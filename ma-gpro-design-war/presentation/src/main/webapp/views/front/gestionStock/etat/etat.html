@@ -1,0 +1,283 @@
+<ul class="nav nav-gpro spacer">
+	<li><a href="#/stock">Mvt. Stock</a></li>
+	<!-- 		<li><a href="#/stockMvtOF" >Mvt. OF</a></li> -->
+	<li><a href="#/historique">Historique</a></li>
+	<li class="active"><a href="#/etat">Etat</a></li>
+	<!-- <li><a href="#/historiqueS">Inventaire Magasin</a></li> -->
+	<li><a href="#/ChartGraphique">Tableau de Bord</a></li>
+</ul>
+
+<div class="container-fluid" ng-controller="EtatCtrl">
+	<div class="col-sm-12">
+		<div class="panel-body ">
+			<!-- Critere de recherche -->
+			<div class="title-ajout">Crit&eacute;res de recherche</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" id="creationStockForm" name="creationStockForm">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Type
+											Article </span> <select ui-select2 data-placeholder="..." class="form-control "
+											ng-model="etatCourant.typeArticle" ng-init="etatCourant.typeArticle='1'">
+											<option value="1">Fourniture</option>
+											<option value="3">Fil &agrave; coudre</option>
+											<option value="2">Tissu</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="alert alert-warning" role="alert" ng-show="displayEtat == 'alert'">Choisis type d'article
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Famille
+										</span>
+										<select ui-select2 data-placeholder="..." class="form-control "
+											ng-model="etatCourant.familleArticle">
+											<option value=''>Tous</option>
+											<option ng-repeat="famille in listeFamilleCache" value="{{famille.id}}">{{famille.designation}}
+											</option>
+										</select>
+
+
+									</div>
+								</div>
+
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Sous
+											Famille </span> <select ui-select2 data-placeholder="..." class="form-control "
+											ng-model="etatCourant.SousfamilleArticle">
+											<option value=''>Tous</option>
+											<option ng-repeat="Sousfamille in listeSousFamilleArticleCache" value="{{Sousfamille.id}}">
+												{{Sousfamille.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f.Article
+										</span>
+										<select ui-select2 data-placeholder="..." class="form-control " ng-model="etatCourant.refArticle">
+											<option value=''>Tous</option>
+											<option ng-repeat="article in listeArticle" value="{{article.id}}">{{article.ref}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">
+											Article </span>
+										<select ui-select2 data-placeholder="..." class="form-control " ng-model="etatCourant.article">
+											<option value=''>Tous</option>
+											<option ng-repeat="article in listeArticle" value="{{article.id}}">{{article.designation}}
+											</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 						<div class="form-group"> -->
+						<!-- 							<div class="row"> -->
+						<!-- 								<div class="col-sm-3"> -->
+						<!-- 									<div class="input-group input-group-sm"> -->
+						<!-- 										<span class="input-group-addon label1" id="basic-addon1">Grosseur -->
+						<!-- 										</span> <select ui-select2 data-placeholder="..." -->
+						<!-- 											style="width: 100%; max-width: 188px;" ng-model="etatCourant.grosseur"> -->
+						<!-- 											<option value=''>Tous</option> -->
+						<!-- 										</select> -->
+						<!-- 									</div> -->
+						<!-- 								</div> -->
+						<!-- 								<div class="col-sm-3"> -->
+						<!-- 									<div class="input-group input-group-sm"> -->
+						<!-- 										<span class="input-group-addon label1" id="basic-addon1">M&eacute;trage -->
+						<!-- 											Article </span> <select ui-select2 data-placeholder="..." -->
+						<!-- 											style="width: 100%; max-width: 188px;" ng-model="etatCourant.metrage"> -->
+						<!-- 											<option value=''>Tous</option> -->
+						<!-- 										</select> -->
+						<!-- 									</div> -->
+						<!-- 								</div> -->
+						<!-- 								<div class="col-sm-3"> -->
+						<!-- 									<div class="input-group input-group-sm"> -->
+						<!-- 										<span class="input-group-addon label1" id="basic-addon1">Mati&egrave;re -->
+						<!-- 										</span> <select ui-select2 data-placeholder="..." -->
+						<!-- 											style="width: 100%; max-width: 188px;" ng-model="etatCourant.matiere"> -->
+						<!-- 											<option value=''>Tous</option> -->
+						<!-- 										</select> -->
+						<!-- 									</div> -->
+						<!-- 								</div> -->
+						<!-- 							</div> -->
+						<!-- 						</div> -->
+						<!-- 						<div class="form-group"> -->
+						<!-- 							<div class="row"> -->
+						<!-- 								<div class="col-sm-3"> -->
+						<!-- 									<div class="input-group input-group-sm"> -->
+						<!-- 										<span class="input-group-addon label1" id="basic-addon1">Famille -->
+						<!-- 											Produit </span> <select class="form-control" ng-model="t"> -->
+						<!-- 											<option></option> -->
+						<!-- 										</select> -->
+						<!-- 									</div> -->
+						<!-- 								</div> -->
+						<!-- 								<div class="col-sm-3"> -->
+						<!-- 									<div class="input-group input-group-sm"> -->
+						<!-- 										<span class="input-group-addon label1" id="basic-addon1">S.Famille -->
+						<!-- 											Produit </span> <select class="form-control" ng-model="t"> -->
+						<!-- 											<option></option> -->
+						<!-- 										</select> -->
+						<!-- 									</div> -->
+						<!-- 								</div> -->
+						<!-- 								<div class="col-sm-3"> -->
+						<!-- 									<div class="input-group input-group-sm"> -->
+						<!-- 										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f.Produit -->
+						<!-- 										</span> <select class="form-control" ng-model="t"> -->
+						<!-- 											<option></option> -->
+						<!-- 										</select> -->
+						<!-- 									</div> -->
+						<!-- 								</div> -->
+						<!-- 								<div class="col-sm-3"> -->
+						<!-- 									<div class="input-group input-group-sm"> -->
+						<!-- 										<span class="input-group-addon label1" id="basic-addon1"> -->
+						<!-- 											Produit </span> <select class="form-control" ng-model="t"> -->
+						<!-- 											<option></option> -->
+						<!-- 										</select> -->
+						<!-- 									</div> -->
+						<!-- 								</div> -->
+						<!-- 							</div> -->
+						<!-- 						</div> -->
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3" ng-controller="DatepickerDemoController">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+										</span> <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											ng-model="etatCourant.date" is-open="opened" datepicker-options="dateOptions"
+											date-="enabled(date, mode)" ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default" ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">
+											Quantit&eacute; </span> <select ui-select2 data-placeholder="..." class="form-control "
+											ng-model="etatCourant.operateurQuantite">
+											<option value=''>Tous</option>
+											<option value="=">=</option>
+											<option value="<">&lt;</option>
+											<option value=">">&gt;</option>
+											<option value=">=">&gt;=</option>
+											<option value="<=">&lt;=</option>
+											<option value="<>">&lt;&gt;</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<div class="input-group input-group-sm">
+										<span id="basic-addon1"></span> <input class="form-control" ng-model="etatCourant.quantite" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Magasin</span>
+										<select ui-select2 data-placeholder="..." class="form-control " ng-model="etatCourant.magasin">
+											<option value=''>Tous</option>
+											<option ng-repeat="magasin in listeMagasinCache" value="{{magasin.id}}">{{magasin.designation}}
+											</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Emplacement
+										</span>
+										<input class="form-control" ng-model="etatCourant.emplacement" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<!-- 								<div class="col-sm-3"> -->
+								<!-- 									<div class="input-group input-group-sm"> -->
+								<!-- 										<span class="input-group-addon label1" id="basic-addon1">Site -->
+								<!-- 											Produit </span> <select ui-select2 data-placeholder="..." -->
+								<!-- 											style="width: 100%; max-width: 188px;" ng-model="etatCourant.site"> -->
+								<!-- 											<option value=''>Tous</option> -->
+								<!-- 										</select> -->
+								<!-- 									</div> -->
+								<!-- 								</div> -->
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm zone">
+										<span class="input-group-addon label1" id="basic-addon1">Zone
+											Dispo. </span> <select ui-select2 data-placeholder="..." class="form-control "
+											ng-model="etatCourant.zoneDispo">
+											<option value=''>Tous</option>
+											<option style="background: red;" value="1">Rouge</option>
+											<option style="background: #80ff00;" value="2">Vert</option>
+											<option style="background: yellow;" value="3">Jaune</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="pull-right">
+						<button class="btn-action2 btn" ng-click="voirEtat()">Rechercher</button>
+						<button class="btn-action2 btn" ng-click="download('Basique')"
+							ng-disabled="etatCourant.typeArticle == null">Rapport Basique</button>
+						<!-- 						<button class="btn-action2 btn" ng-click="download('Global')" ng-disabled="etatCourant.typeArticle == '3' || etatCourant.typeArticle == null">Rapport Global</button> -->
+						<!-- 						<button class="btn-action2 btn" ng-click="download('Detaille')" ng-disabled="etatCourant.typeArticle == '3' || etatCourant.typeArticle == null">Rapport D&eacute;taill&eacute;</button> -->
+						<button class="btn-action btn" ng-click="resetFields()">Annuler</button>
+					</div>
+
+				</div>
+			</div>
+			<!-- Etat des Fournitures -->
+			<div ng-show="displayEtat == 'fourniture'" class="">
+				<div class="title-ajout line">Etat des fournitures</div>
+
+
+				<div style="height: 500px;" class="spacer4" ng-grid="gridOptions"></div>
+			</div>
+
+			<!-- Etat des Fils � coudre-->
+			<div ng-show="displayEtat == 'filaCoudre'" class="">
+				<div class="title-ajout line">Etat des fils a coudre</div>
+				<div style="height: 500px;" class="spacer4" ng-grid="gridOptionsFAC"></div>
+			</div>
+
+			<!-- Etat des Tissu -->
+			<div ng-show="displayEtat == 'tissu'" class="">
+				<div class="title-ajout line">Etat des tissus</div>
+				<div style="height: 500px;" class="spacer4" ng-grid="gridOptionsTisuu"></div>
+			</div>
+
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+</div>

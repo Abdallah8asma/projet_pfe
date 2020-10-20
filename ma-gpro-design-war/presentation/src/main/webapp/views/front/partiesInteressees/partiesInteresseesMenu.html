@@ -1,0 +1,9 @@
+<div ng-controller="MenuPartiesInteresseesController">
+  <div ng-if="ITEM == 'client'">
+    <div ng-include="'views/front/partiesInteressees/partiesInteresseesClient.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'fournisseur'">
+    <div ng-include="'views/front/partiesInteressees/partiesInteresseesFournisseur.html'"></div>
+  </div>
+</div>
+
