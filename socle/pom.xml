@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.gpro.consulting.socle</groupId>
+  <artifactId>socle</artifactId>
+  <version>3.5.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>${project.artifactId}</name>
+  <description>${project.artifactId}</description>
+  <properties>
+  	<encoding>UTF-8</encoding>
+		<locales>fr,en</locales>
+
+		<!-- Compute repository names -->
+		<cip.project.id>GPRO_CONSULTING</cip.project.id>
+		<releases.repository.name>${cip.project.id}-virtual</releases.repository.name>
+		<snapshots.repository.name>${cip.project.id}-virtual</snapshots.repository.name>
+
+		<!-- Locations -->
+		<mrm.location>http://localhost/nexus</mrm.location>
+		<ci-server.location>https://localhost/jenkins/</ci-server.location>
+		<sonar.location>https://localhost/sonar/</sonar.location>
+
+		<!--Distribution URLs -->
+		<distribution.releases.repository>${mrm.location}/${releases.repository.name}</distribution.releases.repository>
+		<distribution.snapshots.repository>${mrm.location}/${snapshots.repository.name}</distribution.snapshots.repository>
+		
+		<!-- Maven plugin version -->
+		<maven.project.info.reports.plugin.version>2.7</maven.project.info.reports.plugin.version>
+  </properties>
+  
+  <inceptionYear>2015</inceptionYear>
+  
+  <organization>
+		<name>STIT</name>
+		<url>url du client</url>
+	</organization>
+	
+	<licenses />
+
+	<developers />
+
+	<contributors />
+	
+	<issueManagement>
+		<system>CRM</system>
+		<url>A Voir </url>
+	</issueManagement>
+
+	<scm>
+		<connection>scm:svn:https://pc-mahdi/svn/GPRO_REPOSITORY/trunk/socle/</connection>
+		<developerConnection>scm:svn:https://localhost/svn/erp_textile/socle/trunk</developerConnection>
+		<url>https://pc-mahdi/svn/GPRO_REPOSITORY/trunk/</url>
+	</scm>
+	
+		<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>Project releases repository</name>
+			<url>http://localhost/nexus</url>
+		</repository>
+	
+	
+		</distributionManagement>
+
+	<ciManagement>
+		<system>jenkins</system>
+		<url>${ci-server.location}</url>
+	</ciManagement>
+
+	<reporting>
+		<plugins>
+			<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-project-info-reports-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${maven.project.info.reports.plugin.version}</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>cim</report>
+							<report>dependency-convergence</report>
+							<report>dependency-management</report>
+							<report>index</report>
+							<report>issue-tracking</report>
+							<report>modules</report>
+							<report>plugin-management</report>
+							<report>plugins</report>
+							<report>scm</report>
+							<report>summary</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+	
+</project>

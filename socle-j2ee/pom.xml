@@ -1,0 +1,825 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gpro.consulting.socle</groupId>
+		<artifactId>socle</artifactId>
+		<version>3.5.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.gpro.consulting.socle.j2ee</groupId>
+	<artifactId>socle-j2ee</artifactId>
+	<version>3.5.0.0-SNAPSHOT</version>
+
+	<packaging>pom</packaging>
+
+	<name>${project.artifactId}</name>
+	<description>${project.artifactId}</description>
+
+	<properties>
+		<!-- Global Properties -->
+		<jdk.version>1.7</jdk.version>
+		<compilerVersion>1.7</compilerVersion>
+		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</maven.build.timestamp.format>
+
+		<!-- Maven plugins Versions -->
+		<maven.findbugs.plugin.version>2.5.3</maven.findbugs.plugin.version>
+		<maven.checkstyle.plugin.version>2.11</maven.checkstyle.plugin.version>
+		<maven.clean.plugin.version>2.5</maven.clean.plugin.version>
+		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+		<maven.javadoc.plugin.version>2.9.1</maven.javadoc.plugin.version>
+		<maven.pmd.plugin.version>3.0.1</maven.pmd.plugin.version>
+		<maven.report.version>2.7</maven.report.version>
+		<maven.resources.plugin.version>2.6</maven.resources.plugin.version>
+		<maven.source.plugin.version>2.2.1</maven.source.plugin.version>
+		<maven.surefire.plugin.version>2.16</maven.surefire.plugin.version>
+		<maven.surefire.report.plugin.version>2.16</maven.surefire.report.plugin.version>
+		<properties.maven.plugin.version>1.0-alpha-2</properties.maven.plugin.version>
+		<maven.sonar.plugin.version>4.1</maven.sonar.plugin.version>
+		<maven.jxr.plugin.version>2.3</maven.jxr.plugin.version>
+		<maven.xbean.plugin.version>3.16</maven.xbean.plugin.version>
+		<jaxb2-maven-plugin-version>1.5</jaxb2-maven-plugin-version>
+		<build.helper.maven.plugin.version>1.8</build.helper.maven.plugin.version>
+		<maven.bundle.plugin.version>2.4.0</maven.bundle.plugin.version>
+		<maven.jar.plugin.version>2.4</maven.jar.plugin.version>
+		<maven.war.plugin.version>2.4</maven.war.plugin.version>
+		<maven.assembly.plugin.version>2.4</maven.assembly.plugin.version>
+		<maven.cobertura.plugin.version>2.6</maven.cobertura.plugin.version>
+
+		<!-- Dependencies Versions -->
+		<!-- Maven -->
+		<maven.plugin.api.version>3.1.1</maven.plugin.api.version>
+		<maven.project.version>2.2.1</maven.project.version>
+
+		<!-- Spring -->
+		<spring.version>4.1.5.RELEASE</spring.version>
+
+		<!-- Commons -->
+		<commons.lang3.version>3.2.1</commons.lang3.version>
+		<commons.collections.version>3.2.1</commons.collections.version>
+		<commons.io.version>2.4</commons.io.version>
+		<commons.beanutils.version>1.9.1</commons.beanutils.version>
+
+		<!-- log -->
+		<slf4j.version>1.7.5</slf4j.version>
+		<logback.version> 1.0.13</logback.version>
+		<jcl.over.slf4j.version>1.7.5</jcl.over.slf4j.version>
+		<jul.to.slf4j.version>1.7.5</jul.to.slf4j.version>
+
+		<!-- tests -->
+		<junit.version>4.11</junit.version>
+		<mockito.all.version>1.9.5</mockito.all.version>
+		<fest.assert.version>2.0M10</fest.assert.version>
+
+		<!-- cxf -->
+		<cxf.version>3.0.0-milestone1</cxf.version>
+		<maven.cxf.codegen.plugin.version>${cxf.version}</maven.cxf.codegen.plugin.version>
+
+		<!-- web -->
+		<myfaces.version>2.2.0</myfaces.version>
+		<tomahawk.version>1.1.14</tomahawk.version>
+		<servlet.api.version>3.0-alpha-1</servlet.api.version>
+		<jsp.api.version>2.2</jsp.api.version>
+		<el.api.version>2.2</el.api.version>
+		<!-- <jstl.version>1.2</jstl.version> -->
+		<appstatus.version>0.4.5</appstatus.version>
+
+		<org.apache.struts.version>2.3.16.3</org.apache.struts.version>
+
+		<!-- AOP -->
+		<aspectjweaver.version>1.7.4</aspectjweaver.version>
+
+		<!-- ORACLE -->
+		<ojdbc.version>11.2.0.3.0</ojdbc.version>
+
+		<!-- Postgree -->
+		<postgre.jdbc.version>8.4-702.jdbc4</postgre.jdbc.version>
+		<!-- hibernate -->
+		<hibernate.core.version>4.3.1.Final</hibernate.core.version>
+		<hibernate.commons.annotations.version>4.0.4.Final</hibernate.commons.annotations.version>
+		<hibernate.entitymanager.version>4.3.1.Final</hibernate.entitymanager.version>
+
+		<!-- divers -->
+		<docx4j.version>3.0.0</docx4j.version>
+		<joda.time.version>2.3</joda.time.version>
+		<jxls.version>1.0.2</jxls.version>
+
+		<!-- Xstream -->
+		<xstream.version>1.4.2</xstream.version>
+		
+		<!-- Jackson -->
+		<jackson.core.version>2.5.1</jackson.core.version>
+
+
+
+	</properties>
+	<build>
+		<!-- Déclaration des plugins hérités par tous les projets J2EE -->
+		<plugins>
+			<!-- COMPILER -->
+			<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-compiler-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compiler.plugin.version}</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+					<encoding>${encoding}</encoding>
+				</configuration>
+			</plugin>
+			<!-- RESOURCES -->
+			<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-resources-plugin/ -->
+			<plugin>
+				<!-- Encodage des fichiers properties en ISO-8859-1 et du reste des ressources 
+					en UTF-8 -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven.resources.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>default-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+						<configuration>
+							<encoding>${encoding}</encoding>
+							<includeEmptyDirs>true</includeEmptyDirs>
+							<excludes>
+								<exclude>**/*.properties</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>properties-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+						<configuration>
+							<encoding>ISO-8859-1</encoding>
+							<includes>
+								<include>**/*.properties</include>
+							</includes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>default-testResources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>testResources</goal>
+						</goals>
+						<configuration>
+							<encoding>${encoding}</encoding>
+							<includeEmptyDirs>true</includeEmptyDirs>
+							<excludes>
+								<exclude>**/*.properties</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+					<execution>
+						<id>properties-testResources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>testResources</goal>
+						</goals>
+						<configuration>
+							<encoding>ISO-8859-1</encoding>
+							<includes>
+								<include>**/*.properties</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- SUREFIRE -->
+			<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-surefire-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surefire.plugin.version}</version>
+				<configuration>
+					<systemPropertyVariables>
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
+			<!-- HELPER -->
+			<!-- http://repo2.maven.org/maven2/org/codehaus/mojo/build-helper-maven-plugin/ -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${build.helper.maven.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${basedir}/src/generated/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<!-- Configuration des plugins disponibles pour tous les projets J2EE -->
+		<pluginManagement>
+			<plugins>
+				<!-- CXF -->
+				<!-- http://repo2.maven.org/maven2/org/apache/cxf/cxf-codegen-plugin/ -->
+				<plugin>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-codegen-plugin</artifactId>
+					<version>${maven.cxf.codegen.plugin.version}</version>
+				</plugin>
+				<!-- Configuration du plugin CXF (génération WSDL / ServerSide / ClientSide). -->
+				<!-- http://repo2.maven.org/maven2/org/apache/cxf/cxf-java2ws-plugin/ -->
+				<plugin>
+					<groupId>org.apache.cxf</groupId>
+					<artifactId>cxf-java2ws-plugin</artifactId>
+					<version>${maven.cxf.codegen.plugin.version}</version>
+					<configuration>
+						<genWsdl>true</genWsdl>
+						<verbose>false</verbose>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.cxf</groupId>
+							<artifactId>cxf-rt-frontend-jaxws</artifactId>
+							<version>${maven.cxf.codegen.plugin.version}</version>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.cxf</groupId>
+							<artifactId>cxf-rt-frontend-simple</artifactId>
+							<version>${maven.cxf.codegen.plugin.version}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<!-- BUNDLE -->
+				<!-- http://repo2.maven.org/maven2/org/apache/felix/maven-bundle-plugin/ -->
+				<plugin>
+					<groupId>org.apache.felix</groupId>
+					<artifactId>maven-bundle-plugin</artifactId>
+					<version>${maven.bundle.plugin.version}</version>
+				</plugin>
+				<!-- CLEAN -->
+				<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-clean-plugin/ -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${maven.clean.plugin.version}</version>
+				</plugin>
+				<!-- SOURCE -->
+				<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-source-plugin/ -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven.source.plugin.version}</version>
+				</plugin>
+				<!-- PROPERTIES -->
+				<!-- http://repo2.maven.org/maven2/org/codehaus/mojo/properties-maven-plugin/ -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>properties-maven-plugin</artifactId>
+					<version>${properties.maven.plugin.version}</version>
+				</plugin>
+				<!-- JAXB -->
+				<!-- http://repo2.maven.org/maven2/org/codehaus/mojo/jaxb2-maven-plugin/ -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>jaxb2-maven-plugin</artifactId>
+					<version>${jaxb2-maven-plugin-version}</version>
+				</plugin>
+				<!-- JAR -->
+				<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-jar-plugin/ -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven.jar.plugin.version}</version>
+				</plugin>
+				<!-- WAR -->
+				<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-war-plugin/ -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>${maven.war.plugin.version}</version>
+				</plugin>
+				<!-- ASSEMBLY -->
+				<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-assembly-plugin/ -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>${maven.assembly.plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>cobertura-maven-plugin</artifactId>
+					<version>${maven.cobertura.plugin.version}</version>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											build-helper-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.8,)
+										</versionRange>
+										<goals>
+											<goal>add-source</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<!-- Déclaration des dépendances héritées par tous les projets J2EE -->
+	<dependencies>
+		<!-- JUNIT -->
+		<!-- http://repo2.maven.org/maven2/junit/junit/ -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- http://repo2.maven.org/maven2/org/springframework/spring-test/ -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- MOCKITO -->
+		<!-- http://repo2.maven.org/maven2/org/mockito/mockito-all/ -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.all.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- EASYTESTING -->
+		<!-- http://repo2.maven.org/maven2/org/easytesting/fest-assert-core/ -->
+		<dependency>
+			<groupId>org.easytesting</groupId>
+			<artifactId>fest-assert-core</artifactId>
+			<version>${fest.assert.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- SLF4J -->
+		<!-- http://repo2.maven.org/maven2/org/slf4j/slf4j-api/ -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>log4j-over-slf4j</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<!-- http://repo2.maven.org/maven2/org/slf4j/jcl-over-slf4j/ -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			</dependency>
+		<!-- http://repo2.maven.org/maven2/org/slf4j/jul-to-slf4j/ -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jul-to-slf4j</artifactId>
+			</dependency>
+		<!-- LOGBACK -->
+		<!-- http://repo2.maven.org/maven2/ch/qos/logback/logback-classic/ -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+		<!-- http://repo2.maven.org/maven2/ch/qos/logback/logback-core/ -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- SPRING -->
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-core/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-beans/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${spring.version}</version>
+				<scope>compile</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-context/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-context-support/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-web/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-webmvc/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-jdbc/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-orm/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-aop/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/springframework/spring-tx/ -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<!-- MAVEN -->
+			<!-- http://repo2.maven.org/maven2/org/apache/maven/maven-plugin-api/ -->
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-plugin-api</artifactId>
+				<version>${maven.plugin.api.version}</version>
+			</dependency>
+
+			<!-- COMMONS -->
+			<!-- http://repo2.maven.org/maven2/org/apache/maven/maven-project/ -->
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-project</artifactId>
+				<version>${maven.project.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/apache/commons/commons-lang3/ -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons.lang3.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/commons-collections/commons-collections/ -->
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>${commons.collections.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/commons-io/commons-io/ -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons.io.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/commons-beanutils/commons-beanutils/ -->
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>${commons.beanutils.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- WEB/JSF -->
+			<!-- http://repo2.maven.org/maven2/javax/servlet/servlet-api/ -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${servlet.api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/javax/servlet/jsp/jsp-api/ -->
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>${jsp.api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/javax/el/el-api/ -->
+			<dependency>
+				<groupId>javax.el</groupId>
+				<artifactId>el-api</artifactId>
+				<version>${el.api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/apache/myfaces/core/myfaces-api/ -->
+			<dependency>
+				<groupId>org.apache.myfaces.core</groupId>
+				<artifactId>myfaces-api</artifactId>
+				<version>${myfaces.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/apache/myfaces/core/myfaces-impl/ -->
+			<dependency>
+				<groupId>org.apache.myfaces.core</groupId>
+				<artifactId>myfaces-impl</artifactId>
+				<version>${myfaces.version}</version>
+				<scope>runtime</scope>
+				<exclusions>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/apache/myfaces/tomahawk/tomahawk21/ -->
+			<dependency>
+				<groupId>org.apache.myfaces.tomahawk</groupId>
+				<artifactId>tomahawk21</artifactId>
+				<version>${tomahawk.version}</version>
+			</dependency>
+			<!-- http://appstatus.sourceforge.net/maven2/repository/net/sf/appstatus/appstatus-web/ -->
+			<dependency>
+				<groupId>net.sf.appstatus</groupId>
+				<artifactId>appstatus-web</artifactId>
+				<version>${appstatus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sf.appstatus</groupId>
+				<artifactId>appstatus-core</artifactId>
+				<version>${appstatus.version}</version>
+			</dependency>
+
+			<!-- ORACLE -->
+			<dependency>
+				<groupId>com.oracle</groupId>
+				<artifactId>ojdbc6</artifactId>
+				<version>${ojdbc.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- HIBERNATE -->
+			<!-- http://repo2.maven.org/maven2/org/hibernate/hibernate-core/ -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${hibernate.core.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/hibernate/hibernate-entitymanager/ -->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.entitymanager.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/hibernate/common/hibernate-commons-annotations/ -->
+			<dependency>
+				<groupId>org.hibernate.common</groupId>
+				<artifactId>hibernate-commons-annotations</artifactId>
+				<version>${hibernate.commons.annotations.version}</version>
+			</dependency>
+
+			<!-- CXF -->
+			<!-- http://repo2.maven.org/maven2/org/apache/cxf/cxf-rt-frontend-jaxws/ -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxws</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/apache/cxf/cxf-rt-frontend-jaxrs/ -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-frontend-jaxrs</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/apache/cxf/cxf-rt-transports-http/ -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/apache/cxf/cxf-rt-transports-http-jetty/ -->
+			<!-- Jetty is needed if you're are not using the CXFServlet -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-transports-http-jetty</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+			<!-- http://repo2.maven.org/maven2/org/apache/cxf/cxf-rt-management/ -->
+			<dependency>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-rt-management</artifactId>
+				<version>${cxf.version}</version>
+			</dependency>
+
+			<!-- AOP -->
+			<!-- http://central.maven.org/maven2/org/aspectj/aspectjweaver/ -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectjweaver.version}</version>
+			</dependency>
+
+
+			<!-- JODA -->
+			<!-- http://central.maven.org/maven2/joda-time/joda-time/ -->
+			<dependency>
+				<groupId>joda-time</groupId>
+				<artifactId>joda-time</artifactId>
+				<version>${joda.time.version}</version>
+			</dependency>
+			<!-- JXLS -->
+			<!-- http://central.maven.org/maven2/net/sf/jxls/jxls-core/ -->
+			<dependency>
+				<groupId>net.sf.jxls</groupId>
+				<artifactId>jxls-core</artifactId>
+				<version>${jxls.version}</version>
+			</dependency>
+			<!-- http://central.maven.org/maven2/net/sf/jxls/jxls-reader/ -->
+			<dependency>
+				<groupId>net.sf.jxls</groupId>
+				<artifactId>jxls-reader</artifactId>
+				<version>${jxls.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>${jcl.over.slf4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+				<version>${jul.to.slf4j.version}</version>
+			</dependency>
+
+			<!-- Rest Webservice -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.core.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.core.version}</version>
+			</dependency>
+
+<dependency>
+	<groupId>postgresql</groupId>
+	<artifactId>postgresql</artifactId>
+	<version>${postgre.jdbc.version}</version>
+</dependency>
+
+	
+<dependency>
+	<groupId>mysql</groupId>
+	<artifactId>mysql-connector-java</artifactId>
+	<version>5.1.36</version>
+</dependency>
+
+
+		</dependencies>
+	</dependencyManagement>
+
+
+	<reporting>
+		<plugins>
+
+			<!-- JAVADOC -->
+			<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-javadoc-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${maven-javadoc-plugin-version}</version>
+				<reportSets>
+					<reportSet>
+						<id>non-aggregate</id>
+						<configuration>
+							<encoding>${encoding}</encoding>
+						</configuration>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<!-- JXR -->
+			<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-jxr-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>${maven.jxr.plugin.version}</version>
+				<configuration>
+					<inputEncoding>${encoding}</inputEncoding>
+					<outputEncoding>${encoding}</outputEncoding>
+				</configuration>
+			</plugin>
+
+			<!-- SUREFIRE -->
+			<!-- http://repo2.maven.org/maven2/org/apache/maven/plugins/maven-surefire-report-plugin/ -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>${maven.surefire.report.plugin.version}</version>
+			</plugin>
+			<!-- FINDBUGS -->
+			<!-- http://repo2.maven.org/maven2/org/codehaus/mojo/findbugs-maven-plugin/ -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>${maven.findbugs.plugin.version}</version>
+			</plugin>
+			<!-- JDEPEND -->
+			<!-- http://repo2.maven.org/maven2/org/codehaus/mojo/jdepend-maven-plugin/ -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+				<version>${jdepend-maven-plugin-version}</version>
+			</plugin>
+			<!-- SONAR -->
+			<!-- http://repo2.maven.org/maven2/org/codehaus/sonar-plugins/maven-report/ -->
+			<plugin>
+				<groupId>org.codehaus.sonar-plugins</groupId>
+				<artifactId>maven-report</artifactId>
+				<version>${maven.report.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
+
+</project>

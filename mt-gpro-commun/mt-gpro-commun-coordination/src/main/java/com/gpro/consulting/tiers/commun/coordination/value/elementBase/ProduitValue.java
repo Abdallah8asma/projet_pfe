@@ -1,0 +1,458 @@
+package com.gpro.consulting.tiers.commun.coordination.value.elementBase;
+
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+
+
+
+/**
+ * The Class ProduitValue.
+ * 
+ * @author med
+ */
+public class ProduitValue implements Comparable<ProduitValue> {
+
+	private Long id;
+	private Long siteId;
+	private String siteEntiteDesignation;
+	private Long sousFamilleId;
+	private String sousFamilleDesignation;
+	private String familleDesignation;
+	private String uidImage;
+	private Long partieIntersseId;
+	private String partieIntersseDesignation;
+	private String reference;
+	private String designation;
+	private Double prixUnitaire;
+	private String etat;
+	private String composition;
+	private Calendar dateIntroduction;
+	private Double quantite;
+	private Double prixAchat;
+	private Double prixSpecial;
+	
+	
+	private Double tva;
+	
+	private boolean serialisable;
+	
+	
+	private String description;
+	
+	
+	private Long groupeClientId;
+	
+	
+	 private Double prixVenteTTC ;
+	 
+	 
+	 private Boolean  retour ;
+		
+	
+	 
+	 private Double remise ;
+	 
+	 
+		private Long boutiqueId;
+		
+		
+		
+
+		private String couleur;
+		
+	
+		private String numero;
+		
+
+		private String referenceFournisseur;
+		
+		
+		 private Double prixAchatTTC ;
+		
+	 
+		 private boolean stock;
+		 
+		 
+		 
+		 private String superFamilleDesignation;
+		 
+		 
+		 
+		 
+		 
+	
+	public String getSuperFamilleDesignation() {
+			return superFamilleDesignation;
+		}
+
+		public void setSuperFamilleDesignation(String superFamilleDesignation) {
+			this.superFamilleDesignation = superFamilleDesignation;
+		}
+
+	public boolean isStock() {
+			return stock;
+		}
+
+		public void setStock(boolean stock) {
+			this.stock = stock;
+		}
+
+	public String getCouleur() {
+			return couleur;
+		}
+
+		public void setCouleur(String couleur) {
+			this.couleur = couleur;
+		}
+
+		public String getNumero() {
+			return numero;
+		}
+
+		public void setNumero(String numero) {
+			this.numero = numero;
+		}
+
+		public String getReferenceFournisseur() {
+			return referenceFournisseur;
+		}
+
+		public void setReferenceFournisseur(String referenceFournisseur) {
+			this.referenceFournisseur = referenceFournisseur;
+		}
+
+		public Double getPrixAchatTTC() {
+			return prixAchatTTC;
+		}
+
+		public void setPrixAchatTTC(Double prixAchatTTC) {
+			this.prixAchatTTC = prixAchatTTC;
+		}
+
+	public Long getBoutiqueId() {
+			return boutiqueId;
+		}
+
+		public void setBoutiqueId(Long boutiqueId) {
+			this.boutiqueId = boutiqueId;
+		}
+
+	public Double getRemise() {
+		return remise;
+	}
+
+	public void setRemise(Double remise) {
+		this.remise = remise;
+	}
+
+	public Boolean getRetour() {
+			return retour;
+		}
+
+		public void setRetour(Boolean retour) {
+			this.retour = retour;
+		}
+
+	public Double getPrixVenteTTC() {
+		return prixVenteTTC;
+	}
+
+	public void setPrixVenteTTC(Double prixVenteTTC) {
+		this.prixVenteTTC = prixVenteTTC;
+	}
+
+	public Long getGroupeClientId() {
+		return groupeClientId;
+	}
+
+	public void setGroupeClientId(Long groupeClientId) {
+		this.groupeClientId = groupeClientId;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public boolean isSerialisable() {
+		return serialisable;
+	}
+
+	public void setSerialisable(boolean serialisable) {
+		this.serialisable = serialisable;
+	}
+
+	public Double getTva() {
+		return tva;
+	}
+
+	public void setTva(Double tva) {
+		this.tva = tva;
+	}
+
+	public Double getPrixSpecial() {
+		return prixSpecial;
+	}
+
+	public void setPrixSpecial(Double prixSpecial) {
+		this.prixSpecial = prixSpecial;
+	}
+
+	public String getUnite() {
+		return unite;
+	}
+
+	public void setUnite(String unite) {
+		this.unite = unite;
+	}
+
+	private Long idTaxe;
+	private String unite;
+	private String uniteSupplementaire;
+	private Boolean fond;
+	private Boolean  fondSupplementaire ;
+	
+	
+	private Set<DocumentProduitValue> documentProduits = new HashSet<DocumentProduitValue>();
+
+	// added on 31/03/2016, by Wahid Gazzah
+	private String codeCouleur;
+
+	// added on 21/04/2016, by Wahid Gazzah
+	private String referenceInterne;
+
+	private Double tauxTVA;
+	
+	
+	@Override
+	public int compareTo(ProduitValue o) {
+		ProduitValue element = (ProduitValue) o;
+		return (element.getId().compareTo(id));
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
+	public Long getIdTaxe() {
+		return idTaxe;
+	}
+
+	public void setIdTaxe(Long idTaxe) {
+		this.idTaxe = idTaxe;
+	}
+
+	public Long getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(Long siteId) {
+		this.siteId = siteId;
+	}
+
+	public String getSiteEntiteDesignation() {
+		return siteEntiteDesignation;
+	}
+
+	public void setSiteEntiteDesignation(String siteEntiteDesignation) {
+		this.siteEntiteDesignation = siteEntiteDesignation;
+	}
+
+	public Long getSousFamilleId() {
+		return sousFamilleId;
+	}
+
+	public void setSousFamilleId(Long sousFamilleId) {
+		this.sousFamilleId = sousFamilleId;
+	}
+
+	public String getSousFamilleDesignation() {
+		return sousFamilleDesignation;
+	}
+
+	public void setSousFamilleDesignation(String sousFamilleDesignation) {
+		this.sousFamilleDesignation = sousFamilleDesignation;
+	}
+
+	public String getFamilleDesignation() {
+		return familleDesignation;
+	}
+
+	public void setFamilleDesignation(String familleDesignation) {
+		this.familleDesignation = familleDesignation;
+	}
+
+	public String getUidImage() {
+		return uidImage;
+	}
+
+	public void setUidImage(String uidImage) {
+		this.uidImage = uidImage;
+	}
+
+	public Long getPartieIntersseId() {
+		return partieIntersseId;
+	}
+
+	public void setPartieIntersseId(Long partieIntersseId) {
+		this.partieIntersseId = partieIntersseId;
+	}
+
+	public String getPartieIntersseDesignation() {
+		return partieIntersseDesignation;
+	}
+
+	public void setPartieIntersseDesignation(String partieIntersseDesignation) {
+		this.partieIntersseDesignation = partieIntersseDesignation;
+	}
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public Double getPrixUnitaire() {
+		return prixUnitaire;
+	}
+
+	public void setPrixUnitaire(Double prixUnitaire) {
+		this.prixUnitaire = prixUnitaire;
+	}
+
+	public String getEtat() {
+		return etat;
+	}
+
+	public void setEtat(String etat) {
+		this.etat = etat;
+	}
+
+	public String getComposition() {
+		return composition;
+	}
+
+	public void setComposition(String composition) {
+		this.composition = composition;
+	}
+
+	public Calendar getDateIntroduction() {
+		return dateIntroduction;
+	}
+
+	public void setDateIntroduction(Calendar dateIntroduction) {
+		this.dateIntroduction = dateIntroduction;
+	}
+
+	public Set<DocumentProduitValue> getDocumentProduits() {
+		return documentProduits;
+	}
+
+	public void setDocumentProduits(Set<DocumentProduitValue> documentProduits) {
+		this.documentProduits = documentProduits;
+	}
+
+	public String getCodeCouleur() {
+		return codeCouleur;
+	}
+
+	public void setCodeCouleur(String codeCouleur) {
+		this.codeCouleur = codeCouleur;
+	}
+
+	public String getReferenceInterne() {
+		return referenceInterne;
+	}
+
+	public void setReferenceInterne(String referenceInterne) {
+		this.referenceInterne = referenceInterne;
+	}
+
+	public Double getQuantite() {
+		return quantite;
+	}
+
+	public void setQuantite(Double quantite) {
+		this.quantite = quantite;
+	}
+
+	public Double getPrixAchat() {
+		return prixAchat;
+	}
+
+	public void setPrixAchat(Double prixAchat) {
+		this.prixAchat = prixAchat;
+	}
+
+	
+	
+	
+	public String getUniteSupplementaire() {
+		return uniteSupplementaire;
+	}
+
+	public void setUniteSupplementaire(String uniteSupplementaire) {
+		this.uniteSupplementaire = uniteSupplementaire;
+	}
+
+	public Boolean getFond() {
+		return fond;
+	}
+
+	public void setFond(Boolean fond) {
+		this.fond = fond;
+	}
+
+
+
+	public Boolean getFondSupplementaire() {
+		return fondSupplementaire;
+	}
+
+	public void setFondSupplementaire(Boolean fondSupplementaire) {
+		this.fondSupplementaire = fondSupplementaire;
+	}
+	
+	
+
+	public Double getTauxTVA() {
+		return tauxTVA;
+	}
+
+	public void setTauxTVA(Double tauxTVA) {
+		this.tauxTVA = tauxTVA;
+	}
+
+	@Override
+	public String toString() {
+		return "ProduitValue [id=" + id + ", siteId=" + siteId + ", siteEntiteDesignation=" + siteEntiteDesignation
+				+ ", sousFamilleId=" + sousFamilleId + ", sousFamilleDesignation=" + sousFamilleDesignation
+				+ ", familleDesignation=" + familleDesignation + ", uidImage=" + uidImage + ", partieIntersseId="
+				+ partieIntersseId + ", partieIntersseDesignation=" + partieIntersseDesignation + ", reference="
+				+ reference + ", designation=" + designation + ", prixUnitaire=" + prixUnitaire + ", etat=" + etat
+				+ ", composition=" + composition + ", dateIntroduction=" + dateIntroduction + ", quantite=" + quantite
+				+ ", prixAchat=" + prixAchat + ", documentProduits=" + documentProduits + ", codeCouleur=" + codeCouleur
+				+ ", referenceInterne=" + referenceInterne + "]";
+	}
+
+}
