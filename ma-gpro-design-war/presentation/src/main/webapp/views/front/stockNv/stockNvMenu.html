@@ -1,0 +1,24 @@
+
+<div ng-controller="stockNvMenuController">
+  <div ng-if="ITEM == 'stockNv'">
+    <div ng-include="'views/front/stockNv/stockNv.html'"></div>
+  </div>
+
+  <div ng-if="ITEM == 'stockNvRetour'">
+    <div ng-include="'views/front/stockNv/stockNvRetour.html'"></div>
+  </div>
+
+
+  <div ng-if="ITEM == 'stockNvRetourDetail'">
+    <div ng-include="'views/front/stockNv/stockNvRetourDetail.html'"></div>
+  </div>
+
+  <div ng-if="ITEM == 'stockNvSortie'">
+    <div ng-include="'views/front/stockNv/stockNvSortie.html'"></div>
+  </div>
+  
+  <div ng-if="ITEM == 'stockNvBonInventaire'">
+    <div ng-include="'views/front/stockNv/stockNvBonInventaire.html'"></div>
+  </div>
+
+</div>
