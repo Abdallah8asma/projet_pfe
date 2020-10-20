@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="classpath:/spring/ehcache.xsd"
+	updateCheck="false">
+	<!-- Default Cache Configuration, with name 'default' -->
+	<defaultCache maxElementsInMemory="300" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeSitePartieInteresseeCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeTypeDocumentCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeFamillePiCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeCategoriePiCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeTypePiCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeDeviseCache" maxElementsInMemory="10"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeFamilleProduitCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeSousFamilleProduitCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listePartieInteresseeCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	
+	<cache name="ListTypeArticle" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeFamilleArticleCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="ListSousFamilleArticle" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeUniteArticleCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeMatiereArticleCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeMetrageArticleCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeGrosseurArticleCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeCouleurProduitCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="rechercherArticleParId" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="rechFamEtSousFamParId" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="rechercheTailleParId" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="rechercheColorParId" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="rechercherProduitParId" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="rechercherPartieInteresseeParId" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+</ehcache>

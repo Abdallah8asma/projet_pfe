@@ -1,0 +1,58 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gpro.consulting.socle.j2ee.tiers</groupId>
+		<artifactId>socle-j2ee-tiers-service</artifactId>
+		<version>3.5.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.gpro.consulting.tiers.commun.service</groupId>
+	<artifactId>mt-gpro-commun-service</artifactId>
+	<version>3.5.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.gpro.consulting.tiers.commun.coordination</groupId>
+			<artifactId>mt-gpro-commun-coordination</artifactId>
+			<version>3.5.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gpro.consulting.tiers.commun.domaine</groupId>
+			<artifactId>mt-gpro-commun-domaine</artifactId>
+			<version>3.5.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+			<version>2.6.11</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.googlecode.ehcache-spring-annotations</groupId>
+			<artifactId>ehcache-spring-annotations</artifactId>
+			<version>1.2.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-expression</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+			<version>4.1.5.RELEASE</version>
+		</dependency>
+	
+  
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>
