@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.gpro.consulting.socle.j2ee.tiers</groupId>
+		<artifactId>socle-j2ee-tiers-persistance</artifactId>
+		<version>3.5.0.0-SNAPSHOT</version>
+	</parent>
+
+	<groupId>com.gpro.consulting.tiers.logistique.persistance</groupId>
+	<artifactId>ma-gpro-logistique-persistance</artifactId>
+	<version>3.5.0.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.common</groupId>
+			<artifactId>hibernate-commons-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>8.4-702.jdbc4</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.gpro.consulting.socle.j2ee.mt</groupId>
+			<artifactId>mt-socle</artifactId>
+			<version>3.5.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.gpro.consulting.socle.j2ee.mt</groupId>
+			<artifactId>mt-commun</artifactId>
+			<version>3.5.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gpro.consulting.tiers.logistique.coordination</groupId>
+			<artifactId>ma-gpro-logistique-coordination</artifactId>
+			<version>3.5.0.0-SNAPSHOT</version>
+
+		</dependency>
+
+
+		<dependency>
+			<groupId>
+				com.gpro.consulting.tiers.commun.persistance
+			</groupId>
+			<artifactId>mt-gpro-commun-persistance</artifactId>
+			<version>3.5.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+
+
+</project>

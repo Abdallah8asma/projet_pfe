@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-11-03T12:46:26 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rapportLogis" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8e99e3e4-c657-4154-a415-655be606f2b5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="54"/>
+	<parameter name="p_ref" class="java.lang.String"/>
+	<parameter name="p_dateR" class="java.util.Date"/>
+	<parameter name="p_tissu" class="java.lang.String"/>
+	<parameter name="p_observation" class="java.lang.String"/>
+	<parameter name="p_client" class="java.lang.String"/>
+	<parameter name="p_delai" class="java.lang.String"/>
+	<parameter name="p_tissu_type" class="java.lang.String"/>
+	<parameter name="p_picture" class="java.lang.String"/>
+	<parameter name="p_nbre_rou" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="p_list1" class="java.util.List"/>
+	<parameter name="p_list2" class="java.util.List"/>
+	<parameter name="p_path_list1" class="java.lang.String"/>
+	<group name="Rouleaux">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupHeader>
+			<band height="173">
+				<subreport>
+					<reportElement x="0" y="48" width="555" height="125" uuid="04d97262-59de-4100-9103-dec0bba03a70"/>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{p_list1})]]></dataSourceExpression>
+					<subreportExpression><![CDATA[$P{p_path_list1}]]></subreportExpression>
+				</subreport>
+				<staticText>
+					<reportElement x="0" y="10" width="126" height="20" uuid="569ee8a6-473a-4f4e-b65f-c7a97f513670"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nombre de rouleaux]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="126" y="10" width="103" height="20" uuid="5878ae44-704f-4d62-b3f8-4c06934611c8"/>
+					<textFieldExpression><![CDATA[$P{p_nbre_rou}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="traitement">
+		<groupExpression><![CDATA[$V{PAGE_NUMBER}]]></groupExpression>
+		<groupHeader>
+			<band height="122">
+				<subreport>
+					<reportElement x="0" y="0" width="555" height="122" uuid="da8ff151-cba4-484f-acad-cb861c5d2750"/>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{p_list2})]]></dataSourceExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="72" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="68" uuid="1f6296a8-c9f9-4b56-923b-f23d7524915b"/>
+				<imageExpression><![CDATA[$P{p_picture}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="136" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="100" height="20" uuid="c69f4b42-0da5-464a-ba96-1ba00bb979e4"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Référence]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="100" height="20" uuid="5b7f9395-a3d4-42d1-bbc3-61e8afa7ced8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Réception]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="74" width="100" height="20" uuid="c3834b88-1a98-4a95-981c-57728d9302db"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tissu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="104" width="100" height="20" uuid="7001897f-0a58-41d6-8813-bdd16d5c4ce8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="10" width="100" height="20" uuid="3fa72cf8-436b-4742-b2e2-ac6639a83981"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Client]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="41" width="100" height="20" uuid="85020fb9-7f32-4d16-9ea6-b2bf0c8522d2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Délai Livraison]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="74" width="100" height="20" uuid="9c8dc363-071d-4272-abbb-26b2e3e2d2d3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type Tissu]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="10" width="129" height="20" uuid="75448ddf-05f8-43cf-9a30-177d227715c0"/>
+				<textFieldExpression><![CDATA[$P{p_ref}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="41" width="129" height="20" uuid="21ff83f8-74f4-4d8c-b845-dc71d88f6648"/>
+				<textFieldExpression><![CDATA[$P{p_dateR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="74" width="129" height="20" uuid="0dc9cdcf-0cf7-482b-8195-c8e87aaa6583"/>
+				<textFieldExpression><![CDATA[$P{p_tissu}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="104" width="129" height="20" uuid="13ed93a3-42dd-4f83-87e4-73495d9e1d05"/>
+				<textFieldExpression><![CDATA[$P{p_observation}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="361" y="10" width="141" height="20" uuid="dc216428-9fed-4fb8-a805-3cd95de57c45"/>
+				<textFieldExpression><![CDATA[$P{p_client}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="361" y="41" width="141" height="20" uuid="4e843b20-496c-4117-b3e8-1658ec02bb36"/>
+				<textFieldExpression><![CDATA[$P{p_delai}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="361" y="74" width="141" height="20" uuid="3bb5933d-0e62-4d39-8e2c-3492ffa0da7b"/>
+				<textFieldExpression><![CDATA[$P{p_tissu_type}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
