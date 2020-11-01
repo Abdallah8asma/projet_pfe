@@ -72,7 +72,7 @@ public class ProduitReceptionEntity {
 		this.id = id;
 		this.receptionVente = receptionVente;
 		this.produit = produit;
-		this.prixUnitaire = prixUnitaire;
+		this.prixUnitaire = prix;
 		this.quantite = quantite;
 		this.dateLivraison = dateLivraison;
 	}
