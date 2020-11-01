@@ -203,7 +203,18 @@ public class PartieInteresseePersistanceImpl extends AbstractPersistance impleme
         }
 
       }
+    
+    
+    if (estNonVide(pRecherchePartieInteresseMulitCritere.getTelephoneMobile())) {
+        vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("telephoneMobile"),
+          pRecherchePartieInteresseMulitCritere.getTelephoneMobile()));
+      }
 
+    
+    if (estNonVide(pRecherchePartieInteresseMulitCritere.getPayementTerme())) {
+        vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("payementTerme"),
+          pRecherchePartieInteresseMulitCritere.getPayementTerme()));
+      }
     /** execute query and do something with result **/
 
     vCriteriaQuery.select(vRootParitieInteresse).where(vWhereClause.toArray(new Predicate[] {}));

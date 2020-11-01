@@ -294,6 +294,10 @@ public class PersistanceUtilities {
 		
 		vPartieInteresseEntite.setBoutiqueId(pPartieInteresseValue.getBoutiqueId());
 		
+		vPartieInteresseEntite.setTelephoneMobile(pPartieInteresseValue.getTelephoneMobile());
+		
+		vPartieInteresseEntite.setPayementTerme(pPartieInteresseValue.getPayementTerme());
+		
 		// Liste Document
 		if (pPartieInteresseValue.getDocuments() != null) {
 
@@ -404,6 +408,10 @@ public class PersistanceUtilities {
 		vPartieInteresseValue.setPassager(pPartieInteresseEntity.getPassager());
 		
 		vPartieInteresseValue.setBoutiqueId(pPartieInteresseEntity.getBoutiqueId());
+		
+		vPartieInteresseValue.setTelephoneMobile(pPartieInteresseEntity.getTelephoneMobile());
+		
+		vPartieInteresseValue.setPayementTerme(pPartieInteresseEntity.getPayementTerme());
 		
 		// Liste Document
 		if (pPartieInteresseEntity.getDocumentEntites() != null) {
