@@ -3,7 +3,6 @@ package com.gpro.consulting.tiers.commun.coordination.value.partieInteressee;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
-
 /**
  * The Class PartieInteresseValue.
  */
@@ -105,9 +104,31 @@ public class PartieInteresseValue {
 	
 	private Long boutiqueId;
 	
+	/** The telephone mobile. */
+
+	private String telephoneMobile;
+	
+	/** The payement terme. */
+
+	private String payementTerme;
 	
 	
-	
+
+	public String getTelephoneMobile() {
+		return telephoneMobile;
+	}
+
+	public void setTelephoneMobile(String telephoneMobile) {
+		this.telephoneMobile = telephoneMobile;
+	}
+
+	public String getPayementTerme() {
+		return payementTerme;
+	}
+
+	public void setPayementTerme(String payementTerme) {
+		this.payementTerme = payementTerme;
+	}
 
 	public Long getBoutiqueId() {
 		return boutiqueId;

@@ -158,8 +158,35 @@ public class PartieInteresseEntite implements Serializable {
 	private Long boutiqueId;
 	
 	
+	/** The telephone mobile. */
+	@Column(name = "telephone_mobile")
+	private String telephoneMobile;
+	
+	/** The payement terme. */
+	@Column(name = "payement_terme")
+	private String payementTerme;
 	
 	
+	
+	
+	
+	
+
+	public String getTelephoneMobile() {
+		return telephoneMobile;
+	}
+
+	public void setTelephoneMobile(String telephoneMobile) {
+		this.telephoneMobile = telephoneMobile;
+	}
+
+	public String getPayementTerme() {
+		return payementTerme;
+	}
+
+	public void setPayementTerme(String payementTerme) {
+		this.payementTerme = payementTerme;
+	}
 
 	public Long getBoutiqueId() {
 		return boutiqueId;
