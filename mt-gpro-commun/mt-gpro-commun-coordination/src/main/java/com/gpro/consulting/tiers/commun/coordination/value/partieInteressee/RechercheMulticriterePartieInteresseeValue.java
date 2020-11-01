@@ -31,12 +31,37 @@ public class RechercheMulticriterePartieInteresseeValue {
   private Long boutiqueId;
   
   
+	/** The telephone mobile. */
+
+	private String telephoneMobile;
+	
+	/** The payement terme. */
+
+	private String payementTerme;
+	
+	
+	
   
   
   
   
-  
-  public Long getBoutiqueId() {
+  public String getTelephoneMobile() {
+		return telephoneMobile;
+	}
+
+	public void setTelephoneMobile(String telephoneMobile) {
+		this.telephoneMobile = telephoneMobile;
+	}
+
+	public String getPayementTerme() {
+		return payementTerme;
+	}
+
+	public void setPayementTerme(String payementTerme) {
+		this.payementTerme = payementTerme;
+	}
+
+public Long getBoutiqueId() {
 	return boutiqueId;
 }
 
