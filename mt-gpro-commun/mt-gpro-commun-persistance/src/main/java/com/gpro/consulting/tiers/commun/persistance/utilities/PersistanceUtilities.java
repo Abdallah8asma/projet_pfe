@@ -14,6 +14,7 @@ import com.gpro.consulting.tiers.commun.coordination.login.value.RoleValue;
 import com.gpro.consulting.tiers.commun.coordination.login.value.UserValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.BoutiqueValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.CompteComptableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.CouleurValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.DetailsPackageValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.DocumentArticleValue;
@@ -50,6 +51,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.Type
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.entity.BaseInfoEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.BoutiqueEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CompteComptableEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CouleurEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DetailsPackageEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DocumentArticleEntite;
@@ -2493,6 +2495,29 @@ public class PersistanceUtilities {
 	    uniteArticleEntity.setDesignation(pUniteArticleValue.getDesignation());
 	    uniteArticleEntity.setDescription(pUniteArticleValue.getDescription());
 	    return uniteArticleEntity;
+	  }
+	  
+	  
+		/*** Compte Comptable  **/
+
+	  /** unitelArticleEntite to uniteArticleValue **/
+	  public static CompteComptableValue toValue(CompteComptableEntity pCompteComptableEntity) {
+		  CompteComptableValue compteComptableValue = new CompteComptableValue();
+		  compteComptableValue.setId(pCompteComptableEntity.getId());
+		  compteComptableValue.setDesignation(pCompteComptableEntity.getDesignation());
+		  compteComptableValue.setDescription(pCompteComptableEntity.getDescription());
+	    return compteComptableValue;
+	  }
+
+	  /** uniteArticleValue to uniteArticleEntite **/
+	  public static CompteComptableEntity toEntity(CompteComptableValue pCompteComptableValue) {
+		  CompteComptableEntity pCompteComptableEntity = new CompteComptableEntity();
+	    if (pCompteComptableValue.getId() != null) {
+	    	pCompteComptableEntity.setId(pCompteComptableValue.getId());
+	    }
+	    pCompteComptableEntity.setDesignation(pCompteComptableValue.getDesignation());
+	    pCompteComptableEntity.setDescription(pCompteComptableValue.getDescription());
+	    return pCompteComptableEntity;
 	  }
 	
 
