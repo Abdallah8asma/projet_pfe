@@ -52,6 +52,10 @@
         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PackageEntite</class>
         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DetailsPackageEntite</class>
          <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SocieteEntite</class>
+         
+         
+        <!--  nouvelle entite commercial industriel -->
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity</class>
           
         <properties>
         <!--           <property name="hibernate.hbm2ddl.auto" value="none" /> -->
