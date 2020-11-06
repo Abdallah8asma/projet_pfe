@@ -59,7 +59,7 @@ public interface IConstante {
 	public static String TABLE_EB_PACKAGE = "eb_package";
 	public static String TABLE_EB_DETAIL_PACKAGE = "eb_detpackage";
 	public static String TABLE_EB_SOCIETE = "eb_societe";
-
+	public static String TABLE_IMPRESSION_PRODUIT = "eb_impression";
 	//
 	// public static String TABLE_EB_PRODUITDEPOT="eb_produitdepot";
 
@@ -101,7 +101,7 @@ public interface IConstante {
 	public static String SEQUENCE_SEUIL = "esu_seq";
 	public static String SEQUENCE_SOUS_FAMILLE = "sfa_seq";
 	public static String SEQUENCE_TYPE_ARTICLE = "eta_seq";
-	public static String SEQUENCE_UNITE = "eun_seq";
+	
 
 	public static String TABLE_EB_PRODUIT_COULEUR = "eb_produitcouleur";
 	public static String TABLE_EB_PRODUIT_TAILLE = "eb_produittaille";
@@ -114,6 +114,12 @@ public interface IConstante {
 	public static String SEQUENCE_EB_PACKAGE = "eb_pge_SEQ";
 	public static String SEQUENCE_EB_DETAIL_PACKAGE = "eb_det_pge_SEQ";
 	public static String SEQUENCE_EB_SOCIETE = "EBSOC_SEQ";
+	
+	
+	public static String SEQUENCE_UNITE = "eun_seq";
+	public static String SEQUENCE_IMPRESSION_PRODUIT = "eb_impr_seq";
+	
+	
 
 	// added on 25 03 2018
 	public static String SEQUENCE_EB_PRIXCLIENT = "pc_seq";

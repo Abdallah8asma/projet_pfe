@@ -21,6 +21,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.DocumentP
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.FamilleArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.FamilleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.GrosseurValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ImpressionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MatiereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MetrageValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PackageValue;
@@ -56,6 +57,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DocumentP
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleArticleEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PackageEntite;
@@ -2469,6 +2471,29 @@ public class PersistanceUtilities {
 		return vFamilleProduitValues;
 	}
 	
+	
+	
+	/*** Impression Produit  **/
+
+	  /** unitelArticleEntite to uniteArticleValue **/
+	  public static ImpressionProduitValue toValue(ImpressionProduitEntity pUniteArticleEntity) {
+	    ImpressionProduitValue uniteArticleValue = new ImpressionProduitValue();
+	    uniteArticleValue.setId(pUniteArticleEntity.getId());
+	    uniteArticleValue.setDesignation(pUniteArticleEntity.getDesignation());
+	    uniteArticleValue.setDescription(pUniteArticleEntity.getDescription());
+	    return uniteArticleValue;
+	  }
+
+	  /** uniteArticleValue to uniteArticleEntite **/
+	  public static ImpressionProduitEntity toEntity(ImpressionProduitValue pUniteArticleValue) {
+	    ImpressionProduitEntity uniteArticleEntity = new ImpressionProduitEntity();
+	    if (pUniteArticleValue.getId() != null) {
+	      uniteArticleEntity.setId(pUniteArticleValue.getId());
+	    }
+	    uniteArticleEntity.setDesignation(pUniteArticleValue.getDesignation());
+	    uniteArticleEntity.setDescription(pUniteArticleValue.getDescription());
+	    return uniteArticleEntity;
+	  }
 	
 
 }
