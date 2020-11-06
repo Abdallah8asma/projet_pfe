@@ -19,7 +19,7 @@ public class ImpressionProduitServiceImpl  implements IImpressionProduitService{
 
 	@Override
 	public ImpressionProduitValue rechercheImpressionProduitParId(Long pImpressionProduitValue) {
-		return null;
+		return impressionProduitDomaine.rechercheImpressionProduitById(pImpressionProduitValue);
 	}
 
 	@Override

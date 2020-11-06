@@ -60,6 +60,8 @@ public interface IConstante {
 	public static String TABLE_EB_DETAIL_PACKAGE = "eb_detpackage";
 	public static String TABLE_EB_SOCIETE = "eb_societe";
 	public static String TABLE_IMPRESSION_PRODUIT = "eb_impression";
+	
+	public static String TABLE_COMPTE_COMPTABLE = "eb_compte_comptable";
 	//
 	// public static String TABLE_EB_PRODUITDEPOT="eb_produitdepot";
 
@@ -118,7 +120,7 @@ public interface IConstante {
 	
 	public static String SEQUENCE_UNITE = "eun_seq";
 	public static String SEQUENCE_IMPRESSION_PRODUIT = "eb_impr_seq";
-	
+	public static String SEQUENCE_COMPTE_COMPTABLE = "eb_cpt_com_seq";
 	
 
 	// added on 25 03 2018
