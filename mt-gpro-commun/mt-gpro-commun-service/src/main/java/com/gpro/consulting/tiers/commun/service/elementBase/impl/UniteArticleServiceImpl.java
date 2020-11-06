@@ -19,7 +19,7 @@ public class UniteArticleServiceImpl  implements IUniteArticleService{
 
 	@Override
 	public UniteArticleValue rechercheUniteArticleParId(Long pUniteArticleValue) {
-		return null;
+		return uniteArticleDomaine.rechercheUniteArticleById(pUniteArticleValue);
 	}
 
 	@Override
