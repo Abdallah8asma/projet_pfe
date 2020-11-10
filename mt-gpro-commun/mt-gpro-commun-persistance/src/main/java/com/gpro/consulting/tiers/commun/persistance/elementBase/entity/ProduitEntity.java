@@ -56,9 +56,7 @@ public class ProduitEntity implements Serializable {
 	@Column(name = "com_site_id")
 	private Long siteId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "eb_sfprod_id")
-	private SousFamilleProduitEntity sousFamille;
+
 
 	@Column(name = "etat")
 	private String etat;
@@ -78,8 +76,7 @@ public class ProduitEntity implements Serializable {
 	@Column(name = "bl_suppression")
 	private boolean blSuppression;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval=true)
-	private Set<DocumentProduitEntity> documentProduits;
+
 
 	@Column(name = "prix_unitaire")
 	private Double prixUnitaire;
@@ -153,9 +150,34 @@ public class ProduitEntity implements Serializable {
 	
 	
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "eb_sfprod_id")
+	private SousFamilleProduitEntity sousFamille;
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval=true)
+	private Set<ArticleProduitEntity> articleProduits;
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval=true)
+	private Set<DocumentProduitEntity> documentProduits;
 	
 	
 	
+	
+	
+	public Set<ArticleProduitEntity> getArticleProduits() {
+		return articleProduits;
+	}
+
+	public void setArticleProduits(Set<ArticleProduitEntity> articleProduits) {
+		this.articleProduits = articleProduits;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public boolean isStock() {
 		return stock;
 	}
