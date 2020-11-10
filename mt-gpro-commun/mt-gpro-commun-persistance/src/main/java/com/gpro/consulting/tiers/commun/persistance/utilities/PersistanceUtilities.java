@@ -14,6 +14,7 @@ import com.gpro.consulting.tiers.commun.coordination.login.value.RoleValue;
 import com.gpro.consulting.tiers.commun.coordination.login.value.UserValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.BoutiqueValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.CompteComptableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.CouleurValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.DetailsPackageValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.DocumentArticleValue;
@@ -21,6 +22,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.DocumentP
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.FamilleArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.FamilleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.GrosseurValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ImpressionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MatiereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MetrageValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PackageValue;
@@ -49,6 +51,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.Type
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.entity.BaseInfoEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.BoutiqueEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CompteComptableEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CouleurEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DetailsPackageEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DocumentArticleEntite;
@@ -56,6 +59,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DocumentP
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleArticleEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PackageEntite;
@@ -294,6 +298,10 @@ public class PersistanceUtilities {
 		
 		vPartieInteresseEntite.setBoutiqueId(pPartieInteresseValue.getBoutiqueId());
 		
+		vPartieInteresseEntite.setTelephoneMobile(pPartieInteresseValue.getTelephoneMobile());
+		
+		vPartieInteresseEntite.setPayementTerme(pPartieInteresseValue.getPayementTerme());
+		
 		// Liste Document
 		if (pPartieInteresseValue.getDocuments() != null) {
 
@@ -404,6 +412,10 @@ public class PersistanceUtilities {
 		vPartieInteresseValue.setPassager(pPartieInteresseEntity.getPassager());
 		
 		vPartieInteresseValue.setBoutiqueId(pPartieInteresseEntity.getBoutiqueId());
+		
+		vPartieInteresseValue.setTelephoneMobile(pPartieInteresseEntity.getTelephoneMobile());
+		
+		vPartieInteresseValue.setPayementTerme(pPartieInteresseEntity.getPayementTerme());
 		
 		// Liste Document
 		if (pPartieInteresseEntity.getDocumentEntites() != null) {
@@ -2461,6 +2473,52 @@ public class PersistanceUtilities {
 		return vFamilleProduitValues;
 	}
 	
+	
+	
+	/*** Impression Produit  **/
+
+	  /** unitelArticleEntite to uniteArticleValue **/
+	  public static ImpressionProduitValue toValue(ImpressionProduitEntity pUniteArticleEntity) {
+	    ImpressionProduitValue uniteArticleValue = new ImpressionProduitValue();
+	    uniteArticleValue.setId(pUniteArticleEntity.getId());
+	    uniteArticleValue.setDesignation(pUniteArticleEntity.getDesignation());
+	    uniteArticleValue.setDescription(pUniteArticleEntity.getDescription());
+	    return uniteArticleValue;
+	  }
+
+	  /** uniteArticleValue to uniteArticleEntite **/
+	  public static ImpressionProduitEntity toEntity(ImpressionProduitValue pUniteArticleValue) {
+	    ImpressionProduitEntity uniteArticleEntity = new ImpressionProduitEntity();
+	    if (pUniteArticleValue.getId() != null) {
+	      uniteArticleEntity.setId(pUniteArticleValue.getId());
+	    }
+	    uniteArticleEntity.setDesignation(pUniteArticleValue.getDesignation());
+	    uniteArticleEntity.setDescription(pUniteArticleValue.getDescription());
+	    return uniteArticleEntity;
+	  }
+	  
+	  
+		/*** Compte Comptable  **/
+
+	  /** unitelArticleEntite to uniteArticleValue **/
+	  public static CompteComptableValue toValue(CompteComptableEntity pCompteComptableEntity) {
+		  CompteComptableValue compteComptableValue = new CompteComptableValue();
+		  compteComptableValue.setId(pCompteComptableEntity.getId());
+		  compteComptableValue.setDesignation(pCompteComptableEntity.getDesignation());
+		  compteComptableValue.setDescription(pCompteComptableEntity.getDescription());
+	    return compteComptableValue;
+	  }
+
+	  /** uniteArticleValue to uniteArticleEntite **/
+	  public static CompteComptableEntity toEntity(CompteComptableValue pCompteComptableValue) {
+		  CompteComptableEntity pCompteComptableEntity = new CompteComptableEntity();
+	    if (pCompteComptableValue.getId() != null) {
+	    	pCompteComptableEntity.setId(pCompteComptableValue.getId());
+	    }
+	    pCompteComptableEntity.setDesignation(pCompteComptableValue.getDesignation());
+	    pCompteComptableEntity.setDescription(pCompteComptableValue.getDescription());
+	    return pCompteComptableEntity;
+	  }
 	
 
 }
