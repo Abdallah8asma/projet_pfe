@@ -12,6 +12,7 @@ import com.erp.socle.j2ee.mt.socle.uploadFichier.IGestionnaireDocument;
 import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
 import com.gpro.consulting.tiers.commun.coordination.login.value.RoleValue;
 import com.gpro.consulting.tiers.commun.coordination.login.value.UserValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.BoutiqueValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.CompteComptableValue;
@@ -25,6 +26,8 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.GrosseurV
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ImpressionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MatiereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MetrageValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PackageValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
@@ -50,6 +53,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.Type
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.TypeValue;
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.entity.BaseInfoEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.BoutiqueEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CompteComptableEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CouleurEntite;
@@ -62,6 +66,8 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurE
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleEntity;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PackageEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PrixClientEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitEntity;
@@ -1443,6 +1449,99 @@ public class PersistanceUtilities {
 	    return vDocumentValue;
 
 	  }
+	  
+	  
+		/******************Option  Article Produit Entity To Value ****************************/
+	  
+	
+		public static OptionArticleProduitValue toValue(OptionArticleProduitEntity pOptionArticleProduitEntity) {
+			
+			
+			OptionArticleProduitValue optionArticleProduitValue = new OptionArticleProduitValue();
+			optionArticleProduitValue.setId(pOptionArticleProduitEntity.getId());
+			optionArticleProduitValue.setNom(pOptionArticleProduitEntity.getNom());
+			optionArticleProduitValue.setOptionArticleId(pOptionArticleProduitEntity.getOptionArticleId());
+			
+
+			return optionArticleProduitValue;
+		}
+
+		// added by samer
+	
+		public static OptionArticleProduitEntity toEntity(OptionArticleProduitValue pOptionArticleProduitValue) {
+			OptionArticleProduitEntity optionArticleProduitEntity = new OptionArticleProduitEntity();
+			if (pOptionArticleProduitValue.getId() != null) {
+				optionArticleProduitEntity.setId(pOptionArticleProduitValue.getId());
+			}
+
+			optionArticleProduitEntity.setNom(pOptionArticleProduitValue.getNom());
+			optionArticleProduitEntity.setOptionArticleId(pOptionArticleProduitValue.getOptionArticleId());
+			
+			
+			return optionArticleProduitEntity;
+		}
+		
+		
+	  
+		/****************** Article Produit Entity To Value ****************************/
+	  
+		// added by zeineb g
+		/** ArticleProduitValue to ArticleProduitValue **/
+		public static ArticleProduitValue toValue(ArticleProduitEntity pArticleProduitEntity) {
+			ArticleProduitValue articleProduitValue = new ArticleProduitValue();
+			articleProduitValue.setId(pArticleProduitEntity.getId());
+			articleProduitValue.setArticleId(pArticleProduitEntity.getArticleId());
+			articleProduitValue.setReferenceArticle(pArticleProduitEntity.getReferenceArticle());
+			articleProduitValue.setProduitSemiFini(pArticleProduitEntity.getProduitSemiFini());
+			// documentProduitValue.setProduitId(pDocumentProduitEntity.getProduitId());
+
+			articleProduitValue.setQte(pArticleProduitEntity.getQte());
+			
+			
+			articleProduitValue.setImpressionProduitId(pArticleProduitEntity.getImpressionProduitId());
+			
+			
+			// added by samer
+			if (pArticleProduitEntity.getOptionArticleProduits() != null) {
+				Set<OptionArticleProduitValue> vListeArticles = new HashSet<OptionArticleProduitValue>();
+				for (OptionArticleProduitEntity vArticleEntity : pArticleProduitEntity.getOptionArticleProduits()) {
+					OptionArticleProduitValue vDe = toValue(vArticleEntity);
+					vListeArticles.add(vDe);
+				}
+				articleProduitValue.setOptionArticleProduits(vListeArticles);
+			}
+
+			
+
+			return articleProduitValue;
+		}
+
+		// added by zeineb g
+		/** ArticleProduitEntity to ArticleProduitEntite **/
+		public static ArticleProduitEntity toEntity(ArticleProduitValue pArticleProduitValue) {
+			ArticleProduitEntity articleProduitEntity = new ArticleProduitEntity();
+			if (pArticleProduitValue.getId() != null) {
+				articleProduitEntity.setId(pArticleProduitValue.getId());
+			}
+			articleProduitEntity.setArticleId(pArticleProduitValue.getArticleId());
+			// documentProduitEntity.setProduitId(pDocumentProduitValue.getProduitId());
+			articleProduitEntity.setQte(pArticleProduitValue.getQte());
+			articleProduitEntity.setProduitSemiFini(pArticleProduitValue.getProduitSemiFini());
+			articleProduitEntity.setReferenceArticle(pArticleProduitValue.getReferenceArticle());
+			
+			articleProduitEntity.setImpressionProduitId(pArticleProduitValue.getImpressionProduitId());
+			
+			
+			
+			
+			
+			
+
+			// added by samer
+			//TODO add to entity optionArticleProduit
+			
+			return articleProduitEntity;
+		}
 
 	/****************** Produit Entity To Value ****************************/
 	public static ProduitValue toValue(ProduitEntity pProduitEntity) {
@@ -1501,6 +1600,18 @@ public class PersistanceUtilities {
 				vListeDocuments.add(vDe);
 			}
 			produitValue.setDocumentProduits(vListeDocuments);
+		}
+		
+		
+		/*** Article produit */
+		// added by zeineb g
+		if (pProduitEntity.getArticleProduits() != null) {
+			Set<ArticleProduitValue> vListeArticles = new HashSet<ArticleProduitValue>();
+			for (ArticleProduitEntity vArticleEntity : pProduitEntity.getArticleProduits()) {
+				ArticleProduitValue vDe = toValue(vArticleEntity);
+				vListeArticles.add(vDe);
+			}
+			produitValue.setArticleProduits(vListeArticles);
 		}
 
 	
@@ -1562,6 +1673,16 @@ public class PersistanceUtilities {
 				vListeDocuments.add(vDe);
 			}
 			produiEntity.setDocumentProduits(vListeDocuments);
+		}
+		
+		if (pProduitValue.getArticleProduits() != null) {
+			Set<ArticleProduitEntity> vListeArticles = new HashSet<ArticleProduitEntity>();
+			for (ArticleProduitValue vArticleValue : pProduitValue.getArticleProduits()) {
+				ArticleProduitEntity vDe = toEntity(vArticleValue);
+				vDe.setProduit(produiEntity);
+				vListeArticles.add(vDe);
+			}
+			produiEntity.setArticleProduits(vListeArticles);		
 		}
 
 		//Added on 16/11/2016 , by Zeineb Medimagh
@@ -2519,6 +2640,34 @@ public class PersistanceUtilities {
 	    pCompteComptableEntity.setDescription(pCompteComptableValue.getDescription());
 	    return pCompteComptableEntity;
 	  }
+	  
+	  
+		/*** option Article  **/
+
+
+	  public static OptionArticleValue toValue(OptionArticleEntity pOptionArticleEntity) {
+		  OptionArticleValue optionArticleValue = new OptionArticleValue();
+		  optionArticleValue.setId(pOptionArticleEntity.getId());
+		  optionArticleValue.setDesignation(pOptionArticleEntity.getDesignation());
+		  optionArticleValue.setDescription(pOptionArticleEntity.getDescription());
+		  optionArticleValue.setTypesIds(pOptionArticleEntity.getTypesIds());
+		  
+		  
+	    return optionArticleValue;
+	  }
+
+	
+	  public static OptionArticleEntity toEntity(OptionArticleValue pOptionArticleValue) {
+		  OptionArticleEntity pOptionArticleEntity = new OptionArticleEntity();
+	    if (pOptionArticleValue.getId() != null) {
+	    	pOptionArticleEntity.setId(pOptionArticleValue.getId());
+	    }
+	    pOptionArticleEntity.setDesignation(pOptionArticleValue.getDesignation());
+	    pOptionArticleEntity.setDescription(pOptionArticleValue.getDescription());
+	    pOptionArticleEntity.setTypesIds(pOptionArticleValue.getTypesIds());
+	    return pOptionArticleEntity;
+	  }
+	
 	
 
 }

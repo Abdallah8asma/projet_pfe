@@ -4,8 +4,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
-
-
 /**
  * The Class ProduitValue.
  * 
@@ -31,112 +29,111 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	private Double quantite;
 	private Double prixAchat;
 	private Double prixSpecial;
-	
-	
+
 	private Double tva;
-	
+
 	private boolean serialisable;
-	
-	
+
 	private String description;
-	
-	
+
 	private Long groupeClientId;
-	
-	
-	 private Double prixVenteTTC ;
-	 
-	 
-	 private Boolean  retour ;
-		
-	
-	 
-	 private Double remise ;
-	 
-	 
-		private Long boutiqueId;
-		
-		
-		
 
-		private String couleur;
-		
-	
-		private String numero;
-		
+	private Double prixVenteTTC;
 
-		private String referenceFournisseur;
-		
-		
-		 private Double prixAchatTTC ;
-		
-	 
-		 private boolean stock;
-		 
-		 
-		 
-		 private String superFamilleDesignation;
-		 
-		 
-		 
-		 
-		 
-	
+	private Boolean retour;
+
+	private Double remise;
+
+	private Long boutiqueId;
+
+	private String couleur;
+
+	private String numero;
+
+	private String referenceFournisseur;
+
+	private Double prixAchatTTC;
+
+	private boolean stock;
+
+	private String superFamilleDesignation;
+
+	// added by zeineb g
+	private Set<ArticleProduitValue> articleProduits = new HashSet<ArticleProduitValue>();
+	// added by zeineb g
+	private Set<ArticleProduitValue> materialProduits = new HashSet<ArticleProduitValue>();
+
+	public Set<ArticleProduitValue> getArticleProduits() {
+		return articleProduits;
+	}
+
+	public void setArticleProduits(Set<ArticleProduitValue> articleProduits) {
+		this.articleProduits = articleProduits;
+	}
+
+	public Set<ArticleProduitValue> getMaterialProduits() {
+		return materialProduits;
+	}
+
+	public void setMaterialProduits(Set<ArticleProduitValue> materialProduits) {
+		this.materialProduits = materialProduits;
+	}
+
 	public String getSuperFamilleDesignation() {
-			return superFamilleDesignation;
-		}
+		return superFamilleDesignation;
+	}
 
-		public void setSuperFamilleDesignation(String superFamilleDesignation) {
-			this.superFamilleDesignation = superFamilleDesignation;
-		}
+	public void setSuperFamilleDesignation(String superFamilleDesignation) {
+		this.superFamilleDesignation = superFamilleDesignation;
+	}
 
 	public boolean isStock() {
-			return stock;
-		}
+		return stock;
+	}
 
-		public void setStock(boolean stock) {
-			this.stock = stock;
-		}
+	public void setStock(boolean stock) {
+		this.stock = stock;
+	}
 
 	public String getCouleur() {
-			return couleur;
-		}
+		return couleur;
+	}
 
-		public void setCouleur(String couleur) {
-			this.couleur = couleur;
-		}
+	public void setCouleur(String couleur) {
+		this.couleur = couleur;
+	}
 
-		public String getNumero() {
-			return numero;
-		}
+	public String getNumero() {
+		return numero;
+	}
 
-		public void setNumero(String numero) {
-			this.numero = numero;
-		}
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
 
-		public String getReferenceFournisseur() {
-			return referenceFournisseur;
-		}
+	public String getReferenceFournisseur() {
+		return referenceFournisseur;
+	}
 
-		public void setReferenceFournisseur(String referenceFournisseur) {
-			this.referenceFournisseur = referenceFournisseur;
-		}
+	public void setReferenceFournisseur(String referenceFournisseur) {
+		this.referenceFournisseur = referenceFournisseur;
+	}
 
-		public Double getPrixAchatTTC() {
-			return prixAchatTTC;
-		}
+	public Double getPrixAchatTTC() {
+		return prixAchatTTC;
+	}
 
-		public void setPrixAchatTTC(Double prixAchatTTC) {
-			this.prixAchatTTC = prixAchatTTC;
-		}
+	public void setPrixAchatTTC(Double prixAchatTTC) {
+		this.prixAchatTTC = prixAchatTTC;
+	}
 
 	public Long getBoutiqueId() {
-			return boutiqueId;
-		}
+		return boutiqueId;
+	}
 
-		public void setBoutiqueId(Long boutiqueId) {
-			this.boutiqueId = boutiqueId;
-		}
+	public void setBoutiqueId(Long boutiqueId) {
+		this.boutiqueId = boutiqueId;
+	}
 
 	public Double getRemise() {
 		return remise;
@@ -147,12 +144,12 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	}
 
 	public Boolean getRetour() {
-			return retour;
-		}
+		return retour;
+	}
 
-		public void setRetour(Boolean retour) {
-			this.retour = retour;
-		}
+	public void setRetour(Boolean retour) {
+		this.retour = retour;
+	}
 
 	public Double getPrixVenteTTC() {
 		return prixVenteTTC;
@@ -214,9 +211,8 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	private String unite;
 	private String uniteSupplementaire;
 	private Boolean fond;
-	private Boolean  fondSupplementaire ;
-	
-	
+	private Boolean fondSupplementaire;
+
 	private Set<DocumentProduitValue> documentProduits = new HashSet<DocumentProduitValue>();
 
 	// added on 31/03/2016, by Wahid Gazzah
@@ -226,8 +222,7 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	private String referenceInterne;
 
 	private Double tauxTVA;
-	
-	
+
 	@Override
 	public int compareTo(ProduitValue o) {
 		ProduitValue element = (ProduitValue) o;
@@ -241,8 +236,6 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
 
 	public Long getIdTaxe() {
 		return idTaxe;
@@ -404,9 +397,6 @@ public class ProduitValue implements Comparable<ProduitValue> {
 		this.prixAchat = prixAchat;
 	}
 
-	
-	
-	
 	public String getUniteSupplementaire() {
 		return uniteSupplementaire;
 	}
@@ -423,8 +413,6 @@ public class ProduitValue implements Comparable<ProduitValue> {
 		this.fond = fond;
 	}
 
-
-
 	public Boolean getFondSupplementaire() {
 		return fondSupplementaire;
 	}
@@ -432,8 +420,6 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	public void setFondSupplementaire(Boolean fondSupplementaire) {
 		this.fondSupplementaire = fondSupplementaire;
 	}
-	
-	
 
 	public Double getTauxTVA() {
 		return tauxTVA;

@@ -22,6 +22,8 @@ public interface IConstante {
 	public static String TABLE_PRODUIT = "eb_produit";
 	public static String TABLE_PRODUIT_SERIALISABLE = "eb_produit_serialisable";
 	public static String TABLE_SOUS_FAMILLE_PRODUIT = "eb_sousfamilleprod";
+	public static String TABLE_ARTICLE_PRODUIT="eb_articleprod";
+	public static String TABLE_OPTION_ARTICLE_PRODUIT="eb_option_articleprod";
 	// added on 25 03 2018
 	public static String TABLE_EB_PRIX_CLIENT = "eb_prixclient";
 	/* PartieInteressee */
@@ -60,8 +62,8 @@ public interface IConstante {
 	public static String TABLE_EB_DETAIL_PACKAGE = "eb_detpackage";
 	public static String TABLE_EB_SOCIETE = "eb_societe";
 	public static String TABLE_IMPRESSION_PRODUIT = "eb_impression";
-	
 	public static String TABLE_COMPTE_COMPTABLE = "eb_compte_comptable";
+	public static String TABLE_OPTION_ARTICLE = "eb_option_article";
 	//
 	// public static String TABLE_EB_PRODUITDEPOT="eb_produitdepot";
 
@@ -73,6 +75,8 @@ public interface IConstante {
 	public static String SEQUENCE_PRODUIT_SERIALISABLE = "epr_serialisable_seq";
 	public static String SEQUENCE_SOUS_FAMILLE_PRODUIT = "esf_seq";
 	public static String SEQUENCE_SUPER_FAMILLE_PRODUIT = "supefp_seq";
+	public static String SEQUENCE_ARTICLE_PRODUIT="eap_seq";
+	public static String SEQUENCE_OPTION_ARTICLE_PRODUIT="opt_eap_seq";
 
 	/* PartieInterssée */
 	public static String SEQUENCE_PARTIE_INTERESSEE = "seq_ppi";
@@ -121,6 +125,7 @@ public interface IConstante {
 	public static String SEQUENCE_UNITE = "eun_seq";
 	public static String SEQUENCE_IMPRESSION_PRODUIT = "eb_impr_seq";
 	public static String SEQUENCE_COMPTE_COMPTABLE = "eb_cpt_com_seq";
+	public static String SEQUENCE_OPTION_ARTICLE = "eb_op_art_seq";
 	
 
 	// added on 25 03 2018
