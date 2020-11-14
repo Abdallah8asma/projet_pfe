@@ -201,6 +201,15 @@
 	
 	  <class>com.gpro.consulting.tiers.commun.persistance.login.entity.UserEntity</class>
 	  <class>com.gpro.consulting.tiers.commun.persistance.login.entity.RoleEntity</class>
+	  
+	          <!--  nouvelle entite commercial industriel -->
+         <class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CompteComptablePIEntity</class> 
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CompteComptableEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleProduitEntity</class>
+	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity</class>
+      
 	
 		
 		<properties>

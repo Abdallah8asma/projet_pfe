@@ -112,6 +112,11 @@ public class PartieInteresseEntite implements Serializable {
 	/** The categorie entite. */
 	@Column(name = "pi_categorie_id")
 	private Long categoriePartieInteressee;
+	
+	
+
+	
+	
 
 	/** The bl suppression. */
 	@Column(name = "bl_suppression")
@@ -167,10 +172,24 @@ public class PartieInteresseEntite implements Serializable {
 	private String payementTerme;
 	
 	
+	/** Thepi_compte_comptable_id. */
+	@Column(name = "pi_compte_comptable_id")
+	private Long compteComptablePartieInteressee;
 	
 	
 	
-	
+
+	public Long getCompteComptablePartieInteressee() {
+		return compteComptablePartieInteressee;
+	}
+
+	public void setCompteComptablePartieInteressee(Long compteComptablePartieInteressee) {
+		this.compteComptablePartieInteressee = compteComptablePartieInteressee;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public String getTelephoneMobile() {
 		return telephoneMobile;

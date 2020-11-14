@@ -227,7 +227,7 @@ public class ProduitPersistanceImpl extends AbstractPersistance implements IProd
 		    if (estNonVide(pRechercheProduitMulitCritere.getStock())) {
 		    	 
 		    	Expression<Boolean> expression = vRootProduit.get(stock);
-				switch (pRechercheProduitMulitCritere.getRetour()) {
+				switch (pRechercheProduitMulitCritere.getStock()) {
 					case IConstante.OUI:
 						vWhereClause.add(vBuilder.isTrue(expression));
 						break;
