@@ -113,6 +113,31 @@ public class PartieInteresseValue {
 	private String payementTerme;
 	
 	
+	
+	private Long compteComptablePartieInteressee;
+	
+	
+	private String compteComptablePartieInteresseeDesignation;
+	
+	
+	
+	
+
+	public Long getCompteComptablePartieInteressee() {
+		return compteComptablePartieInteressee;
+	}
+
+	public void setCompteComptablePartieInteressee(Long compteComptablePartieInteressee) {
+		this.compteComptablePartieInteressee = compteComptablePartieInteressee;
+	}
+
+	public String getCompteComptablePartieInteresseeDesignation() {
+		return compteComptablePartieInteresseeDesignation;
+	}
+
+	public void setCompteComptablePartieInteresseeDesignation(String compteComptablePartieInteresseeDesignation) {
+		this.compteComptablePartieInteresseeDesignation = compteComptablePartieInteresseeDesignation;
+	}
 
 	public String getTelephoneMobile() {
 		return telephoneMobile;

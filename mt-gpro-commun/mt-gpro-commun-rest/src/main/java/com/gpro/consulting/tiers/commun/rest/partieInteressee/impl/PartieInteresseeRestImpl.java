@@ -13,15 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.CompteComptablePIValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.GroupeClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseCacheValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.RechercheMulticriterePartieInteresseeValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.ResultatRechechePartieInteresseeValue;
+import com.gpro.consulting.tiers.commun.rest.partieInteressee.ICompteComptablePIRest;
 import com.gpro.consulting.tiers.commun.rest.partieInteressee.IPartieInteresseeRest;
 import com.gpro.consulting.tiers.commun.service.cache.IGestionnaireCacheService;
+import com.gpro.consulting.tiers.commun.service.partieInteressee.ICompteComptablePIService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IGroupeClientService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
+import com.gpro.consulting.tiers.commun.service.partieInteressee.IRegionService;
 
 /**
  * 
@@ -38,6 +42,12 @@ public class PartieInteresseeRestImpl implements IPartieInteresseeRest {
   
   @Autowired
   private IGroupeClientService groupeClientService;
+  
+  @Autowired
+  private IRegionService regionService;
+  
+  @Autowired
+  private ICompteComptablePIService compteComptablePIService;
   
   
   @Autowired
@@ -56,7 +66,14 @@ public class PartieInteresseeRestImpl implements IPartieInteresseeRest {
 	public @ResponseBody PartieInteresseValue getInteresseValue(@PathVariable Long id) {
 		PartieInteresseValue pPartieInteresseValue=new PartieInteresseValue();
 		pPartieInteresseValue.setId(id.longValue());
-		return  partieInteresseeService.recherchePartieInteresseeParId(pPartieInteresseValue);
+		PartieInteresseValue pi =  partieInteresseeService.recherchePartieInteresseeParId(pPartieInteresseValue);
+		
+		if(pi.getCompteComptablePartieInteressee() != null)
+			pi.setCompteComptablePartieInteresseeDesignation(compteComptablePIService.rechercheCompteComptablePIParId(pi.getCompteComptablePartieInteressee()).getDesignation());
+		
+		
+		
+		return pi;
 	}
 	
 
@@ -83,6 +100,14 @@ public class PartieInteresseeRestImpl implements IPartieInteresseeRest {
 	    	  partieInteressee.setFamillePartieInteresseeDesignation(mapA.get("famillePi"));
 	    	  partieInteressee.setCategoriePartieInteresseeDesignation(mapA.get("categoriePi"));
 	    	  partieInteressee.setTypePartieInteresseeDesignation(mapA.get("typePi"));
+	    	  
+	    	  
+	    	  if(partieInteressee.getRegionId() != null)
+	    		  partieInteressee.setRegionDesignation(regionService.getById(partieInteressee.getRegionId()).getDesignation());
+	    	  
+	    	  
+	    	  if(partieInteressee.getCompteComptablePartieInteressee() != null)
+	    		  partieInteressee.setCompteComptablePartieInteresseeDesignation(compteComptablePIService.rechercheCompteComptablePIParId(partieInteressee.getCompteComptablePartieInteressee()).getDesignation());
 	  }
 
     return vPiValue; 
@@ -114,6 +139,15 @@ public class PartieInteresseeRestImpl implements IPartieInteresseeRest {
    	  if(partieInteressee.getGroupeClientId() != null) {
    		partieInteressee.setGroupeClientDesignation(groupeClientService.rechercheGroupeClientParId(new GroupeClientValue(partieInteressee.getGroupeClientId())).getDesignation());
    	  }
+   	  
+   	  
+	  if(partieInteressee.getRegionId() != null)
+		  partieInteressee.setRegionDesignation(regionService.getById(partieInteressee.getRegionId()).getDesignation());
+	  
+	  
+	  if(partieInteressee.getCompteComptablePartieInteressee() != null)
+		  partieInteressee.setCompteComptablePartieInteresseeDesignation(compteComptablePIService.rechercheCompteComptablePIParId(partieInteressee.getCompteComptablePartieInteressee()).getDesignation());
+
    		
    	  
    	  
@@ -130,6 +164,31 @@ public class PartieInteresseeRestImpl implements IPartieInteresseeRest {
    */
   @RequestMapping(value = "/creerPartieInteressee", method = RequestMethod.POST)
   public @ResponseBody String creerPartieInteressee(@RequestBody PartieInteresseValue pPartieInteresseValue) {
+	  
+	  
+	  
+	  if(estNonVide(pPartieInteresseValue.getCompteComptablePartieInteresseeDesignation())) {
+		  
+		  CompteComptablePIValue cpt = compteComptablePIService.rechercheCompteComptablePIParDesignation(pPartieInteresseValue.getCompteComptablePartieInteresseeDesignation());
+		
+		  
+		  if(cpt == null) {
+			  
+			  String  idCpteComptable = compteComptablePIService.creerCompteComptablePI( new CompteComptablePIValue(pPartieInteresseValue.getCompteComptablePartieInteresseeDesignation()));
+			  pPartieInteresseValue.setCompteComptablePartieInteressee(Long.parseLong(idCpteComptable));
+			  
+		  }else
+			  
+		  {
+			  
+			  pPartieInteresseValue.setCompteComptablePartieInteressee(cpt.getId());
+		  }
+		
+		 
+		  
+		  
+	  }
+	  
     return this.partieInteresseeService.creerPartieInteressee(pPartieInteresseValue);
   }
 
@@ -141,6 +200,40 @@ public class PartieInteresseeRestImpl implements IPartieInteresseeRest {
    */
   @RequestMapping(value = "/modifierPartieInteressee", method = RequestMethod.POST)
   public @ResponseBody String modifierPartieInteressee(@RequestBody PartieInteresseValue pPartieInteresseValue) {
+	  
+	  
+	  
+	  
+	  if(estNonVide(pPartieInteresseValue.getCompteComptablePartieInteresseeDesignation())) {
+		  
+		  CompteComptablePIValue cpt = compteComptablePIService.rechercheCompteComptablePIParDesignation(pPartieInteresseValue.getCompteComptablePartieInteresseeDesignation());
+		
+		  
+		  if(cpt == null) {
+			  
+			  String  idCpteComptable = compteComptablePIService.creerCompteComptablePI( new CompteComptablePIValue(pPartieInteresseValue.getCompteComptablePartieInteresseeDesignation()));
+			  pPartieInteresseValue.setCompteComptablePartieInteressee(Long.parseLong(idCpteComptable));
+			  
+		  }else
+			  
+		  {
+			  
+			  pPartieInteresseValue.setCompteComptablePartieInteressee(cpt.getId());
+		  }
+		
+		 
+		  
+		  
+	  }else
+		  
+	  {
+		  pPartieInteresseValue.setCompteComptablePartieInteressee(null);
+		  
+	  }
+	  
+	  
+	  
+	  
     return this.partieInteresseeService.modifierPartieInteressee(pPartieInteresseValue);
   }
   @RequestMapping(value = "/supprimerPartieInteressee:{id}", method = RequestMethod.DELETE)
@@ -156,5 +249,11 @@ public class PartieInteresseeRestImpl implements IPartieInteresseeRest {
  		
  		return  partieInteresseeService.getCurrentReferenceByFamille(id,false);
  	}
+ 	
+ 	
+ 	  private boolean estNonVide(String val) {
+ 		    return val != null && !"".equals(val)  && !"undefined".equals(val)  && !"null".equals(val);
+
+ 		  }
 
 }

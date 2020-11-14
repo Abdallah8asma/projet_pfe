@@ -188,6 +188,19 @@ angular
             });
         };
 
+
+            // get Liste des compte comptable PI
+            $scope.getListeCompteComptable = function () {
+              //TODO cache
+              $http
+                .get(UrlCommun + '/compteComptablePI/all')
+                .success(function (dataRegionCache) {
+                  $log.debug('compte comptable : ' + dataRegionCache.length);
+                  $scope.listeCompteComptable = dataRegionCache;
+                });
+            };
+
+      //  $scope.getListeCompteComptable();
         $scope.listeRegionCache();
         $scope.ListDeviseCache();
         $scope.listeTypeDocumentCache();
@@ -521,13 +534,13 @@ angular
           $scope.colDefs = [
 
 
-            {
+         /*    {
               field: 'dateIntroduction',
               displayName: 'Date Introd.',
               width: '9%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
               cellFilter: "date: 'yyyy-MM-dd'"
-            },
+            }, */
             {
               field: 'reference',
               displayName: 'Référence',
@@ -568,12 +581,12 @@ angular
                 fontfamily: 'Poppins, Helvetica, sans-serif',
               },*/
 
-            {
-              field: 'ville',
+         /*    {
+              field: 'regionDesignation',
               displayName: 'Ville',
               width: '7%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
-            },
+            }, */
             {
               field: 'representants[0].nom',
               displayName: 'Vis à vis',
@@ -586,10 +599,24 @@ angular
               width: '8%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },
+
+            {
+              field: 'telephoneMobile',
+              displayName: 'Téléphone Mobile',
+              width: '8%',
+              fontfamily: 'Poppins, Helvetica, sans-serif',
+            },
             {
               field: 'email',
               displayName: 'Email',
               width: '25%',
+              fontfamily: 'Poppins, Helvetica, sans-serif',
+            },
+
+            {
+              field: 'compteComptablePartieInteresseeDesignation',
+              displayName: 'Compte Comptable',
+              width: '8%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },
 

@@ -38,6 +38,7 @@ public interface IConstante {
 	public static String TABLE_TYPE_DOCUMENT = "pi_com_typedoc";
 	public static String TABLE_DEVISE = "pi_devise";
 	public static String TABLE_REGION_PARTIE_INTERESSEE = "pi_region";
+	public static String TABLE_COMPTE_COMPTABLE_PARTIE_INTERESSEE = "pi_compte_comptable";
 
 	/* Article */
 	public static String TABLE_EB_DETPROD_ARTICLE = "eb_detprodarticle";
@@ -90,6 +91,7 @@ public interface IConstante {
 	public static String SEQUENCE_TYPE_DOCUMENT = "seq_pct";
 	public static String SEQUENCE_DEVISE = "pdv_seq";
 	public static String SEQUENCE_REGION_PARTIE_INTERESSEE = "pre_seq";
+	public static String SEQUENCE_COMPTE_COMPTABLE_PARTIE_INTERESSEE = "pi_cc_seq";
 
 	/* Article */
 	public static String SEQUENCE_EB_GROSSEUR = "egr_seq";

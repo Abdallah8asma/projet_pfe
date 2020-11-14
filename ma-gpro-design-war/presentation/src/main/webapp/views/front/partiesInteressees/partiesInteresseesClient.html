@@ -681,6 +681,36 @@
 			</div>
 		</div>
 	</div>
+				
+	<div class="col-sm-4">
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<label class=" input-group-text ms-Label">Compte Comptable</label>
+
+				</div>
+				<input type="text" class="form-control" placeholder="Compte Comptable"
+					ng-model="partieInteresseeCourante.compteComptablePartieInteresseeDesignation" />
+			</div>
+		</div>
+	</div>
+
+<!-- 	<div class="col-sm-4">
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<label class="input-group-text ms-Label">Compte Comptable</label>
+				</div>
+				<select ui-select2 ng-model="partieInteresseeCourante.compteComptablePartieInteressee"
+					ng-init="partieInteresseeCourante.compteComptablePartieInteressee =''" data-placeholder="..."
+					class="form-control " style="border: 1px solid #e5eaee !important;">
+					<option value=""></option>
+					<option ng-repeat="cpt in listeCompteComptable" value="{{cpt.id}}">
+						{{cpt.designation}}</option>
+				</select>
+			</div>
+		</div>
+	</div> -->
 
 
 </div>

@@ -21,6 +21,7 @@
 		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DeviseEntite</class>
 		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.RegionEntite</class> 
 		
+		
 		<!-- Entité Produit -->
 	    <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DocumentProduitEntity</class>
 		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleProduitEntity</class>
@@ -28,6 +29,8 @@
 		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SousFamilleProduitEntity</class>
 		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitSerialisableEntity</class>
 		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SuperFamilleProduitEntity</class>
+
+		
 		
         
         <!-- Entité Article --> 
@@ -55,9 +58,12 @@
          
          
         <!--  nouvelle entite commercial industriel -->
+         <class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CompteComptablePIEntity</class> 
          <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity</class>
          <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CompteComptableEntity</class>
-          <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleProduitEntity</class>
+	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity</class>
          <!--  todo           Add  ArticleProduit et optionArticle Produit-->
          
         <properties>

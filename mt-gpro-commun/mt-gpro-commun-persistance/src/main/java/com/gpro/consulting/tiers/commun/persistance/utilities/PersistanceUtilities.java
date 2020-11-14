@@ -41,6 +41,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SuperFami
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.TypeArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.UniteArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.CategorieValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.CompteComptablePIValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.DeviseValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.DocumentValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.FamilleValue;
@@ -83,6 +84,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.UniteArti
 import com.gpro.consulting.tiers.commun.persistance.login.entity.RoleEntity;
 import com.gpro.consulting.tiers.commun.persistance.login.entity.UserEntity;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CategorieEntite;
+import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CompteComptablePIEntity;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DeviseEntite;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DocumentEntite;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.FamilleEntite;
@@ -308,6 +310,8 @@ public class PersistanceUtilities {
 		
 		vPartieInteresseEntite.setPayementTerme(pPartieInteresseValue.getPayementTerme());
 		
+		vPartieInteresseEntite.setCompteComptablePartieInteressee(pPartieInteresseValue.getCompteComptablePartieInteressee());
+		
 		// Liste Document
 		if (pPartieInteresseValue.getDocuments() != null) {
 
@@ -422,6 +426,9 @@ public class PersistanceUtilities {
 		vPartieInteresseValue.setTelephoneMobile(pPartieInteresseEntity.getTelephoneMobile());
 		
 		vPartieInteresseValue.setPayementTerme(pPartieInteresseEntity.getPayementTerme());
+		
+		vPartieInteresseValue.setCompteComptablePartieInteressee(pPartieInteresseEntity.getCompteComptablePartieInteressee());
+		
 		
 		// Liste Document
 		if (pPartieInteresseEntity.getDocumentEntites() != null) {
@@ -2633,6 +2640,30 @@ public class PersistanceUtilities {
 	  /** uniteArticleValue to uniteArticleEntite **/
 	  public static CompteComptableEntity toEntity(CompteComptableValue pCompteComptableValue) {
 		  CompteComptableEntity pCompteComptableEntity = new CompteComptableEntity();
+	    if (pCompteComptableValue.getId() != null) {
+	    	pCompteComptableEntity.setId(pCompteComptableValue.getId());
+	    }
+	    pCompteComptableEntity.setDesignation(pCompteComptableValue.getDesignation());
+	    pCompteComptableEntity.setDescription(pCompteComptableValue.getDescription());
+	    return pCompteComptableEntity;
+	  }
+	  
+	  
+	  
+		/*** Compte Comptable PI  **/
+
+	  /** unitelArticleEntite to uniteArticleValue **/
+	  public static CompteComptablePIValue toValue(CompteComptablePIEntity pCompteComptableEntity) {
+		  CompteComptablePIValue compteComptableValue = new CompteComptablePIValue();
+		  compteComptableValue.setId(pCompteComptableEntity.getId());
+		  compteComptableValue.setDesignation(pCompteComptableEntity.getDesignation());
+		  compteComptableValue.setDescription(pCompteComptableEntity.getDescription());
+	    return compteComptableValue;
+	  }
+
+	  /** uniteArticleValue to uniteArticleEntite **/
+	  public static CompteComptablePIEntity toEntity(CompteComptablePIValue pCompteComptableValue) {
+		  CompteComptablePIEntity pCompteComptableEntity = new CompteComptablePIEntity();
 	    if (pCompteComptableValue.getId() != null) {
 	    	pCompteComptableEntity.setId(pCompteComptableValue.getId());
 	    }
