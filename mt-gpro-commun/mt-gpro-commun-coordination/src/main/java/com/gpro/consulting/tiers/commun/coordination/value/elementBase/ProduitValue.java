@@ -57,11 +57,71 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	private boolean stock;
 
 	private String superFamilleDesignation;
+	
+	
+	
+
+	private String dimension;
+	
+	
+	private String grammage;
+	
+
+	private String numerotation;
+	
+
+	private String nbrPause;
+	
+	
+	private String nature;
 
 	// added by zeineb g
 	private Set<ArticleProduitValue> articleProduits = new HashSet<ArticleProduitValue>();
 	// added by zeineb g
 	private Set<ArticleProduitValue> materialProduits = new HashSet<ArticleProduitValue>();
+	
+	
+	
+
+	public String getDimension() {
+		return dimension;
+	}
+
+	public void setDimension(String dimension) {
+		this.dimension = dimension;
+	}
+
+	public String getGrammage() {
+		return grammage;
+	}
+
+	public void setGrammage(String grammage) {
+		this.grammage = grammage;
+	}
+
+	public String getNumerotation() {
+		return numerotation;
+	}
+
+	public void setNumerotation(String numerotation) {
+		this.numerotation = numerotation;
+	}
+
+	public String getNbrPause() {
+		return nbrPause;
+	}
+
+	public void setNbrPause(String nbrPause) {
+		this.nbrPause = nbrPause;
+	}
+
+	public String getNature() {
+		return nature;
+	}
+
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
 
 	public Set<ArticleProduitValue> getArticleProduits() {
 		return articleProduits;

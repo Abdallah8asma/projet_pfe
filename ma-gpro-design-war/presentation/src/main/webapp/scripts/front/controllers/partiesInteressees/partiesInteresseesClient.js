@@ -313,13 +313,13 @@ angular
           $scope.listeRepresentant = [];
           $scope.listeDocument = [];
 
-          $http
+         /* $http
             .get(UrlCommun + '/partieInteressee/getCurrentReferenceByFamille:1')
             .success(function (datagetPI) {
               $scope.partieInteresseeCourante.reference = datagetPI;
 
               $scope.partieInteresseeCourante.refAvantChangement = datagetPI;
-            });
+            });*/
 
           $scope.displayMode = 'edit';
         };

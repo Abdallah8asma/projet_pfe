@@ -269,13 +269,13 @@ angular
         $scope.listeRepresentant = [];
         $scope.listeDocument = [];
 
-        $http
+       /* $http
           .get(UrlCommun + '/partieInteressee/getCurrentReferenceByFamille:2')
           .success(function (datagetPI) {
             $scope.partieInteresseeCourante.reference = datagetPI;
 
             $scope.partieInteresseeCourante.refAvantChangement = datagetPI;
-          });
+          });*/
 
         $scope.displayMode = 'edit';
       };

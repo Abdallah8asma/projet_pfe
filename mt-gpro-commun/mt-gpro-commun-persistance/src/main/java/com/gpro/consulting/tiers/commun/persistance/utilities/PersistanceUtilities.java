@@ -1590,6 +1590,14 @@ public class PersistanceUtilities {
 	    produitValue.setPrixAchatTTC(pProduitEntity.getPrixAchatTTC());
 	    produitValue.setStock(pProduitEntity.isStock());
 	    
+	    
+	    
+	    produitValue.setDimension(pProduitEntity.getDimension());
+	    produitValue.setGrammage(pProduitEntity.getGrammage());
+	    produitValue.setNature(pProduitEntity.getNature());
+	    produitValue.setNbrPause(pProduitEntity.getNbrPause());
+	    produitValue.setNumerotation(pProduitEntity.getNumerotation());
+	    
 	    if (pProduitEntity.getSousFamille() != null) {
 			produitValue.setSousFamilleId(pProduitEntity.getSousFamille()
 					.getId());
@@ -1670,6 +1678,14 @@ public class PersistanceUtilities {
 		produiEntity.setPrixAchatTTC(pProduitValue.getPrixAchatTTC());
 		produiEntity.setStock(pProduitValue.isStock());
 		
+		
+		produiEntity.setDimension(pProduitValue.getDimension());
+		produiEntity.setGrammage(pProduitValue.getGrammage());
+		produiEntity.setNature(pProduitValue.getNature());
+		produiEntity.setNbrPause(pProduitValue.getNbrPause());
+		produiEntity.setNumerotation(pProduitValue.getNumerotation());
+		
+
 		/*** Liste Document produit */
 		if (pProduitValue.getDocumentProduits() != null) {
 			Set<DocumentProduitEntity> vListeDocuments = new HashSet<DocumentProduitEntity>();
