@@ -1,5 +1,5 @@
 package com.gpro.consulting.tiers.commun.rest.elementBase;
 
-public interface IOptionArticleRest {
+public interface IOptionProduitRest {
 
 }

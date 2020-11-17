@@ -176,8 +176,35 @@ public class PartieInteresseEntite implements Serializable {
 	@Column(name = "pi_compte_comptable_id")
 	private Long compteComptablePartieInteressee;
 	
+
+	
+	/** The banque */
+	@Column(name = "banque_id")
+	private Long banqueId;
+	
+
+	/** The banque bancaire */
+	@Column(name = "code_bancaire")
+	private String codeBancaire;
 	
 	
+	
+
+	public String getCodeBancaire() {
+		return codeBancaire;
+	}
+
+	public void setCodeBancaire(String codeBancaire) {
+		this.codeBancaire = codeBancaire;
+	}
+
+	public Long getBanqueId() {
+		return banqueId;
+	}
+
+	public void setBanqueId(Long banqueId) {
+		this.banqueId = banqueId;
+	}
 
 	public Long getCompteComptablePartieInteressee() {
 		return compteComptablePartieInteressee;

@@ -20,6 +20,7 @@
 		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.TypeEntite</class>
 		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DeviseEntite</class>
 		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.RegionEntite</class> 
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.BanqueEntite</class>
 		
 		
 		<!-- Entité Produit -->

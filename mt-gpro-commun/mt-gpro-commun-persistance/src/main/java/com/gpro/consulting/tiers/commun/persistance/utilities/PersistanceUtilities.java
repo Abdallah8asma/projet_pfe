@@ -27,7 +27,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.Impressio
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MatiereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MetrageValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleProduitValue;
-import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PackageValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
@@ -40,6 +40,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamil
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SuperFamilleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.TypeArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.UniteArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.BanqueValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.CategorieValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.CompteComptablePIValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.DeviseValue;
@@ -67,7 +68,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurE
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite;
-import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleEntity;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PackageEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PrixClientEntity;
@@ -83,6 +84,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.TypeArtic
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.UniteArticleEntity;
 import com.gpro.consulting.tiers.commun.persistance.login.entity.RoleEntity;
 import com.gpro.consulting.tiers.commun.persistance.login.entity.UserEntity;
+import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.BanqueEntite;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CategorieEntite;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CompteComptablePIEntity;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DeviseEntite;
@@ -312,6 +314,11 @@ public class PersistanceUtilities {
 		
 		vPartieInteresseEntite.setCompteComptablePartieInteressee(pPartieInteresseValue.getCompteComptablePartieInteressee());
 		
+		
+		vPartieInteresseEntite.setBanqueId(pPartieInteresseValue.getBanqueId());
+		
+		vPartieInteresseEntite.setCodeBancaire(pPartieInteresseValue.getCodeBancaire());
+		
 		// Liste Document
 		if (pPartieInteresseValue.getDocuments() != null) {
 
@@ -429,6 +436,11 @@ public class PersistanceUtilities {
 		
 		vPartieInteresseValue.setCompteComptablePartieInteressee(pPartieInteresseEntity.getCompteComptablePartieInteressee());
 		
+		
+		vPartieInteresseValue.setBanqueId(pPartieInteresseEntity.getBanqueId());
+		
+		
+		vPartieInteresseValue.setCodeBancaire(pPartieInteresseEntity.getCodeBancaire());
 		
 		// Liste Document
 		if (pPartieInteresseEntity.getDocumentEntites() != null) {
@@ -836,6 +848,38 @@ public class PersistanceUtilities {
 		return categorieValue;
 	}
 
+	
+
+	/**
+	 * Méthode  banque entite
+	 */
+	public static BanqueEntite toEntity(BanqueValue categorieValue) {
+		BanqueEntite categorieEntite = new BanqueEntite();
+		if (categorieValue.getId() != null) {
+			categorieEntite.setId(categorieValue.getId());
+		}
+		
+		categorieEntite.setCode(categorieValue.getCode());
+		categorieEntite.setAbreviation(categorieValue.getAbreviation());
+		categorieEntite.setDesignation(categorieValue.getDesignation());
+		
+	
+
+		return categorieEntite;
+	}
+
+	/** Converstion CathegoriePartieINT entite en CathegoriePartieINT value **/
+	public static BanqueValue toValue(BanqueEntite categorieEntite) {
+		BanqueValue categorieValue = new BanqueValue();
+
+		categorieValue.setId(categorieEntite.getId());
+		
+		categorieValue.setCode(categorieEntite.getCode());
+		categorieValue.setAbreviation(categorieEntite.getAbreviation());
+		categorieValue.setDesignation(categorieEntite.getDesignation());
+
+		return categorieValue;
+	}
 	/**************************** value to entite famille PI *********************************/
 
 	/** Converstion Famille value en Famille entite **/
@@ -2692,8 +2736,8 @@ public class PersistanceUtilities {
 		/*** option Article  **/
 
 
-	  public static OptionArticleValue toValue(OptionArticleEntity pOptionArticleEntity) {
-		  OptionArticleValue optionArticleValue = new OptionArticleValue();
+	  public static OptionProduitValue toValue(OptionProduitEntity pOptionArticleEntity) {
+		  OptionProduitValue optionArticleValue = new OptionProduitValue();
 		  optionArticleValue.setId(pOptionArticleEntity.getId());
 		  optionArticleValue.setDesignation(pOptionArticleEntity.getDesignation());
 		  optionArticleValue.setDescription(pOptionArticleEntity.getDescription());
@@ -2704,8 +2748,8 @@ public class PersistanceUtilities {
 	  }
 
 	
-	  public static OptionArticleEntity toEntity(OptionArticleValue pOptionArticleValue) {
-		  OptionArticleEntity pOptionArticleEntity = new OptionArticleEntity();
+	  public static OptionProduitEntity toEntity(OptionProduitValue pOptionArticleValue) {
+		  OptionProduitEntity pOptionArticleEntity = new OptionProduitEntity();
 	    if (pOptionArticleValue.getId() != null) {
 	    	pOptionArticleEntity.setId(pOptionArticleValue.getId());
 	    }

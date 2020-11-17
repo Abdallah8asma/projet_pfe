@@ -120,8 +120,40 @@ public class PartieInteresseValue {
 	private String compteComptablePartieInteresseeDesignation;
 	
 	
+	private Long banqueId;
+	
+	private Long banqueDesignation;
 	
 	
+	private String codeBancaire;
+	
+	
+	
+	
+
+	public String getCodeBancaire() {
+		return codeBancaire;
+	}
+
+	public void setCodeBancaire(String codeBancaire) {
+		this.codeBancaire = codeBancaire;
+	}
+
+	public Long getBanqueId() {
+		return banqueId;
+	}
+
+	public void setBanqueId(Long banqueId) {
+		this.banqueId = banqueId;
+	}
+
+	public Long getBanqueDesignation() {
+		return banqueDesignation;
+	}
+
+	public void setBanqueDesignation(Long banqueDesignation) {
+		this.banqueDesignation = banqueDesignation;
+	}
 
 	public Long getCompteComptablePartieInteressee() {
 		return compteComptablePartieInteressee;

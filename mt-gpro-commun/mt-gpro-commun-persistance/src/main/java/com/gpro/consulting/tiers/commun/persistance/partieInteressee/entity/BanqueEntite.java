@@ -1,4 +1,4 @@
-package com.gpro.consulting.tiers.commun.persistance.elementBase.entity;
+package com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -12,42 +12,41 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.gpro.consulting.tiers.commun.coordination.IConstante;
-// TODO: Auto-generated Javadoc
 
 /**
- * The Class OptionArticleEntity.
- * @author Samer
+ * Classe représentant categorie Partie Interessée de l'application.
+ * 
+ * @author $mohamed: $ @
  */
 @Entity
-@Table(name=IConstante.TABLE_OPTION_ARTICLE)
-public class OptionArticleEntity implements Serializable{
-
+@Table(name = IConstante.TABLE_BANQUE_PARTIE_INTERESSEE)
+public class BanqueEntite implements Serializable {
 
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -5474008032984912397L;
+	private static final long serialVersionUID = 7739486521462938689L;
 
-	/** The id. */
+	/** Identifiant technique. */
+	/** L'id de la table. */
 	@Id
-	@SequenceGenerator(name="OPTION_ARTICLE_ID_GENERATOR", sequenceName = IConstante.SEQUENCE_OPTION_ARTICLE,allocationSize=1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="OPTION_ARTICLE_ID_GENERATOR")
+	@SequenceGenerator(name = "BANQUE_ID_GENERATOR", sequenceName = IConstante.SEQUENCE_BANQUE_PARTIE_INTERESSEE, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BANQUE_ID_GENERATOR")
 	private Long id;
+
+	@Column(name = "code")
+	private String code;
+	
+	
+	@Column(name = "abreviation")
+	private String abreviation;
+	
 	
 	/** The designation. */
-	@Column(name="designation")
+	@Column(name = "designation")
 	private String designation;
-	
-	/** The description. */
-	@Column(name="description")
-	private String description;
-	
-	
-	@Column(name="types_ids")
-	private String typesIds;
-	
-	
+
 	/** The bl suppression. */
 	@Column(name = "bl_suppression")
 	private boolean blSuppression;
@@ -67,21 +66,22 @@ public class OptionArticleEntity implements Serializable{
 	
 	
 	
+	
 
-	public String getTypesIds() {
-		return typesIds;
+	public String getCode() {
+		return code;
 	}
 
-	public void setTypesIds(String typesIds) {
-		this.typesIds = typesIds;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getAbreviation() {
+		return abreviation;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setAbreviation(String abreviation) {
+		this.abreviation = abreviation;
 	}
 
 	public static long getSerialversionuid() {
@@ -100,7 +100,8 @@ public class OptionArticleEntity implements Serializable{
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -118,7 +119,8 @@ public class OptionArticleEntity implements Serializable{
 	/**
 	 * Sets the designation.
 	 *
-	 * @param designation the new designation
+	 * @param designation
+	 *            the new designation
 	 */
 	public void setDesignation(String designation) {
 		this.designation = designation;
@@ -136,7 +138,8 @@ public class OptionArticleEntity implements Serializable{
 	/**
 	 * Sets the bl suppression.
 	 *
-	 * @param blSuppression the new bl suppression
+	 * @param blSuppression
+	 *            the new bl suppression
 	 */
 	public void setBlSuppression(boolean blSuppression) {
 		this.blSuppression = blSuppression;
@@ -154,7 +157,8 @@ public class OptionArticleEntity implements Serializable{
 	/**
 	 * Sets the date suppression.
 	 *
-	 * @param dateSuppression the new date suppression
+	 * @param dateSuppression
+	 *            the new date suppression
 	 */
 	public void setDateSuppression(Calendar dateSuppression) {
 		this.dateSuppression = dateSuppression;
@@ -172,7 +176,8 @@ public class OptionArticleEntity implements Serializable{
 	/**
 	 * Sets the date creation.
 	 *
-	 * @param dateCreation the new date creation
+	 * @param dateCreation
+	 *            the new date creation
 	 */
 	public void setDateCreation(Calendar dateCreation) {
 		this.dateCreation = dateCreation;
@@ -190,25 +195,28 @@ public class OptionArticleEntity implements Serializable{
 	/**
 	 * Sets the date modification.
 	 *
-	 * @param dateModification the new date modification
+	 * @param dateModification
+	 *            the new date modification
 	 */
 	public void setDateModification(Calendar dateModification) {
 		this.dateModification = dateModification;
 	}
 
-/* (non-Javadoc)
- * @see java.lang.Object#equals(java.lang.Object)
- */
-@Override
-public boolean equals(Object obj) {
-	return super.equals(obj);
-}
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
 
-/* (non-Javadoc)
- * @see java.lang.Object#toString()
- */
-@Override
-public String toString() {
-	return super.toString();
-}
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+
 }

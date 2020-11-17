@@ -5,7 +5,7 @@ package   com.gpro.consulting.tiers.commun.coordination.value.elementBase;
  * The Class OptionArticleValue.
  * @author samer 
  */
-public class OptionArticleValue {
+public class OptionProduitValue {
 
 	/** The id. */
 	private Long id;
