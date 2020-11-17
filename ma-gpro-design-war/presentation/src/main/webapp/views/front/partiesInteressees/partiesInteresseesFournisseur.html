@@ -512,7 +512,24 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-8">
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Banque</label>
+										</div>
+										<select ui-select2 ng-model="partieInteresseeCourante.banqueId"
+											ng-init="partieInteresseeCourante.banqueId =''" data-placeholder="..."
+											class="form-control " style="border: 1px solid #e5eaee !important;">
+											<option value=""></option>
+											<option ng-repeat="categorie in listeBanque" value="{{categorie.id}}">
+												{{categorie.code}} / {{categorie.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
 
 
 								<div class="form-group float-right">

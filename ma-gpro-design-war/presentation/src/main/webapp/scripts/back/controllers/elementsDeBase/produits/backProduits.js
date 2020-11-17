@@ -574,6 +574,228 @@ app
 							$scope.listeFamilleProduit();
 							$scope.listeSousFamilleProduit();
 						} ])
+
+
+
+						/*******************************************************************************
+ * Gestion des Impression produit
+ ******************************************************************************/
+app
+.controller(
+		'backImpressionProduitController',
+		[
+				'$scope',
+				'$filter',
+				'$http',
+				'$log',
+				'UrlCommun',
+				'UrlAtelier',
+				function($scope, $filter, $http, $log, UrlCommun,UrlAtelier) {
+					// Déclaration des variables globales utilisées
+					var data;
+					$scope.displayMode = "";
+					$scope.familleCourante = null;
+					$scope.listeFamille = [];
+					$scope.ListeTaxe = [];
+					$scope.resultatRecherche = $scope.listeFamille;
+					
+				
+					// Lister Famille produit
+					$scope.listeFamilleProduit = function() {
+						$http.get(UrlCommun + "/impressionProduit/all")
+								.success(function(dataFamille) {
+									$log.debug("listeFamille " + dataFamille.length);
+									$scope.listeFamille = dataFamille;
+								});
+					}
+					
+				 $scope.refresh = function(){
+						
+						$scope.listeFamilleProduit();
+					}
+					
+				
+					
+				
+
+					// ajout d'une Famille
+					$scope.ajouterFamille = function() {
+						$scope.familleCourante = {
+							designation : '',
+							description:''
+						};
+						$scope.listeFamille
+								.push($scope.familleCourante);
+
+					};
+
+					// Enregistrer famille
+					$scope.saveFamille = function(data, id) {
+						if (angular.isDefined(id)) {
+							$log.debug("famille existe deja");
+							$http
+									.post(
+											UrlCommun
+													+ "/impressionProduit/modifierImpressionProduit",
+											data)
+									.success(function(newfamille) {
+										$log.debug("Success Modification");
+										angular.extend(newfamille);
+									});
+						} else {
+							$http
+									.post(
+											UrlCommun
+													+ "/impressionProduit/creerImpressionProduit",
+											data)
+									.success(function(newfamille) {
+										data.id = newfamille;
+										$log.debug("Success Creation");
+										angular.extend(newfamille);
+							
+									});
+						}
+
+					}
+
+					// Suppression d'une Famille
+					$scope.removeFamilleProduit = function(index) {
+						$log.debug("INDEX :" + index);
+						$log.debug("**OBJET :" + $scope.listeFamille[index]);
+						$log.debug("DELETE .." + $scope.listeFamille[index].id);
+						$http(
+								{
+									method : "DELETE",
+									url : UrlCommun
+											+ "/impressionProduit/supprimerImpressionProduit:"+ $scope.listeFamille[index].id
+								}).success(function() {
+							$log.debug("Success Delete");
+							$scope.listeFamille.splice(index, 1);
+						});
+						$scope.listeFamille.splice(index, 1);
+					}
+					$scope.listeFamilleProduit();
+
+				} ])
+
+
+
+				
+						/*******************************************************************************
+ * Gestion des Option Produit
+ ******************************************************************************/
+app
+.controller(
+		'backOptionProduitController',
+		[
+				'$scope',
+				'$filter',
+				'$http',
+				'$log',
+				'UrlCommun',
+				'UrlAtelier',
+				function($scope, $filter, $http, $log, UrlCommun,UrlAtelier) {
+					// Déclaration des variables globales utilisées
+					var data;
+					$scope.displayMode = "";
+					$scope.familleCourante = null;
+					$scope.listeFamille = [];
+					$scope.ListeTaxe = [];
+					$scope.resultatRecherche = $scope.listeFamille;
+
+
+
+
+
+						// Lister SousFamille Produit
+						$scope.listeSousFamilleProduit = function() {
+							$http.get(UrlCommun + "/sousFamilleProduit/all")
+									.success(function(dataSousFamille) {
+										$log.debug("listeSousFamille " + dataSousFamille.length);
+										$scope.listeSousFamille = dataSousFamille;
+									});
+						}
+
+						$scope.listeSousFamilleProduit();
+					
+				
+					// Lister Famille produit
+					$scope.listeFamilleProduit = function() {
+						$http.get(UrlCommun + "/optionProduit/all")
+								.success(function(dataFamille) {
+									$log.debug("listeFamille " + dataFamille.length);
+									$scope.listeFamille = dataFamille;
+								});
+					}
+					
+				 $scope.refresh = function(){
+						
+						$scope.listeFamilleProduit();
+					}
+					
+				
+					
+				
+
+					// ajout d'une Famille
+					$scope.ajouterFamille = function() {
+						$scope.familleCourante = {
+							designation : '',
+							description:''
+						};
+						$scope.listeFamille
+								.push($scope.familleCourante);
+
+					};
+
+					// Enregistrer famille
+					$scope.saveFamille = function(data, id) {
+						if (angular.isDefined(id)) {
+							$log.debug("famille existe deja");
+							$http
+									.post(
+											UrlCommun
+													+ "/optionProduit/modifierOptionProduit",
+											data)
+									.success(function(newfamille) {
+										$log.debug("Success Modification");
+										angular.extend(newfamille);
+									});
+						} else {
+							$http
+									.post(
+											UrlCommun
+													+ "/optionProduit/creerOptionProduit",
+											data)
+									.success(function(newfamille) {
+										data.id = newfamille;
+										$log.debug("Success Creation");
+										angular.extend(newfamille);
+							
+									});
+						}
+
+					}
+
+					// Suppression d'une Famille
+					$scope.removeFamilleProduit = function(index) {
+						$log.debug("INDEX :" + index);
+						$log.debug("**OBJET :" + $scope.listeFamille[index]);
+						$log.debug("DELETE .." + $scope.listeFamille[index].id);
+						$http(
+								{
+									method : "DELETE",
+									url : UrlCommun
+											+ "/optionProduit/supprimerOptionProduit:"+ $scope.listeFamille[index].id
+								}).success(function() {
+							$log.debug("Success Delete");
+							$scope.listeFamille.splice(index, 1);
+						});
+						$scope.listeFamille.splice(index, 1);
+					}
+					$scope.listeFamilleProduit();
+
+				} ])
 						
 			.filter('sousFamillefilterBackProduit', function() {
 				  return function(listeSousFamille, id) {

@@ -36,6 +36,7 @@ angular
         $scope.ListFamillePICache = [];
         $scope.ListSitePICache = [];
         $scope.listeRegionCache = [];
+        $scope.listeBanque = [];
         $scope.ListActifPI = [
           { actif: true, designation: 'oui' },
           { actif: false, designation: 'non' },
@@ -52,6 +53,8 @@ angular
         /***************************************************
          * Gestion de la Menu PI
          **************************************************/
+
+         
         $scope.changeTaPartieInteresse = function () {
           $scope.displayMenu = 'pi';
         };
@@ -199,6 +202,16 @@ angular
                   $scope.listeCompteComptable = dataRegionCache;
                 });
             };
+
+
+            $scope.getListeBanquePI = function () {
+              $http.get(UrlCommun+"/banquePI/all").success(function (data) {
+                $log.debug("listeCathegorie : "+data.length);
+                $scope.listeBanque = data;
+              });
+            }
+
+            $scope.getListeBanquePI();
 
       //  $scope.getListeCompteComptable();
         $scope.listeRegionCache();

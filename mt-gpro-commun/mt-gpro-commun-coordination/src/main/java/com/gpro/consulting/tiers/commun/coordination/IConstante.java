@@ -39,7 +39,7 @@ public interface IConstante {
 	public static String TABLE_DEVISE = "pi_devise";
 	public static String TABLE_REGION_PARTIE_INTERESSEE = "pi_region";
 	public static String TABLE_COMPTE_COMPTABLE_PARTIE_INTERESSEE = "pi_compte_comptable";
-
+	public static String TABLE_BANQUE_PARTIE_INTERESSEE = "pi_banque";
 	/* Article */
 	public static String TABLE_EB_DETPROD_ARTICLE = "eb_detprodarticle";
 	public static String TABLE_EB_COULEUR = "eb_couleur";
@@ -64,7 +64,7 @@ public interface IConstante {
 	public static String TABLE_EB_SOCIETE = "eb_societe";
 	public static String TABLE_IMPRESSION_PRODUIT = "eb_impression";
 	public static String TABLE_COMPTE_COMPTABLE = "eb_compte_comptable";
-	public static String TABLE_OPTION_ARTICLE = "eb_option_article";
+	public static String TABLE_OPTION_PRODUIT = "eb_option_produit";
 	//
 	// public static String TABLE_EB_PRODUITDEPOT="eb_produitdepot";
 
@@ -92,6 +92,7 @@ public interface IConstante {
 	public static String SEQUENCE_DEVISE = "pdv_seq";
 	public static String SEQUENCE_REGION_PARTIE_INTERESSEE = "pre_seq";
 	public static String SEQUENCE_COMPTE_COMPTABLE_PARTIE_INTERESSEE = "pi_cc_seq";
+	public static String SEQUENCE_BANQUE_PARTIE_INTERESSEE = "pi_bq_seq";
 
 	/* Article */
 	public static String SEQUENCE_EB_GROSSEUR = "egr_seq";
@@ -127,7 +128,7 @@ public interface IConstante {
 	public static String SEQUENCE_UNITE = "eun_seq";
 	public static String SEQUENCE_IMPRESSION_PRODUIT = "eb_impr_seq";
 	public static String SEQUENCE_COMPTE_COMPTABLE = "eb_cpt_com_seq";
-	public static String SEQUENCE_OPTION_ARTICLE = "eb_op_art_seq";
+	public static String SEQUENCE_OPTION_PRODUIT = "eb_op_prod_seq";
 	
 
 	// added on 25 03 2018
