@@ -209,7 +209,8 @@
          <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleEntity</class>
          <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleProduitEntity</class>
 	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity</class>
-      
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationProduitEntity</class>
+	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationArticleProduitEntity</class>
 	
 		
 		<properties>

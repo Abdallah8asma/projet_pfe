@@ -16,38 +16,70 @@ import javax.persistence.Table;
 import com.gpro.consulting.tiers.commun.coordination.IConstante;
 
 @Entity
-@Table(name = IConstante.TABLE_OPTION_ARTICLE_PRODUIT)
-public class OptionArticleProduitEntity implements Serializable {
+@Table(name = IConstante.TABLE_OPERATION_ARTICLE_PRODUIT)
+public class OperationArticleProduitEntity implements Serializable {
 
 
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2359404174074018193L;
+	private static final long serialVersionUID = -6199834431862073142L;
 
 	@Id
-	@SequenceGenerator(name = "OPTION_ARTICLE_PRODUIT_ID_GENERATOR", sequenceName = IConstante.SEQUENCE_OPTION_ARTICLE_PRODUIT)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OPTION_ARTICLE_PRODUIT_ID_GENERATOR")
+	@SequenceGenerator(name = "OPERATION_ARTICLE_PRODUIT_ID_GENERATOR", sequenceName = IConstante.SEQUENCE_OPERATION_ARTICLE_PRODUIT)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OPERATION_ARTICLE_PRODUIT_ID_GENERATOR")
 	private Long id;
 
-	@Column(name = "option_article_id")
-	private Long optionArticleId;
+	@Column(name = "operation_article_id")
+	private Long operationArticleId;
 
-	
 	@Column(name = "nom")
 	private String nom;
-	
-	
+
 	@Column(name = "designation")
 	private String designation;
+
+	@Column(name = "cout")
+	private Double cout;
+
+	@Column(name = "temps")
+	private Double temps;
+
+	@Column(name = "ordre")
+	private Long ordre;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "eb_articleprod_id")
 	private ArticleProduitEntity articleProduit;
+
 	
 	
 	
+	
+	public Double getCout() {
+		return cout;
+	}
+
+	public void setCout(Double cout) {
+		this.cout = cout;
+	}
+
+	public Double getTemps() {
+		return temps;
+	}
+
+	public void setTemps(Double temps) {
+		this.temps = temps;
+	}
+
+	public Long getOrdre() {
+		return ordre;
+	}
+
+	public void setOrdre(Long ordre) {
+		this.ordre = ordre;
+	}
 
 	public String getDesignation() {
 		return designation;
@@ -65,12 +97,12 @@ public class OptionArticleProduitEntity implements Serializable {
 		this.id = id;
 	}
 
-	public Long getOptionArticleId() {
-		return optionArticleId;
+	public Long getOperationArticleId() {
+		return operationArticleId;
 	}
 
-	public void setOptionArticleId(Long optionArticleId) {
-		this.optionArticleId = optionArticleId;
+	public void setOperationArticleId(Long operationArticleId) {
+		this.operationArticleId = operationArticleId;
 	}
 
 	public String getNom() {
@@ -92,9 +124,5 @@ public class OptionArticleProduitEntity implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
-	
-	
 
 }

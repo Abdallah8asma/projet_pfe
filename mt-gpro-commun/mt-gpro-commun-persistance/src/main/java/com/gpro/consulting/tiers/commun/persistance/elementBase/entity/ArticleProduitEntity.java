@@ -43,6 +43,9 @@ public class ArticleProduitEntity implements Serializable {
 
 	@Column(name = "impression_produit_id")
 	private Long impressionProduitId;
+	
+	@Column(name = "grammage")
+	private String grammage;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "eb_produit_id")
@@ -50,73 +53,116 @@ public class ArticleProduitEntity implements Serializable {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "articleProduit", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<OptionArticleProduitEntity> optionArticleProduits;
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "articleProduit", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<OperationArticleProduitEntity> operationArticleProduits;
+
 
 	public Long getId() {
 		return id;
 	}
 
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	public Long getArticleId() {
 		return articleId;
 	}
 
+
 	public void setArticleId(Long articleId) {
 		this.articleId = articleId;
 	}
+
 
 	public Double getQte() {
 		return qte;
 	}
 
+
 	public void setQte(Double qte) {
 		this.qte = qte;
 	}
+
 
 	public String getProduitSemiFini() {
 		return produitSemiFini;
 	}
 
+
 	public void setProduitSemiFini(String produitSemiFini) {
 		this.produitSemiFini = produitSemiFini;
 	}
+
 
 	public String getReferenceArticle() {
 		return referenceArticle;
 	}
 
+
 	public void setReferenceArticle(String referenceArticle) {
 		this.referenceArticle = referenceArticle;
 	}
+
 
 	public Long getImpressionProduitId() {
 		return impressionProduitId;
 	}
 
+
 	public void setImpressionProduitId(Long impressionProduitId) {
 		this.impressionProduitId = impressionProduitId;
 	}
+
+
+	public String getGrammage() {
+		return grammage;
+	}
+
+
+	public void setGrammage(String grammage) {
+		this.grammage = grammage;
+	}
+
 
 	public ProduitEntity getProduit() {
 		return produit;
 	}
 
+
 	public void setProduit(ProduitEntity produit) {
 		this.produit = produit;
 	}
+
 
 	public Set<OptionArticleProduitEntity> getOptionArticleProduits() {
 		return optionArticleProduits;
 	}
 
+
 	public void setOptionArticleProduits(Set<OptionArticleProduitEntity> optionArticleProduits) {
 		this.optionArticleProduits = optionArticleProduits;
 	}
 
+
+	public Set<OperationArticleProduitEntity> getOperationArticleProduits() {
+		return operationArticleProduits;
+	}
+
+
+	public void setOperationArticleProduits(Set<OperationArticleProduitEntity> operationArticleProduits) {
+		this.operationArticleProduits = operationArticleProduits;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	
 
 }
