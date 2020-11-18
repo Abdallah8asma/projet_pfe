@@ -17,10 +17,32 @@ public class ArticleProduitValue {
 	
 	private Long impressionProduitId;
 	
+	private String grammage;
+	
 	
 	private Set<OptionArticleProduitValue> optionArticleProduits = new HashSet<OptionArticleProduitValue>();
 	
 	
+	private Set<OperationArticleProduitValue> operationArticleProduits = new HashSet<OperationArticleProduitValue>();
+	
+	
+	
+
+	public Set<OperationArticleProduitValue> getOperationArticleProduits() {
+		return operationArticleProduits;
+	}
+
+	public void setOperationArticleProduits(Set<OperationArticleProduitValue> operationArticleProduits) {
+		this.operationArticleProduits = operationArticleProduits;
+	}
+
+	public String getGrammage() {
+		return grammage;
+	}
+
+	public void setGrammage(String grammage) {
+		this.grammage = grammage;
+	}
 
 	public Set<OptionArticleProduitValue> getOptionArticleProduits() {
 		return optionArticleProduits;

@@ -34,9 +34,32 @@ angular
     	        "dateIntroduction": new Date(),
     	        "stock":true, 
     	        "serialisable":true,
-    	        "retour":false
+              "retour":false,
+              "articleProduits":[{
+                                'articleId':'',
+                                'impressionProduitId':'',
+                                "optionArticleProduits":[{
+                                                          'designation':'',
+                                                          'optionArticleId':'',
+
+                                                         }],
+                                "operationArticleProduits":[{
+                                                          'designation':'',
+                                                          'operationArticleId':'',
+
+                                                           }]                                                               
+                              
+                                }]
     	  
-    	                       };
+                  };
+                  
+      $scope.listeAllArticle = [];
+      $scope.listeImpressionProduit = [];
+      $scope.listeOptionProduit = [];
+      $scope.listeOperationProduit = [];
+      
+
+
       $scope.listePartieInteressee = [];
       $scope.listeDocuments = [];
       $scope.listeDocumentProduit = [];
@@ -54,6 +77,53 @@ angular
       /***************************************************
        * Gestion de Cache des Referentiels *
        **************************************************/
+
+     /* $scope.getSousFamilleArticle = function () {
+        $http.get(UrlCommun + '/sousFamilleArticle/all').success(function (data) {
+          $scope.listeSousFamilleArticle = data;
+        });
+      };
+
+      $scope.getSousFamilleArticle();*/
+
+
+      
+      $scope.getAllOperationProduit = function () {
+        $http.get(UrlCommun + '/operationProduit/all').success(function (data) {
+          $scope.listeOperationProduit = data;
+        });
+      };
+
+      $scope.getAllOperationProduit();
+
+
+      $scope.getAllOptionProduit = function () {
+        $http.get(UrlCommun + '/optionProduit/all').success(function (data) {
+          $scope.listeOptionProduit = data;
+        });
+      };
+
+      $scope.getAllOptionProduit();
+
+
+      $scope.getAllImpressionProduit = function () {
+        $http.get(UrlCommun + '/impressionProduit/all').success(function (data) {
+          $scope.listeImpressionProduit = data;
+        });
+      };
+
+      $scope.getAllImpressionProduit();
+
+
+      $scope.getAllArticle = function () {
+        $http.get(UrlCommun + '/article/all').success(function (data) {
+          $scope.listeAllArticle = data;
+        });
+      };
+
+      $scope.getAllArticle();
+
+
 
       /***    Fermer notification Article existant       **/
 
@@ -464,8 +534,23 @@ angular
         "dateIntroduction": new Date(),
         "stock":true, 
         "serialisable":true,
-        "retour":false
-  
+        "retour":false,
+        
+        "articleProduits":[{
+          'articleId':'',
+          'impressionProduitId':'',
+          "optionArticleProduits":[{
+                                    'designation':'',
+                                    'optionArticleId':'',
+
+                                   }],
+          "operationArticleProduits":[{
+                                    'designation':'',
+                                    'operationArticleId':'',
+
+                                     }]                                                               
+        
+          }]
                  };
         
         

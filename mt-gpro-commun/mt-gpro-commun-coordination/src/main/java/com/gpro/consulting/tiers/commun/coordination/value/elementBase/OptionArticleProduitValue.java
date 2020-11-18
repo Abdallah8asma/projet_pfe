@@ -7,6 +7,19 @@ public class OptionArticleProduitValue {
 	private Long optionArticleId;
 	
 	private String nom;
+	
+	private String designation;
+	
+	
+	
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
 
 	public Long getId() {
 		return id;

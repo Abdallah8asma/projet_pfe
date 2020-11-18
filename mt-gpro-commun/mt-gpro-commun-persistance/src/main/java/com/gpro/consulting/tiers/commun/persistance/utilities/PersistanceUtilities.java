@@ -26,6 +26,8 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.GrosseurV
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ImpressionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MatiereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MetrageValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OperationArticleProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OperationProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PackageValue;
@@ -68,6 +70,8 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurE
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationArticleProduitEntity;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PackageEntite;
@@ -1512,6 +1516,7 @@ public class PersistanceUtilities {
 			optionArticleProduitValue.setId(pOptionArticleProduitEntity.getId());
 			optionArticleProduitValue.setNom(pOptionArticleProduitEntity.getNom());
 			optionArticleProduitValue.setOptionArticleId(pOptionArticleProduitEntity.getOptionArticleId());
+			optionArticleProduitValue.setDesignation(pOptionArticleProduitEntity.getDesignation());
 			
 
 			return optionArticleProduitValue;
@@ -1527,11 +1532,53 @@ public class PersistanceUtilities {
 
 			optionArticleProduitEntity.setNom(pOptionArticleProduitValue.getNom());
 			optionArticleProduitEntity.setOptionArticleId(pOptionArticleProduitValue.getOptionArticleId());
-			
+			optionArticleProduitEntity.setDesignation(pOptionArticleProduitValue.getDesignation());
 			
 			return optionArticleProduitEntity;
 		}
 		
+		
+		/******************OperationArticleProduit Entity To Value ****************************/
+		  
+		
+		public static OperationArticleProduitValue toValue(OperationArticleProduitEntity pOptionArticleProduitEntity) {
+			
+			
+			OperationArticleProduitValue optionArticleProduitValue = new OperationArticleProduitValue();
+			
+			optionArticleProduitValue.setId(pOptionArticleProduitEntity.getId());
+			optionArticleProduitValue.setNom(pOptionArticleProduitEntity.getNom());
+			optionArticleProduitValue.setOperationArticleId(pOptionArticleProduitEntity.getOperationArticleId());
+			optionArticleProduitValue.setDesignation(pOptionArticleProduitEntity.getDesignation());
+			
+			
+			optionArticleProduitValue.setCout(pOptionArticleProduitEntity.getCout());
+			optionArticleProduitValue.setTemps(pOptionArticleProduitEntity.getTemps());
+			optionArticleProduitValue.setOrdre(pOptionArticleProduitEntity.getOrdre());
+			
+
+			return optionArticleProduitValue;
+		}
+
+		// added by samer
+	
+		public static OperationArticleProduitEntity toEntity(OperationArticleProduitValue pOptionArticleProduitValue) {
+			OperationArticleProduitEntity optionArticleProduitEntity = new OperationArticleProduitEntity();
+			if (pOptionArticleProduitValue.getId() != null) {
+				optionArticleProduitEntity.setId(pOptionArticleProduitValue.getId());
+			}
+
+			optionArticleProduitEntity.setNom(pOptionArticleProduitValue.getNom());
+			optionArticleProduitEntity.setOperationArticleId(pOptionArticleProduitValue.getOperationArticleId());
+			optionArticleProduitEntity.setDesignation(pOptionArticleProduitValue.getDesignation());
+			
+			
+			optionArticleProduitEntity.setCout(pOptionArticleProduitValue.getCout());
+			optionArticleProduitEntity.setTemps(pOptionArticleProduitValue.getTemps());
+			optionArticleProduitEntity.setOrdre(pOptionArticleProduitValue.getOrdre());
+			
+			return optionArticleProduitEntity;
+		}
 		
 	  
 		/****************** Article Produit Entity To Value ****************************/
@@ -1551,16 +1598,29 @@ public class PersistanceUtilities {
 			
 			articleProduitValue.setImpressionProduitId(pArticleProduitEntity.getImpressionProduitId());
 			
+			articleProduitValue.setGrammage(pArticleProduitEntity.getGrammage());
+			
 			
 			// added by samer
 			if (pArticleProduitEntity.getOptionArticleProduits() != null) {
-				Set<OptionArticleProduitValue> vListeArticles = new HashSet<OptionArticleProduitValue>();
+				Set<OptionArticleProduitValue> vListeOptions = new HashSet<OptionArticleProduitValue>();
 				for (OptionArticleProduitEntity vArticleEntity : pArticleProduitEntity.getOptionArticleProduits()) {
 					OptionArticleProduitValue vDe = toValue(vArticleEntity);
-					vListeArticles.add(vDe);
+					vListeOptions.add(vDe);
 				}
-				articleProduitValue.setOptionArticleProduits(vListeArticles);
+				articleProduitValue.setOptionArticleProduits(vListeOptions);
 			}
+			
+			// added by samer
+			if (pArticleProduitEntity.getOperationArticleProduits() != null) {
+				Set<OperationArticleProduitValue> vListeOperations = new HashSet<OperationArticleProduitValue>();
+				for (OperationArticleProduitEntity vArticleEntity : pArticleProduitEntity.getOperationArticleProduits()) {
+					OperationArticleProduitValue vDe = toValue(vArticleEntity);
+					vListeOperations.add(vDe);
+				}
+				articleProduitValue.setOperationArticleProduits(vListeOperations);
+			}
+
 
 			
 
@@ -1582,14 +1642,45 @@ public class PersistanceUtilities {
 			
 			articleProduitEntity.setImpressionProduitId(pArticleProduitValue.getImpressionProduitId());
 			
+			articleProduitEntity.setGrammage(pArticleProduitValue.getGrammage());
+			
+			if(pArticleProduitValue.getOptionArticleProduits() != null) {
+				
+				Set<OptionArticleProduitEntity> vListeOptionArticleProduit = new HashSet<OptionArticleProduitEntity>();
+				
+				for(OptionArticleProduitValue vOptionArticleProduit :pArticleProduitValue.getOptionArticleProduits() ) {
+					
+					OptionArticleProduitEntity   vOptionArticleProduitEntite = toEntity(vOptionArticleProduit);
+					
+					vOptionArticleProduitEntite.setArticleProduit(articleProduitEntity);
+					
+					vListeOptionArticleProduit.add(vOptionArticleProduitEntite);
+				}
+				
+				
+				articleProduitEntity.setOptionArticleProduits(vListeOptionArticleProduit);
+				
+			}
 			
 			
 			
-			
-			
-
-			// added by samer
-			//TODO add to entity optionArticleProduit
+	         if(pArticleProduitValue.getOperationArticleProduits() != null) {
+				
+				Set<OperationArticleProduitEntity> vListeOperationArticleProduit = new HashSet<OperationArticleProduitEntity>();
+				
+				for(OperationArticleProduitValue vOptionArticleProduit :pArticleProduitValue.getOperationArticleProduits() ) {
+					
+					OperationArticleProduitEntity   vOptionArticleProduitEntite = toEntity(vOptionArticleProduit);
+					
+					vOptionArticleProduitEntite.setArticleProduit(articleProduitEntity);
+					
+					vListeOperationArticleProduit.add(vOptionArticleProduitEntite);
+				}
+				
+				
+				articleProduitEntity.setOperationArticleProduits(vListeOperationArticleProduit);
+				
+			}
 			
 			return articleProduitEntity;
 		}
@@ -2756,6 +2847,45 @@ public class PersistanceUtilities {
 	    pOptionArticleEntity.setDesignation(pOptionArticleValue.getDesignation());
 	    pOptionArticleEntity.setDescription(pOptionArticleValue.getDescription());
 	    pOptionArticleEntity.setTypesIds(pOptionArticleValue.getTypesIds());
+	    return pOptionArticleEntity;
+	  }
+	  
+	  
+	  
+		/*** operation Produit  **/
+
+
+	  public static OperationProduitValue toValue(OperationProduitEntity pOptionArticleEntity) {
+		  OperationProduitValue optionArticleValue = new OperationProduitValue();
+		  optionArticleValue.setId(pOptionArticleEntity.getId());
+		  optionArticleValue.setDesignation(pOptionArticleEntity.getDesignation());
+		  optionArticleValue.setDescription(pOptionArticleEntity.getDescription());
+		  optionArticleValue.setTypesIds(pOptionArticleEntity.getTypesIds());
+		  
+		  optionArticleValue.setCout(pOptionArticleEntity.getCout());
+		  optionArticleValue.setTemps(pOptionArticleEntity.getTemps());
+		  optionArticleValue.setOrdre(pOptionArticleEntity.getOrdre());
+		  
+		  
+	    return optionArticleValue;
+	  }
+
+	
+	  public static OperationProduitEntity toEntity(OperationProduitValue pOptionArticleValue) {
+		  OperationProduitEntity pOptionArticleEntity = new OperationProduitEntity();
+	    if (pOptionArticleValue.getId() != null) {
+	    	pOptionArticleEntity.setId(pOptionArticleValue.getId());
+	    }
+	    pOptionArticleEntity.setDesignation(pOptionArticleValue.getDesignation());
+	    pOptionArticleEntity.setDescription(pOptionArticleValue.getDescription());
+	    pOptionArticleEntity.setTypesIds(pOptionArticleValue.getTypesIds());
+	    
+	    
+	    pOptionArticleEntity.setCout(pOptionArticleValue.getCout());
+	    pOptionArticleEntity.setTemps(pOptionArticleValue.getTemps());
+	    pOptionArticleEntity.setOrdre(pOptionArticleValue.getOrdre());
+	    
+	    
 	    return pOptionArticleEntity;
 	  }
 	
