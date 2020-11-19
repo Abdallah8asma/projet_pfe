@@ -148,6 +148,11 @@ public class ArticleEntite implements Serializable {
 	@Column(name="emplacement")
 	 private String emplacement ;
 	
+	
+	/** The unite entite. */
+	@Column(name = "eb_unite_2_id")
+	private Long unite2Entite;
+	
 	/** The document entites. */
 	
     @OneToMany(mappedBy = "article",cascade=CascadeType.ALL)
@@ -158,6 +163,21 @@ public class ArticleEntite implements Serializable {
 	@OneToMany(mappedBy = "article",cascade=CascadeType.ALL)
 	private Set<SeuilArticleEntity> seuilEntites;
 	
+	
+	
+	
+	public Long getUnite2Entite() {
+		return unite2Entite;
+	}
+
+	public void setUnite2Entite(Long unite2Entite) {
+		this.unite2Entite = unite2Entite;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public Set<SeuilArticleEntity> getSeuilEntites() {
 		return seuilEntites;
 	}

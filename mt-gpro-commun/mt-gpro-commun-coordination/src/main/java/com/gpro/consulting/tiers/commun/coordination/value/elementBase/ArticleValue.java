@@ -114,6 +114,13 @@ public class ArticleValue implements Comparable<ArticleValue>{
 	private String methodeGestion;
 	
 	
+	private Long unite2Entite;
+	
+	
+	
+	private String uniteDesignation;
+	
+	private String unite2Designation;
 	/*** Documents **//////
 	private Set<DocumentArticleValue> documentEntites;
 	
@@ -130,6 +137,30 @@ public class ArticleValue implements Comparable<ArticleValue>{
 
 	public Long getId() {
 		return id;
+	}
+
+	public String getUniteDesignation() {
+		return uniteDesignation;
+	}
+
+	public void setUniteDesignation(String uniteDesignation) {
+		this.uniteDesignation = uniteDesignation;
+	}
+
+	public String getUnite2Designation() {
+		return unite2Designation;
+	}
+
+	public void setUnite2Designation(String unite2Designation) {
+		this.unite2Designation = unite2Designation;
+	}
+
+	public Long getUnite2Entite() {
+		return unite2Entite;
+	}
+
+	public void setUnite2Entite(Long unite2Entite) {
+		this.unite2Entite = unite2Entite;
 	}
 
 	@Override
