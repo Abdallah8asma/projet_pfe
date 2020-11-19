@@ -972,6 +972,8 @@ angular
           templateUrl: 'views/front/transfert/transfertMenu.html',
         })
 
+       
+
         /**
          * ********************** Finance
          * ***************************
@@ -1153,6 +1155,10 @@ angular
          */
 
         .when('/backArticles', {
+          templateUrl: 'views/back/elementsDeBase/articles/backArticles.html',
+        })
+
+        .when('/backArticles/:type', {
           templateUrl: 'views/back/elementsDeBase/articles/backArticles.html',
         })
 
