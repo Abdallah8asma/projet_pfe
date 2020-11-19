@@ -383,7 +383,55 @@ angular
 								$scope.closePopupDelete();
 								$scope.rechercherArticle({});
 							};
+
+
+							$scope.downloadAllArticlesExcel = function (
+								articleCourante) {
+			
+								$http({
+									url: UrlCommun + "/fiches/listArticle",
+									method: "POST",
+									data: articleCourante, // this is your json
+																	// data string
+									headers: {
+										'Content-type': 'application/json',
+									},
+									responseType: 'arraybuffer'
+								}).success(function (data, status, headers, config) {
+			
+									var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+			
+			
+									var fileName = 'Matiere_Premiere_' + formattedDate(new Date());
+									var link = document.createElement('a');
+									link.href = window.URL.createObjectURL(blob);
+									link.download = fileName;
+									link.click();
+									window.URL.revokeObjectURL(link.href);
+			
+			
+									// var objectUrl = URL.createObjectURL(blob);
+									// window.open(objectUrl);
+								}).error(function (data, status, headers, config) {
+									// upload failed
+								});
+			
+			
+							};
 							/** Fin de gestion des Articles */
+
+									// conversion date en String
+				function formattedDate(date) {
+					var d = new Date(date), month = ''
+						+ (d.getMonth() + 1), day = ''
+							+ d.getDate(), year = d.getFullYear();
+
+					if (month.length < 2)
+						month = '0' + month;
+					if (day.length < 2)
+						day = '0' + day;
+					return [year, month, day].join('-');
+				}
 
 							/***************************************************
 							 * Gestion des SeuilApprovisionnement
@@ -576,15 +624,29 @@ angular
 													{
 														field : 'siteEntiteDesignation',
 														displayName : $translate.instant('site'),
-														width:'15%'
+														width:'10%'
 													},
+												
+												
+												
 													{
-														field : '',
-														width:'5%',
-														cellTemplate : '<div class="buttons" ng-show="!rowform.$visible">'
-																+ '<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerArticle()"><i class="fa fa-fw fa-pencil"></i></button>'
-																+ '<button data-nodrag class="btn btn-default btn-xs"	ng-click="showPopupDelete(9)">	<i class="fa fa-fw fa-trash-o"></i></button></div>'
-													} ];
+														field: '',
+														cellTemplate:
+														`<div class="ms-CommandButton float-right" ng-show="!rowform.$visible">
+														  <button class="ms-CommandButton-button ms-CommandButton-Gpro  " ng-click="modifierOuCreerArticle()">
+														  <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+														  </button>
+														  <button class="ms-CommandButton-button"  ng-click="showPopupDelete(9)" permission="['Matiere_premiere_Delete']">
+														  <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+														 </button>
+															  </div> `,
+											
+														// '<div class="buttons" ng-show="!rowform.$visible">
+														//<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerProduit()"> <i class="fa fa-fw fa-pencil"></i></button>
+														// <button data-nodrag class="btn btn-default btn-xs" ng-click="showPopupDelete('$scope.typeAlert')"> <i class="fa fa-fw fa-trash-o"></i></button>'
+														// 	+ '</div>',
+														//width: 100
+													  }];
 										});
 							};
 							

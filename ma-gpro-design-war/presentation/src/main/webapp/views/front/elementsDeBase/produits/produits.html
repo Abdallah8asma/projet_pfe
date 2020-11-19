@@ -725,7 +725,15 @@
 
 
 						<div ng-repeat=" articleProduit in produitCourante.articleProduits track by $index">
-							<span class="ms-ListItem-primaryText">Composant {{$index +1}}</span>
+							<span class="ms-ListItem-primaryText">Composant {{$index +1}} 	<span class="ms-CommandButton-icon"
+								ng-click="deleteArticleProduit($index,produitCourante.articleProduits)">
+									 <a href="javascript:void(0)"> <i
+										class="ms-Icon ms-Icon--Delete"
+										style="color: rgb(255, 0, 0) !important;"> </i>
+								</a>
+							   </span></span> 	
+							
+						
 							<div class="panel-body">
 
 								<div class="form-group">
@@ -741,7 +749,7 @@
 													</div>
 
 													<select ui-select2 ng-model="articleProduit.articleId" required
-														ng-init="articleProduit.articleId=''" ng-required="true"
+														 ng-required="true"
 														data-placeholder="Composant" class="form-control"
 														style="border: 1px solid #e5eaee !important;">
 														<option value=""></option>
@@ -763,7 +771,7 @@
 													</div>
 
 													<select ui-select2 ng-model="articleProduit.impressionProduitId"
-														required ng-init="articleProduit.impressionProduitId=''"
+														required 
 														ng-required="true" data-placeholder="Impression"
 														class="form-control"
 														style="border: 1px solid #e5eaee !important;">
@@ -784,7 +792,7 @@
 														<label class="input-group-text ms-Label is-required">Qte</label>
 													</div>
 													<input type="number" class="form-control"
-														ng-model="articleProduit.qte" ng-init="articleProduit.qte=''" />
+														ng-model="articleProduit.qte"  />
 												</div>
 											</div>
 										</div>
@@ -799,7 +807,7 @@
 													</div>
 													<input type="text" class="form-control"
 														ng-model="articleProduit.grammage"
-														ng-init="articleProduit.grammage=''" />
+													 />
 												</div>
 											</div>
 										</div>
@@ -810,7 +818,17 @@
 
 								</div>
 
-								<span class="ms-ListItem-secondaryText">Option Composant</span>
+								<span class="ms-ListItem-secondaryText">Option Composant <span class="ms-CommandButton-icon"
+									ng-click="addOptionArticleProduit(articleProduit.optionArticleProduits)"> <a href="javascript:void(0)"> <i
+											class="ms-Icon ms-Icon--CirclePlus"
+											style="color: rgb(0, 0, 255) !important;"> </i>
+									</a>
+									</span></span>
+
+								
+
+
+								
 								<div class="form-group">
 									<div class="row"
 										ng-repeat=" optionArticleProduit in articleProduit.optionArticleProduits">
@@ -824,10 +842,11 @@
 													</div>
 
 													<select ui-select2 ng-model="optionArticleProduit.optionArticleId"
-														required ng-init="optionArticleProduit.optionArticleId=''"
+														required  
 														ng-required="true" data-placeholder="Option"
 														class="form-control"
-														style="border: 1px solid #e5eaee !important;">
+														style="border: 1px solid #e5eaee !important;"
+														ng-change="optionIsChanged(optionArticleProduit.optionArticleId,optionArticleProduit)">
 														<option value=""></option>
 														<option ng-repeat=" opt in listeOptionProduit"
 															value="{{opt.id}}">{{opt.designation}}</option>
@@ -846,10 +865,20 @@
 													</div>
 													<input class="form-control"
 														ng-model="optionArticleProduit.designation"
-														ng-init="optionArticleProduit.designation=''" />
+														 />
 												</div>
 											</div>
 										</div>
+
+										<div class="col-sm-4">
+										<span class="ms-CommandButton-icon float-right"
+										ng-click="deleteOptionArticleProduit(optionArticleProduit,articleProduit.optionArticleProduits)">
+											 <a href="javascript:void(0)"> <i
+												class="ms-Icon ms-Icon--Delete"
+												style="color: rgb(255, 0, 0) !important;"> </i>
+										</a>
+									   </span>
+									</div>
 
 
 									</div>
@@ -862,7 +891,13 @@
 
 
 
-								<span class="ms-ListItem-secondaryText">Operation Composant</span>
+								<span class="ms-ListItem-secondaryText">Operation Composant 	<span class="ms-CommandButton-icon"
+									ng-click="addOperationArticleProduit(articleProduit.operationArticleProduits)"> <a href="javascript:void(0)"> <i
+											class="ms-Icon ms-Icon--CirclePlus"
+											style="color:rgb(0, 0, 255) !important;"> </i>
+									</a>
+									</span></span>
+							
 								<div class="form-group">
 									<div class="row"
 										ng-repeat=" operationArticleProduit in articleProduit.operationArticleProduits">
@@ -877,10 +912,11 @@
 
 													<select ui-select2
 														ng-model="operationArticleProduit.operationArticleId" required
-														ng-init="operationArticleProduit.operationArticleId=''"
+													
 														ng-required="true" data-placeholder="Operation"
 														class="form-control"
-														style="border: 1px solid #e5eaee !important;">
+														style="border: 1px solid #e5eaee !important;"
+														ng-change="operationIsChanged(operationArticleProduit.operationArticleId,operationArticleProduit)">
 														<option value=""></option>
 														<option ng-repeat=" operation in listeOperationProduit"
 															value="{{operation.id}}">{{operation.designation}}</option>
@@ -899,12 +935,12 @@
 													</div>
 													<input class="form-control"
 														ng-model="operationArticleProduit.designation"
-														ng-init="operationArticleProduit.designation=''" />
+													 />
 												</div>
 											</div>
 										</div>
 
-										<div class="col-sm-3">
+										<div class="col-sm-2">
 											<div class="form-group">
 												<div class="input-group">
 													<div class="input-group-prepend">
@@ -912,13 +948,13 @@
 													</div>
 													<input type="number" class="form-control"
 														ng-model="operationArticleProduit.cout"
-														ng-init="operationArticleProduit.cout=''" />
+														/>
 												</div>
 											</div>
 										</div>
 
 
-										<div class="col-sm-3">
+										<div class="col-sm-2">
 											<div class="form-group">
 												<div class="input-group">
 													<div class="input-group-prepend">
@@ -926,9 +962,20 @@
 													</div>
 													<input type="number" class="form-control"
 														ng-model="operationArticleProduit.temps"
-														ng-init="operationArticleProduit.temps=''" />
+														 />
 												</div>
 											</div>
+										</div>
+
+
+										<div class="col-sm-2">
+											<span class="ms-CommandButton-icon float-right"
+											ng-click="deleteOperationArticleProduit(operationArticleProduit,articleProduit.operationArticleProduits)">
+												 <a href="javascript:void(0)"> <i
+													class="ms-Icon ms-Icon--Delete"
+													style="color: rgb(255, 0, 0) !important;"> </i>
+											</a>
+										   </span>
 										</div>
 
 
@@ -947,6 +994,13 @@
 
 
 						</div>
+
+						<span class="ms-CommandButton-icon float-left"
+												ng-click="addArticleProduit(produitCourante.articleProduits)"> <a href="javascript:void(0)"> <i
+														class="ms-Icon ms-Icon--CirclePlus"
+														style="color: rgb(0, 0, 255) !important;"> </i>
+												</a>
+						</span>
 
 
 

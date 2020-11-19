@@ -10,6 +10,8 @@
 		new fabric['SearchBox'](SearchBoxElements[i]);
 	}
 
+	
+
 </script>
 <!--End FabricJS-->
 
@@ -72,10 +74,10 @@
 	</ul> -->
 
 
-	<div class="container-fluid back-office-background" ng-show="ITEM == 'article'"
+	<div class="container-fluid back-office-background" ng-if="ITEM == 'article'"
 		ng-controller="BackPartieInteresseeCtrl2">
 
-		<span class="ms-ListItem-primaryText">Articles</span>
+		<span class="ms-ListItem-primaryText">Matière Première</span>
 		<br />
 
 
@@ -127,17 +129,16 @@
 
 
 					<button class="ms-CommandButton-button" ng-change="selectAction()" name="selector1" id="selector1">
-						<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
-								class="ms-Icon ms-Icon--Settings"></i></span>
+						<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Settings"></i></span>
 						<span class="ms-CommandButton-label">Param&eacute;trage</span>
 						<span class="ms-CommandButton-dropdownIcon"><i class="ms-Icon ms-Icon--ChevronDown"></i></span>
 					</button>
-					<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+			
 						<select name="selector1" id="selector1" class="form-control" ng-model="parametre">
 							<option>Unite</option>
-							<option>M&eacute;trage Fils</option>
+						<!-- 	<option>M&eacute;trage Fils</option>
 							<option>Mati&egrave;re Tissu</option>
-							<option>Grosseur Fils</option>
+							<option>Grosseur Fils</option> -->
 							<option>Famille Article</option>
 							<option>Sous Famille Article</option>
 						</select>
@@ -145,7 +146,7 @@
 
 
 
-					</ul>
+				
 				</div>
 
 
@@ -186,7 +187,7 @@
 
 
 		<!-- Menu Principale -->
-		<div ng-show="displayMenu == 'eb'">
+		<div ng-if="displayMenu == 'eb'">
 
 
 
@@ -194,7 +195,7 @@
 			<div class="panel panel-primary" ng-show="displayMode != 'test'">
 
 				<!-- Div Unite -->
-				<div class="panel-body" ng-show="parametre =='Unite'" ng-controller="BackArticleUniteController">
+				<div class="panel-body" ng-if="parametre =='Unite'" ng-controller="BackArticleUniteController">
 
 					<table class="table table-bordered table-condensed back-table-head-color">
 						<thead>
@@ -261,7 +262,7 @@
 				</div>
 
 				<!-- Div Metrage -->
-				<div class="panel-body" ng-show="parametre =='M&eacute;trage Fils'"
+				<div class="panel-body" ng-if="parametre =='M&eacute;trage Fils'"
 					ng-controller="BackArticleMetrageController">
 
 					<table class="table table-bordered table-condensed back-table-head-color">
@@ -329,7 +330,7 @@
 				</div>
 
 				<!-- Div Matiere -->
-				<div class="panel-body" ng-show="parametre =='Mati&egrave;re Tissu'"
+				<div class="panel-body" ng-if="parametre =='Mati&egrave;re Tissu'"
 					ng-controller="BackArticleMatiereController">
 					<div class="form-group">
 						<div class="row">
@@ -403,7 +404,7 @@
 				</div>
 
 				<!-- Div Grosseur -->
-				<div class="panel-body" ng-show="parametre =='Grosseur Fils'" ng-controller="BackArticleGrosseurController">
+				<div class="panel-body" ng-if="parametre =='Grosseur Fils'" ng-controller="BackArticleGrosseurController">
 					<div class="form-group">
 						<div class="row">
 
@@ -481,7 +482,7 @@
 				</div>
 
 				<!-- Div Famille -->
-				<div class="panel-body" ng-show="parametre =='Famille Article'" ng-controller="BackArticleFamilleController">
+				<div class="panel-body" ng-if="parametre =='Famille Article'" ng-controller="BackArticleFamilleController">
 					<div class="form-group">
 						<div class="row">
 
@@ -564,7 +565,7 @@
 				</div>
 
 				<!-- Div Sous Famille -->
-				<div class="panel-body" ng-show="parametre =='Sous Famille Article'"
+				<div class="panel-body" ng-if="parametre =='Sous Famille Article'"
 					ng-controller="BackArticleSousFamilleController">
 					<div class="form-group">
 						<div class="row">

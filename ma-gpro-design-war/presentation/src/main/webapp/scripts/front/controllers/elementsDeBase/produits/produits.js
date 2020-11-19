@@ -87,6 +87,157 @@ angular
       $scope.getSousFamilleArticle();*/
 
 
+
+      $scope.addArticleProduit = function (articleProduits) {
+
+        console.log('addArticleProduit');
+
+          var artProd = {
+            'articleId':'',
+            'impressionProduitId':'',
+            'qte':'',
+            'grammage':'',
+            "optionArticleProduits":[{
+                                      'designation':'',
+                                      'optionArticleId':'',
+
+                                     }],
+            "operationArticleProduits":[{
+                                      'designation':'',
+                                      'operationArticleId':'',
+                                      'cout':'',
+                                      'temps':''
+
+                                       }]                                                               
+          
+            };
+
+
+        articleProduits.push(artProd);
+        
+      };
+
+      $scope.optionIsChanged = function (optionId,option) {
+
+        console.log('optionIsChanged');
+
+
+        var element = $scope.listeOptionProduit.filter(function(opt) {
+              return opt.id==optionId;
+          });
+    
+         if(angular.isDefined(element[0])){
+
+
+          console.log('element Trouvee');
+             
+             option.designation = element[0].designation;
+
+              }
+
+      };
+
+      
+      $scope.operationIsChanged = function (operationId,operation) {
+
+        console.log('operationIsChanged');
+
+
+        var element = $scope.listeOperationProduit.filter(function(opt) {
+              return opt.id==operationId;
+          });
+    
+         if(angular.isDefined(element[0])){
+
+
+          console.log('element Trouvee');
+             
+             operation.designation = element[0].designation;
+             operation.cout = element[0].cout;
+             operation.temps = element[0].temps;
+
+              }
+
+      };
+
+
+      
+
+
+
+      $scope.deleteArticleProduit = function (index,artProdList) {
+
+        console.log('deleteArticleProduit');
+
+      
+          artProdList.splice(index,1);
+      
+      };
+
+
+
+         $scope.addOptionArticleProduit = function (optionArticleProduits) {
+
+          console.log('addOptionArticleProduit');
+
+          var optionArtProd = {
+          'designation':'',
+          'optionArticleId':''
+
+                  }   
+                  
+           optionArticleProduits.push(optionArtProd);  
+        
+          };
+
+
+         
+    $scope.deleteOptionArticleProduit = function (option,optionArticleProduits) {
+
+      
+      console.log('deleteOptionArticleProduit');
+        
+      var index = optionArticleProduits.indexOf(option);
+       
+      optionArticleProduits.splice(index,1);
+    
+    };
+
+
+    $scope.addOperationArticleProduit = function (operationArticleProduits) {
+
+
+      console.log('addOperationArticleProduit');
+
+      var operationArtProd = {
+      'designation':'',
+      'operationArticleId':''
+
+              }   
+              
+              operationArticleProduits.push(operationArtProd);  
+    
+      };
+
+
+     
+$scope.deleteOperationArticleProduit = function (operation,operationArticleProduits) {
+
+  
+
+  console.log('deleteOperationArticleProduit');
+    
+  var index = operationArticleProduits.indexOf(operation);
+   
+  operationArticleProduits.splice(index,1);
+
+};
+
+
+
+
+
+
       
       $scope.getAllOperationProduit = function () {
         $http.get(UrlCommun + '/operationProduit/all').success(function (data) {
@@ -539,6 +690,8 @@ angular
         "articleProduits":[{
           'articleId':'',
           'impressionProduitId':'',
+          'qte':'',
+          'grammage':'',
           "optionArticleProduits":[{
                                     'designation':'',
                                     'optionArticleId':'',
@@ -547,6 +700,8 @@ angular
           "operationArticleProduits":[{
                                     'designation':'',
                                     'operationArticleId':'',
+                                    'cout':'',
+                                    'temps':''
 
                                      }]                                                               
         
@@ -568,42 +723,14 @@ angular
 
             $scope.creationProduitForm.$setPristine();
             $scope.myData[index].documentProduits = $scope.listeDocumentProduit;
+
+            $scope.produitCourante = datagetProduit;
+
+
+
           });
 
 
-          if ($scope.myData[index].dateIntroduction == null) {
-
-            $scope.produitCourante = $scope.myData[index]
-          ? angular.copy($scope.myData[index])
-          : {};
-
-          } else {
-            const dateTimeFormat = new Intl.DateTimeFormat("en", {
-              year: "numeric",
-              month: "numeric",
-              day: "2-digit",
-            });
-            var [
-              { value: month },
-              ,
-              { value: day },
-              ,
-              { value: year }
-            ] = dateTimeFormat.formatToParts($scope.myData[index].dateIntroduction);
-            $scope.dateParEdition = `${year}-${month}-${day}`;
-           
-            $scope.produitCourante = Object.assign($scope.myData[index], { dateIntroduction: $scope.dateParEdition })
-              //  $scope.partieInteresseeCourante = $scope.myData[index]
-              ? angular.copy($scope.myData[index])
-              : {};
-
-        
-
-
-          }
-
-
-       
         $scope.displayMode = 'edit'; 
         $scope.qte = true;
       };
@@ -950,14 +1077,14 @@ angular
       $scope.$watch('myData', function () {
         $scope.colDefs = [
 		
-		    {
+		   /*  {
               field: 'numero',
               displayName: 'Modele Article',
               width: '10%',
-            },
+            }, */
           {
             field: 'reference',
-            displayName: 'N° Article',
+            displayName: 'Ref',
             width: '12%',
           },
           {
@@ -978,12 +1105,12 @@ angular
             }, */
           {
             field: 'familleDesignation',
-            displayName: 'Sous Famille',
+            displayName: 'Categorie',
             width: '10%',
           },
           {
             field: 'sousFamilleDesignation',
-            displayName: 'Marque',
+            displayName: 'Sous Categorie',
             width: '8%',
           },
           //										{

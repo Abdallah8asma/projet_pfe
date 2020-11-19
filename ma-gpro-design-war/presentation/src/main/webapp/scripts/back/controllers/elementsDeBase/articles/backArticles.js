@@ -774,10 +774,27 @@ app.filter('filterListBackArticle', function() {
 		 return listeFiltre;
 	  };
 	})
-app.controller('BackElBase', [ '$scope', function($scope) {
-	
+app.controller('BackElBase', [ '$scope','$route', function($scope, $route) {
+
+
+
 	//$scope.ITEM = 'article';
 	$scope.ITEM = 'produit';
+
+
+	var current = $route.current;
+	switch (current.params['type']) {
+		case 'produit':
+			$scope.ITEM = 'produit';
+			break;
+	
+
+		case 'article':
+			$scope.ITEM = 'article';
+			break;
+	}
+	
+
 	$scope.goArticle = function(){$scope.ITEM = 'article';}
 	$scope.goProduit = function(){$scope.ITEM = 'produit';}
 }]);
