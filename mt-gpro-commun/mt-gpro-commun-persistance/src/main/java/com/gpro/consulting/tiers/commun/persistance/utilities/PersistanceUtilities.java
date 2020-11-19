@@ -1328,6 +1328,8 @@ public class PersistanceUtilities {
 	    /** Emplacement */
 	    vArticleEntity.setEmplacement(pArticleValue.getEmplacement());
 	    
+	    vArticleEntity.setUnite2Entite(pArticleValue.getUnite2Entite());
+	    
 	    // Liste Document
 	    if (pArticleValue.getDocumentEntites() != null) {
 
@@ -1399,6 +1401,9 @@ public class PersistanceUtilities {
 	    vArticleValue.setEmplacement(pArticleEntity.getEmplacement());
 	    /** site */
 	    vArticleValue.setSiteEntite(pArticleEntity.getSiteEntite());
+	    
+	    vArticleValue.setUnite2Entite(pArticleEntity.getUnite2Entite());
+	    
 	    /** Sous Famille */
 	    if (pArticleEntity.getSousFamilleArtEntite() != null) {
 	      vArticleValue.setSousFamilleArtEntite(pArticleEntity.getSousFamilleArtEntite().getId());
