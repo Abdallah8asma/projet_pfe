@@ -125,6 +125,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 											<option>Site</option>
 											<option>Groupe</option>
 											<option>Region</option>
+											<option>Banque</option>
 										</select>
 				</ul>
 			</div>
@@ -198,7 +199,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 				</div> -->
 
 				<!-- /*********devise **********/ -->
-				<div class="row" ng-show="parametre=='Devise'" ng-controller="backDeviseController">
+				<div class="row" ng-if="parametre=='Devise'" ng-controller="backDeviseController">
 
 					<table class="table table-bordered table-condensed back-table-head-color">
 						<thead>
@@ -272,7 +273,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 				</div>
 
 				<!-- /***** famille *******/ -->
-				<div class="row" ng-show="parametre=='Famille'" ng-controller="backFamillePIController">
+				<div class="row" ng-if="parametre=='Famille'" ng-controller="backFamillePIController">
 
 					<table class="table table-bordered table-condensed back-table-head-color" data-heading="Editable Rows">
 						<thead>
@@ -346,7 +347,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 				</div>
 
 				<!-- /***** type *******/ -->
-				<div class="row" ng-show="parametre=='Type PI'" ng-controller="backTypePIController">
+				<div class="row" ng-if="parametre=='Type PI'" ng-controller="backTypePIController">
 
 					<table class="table table-bordered table-condensed back-table-head-color">
 						<thead>
@@ -416,7 +417,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 				</div>
 
 				<!-- /*********TypeDoc **********/ -->
-				<div class="row" ng-show="parametre=='TypeDoc'" ng-controller="backTypeDocController">
+				<div class="row" ng-if="parametre=='TypeDoc'" ng-controller="backTypeDocController">
 
 					<table class="table table-bordered table-condensed back-table-head-color">
 						<thead>
@@ -496,7 +497,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 				</div>
 
 				<!-- /*****categorie *******/ -->
-				<div class="row" ng-show="parametre=='Cat&eacute;gorie'" ng-controller="backCathegoriePIController">
+				<div class="row" ng-if="parametre=='Cat&eacute;gorie'" ng-controller="backCathegoriePIController">
 
 					<!-- <panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
 								class="fa fa-wrench"></i></a> <a href="">
@@ -569,7 +570,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 				</div>
 
 				<!-- /*****Site *******/ -->
-				<div class="row" ng-show="parametre=='Site'" ng-controller="backSitePIController">
+				<div class="row" ng-if="parametre=='Site'" ng-controller="backSitePIController">
 					<!-- 
 					<panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
 								class="fa fa-wrench"></i></a> <a href="">
@@ -640,7 +641,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 				</div>
 
 				<!-- /*****Groupe Client *******/ -->
-				<div class="row" ng-show="parametre=='Groupe'" ng-controller="backGroupeClientController">
+				<div class="row" ng-if="parametre=='Groupe'" ng-controller="backGroupeClientController">
 
 					<!-- <panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
 								class="fa fa-wrench"></i></a> <a href="">
@@ -714,7 +715,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 
 
 				<!-- /*****Region Client,Fournisseur *******/ -->
-				<div class="row" ng-show="parametre=='Region'" ng-controller="backRegionPIController">
+				<div class="row" ng-if="parametre=='Region'" ng-controller="backRegionPIController">
 					<!-- 
 					<panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
 								class="fa fa-wrench"></i></a> <a href="">
@@ -780,6 +781,96 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 										</div>
 									</div>
 
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+
+
+				
+				<!-- /*****banque *******/ -->
+				<div class="row" ng-if="parametre=='Banque'" ng-controller="backBanquePIController">
+
+					<!-- <panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
+								class="fa fa-wrench"></i></a> <a href="">
+							<panel-control-collapse class="fa fa-chevron-down"></panel-control-collapse>
+						</a> </panel-controls> -->
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th style="width: 15%">Code</th>
+								<th style="width: 15%">Abreviation</th>
+								<th style="width: 70%">Nom</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterCathegorie()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="cathegorie in listeCathegorie">
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.code"
+										e-name="code" e-form="rowform" e-required> {{ cathegorie.code ||
+									'empty' }} </span>
+								</td>
+
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.abreviation"
+										e-name="abreviation" e-form="rowform" e-required> {{ cathegorie.abreviation ||
+									'empty' }} </span>
+								</td>
+
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.designation"
+										e-name="designation" e-form="rowform" e-required> {{ cathegorie.designation ||
+									'empty' }} </span>
+								</td>
+								<td style="white-space: nowrap">
+
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveCathegorie(cathegorie,cathegorie.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline"
+												shown="CategorieCourante == cathegorie">
+
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+													<i class="ms-Icon ms-Icon--Download " aria-hidden="true"></i>
+												</button>
+
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, cathegorie.id, cathegorie.designation, listeCathegorie )"
+													class="btn btn-sm ">
+
+													<i class="ms-Icon ms-Icon--Cancel " aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn  btn-sm " ng-click="removecathegorie($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
 
 
 								</td>

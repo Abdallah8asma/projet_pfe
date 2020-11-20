@@ -22,6 +22,7 @@ angular
       $scope.ListFamillePICache = [];
       $scope.ListSitePICache = [];
       $scope.listeRegionCache = [];
+      $scope.listeBanque  = [];
       $scope.ListActifPI = [
         { actif: true, designation: 'oui' },
         { actif: false, designation: 'non' },
@@ -160,6 +161,15 @@ angular
           });
       };
 
+      $scope.getListeBanquePI = function () {
+        $http.get(UrlCommun+"/banquePI/all").success(function (data) {
+          $log.debug("listeCathegorie : "+data.length);
+          $scope.listeBanque = data;
+        });
+      }
+
+      $scope.getListeBanquePI();
+
       $scope.listeRegionCache();
       $scope.ListDeviseCache();
       $scope.listeTypeDocumentCache();
@@ -269,13 +279,13 @@ angular
         $scope.listeRepresentant = [];
         $scope.listeDocument = [];
 
-        $http
+       /* $http
           .get(UrlCommun + '/partieInteressee/getCurrentReferenceByFamille:2')
           .success(function (datagetPI) {
             $scope.partieInteresseeCourante.reference = datagetPI;
 
             $scope.partieInteresseeCourante.refAvantChangement = datagetPI;
-          });
+          });*/
 
         $scope.displayMode = 'edit';
       };

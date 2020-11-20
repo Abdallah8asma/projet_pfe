@@ -12,6 +12,7 @@ import com.erp.socle.j2ee.mt.socle.uploadFichier.IGestionnaireDocument;
 import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
 import com.gpro.consulting.tiers.commun.coordination.login.value.RoleValue;
 import com.gpro.consulting.tiers.commun.coordination.login.value.UserValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.BoutiqueValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.CompteComptableValue;
@@ -25,6 +26,10 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.GrosseurV
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ImpressionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MatiereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MetrageValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OperationArticleProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OperationProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PackageValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
@@ -37,7 +42,9 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamil
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SuperFamilleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.TypeArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.UniteArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.BanqueValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.CategorieValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.CompteComptablePIValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.DeviseValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.DocumentValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.FamilleValue;
@@ -50,6 +57,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.Type
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.TypeValue;
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.entity.BaseInfoEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.BoutiqueEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CompteComptableEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CouleurEntite;
@@ -62,6 +70,10 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurE
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationArticleProduitEntity;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationProduitEntity;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionProduitEntity;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PackageEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PrixClientEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitEntity;
@@ -76,7 +88,9 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.TypeArtic
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.UniteArticleEntity;
 import com.gpro.consulting.tiers.commun.persistance.login.entity.RoleEntity;
 import com.gpro.consulting.tiers.commun.persistance.login.entity.UserEntity;
+import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.BanqueEntite;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CategorieEntite;
+import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CompteComptablePIEntity;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DeviseEntite;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DocumentEntite;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.FamilleEntite;
@@ -302,6 +316,13 @@ public class PersistanceUtilities {
 		
 		vPartieInteresseEntite.setPayementTerme(pPartieInteresseValue.getPayementTerme());
 		
+		vPartieInteresseEntite.setCompteComptablePartieInteressee(pPartieInteresseValue.getCompteComptablePartieInteressee());
+		
+		
+		vPartieInteresseEntite.setBanqueId(pPartieInteresseValue.getBanqueId());
+		
+		vPartieInteresseEntite.setCodeBancaire(pPartieInteresseValue.getCodeBancaire());
+		
 		// Liste Document
 		if (pPartieInteresseValue.getDocuments() != null) {
 
@@ -416,6 +437,14 @@ public class PersistanceUtilities {
 		vPartieInteresseValue.setTelephoneMobile(pPartieInteresseEntity.getTelephoneMobile());
 		
 		vPartieInteresseValue.setPayementTerme(pPartieInteresseEntity.getPayementTerme());
+		
+		vPartieInteresseValue.setCompteComptablePartieInteressee(pPartieInteresseEntity.getCompteComptablePartieInteressee());
+		
+		
+		vPartieInteresseValue.setBanqueId(pPartieInteresseEntity.getBanqueId());
+		
+		
+		vPartieInteresseValue.setCodeBancaire(pPartieInteresseEntity.getCodeBancaire());
 		
 		// Liste Document
 		if (pPartieInteresseEntity.getDocumentEntites() != null) {
@@ -823,6 +852,38 @@ public class PersistanceUtilities {
 		return categorieValue;
 	}
 
+	
+
+	/**
+	 * Méthode  banque entite
+	 */
+	public static BanqueEntite toEntity(BanqueValue categorieValue) {
+		BanqueEntite categorieEntite = new BanqueEntite();
+		if (categorieValue.getId() != null) {
+			categorieEntite.setId(categorieValue.getId());
+		}
+		
+		categorieEntite.setCode(categorieValue.getCode());
+		categorieEntite.setAbreviation(categorieValue.getAbreviation());
+		categorieEntite.setDesignation(categorieValue.getDesignation());
+		
+	
+
+		return categorieEntite;
+	}
+
+	/** Converstion CathegoriePartieINT entite en CathegoriePartieINT value **/
+	public static BanqueValue toValue(BanqueEntite categorieEntite) {
+		BanqueValue categorieValue = new BanqueValue();
+
+		categorieValue.setId(categorieEntite.getId());
+		
+		categorieValue.setCode(categorieEntite.getCode());
+		categorieValue.setAbreviation(categorieEntite.getAbreviation());
+		categorieValue.setDesignation(categorieEntite.getDesignation());
+
+		return categorieValue;
+	}
 	/**************************** value to entite famille PI *********************************/
 
 	/** Converstion Famille value en Famille entite **/
@@ -1267,6 +1328,8 @@ public class PersistanceUtilities {
 	    /** Emplacement */
 	    vArticleEntity.setEmplacement(pArticleValue.getEmplacement());
 	    
+	    vArticleEntity.setUnite2Entite(pArticleValue.getUnite2Entite());
+	    
 	    // Liste Document
 	    if (pArticleValue.getDocumentEntites() != null) {
 
@@ -1338,6 +1401,9 @@ public class PersistanceUtilities {
 	    vArticleValue.setEmplacement(pArticleEntity.getEmplacement());
 	    /** site */
 	    vArticleValue.setSiteEntite(pArticleEntity.getSiteEntite());
+	    
+	    vArticleValue.setUnite2Entite(pArticleEntity.getUnite2Entite());
+	    
 	    /** Sous Famille */
 	    if (pArticleEntity.getSousFamilleArtEntite() != null) {
 	      vArticleValue.setSousFamilleArtEntite(pArticleEntity.getSousFamilleArtEntite().getId());
@@ -1443,6 +1509,186 @@ public class PersistanceUtilities {
 	    return vDocumentValue;
 
 	  }
+	  
+	  
+		/******************Option  Article Produit Entity To Value ****************************/
+	  
+	
+		public static OptionArticleProduitValue toValue(OptionArticleProduitEntity pOptionArticleProduitEntity) {
+			
+			
+			OptionArticleProduitValue optionArticleProduitValue = new OptionArticleProduitValue();
+			optionArticleProduitValue.setId(pOptionArticleProduitEntity.getId());
+			optionArticleProduitValue.setNom(pOptionArticleProduitEntity.getNom());
+			optionArticleProduitValue.setOptionArticleId(pOptionArticleProduitEntity.getOptionArticleId());
+			optionArticleProduitValue.setDesignation(pOptionArticleProduitEntity.getDesignation());
+			
+
+			return optionArticleProduitValue;
+		}
+
+		// added by samer
+	
+		public static OptionArticleProduitEntity toEntity(OptionArticleProduitValue pOptionArticleProduitValue) {
+			OptionArticleProduitEntity optionArticleProduitEntity = new OptionArticleProduitEntity();
+			if (pOptionArticleProduitValue.getId() != null) {
+				optionArticleProduitEntity.setId(pOptionArticleProduitValue.getId());
+			}
+
+			optionArticleProduitEntity.setNom(pOptionArticleProduitValue.getNom());
+			optionArticleProduitEntity.setOptionArticleId(pOptionArticleProduitValue.getOptionArticleId());
+			optionArticleProduitEntity.setDesignation(pOptionArticleProduitValue.getDesignation());
+			
+			return optionArticleProduitEntity;
+		}
+		
+		
+		/******************OperationArticleProduit Entity To Value ****************************/
+		  
+		
+		public static OperationArticleProduitValue toValue(OperationArticleProduitEntity pOptionArticleProduitEntity) {
+			
+			
+			OperationArticleProduitValue optionArticleProduitValue = new OperationArticleProduitValue();
+			
+			optionArticleProduitValue.setId(pOptionArticleProduitEntity.getId());
+			optionArticleProduitValue.setNom(pOptionArticleProduitEntity.getNom());
+			optionArticleProduitValue.setOperationArticleId(pOptionArticleProduitEntity.getOperationArticleId());
+			optionArticleProduitValue.setDesignation(pOptionArticleProduitEntity.getDesignation());
+			
+			
+			optionArticleProduitValue.setCout(pOptionArticleProduitEntity.getCout());
+			optionArticleProduitValue.setTemps(pOptionArticleProduitEntity.getTemps());
+			optionArticleProduitValue.setOrdre(pOptionArticleProduitEntity.getOrdre());
+			
+
+			return optionArticleProduitValue;
+		}
+
+		// added by samer
+	
+		public static OperationArticleProduitEntity toEntity(OperationArticleProduitValue pOptionArticleProduitValue) {
+			OperationArticleProduitEntity optionArticleProduitEntity = new OperationArticleProduitEntity();
+			if (pOptionArticleProduitValue.getId() != null) {
+				optionArticleProduitEntity.setId(pOptionArticleProduitValue.getId());
+			}
+
+			optionArticleProduitEntity.setNom(pOptionArticleProduitValue.getNom());
+			optionArticleProduitEntity.setOperationArticleId(pOptionArticleProduitValue.getOperationArticleId());
+			optionArticleProduitEntity.setDesignation(pOptionArticleProduitValue.getDesignation());
+			
+			
+			optionArticleProduitEntity.setCout(pOptionArticleProduitValue.getCout());
+			optionArticleProduitEntity.setTemps(pOptionArticleProduitValue.getTemps());
+			optionArticleProduitEntity.setOrdre(pOptionArticleProduitValue.getOrdre());
+			
+			return optionArticleProduitEntity;
+		}
+		
+	  
+		/****************** Article Produit Entity To Value ****************************/
+	  
+		// added by zeineb g
+		/** ArticleProduitValue to ArticleProduitValue **/
+		public static ArticleProduitValue toValue(ArticleProduitEntity pArticleProduitEntity) {
+			ArticleProduitValue articleProduitValue = new ArticleProduitValue();
+			articleProduitValue.setId(pArticleProduitEntity.getId());
+			articleProduitValue.setArticleId(pArticleProduitEntity.getArticleId());
+			articleProduitValue.setReferenceArticle(pArticleProduitEntity.getReferenceArticle());
+			articleProduitValue.setProduitSemiFini(pArticleProduitEntity.getProduitSemiFini());
+			// documentProduitValue.setProduitId(pDocumentProduitEntity.getProduitId());
+
+			articleProduitValue.setQte(pArticleProduitEntity.getQte());
+			
+			
+			articleProduitValue.setImpressionProduitId(pArticleProduitEntity.getImpressionProduitId());
+			
+			articleProduitValue.setGrammage(pArticleProduitEntity.getGrammage());
+			
+			
+			// added by samer
+			if (pArticleProduitEntity.getOptionArticleProduits() != null) {
+				Set<OptionArticleProduitValue> vListeOptions = new HashSet<OptionArticleProduitValue>();
+				for (OptionArticleProduitEntity vArticleEntity : pArticleProduitEntity.getOptionArticleProduits()) {
+					OptionArticleProduitValue vDe = toValue(vArticleEntity);
+					vListeOptions.add(vDe);
+				}
+				articleProduitValue.setOptionArticleProduits(vListeOptions);
+			}
+			
+			// added by samer
+			if (pArticleProduitEntity.getOperationArticleProduits() != null) {
+				Set<OperationArticleProduitValue> vListeOperations = new HashSet<OperationArticleProduitValue>();
+				for (OperationArticleProduitEntity vArticleEntity : pArticleProduitEntity.getOperationArticleProduits()) {
+					OperationArticleProduitValue vDe = toValue(vArticleEntity);
+					vListeOperations.add(vDe);
+				}
+				articleProduitValue.setOperationArticleProduits(vListeOperations);
+			}
+
+
+			
+
+			return articleProduitValue;
+		}
+
+		// added by zeineb g
+		/** ArticleProduitEntity to ArticleProduitEntite **/
+		public static ArticleProduitEntity toEntity(ArticleProduitValue pArticleProduitValue) {
+			ArticleProduitEntity articleProduitEntity = new ArticleProduitEntity();
+			if (pArticleProduitValue.getId() != null) {
+				articleProduitEntity.setId(pArticleProduitValue.getId());
+			}
+			articleProduitEntity.setArticleId(pArticleProduitValue.getArticleId());
+			// documentProduitEntity.setProduitId(pDocumentProduitValue.getProduitId());
+			articleProduitEntity.setQte(pArticleProduitValue.getQte());
+			articleProduitEntity.setProduitSemiFini(pArticleProduitValue.getProduitSemiFini());
+			articleProduitEntity.setReferenceArticle(pArticleProduitValue.getReferenceArticle());
+			
+			articleProduitEntity.setImpressionProduitId(pArticleProduitValue.getImpressionProduitId());
+			
+			articleProduitEntity.setGrammage(pArticleProduitValue.getGrammage());
+			
+			if(pArticleProduitValue.getOptionArticleProduits() != null) {
+				
+				Set<OptionArticleProduitEntity> vListeOptionArticleProduit = new HashSet<OptionArticleProduitEntity>();
+				
+				for(OptionArticleProduitValue vOptionArticleProduit :pArticleProduitValue.getOptionArticleProduits() ) {
+					
+					OptionArticleProduitEntity   vOptionArticleProduitEntite = toEntity(vOptionArticleProduit);
+					
+					vOptionArticleProduitEntite.setArticleProduit(articleProduitEntity);
+					
+					vListeOptionArticleProduit.add(vOptionArticleProduitEntite);
+				}
+				
+				
+				articleProduitEntity.setOptionArticleProduits(vListeOptionArticleProduit);
+				
+			}
+			
+			
+			
+	         if(pArticleProduitValue.getOperationArticleProduits() != null) {
+				
+				Set<OperationArticleProduitEntity> vListeOperationArticleProduit = new HashSet<OperationArticleProduitEntity>();
+				
+				for(OperationArticleProduitValue vOptionArticleProduit :pArticleProduitValue.getOperationArticleProduits() ) {
+					
+					OperationArticleProduitEntity   vOptionArticleProduitEntite = toEntity(vOptionArticleProduit);
+					
+					vOptionArticleProduitEntite.setArticleProduit(articleProduitEntity);
+					
+					vListeOperationArticleProduit.add(vOptionArticleProduitEntite);
+				}
+				
+				
+				articleProduitEntity.setOperationArticleProduits(vListeOperationArticleProduit);
+				
+			}
+			
+			return articleProduitEntity;
+		}
 
 	/****************** Produit Entity To Value ****************************/
 	public static ProduitValue toValue(ProduitEntity pProduitEntity) {
@@ -1484,6 +1730,14 @@ public class PersistanceUtilities {
 	    produitValue.setPrixAchatTTC(pProduitEntity.getPrixAchatTTC());
 	    produitValue.setStock(pProduitEntity.isStock());
 	    
+	    
+	    
+	    produitValue.setDimension(pProduitEntity.getDimension());
+	    produitValue.setGrammage(pProduitEntity.getGrammage());
+	    produitValue.setNature(pProduitEntity.getNature());
+	    produitValue.setNbrPause(pProduitEntity.getNbrPause());
+	    produitValue.setNumerotation(pProduitEntity.getNumerotation());
+	    
 	    if (pProduitEntity.getSousFamille() != null) {
 			produitValue.setSousFamilleId(pProduitEntity.getSousFamille()
 					.getId());
@@ -1501,6 +1755,18 @@ public class PersistanceUtilities {
 				vListeDocuments.add(vDe);
 			}
 			produitValue.setDocumentProduits(vListeDocuments);
+		}
+		
+		
+		/*** Article produit */
+		// added by zeineb g
+		if (pProduitEntity.getArticleProduits() != null) {
+			Set<ArticleProduitValue> vListeArticles = new HashSet<ArticleProduitValue>();
+			for (ArticleProduitEntity vArticleEntity : pProduitEntity.getArticleProduits()) {
+				ArticleProduitValue vDe = toValue(vArticleEntity);
+				vListeArticles.add(vDe);
+			}
+			produitValue.setArticleProduits(vListeArticles);
 		}
 
 	
@@ -1552,6 +1818,14 @@ public class PersistanceUtilities {
 		produiEntity.setPrixAchatTTC(pProduitValue.getPrixAchatTTC());
 		produiEntity.setStock(pProduitValue.isStock());
 		
+		
+		produiEntity.setDimension(pProduitValue.getDimension());
+		produiEntity.setGrammage(pProduitValue.getGrammage());
+		produiEntity.setNature(pProduitValue.getNature());
+		produiEntity.setNbrPause(pProduitValue.getNbrPause());
+		produiEntity.setNumerotation(pProduitValue.getNumerotation());
+		
+
 		/*** Liste Document produit */
 		if (pProduitValue.getDocumentProduits() != null) {
 			Set<DocumentProduitEntity> vListeDocuments = new HashSet<DocumentProduitEntity>();
@@ -1562,6 +1836,16 @@ public class PersistanceUtilities {
 				vListeDocuments.add(vDe);
 			}
 			produiEntity.setDocumentProduits(vListeDocuments);
+		}
+		
+		if (pProduitValue.getArticleProduits() != null) {
+			Set<ArticleProduitEntity> vListeArticles = new HashSet<ArticleProduitEntity>();
+			for (ArticleProduitValue vArticleValue : pProduitValue.getArticleProduits()) {
+				ArticleProduitEntity vDe = toEntity(vArticleValue);
+				vDe.setProduit(produiEntity);
+				vListeArticles.add(vDe);
+			}
+			produiEntity.setArticleProduits(vListeArticles);		
 		}
 
 		//Added on 16/11/2016 , by Zeineb Medimagh
@@ -2519,6 +2803,97 @@ public class PersistanceUtilities {
 	    pCompteComptableEntity.setDescription(pCompteComptableValue.getDescription());
 	    return pCompteComptableEntity;
 	  }
+	  
+	  
+	  
+		/*** Compte Comptable PI  **/
+
+	  /** unitelArticleEntite to uniteArticleValue **/
+	  public static CompteComptablePIValue toValue(CompteComptablePIEntity pCompteComptableEntity) {
+		  CompteComptablePIValue compteComptableValue = new CompteComptablePIValue();
+		  compteComptableValue.setId(pCompteComptableEntity.getId());
+		  compteComptableValue.setDesignation(pCompteComptableEntity.getDesignation());
+		  compteComptableValue.setDescription(pCompteComptableEntity.getDescription());
+	    return compteComptableValue;
+	  }
+
+	  /** uniteArticleValue to uniteArticleEntite **/
+	  public static CompteComptablePIEntity toEntity(CompteComptablePIValue pCompteComptableValue) {
+		  CompteComptablePIEntity pCompteComptableEntity = new CompteComptablePIEntity();
+	    if (pCompteComptableValue.getId() != null) {
+	    	pCompteComptableEntity.setId(pCompteComptableValue.getId());
+	    }
+	    pCompteComptableEntity.setDesignation(pCompteComptableValue.getDesignation());
+	    pCompteComptableEntity.setDescription(pCompteComptableValue.getDescription());
+	    return pCompteComptableEntity;
+	  }
+	  
+	  
+		/*** option Article  **/
+
+
+	  public static OptionProduitValue toValue(OptionProduitEntity pOptionArticleEntity) {
+		  OptionProduitValue optionArticleValue = new OptionProduitValue();
+		  optionArticleValue.setId(pOptionArticleEntity.getId());
+		  optionArticleValue.setDesignation(pOptionArticleEntity.getDesignation());
+		  optionArticleValue.setDescription(pOptionArticleEntity.getDescription());
+		  optionArticleValue.setTypesIds(pOptionArticleEntity.getTypesIds());
+		  
+		  
+	    return optionArticleValue;
+	  }
+
+	
+	  public static OptionProduitEntity toEntity(OptionProduitValue pOptionArticleValue) {
+		  OptionProduitEntity pOptionArticleEntity = new OptionProduitEntity();
+	    if (pOptionArticleValue.getId() != null) {
+	    	pOptionArticleEntity.setId(pOptionArticleValue.getId());
+	    }
+	    pOptionArticleEntity.setDesignation(pOptionArticleValue.getDesignation());
+	    pOptionArticleEntity.setDescription(pOptionArticleValue.getDescription());
+	    pOptionArticleEntity.setTypesIds(pOptionArticleValue.getTypesIds());
+	    return pOptionArticleEntity;
+	  }
+	  
+	  
+	  
+		/*** operation Produit  **/
+
+
+	  public static OperationProduitValue toValue(OperationProduitEntity pOptionArticleEntity) {
+		  OperationProduitValue optionArticleValue = new OperationProduitValue();
+		  optionArticleValue.setId(pOptionArticleEntity.getId());
+		  optionArticleValue.setDesignation(pOptionArticleEntity.getDesignation());
+		  optionArticleValue.setDescription(pOptionArticleEntity.getDescription());
+		  optionArticleValue.setTypesIds(pOptionArticleEntity.getTypesIds());
+		  
+		  optionArticleValue.setCout(pOptionArticleEntity.getCout());
+		  optionArticleValue.setTemps(pOptionArticleEntity.getTemps());
+		  optionArticleValue.setOrdre(pOptionArticleEntity.getOrdre());
+		  
+		  
+	    return optionArticleValue;
+	  }
+
+	
+	  public static OperationProduitEntity toEntity(OperationProduitValue pOptionArticleValue) {
+		  OperationProduitEntity pOptionArticleEntity = new OperationProduitEntity();
+	    if (pOptionArticleValue.getId() != null) {
+	    	pOptionArticleEntity.setId(pOptionArticleValue.getId());
+	    }
+	    pOptionArticleEntity.setDesignation(pOptionArticleValue.getDesignation());
+	    pOptionArticleEntity.setDescription(pOptionArticleValue.getDescription());
+	    pOptionArticleEntity.setTypesIds(pOptionArticleValue.getTypesIds());
+	    
+	    
+	    pOptionArticleEntity.setCout(pOptionArticleValue.getCout());
+	    pOptionArticleEntity.setTemps(pOptionArticleValue.getTemps());
+	    pOptionArticleEntity.setOrdre(pOptionArticleValue.getOrdre());
+	    
+	    
+	    return pOptionArticleEntity;
+	  }
+	
 	
 
 }

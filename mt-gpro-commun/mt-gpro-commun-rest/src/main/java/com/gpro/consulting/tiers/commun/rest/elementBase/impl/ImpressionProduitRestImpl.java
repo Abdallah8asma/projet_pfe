@@ -55,9 +55,11 @@ public class ImpressionProduitRestImpl implements IImpressionProduitRest {
   
   /**********************  Méthode de Suppression d'un ImpressionProduit **********************/
   @RequestMapping(value = "/supprimerImpressionProduit:{id}", method = RequestMethod.DELETE)
-  public void supprimerImpressionProduit(@PathVariable("id") String id) {
+  public @ResponseBody String supprimerImpressionProduit(@PathVariable("id") String id) {
    Long idSupp= Long.parseLong(id);
    impressionProduitService.supprimerImpressionProduit(Long.valueOf(idSupp));
+   
+   return "OK";
   }
   
 }

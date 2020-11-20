@@ -56,9 +56,7 @@ public class ProduitEntity implements Serializable {
 	@Column(name = "com_site_id")
 	private Long siteId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "eb_sfprod_id")
-	private SousFamilleProduitEntity sousFamille;
+
 
 	@Column(name = "etat")
 	private String etat;
@@ -78,8 +76,7 @@ public class ProduitEntity implements Serializable {
 	@Column(name = "bl_suppression")
 	private boolean blSuppression;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval=true)
-	private Set<DocumentProduitEntity> documentProduits;
+
 
 	@Column(name = "prix_unitaire")
 	private Double prixUnitaire;
@@ -153,9 +150,89 @@ public class ProduitEntity implements Serializable {
 	
 	
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "eb_sfprod_id")
+	private SousFamilleProduitEntity sousFamille;
+	
+	
+	@Column(name = "dimension")
+	private String dimension;
+	
+	@Column(name = "grammage")
+	private String grammage;
+	
+	@Column(name = "numerotation")
+	private String numerotation;
+	
+	@Column(name = "nbr_pause")
+	private String nbrPause;
+	
+	@Column(name = "nature")
+	private String nature;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval=true)
+	private Set<ArticleProduitEntity> articleProduits;
+	
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval=true)
+	private Set<DocumentProduitEntity> documentProduits;
 	
 	
 	
+	
+	
+	public String getDimension() {
+		return dimension;
+	}
+
+	public void setDimension(String dimension) {
+		this.dimension = dimension;
+	}
+
+	public String getGrammage() {
+		return grammage;
+	}
+
+	public void setGrammage(String grammage) {
+		this.grammage = grammage;
+	}
+
+	public String getNumerotation() {
+		return numerotation;
+	}
+
+	public void setNumerotation(String numerotation) {
+		this.numerotation = numerotation;
+	}
+
+	public String getNbrPause() {
+		return nbrPause;
+	}
+
+	public void setNbrPause(String nbrPause) {
+		this.nbrPause = nbrPause;
+	}
+
+	public String getNature() {
+		return nature;
+	}
+
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
+
+	public Set<ArticleProduitEntity> getArticleProduits() {
+		return articleProduits;
+	}
+
+	public void setArticleProduits(Set<ArticleProduitEntity> articleProduits) {
+		this.articleProduits = articleProduits;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public boolean isStock() {
 		return stock;
 	}

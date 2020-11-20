@@ -10,8 +10,7 @@
 	}
 </script>
 
-<div class="container-fluid" ng-controller="produitController"
-	style="background-color: #fff;">
+<div class="container-fluid" ng-controller="produitController" style="background-color: #fff;">
 
 	<div class="row" ng-show="displayMode != 'edit'">
 
@@ -22,33 +21,25 @@
 			<div class="ms-CommandBar ms-CommandBar--navBar">
 				<div class="ms-CommandBar-sideCommands">
 					<div class="ms-SearchBox ms-SearchBox--commandBar">
-						<input class="ms-SearchBox-field" type="text" value=""
-							ng-model="filterOptions.filterText" /> <label
-							class="ms-SearchBox-label"> <i
-							class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i> <span
-							class="ms-SearchBox-text">Rechercher</span>
+						<input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
+						<label class="ms-SearchBox-label"> <i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+							<span class="ms-SearchBox-text">Rechercher</span>
 						</label>
-						<div
-							class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
+						<div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
 							<button class="ms-CommandButton-button">
-								<span class="ms-CommandButton-icon"><i
-									class="ms-Icon ms-Icon--Cancel"></i></span> <span
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span> <span
 									class="ms-CommandButton-label"></span>
 							</button>
 						</div>
-						<div
-							class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel">
+						<div class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel">
 							<button class="ms-CommandButton-button">
-								<span class="ms-CommandButton-icon"><i
-									class="ms-Icon ms-Icon--ChromeBack"></i></span> <span
-									class="ms-CommandButton-label"></span>
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--ChromeBack"></i></span>
+								<span class="ms-CommandButton-label"></span>
 							</button>
 						</div>
-						<div
-							class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel">
+						<div class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel">
 							<button class="ms-CommandButton-button">
-								<span class="ms-CommandButton-icon"><i
-									class="ms-Icon ms-Icon--Filter"></i></span> <span
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Filter"></i></span> <span
 									class="ms-CommandButton-label"></span>
 							</button>
 						</div>
@@ -57,17 +48,15 @@
 					<div class="ms-CommandButton ms-CommandButton--noLabel">
 						<button class="ms-CommandButton-button">
 							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
-								class="ms-Icon ms-Icon--Info"></i></span> <span
+									class="ms-Icon ms-Icon--Info"></i></span> <span
 								class="ms-CommandButton-label"></span>
 						</button>
 					</div>
 				</div>
 				<div class="ms-CommandBar-mainArea">
 					<div class="ms-CommandButton">
-						<button class="ms-CommandButton-button"
-							ng-click="AffectationProduit(produitCourante)">
-							<span class="ms-CommandButton-icon"><i
-								class="ms-Icon ms-Icon--CirclePlus"></i></span> <span
+						<button class="ms-CommandButton-button" ng-click="AffectationProduit(produitCourante)">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--CirclePlus"></i></span> <span
 								class="ms-CommandButton-label">Ajouter</span>
 						</button>
 					</div>
@@ -76,63 +65,49 @@
 					<div class="ms-CommandButton ms-CommandButton--dropdown">
 						<button class="ms-CommandButton-button">
 							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
-								class="ms-Icon ms-Icon--Generate"></i></span> <span
+									class="ms-Icon ms-Icon--Generate"></i></span> <span
 								class="ms-CommandButton-label">G&eacute;n&eacute;rer</span> <span
 								class="ms-CommandButton-dropdownIcon"><i
-								class="ms-Icon ms-Icon--ChevronDown"></i></span>
+									class="ms-Icon ms-Icon--ChevronDown"></i></span>
 						</button>
-						<ul
-							class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
-							<li class="ms-ContextualMenu-item"><a
-								class="ms-ContextualMenu-link" tabindex="1"
-								ng-click="downloadAllProduits(produitCourante)">PDF</a></li>
-							<li class="ms-ContextualMenu-item"><a
-								class="ms-ContextualMenu-link" tabindex="1" (
-								ng-click="downloadAllProduitsExcel(produitCourante)">Excel</a></li>
+						<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
+									ng-click="downloadAllProduits(produitCourante)">PDF</a></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
+									ng-click="downloadAllProduitsExcel(produitCourante)">Excel</a></li>
 						</ul>
 					</div>
 
 					<div class="ms-CommandButton">
-						<button class="ms-CommandButton-button"
-							ng-click="rechercheProduit(produitCourante)">
-							<span class="ms-CommandButton-icon"><i
-								class="ms-Icon ms-Icon--FolderSearch"></i></span> <span
-								class="ms-CommandButton-label">Rechercher</span>
+						<button class="ms-CommandButton-button" ng-click="rechercheProduit(produitCourante)">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+							<span class="ms-CommandButton-label">Rechercher</span>
 						</button>
 					</div>
 
 					<div class="ms-CommandButton">
 						<button class="ms-CommandButton-button" ng-click="annulerAjout()">
-							<span class="ms-CommandButton-icon"><i
-								class="ms-Icon ms-Icon--Cancel"></i></span> <span
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span> <span
 								class="ms-CommandButton-label">Annuler</span>
 						</button>
 					</div>
-					<div
-						class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+					<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
 						<button class="ms-CommandButton-button">
-							<span class="ms-CommandButton-icon"><i
-								class="ms-Icon ms-Icon--More"></i></span> <span
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span> <span
 								class="ms-CommandButton-label"></span>
 						</button>
 						<ul class="ms-ContextualMenu is-opened">
-							<li class="ms-ContextualMenu-item"><a
-								class="ms-ContextualMenu-link" tabindex="1">Folder</a> <i
-								class="ms-Icon ms-Icon--Folder"></i></li>
-							<li
-								class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
-							<li class="ms-ContextualMenu-item"><a
-								class="ms-ContextualMenu-link" tabindex="1">Plain Text
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+								<i class="ms-Icon ms-Icon--Folder"></i></li>
+							<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">Plain Text
 									Document</a> <i class="ms-Icon ms-Icon--Document"></i></li>
-							<li class="ms-ContextualMenu-item"><a
-								class="ms-ContextualMenu-link" tabindex="1">A Coffee</a> <i
-								class="ms-Icon ms-Icon--Coffee"></i></li>
-							<li class="ms-ContextualMenu-item"><a
-								class="ms-ContextualMenu-link" tabindex="1">Picture</a> <i
-								class="ms-Icon ms-Icon--Picture"></i></li>
-							<li class="ms-ContextualMenu-item"><a
-								class="ms-ContextualMenu-link" tabindex="1">Money</a> <i
-								class="ms-Icon ms-Icon--Money"></i></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">A
+									Coffee</a> <i class="ms-Icon ms-Icon--Coffee"></i></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+									tabindex="1">Picture</a> <i class="ms-Icon ms-Icon--Picture"></i></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+								<i class="ms-Icon ms-Icon--Money"></i></li>
 						</ul>
 					</div>
 				</div>
@@ -140,17 +115,15 @@
 
 			<div class="panel panel-primary">
 				<div class="panel-body">
-					<form class="form-horizontal" name="rechercheProduitForm"
-						id="rechercheProduitForm">
+					<form class="form-horizontal" name="rechercheProduitForm" id="rechercheProduitForm">
 						<div class="row">
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">N° Article</span>
+											<span class="input-group-text">Réf.</span>
 										</div>
-										<input class="form-control"
-											ng-model="produitCourante.reference"
+										<input class="form-control" ng-model="produitCourante.reference"
 											ng-init="produitCourante.reference=''" />
 									</div>
 								</div>
@@ -161,8 +134,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Désignation</span>
 										</div>
-										<input class="form-control"
-											ng-model="produitCourante.designation"
+										<input class="form-control" ng-model="produitCourante.designation"
 											ng-init="produitCourante.designation=''" />
 									</div>
 								</div>
@@ -172,10 +144,9 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Famille</span>
+											<span class="input-group-text">Sous Categorie</span>
 										</div>
-										<select class="form-control"
-											ng-model="produitCourante.sousfamille"
+										<select class="form-control" ng-model="produitCourante.sousfamille"
 											ng-init="produitCourante.sousfamille=''">
 											<option value="">Tous</option>
 											<option
@@ -186,41 +157,39 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="row">
-						
-						
+
+
 							<div class="col-sm-6">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<span class="input-group-text">Modele Article</span>
 										</div>
-										<input class="form-control"
-											ng-model="produitCourante.numero"
+										<input class="form-control" ng-model="produitCourante.numero"
 											ng-init="produitCourante.numero=''" />
 									</div>
 								</div>
 							</div>
-							
-							
-									<div class="col-sm-6">
+
+
+							<div class="col-sm-6">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<span class="input-group-text">R&eacute;f Four.</span>
 										</div>
-										<input class="form-control"
-											ng-model="produitCourante.referenceFournisseur"
+										<input class="form-control" ng-model="produitCourante.referenceFournisseur"
 											ng-init="produitCourante.referenceFournisseur=''" />
 									</div>
 								</div>
 							</div>
-						
-						
+
+
 						</div>
-						
-						
+
+
 						<div class="row">
 							<div class="col-sm-6">
 								<div class="form-group">
@@ -229,8 +198,7 @@
 											<span class="input-group-text">Prix Entre</span>
 										</div>
 										<input type="number" step="any" class="form-control"
-											ng-model="produitCourante.prix_inf"
-											ng-init="produitCourante.prix_inf=''" />
+											ng-model="produitCourante.prix_inf" ng-init="produitCourante.prix_inf=''" />
 									</div>
 								</div>
 							</div>
@@ -241,8 +209,7 @@
 											<span class="input-group-text">Et</span>
 										</div>
 										<input type="number" step="any" class="form-control"
-											ng-model="produitCourante.prix_sup"
-											ng-init="produitCourante.prix_sup=''" />
+											ng-model="produitCourante.prix_sup" ng-init="produitCourante.prix_sup=''" />
 									</div>
 								</div>
 							</div>
@@ -270,53 +237,43 @@
 						<div class="ms-CommandButton ms-CommandButton--noLabel">
 							<button class="ms-CommandButton-button">
 								<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
-									class="ms-Icon ms-Icon--Info"></i></span> <span
+										class="ms-Icon ms-Icon--Info"></i></span> <span
 									class="ms-CommandButton-label"></span>
 							</button>
 						</div>
 					</div>
 					<div class="ms-CommandBar-mainArea">
 						<div class="ms-CommandButton" permission="['Article_Edit']">
-							<button class="ms-CommandButton-button"
-								ng-click="sauvegarderAjout(produitCourante)">
-								<span class="ms-CommandButton-icon"><i
-									class="ms-Icon ms-Icon--Save"></i></span> <span
+							<button class="ms-CommandButton-button" ng-click="sauvegarderAjout(produitCourante)">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span> <span
 									class="ms-CommandButton-label">Enregistrer</span>
 							</button>
 						</div>
 
 						<div class="ms-CommandButton">
 							<button class="ms-CommandButton-button" ng-click="annulerAjout()">
-								<span class="ms-CommandButton-icon"><i
-									class="ms-Icon ms-Icon--Back"></i></span> <span
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span> <span
 									class="ms-CommandButton-label">Retour</span>
 							</button>
 						</div>
-						<div
-							class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+						<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
 							<button class="ms-CommandButton-button">
-								<span class="ms-CommandButton-icon"><i
-									class="ms-Icon ms-Icon--More"></i></span> <span
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span> <span
 									class="ms-CommandButton-label"></span>
 							</button>
 							<ul class="ms-ContextualMenu is-opened">
-								<li class="ms-ContextualMenu-item"><a
-									class="ms-ContextualMenu-link" tabindex="1">Folder</a> <i
-									class="ms-Icon ms-Icon--Folder"></i></li>
-								<li
-									class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
-								<li class="ms-ContextualMenu-item"><a
-									class="ms-ContextualMenu-link" tabindex="1">Plain Text
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+										tabindex="1">Folder</a> <i class="ms-Icon ms-Icon--Folder"></i></li>
+								<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">Plain
+										Text
 										Document</a> <i class="ms-Icon ms-Icon--Document"></i></li>
-								<li class="ms-ContextualMenu-item"><a
-									class="ms-ContextualMenu-link" tabindex="1">A Coffee</a> <i
-									class="ms-Icon ms-Icon--Coffee"></i></li>
-								<li class="ms-ContextualMenu-item"><a
-									class="ms-ContextualMenu-link" tabindex="1">Picture</a> <i
-									class="ms-Icon ms-Icon--Picture"></i></li>
-								<li class="ms-ContextualMenu-item"><a
-									class="ms-ContextualMenu-link" tabindex="1">Money</a> <i
-									class="ms-Icon ms-Icon--Money"></i></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">A
+										Coffee</a> <i class="ms-Icon ms-Icon--Coffee"></i></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+										tabindex="1">Picture</a> <i class="ms-Icon ms-Icon--Picture"></i></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+										tabindex="1">Money</a> <i class="ms-Icon ms-Icon--Money"></i></li>
 							</ul>
 						</div>
 					</div>
@@ -326,8 +283,7 @@
 					<br />
 					<div class="row" ng-show="displayMode == 'edit'">
 						<div class="col-sm-12" ng-show="hiddenNotifSucc">
-							<div
-								class="ms-MessageBar ms-MessageBar--error mx-auto float-left"
+							<div class="ms-MessageBar ms-MessageBar--error mx-auto float-left"
 								style="width: 300px !important;">
 								<div class="ms-MessageBar-content">
 									<div class="ms-MessageBar-icon">
@@ -342,18 +298,17 @@
 					</div>
 					<br />
 
-					<form class="form-horizontal" id="creationProduitForm"
-						name="creationProduitForm">
+					<form class="form-horizontal" id="creationProduitForm" name="creationProduitForm">
 						<div class="row">
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">N° Article</label>
+											<label class="input-group-text ms-Label is-required">Réf.</label>
 										</div>
-										<input type="text" class="form-control"
-											
-											ng-model="produitCourante.reference"  ng-change="produitCourante.reference = produitCourante.reference.toUpperCase()" required />
+										<input type="text" class="form-control" ng-model="produitCourante.reference"
+											ng-change="produitCourante.reference = produitCourante.reference.toUpperCase()"
+											required />
 									</div>
 								</div>
 							</div>
@@ -361,15 +316,17 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">D&eacute;signation</label>
+											<label
+												class="input-group-text ms-Label is-required">D&eacute;signation</label>
 										</div>
-										<input type="text" class="form-control"
-											style="text-transform: uppercase;"
-											ng-model="produitCourante.designation" ng-change="produitCourante.designation = produitCourante.designation.toUpperCase()" required />
+										<input type="text" class="form-control" style="text-transform: uppercase;"
+											ng-model="produitCourante.designation"
+											ng-change="produitCourante.designation = produitCourante.designation.toUpperCase()"
+											required />
 									</div>
 								</div>
 							</div>
-							
+
 
 
 						</div>
@@ -383,9 +340,9 @@
 										<div class="input-group-prepend">
 											<label class="input-group-text ms-Label is-required">Modele Article</label>
 										</div>
-										<input type="text" class="form-control"
-											
-											ng-model="produitCourante.numero" ng-change="produitCourante.numero = produitCourante.numero.toUpperCase()" required />
+										<input type="text" class="form-control" ng-model="produitCourante.numero"
+											ng-change="produitCourante.numero = produitCourante.numero.toUpperCase()"
+											required />
 									</div>
 								</div>
 							</div>
@@ -397,8 +354,7 @@
 										<div class="input-group-prepend">
 											<label class="input-group-text ms-Label is-required">Couleur</label>
 										</div>
-										<input type="text" class="form-control"
-											style="text-transform: uppercase;"
+										<input type="text" class="form-control" style="text-transform: uppercase;"
 											ng-model="produitCourante.couleur" required />
 									</div>
 								</div>
@@ -413,8 +369,8 @@
 												Fournisseur</label>
 										</div>
 										<input type="text" class="form-control"
-										
-											ng-model="produitCourante.referenceFournisseur" ng-change="produitCourante.referenceFournisseur = produitCourante.referenceFournisseur.toUpperCase()"/>
+											ng-model="produitCourante.referenceFournisseur"
+											ng-change="produitCourante.referenceFournisseur = produitCourante.referenceFournisseur.toUpperCase()" />
 									</div>
 								</div>
 							</div>
@@ -434,13 +390,11 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">Marque</label>
+											<label class="input-group-text ms-Label is-required">Sous Categorie</label>
 										</div>
-										<select ui-select2
-											ng-change="sousFamilleChange(produitCourante.sousFamilleId)"
-											ng-model="produitCourante.sousFamilleId"
-											data-placeholder="Pick a state" class="form-control"
-											style="border: 1px solid #e5eaee !important;">
+										<select ui-select2 ng-change="sousFamilleChange(produitCourante.sousFamilleId)"
+											ng-model="produitCourante.sousFamilleId" data-placeholder="Pick a state"
+											class="form-control" style="border: 1px solid #e5eaee !important;">
 											<optgroup ng-repeat="famille in ListFamilleProduitCache"
 												label="famille : {{famille.designation}}">
 												<option value="">Tous</option>
@@ -474,10 +428,8 @@
 
 
 									</div>
-									<div
-										ng-show="
-                  creationProduitForm.prixUnitaire.$dirty && creationProduitForm.prixUnitaire.$invalid"
-										class="error">
+									<div ng-show="
+                  creationProduitForm.prixUnitaire.$dirty && creationProduitForm.prixUnitaire.$invalid" class="error">
 										<div ng-show="creationProduitForm.prixUnitaire.$error">
 											La valeur doit être supérieure ou égale à 0 !</div>
 									</div>
@@ -508,7 +460,7 @@
 
 						<div class="row">
 
-			<div class="col-sm-4">
+							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -518,10 +470,10 @@
 											ng-init="produitCourante.idTaxe=''" ng-required="true"
 											data-placeholder="Pick a state"
 											ng-change="calculerPrixVenteTTC(produitCourante.prixUnitaire,produitCourante.idTaxe)"
-											class="form-control"
-											style="border: 1px solid #e5eaee !important;">
+											class="form-control" style="border: 1px solid #e5eaee !important;">
 											<option value=""></option>
-											<option ng-repeat=" lt in ListeTaxe" value="{{lt.id}}">{{lt.designation}}</option>
+											<option ng-repeat=" lt in ListeTaxe" value="{{lt.id}}">{{lt.designation}}
+											</option>
 										</select>
 									</div>
 								</div>
@@ -535,14 +487,12 @@
 												HT</label>
 										</div>
 										<input type="number" step="0.001" class="form-control" min="0"
-											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
-											name="prixAchat" ng-model="produitCourante.prixAchat" 
-											ng-change="calculerPrixAchatTTC(produitCourante.prixAchat,produitCourante.idTaxe)"/>
+											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0" name="prixAchat"
+											ng-model="produitCourante.prixAchat"
+											ng-change="calculerPrixAchatTTC(produitCourante.prixAchat,produitCourante.idTaxe)" />
 									</div>
-									<div
-										ng-show="
-                  creationProduitForm.prixAchat.$dirty && creationProduitForm.prixAchat.$invalid"
-										class="error">
+									<div ng-show="
+                  creationProduitForm.prixAchat.$dirty && creationProduitForm.prixAchat.$invalid" class="error">
 										<div ng-show="creationProduitForm.prixAchat.$error">La
 											valeur doit être supérieure ou égale à 0 !</div>
 									</div>
@@ -557,14 +507,12 @@
 												TTC</label>
 										</div>
 										<input type="number" step="0.001" class="form-control" min="0"
-											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
-											name="prixAchat" ng-model="produitCourante.prixAchatTTC" 
-											ng-change="calculerPrixAchatHT(produitCourante.prixAchatTTC,produitCourante.idTaxe)"/>
+											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0" name="prixAchat"
+											ng-model="produitCourante.prixAchatTTC"
+											ng-change="calculerPrixAchatHT(produitCourante.prixAchatTTC,produitCourante.idTaxe)" />
 									</div>
-									<div
-										ng-show="
-                  creationProduitForm.prixAchat.$dirty && creationProduitForm.prixAchat.$invalid"
-										class="error">
+									<div ng-show="
+                  creationProduitForm.prixAchat.$dirty && creationProduitForm.prixAchat.$invalid" class="error">
 										<div ng-show="creationProduitForm.prixAchat.$error">La
 											valeur doit être supérieure ou égale à 0 !</div>
 									</div>
@@ -573,12 +521,8 @@
 
 
 
-				
+
 						</div>
-
-
-
-
 
 
 
@@ -587,7 +531,7 @@
 
 
 
-							<!-- <div class="col-sm-4">
+							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -597,26 +541,23 @@
 											ng-model="produitCourante.quantite" disabled />
 									</div>
 								</div>
-							</div> -->
+							</div>
 
 							<div class="col-sm-4" ng-controller="DateIntroCtrl">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<span class="input-group-text"> Date In</span>
-										</div> 
-										<input type="text" class="form-control datepicker"
-											datepicker-popup="{{format}}" max-date="{{maxToDay}}"
-											ng-model="produitCourante.dateIntroduction" is-open="opened"
-											datepicker-options="dateOptions" date-="enabled(date, mode)"
-										     close-text="Close" />
+										</div>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											max-date="{{maxToDay}}" ng-model="produitCourante.dateIntroduction"
+											is-open="opened" datepicker-options="dateOptions"
+											date-="enabled(date, mode)" close-text="Close" />
 
 										<div class="input-group-append">
-											<button type="button" class="btn1 btn-default"
-												ng-click="open($event)"
+											<button type="button" class="btn1 btn-default" ng-click="open($event)"
 												style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
-												<i class="glyphicon glyphicon-calendar"
-													style="color: #3699ff;"></i>
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
 											</button>
 										</div>
 									</div>
@@ -624,7 +565,7 @@
 							</div>
 
 
-							<!-- <div class="col-sm-4">
+							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -634,16 +575,96 @@
 											ng-model="produitCourante.description"></textarea>
 									</div>
 								</div>
-							</div> -->
+							</div>
 
 						</div>
 
 
+						<div class="row">
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Dimension</label>
+										</div>
+										<input type="text" class="form-control" ng-model="produitCourante.dimension" />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Grammage</label>
+										</div>
+										<input type="text" class="form-control" ng-model="produitCourante.grammage" />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Numerotation</label>
+										</div>
+										<input type="text" class="form-control"
+											ng-model="produitCourante.numerotation" />
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
 
 						<div class="row">
-				  <div class="col-sm-2"></div>
-	                <div class="col-sm-2"></div>
-		
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Nbr Pause</label>
+										</div>
+										<input type="text" class="form-control" ng-model="produitCourante.nbrPause" />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Nature</label>
+										</div>
+										<select class="form-control" ng-model="produitCourante.nature"
+											ng-init="produitCourante.nature=''">
+											<option value="Nouveau">Nouveau</option>
+											<option value="Ancien avec changement">Ancien avec changement</option>
+
+										</select>
+
+
+
+
+
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+						<div class="row">
+							<div class="col-sm-2"></div>
+							<div class="col-sm-2"></div>
+
 
 							<div class="col-sm-2">
 								<div class="form-group float-right">
@@ -655,7 +676,7 @@
 											<div class="input-group-text">
 												<label class="checkbox checkbox-square checkbox-primary">
 													<input type="checkbox" checked="checked"
-													ng-model="produitCourante.serialisable" /> <span></span>
+														ng-model="produitCourante.serialisable" /> <span></span>
 												</label>
 											</div>
 										</div>
@@ -671,8 +692,9 @@
 										<div class="input-group-prepend">
 											<div class="input-group-text">
 												<label class="checkbox checkbox-square checkbox-primary">
-													<input type="checkbox" checked="checked" ng-change="financierIsChanged(produitCourante.retour)"
-													ng-model="produitCourante.retour" /> <span></span>
+													<input type="checkbox" checked="checked"
+														ng-change="financierIsChanged(produitCourante.retour)"
+														ng-model="produitCourante.retour" /> <span></span>
 												</label>
 											</div>
 										</div>
@@ -690,7 +712,7 @@
 											<div class="input-group-text">
 												<label class="checkbox checkbox-square checkbox-primary">
 													<input type="checkbox" checked="checked"
-													ng-model="produitCourante.stock" /> <span></span>
+														ng-model="produitCourante.stock" /> <span></span>
 												</label>
 											</div>
 										</div>
@@ -701,6 +723,289 @@
 
 						</div>
 
+
+						<div ng-repeat=" articleProduit in produitCourante.articleProduits track by $index">
+							<span class="ms-ListItem-primaryText">Composant {{$index +1}} 	<span class="ms-CommandButton-icon"
+								ng-click="deleteArticleProduit($index,produitCourante.articleProduits)">
+									 <a href="javascript:void(0)"> <i
+										class="ms-Icon ms-Icon--Delete"
+										style="color: rgb(255, 0, 0) !important;"> </i>
+								</a>
+							   </span></span> 	
+							
+						
+							<div class="panel-body">
+
+								<div class="form-group">
+
+									<div class="row">
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">Article</label>
+													</div>
+
+													<select ui-select2 ng-model="articleProduit.articleId" required
+														 ng-required="true"
+														data-placeholder="Composant" class="form-control"
+														style="border: 1px solid #e5eaee !important;">
+														<option value=""></option>
+														<option ng-repeat=" vArticle in listeAllArticle"
+															value="{{vArticle.id}}">{{vArticle.designation}}</option>
+													</select>
+
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">Impression</label>
+													</div>
+
+													<select ui-select2 ng-model="articleProduit.impressionProduitId"
+														required 
+														ng-required="true" data-placeholder="Impression"
+														class="form-control"
+														style="border: 1px solid #e5eaee !important;">
+														<option value=""></option>
+														<option ng-repeat=" impr in listeImpressionProduit"
+															value="{{impr.id}}">{{impr.designation}}</option>
+													</select>
+
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label class="input-group-text ms-Label is-required">Qte</label>
+													</div>
+													<input type="number" class="form-control"
+														ng-model="articleProduit.qte"  />
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">Grammage</label>
+													</div>
+													<input type="text" class="form-control"
+														ng-model="articleProduit.grammage"
+													 />
+												</div>
+											</div>
+										</div>
+
+
+
+									</div>
+
+								</div>
+
+								<span class="ms-ListItem-secondaryText">Option Composant <span class="ms-CommandButton-icon"
+									ng-click="addOptionArticleProduit(articleProduit.optionArticleProduits)"> <a href="javascript:void(0)"> <i
+											class="ms-Icon ms-Icon--CirclePlus"
+											style="color: rgb(0, 0, 255) !important;"> </i>
+									</a>
+									</span></span>
+
+								
+
+
+								
+								<div class="form-group">
+									<div class="row"
+										ng-repeat=" optionArticleProduit in articleProduit.optionArticleProduits">
+
+										<div class="col-sm-4">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">Option</label>
+													</div>
+
+													<select ui-select2 ng-model="optionArticleProduit.optionArticleId"
+														required  
+														ng-required="true" data-placeholder="Option"
+														class="form-control"
+														style="border: 1px solid #e5eaee !important;"
+														ng-change="optionIsChanged(optionArticleProduit.optionArticleId,optionArticleProduit)">
+														<option value=""></option>
+														<option ng-repeat=" opt in listeOptionProduit"
+															value="{{opt.id}}">{{opt.designation}}</option>
+													</select>
+
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-sm-4">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Designation</span>
+													</div>
+													<input class="form-control"
+														ng-model="optionArticleProduit.designation"
+														 />
+												</div>
+											</div>
+										</div>
+
+										<div class="col-sm-4">
+										<span class="ms-CommandButton-icon float-right"
+										ng-click="deleteOptionArticleProduit(optionArticleProduit,articleProduit.optionArticleProduits)">
+											 <a href="javascript:void(0)"> <i
+												class="ms-Icon ms-Icon--Delete"
+												style="color: rgb(255, 0, 0) !important;"> </i>
+										</a>
+									   </span>
+									</div>
+
+
+									</div>
+
+
+
+								</div>
+
+
+
+
+
+								<span class="ms-ListItem-secondaryText">Operation Composant 	<span class="ms-CommandButton-icon"
+									ng-click="addOperationArticleProduit(articleProduit.operationArticleProduits)"> <a href="javascript:void(0)"> <i
+											class="ms-Icon ms-Icon--CirclePlus"
+											style="color:rgb(0, 0, 255) !important;"> </i>
+									</a>
+									</span></span>
+							
+								<div class="form-group">
+									<div class="row"
+										ng-repeat=" operationArticleProduit in articleProduit.operationArticleProduits">
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">Operation</label>
+													</div>
+
+													<select ui-select2
+														ng-model="operationArticleProduit.operationArticleId" required
+													
+														ng-required="true" data-placeholder="Operation"
+														class="form-control"
+														style="border: 1px solid #e5eaee !important;"
+														ng-change="operationIsChanged(operationArticleProduit.operationArticleId,operationArticleProduit)">
+														<option value=""></option>
+														<option ng-repeat=" operation in listeOperationProduit"
+															value="{{operation.id}}">{{operation.designation}}</option>
+													</select>
+
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Designation</span>
+													</div>
+													<input class="form-control"
+														ng-model="operationArticleProduit.designation"
+													 />
+												</div>
+											</div>
+										</div>
+
+										<div class="col-sm-2">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Cout</span>
+													</div>
+													<input type="number" class="form-control"
+														ng-model="operationArticleProduit.cout"
+														/>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-sm-2">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Temps</span>
+													</div>
+													<input type="number" class="form-control"
+														ng-model="operationArticleProduit.temps"
+														 />
+												</div>
+											</div>
+										</div>
+
+
+										<div class="col-sm-2">
+											<span class="ms-CommandButton-icon float-right"
+											ng-click="deleteOperationArticleProduit(operationArticleProduit,articleProduit.operationArticleProduits)">
+												 <a href="javascript:void(0)"> <i
+													class="ms-Icon ms-Icon--Delete"
+													style="color: rgb(255, 0, 0) !important;"> </i>
+											</a>
+										   </span>
+										</div>
+
+
+									</div>
+
+
+
+								</div>
+
+
+
+
+
+
+							</div>
+
+
+						</div>
+
+						<span class="ms-CommandButton-icon float-left"
+												ng-click="addArticleProduit(produitCourante.articleProduits)"> <a href="javascript:void(0)"> <i
+														class="ms-Icon ms-Icon--CirclePlus"
+														style="color: rgb(0, 0, 255) !important;"> </i>
+												</a>
+						</span>
+
+
+
+
+
 					</form>
 				</div>
 
@@ -708,48 +1013,45 @@
 				<div class="panel-body" ng-show="displayMode == 'edit'">
 					<div class="form-group">
 						<div class="row">
-							<table
-								class="table table-bordered table-condensed table-head-color">
+							<table class="table table-bordered table-condensed table-head-color">
 								<thead>
 									<tr>
 										<th class="hidden">Id</th>
 										<th>Type Document</th>
 										<th>Document</th>
 										<th><span class="ms-CommandButton-icon float-right"
-											ng-click="ajoutDocumentProduit()"> <a
-												href="javascript:void(0)"> <i
-													class="ms-Icon ms-Icon--CirclePlus"
-													style="color: #fff !important;"> </i>
-											</a>
-										</span></th>
+												ng-click="ajoutDocumentProduit()"> <a href="javascript:void(0)"> <i
+														class="ms-Icon ms-Icon--CirclePlus"
+														style="color: #fff !important;"> </i>
+												</a>
+											</span></th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="documentProduit in listeDocumentProduit">
-										<td class="hidden"><span
-											editable-text="documentProduit.id" e-name="id"
-											e-form="rowform" e-required> {{ documentProduit.id ||
+										<td class="hidden"><span editable-text="documentProduit.id" e-name="id"
+												e-form="rowform" e-required> {{ documentProduit.id ||
 												'empty' }} </span></td>
-										<td><span
-											editable-select="documentProduit.typeDocumentId"
-											e-ng-options="s.id as s.designation for s in listeTypeDocumentsCache"
-											e-name="idTypeDocPROD" e-form="rowform">
+										<td><span editable-select="documentProduit.typeDocumentId"
+												e-ng-options="s.id as s.designation for s in listeTypeDocumentsCache"
+												e-name="idTypeDocPROD" e-form="rowform">
 												{{showStatus(documentProduit.typeDocumentId)}} </span></td>
 										<td ng-controller="UploadCtrl">
 
 											<div class="form-group">
 												<div class="col-sm-12">
-													<div class="fileinput fileinput-new"
-														data-provides="fileinput">
+													<div class="fileinput fileinput-new" data-provides="fileinput">
 														<input class="hidden" type="text" ng-model="name" /> <span
 															class="btn btn-file btn-sm"
 															style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255); border-color: transparent;"
 															ng-show="!isUploaded && rowform.$visible"> <span
-															class="fileinput-new">Selectionner fichier</span> <input
-															type="file" class="custom-file-input" file-model="myFile" />
+																class="fileinput-new">Selectionner fichier</span> <input
+																type="file" class="custom-file-input"
+																file-model="myFile" />
 															<span href="#" class="close fileinput-exists pull-right"
-															style="float: none; padding: 0;" data-dismiss="fileinput"
-															ng-show="!isUploaded && rowform.$visible">x</span>
+																style="float: none; padding: 0;"
+																data-dismiss="fileinput"
+																ng-show="!isUploaded && rowform.$visible">x</span>
 														</span> <span class="fileinput-filename"
 															ng-model="documentProduit.path" e-name="path"
 															e-form="rowform" e-required>{{documentProduit.path}}</span>
@@ -762,61 +1064,61 @@
 															<svg xmlns="http://www.w3.org/2000/svg"
 																xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
 																height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1"
-																	fill="none" fill-rule="evenodd">
-                                  <rect x="0" y="0" width="24"
-																	height="24" />
-                                  <path
-																	d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
-																	fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                  <rect fill="#000000" opacity="0.3"
-																	transform="translate(12.000000, 8.000000) rotate(-180.000000) translate(-12.000000, -8.000000) "
-																	x="11" y="1" width="2" height="14" rx="1" />
-                                  <path
-																	d="M7.70710678,15.7071068 C7.31658249,16.0976311 6.68341751,16.0976311 6.29289322,15.7071068 C5.90236893,15.3165825 5.90236893,14.6834175 6.29289322,14.2928932 L11.2928932,9.29289322 C11.6689749,8.91681153 12.2736364,8.90091039 12.6689647,9.25670585 L17.6689647,13.7567059 C18.0794748,14.1261649 18.1127532,14.7584547 17.7432941,15.1689647 C17.3738351,15.5794748 16.7415453,15.6127532 16.3310353,15.2432941 L12.0362375,11.3779761 L7.70710678,15.7071068 Z"
-																	fill="#000000" fill-rule="nonzero"
-																	transform="translate(12.000004, 12.499999) rotate(-180.000000) translate(-12.000004, -12.499999) " />
-                                </g>
-                              </svg> <!--end::Svg Icon-->
-													</span>
+																<g stroke="none" stroke-width="1" fill="none"
+																	fill-rule="evenodd">
+																	<rect x="0" y="0" width="24" height="24" />
+																	<path
+																		d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+																		fill="#000000" fill-rule="nonzero"
+																		opacity="0.3" />
+																	<rect fill="#000000" opacity="0.3"
+																		transform="translate(12.000000, 8.000000) rotate(-180.000000) translate(-12.000000, -8.000000) "
+																		x="11" y="1" width="2" height="14" rx="1" />
+																	<path
+																		d="M7.70710678,15.7071068 C7.31658249,16.0976311 6.68341751,16.0976311 6.29289322,15.7071068 C5.90236893,15.3165825 5.90236893,14.6834175 6.29289322,14.2928932 L11.2928932,9.29289322 C11.6689749,8.91681153 12.2736364,8.90091039 12.6689647,9.25670585 L17.6689647,13.7567059 C18.0794748,14.1261649 18.1127532,14.7584547 17.7432941,15.1689647 C17.3738351,15.5794748 16.7415453,15.6127532 16.3310353,15.2432941 L12.0362375,11.3779761 L7.70710678,15.7071068 Z"
+																		fill="#000000" fill-rule="nonzero"
+																		transform="translate(12.000004, 12.499999) rotate(-180.000000) translate(-12.000004, -12.499999) " />
+																</g>
+															</svg>
+															<!--end::Svg Icon-->
+														</span>
 													</a>
-													 <a ng-click="uploadFile('ELEMENT_DE_BASE_PRODUIT')"
+													<a ng-click="uploadFile('ELEMENT_DE_BASE_PRODUIT')"
 														ng-show="!isUploaded && rowform.$visible"
 														class="btn btn-sm fileinput-upload pull-right"> <span
-														class="svg-icon svg-icon-primary svg-icon-2x"> <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Upload.svg-->
+															class="svg-icon svg-icon-primary svg-icon-2x">
+															<!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Upload.svg-->
 															<svg xmlns="http://www.w3.org/2000/svg"
 																xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
 																height="24px" viewBox="0 0 24 24" version="1.1">
-                                <g stroke="none" stroke-width="1"
-																	fill="none" fill-rule="evenodd">
-                                  <rect x="0" y="0" width="24"
-																	height="24" />
-                                  <path
-																	d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
-																	fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                  <rect fill="#000000" opacity="0.3"
-																	x="11" y="2" width="2" height="14" rx="1" />
-                                  <path
-																	d="M12.0362375,3.37797611 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6689749,0.916811528 12.2736364,0.900910387 12.6689647,1.25670585 L17.6689647,5.75670585 C18.0794748,6.12616487 18.1127532,6.75845471 17.7432941,7.16896473 C17.3738351,7.57947475 16.7415453,7.61275317 16.3310353,7.24329415 L12.0362375,3.37797611 Z"
-																	fill="#000000" fill-rule="nonzero" />
-                                </g>
-                              </svg> <!--end::Svg Icon--></span>
+																<g stroke="none" stroke-width="1" fill="none"
+																	fill-rule="evenodd">
+																	<rect x="0" y="0" width="24" height="24" />
+																	<path
+																		d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+																		fill="#000000" fill-rule="nonzero"
+																		opacity="0.3" />
+																	<rect fill="#000000" opacity="0.3" x="11" y="2"
+																		width="2" height="14" rx="1" />
+																	<path
+																		d="M12.0362375,3.37797611 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6689749,0.916811528 12.2736364,0.900910387 12.6689647,1.25670585 L17.6689647,5.75670585 C18.0794748,6.12616487 18.1127532,6.75845471 17.7432941,7.16896473 C17.3738351,7.57947475 16.7415453,7.61275317 16.3310353,7.24329415 L12.0362375,3.37797611 Z"
+																		fill="#000000" fill-rule="nonzero" />
+																</g>
+															</svg>
+															<!--end::Svg Icon--></span>
 													</a>
 												</div>
 											</div> <input class="hidden" ng-model="documentProduit.uidDocument"
-											e-name="uidDocument" e-form="rowform" e-required
-											value="{{ documentProduit.uidDocument ||
+												e-name="uidDocument" e-form="rowform" e-required value="{{ documentProduit.uidDocument ||
 															'empty' }} " />
 										</td>
 										<td style="white-space: nowrap;">
 
 											<form editable-form name="rowform"
 												onbeforesave="saveDocumentProduit($data, documentProduit.id)"
-												ng-show="rowform.$visible"
-												class="form-buttons form-inline float-right"
+												ng-show="rowform.$visible" class="form-buttons form-inline float-right"
 												shown="DocumentProduitInserree == documentProduit">
-												<button type="submit" ng-disabled="rowform.$waiting"
-													class="btn btn-sm">
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm">
 													<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
 												</button>
 												<button type="button" ng-disabled="rowform.$waiting"
@@ -826,16 +1128,13 @@
 												</button>
 											</form>
 											<div class="buttons float-right " ng-show="!rowform.$visible">
-												<button data-nodrag
-													class="btn btn-sm"
-													ng-click="rowform.$show()">
+												<button data-nodrag class="btn btn-sm" ng-click="rowform.$show()">
 													<i class="ms-Icon ms-Icon--Edit" aria-hidden="true"></i>
 												</button>
-												<button data-nodrag
-													class="btn btn-sm"
+												<button data-nodrag class="btn btn-sm"
 													ng-click="removeDocumentProduit($index)">
 													<i class="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
-												
+
 												</button>
 											</div>
 										</td>

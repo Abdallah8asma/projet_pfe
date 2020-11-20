@@ -36,6 +36,7 @@ angular
         $scope.ListFamillePICache = [];
         $scope.ListSitePICache = [];
         $scope.listeRegionCache = [];
+        $scope.listeBanque = [];
         $scope.ListActifPI = [
           { actif: true, designation: 'oui' },
           { actif: false, designation: 'non' },
@@ -52,6 +53,8 @@ angular
         /***************************************************
          * Gestion de la Menu PI
          **************************************************/
+
+         
         $scope.changeTaPartieInteresse = function () {
           $scope.displayMenu = 'pi';
         };
@@ -188,6 +191,29 @@ angular
             });
         };
 
+
+            // get Liste des compte comptable PI
+            $scope.getListeCompteComptable = function () {
+              //TODO cache
+              $http
+                .get(UrlCommun + '/compteComptablePI/all')
+                .success(function (dataRegionCache) {
+                  $log.debug('compte comptable : ' + dataRegionCache.length);
+                  $scope.listeCompteComptable = dataRegionCache;
+                });
+            };
+
+
+            $scope.getListeBanquePI = function () {
+              $http.get(UrlCommun+"/banquePI/all").success(function (data) {
+                $log.debug("listeCathegorie : "+data.length);
+                $scope.listeBanque = data;
+              });
+            }
+
+            $scope.getListeBanquePI();
+
+      //  $scope.getListeCompteComptable();
         $scope.listeRegionCache();
         $scope.ListDeviseCache();
         $scope.listeTypeDocumentCache();
@@ -300,13 +326,13 @@ angular
           $scope.listeRepresentant = [];
           $scope.listeDocument = [];
 
-          $http
+         /* $http
             .get(UrlCommun + '/partieInteressee/getCurrentReferenceByFamille:1')
             .success(function (datagetPI) {
               $scope.partieInteresseeCourante.reference = datagetPI;
 
               $scope.partieInteresseeCourante.refAvantChangement = datagetPI;
-            });
+            });*/
 
           $scope.displayMode = 'edit';
         };
@@ -521,13 +547,13 @@ angular
           $scope.colDefs = [
 
 
-            {
+         /*    {
               field: 'dateIntroduction',
               displayName: 'Date Introd.',
               width: '9%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
               cellFilter: "date: 'yyyy-MM-dd'"
-            },
+            }, */
             {
               field: 'reference',
               displayName: 'Référence',
@@ -568,12 +594,12 @@ angular
                 fontfamily: 'Poppins, Helvetica, sans-serif',
               },*/
 
-            {
-              field: 'ville',
+         /*    {
+              field: 'regionDesignation',
               displayName: 'Ville',
               width: '7%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
-            },
+            }, */
             {
               field: 'representants[0].nom',
               displayName: 'Vis à vis',
@@ -586,10 +612,24 @@ angular
               width: '8%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },
+
+            {
+              field: 'telephoneMobile',
+              displayName: 'Téléphone Mobile',
+              width: '8%',
+              fontfamily: 'Poppins, Helvetica, sans-serif',
+            },
             {
               field: 'email',
               displayName: 'Email',
               width: '25%',
+              fontfamily: 'Poppins, Helvetica, sans-serif',
+            },
+
+            {
+              field: 'compteComptablePartieInteresseeDesignation',
+              displayName: 'Compte Comptable',
+              width: '8%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },
 

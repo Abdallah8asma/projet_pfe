@@ -618,3 +618,71 @@ var app = angular.module('gpro.back-partieInteressee', ["ngResource"]);
 			    $scope.listeCathegoriePI();
 		   }
 		  ]);
+
+
+		    /*****************************
+	     * Gestion des banque 
+	     ****************************/
+	  app.controller('backBanquePIController', ['$scope','$filter', '$http','$log','UrlCommun', function ($scope,$filter, $http, $log, UrlCommun) {
+		var data;
+				$scope.displayMode = "";
+			  $scope.cathegorieCourante = null;
+			  $scope.listeCathegorie=[]; 
+			  $scope.resultatRecherche=$scope.listeCathegorie;
+			  /********************
+			   * Gestion des cateegories 
+			   *********************************/
+			  //Lister Cathegorie  partie interessee
+			  $scope.listeCathegoriePI = function () {
+				  $http.get(UrlCommun+"/banquePI/all").success(function (data) {
+					  $log.debug("listeCathegorie : "+data.length);
+					  $scope.listeCathegorie = data;
+				  });
+			  }
+			 
+			   // ajout d'une cateegories
+				  $scope.ajouterCathegorie = function() {
+					   $scope.CategorieCourante = {
+								  designation: ''
+								};
+					$log.debug("* $scope.CategorieCourante "+ $scope.CategorieCourante);
+					$scope.listeCathegorie.push($scope.CategorieCourante);
+				  };
+			 //Enregistrer cateegories
+			$scope.saveCathegorie = function(data, id) {
+				$log.debug("Categorie "+data);
+				if (angular.isDefined(id)) {
+					   $http.post(UrlCommun + "/banquePI/modifierBanquePI", data)
+					   .success(function (newcathegorie) {
+						   $log.debug("Success Modification");
+						  angular.extend(newcathegorie);
+					   });
+				  } else {
+					  $log.debug(data);
+					   $http.post(UrlCommun + "/banquePI/creerBanquePI", data)
+					   .success(function (newcathegorie) {
+						data.id = newcathegorie;
+						   $log.debug("Success Creation");
+							  angular.extend(newcathegorie);
+					   });
+				  }
+				}
+			 // Suppression famille produit
+			  $scope.removecathegorie = function (index) {
+				  $log.debug("INDEX :" + index);
+				  $log.debug("**OBJET :" + $scope.listeCathegorie[index]);
+				  $log.debug("DELETE .." + $scope.listeCathegorie[index].id);
+
+					  $http({
+						   method: "DELETE",
+						   url: UrlCommun + "/banquePI/supprimerBanquePI:"+ $scope.listeCathegorie[index].id
+						   }).success(function () {
+								$log.debug("Success Delete");
+							   $scope.listeCathegorie.splice(index, 1);
+							   
+					   });
+					  $scope.listeCathegorie.splice(index, 1);
+			  }
+			  $scope.listeCathegoriePI();
+		 }
+		]);

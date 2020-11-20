@@ -18,6 +18,10 @@ angular
 				case 'elementDeBaseReporting':
 					$scope.ITEM = 'elementDeBaseReporting';
 					break;
+
+				case 'article':
+					$scope.ITEM = 'article';
+					break;
 			}
 
 
