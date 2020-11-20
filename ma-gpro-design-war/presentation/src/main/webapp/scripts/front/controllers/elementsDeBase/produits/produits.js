@@ -273,8 +273,28 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
       };
 
       $scope.getAllArticle();
+      
+      
+            // Liste des PICache
+      $scope.listePartieInteresseeCache = function () {
+        $http
+          .get(UrlCommun + '/gestionnaireCache/listePartieInteresseeCache')
+          .success(function (dataPICache) {
+            // $log.debug("*LISTEPartieInteresseeCache
+            // :"
+            // +JSON.stringify(dataPICache,null,"
+            // "));
 
+            // $scope.listePartieInteressee
+            // = $filter ('filter')
+            // (dataPICache ,
+            // {famillePartieInteressee
+            // : 2});
+            $scope.listePartieInteressee = dataPICache;
+          });
+      };
 
+//$scope.listePartieInteresseeCache();
 
       /***    Fermer notification Article existant       **/
 
@@ -482,7 +502,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
 				}*/
 
       // Liste des PICache
-      $scope.listePartieInteresseeCache = function () {
+   /*   $scope.listePartieInteresseeCache = function () {
         $http
           .get(UrlCommun + '/gestionnaireCache/listePartieInteresseeCache')
           .success(function (dataPICache) {
@@ -493,7 +513,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
               famillePartieInteressee: 2,
             });
           });
-      };
+      };*/
 
       // Liste TypeDocumentCache
       $scope.listeTypeDocumentsCache = function () {
