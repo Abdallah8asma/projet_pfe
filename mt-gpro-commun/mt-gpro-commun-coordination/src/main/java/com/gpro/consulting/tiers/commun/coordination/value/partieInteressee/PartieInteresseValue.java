@@ -129,7 +129,31 @@ public class PartieInteresseValue {
 	
 	
 	
+	private String email2;
 	
+
+	private String codeProduit;
+	
+	
+	
+	
+	
+
+	public String getEmail2() {
+		return email2;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+
+	public String getCodeProduit() {
+		return codeProduit;
+	}
+
+	public void setCodeProduit(String codeProduit) {
+		this.codeProduit = codeProduit;
+	}
 
 	public String getCodeBancaire() {
 		return codeBancaire;
