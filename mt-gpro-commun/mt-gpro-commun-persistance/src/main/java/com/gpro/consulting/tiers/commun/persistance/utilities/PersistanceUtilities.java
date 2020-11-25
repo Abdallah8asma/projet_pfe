@@ -322,6 +322,11 @@ public class PersistanceUtilities {
 		vPartieInteresseEntite.setBanqueId(pPartieInteresseValue.getBanqueId());
 		
 		vPartieInteresseEntite.setCodeBancaire(pPartieInteresseValue.getCodeBancaire());
+	
+		
+		vPartieInteresseEntite.setEmail2(pPartieInteresseValue.getEmail2());
+		
+		vPartieInteresseEntite.setCodeProduit(pPartieInteresseValue.getCodeProduit());
 		
 		// Liste Document
 		if (pPartieInteresseValue.getDocuments() != null) {
@@ -445,6 +450,11 @@ public class PersistanceUtilities {
 		
 		
 		vPartieInteresseValue.setCodeBancaire(pPartieInteresseEntity.getCodeBancaire());
+	
+		
+		vPartieInteresseValue.setEmail2(pPartieInteresseEntity.getEmail2());
+		
+		vPartieInteresseValue.setCodeProduit(pPartieInteresseEntity.getCodeProduit());
 		
 		// Liste Document
 		if (pPartieInteresseEntity.getDocumentEntites() != null) {
@@ -1604,6 +1614,8 @@ public class PersistanceUtilities {
 			articleProduitValue.setImpressionProduitId(pArticleProduitEntity.getImpressionProduitId());
 			
 			articleProduitValue.setGrammage(pArticleProduitEntity.getGrammage());
+						
+			articleProduitValue.setDimension(pArticleProduitEntity.getDimension());
 			
 			
 			// added by samer
@@ -1648,6 +1660,8 @@ public class PersistanceUtilities {
 			articleProduitEntity.setImpressionProduitId(pArticleProduitValue.getImpressionProduitId());
 			
 			articleProduitEntity.setGrammage(pArticleProduitValue.getGrammage());
+			
+			articleProduitEntity.setDimension(pArticleProduitValue.getDimension());
 			
 			if(pArticleProduitValue.getOptionArticleProduits() != null) {
 				
@@ -1738,6 +1752,8 @@ public class PersistanceUtilities {
 	    produitValue.setNbrPause(pProduitEntity.getNbrPause());
 	    produitValue.setNumerotation(pProduitEntity.getNumerotation());
 	    
+	    produitValue.setCompteComptableId(pProduitEntity.getCompteComptableId());
+	    
 	    if (pProduitEntity.getSousFamille() != null) {
 			produitValue.setSousFamilleId(pProduitEntity.getSousFamille()
 					.getId());
@@ -1824,6 +1840,8 @@ public class PersistanceUtilities {
 		produiEntity.setNature(pProduitValue.getNature());
 		produiEntity.setNbrPause(pProduitValue.getNbrPause());
 		produiEntity.setNumerotation(pProduitValue.getNumerotation());
+		
+		produiEntity.setCompteComptableId(pProduitValue.getCompteComptableId());
 		
 
 		/*** Liste Document produit */

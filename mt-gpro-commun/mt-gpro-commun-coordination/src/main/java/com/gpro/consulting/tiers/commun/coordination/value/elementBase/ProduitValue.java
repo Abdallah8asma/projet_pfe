@@ -74,6 +74,13 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	
 	
 	private String nature;
+	
+	
+	private Long compteComptableId;
+	
+	
+	private String compteComptableDesignation;
+	
 
 	// added by zeineb g
 	private Set<ArticleProduitValue> articleProduits = new HashSet<ArticleProduitValue>();
@@ -82,6 +89,24 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	
 	
 	
+	
+	
+
+	public Long getCompteComptableId() {
+		return compteComptableId;
+	}
+
+	public void setCompteComptableId(Long compteComptableId) {
+		this.compteComptableId = compteComptableId;
+	}
+
+	public String getCompteComptableDesignation() {
+		return compteComptableDesignation;
+	}
+
+	public void setCompteComptableDesignation(String compteComptableDesignation) {
+		this.compteComptableDesignation = compteComptableDesignation;
+	}
 
 	public String getDimension() {
 		return dimension;

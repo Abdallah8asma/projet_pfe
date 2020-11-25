@@ -170,6 +170,10 @@ public class ProduitEntity implements Serializable {
 	@Column(name = "nature")
 	private String nature;
 	
+	
+	@Column(name = "compte_comptable_id")
+	private Long compteComptableId;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval=true)
 	private Set<ArticleProduitEntity> articleProduits;
 	
@@ -181,6 +185,14 @@ public class ProduitEntity implements Serializable {
 	
 	
 	
+	public Long getCompteComptableId() {
+		return compteComptableId;
+	}
+
+	public void setCompteComptableId(Long compteComptableId) {
+		this.compteComptableId = compteComptableId;
+	}
+
 	public String getDimension() {
 		return dimension;
 	}

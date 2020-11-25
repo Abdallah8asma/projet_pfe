@@ -19,6 +19,8 @@ public class ArticleProduitValue {
 	
 	private String grammage;
 	
+	private String dimension;
+	
 	
 	private Set<OptionArticleProduitValue> optionArticleProduits = new HashSet<OptionArticleProduitValue>();
 	
@@ -27,6 +29,14 @@ public class ArticleProduitValue {
 	
 	
 	
+
+	public String getDimension() {
+		return dimension;
+	}
+
+	public void setDimension(String dimension) {
+		this.dimension = dimension;
+	}
 
 	public Set<OperationArticleProduitValue> getOperationArticleProduits() {
 		return operationArticleProduits;
