@@ -35,6 +35,7 @@ angular
     	        "stock":true, 
     	        "serialisable":false,
               "retour":false,
+              "fodec":false,
               "articleProduits":[{
                                 'articleId':'',
                                 'impressionProduitId':'',
@@ -80,13 +81,28 @@ angular
        * Gestion de Cache des Referentiels *
        **************************************************/
 
-     /* $scope.getSousFamilleArticle = function () {
+
+        
+								   // Lister Famille produit
+								   $scope.listeFamilleOptionProduit = function() {
+
+									
+                    $http.get(UrlCommun + "/utilsEntite/getAllByType:OPTION_PRODUIT")
+                        .success(function(dataFamille) {
+                          $log.debug("listeFamille " + dataFamille.length);
+                          $scope.listeFamille = dataFamille;
+                        });
+                  }
+
+                  $scope.listeFamilleOptionProduit();
+
+    $scope.getSousFamilleArticle = function () {
         $http.get(UrlCommun + '/sousFamilleArticle/all').success(function (data) {
           $scope.listeSousFamilleArticle = data;
         });
       };
 
-      $scope.getSousFamilleArticle();*/
+      $scope.getSousFamilleArticle();
 
 
            // get Liste des compte comptable PI
@@ -721,6 +737,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
         "stock":true, 
         "serialisable":false,
         "retour":false,
+        "fodec":false,
         
         "articleProduits":[{
           'articleId':'',
