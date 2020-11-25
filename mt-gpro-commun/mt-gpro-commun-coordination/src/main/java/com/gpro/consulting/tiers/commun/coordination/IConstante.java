@@ -70,6 +70,8 @@ public interface IConstante {
 	public static String TABLE_ARTICLE_PRODUIT="eb_articleprod";
 	public static String TABLE_OPTION_ARTICLE_PRODUIT="eb_option_articleprod";
 	public static String TABLE_OPERATION_ARTICLE_PRODUIT="eb_operation_articleprod";
+	
+	public static String TABLE_EB_UTILS = "eb_utils";
 	//
 	// public static String TABLE_EB_PRODUITDEPOT="eb_produitdepot";
 
@@ -136,6 +138,7 @@ public interface IConstante {
 	public static String SEQUENCE_COMPTE_COMPTABLE = "eb_cpt_com_seq";
 	public static String SEQUENCE_OPTION_PRODUIT = "eb_op_prod_seq";
 	public static String SEQUENCE_OPERATION_PRODUIT = "eb_oper_prod_seq";
+	public static String SEQUENCE_EB_UTILS = "eb_util_seq";
 	
 	
 

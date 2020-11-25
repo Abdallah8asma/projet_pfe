@@ -55,6 +55,14 @@ public class ArticleProduitEntity implements Serializable {
 	private String dimension;
 	
 	
+	@Column(name = "sous_famille_article_id")
+	private Long sousFamilleArticleId;
+	
+	
+	@Column(name = "info_matiere")
+	private String infoMatiere;
+	
+	
 	
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "articleProduit", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -67,6 +75,26 @@ public class ArticleProduitEntity implements Serializable {
 	
 	
 	
+
+	public String getInfoMatiere() {
+		return infoMatiere;
+	}
+
+
+	public void setInfoMatiere(String infoMatiere) {
+		this.infoMatiere = infoMatiere;
+	}
+
+
+	public Long getSousFamilleArticleId() {
+		return sousFamilleArticleId;
+	}
+
+
+	public void setSousFamilleArticleId(Long sousFamilleArticleId) {
+		this.sousFamilleArticleId = sousFamilleArticleId;
+	}
+
 
 	public String getDimension() {
 		return dimension;

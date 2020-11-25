@@ -68,6 +68,7 @@
 	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity</class>
 	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationProduitEntity</class>
 	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationArticleProduitEntity</class>
+	      <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.UtilsEntite</class>
       
          
         <properties>

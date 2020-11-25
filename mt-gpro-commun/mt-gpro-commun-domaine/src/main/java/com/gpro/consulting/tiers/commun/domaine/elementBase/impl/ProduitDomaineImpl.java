@@ -77,6 +77,9 @@ public class ProduitDomaineImpl implements IProduitDomaine {
 	@Override
 	public ProduitValue rechercheProduitById(Long pProduitId) {
 		ProduitValue vProduitValue = produitPersistance.rechercheProduitById(pProduitId);
+		
+		/*
+		
 		Set<ArticleProduitValue> listMaterial = new HashSet<ArticleProduitValue>();
 		Set<ArticleProduitValue> listProduct = new HashSet<ArticleProduitValue>();
 		if (vProduitValue.getArticleProduits() != null && vProduitValue.getArticleProduits().size() > 0)
@@ -91,6 +94,8 @@ public class ProduitDomaineImpl implements IProduitDomaine {
 
 		vProduitValue.setMaterialProduits(listMaterial);
 		vProduitValue.setArticleProduits(listProduct);
+		
+		*/
 
 		return vProduitValue;
 
@@ -169,7 +174,7 @@ public class ProduitDomaineImpl implements IProduitDomaine {
 	public ProduitValue rechercheProduitParReference(String reference) {
 		ProduitValue produit = produitPersistance.rechercheProduitParReference(reference);
 
-		if (produit != null) {
+	/*	if (produit != null) {
 			Set<ArticleProduitValue> listMaterial = new HashSet<ArticleProduitValue>();
 			Set<ArticleProduitValue> listProduct = new HashSet<ArticleProduitValue>();
 			if (produit.getArticleProduits() != null && produit.getArticleProduits().size() > 0)
@@ -187,6 +192,7 @@ public class ProduitDomaineImpl implements IProduitDomaine {
 			produit.setArticleProduits(listProduct);
 
 		}
+		*/
 
 		return produit;
 

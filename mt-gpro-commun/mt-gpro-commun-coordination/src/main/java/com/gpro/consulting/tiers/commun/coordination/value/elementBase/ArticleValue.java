@@ -131,9 +131,31 @@ public class ArticleValue implements Comparable<ArticleValue>{
 	 * @see java.lang.Object#toString()
 	 */
 
+	
+
+	private String dimension;
+	
+	
+	private String grammage;
 
 
 
+	
+	public String getDimension() {
+		return dimension;
+	}
+
+	public void setDimension(String dimension) {
+		this.dimension = dimension;
+	}
+
+	public String getGrammage() {
+		return grammage;
+	}
+
+	public void setGrammage(String grammage) {
+		this.grammage = grammage;
+	}
 
 	public Long getId() {
 		return id;

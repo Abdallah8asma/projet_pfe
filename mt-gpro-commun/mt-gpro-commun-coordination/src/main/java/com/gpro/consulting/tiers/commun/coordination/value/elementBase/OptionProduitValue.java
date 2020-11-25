@@ -16,12 +16,24 @@ public class OptionProduitValue {
 	
 	private String description;
 	
+	
+	private String nature;
+	
+	
 	private String typesIds;
 	
 	
 	
 	
 	
+
+	public String getNature() {
+		return nature;
+	}
+
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
 
 	public String getTypesIds() {
 		return typesIds;
