@@ -81,6 +81,10 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	
 	private String compteComptableDesignation;
 	
+	
+	
+	private boolean fodec;
+	
 
 	// added by zeineb g
 	private Set<ArticleProduitValue> articleProduits = new HashSet<ArticleProduitValue>();
@@ -91,6 +95,14 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	
 	
 	
+
+	public boolean isFodec() {
+		return fodec;
+	}
+
+	public void setFodec(boolean fodec) {
+		this.fodec = fodec;
+	}
 
 	public Long getCompteComptableId() {
 		return compteComptableId;
