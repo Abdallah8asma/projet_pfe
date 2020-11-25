@@ -22,6 +22,10 @@ angular
 				case 'article':
 					$scope.ITEM = 'article';
 					break;
+
+					case 'produitFinancier':
+						$scope.ITEM = 'produitFinancier';
+						break;
 			}
 
 

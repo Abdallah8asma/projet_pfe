@@ -66,6 +66,7 @@ angular
     'gpro.stockNv',
     'gpro.back-articles',
     'gpro.produit',
+    'gpro.produitFinancier',
     'gpro.produitSerialisable',
     'gpro.clientprix',
     'gpro.fournisseurprix',
