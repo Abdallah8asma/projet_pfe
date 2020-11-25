@@ -714,7 +714,7 @@
                             <span class="menu-text">Matière Première</span>
                           </a>
                         </li>
-               
+               <!-- 
                         <li
                           class="menu-item"
                           aria-haspopup="true"
@@ -730,7 +730,7 @@
                             </i>
                             <span class="menu-text">Matière Première Reporting</span>
                           </a>
-                        </li>
+                        </li> -->
                   
                       </ul>
                     </div>
@@ -806,7 +806,27 @@
                             <span class="menu-text">Articles</span>
                           </a>
                         </li>
+
+
                         <li
+                          class="menu-item"
+                          aria-haspopup="true"
+                          permission="['Article_Consult']"
+                        >
+                          <a
+                            href="#/elementsDeBase/produitFinancier"
+                            ng-click="upSelectedMenu('Articles ',' Financier')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Financier</span>
+                          </a>
+                        </li>
+
+
+                        <!-- <li
                           class="menu-item"
                           aria-haspopup="true"
                           permission="['Article_serialisable']"
@@ -823,7 +843,7 @@
                               >Articles Serialisables</span
                             >
                           </a>
-                        </li>
+                        </li> -->
                         <li
                           class="menu-item"
                           aria-haspopup="true"
@@ -4953,6 +4973,7 @@
     <script src="scripts/front/controllers/elementsDeBase/articles/articles.js"></script>
     <script src="scripts/front/controllers/elementsDeBase/produits/produits.js"></script>
     <script src="scripts/front/controllers/elementsDeBase/produits/produitsSerialisable.js"></script>
+    <script src="scripts/front/controllers/elementsDeBase/produits/produitsFinancier.js"></script>
     <script src="scripts/front/controllers/elementsDeBase/flotte/engin.js"></script>
     <script src="scripts/front/controllers/elementsDeBase/flotte/chauffeur.js"></script>
     <script src="scripts/front/controllers/elementsDeBase/flotte/remorque.js"></script>

@@ -1,8 +1,8 @@
 'use strict';
 
 angular
-  .module('gpro.produit', ['ngResource'])
-  .controller('produitController', [
+  .module('gpro.produitFinancier', ['ngResource'])
+  .controller('produitFinancierController', [
     '$scope',
     '$filter',
     '$http',
@@ -29,12 +29,12 @@ angular
 
       
       $scope.produitCourante = {
-    		  
+    		      "idTaxe":6,
     	        "quantite":0,		
     	        "dateIntroduction": new Date(),
-    	        "stock":true, 
+    	        "stock":false, 
     	        "serialisable":false,
-              "retour":false,
+              "retour":true,
               "articleProduits":[{
                                 'articleId':'',
                                 'impressionProduitId':'',
@@ -648,6 +648,8 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
 
       // Rechercher produit
       $scope.rechercheProduit = function (produitCourante) {
+
+        produitCourante.retour = 'oui';
         $log.debug('recherche en cours ..');
         $http
           .post(
@@ -716,11 +718,12 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
         
         
         $scope.produitCourante ={
+        "idTaxe":6,
         "quantite":0,		
         "dateIntroduction": new Date(),
-        "stock":true, 
+        "stock":false, 
         "serialisable":false,
-        "retour":false,
+        "retour":true,
         
         "articleProduits":[{
           'articleId':'',
@@ -784,6 +787,9 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
 
       // Mise à jour des Produits
       $scope.updateProduit = function (produit) {
+
+        produit.retour = true;
+        
         produit.documentProduits = $scope.listeDocumentProduit;
         
         if(produit.idTaxe != null){
@@ -809,6 +815,8 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
 
       // Création Produit
       $scope.creerProduit = function (produit) {
+
+        produit.retour = true;
     	  
     	  if(produit.idTaxe != null){
     		  
