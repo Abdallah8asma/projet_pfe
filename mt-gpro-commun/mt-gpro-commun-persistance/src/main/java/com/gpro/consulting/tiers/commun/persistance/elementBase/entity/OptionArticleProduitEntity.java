@@ -33,6 +33,13 @@ public class OptionArticleProduitEntity implements Serializable {
 
 	@Column(name = "option_article_id")
 	private Long optionArticleId;
+	
+	
+	
+	
+	
+	@Column(name = "famille_option_article_designation")
+	private String familleOptionArticleDesignation;
 
 	
 	@Column(name = "nom")
@@ -48,6 +55,16 @@ public class OptionArticleProduitEntity implements Serializable {
 	
 	
 	
+	
+	
+
+	public String getFamilleOptionArticleDesignation() {
+		return familleOptionArticleDesignation;
+	}
+
+	public void setFamilleOptionArticleDesignation(String familleOptionArticleDesignation) {
+		this.familleOptionArticleDesignation = familleOptionArticleDesignation;
+	}
 
 	public String getDesignation() {
 		return designation;
