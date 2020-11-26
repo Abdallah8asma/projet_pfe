@@ -433,8 +433,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Sous Categorie</span>
 										</div>
-										<select ui-select2 class="form-control" ng-model="produitCourante.sousfamille"
-											ng-init="produitCourante.sousfamille=''">
+										<select ui-select2 class="form-control" ng-model="produitCourante.sousFamilleId"
+											ng-init="produitCourante.sousFamilleId=''">
 											<option value="">Tous</option>
 											<option
 												ng-repeat="sousFamille in ListSousFamilleProduitCache  | filter : {familleProduitId : produitCourante.famille}"
@@ -1028,6 +1028,37 @@
 									<div class="row"
 										ng-repeat=" optionArticleProduit in articleProduit.optionArticleProduits">
 
+
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">Famille Option</label>
+													</div>
+
+													<select ui-select2 ng-model="optionArticleProduit.familleOptionArticleDesignation"
+														 data-placeholder="Option"
+														class="form-control"
+														style="border: 1px solid #e5eaee !important;"
+													>
+														<option value="">Tous</option>
+														<option ng-repeat=" optFam in listeFamilleOptionProduit"
+															value="{{optFam.designation}}">{{optFam.designation}}</option>
+													</select>
+
+												</div>
+											</div>
+										</div>
+
+
+
+
+							
+
+
+
 										<div class="col-sm-4">
 											<div class="form-group">
 												<div class="input-group">
@@ -1043,7 +1074,7 @@
 														style="border: 1px solid #e5eaee !important;"
 														ng-change="optionIsChanged(optionArticleProduit.optionArticleId,optionArticleProduit)">
 														<option value=""></option>
-														<option ng-repeat=" opt in listeOptionProduit"
+														<option ng-repeat=" opt in listeOptionProduit  | filter : {nature : optionArticleProduit.familleOptionArticleDesignation}"
 															value="{{opt.id}}">{{opt.designation}}</option>
 													</select>
 
@@ -1065,7 +1096,7 @@
 											</div>
 										</div>
 
-										<div class="col-sm-4">
+										<div class="col-sm-1">
 										<span class="ms-CommandButton-icon float-right"
 										ng-click="deleteOptionArticleProduit(optionArticleProduit,articleProduit.optionArticleProduits)">
 											 <a href="javascript:void(0)"> <i

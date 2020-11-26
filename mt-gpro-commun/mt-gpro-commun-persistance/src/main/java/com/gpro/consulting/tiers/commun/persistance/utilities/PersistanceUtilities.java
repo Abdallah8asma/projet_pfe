@@ -1542,6 +1542,8 @@ public class PersistanceUtilities {
 			optionArticleProduitValue.setOptionArticleId(pOptionArticleProduitEntity.getOptionArticleId());
 			optionArticleProduitValue.setDesignation(pOptionArticleProduitEntity.getDesignation());
 			
+			optionArticleProduitValue.setFamilleOptionArticleDesignation(pOptionArticleProduitEntity.getFamilleOptionArticleDesignation());
+			
 
 			return optionArticleProduitValue;
 		}
@@ -1557,6 +1559,8 @@ public class PersistanceUtilities {
 			optionArticleProduitEntity.setNom(pOptionArticleProduitValue.getNom());
 			optionArticleProduitEntity.setOptionArticleId(pOptionArticleProduitValue.getOptionArticleId());
 			optionArticleProduitEntity.setDesignation(pOptionArticleProduitValue.getDesignation());
+			
+			optionArticleProduitEntity.setFamilleOptionArticleDesignation(pOptionArticleProduitValue.getFamilleOptionArticleDesignation());
 			
 			return optionArticleProduitEntity;
 		}

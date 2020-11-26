@@ -6,12 +6,22 @@ public class OptionArticleProduitValue {
 
 	private Long optionArticleId;
 	
+	private String familleOptionArticleDesignation;
+	
 	private String nom;
 	
 	private String designation;
 	
 	
 	
+
+	public String getFamilleOptionArticleDesignation() {
+		return familleOptionArticleDesignation;
+	}
+
+	public void setFamilleOptionArticleDesignation(String familleOptionArticleDesignation) {
+		this.familleOptionArticleDesignation = familleOptionArticleDesignation;
+	}
 
 	public String getDesignation() {
 		return designation;

@@ -379,7 +379,7 @@
 											ng-init="articleCourante.sousFamilleArtEntite=''">
 											<option value=""></option>
 											<option
-												ng-repeat="sousFamille in ListSousFamilleArticleCache | filter : {familleArticleId : articleCourante.familleEntite}"
+												ng-repeat="sousFamille in ListSousFamilleArticleCache | filter : {idFamilleArticle : articleCourante.familleEntite}"
 												value="{{sousFamille.id}}">{{sousFamille.designation}}</option>
 										</select>
 									</div>

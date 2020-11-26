@@ -84,17 +84,17 @@ angular
 
         
 								   // Lister Famille produit
-								   $scope.listeFamilleOptionProduit = function() {
+								   $scope.getListeFamilleOptionProduit = function() {
 
 									
                     $http.get(UrlCommun + "/utilsEntite/getAllByType:OPTION_PRODUIT")
                         .success(function(dataFamille) {
                           $log.debug("listeFamille " + dataFamille.length);
-                          $scope.listeFamille = dataFamille;
+                          $scope.listeFamilleOptionProduit = dataFamille;
                         });
                   }
 
-                  $scope.listeFamilleOptionProduit();
+                  $scope.getListeFamilleOptionProduit();
 
     $scope.getSousFamilleArticle = function () {
         $http.get(UrlCommun + '/sousFamilleArticle/all').success(function (data) {
