@@ -3010,7 +3010,7 @@ input[type="button"].btn-block {
       -webkit-transition: none;
       transition: none; } }
   .fade:not(.show) {
-    opacity: 0; }
+    opacity: 1; }
 
 .collapse:not(.show) {
   display: none; }
