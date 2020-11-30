@@ -1,29 +1,11 @@
 package com.gpro.consulting.tiers.logistique.persistance.gc.guichet.utilities;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.MarcheValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.ModePaiementValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.TaxeValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.DetFactureVenteValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.FactureVenteValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.FactureVenteVue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.TaxeFactureValue;
-import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.MarcheEntity;
-import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.ModePaiementEntity;
-import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.TaxeEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.entity.GuichetAnnuelEntity;
-import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.DetFactureVenteEntity;
-import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.FactureVenteEntity;
-import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.TaxeFactureEntity;
 
 /**
  * Mapping Class from DTO to Entity, and from Entity to DTO
@@ -101,6 +83,10 @@ public class GuichetPersistanceUtilities {
 		entity.setPrefixeBonTransfertReception(dto.getPrefixeBonTransfertReception());
 		entity.setPrefixeBonTransfertSortie(dto.getPrefixeBonTransfertSortie());
 		
+		
+		entity.setNumBonMouvementEntre(dto.getNumBonMouvementEntre());
+		entity.setNumBonMouvementSortie(dto.getNumBonMouvementSortie());
+		
 		return entity;
 	}
 
@@ -168,6 +154,10 @@ public class GuichetPersistanceUtilities {
 		dto.setNumBonTransfertSortieCourante(entity.getNumBonTransfertSortieCourante());
 		dto.setPrefixeBonTransfertReception(entity.getPrefixeBonTransfertReception());
 		dto.setPrefixeBonTransfertSortie(entity.getPrefixeBonTransfertSortie());
+		
+		dto.setNumBonMouvementEntre(entity.getNumBonMouvementEntre());
+		dto.setNumBonMouvementSortie(entity.getNumBonMouvementSortie());
+		
 		
 		
 		return dto;

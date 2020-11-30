@@ -1,5 +1,6 @@
 package com.gpro.consulting.tiers.logistique.domaine.gs.impl;
 
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,9 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.domaine.elementBase.IArticleDomaine;
-import com.gpro.consulting.tiers.logistique.coordination.gl.fichesuiveuse.value.FicheSuiveuseValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.IConstante;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.BonMouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.EntiteStockValue;
@@ -21,6 +22,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gs.value.MouvementStock
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereBonMouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatListeBonMvtParTypeValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechecheBonMouvementStockValue;
+import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetAnnuelDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gs.IBonMouvementDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gl.fichesuiveuse.IFicheSuiveusePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gs.IBonMouvementPersistance;
@@ -54,6 +56,9 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 	
 	@Autowired 
 	private IFicheSuiveusePersistance ficheSuiveusePersistance;
+	
+	@Autowired
+	private IGuichetAnnuelDomaine guichetAnnuelDomaine;
 
 	/** The Constant LOGGER. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(BonMouvementDomaineImpl.class);
@@ -67,6 +72,10 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 
 	@Override
 	public String creerBonMouvement(BonMouvementStockValue bonMouvementStock) {
+		
+		if(bonMouvementStock.getDate() == null)
+			bonMouvementStock.setDate(Calendar.getInstance());
+			
 
 		BonMouvementStockValue request = new BonMouvementStockValue();
 
@@ -75,9 +84,12 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 			switch (bonMouvementStock.getType()) {
 			case IConstante.TYPE_MVT_ENT:
 				request = enrichirBonEntree(bonMouvementStock);
+				request.setNumero(this.getNumeroBonMouvementEntre(bonMouvementStock.getDate()));
 				break;
 
 			case IConstante.TYPE_MVT_SORT:
+				
+			
 
 				if (bonMouvementStock.isSoustractionSortie()){
 
@@ -88,6 +100,7 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 
 					request = enrichirBonSortie(bonMouvementStock);
 				}
+				request.setNumero(this.getNumeroBonMouvementSortie(bonMouvementStock.getDate()));
 				break;
 
 			case IConstante.TYPE_MVT_RES:
@@ -892,4 +905,64 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 
 	}
 
+	
+	private String getNumeroBonMouvementEntre(final Calendar pDateBonMouvementEntre){
+
+		Long vNumGuichetBonMouvementEntre = this.guichetAnnuelDomaine.getNextNumBonMouvementEntre();
+		/** Année courante. */
+		int vAnneeCourante = pDateBonMouvementEntre.get(Calendar.YEAR);
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonMouvementEntre = new StringBuilder("");
+		vNumBonMouvementEntre.append(vAnneeCourante);
+		if(vNumGuichetBonMouvementEntre<100)
+			vNumBonMouvementEntre.append("0");
+	       	vNumBonMouvementEntre.append( vNumGuichetBonMouvementEntre);
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetAnnuelValue vGuichetValeur = new GuichetAnnuelValue();
+		
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idAnnuel = (anneActuelle - 2016) +1;
+
+		vGuichetValeur.setId(new Long(idAnnuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumBonMouvementEntre(new Long(
+				vNumGuichetBonMouvementEntre + 1L));
+		/** Modification de la valeur en base du numéro. */
+		this.guichetAnnuelDomaine
+				.modifierGuichetBonMouvementEntreAnnuel(vGuichetValeur);
+		return vNumBonMouvementEntre.toString();
+	}
+	
+	private String getNumeroBonMouvementSortie(final Calendar pDateBonMouvementSortie){
+
+		Long vNumGuichetBonMouvementSortie = this.guichetAnnuelDomaine.getNextNumBonMouvementSortie();
+		/** Année courante. */
+		int vAnneeCourante = pDateBonMouvementSortie.get(Calendar.YEAR);
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonMouvementSortie = new StringBuilder("");
+		vNumBonMouvementSortie.append(vAnneeCourante);
+		if(vNumGuichetBonMouvementSortie<100)
+			vNumBonMouvementSortie.append("0");
+		    vNumBonMouvementSortie.append( vNumGuichetBonMouvementSortie);
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetAnnuelValue vGuichetValeur = new GuichetAnnuelValue();
+		
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idAnnuel = (anneActuelle - 2016) +1;
+
+		vGuichetValeur.setId(new Long(idAnnuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumBonMouvementSortie(new Long(
+				vNumGuichetBonMouvementSortie + 1L));
+		/** Modification de la valeur en base du numéro. */
+		this.guichetAnnuelDomaine
+				.modifierGuichetBonMouvementSortieAnnuel(vGuichetValeur);
+		return vNumBonMouvementSortie.toString();
+	}
 }
