@@ -192,7 +192,29 @@ public class GuichetAnnuelDomaineImpl implements IGuichetAnnuelDomaine{
 	
 
 	
+	@Override
+	public Long getNextNumBonMouvementEntre() {
+		// TODO Auto-generated method stub
+		 return this.guichetAnnuelPersistance.getNextNumBonMouvementEntre();
+	}
+
+	@Override
+	public Long getNextNumBonMouvementSortie() {
+		// TODO Auto-generated method stub
+		 return this.guichetAnnuelPersistance.getNextNumBonMouvementSortie();
+	}
 	
-	
+
+	@Override
+	public Long modifierGuichetBonMouvementEntreAnnuel(GuichetAnnuelValue pGuichetValeur) {
+		// TODO Auto-generated method stub
+		return this.guichetAnnuelPersistance.modifierGuichetBonMouvementEntreAnnuel(pGuichetValeur);
+	}
+
+	@Override
+	public Long modifierGuichetBonMouvementSortieAnnuel(GuichetAnnuelValue pGuichetValeur) {
+		// TODO Auto-generated method stub
+		return this.guichetAnnuelPersistance.modifierGuichetBonMouvementSortieAnnuel(pGuichetValeur);
+	}
 
 }

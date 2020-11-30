@@ -219,13 +219,19 @@ public class GestionnaireGSCacheServiceImpl implements IGestionnaireGSCacheServi
 
 		Map<String, String> mapA = new HashMap<String, String>();
 
-		for (RaisonMouvementStockValue raison : this.getListeRaison()) {
 
-			if (raison.getId().equals(pIdRaison)) {
-				// returne sousFamille Designation
-				mapA.put("raison", raison.getDesignation());
+		if(this.getListeRaison()!=null)
+		{
+			for (RaisonMouvementStockValue raison : this.getListeRaison()) {
+
+				if (raison.getId().equals(pIdRaison)) {
+					// returne sousFamille Designation
+					mapA.put("raison", raison.getDesignation());
+				}
 			}
+			
 		}
+		
 		return mapA;
 	}
 	

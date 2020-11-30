@@ -7,54 +7,53 @@ import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnue
 public interface IGuichetAnnuelPersistance {
 
 	/**
-	   * Méthode de récupération du numéro du bon de sortie dans la persistance.
-	   * 
-	   * @return le numéro du prochain bon de sortie
-	   */
+	 * Méthode de récupération du numéro du bon de sortie dans la persistance.
+	 * 
+	 * @return le numéro du prochain bon de sortie
+	 */
 
-	
 	/**
-	   * Méthode de récupération du numéro du bon de livraison dans la persistance.
-	   * 
-	   * @return le numéro du prochain bon de livraison
-	   */
-	
-	  public Long getNextNumBonComptoirReference();
-	
-	  public Long getNextNumBonCommandeReference();
-	
-	
-	  public Long getNextNumFactureReference();
-	  
-	  public Long getNextNumBLReference();
+	 * Méthode de récupération du numéro du bon de livraison dans la persistance.
+	 * 
+	 * @return le numéro du prochain bon de livraison
+	 */
 
-	  public Long getNextNumAvoirReference();
-	  
-	  public Long getNextNumReglementReference();
-	  
-	  /**
-	   * Méthode de modification d'un numéro de référence dans le guichet  pour l'année
-	   * courante..
-	   * @param pGuichetValeur le guichet à modifier
-	   * @return l'année du guichet
-	   */
-	  public Long modifierGuichetFactureAnnuel(GuichetAnnuelValue pGuichetValeur);
+	public Long getNextNumBonComptoirReference();
 
-	  public Long modifierGuichetAvoirAnnuel(GuichetAnnuelValue pGuichetValeur);
-	  
-	  public Long modifierGuichetBonCommandeAnnuel(GuichetAnnuelValue pGuichetValeur);
-	
-	  public Long modifierGuichetReglementAnnuel(GuichetAnnuelValue pGuichetValeur);
+	public Long getNextNumBonCommandeReference();
 
-	  public GuichetAnnuelValue getById(Long id);
-	  
-	  public String modifierGuichetAnnuel(GuichetAnnuelValue pGuichetAnnuelValue);
-	  
-	  public List<GuichetAnnuelValue> getAll();
-	  
-	  public Long modifierGuichetBLAnnuel(GuichetAnnuelValue pGuichetValeur);
-	  
-	  public Long modifierGuichetBonComptoirAnnuel(GuichetAnnuelValue pGuichetValeur);
+	public Long getNextNumFactureReference();
+
+	public Long getNextNumBLReference();
+
+	public Long getNextNumAvoirReference();
+
+	public Long getNextNumReglementReference();
+
+	/**
+	 * Méthode de modification d'un numéro de référence dans le guichet pour l'année
+	 * courante..
+	 * 
+	 * @param pGuichetValeur le guichet à modifier
+	 * @return l'année du guichet
+	 */
+	public Long modifierGuichetFactureAnnuel(GuichetAnnuelValue pGuichetValeur);
+
+	public Long modifierGuichetAvoirAnnuel(GuichetAnnuelValue pGuichetValeur);
+
+	public Long modifierGuichetBonCommandeAnnuel(GuichetAnnuelValue pGuichetValeur);
+
+	public Long modifierGuichetReglementAnnuel(GuichetAnnuelValue pGuichetValeur);
+
+	public GuichetAnnuelValue getById(Long id);
+
+	public String modifierGuichetAnnuel(GuichetAnnuelValue pGuichetAnnuelValue);
+
+	public List<GuichetAnnuelValue> getAll();
+
+	public Long modifierGuichetBLAnnuel(GuichetAnnuelValue pGuichetValeur);
+
+	public Long modifierGuichetBonComptoirAnnuel(GuichetAnnuelValue pGuichetValeur);
 
 	public GuichetAnnuelValue getCurrentGuichetAnnuel();
 
@@ -83,5 +82,15 @@ public interface IGuichetAnnuelPersistance {
 	public Long modifierGuichetBonTransfertReceptionAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
 
 	public Long modifierGuichetBonTransfertSortieAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
+	// stock
+
+	public Long getNextNumBonMouvementEntre();
+
+	public Long getNextNumBonMouvementSortie();
+
+	public Long modifierGuichetBonMouvementEntreAnnuel(GuichetAnnuelValue pGuichetValeur);
+
+	public Long modifierGuichetBonMouvementSortieAnnuel(GuichetAnnuelValue pGuichetValeur);
 
 }

@@ -94,5 +94,18 @@ public interface IGuichetAnnuelDomaine {
 
 	public Long modifierGuichetBonTransfertSortieAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
 
+
+	
+	
+	//stock 
+	public Long getNextNumBonMouvementEntre();
+	
+	public Long getNextNumBonMouvementSortie();
+
+
+	  public Long modifierGuichetBonMouvementEntreAnnuel(GuichetAnnuelValue pGuichetValeur);
+	  
+	  public Long modifierGuichetBonMouvementSortieAnnuel(GuichetAnnuelValue pGuichetValeur);
+
 		
 }

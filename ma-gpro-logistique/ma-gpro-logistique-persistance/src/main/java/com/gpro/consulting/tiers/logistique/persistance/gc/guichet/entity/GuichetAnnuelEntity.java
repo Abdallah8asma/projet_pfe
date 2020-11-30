@@ -186,7 +186,43 @@ public class GuichetAnnuelEntity {
 	  
 	  
 	  
-	  public String getPrefixeBonInventaire() {
+	  
+	  
+	  
+	  //GS
+	  
+	  
+	  /** Numéro Bon de mouvement entre. */
+	  @Column(name = "num_bonmouvement_entre")
+	  private Long numBonMouvementEntre;
+ 
+	  
+	  /** Numéro Bon de mouvement de sortie. */
+	  @Column(name = "num_bonmouvement_sortie")
+	  private Long numBonMouvementSortie;
+	  
+	  
+	  
+	  
+	  
+	  
+	  public Long getNumBonMouvementEntre() {
+		return numBonMouvementEntre;
+	}
+
+	public void setNumBonMouvementEntre(Long numBonMouvementEntre) {
+		this.numBonMouvementEntre = numBonMouvementEntre;
+	}
+
+	public Long getNumBonMouvementSortie() {
+		return numBonMouvementSortie;
+	}
+
+	public void setNumBonMouvementSortie(Long numBonMouvementSortie) {
+		this.numBonMouvementSortie = numBonMouvementSortie;
+	}
+
+	public String getPrefixeBonInventaire() {
 		return prefixeBonInventaire;
 	}
 

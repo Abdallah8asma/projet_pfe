@@ -447,6 +447,63 @@ public class GuichetAnnuelPersistanceImpl extends AbstractPersistance implements
 	
 
 	
+	@Override
+	public Long getNextNumBonMouvementEntre() {
+		// TODO Auto-generated method stub
+	
+		
+		// Année courante
+	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+	   
+	    
+	    // Chercher le dernier numéro dans la base et le charger
+	    Query vQuery = this.entityManager.createQuery(
+	      "select g.numBonMouvementEntre from GuichetAnnuelEntity g where g.annee =" + vAnneeCourante);
 
+	    Object vResult = vQuery.getSingleResult();
+	    Long vNextNum = (Long) vResult;
+	    // Format du Numéro du bon de reception : NNNNNNN
+	    return vNextNum;
+	}
+
+	@Override
+	public Long getNextNumBonMouvementSortie() {
+		// TODO Auto-generated method stub
+		// Année courante
+	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+	   
+	    
+	    // Chercher le dernier numéro dans la base et le charger
+	    Query vQuery = this.entityManager.createQuery(
+	      "select g.numBonMouvementSortie from GuichetAnnuelEntity g where g.annee =" + vAnneeCourante);
+
+	    Object vResult = vQuery.getSingleResult();
+	    Long vNextNum = (Long) vResult;
+	    // Format du Numéro du bon de reception : NNNNNNN
+	    return vNextNum;
+	}
+	
+	
+	@Override
+	public Long modifierGuichetBonMouvementEntreAnnuel(GuichetAnnuelValue pGuichetValeur) {
+		// Convertir la valeur du guichet en une entité.
+		  GuichetAnnuelEntity vGuichetEntite = rechercherGuichetAnnuel(pGuichetValeur);
+		// Sauvegarde de l'instance dans la base
+	    vGuichetEntite.setNumBonMouvementEntre(pGuichetValeur.getNumBonMouvementEntre());
+	    this.entityManager.merge(vGuichetEntite);
+	    this.entityManager.flush();
+	    return vGuichetEntite.getId();
+	}
+
+	@Override
+	public Long modifierGuichetBonMouvementSortieAnnuel(GuichetAnnuelValue pGuichetValeur) {
+		// Convertir la valeur du guichet en une entité.
+		  GuichetAnnuelEntity vGuichetEntite = rechercherGuichetAnnuel(pGuichetValeur);
+		// Sauvegarde de l'instance dans la base
+	    vGuichetEntite.setNumBonMouvementSortie(pGuichetValeur.getNumBonMouvementSortie());
+	    this.entityManager.merge(vGuichetEntite);
+	    this.entityManager.flush();
+	    return vGuichetEntite.getId();
+	}
 	
 }
