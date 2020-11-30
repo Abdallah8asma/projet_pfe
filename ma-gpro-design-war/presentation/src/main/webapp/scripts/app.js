@@ -146,8 +146,8 @@ angular
     'gpro.backRaisonMouvement',
     'gpro.backMagasin',
     'gpro.backEmplacement',
-    'gpro.PopupStockEntree',
-    'gpro.PopupStockSortie',
+    //'gpro.PopupStockEntree',
+    //'gpro.PopupStockSortie',
     'gpro.stock',
     'gpro.stockEChart',
 
@@ -187,10 +187,22 @@ angular
 	'gpro.analyseAchat',
 	'gpro.dashbord',
 	
-	 /************* Transfert *******************/
+	/************* Transfert *******************/
 	'gpro.transfertMenu',
 	'gpro.transfertBonTransfertReception',
-	'gpro.transfertBonTransfertSortie'
+	'gpro.transfertBonTransfertSortie',
+	
+	
+    /************* Stock MP *******************/
+	
+  'gpro.stockSortieMP',
+  'gpro.stockEntreeMP',
+  'gpro.etatMP',
+  'gpro.historiqueMP',
+  'gpro.stockMPmenu',
+  'gpro.PopupStockEntreeMP',
+  'gpro.PopupStockSortieMP'
+	
 	
   ])
 
@@ -971,6 +983,66 @@ angular
 
         .when('/transfert/:type', {
           templateUrl: 'views/front/transfert/transfertMenu.html',
+        })
+
+
+        /********** Stock Mp ******************************** */
+
+                
+        /**
+         * ********************** StockMp
+         * ***************************
+         */
+
+        .when('/stockMP', {
+   
+          templateUrl: 'views/front/stockMP/stockMP.html',
+          
+        })
+        .when('/stockMP/:type', {
+         
+          templateUrl: 'views/front/stockMP/stockMP.html',
+        })
+        .when('/front/stockMP/etat/:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/stockMP/etat/' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
+
+        .when('/front/stockMP/sortie:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/stockMP/sortie/' + param.templateFile + '.html'
+            );
+          },
+        })
+
+        .when('/front/stockMP/historique/:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/stockMP/historique/' + param.templateFile + '.html'
+            );
+          },
+        })
+
+        .when('/front/stockMP/tableaudebord:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/stockMP/tableaudebord/' + param.templateFile + '.html'
+            );
+          },
+        })
+
+        .when('/front/stockMP/entree:templateFile', {
+          templateUrl: function (param) {
+            return 'views/front/stockMP/entree/' +
+            param.templateFile +
+            '.html';
+          },
         })
 
        
