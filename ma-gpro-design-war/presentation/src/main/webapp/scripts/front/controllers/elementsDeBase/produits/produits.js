@@ -33,8 +33,9 @@ angular
     	        "quantite":0,		
     	        "dateIntroduction": new Date(),
     	        "stock":true, 
-    	        "serialisable":true,
+    	        "serialisable":false,
               "retour":false,
+              "fodec":false,
               "articleProduits":[{
                                 'articleId':'',
                                 'impressionProduitId':'',
@@ -59,6 +60,8 @@ angular
       $scope.listeOperationProduit = [];
       
 
+      $scope.listeCompteComptable = [];
+
 
       $scope.listePartieInteressee = [];
       $scope.listeDocuments = [];
@@ -78,13 +81,41 @@ angular
        * Gestion de Cache des Referentiels *
        **************************************************/
 
-     /* $scope.getSousFamilleArticle = function () {
+
+        
+								   // Lister Famille produit
+								   $scope.getListeFamilleOptionProduit = function() {
+
+									
+                    $http.get(UrlCommun + "/utilsEntite/getAllByType:OPTION_PRODUIT")
+                        .success(function(dataFamille) {
+                          $log.debug("listeFamille " + dataFamille.length);
+                          $scope.listeFamilleOptionProduit = dataFamille;
+                        });
+                  }
+
+                  $scope.getListeFamilleOptionProduit();
+
+    $scope.getSousFamilleArticle = function () {
         $http.get(UrlCommun + '/sousFamilleArticle/all').success(function (data) {
           $scope.listeSousFamilleArticle = data;
         });
       };
 
-      $scope.getSousFamilleArticle();*/
+      $scope.getSousFamilleArticle();
+
+
+           // get Liste des compte comptable PI
+           $scope.getListeCompteComptable = function () {
+            //TODO cache
+            $http
+              .get(UrlCommun + '/compteComptable/all')
+              .success(function (dataRegionCache) {
+                $log.debug('compte comptable : ' + dataRegionCache.length);
+                $scope.listeCompteComptable = dataRegionCache;
+              });
+          };
+          $scope.getListeCompteComptable();
 
 
 
@@ -273,8 +304,28 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
       };
 
       $scope.getAllArticle();
+      
+      
+            // Liste des PICache
+      $scope.listePartieInteresseeCache = function () {
+        $http
+          .get(UrlCommun + '/gestionnaireCache/listePartieInteresseeCache')
+          .success(function (dataPICache) {
+            // $log.debug("*LISTEPartieInteresseeCache
+            // :"
+            // +JSON.stringify(dataPICache,null,"
+            // "));
 
+            // $scope.listePartieInteressee
+            // = $filter ('filter')
+            // (dataPICache ,
+            // {famillePartieInteressee
+            // : 2});
+            $scope.listePartieInteressee = dataPICache;
+          });
+      };
 
+//$scope.listePartieInteresseeCache();
 
       /***    Fermer notification Article existant       **/
 
@@ -482,7 +533,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
 				}*/
 
       // Liste des PICache
-      $scope.listePartieInteresseeCache = function () {
+   /*   $scope.listePartieInteresseeCache = function () {
         $http
           .get(UrlCommun + '/gestionnaireCache/listePartieInteresseeCache')
           .success(function (dataPICache) {
@@ -493,7 +544,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
               famillePartieInteressee: 2,
             });
           });
-      };
+      };*/
 
       // Liste TypeDocumentCache
       $scope.listeTypeDocumentsCache = function () {
@@ -684,14 +735,16 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
         "quantite":0,		
         "dateIntroduction": new Date(),
         "stock":true, 
-        "serialisable":true,
+        "serialisable":false,
         "retour":false,
+        "fodec":false,
         
         "articleProduits":[{
           'articleId':'',
           'impressionProduitId':'',
           'qte':'',
           'grammage':'',
+          'dimension':'',
           "optionArticleProduits":[{
                                     'designation':'',
                                     'optionArticleId':'',

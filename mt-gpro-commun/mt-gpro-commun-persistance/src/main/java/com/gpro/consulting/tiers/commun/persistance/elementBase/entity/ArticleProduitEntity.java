@@ -50,6 +50,20 @@ public class ArticleProduitEntity implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "eb_produit_id")
 	private ProduitEntity produit;
+	
+	@Column(name = "dimension")
+	private String dimension;
+	
+	
+	@Column(name = "sous_famille_article_id")
+	private Long sousFamilleArticleId;
+	
+	
+	@Column(name = "info_matiere")
+	private String infoMatiere;
+	
+	
+	
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "articleProduit", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<OptionArticleProduitEntity> optionArticleProduits;
@@ -57,6 +71,39 @@ public class ArticleProduitEntity implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "articleProduit", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<OperationArticleProduitEntity> operationArticleProduits;
+
+	
+	
+	
+
+	public String getInfoMatiere() {
+		return infoMatiere;
+	}
+
+
+	public void setInfoMatiere(String infoMatiere) {
+		this.infoMatiere = infoMatiere;
+	}
+
+
+	public Long getSousFamilleArticleId() {
+		return sousFamilleArticleId;
+	}
+
+
+	public void setSousFamilleArticleId(Long sousFamilleArticleId) {
+		this.sousFamilleArticleId = sousFamilleArticleId;
+	}
+
+
+	public String getDimension() {
+		return dimension;
+	}
+
+
+	public void setDimension(String dimension) {
+		this.dimension = dimension;
+	}
 
 
 	public Long getId() {

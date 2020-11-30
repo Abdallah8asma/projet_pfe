@@ -19,6 +19,14 @@ public class ArticleProduitValue {
 	
 	private String grammage;
 	
+	private String dimension;
+	
+	
+	private Long sousFamilleArticleId;
+	
+	
+	private String infoMatiere;
+	
 	
 	private Set<OptionArticleProduitValue> optionArticleProduits = new HashSet<OptionArticleProduitValue>();
 	
@@ -27,6 +35,30 @@ public class ArticleProduitValue {
 	
 	
 	
+
+	public String getInfoMatiere() {
+		return infoMatiere;
+	}
+
+	public void setInfoMatiere(String infoMatiere) {
+		this.infoMatiere = infoMatiere;
+	}
+
+	public Long getSousFamilleArticleId() {
+		return sousFamilleArticleId;
+	}
+
+	public void setSousFamilleArticleId(Long sousFamilleArticleId) {
+		this.sousFamilleArticleId = sousFamilleArticleId;
+	}
+
+	public String getDimension() {
+		return dimension;
+	}
+
+	public void setDimension(String dimension) {
+		this.dimension = dimension;
+	}
 
 	public Set<OperationArticleProduitValue> getOperationArticleProduits() {
 		return operationArticleProduits;

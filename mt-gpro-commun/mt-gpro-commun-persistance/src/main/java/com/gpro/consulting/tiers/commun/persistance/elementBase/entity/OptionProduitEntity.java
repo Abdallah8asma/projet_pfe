@@ -48,6 +48,10 @@ public class OptionProduitEntity implements Serializable{
 	private String typesIds;
 	
 	
+	@Column(name="nature")
+	private String nature;
+	
+	
 	/** The bl suppression. */
 	@Column(name = "bl_suppression")
 	private boolean blSuppression;
@@ -67,6 +71,14 @@ public class OptionProduitEntity implements Serializable{
 	
 	
 	
+
+	public String getNature() {
+		return nature;
+	}
+
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
 
 	public String getTypesIds() {
 		return typesIds;

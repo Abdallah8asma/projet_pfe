@@ -170,6 +170,14 @@ public class ProduitEntity implements Serializable {
 	@Column(name = "nature")
 	private String nature;
 	
+	
+	@Column(name = "compte_comptable_id")
+	private Long compteComptableId;
+	
+	/** The fodec. */
+	@Column(name = "fodec")
+	private boolean fodec;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "produit", cascade = CascadeType.ALL, orphanRemoval=true)
 	private Set<ArticleProduitEntity> articleProduits;
 	
@@ -181,6 +189,22 @@ public class ProduitEntity implements Serializable {
 	
 	
 	
+	public boolean isFodec() {
+		return fodec;
+	}
+
+	public void setFodec(boolean fodec) {
+		this.fodec = fodec;
+	}
+
+	public Long getCompteComptableId() {
+		return compteComptableId;
+	}
+
+	public void setCompteComptableId(Long compteComptableId) {
+		this.compteComptableId = compteComptableId;
+	}
+
 	public String getDimension() {
 		return dimension;
 	}

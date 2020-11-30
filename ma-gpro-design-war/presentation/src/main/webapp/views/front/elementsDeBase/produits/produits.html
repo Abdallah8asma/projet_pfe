@@ -158,7 +158,7 @@
 							</div>
 						</div>
 
-						<div class="row">
+					<!-- 	<div class="row">
 
 
 							<div class="col-sm-6">
@@ -187,7 +187,7 @@
 							</div>
 
 
-						</div>
+						</div> -->
 
 
 						<div class="row">
@@ -331,7 +331,7 @@
 
 						</div>
 
-						<div class="row">
+					<!-- 	<div class="row">
 
 
 							<div class="col-sm-4">
@@ -379,13 +379,13 @@
 
 
 
-						</div>
+						</div> -->
 
 
 						<div class="row">
 
 
-
+<!-- 
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
@@ -405,12 +405,75 @@
 										</select>
 									</div>
 								</div>
+							</div> -->
+
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Categorie</span>
+										</div>
+										<select ui-select2 class="form-control" ng-model="produitCourante.famille"
+											ng-init="produitCourante.famille=''">
+											<option value="">Tous</option>
+											<option
+												ng-repeat="famille in ListFamilleProduitCache"
+												value="{{famille.id}}">{{famille.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Sous Categorie</span>
+										</div>
+										<select ui-select2 class="form-control" ng-model="produitCourante.sousFamilleId"
+											ng-init="produitCourante.sousFamilleId=''">
+											<option value="">Tous</option>
+											<option
+												ng-repeat="sousFamille in ListSousFamilleProduitCache  | filter : {familleProduitId : produitCourante.famille}"
+												value="{{sousFamille.id}}">{{sousFamille.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">TVA</label>
+										</div>
+										<select ui-select2 ng-model="produitCourante.idTaxe" required
+											ng-init="produitCourante.idTaxe=''" ng-required="true"
+											data-placeholder="Choisir TVA"
+											ng-change="calculerPrixVenteTTC(produitCourante.prixUnitaire,produitCourante.idTaxe)"
+											class="form-control" style="border: 1px solid #e5eaee !important;">
+											<option value=""></option>
+											<option ng-repeat=" lt in ListeTaxe" value="{{lt.id}}">{{lt.designation}}
+											</option>
+										</select>
+									</div>
+								</div>
 							</div>
 
 
 
 
+					
 
+
+
+						</div>
+
+						<div class="row">
 
 							<div class="col-sm-4">
 								<div class="form-group">
@@ -454,32 +517,9 @@
 								</div>
 							</div>
 
+						
 
-
-						</div>
-
-						<div class="row">
-
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">TVA</label>
-										</div>
-										<select ui-select2 ng-model="produitCourante.idTaxe" required
-											ng-init="produitCourante.idTaxe=''" ng-required="true"
-											data-placeholder="Pick a state"
-											ng-change="calculerPrixVenteTTC(produitCourante.prixUnitaire,produitCourante.idTaxe)"
-											class="form-control" style="border: 1px solid #e5eaee !important;">
-											<option value=""></option>
-											<option ng-repeat=" lt in ListeTaxe" value="{{lt.id}}">{{lt.designation}}
-											</option>
-										</select>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-4">
+					<!-- 		<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -517,7 +557,7 @@
 											valeur doit être supérieure ou égale à 0 !</div>
 									</div>
 								</div>
-							</div>
+							</div> -->
 
 
 
@@ -527,7 +567,9 @@
 
 
 
+
 						<div class="row">
+
 
 
 
@@ -535,54 +577,19 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label">Quantit&eacute;</label>
+
+											<label class=" input-group-text ms-Label">Compte Comptable</label>
 										</div>
-										<input class="form-control" type="number" step="any"
-											ng-model="produitCourante.quantite" disabled />
+										<select  class="form-control"
+											ng-model="produitCourante.vCategoriePartieInteressee">
+											<option ng-repeat="cpt in listeCompteComptable" value="{{cpt.id}}">
+												{{cpt.designation}}</option>
+										</select>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-sm-4" ng-controller="DateIntroCtrl">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"> Date In</span>
-										</div>
-										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-											max-date="{{maxToDay}}" ng-model="produitCourante.dateIntroduction"
-											is-open="opened" datepicker-options="dateOptions"
-											date-="enabled(date, mode)" close-text="Close" />
-
-										<div class="input-group-append">
-											<button type="button" class="btn1 btn-default" ng-click="open($event)"
-												style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
-												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-
-
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label">Déscription</label>
-										</div>
-										<textarea class="form-control" rows="1"
-											ng-model="produitCourante.description"></textarea>
-									</div>
-								</div>
-							</div>
-
-						</div>
-
-
-						<div class="row">
-
-
+<!-- 
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
@@ -605,7 +612,7 @@
 									</div>
 								</div>
 							</div>
-
+ -->
 
 							<div class="col-sm-4">
 								<div class="form-group">
@@ -620,11 +627,6 @@
 							</div>
 
 
-						</div>
-
-
-						<div class="row">
-
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
@@ -636,6 +638,37 @@
 								</div>
 							</div>
 
+
+
+						</div>
+
+
+						<div class="row">
+
+
+							
+							<div class="col-sm-4" ng-controller="DateIntroCtrl">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> Date In</span>
+										</div>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											max-date="{{maxToDay}}" ng-model="produitCourante.dateIntroduction"
+											is-open="opened" datepicker-options="dateOptions"
+											date-="enabled(date, mode)" close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default" ng-click="open($event)"
+												style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+
+					
 
 							<div class="col-sm-4">
 								<div class="form-group">
@@ -657,16 +690,66 @@
 									</div>
 								</div>
 							</div>
+							
+							
+							
+							 <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <select ui-select2 ng-model="produitCourante.partieIntersseId" data-placeholder="..."
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="pi in listePartieInteressee | filter:{famillePartieInteressee : 1}"
+                        value="{{pi.id}}">{{pi.raisonSociale}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div><!--  -->
 
 
 						</div>
 
 						<div class="row">
-							<div class="col-sm-2"></div>
-							<div class="col-sm-2"></div>
+							
+
+					
 
 
-							<div class="col-sm-2">
+
+							<!-- <div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Quantit&eacute;</label>
+										</div>
+										<input class="form-control" type="number" step="any"
+											ng-model="produitCourante.quantite" disabled />
+									</div>
+								</div>
+							</div> -->
+
+
+
+							<div class="col-sm-8">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Déscription</label>
+										</div>
+										<textarea class="form-control" rows="1"
+											ng-model="produitCourante.description"></textarea>
+									</div>
+								</div>
+							</div>
+
+					
+						
+
+
+					<!-- 		<div class="col-sm-2">
 								<div class="form-group float-right">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -682,8 +765,8 @@
 										</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-sm-2">
+							</div> -->
+						<!-- 	<div class="col-sm-2">
 								<div class="form-group float-right">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -695,6 +778,24 @@
 													<input type="checkbox" checked="checked"
 														ng-change="financierIsChanged(produitCourante.retour)"
 														ng-model="produitCourante.retour" /> <span></span>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div> -->
+
+							<div class="col-sm-2">
+								<div class="form-group float-right">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Fodec</label>
+										</div>
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<label class="checkbox checkbox-square checkbox-primary">
+													<input type="checkbox" checked="checked"
+														ng-model="produitCourante.fodec" /> <span></span>
 												</label>
 											</div>
 										</div>
@@ -725,7 +826,7 @@
 
 
 						<div ng-repeat=" articleProduit in produitCourante.articleProduits track by $index">
-							<span class="ms-ListItem-primaryText">Composant {{$index +1}} 	<span class="ms-CommandButton-icon"
+							<span class="ms-ListItem-primaryText">Détail Produit {{$index +1}} 	<span class="ms-CommandButton-icon"
 								ng-click="deleteArticleProduit($index,produitCourante.articleProduits)">
 									 <a href="javascript:void(0)"> <i
 										class="ms-Icon ms-Icon--Delete"
@@ -740,29 +841,42 @@
 
 									<div class="row">
 
-										<div class="col-sm-3">
+
+
+											
+										<div class="col-sm-4">
 											<div class="form-group">
 												<div class="input-group">
 													<div class="input-group-prepend">
 														<label
-															class="input-group-text ms-Label is-required">Article</label>
+															class="input-group-text ms-Label is-required">Désignation</label>
 													</div>
-
-													<select ui-select2 ng-model="articleProduit.articleId" required
-														 ng-required="true"
-														data-placeholder="Composant" class="form-control"
-														style="border: 1px solid #e5eaee !important;">
-														<option value=""></option>
-														<option ng-repeat=" vArticle in listeAllArticle"
-															value="{{vArticle.id}}">{{vArticle.designation}}</option>
-													</select>
-
+													<input type="text" class="form-control"
+														ng-model="articleProduit.produitSemiFini"
+													 />
 												</div>
 											</div>
 										</div>
 
 
-										<div class="col-sm-3">
+											
+										<div class="col-sm-4">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">Dimension</label>
+													</div>
+													<input type="text" class="form-control"
+														ng-model="articleProduit.dimension"
+													 />
+												</div>
+											</div>
+										</div>
+
+
+
+										<div class="col-sm-4">
 											<div class="form-group">
 												<div class="input-group">
 													<div class="input-group-prepend">
@@ -785,17 +899,78 @@
 										</div>
 
 
+									
+
+
+								 
+
+
+									<!-- 	<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">MP</label>
+													</div>
+
+													<select ui-select2 ng-model="articleProduit.articleId" required
+														 ng-required="true"
+														data-placeholder="Composant" class="form-control"
+														style="border: 1px solid #e5eaee !important;">
+														<option value=""></option>
+														<option ng-repeat=" vArticle in listeAllArticle"
+															value="{{vArticle.id}}">{{vArticle.designation}}</option>
+													</select>
+
+												</div>
+											</div>
+										</div> -->
+
+
+
+									</div>
+
+
+
+									<div class="row">
+
+
 										<div class="col-sm-3">
 											<div class="form-group">
 												<div class="input-group">
 													<div class="input-group-prepend">
-														<label class="input-group-text ms-Label is-required">Qte</label>
+														<label
+															class="input-group-text ms-Label is-required">Matière</label>
 													</div>
-													<input type="number" class="form-control"
-														ng-model="articleProduit.qte"  />
+
+													<select ui-select2 ng-model="articleProduit.sousFamilleArticleId" required
+														 ng-required="true"
+														data-placeholder="Composant" class="form-control"
+														style="border: 1px solid #e5eaee !important;">
+														<option value=""></option>
+														<option ng-repeat=" sfArt in listeSousFamilleArticle"
+															value="{{sfArt.id}}">{{sfArt.designation}}</option>
+													</select>
+
 												</div>
 											</div>
 										</div>
+
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">Info Mat.</label>
+													</div>
+													<input type="text" class="form-control"
+														ng-model="articleProduit.infoMatiere"
+													 />
+												</div>
+											</div>
+										</div>
+
 
 
 										<div class="col-sm-3">
@@ -814,7 +989,27 @@
 
 
 
+							
+
+
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label class="input-group-text ms-Label is-required">Qte</label>
+													</div>
+													<input type="number" class="form-control"
+														ng-model="articleProduit.qte"  />
+												</div>
+											</div>
+										</div>
+
+
+
+
 									</div>
+
 
 								</div>
 
@@ -833,6 +1028,37 @@
 									<div class="row"
 										ng-repeat=" optionArticleProduit in articleProduit.optionArticleProduits">
 
+
+
+										<div class="col-sm-3">
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-prepend">
+														<label
+															class="input-group-text ms-Label is-required">Famille Option</label>
+													</div>
+
+													<select ui-select2 ng-model="optionArticleProduit.familleOptionArticleDesignation"
+														 data-placeholder="Option"
+														class="form-control"
+														style="border: 1px solid #e5eaee !important;"
+													>
+														<option value="">Tous</option>
+														<option ng-repeat=" optFam in listeFamilleOptionProduit"
+															value="{{optFam.designation}}">{{optFam.designation}}</option>
+													</select>
+
+												</div>
+											</div>
+										</div>
+
+
+
+
+							
+
+
+
 										<div class="col-sm-4">
 											<div class="form-group">
 												<div class="input-group">
@@ -848,7 +1074,7 @@
 														style="border: 1px solid #e5eaee !important;"
 														ng-change="optionIsChanged(optionArticleProduit.optionArticleId,optionArticleProduit)">
 														<option value=""></option>
-														<option ng-repeat=" opt in listeOptionProduit"
+														<option ng-repeat=" opt in listeOptionProduit  | filter : {nature : optionArticleProduit.familleOptionArticleDesignation}"
 															value="{{opt.id}}">{{opt.designation}}</option>
 													</select>
 
@@ -870,7 +1096,7 @@
 											</div>
 										</div>
 
-										<div class="col-sm-4">
+										<div class="col-sm-1">
 										<span class="ms-CommandButton-icon float-right"
 										ng-click="deleteOptionArticleProduit(optionArticleProduit,articleProduit.optionArticleProduits)">
 											 <a href="javascript:void(0)"> <i

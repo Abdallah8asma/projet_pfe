@@ -187,8 +187,33 @@ public class PartieInteresseEntite implements Serializable {
 	@Column(name = "code_bancaire")
 	private String codeBancaire;
 	
+	/** The email2. */
+	@Column(name = "email2")
+	private String email2;
+	
+	@Column(name = "code_produit")
+	private String codeProduit;
 	
 	
+	
+	
+	
+
+	public String getEmail2() {
+		return email2;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
+	}
+
+	public String getCodeProduit() {
+		return codeProduit;
+	}
+
+	public void setCodeProduit(String codeProduit) {
+		this.codeProduit = codeProduit;
+	}
 
 	public String getCodeBancaire() {
 		return codeBancaire;
