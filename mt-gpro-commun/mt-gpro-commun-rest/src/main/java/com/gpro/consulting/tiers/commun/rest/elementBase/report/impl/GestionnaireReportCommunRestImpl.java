@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.erp.socle.j2ee.mt.socle.report.impl.AbstractGestionnaireDownloadImpl;
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
 import com.gpro.consulting.tiers.commun.coordination.report.value.ProduitReportElementValue;
 import com.gpro.consulting.tiers.commun.coordination.report.value.ProduitsReportListValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
 import com.gpro.consulting.tiers.commun.service.cache.IGestionnaireCacheService;
 import com.gpro.consulting.tiers.commun.service.elementBase.report.IGestionnaireReportCommunService;
 
@@ -145,6 +147,38 @@ public class GestionnaireReportCommunRestImpl extends AbstractGestionnaireDownlo
 				report.getFileName(),report.getJRBeanCollectionDataSource(), response);
 
 	}
+	
+	
+	@RequestMapping(value="/listarticle", method = RequestMethod.GET)
+	public void generateListArticleReport(@RequestParam("type") String type,
+//			@RequestParam("request") RechercheMulticritereProduitValue request,
+		//	@RequestParam("reference") String reference,
+			//@RequestParam("designation") String designation,
+			@RequestParam("famille") String famille,
+		//	@RequestParam("sousfamille") String sousfamille,
+			
+			
+			HttpServletResponse response ) throws JRException, IOException {
+		
+		logger.info("Generate a {} Report Produit List",type);
+		
+		RecherecheMulticritereArticleValue request = new RecherecheMulticritereArticleValue();
+		//request.setRef(reference);
+		//request.setDesignation(designation); 
+    	request.setFamilleEntite(famille);
+	//	request.setSousFamilleEntite(sousfamille);
+		
+		
+		
+    	FicheColisReportValue report = gestionnaireReportCommunService.getListArticleReport(request);
+		
+	
+		
+		this.download( type , report.getReportStream() ,report.getParams(), 
+				report.getFileName(),report.getjRBeanCollectionDataSource(), response);
+
+	}
+	
 
 	/**
 	 * @return the gestionnaireReportCommunService
