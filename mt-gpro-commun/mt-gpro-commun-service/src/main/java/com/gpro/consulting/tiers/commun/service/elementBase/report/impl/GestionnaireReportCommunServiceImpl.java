@@ -7,8 +7,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gpro.consulting.tiers.commun.coordination.report.value.ArticleReportValue;
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
+import com.gpro.consulting.tiers.commun.coordination.report.value.ProduitReportValue;
 import com.gpro.consulting.tiers.commun.coordination.report.value.ProduitsReportListValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
 import com.gpro.consulting.tiers.commun.domaine.elementBase.report.IGestionnaireReportCommunDomaine;
 import com.gpro.consulting.tiers.commun.service.elementBase.report.IGestionnaireReportCommunService;
 
@@ -56,4 +60,24 @@ public class GestionnaireReportCommunServiceImpl implements IGestionnaireReportC
 		this.gestionnaireReportCommunDomaine = gestionnaireReportCommunDomaine;
 	}
 	
+	
+	@Override
+	public ArticleReportValue getArticleReport(
+			Long id) throws IOException {
+		
+		return gestionnaireReportCommunDomaine.getArticleReport(id);
+	}
+
+	@Override
+	public FicheColisReportValue getListArticleReport(RecherecheMulticritereArticleValue request) throws IOException {
+		// TODO Auto-generated method stub
+		return gestionnaireReportCommunDomaine.getColisReport(request);
+	}
+
+	@Override
+	public ProduitReportValue getProduitReport(Long id) throws IOException {
+		// TODO Auto-generated method stub
+		 	
+				return gestionnaireReportCommunDomaine.getProduitReport(id);
+	}
 }

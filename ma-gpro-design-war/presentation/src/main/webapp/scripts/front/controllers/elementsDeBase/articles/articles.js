@@ -13,8 +13,9 @@ angular
 						'downloadService',
 						'initReferentielService',
 						'UrlCommun',
+						'$window',
 						function($scope, $rootScope, $translate, $filter, $http, $log, downloadService,	
-							initReferentielService, UrlCommun) {
+							initReferentielService, UrlCommun,$window) {
 							// Déclaration des variables globales utilisées
 							$log.info("=============ARTICLE===============");
 							/** ***Liste desVariables **** */
@@ -419,6 +420,66 @@ angular
 			
 							};
 							/** Fin de gestion des Articles */
+
+
+
+							$scope.downloadAllArticleBarCode = function(articleCourante) {
+
+								$scope.traitementEnCoursGenererLivraison="true";
+								 	
+							
+								var url;
+								//$log.debug("PI  "+produitCourant.partieInteressee );
+								
+							
+								
+								//$log.debug("-- produitCourant After" + JSON.stringify(produitCourant, null, "  ") );
+				       			url = UrlCommun + "/reportCommun/listarticle?famille=" + articleCourante.familleEntite
+									 					
+														 + "&type=pdf";
+				
+
+											
+										var a = document.createElement('a');
+										document.body.appendChild(a);
+										downloadService.download(url).then(function (result) {
+											var heasersFileName = result.headers(['content-disposition']).substring(17);
+										var fileName = heasersFileName.split('.');
+									var typeFile = result.headers(['content-type']);
+									var file = new Blob([result.data], {type: typeFile});
+									var fileURL = window.URL.createObjectURL(file);
+
+
+									a.download = fileName[0];
+									$window.open(fileURL)
+									 a.click();
+
+								/*	if(typeFile == 'application/vnd.ms-excel'){
+			
+									 // a.href = fileURL;
+										 a.download = fileName[0];
+										$window.open(fileURL)
+										 a.click();
+					
+									}else{
+								
+										a.href = fileURL;
+										a.download = fileName[0];
+									 $window.open(fileURL)
+										a.click();
+					
+									}*/
+										
+									$scope.traitementEnCoursGenererLivraison="false";
+
+									});
+
+
+
+
+
+							 };
+							 
 
 									// conversion date en String
 				function formattedDate(date) {

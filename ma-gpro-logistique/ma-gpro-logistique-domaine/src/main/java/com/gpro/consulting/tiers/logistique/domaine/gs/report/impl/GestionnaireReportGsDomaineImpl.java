@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.tiers.commun.coordination.report.value.ColisValue;
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IArticlePersistance;
@@ -1087,6 +1089,42 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
 		
 		report.setElementsList(elementsList);
 		
+	}
+
+	@Override
+	public FicheColisReportValue generateListEtatStockBarCodeReport(RechercheMulticritereEntiteStockValue request)
+			throws IOException {		// TODO Auto-generated method stub
+		FicheColisReportValue report = new FicheColisReportValue();
+
+		report.setFileName("article");
+		report.setReportStream(new FileInputStream("C:/ERP/Lib/COM_INDUSTRIEL/Stock_MP/Etat/Bar_Code/fiche_etat_bar_code.jrxml"));
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+		ResultatRechecheEntiteStockStockValue result = entiteStockPersistance.rechercherEntiteStockMultiCritere(request);
+		
+		List<ColisValue> list = new ArrayList<ColisValue>();
+			for (EntiteStockValue det :result.getEntiteStock()){
+        	    ColisValue detail=new ColisValue();
+        	    detail.setProduitReference(det.getId().toString());
+        	      	    
+        	    detail.setCouleurDesignation(det.getReferenceArticle());
+        	    detail.setProduitDesignation(det.getLibelleArticle());
+        	 
+        	
+        	list.add(detail);
+        }
+		
+		
+		report.setColisList(list);    
+		ArrayList<FicheColisReportValue> dataList = new ArrayList<FicheColisReportValue>();
+		dataList.add(report);
+
+
+		JRBeanCollectionDataSource jRBeanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
+		report.setjRBeanCollectionDataSource(jRBeanCollectionDataSource);
+
+		return report;
 	}
 
 	

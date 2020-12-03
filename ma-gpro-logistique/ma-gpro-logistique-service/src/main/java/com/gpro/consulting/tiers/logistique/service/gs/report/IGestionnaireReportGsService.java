@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.BonMouvementStockReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatMouvementReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatStockDetailleReportValue;
@@ -54,4 +56,10 @@ public interface IGestionnaireReportGsService {
 	//Added on 15/11/2016 by Zeineb
 	@Transactional(readOnly=true, rollbackFor=Exception.class)
 	public MouvementStockHistoryDetailleReportValue getHistoryReportDetaille(RechercheMulticritereMouvementValue critere) throws IOException;
+
+
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public FicheColisReportValue generateListEtatStockBarCodeReport(
+			RechercheMulticritereEntiteStockValue request) throws IOException;
+
 }

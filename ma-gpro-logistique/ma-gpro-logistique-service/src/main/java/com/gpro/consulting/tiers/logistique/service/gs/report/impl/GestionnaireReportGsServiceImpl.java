@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.BonMouvementStockReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatMouvementReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatStockDetailleReportValue;
@@ -89,6 +90,13 @@ public class GestionnaireReportGsServiceImpl implements IGestionnaireReportGsSer
 	public MouvementStockHistoryDetailleReportValue getHistoryReportDetaille(
 			RechercheMulticritereMouvementValue critere) throws IOException {
 		return gestionnaireReportGsDomaine.getHistoryReportDetaille(critere);
+	}
+
+	@Override
+	public FicheColisReportValue generateListEtatStockBarCodeReport(RechercheMulticritereEntiteStockValue request)
+			throws IOException {
+		// TODO Auto-generated method stub
+		return gestionnaireReportGsDomaine.generateListEtatStockBarCodeReport(request);
 	}
 
 
