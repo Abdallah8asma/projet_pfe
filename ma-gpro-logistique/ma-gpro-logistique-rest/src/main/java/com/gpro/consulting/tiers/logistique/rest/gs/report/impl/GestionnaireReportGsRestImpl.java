@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.erp.socle.j2ee.mt.socle.report.impl.AbstractGestionnaireDownloadImpl;
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseCacheValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.BonMouvementStockReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatMouvementReportValue;
@@ -296,6 +298,50 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		this.download( type , report.getReportStream() ,report.getParams(), 
 				report.getFileName(),report.getJRBeanCollectionDataSource(), response);
 	}
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value="/listEtatStockBarCode", method = RequestMethod.GET)
+	public void generateListEtatStockBarCodeReport(
+			
+			@RequestParam("type") String type,
+			
+			@RequestParam("typeArticle") String typeArticle,
+
+			@RequestParam("familleArticle") String familleArticle,
+			
+			@RequestParam("article") String article,
+			
+			@RequestParam("magasin") String magasin,
+	
+			
+			
+			HttpServletResponse response ) throws JRException, IOException {
+		
+		logger.info("Generate a {} Report Etat Stock  Bar Code List",type);
+		
+		RechercheMulticritereEntiteStockValue request = new RechercheMulticritereEntiteStockValue();
+		
+		request.setTypeArticle(typeArticle);
+		request.setFamilleArticle(familleArticle);
+		request.setArticle(article);
+		request.setMagasin(magasin);
+		
+		
+    	FicheColisReportValue report = gestionnaireReportGsService.generateListEtatStockBarCodeReport(request);
+		
+	
+		
+		this.download( type , report.getReportStream() ,report.getParams(), 
+				report.getFileName(),report.getjRBeanCollectionDataSource(), response);
+
+	}
+	
+	
 	
 	
 	private Calendar stringToCalendar(String dateString) {

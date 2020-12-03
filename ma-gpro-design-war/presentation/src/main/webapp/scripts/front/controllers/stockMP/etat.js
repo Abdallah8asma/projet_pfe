@@ -3,8 +3,8 @@
  * Gestion Etat
  */
 angular.module('gpro.etatMP', [])
-.controller('EtatCtrl',[ '$scope', '$http', '$filter','$log', 'UrlAtelier','UrlCommun','downloadService',
-	function($scope, $http, $filter,$log,UrlAtelier, UrlCommun,downloadService) {
+.controller('EtatCtrl',[ '$scope', '$http', '$filter','$log', 'UrlAtelier','UrlCommun','downloadService','$window',
+	function($scope, $http, $filter,$log,UrlAtelier, UrlCommun,downloadService,$window) {
 	//declaration variable
         $scope.etatCourant={};
         $scope.myData = [];
@@ -137,6 +137,48 @@ angular.module('gpro.etatMP', [])
 					});
 
 		};	
+
+			   /*** PDF ***/
+			   $scope.downloadBarCode = function(etatCourant) {
+
+				$scope.traitementEnCoursGenererLivraison="true";
+								 	
+							
+				var url;
+				//$log.debug("PI  "+produitCourant.partieInteressee );
+				
+			
+				
+				//$log.debug("-- produitCourant After" + JSON.stringify(produitCourant, null, "  ") );
+				   url = UrlAtelier + "/reportgs/listEtatStockBarCode?typeArticle="+etatCourant.typeArticle 
+									
+										 + "&familleArticle="+etatCourant.familleArticle 
+										 + "&article="+etatCourant.article 
+										 + "&magasin="+etatCourant.magasin 	
+										 + "&type=pdf";
+
+				var a = document.createElement('a');
+						document.body.appendChild(a);
+						downloadService.download(url).then(function (result) {
+							var heasersFileName = result.headers(['content-disposition']).substring(17);
+						var fileName = heasersFileName.split('.');
+					var typeFile = result.headers(['content-type']);
+					var file = new Blob([result.data], {type: typeFile});
+					var fileURL = window.URL.createObjectURL(file);
+
+
+					a.download = fileName[0];
+					$window.open(fileURL)
+					 a.click();
+
+						
+					$scope.traitementEnCoursGenererLivraison="false";
+
+					});
+
+
+
+			   }
     //Voir Etat
 	$scope.voirEtat = function(){
 

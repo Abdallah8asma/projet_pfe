@@ -2,6 +2,7 @@ package com.gpro.consulting.tiers.logistique.domaine.gs.report;
 
 import java.io.IOException;
 
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.BonMouvementStockReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatMouvementReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatStockDetailleReportValue;
@@ -43,5 +44,7 @@ public interface IGestionnaireReportGsDomaine {
 	//Added on 15/11/2016 by Zeineb
 	
 	public MouvementStockHistoryDetailleReportValue getHistoryReportDetaille(RechercheMulticritereMouvementValue critere) throws IOException;
+
+	public FicheColisReportValue generateListEtatStockBarCodeReport(RechercheMulticritereEntiteStockValue request)throws IOException;
 
 }

@@ -83,6 +83,14 @@
 		    <artifactId>jasperreports</artifactId>
 		    <version>5.0.1</version>
 		</dependency>
+		
+		
+				<!-- Dependency required by Jasper to generate the bare code -->
+		<dependency>
+			<groupId>net.sourceforge.barbecue</groupId>
+			<artifactId>barbecue</artifactId>
+			<version>1.5-beta1</version>
+		</dependency>
 
 <!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina 
 		<dependency>
