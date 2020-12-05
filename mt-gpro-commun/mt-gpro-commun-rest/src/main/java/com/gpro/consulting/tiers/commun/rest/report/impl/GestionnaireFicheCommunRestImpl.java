@@ -1212,18 +1212,18 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 
 		sheet3.setColumnView(0, 7);
 		sheet3.setColumnView(1, 20);
-		sheet3.setColumnView(2, 18);
+		sheet3.setColumnView(2, 10);
 
 		sheet3.setColumnView(3, 30);
-		sheet3.setColumnView(4, 30);
+		sheet3.setColumnView(4, 15);
 		sheet3.setColumnView(5, 10);
 		sheet3.setColumnView(6, 15);
 		sheet3.setColumnView(7, 15);
 		sheet3.setColumnView(8, 15);
 
-		sheet3.setColumnView(9, 15);
+		sheet3.setColumnView(9, 20);
 		sheet3.setColumnView(10, 15);
-		sheet3.setColumnView(11, 15);
+		sheet3.setColumnView(11, 30);
 		sheet3.setColumnView(12, 15);
 
 		sheet3.setColumnView(13, 30);
@@ -1454,19 +1454,20 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 
 		sheet3.addCell(new Label(2, i - 1, "Réference", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(3, i - 1, "Raison Sociale", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(4, i - 1, "Abreviation", ExcelUtils.boldRed2));
+		//sheet3.addCell(new Label(4, i - 1, "Abreviation", ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(5, i - 1, "Catégorie", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(6, i - 1, "Groupe", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(4, i - 1, "Catégorie", ExcelUtils.boldRed2));
+		//sheet3.addCell(new Label(5, i - 1, "Groupe", ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(7, i - 1, "Type", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(8, i - 1, "Tel", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(9, i - 1, "Fax", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(5, i - 1, "Type", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(6, i - 1, "Tel Mobile", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i - 1, "fix", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(8, i - 1, "Fax", ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(10, i - 1, "Mat.Fiscale", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(11, i - 1, "Registre.Comm", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(12, i - 1, "Code.Douane", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(13, i - 1, "Adresse", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i - 1, "Mat.Fiscale", ExcelUtils.boldRed2));
+		//sheet3.addCell(new Label(11, i - 1, "Registre.Comm", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(10, i - 1, "Code Postale", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(11, i - 1, "Adresse", ExcelUtils.boldRed2));
 
 		Double quantiteTotale = 0d;
 
@@ -1487,86 +1488,106 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 
 			}
 
-			if (element.getAbreviation() != null) {
-				sheet3.addCell(new Label(4, i, element.getAbreviation() + "", ExcelUtils.boldRed));
+			/*
+			 * if (element.getAbreviation() != null) { sheet3.addCell(new Label(4, i,
+			 * element.getAbreviation() + "", ExcelUtils.boldRed));
+			 * 
+			 * } else { sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
+			 * 
+			 * }
+			 */
+
+			if (element.getCategoriePartieInteresseeDesignation() != null) {
+				sheet3.addCell(
+						new Label(4, i, element.getCategoriePartieInteresseeDesignation() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
 
 			}
 
-			if (element.getCategoriePartieInteresseeDesignation() != null) {
-				sheet3.addCell(
-						new Label(5, i, element.getCategoriePartieInteresseeDesignation() + "", ExcelUtils.boldRed));
+			/*if (element.getGroupeClientDesignation() != null) {
+				sheet3.addCell(new Label(5, i, element.getGroupeClientDesignation() + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+
+			}*/
+
+			if (element.getTypePartieInteresseeDesignation() != null) {
+				sheet3.addCell(new Label(5, i, element.getTypePartieInteresseeDesignation() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
 
 			}
-
-			if (element.getGroupeClientDesignation() != null) {
-				sheet3.addCell(new Label(6, i, element.getGroupeClientDesignation() + "", ExcelUtils.boldRed));
+			
+			
+			
+			
+			
+			
+			if (element.getTelephoneMobile() != null) {
+				sheet3.addCell(new Label(6, i, element.getTelephoneMobile() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
 
 			}
+			
+			
+			
+			
+			
 
-			if (element.getTypePartieInteresseeDesignation() != null) {
-				sheet3.addCell(new Label(7, i, element.getTypePartieInteresseeDesignation() + "", ExcelUtils.boldRed));
+			if (element.getTelephone() != null) {
+				sheet3.addCell(new Label(7, i, element.getTelephone() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
 
 			}
 
-			if (element.getTelephone() != null) {
-				sheet3.addCell(new Label(8, i, element.getTelephone() + "", ExcelUtils.boldRed));
+			if (element.getFax() != null) {
+				sheet3.addCell(new Label(8, i, element.getFax() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
 
 			}
 
-			if (element.getFax() != null) {
-				sheet3.addCell(new Label(9, i, element.getFax() + "", ExcelUtils.boldRed));
+			// mat
+
+			if (element.getMatriculeFiscal() != null) {
+				sheet3.addCell(new Label(9, i, element.getMatriculeFiscal() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
 
 			}
 
-			// mat
+			/*
+			 * if (element.getRegimeCommercial() != null) { sheet3.addCell(new Label(11, i,
+			 * element.getRegimeCommercial() + "", ExcelUtils.boldRed));
+			 * 
+			 * } else { sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
+			 * 
+			 * }
+			 */
 
-			if (element.getMatriculeFiscal() != null) {
-				sheet3.addCell(new Label(10, i, element.getMatriculeFiscal() + "", ExcelUtils.boldRed));
+			if (element.getCodeDouane() != null) {
+				sheet3.addCell(new Label(10, i, element.getCodeDouane() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
 
 			}
 
-			if (element.getRegimeCommercial() != null) {
-				sheet3.addCell(new Label(11, i, element.getRegimeCommercial() + "", ExcelUtils.boldRed));
+			if (element.getAdresse() != null) {
+				sheet3.addCell(new Label(11, i, element.getAdresse() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
-
-			}
-
-			if (element.getCodeDouane() != null) {
-				sheet3.addCell(new Label(12, i, element.getCodeDouane() + "", ExcelUtils.boldRed));
-
-			} else {
-				sheet3.addCell(new Label(12, i, "", ExcelUtils.boldRed));
-
-			}
-
-			if (element.getAdresse() != null) {
-				sheet3.addCell(new Label(13, i, element.getAdresse() + "", ExcelUtils.boldRed));
-
-			} else {
-				sheet3.addCell(new Label(13, i, "", ExcelUtils.boldRed));
 
 			}
 
