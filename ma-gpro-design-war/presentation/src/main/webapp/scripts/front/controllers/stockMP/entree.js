@@ -247,6 +247,38 @@ angular
 
 												});
 							}
+
+									// Liste des PartieInteressee (avec FamilleId=1)
+				$scope.listeFournisseursCache = function () {
+					$http
+						.get(
+							UrlCommun
+							+ "/gestionnaireCache/listePartieInteresseeCache")
+						.success(
+							function (dataPartieInteressee) {
+
+								$scope.listePartieInteressee = $filter(
+									'filter')
+									(
+										dataPartieInteressee,
+										{
+											famillePartieInteressee: 2
+										});
+
+								$scope.listePartieInteresseeClient = $filter(
+									'filter')
+									(
+										dataPartieInteressee,
+										{
+											famillePartieInteressee: 1
+										});
+
+
+							});
+				}
+
+
+	                       $scope.listeFournisseursCache();
 							$scope.listeMatiereCache();
 							$scope.listeMetrageCache();
 							$scope.listeGrosseurCache();
