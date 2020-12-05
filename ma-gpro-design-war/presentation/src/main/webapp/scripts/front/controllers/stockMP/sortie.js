@@ -330,6 +330,8 @@ angular
 
 						$scope.rechercherStockSortie = function(
 								mouvementCourante) {
+
+									mouvementCourante.typeBonMouvement = 'SORTIE';
 							
 							$log.debug("----------mouvementCourante"+ JSON.stringify(mouvementCourante,null," "));
 							

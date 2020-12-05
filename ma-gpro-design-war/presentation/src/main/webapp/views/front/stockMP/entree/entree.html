@@ -130,7 +130,7 @@
 								</div>
 							</div>
 
-							<div class="col-sm-3">
+				<!-- 			<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -138,10 +138,27 @@
 										</div>
 
 										<select class="form-control" ng-model="bonMouvementStockCourante.fournisseur"
-											ng-change="bonMouvementStockCourante.fournisseur = bonMouvementStockCourante.fournisseur.toUpperCase()"
+											
 											data-placeholder="...">
 											<option ng-repeat="fournisseur in listeFournisseurCache"
 												value="{{fournisseur.id}}">{{fournisseur.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+							</div> -->
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text  ms-Label is required">Fournisseur</span>
+										</div>
+										<select ui-select2 ng-model="bonMouvementStockCourante.fournisseur"
+											ng-init="bonMouvementStockCourante.fournisseur=''" data-placeholder="..."
+											class="form-control ">
+											<option value="">Tous</option>
+											<option ng-repeat="pi in listePartieInteressee" value="{{pi.id}}">{{pi.raisonSociale}}</option>
 										</select>
 									</div>
 								</div>
@@ -409,45 +426,30 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">N°.BE</span>
 										</div>
-										<input type="text" class="form-control" ng-model="bonMouvementStockCourante.nBE"
-											ng-change="bonMouvementStockCourante.nBE = bonMouvementStockCourante.nBE.toUpperCase()" />
+										<input type="text" class="form-control" ng-model="bonMouvementStockCourante.numero"
+											 />
 									</div>
 								</div>
 							</div>
 
 
-							<div class="col-sm-4">
+							
+
+
+
+							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Fournisseur</span>
-										<!-- </div>
-										<input type="text" class="form-control"
-											ng-model="bonMouvementStockCourante.fournisseur"
-											ng-change="bonMouvementStockCourante.fournisseur= bonMouvementStockCourante.fournisseur.toUpperCase()" />
-									</div> -->
-									
-									
-									
-									
-									
-									</div>
-
-										<select class="form-control" ng-model="bonMouvementStockCourante.fournisseur"
-											ng-change="bonMouvementStockCourante.fournisseur = bonMouvementStockCourante.fournisseur.toUpperCase()"
-											data-placeholder="...">
-											<option ng-repeat="fournisseur in listeFournisseurCache"
-												value="{{fournisseur.id}}">{{fournisseur.abreviation}}</option>
+											<span class="input-group-text  ms-Label is required">Fournisseur</span>
+										</div>
+										<select ui-select2 ng-model="bonMouvementStockCourante.partieintId"
+											ng-init="bonMouvementStockCourante.partieintId=''" data-placeholder="..."
+											class="form-control ">
+											<option value="">Tous</option>
+											<option ng-repeat="pi in listePartieInteressee" value="{{pi.id}}">{{pi.raisonSociale}}</option>
 										</select>
 									</div>
-									
-									
-									
-									
-									
-									
-									
-									
 								</div>
 							</div>
 
@@ -465,8 +467,8 @@
 												Date </span>
 										</div>
 										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-											ng-init="receptionAchatCourante.dateIntroductionDu =''"
-											ng-model="receptionAchatCourante.dateIntroductionDu" is-open="opened"
+											ng-init="bonMouvementStockCourante.date =''"
+											ng-model="bonMouvementStockCourante.date" is-open="opened"
 											datepicker-options="dateOptions" date-="enabled(date, mode)"
 											ng-required="true" close-text="Close" />
 
