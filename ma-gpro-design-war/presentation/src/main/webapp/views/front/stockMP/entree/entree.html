@@ -157,7 +157,7 @@
 											ng-change="bonMouvementStockCourante.etat = bonMouvementStockCourante.etat.toUpperCase()">
 
 
-											<option value="Valide Conforme">validation Conforme</option>
+											<option value="Valide Conforme">Validation Conforme</option>
 											<option value="Valide Non Conforme">Aucune Validation Conforme</option>
 											<option value="Non Valide">Attente de validation</option>
 										</select>
@@ -421,11 +421,33 @@
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<span class="input-group-text">Fournisseur</span>
-										</div>
+										<!-- </div>
 										<input type="text" class="form-control"
 											ng-model="bonMouvementStockCourante.fournisseur"
 											ng-change="bonMouvementStockCourante.fournisseur= bonMouvementStockCourante.fournisseur.toUpperCase()" />
+									</div> -->
+									
+									
+									
+									
+									
 									</div>
+
+										<select class="form-control" ng-model="bonMouvementStockCourante.fournisseur"
+											ng-change="bonMouvementStockCourante.fournisseur = bonMouvementStockCourante.fournisseur.toUpperCase()"
+											data-placeholder="...">
+											<option ng-repeat="fournisseur in listeFournisseurCache"
+												value="{{fournisseur.id}}">{{fournisseur.abreviation}}</option>
+										</select>
+									</div>
+									
+									
+									
+									
+									
+									
+									
+									
 								</div>
 							</div>
 
@@ -515,9 +537,10 @@
 										<select class="form-control" ng-model="bonMouvementStockCourante.etat"
 											ng-change="bonMouvementStockCourante.etat = bonMouvementStockCourante.etat.toUpperCase()">
 
-											<option value="Valide Conforme">validation Conforme</option>
+											<option value="Valide Conforme">Validation Conforme</option>
 											<option value="Valide Non Conforme">Aucune Validation Conforme</option>
 											<option value="Non Valide">Attente de validation</option>
+											
 										</select>
 									</div>
 								</div>
