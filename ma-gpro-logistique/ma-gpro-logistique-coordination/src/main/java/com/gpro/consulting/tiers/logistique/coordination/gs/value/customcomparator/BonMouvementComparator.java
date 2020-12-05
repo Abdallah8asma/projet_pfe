@@ -14,10 +14,17 @@ public class BonMouvementComparator implements Comparator<BonMouvementStockValue
 	@Override
 	public int compare(BonMouvementStockValue o1, BonMouvementStockValue o2) {
 		// TODO Auto-generated method stub
-		return ComparisonChain.start()
+	/*	return ComparisonChain.start()
 		        .compare(o1.getDate(), o2.getDate())
 		        .compare(o1.getId(), o2.getId())
+		        .result();*/
+		
+		
+		return ComparisonChain.start()
+		      
+		        .compare(o1.getId(), o2.getId())
 		        .result();
+		
 	    }
 	}
 

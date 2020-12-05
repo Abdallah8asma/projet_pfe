@@ -30,6 +30,17 @@ public class RechercheMulticritereEntiteStockValue {
 	private String mouvement;
 	
 	
+	private String numeroBonEntree;
+	
+	
+	
+	
+	public String getNumeroBonEntree() {
+		return numeroBonEntree;
+	}
+	public void setNumeroBonEntree(String numeroBonEntree) {
+		this.numeroBonEntree = numeroBonEntree;
+	}
 	public String getTypeArticle() {
 		return typeArticle;
 	}

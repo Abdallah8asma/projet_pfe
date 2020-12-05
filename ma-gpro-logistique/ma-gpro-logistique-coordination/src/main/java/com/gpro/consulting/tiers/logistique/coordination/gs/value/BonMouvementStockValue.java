@@ -335,7 +335,10 @@ public class BonMouvementStockValue implements Comparable<Object> {
 	@Override
 	public int compareTo(Object o) {
 		BonMouvementStockValue element = (BonMouvementStockValue) o;
-		return (element.getDate().compareTo(date));
+		
+		return (element.getNumero().compareTo(numero));
+		
+		//return (element.getDate().compareTo(date));
 	}
 
 	public Long getIdMagasin() {
