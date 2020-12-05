@@ -86,6 +86,12 @@ public class BonMouvementPersistanceImpl extends AbstractPersistance implements 
 
 		/************ entity jointure *****************/
 		Root<BonMouvementEntite> vRootBonMouvement = vCriteriaQuery.from(BonMouvementEntite.class);
+		
+		
+		if (estNonVide(pRechercheMulticritereMouvementStockValue.getnBE())) {
+			vWhereClause.add(
+					vBuilder.equal(vRootBonMouvement.get(nBE), pRechercheMulticritereMouvementStockValue.getnBE()));
+		}
 
 		/***************** Predicate *************/
 		if (estNonVide(pRechercheMulticritereMouvementStockValue.getnBE())) {
@@ -220,7 +226,7 @@ public class BonMouvementPersistanceImpl extends AbstractPersistance implements 
 	public String creerBonMouvement(BonMouvementStockValue pBonMouvementStockValue) {
 
 		BonMouvementEntite vBonMouvementEntite = (BonMouvementEntite) toBonMouvementEntity(pBonMouvementStockValue);
-		System.out.println("creerBonMouvement : persitance : vBonMouvementEntiteResultat" + vBonMouvementEntite);
+		//System.out.println("creerBonMouvement : persitance : vBonMouvementEntiteResultat" + vBonMouvementEntite);
 
 		BonMouvementEntite vBonMouvementEntiteResultat = (BonMouvementEntite) this.modifier(vBonMouvementEntite);
 		return vBonMouvementEntiteResultat.getId().toString();
@@ -353,6 +359,10 @@ public class BonMouvementPersistanceImpl extends AbstractPersistance implements 
 		entiteStock.setReferenceLot(pEntiteStockValue.getReferenceLot());
 		entiteStock.setRouleauxActuel(pEntiteStockValue.getRouleauxActuel());
 		entiteStock.setRouleauxReserve(pEntiteStockValue.getRouleauxReserve());
+		
+		entiteStock.setNumeroBonEntree(pEntiteStockValue.getNumeroBonEntree());		
+		entiteStock.setQteEntree(pEntiteStockValue.getQteEntree());
+		
 		return entiteStock;
 	}
 

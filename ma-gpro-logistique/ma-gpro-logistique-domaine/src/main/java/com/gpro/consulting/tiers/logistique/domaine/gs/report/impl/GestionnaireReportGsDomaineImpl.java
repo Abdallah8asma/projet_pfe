@@ -1106,10 +1106,16 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
 		List<ColisValue> list = new ArrayList<ColisValue>();
 			for (EntiteStockValue det :result.getEntiteStock()){
         	    ColisValue detail=new ColisValue();
+        	    
+        	    detail.setChoix(det.getNumeroBonEntree());
+        	    
         	    detail.setProduitReference(det.getId().toString());
         	      	    
         	    detail.setCouleurDesignation(det.getReferenceArticle());
         	    detail.setProduitDesignation(det.getLibelleArticle());
+        	    
+        	    detail.setPoidsNet(det.getQteEntree());
+        	    
         	 
         	
         	list.add(detail);

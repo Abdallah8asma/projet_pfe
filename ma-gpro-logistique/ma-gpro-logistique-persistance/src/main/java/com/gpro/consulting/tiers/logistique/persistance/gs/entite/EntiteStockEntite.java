@@ -146,6 +146,44 @@ public class EntiteStockEntite implements Serializable {
 	/** The date suppression. */
 	@Column(name="date_suppression")
 	private Calendar dateSuppression;
+	
+	
+	
+	
+	/** The numero_bon_entree. */
+	@Column(name = "numero_bon_entree")
+	private String numeroBonEntree;
+	
+	
+	
+
+	/** The qte actuelle. */
+	@Column(name="qte_entree")
+	private Double qteEntree;
+
+	
+	
+	
+
+	public Double getQteEntree() {
+		return qteEntree;
+	}
+
+	public void setQteEntree(Double qteEntree) {
+		this.qteEntree = qteEntree;
+	}
+
+	public String getNumeroBonEntree() {
+		return numeroBonEntree;
+	}
+
+	public void setNumeroBonEntree(String numeroBonEntree) {
+		this.numeroBonEntree = numeroBonEntree;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	/**
 	 * Gets the id.
