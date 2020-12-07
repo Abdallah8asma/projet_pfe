@@ -163,12 +163,22 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Réf Matière </span>
 										</div>
-										<select class="form-control" ng-model="etatCourant.refArticle"
+										
+										
+										<select ui-select2 ng-model="etatCourant.refArticle"
+											ng-init="etatCourant.refArticle=''" data-placeholder="..."
+											class="form-control ">
+											<option value="">Tous</option>
+											<option ng-repeat="article in listeArticle" value="{{article.id}}">{{article.ref}}</option>
+										</select>
+																			
+										<!-- <select class="form-control" ng-model="etatCourant.refArticle"
 											ng-init="etatCourant.refArticle=''">
 											<option value="">Tous</option>
 											<option ng-repeat="article in listeArticle"
 											value="{{article.id}}">{{article.ref}}</option>
-										</select>
+										</select> -->
+																				
 									</div>
 								</div>
 							</div>
@@ -184,12 +194,23 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Matière </span>
 										</div>
-										<select class="form-control" ng-model="etatCourant.article"
+										
+										
+										
+										<select ui-select2 ng-model="etatCourant.article"
+											ng-init="etatCourant.article=''" data-placeholder="..."
+											class="form-control ">
+											<option value="">Tous</option>
+											<option ng-repeat="article in listeArticle" value="{{article.id}}">{{article.designation}}</option>
+										</select>
+																														
+										<!-- <select class="form-control" ng-model="etatCourant.article"
 											ng-init="etatCourant.article=''">
 											<option value="">Tous</option>
 											<option ng-repeat="article in listeArticle"
 											value="{{article.id}}">{{article.designation}}</option>
-										</select>
+										</select> -->
+																				
 									</div>
 								</div>
 
@@ -229,7 +250,7 @@
 
 							</div>
 
-							<div class="col-sm-4">
+							<!-- <div class="col-sm-4">
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
@@ -247,7 +268,7 @@
 									</select>
 								</div>
 							</div>
-							</div>
+							</div> -->
 							
 
 						</div>
