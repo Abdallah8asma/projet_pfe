@@ -47,4 +47,6 @@ public interface IGestionnaireReportGsDomaine {
 
 	public FicheColisReportValue generateListEtatStockBarCodeReport(RechercheMulticritereEntiteStockValue request)throws IOException;
 
+	public FicheColisReportValue generateListEtatStockBarCodeFromBEReport(Long id) throws IOException;
+
 }

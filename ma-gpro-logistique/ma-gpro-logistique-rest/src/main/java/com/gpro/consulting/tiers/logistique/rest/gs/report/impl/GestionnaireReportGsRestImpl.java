@@ -349,6 +349,39 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 	
 	
 	
+	@RequestMapping(value="/listEtatStockBarCodeFromBE", method = RequestMethod.GET)
+	public void generateListEtatStockBarCodeFromBEReport(
+			
+			
+			
+			@RequestParam("id") Long id,
+
+
+			@RequestParam("type") String type,
+	
+			
+			
+			HttpServletResponse response ) throws JRException, IOException {
+		
+		logger.info("Generate a {} Report Etat Stock  Bar Code List From BE",type);
+		
+		RechercheMulticritereEntiteStockValue request = new RechercheMulticritereEntiteStockValue();
+		
+	
+		
+		
+		
+    	FicheColisReportValue report = gestionnaireReportGsService.generateListEtatStockBarCodeFromBEReport(id);
+		
+	
+		
+		this.download( type , report.getReportStream() ,report.getParams(), 
+				report.getFileName(),report.getjRBeanCollectionDataSource(), response);
+
+	}
+	
+	
+	
 	private Calendar stringToCalendar(String dateString) {
 		
 		Calendar dateCalendar = null;
