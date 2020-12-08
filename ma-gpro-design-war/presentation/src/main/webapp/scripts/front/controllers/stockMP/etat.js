@@ -128,13 +128,33 @@ angular.module('gpro.etatMP', [])
 					url = UrlAtelier+ "/reportgs/etatStockDetaille?type=xls&articleType=" + $scope.etatCourant.typeArticle+"&typeRapport="+ typeRapport ;
 				}
 					
-			downloadService.download(url).then(
+			/*downloadService.download(url).then(
 					function(success) {
 						//$log.debug('success : ' + success);
 						//$scope.annulerAjout();
 					}, function(error) {
 						//$log.debug('error : ' + error);
-					});
+					});*/
+
+
+					var a = document.createElement('a');
+					document.body.appendChild(a);
+					downloadService.download(url).then(function (result) {
+						var heasersFileName = result.headers(['content-disposition']).substring(17);
+					var fileName = heasersFileName.split('.');
+				var typeFile = result.headers(['content-type']);
+				var file = new Blob([result.data], {type: typeFile});
+				var fileURL = window.URL.createObjectURL(file);
+
+
+				a.download = fileName[0];
+				$window.open(fileURL)
+				 a.click();
+
+					
+				$scope.traitementEnCoursGenererLivraison="false";
+
+				});
 
 		};	
 
@@ -223,6 +243,13 @@ angular.module('gpro.etatMP', [])
 
 				
 	}
+
+	$scope.etatCourant.typeArticle = "1";
+	$scope.voirEtat();
+
+
+
+	//$scope.rechercherEtat({});
 	
 	
 //	$scope.getArticle = function(articleId) {

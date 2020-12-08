@@ -15,8 +15,9 @@ angular
 						'UrlAtelier',
 						'UrlCommun',
 						'$rootScope',
+						'$window', 
 						function($scope, $http, $filter, $log, downloadService,
-								UrlAtelier, UrlCommun, $rootScope) {
+								UrlAtelier, UrlCommun, $rootScope,$window ) {
 							var data;
 							$scope.fcon = true;
 							$scope.myData = [];
@@ -793,14 +794,78 @@ angular
 								var url = UrlAtelier
 										+ "/reportgs/bonMouvementStockEntreeSortieById?id="
 										+ id + "&type=pdf";
-								downloadService.download(url).then(
+							/*	downloadService.download(url).then(
 										function(success) {
 											$log.debug('success : ' + success);
 											//$scope.annulerAjout();
 										}, function(error) {
 											$log.debug('error : ' + error);
+										});*/
+
+
+										var a = document.createElement('a');
+										document.body.appendChild(a);
+										downloadService.download(url).then(function (result) {
+											var heasersFileName = result.headers(['content-disposition']).substring(17);
+										var fileName = heasersFileName.split('.');
+									var typeFile = result.headers(['content-type']);
+									var file = new Blob([result.data], {type: typeFile});
+									var fileURL = window.URL.createObjectURL(file);
+				
+				
+									a.download = fileName[0];
+									$window.open(fileURL)
+									 a.click();
+				
+										
+									$scope.traitementEnCoursGenererLivraison="false";
+
+
 										});
+             
+
 							};
+
+
+
+							   /*** PDF ***/
+			   $scope.downloadBarCode = function(etatCourant) {
+
+				$scope.traitementEnCoursGenererLivraison="true";
+								 	
+							
+				var url;
+				//$log.debug("PI  "+produitCourant.partieInteressee );
+				
+			
+				
+				//$log.debug("-- produitCourant After" + JSON.stringify(produitCourant, null, "  ") );
+				   url = UrlAtelier + "/reportgs/listEtatStockBarCodeFromBE?id="+etatCourant.id 
+									
+										 + "&type=pdf";
+
+				var a = document.createElement('a');
+						document.body.appendChild(a);
+						downloadService.download(url).then(function (result) {
+							var heasersFileName = result.headers(['content-disposition']).substring(17);
+						var fileName = heasersFileName.split('.');
+					var typeFile = result.headers(['content-type']);
+					var file = new Blob([result.data], {type: typeFile});
+					var fileURL = window.URL.createObjectURL(file);
+
+
+					a.download = fileName[0];
+					$window.open(fileURL)
+					 a.click();
+
+						
+					$scope.traitementEnCoursGenererLivraison="false";
+
+					});
+
+
+
+			   }
 
 							// $scope.listeMouvement();
 							$scope.typeAlert = 3;
