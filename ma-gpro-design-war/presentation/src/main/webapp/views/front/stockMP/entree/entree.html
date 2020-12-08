@@ -370,6 +370,31 @@
 							</button>
 						</div>
 
+
+
+						<div class="ms-CommandButton ms-CommandButton--dropdown">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+										class="ms-Icon ms-Icon--Generate"></i></span> <span
+									class="ms-CommandButton-label">G&eacute;n&eacute;rer</span> <span
+									class="ms-CommandButton-dropdownIcon"><i
+										class="ms-Icon ms-Icon--ChevronDown"></i></span>
+							</button>
+							<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+	
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
+									ng-click="downloadBarCode(bonMouvementStockCourante)">Code à barre</a></li>
+	
+	
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
+										ng-click="downloadBonEntree(bonMouvementStockCourante.id)">PDF</a></li>
+
+
+								<!-- <li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
+										ng-click="downloadAllProduitsExcel(produitCourante)">Excel</a></li> -->
+							</ul>
+						</div>
+
 						<div class="ms-CommandButton">
 							<button class="ms-CommandButton-button" ng-click="annulerAjout()">
 								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span> <span
@@ -679,7 +704,7 @@
 											<tr>
 												<th style="width: 10%">Réf.</th>
 												<th style="width: 30%">Désignation</th>
-												<th style="width: 10%">Lot</th>
+												<th style="width: 10%">Palette</th>
 												<th style="width: 10%">Famille</th>
 												<!--<th>S.Famille</th>-->
 												<th style="width: 6%">Q.BL</th>
