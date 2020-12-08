@@ -1,5 +1,5 @@
 'use strict'
-/** samer
+/**
  * Gestion Stock
  */
 angular
