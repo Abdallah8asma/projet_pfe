@@ -1,6 +1,7 @@
 package com.gpro.consulting.tiers.logistique.coordination.gs.value;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class RechercheMulticritereEntiteStockValue {
 	private String typeArticle; //done
@@ -35,6 +36,18 @@ public class RechercheMulticritereEntiteStockValue {
 	
 	
 	
+	private List<Long> ids;
+	
+	
+	
+	
+	
+	public List<Long> getIds() {
+		return ids;
+	}
+	public void setIds(List<Long> ids) {
+		this.ids = ids;
+	}
 	public String getNumeroBonEntree() {
 		return numeroBonEntree;
 	}

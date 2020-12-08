@@ -274,6 +274,16 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		    	 pRechercheMulticritereEntiteStockValue.getNumeroBonEntree()));
 	    }
 	    
+	    
+	    if (pRechercheMulticritereEntiteStockValue.getIds() != null && pRechercheMulticritereEntiteStockValue.getIds().size()>0 ) {
+	    	
+	    	 vWhereClause.add(vRootEntiteStock.get(id).in(pRechercheMulticritereEntiteStockValue.getIds() ));
+	 	    
+		    //  vWhereClause.add(vBuilder.in(vRootEntiteStock.get(id)).value( pRechercheMulticritereEntiteStockValue.getIds())) ;
+		    		
+	    }
+	    
+	   
 	   
 	    /** execute query and do something with result **/
 
