@@ -790,6 +790,9 @@ angular
 							/*** PDF ***/
 							//generer rapport apres creation d'un bon de d'Entree. mode : Modification/Consultation
 							$scope.downloadBonEntree = function(id) {
+
+
+								$scope.traitementEnCoursGenererLivraison="true";
 								//$log.debug("-- id"+id);
 								var url = UrlAtelier
 										+ "/reportgs/bonMouvementStockEntreeSortieById?id="

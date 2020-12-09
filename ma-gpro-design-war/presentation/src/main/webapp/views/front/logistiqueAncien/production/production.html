@@ -1,0 +1,1722 @@
+<!-- Front -->
+<div class="container-fluid" ng-controller="productionController"
+	style="background-color: #fff;">
+	<!-- critères de recherche -->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-sm-12">
+			<button class="btn btn-action2 pull-right"
+				ng-click="affectationFicheSuiveuse(ficheCourante)">Ajouter</button>
+		</div>
+		<div class="col-sm-12">
+			<div class="title-ajout">Critère de recherche</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="rechercheFicheForm"
+						id="rechercheFicheForm">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">N&deg; Mise :</span> 
+										<select ui-select2 ng-model="ficheCouranteRecherche.numMise"
+											ng-init="ficheCouranteRecherche.numMise =''" data-placeholder="..." style="width: 100%">
+											<option value="">Toutes les Mises</option>
+											<option ng-repeat="mise in listeMise" value="{{mise.reference}}">{{mise.reference}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Ref.Tissu</span>
+										<select ui-select2 ng-model="ficheCouranteRecherche.produitId"
+											ng-init="ficheCouranteRecherche.produitId =''" 
+											data-placeholder="..." style="width: 100%">
+											<option value="">Tous les Tissus</option>
+											<option ng-repeat="produit in listeProduitCache"
+												value="{{produit.id}}">{{produit.reference}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Tissu</span>
+										<select ui-select2 ng-model="ficheCouranteRecherche.produitId"
+											ng-init="ficheCouranteRecherche.produitId =''" 
+											data-placeholder="..." style="width: 100%">
+											<option value="">Tous les Tissus</option>
+											<option ng-repeat="produit in listeProduitCache"
+												value="{{produit.id}}">{{produit.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Client</span>
+										<select ui-select2 ng-model="ficheCouranteRecherche.partieIntId"
+											ng-init="ficheCouranteRecherche.partieIntId =''" 
+											data-placeholder="..." style="width: 100%">
+											<option value="">Tous les Clients</option>
+											<option ng-repeat="client in listeClientCache"
+												value="{{client.id}}">{{client.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3" ng-controller="DatepickerDController">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+											Entre </span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="ficheCouranteRecherche.dateEntreMin =''"
+											ng-model="ficheCouranteRecherche.dateEntreMin" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3" ng-controller="DatepickerDController">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Et </span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="ficheCouranteRecherche.dateEntreMax =''"
+											ng-model="ficheCouranteRecherche.dateEntreMax" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1"> Type Liv.</span>
+										<input type="numeric" class="form-control"
+											ng-model="ficheCouranteRecherche.typeLivraison"
+											 ng-init="ficheCouranteRecherche.typeLivraison =''">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Poids S.Entre
+											</span> <input type="number" step="any" class="form-control"
+											 ng-init="ficheCouranteRecherche.poidsSortieMin"
+											ng-model="ficheCouranteRecherche.poidsSortieMin">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">ET :
+										</span> <input type="number" step="any" class="form-control"
+											  ng-init="ficheCouranteRecherche.poidsSortieMax"
+											ng-model="ficheCouranteRecherche.poidsSortieMax">
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="pull-right">
+						<button class="btn-action btn">G&eacute;n&eacute;rer</button>
+						<button class="btn-action btn"
+							ng-click="rechercherFiche(ficheCouranteRecherche)">Recherecher</button>
+						<button class="btn-action btn" ng-click="annulerAjout()">Annuler</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Ajout/Modification FicheSuiveuse -->
+	<div class="row" ng-show="displayMode == 'edit'">
+		<div class="col-sm-12">
+			<div class="pull-right">
+				<button class="btn btn-action"
+					ng-click="soustraireStock()" ng-disabled="ficheCourante.soustractionEffectuee">Stock</button>
+				<button class="btn btn-action"
+					ng-click="sauvegarderFicheSuiveuse(ficheCourante)">Enregistrer</button>
+				<button class="btn btn-action pull-right" ng-click="annulerAjout()">Retour</button>
+				<button class="btn-action btn" ng-show="modePdf == 'actif'" ng-click="downloadEchantillon(ficheCourante.id)">Echantillon</button>
+				<span ng-show="modePdf == 'actif'" class="option pull-right">
+		            <span class="btn-toolbar">
+		                <span class="btn-group" dropdown>
+		                    <button type="button" class="btn btn btn-action dropdown-toggle">
+		                       Generer <span class="caret"></span>
+		                    </button>
+		                    <ul class="dropdown-menu" role="menu">
+		                    	<li>
+		                    		<a><span class="fa fa-file-text-o clickable" style="margin-right: 5px;"
+									ng-click="download(ficheCourante.id, 0)">  Sans Recette</span></a></li>
+								<li><a><span class="fa fa-file-text-o clickable" style="margin-right: 5px;"
+									ng-click="download(ficheCourante.id, 1)">  Avec Recette</span></a></li>
+		                    </ul>
+		                </span>
+		            </span>
+		    	</span>
+			</div>
+		</div>
+
+		<!-- Attributs de l'objetCourant -->
+		<div class="col-sm-12">
+			<div class="title-ajout" ng-show="modePdf == 'actif'">
+				Modification Fiche Suiveuse. Mise N° : {{resultatRechercheMise.referenceMise}} </div>
+			<div class="title-ajout" ng-show="modePdf != 'actif'">
+				Création Fiche Suiveuse. Mise N° : {{resultatRechercheMise.referenceMise}} </div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="creationFicheForm"
+						id="creationFicheForm">
+						<div class="form-group" ng-show="modePdf != 'actif'">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Dupliquer N° Fiche :</span> 
+										<!-- modeCreation -->
+										<span >
+											<select ui-select2 ng-model="idFiche"
+												ng-init="idFiche =''"
+												ng-change="remplirFicheSuiveuse(idFiche)"
+												data-placeholder="..." style="width: 100%">
+												<option ng-repeat="fisheS in listeFicheSuiveuse" value="{{fisheS.id}}">{{fisheS.referenceMise}}</option>
+											</select>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">N° Mise :</span> 
+										<!-- modeCreation -->
+										<span ng-show="modePdf != 'actif'">
+											<select ui-select2 ng-model="id"
+												ng-init="id =''"
+												ng-change="remplirMise(id)"
+												data-placeholder="..." style="width: 100%">
+												<option ng-repeat="mise in listeMise" value="{{mise.idMise}}">{{mise.reference}}</option>
+											</select>
+										</span>
+
+										<!-- modeModification -->
+										<span ng-show="modePdf == 'actif'">
+											<input ng-hide="creation" class="form-control"
+												readonly="readonly"
+												value="{{resultatRechercheMise.referenceMise}}" />
+										</span>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Metrage</span>
+										<input class="form-control" readonly="readonly"
+											value="{{resultatRechercheMise.metrage}}" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Poids</span>
+										<!-- {{resultatRechercheMise.poids}}  -->
+										<input class="form-control" readonly="readonly"
+											value="{{resultatRechercheMise.poids}}" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Laize Dem.Fini</span>
+										<input type="text"
+											class="form-control" ng-model="ficheCourante.laizeDemFini" 
+											ng-init="ficheCourante.laizeDemFini =''" >
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group alert alert-warning">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Reference
+											</span> 
+											<input class="form-control" readonly="readonly"
+												value="{{resultatRechercheMise.reference}}" />
+										</div>
+									</div>
+									<div class="col-sm-9">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Designation
+											</span> <input class="form-control" readonly="readonly"
+												value="{{resultatRechercheMise.designation}}" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Composition
+											</span> <input class="form-control" readonly="readonly"
+												value="{{resultatRechercheMise.composition}}" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Référence Interne 
+											</span> <input class="form-control" readonly="readonly"
+													value="{{resultatRechercheMise.referenceInterne}}" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Type Livraison
+										</span> <input class="form-control"
+											ng-model="ficheCourante.typeLivraison"
+											ng-init="ficheCourante.typeLivraison=''" />
+									</div>
+								</div>
+								<div class="col-sm-3" ng-controller="DatepickerDemoController">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+											S.Entre: </span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="ficheCourante.dateLancement=''"
+											ng-model="ficheCourante.dateLancement" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Rapport bain</span>
+										<input type="text" 
+											class="form-control" ng-model="ficheCourante.rapportBain" 
+											ng-init="ficheCourante.rapportBain =''" >
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Volume Total
+										</span> <input class="form-control" type="number" step="any"
+											ng-model="ficheCourante.volume" ng-init="ficheCourante.volume=''" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Marché
+										</span>
+										<select class="form-control"
+											ng-model="ficheCourante.marcheId">
+											<option ng-repeat="marche in listeMarche"
+												value="{{marche.id}}">{{marche.designation}}</option>
+										</select> 
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Observation
+										</span> <textarea class="form-control"
+											ng-model="ficheCourante.observations"
+											ng-init="ficheCourante.observations=''" />
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+						<div class="form-group alert alert-danger">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Poids Sortie
+											</span> <input class="form-control" type="number" step="any"
+											ng-model="ficheCourante.poidsSortie" ng-init="ficheCourante.poidsSortie=''" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Laize Sortie
+											</span> 
+											 <input class="form-control" type="number" step="any"
+											ng-model="ficheCourante.laizeSortie" ng-init="ficheCourante.laizeSortie=''" />
+									</div>
+								</div>
+								<div class="col-sm-3" ng-controller="DatepickerDemoController">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+											Sortie: </span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="ficheCourante.date=''"
+											ng-model="ficheCourante.date" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Metrage Sortie
+											</span> <input class="form-control" type="number" step="any"
+											ng-model="ficheCourante.metrageSortie" ng-init="ficheCourante.metrageSortie=''" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group alert alert-danger">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Poids PES
+											</span> <input class="form-control" type="number" step="any"
+											ng-model="ficheCourante.poidsPES" ng-init="ficheCourante.poidsPES=''" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Volume PES
+											</span> 
+											 <input class="form-control" type="number" step="any"
+											ng-model="ficheCourante.volumePES" ng-init="ficheCourante.volumePES=''" />
+									</div>
+								</div>
+								<div class="col-sm-3" ng-controller="DatepickerDemoController">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Poids Coton </span> 
+										<input class="form-control" type="number" step="any"
+											ng-model="ficheCourante.poidsCoton" ng-init="ficheCourante.poidsCoton=''" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Volume Coton
+											</span> <input class="form-control" type="number" step="any"
+											ng-model="ficheCourante.volumeCoton" ng-init="ficheCourante.volumeCoton=''" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Tableaux de l'objetCourant -->
+
+		<!-- Recette / Controle -->
+		<div class="col-sm-12">
+			<div class="title-ajout ">
+				Recette / Contôle<span class="fadeIn hidePlus" id="articles">+</span>
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						
+						<!-- Préparation -->
+						<div style="display: none" id="panel-articles">
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="title-ajout2">
+										Preparation<span id="preparationBtn"
+											class="fadeOut pull-right hidePlusPreparation">-</span>
+									</div>
+								</div>
+							</div>
+							<div class="line4"></div>
+							<div id="preparations">
+								<!-- Operation -->
+								<div class="form-group">
+									<div class="row">
+										<button class="btn pull-right btn-default" ng-click="AjouterBlocPrepa()"> (+)</button> 
+									</div>
+								</div>
+										<!-- new Version -->
+										<form class="form-horizontal" name="prepaForm"
+												id="prepaForm">
+										
+										  <div ng-repeat="(indexX,object) in listeTraitementMisePreparation track by indexX">
+										  <!--  Bloc : {{indexX}} <br> -->
+										   	<div class="form-group">
+											   	<div class="row">
+												   		<div class="col-sm-3">
+															<div class="input-group">
+																<span class="input-group-addon label1" id="basic-addon1">
+																Opération <i style="color: red">*</i>
+																</span> 
+																<select ui-select2
+																		ng-model="listeTraitementMisePreparation[indexX].traitementId"
+																		data-placeholder="..." style="width: 100%">
+																	<option ng-repeat="traitement in listeTraitementCaches"
+																	value="{{traitement.id}}">{{traitement.designation}}</option>
+																</select>
+															</div>
+														</div>
+														<div class="col-sm-3">
+															<div class="input-group">
+																<span class="input-group-addon label1" id="basic-addon1">Machine</span>
+																<select ui-select2
+																ng-model="listeTraitementMisePreparation[indexX].machineId"
+																data-placeholder="..." style="width: 100%">
+																<option
+																	ng-repeat="machine in listeMachines"
+																	value="{{machine.id}}"> {{machine.designation}}</option>
+																</select>
+															</div>
+														</div>
+														<div class="col-sm-5">
+															<div class="input-group">
+																<span class="input-group-addon label1" id="basic-addon1">Observation
+																</span> <input class="form-control"
+																	ng-model="listeTraitementMisePreparation[indexX].observations"/>
+															</div>
+														</div>
+													
+													<div class="col-sm-1">
+														<button class="btn pull-right btn-default" ng-click="removeTraitementMisePreparation(indexX)"> (-)</button> 
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													    <!-- Tab RecettePreparation -->
+													  	<table
+													  		class="table table-bordered table-hover table-condensed table-head-color">
+													  		<thead>
+													  			<tr>
+													  				<th style="width: 10%">Référence</th>
+													  				<th style="width: 25%">Designation</th>
+													  				<th style="width: 15%">Famille</th>
+													  				<th style="width: 5%">%</th>
+													  				<th style="width: 10%">Méthode</th>
+													  				<th style="width: 5%">Poids</th>
+													  				<th style="width: 5%">Rajout</th>
+													  				<th style="width: 5%">T°c</th>
+													  				<th style="width: 5%">Temps</th>
+													  				<th style="width: 5%">PH</th>
+													  				<th style="width: 10%">Observations</th>
+													  				<th></th>
+													  			</tr>
+													  		</thead>
+													  		<tr ng-repeat="(indexY,value) in object.listElementRecetteMise track by indexY">
+													  		
+													  		  	<td>
+																	<select ui-select2
+																		ng-model="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].articleId"
+																		e-ng-change="remplirRecetteArticle(listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].articleId, $index)" 
+																		data-placeholder="..." style="width: 100%" ng-disabled="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].checked">
+																		<option ng-repeat="article in listeArticle"
+																			value="{{article.id}}">{{article.ref}}</option>
+																	</select>
+																</td>
+																<td>
+																	{{ showArticleDetails(listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].articleId , "designation") || 'empty' }}
+																</td>
+																<td>
+																	{{ showArticleDetails(listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].articleId , "sousFamille") || 'empty' }}
+																</td>
+														  		<td><input type=text class="form-control" ng-model="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].pourcentage"/></td>
+														  		<td >
+														  			<select ui-select2
+																		ng-model="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].methode"
+																		data-placeholder="..." style="width: 100%">
+																		<option ng-repeat="methode in listeMethodeCalcule"
+																			value="{{methode.value}}">{{methode.designation}}</option>
+																	</select>
+																</td>
+														  		<td>
+														  		<input type=text class="form-control" ng-model="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].poids"/></td>
+														  		<td><input type=text class="form-control" ng-model="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].rajout"/></td>
+														  		<td><input type=text class="form-control" ng-model="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].temperature"/></td>
+														  		<td><input type=text class="form-control" ng-model="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].temps"/></td>
+														  		<td><input type=text class="form-control" ng-model="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].ph"/></td>
+														  		<td><input type=text class="form-control" ng-model="listeTraitementMisePreparation[indexX].listElementRecetteMise[indexY].observations"/></td>
+														  		<td>
+														  			<button ng-click="removeRecettePreparation(indexX,indexY)" data-nodrag
+																	class="btn btn-sm glyphicon glyphicon-trash"></button>
+														  		</td>
+													  		</tr>
+													  	</table>
+											 
+											 			<button class="btn btn-action pull-right spacer2" ng-click="AjouterRecettePrepa(indexX)">Ajouter</button>
+										 			</div>
+												</div>
+
+												
+
+											</div>
+
+										</form>
+								
+
+							<!-- Tab ControlePreparation -->
+								<!-- modeCreation 
+								<div ng-show="modePdf != 'actif'" class="panel panel-primary">
+									<table
+										class="table table-bordered table-hover table-condensed tableOperation-head-color">
+										<thead>
+											<tr>
+												<th style="width: 10%">Controle</th>
+												<th style="width: 10%">Norme</th>
+												<th style="width: 10%">Temps</th>
+												<th style="width: 20%">Resultat1</th>
+												<th style="width: 10%">Correction</th>
+												<th style="width: 20%">Resultat2</th>
+												<th style="width: 10%">Observation</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tr ng-repeat="controle in listControlePreparationInit">
+											<td>
+												<span
+												editable-select="controle.controleId" e-name="controleId"
+												e-form="rowform"
+												e-ng-options="s.id as s.designation for s in listeControles">
+													{{ showControleDetails(controle.controleId , "designation") || 'empty' }} </span> 
+											</td>
+											<td>
+												<span
+												editable-text="controle.methode" e-name="methode"
+												e-form="rowform" e-required> {{ controle.methode
+													|| '--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.temps" e-name="temps"
+												e-form="rowform" e-required> {{ controle.temps
+													|| '--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeur" e-name="valeur"
+												e-form="rowform" e-required> {{ controle.valeur ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeurCorrige" e-name="valeurCorrige"
+												e-form="rowform" e-required> {{ controle.valeurCorrige ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeurTheorique" e-name="valeurTheorique"
+												e-form="rowform" e-required> {{ controle.valeurTheorique ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.observations" e-name="observations"
+												e-form="rowform" e-required> {{ controle.observations ||
+													'--' }} </span>
+											</td>
+											<td>
+												<form editable-form name="rowform"
+													onbeforesave="saveControlePreparation($data, controle.produitId)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="inserted == controle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddFicheSuiveuse(rowform, $index, controle.id, controle.controleId, listControlePreparationInit)"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button ng-click="rowform.$show()" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"></button>
+													<button ng-click="removeControlePreparationInit($index)" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"></button>
+												</div>
+											</td>
+										</tr>
+									</table>
+
+									<button class="btn btn-default" ng-click="addControlePreparationInit()">Ajouter</button>
+								</div>-->
+			
+								<!-- modeModification 
+								<div ng-show="modePdf == 'actif'" class="panel panel-primary">-->
+									<table
+										class="table table-bordered table-hover table-condensed tableOperation-head-color">
+										<thead>
+											<tr>
+												<th style="width: 10%">Controle</th>
+												<th style="width: 10%">Norme</th>
+												<th style="width: 10%">Temps</th>
+												<th style="width: 20%">Resultat1</th>
+												<th style="width: 10%">Correction</th>
+												<th style="width: 20%">Resultat2</th>
+												<th style="width: 10%">Observation</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tr ng-repeat="controle in listControlePreparation">
+											<td>
+												<!-- TODO: ID => Designation & DropList Field -->  <span
+												editable-select="controle.controleId" e-name="controleId"
+												e-form="rowform"
+												e-ng-options="s.id as s.designation for s in listeControles">
+													{{ showControleDetails(controle.controleId , "designation") || 'empty' }} </span> 
+											</td>
+											<td>
+												<!-- editable methode (text with validation) --> <span
+												editable-text="controle.methode" e-name="methode"
+												e-form="rowform" e-required> {{ controle.methode
+													|| '--' }} </span>
+											</td>
+											<td>
+												<!-- editable temps (text with validation) --> <span
+												editable-text ="controle.temps" e-name="temps"
+												e-form="rowform" e-required> {{ controle.temps
+													|| '--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeur (text with validation) --> <span
+												editable-text="controle.valeur" e-name="valeur"
+												e-form="rowform" e-required> {{ controle.valeur ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeurCorrige (text with validation) --> <span
+												editable-text="controle.valeurCorrige" e-name="valeurCorrige"
+												e-form="rowform" e-required> {{ controle.valeurCorrige ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeurTheorique (text with validation) --> <span
+												editable-text="controle.valeurTheorique" e-name="valeurTheorique"
+												e-form="rowform" e-required> {{ controle.valeurTheorique ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable observations (text with validation) --> <span
+												editable-text="controle.observations" e-name="observations"
+												e-form="rowform" e-required> {{ controle.observations ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveControlePreparation($data, controle.produitId)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="inserted == controle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddFicheSuiveuse(rowform, $index, controle.id, controle.controleId, listControlePreparation)"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button ng-click="rowform.$show()" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"></button>
+													<button ng-click="removeControlePreparation($index)" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"></button>
+												</div>
+											</td>
+										</tr>
+									</table>
+
+									<button class="btn btn-default" ng-click="addControlePreparation()">Ajouter</button>
+								<!-- </div> end divCreation -->
+
+							</div>
+						</div><!-- endPreparation -->
+
+						<!-- Teinture - PES -->
+						<div style="display: none" id="panel-articles">
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="title-ajout2">
+										Teinture - PES<span id="filBtn"
+											class="fadeOut pull-right hidePlusFil">-</span>
+									</div>
+								</div>
+							</div>
+							<div class="line4"></div>
+							<div id="fil">
+								<!-- Operation -->
+								<div class="form-group">
+									<div class="row">
+										
+										<button class="btn pull-right btn-default" ng-click="AjouterBlocTeinturePES()"> (+)</button> 
+									</div>
+								</div>
+								<form class="form-horizontal" name="teinturePESForm"
+											id="teinturePESForm">
+										
+										<!-- new Version -->
+									  	<div ng-repeat="(indexXPES,objectPES) in listeTraitementMiseTeinturePES track by 	indexXPES">
+									  		<div class="form-group">
+												<div class="row">
+									  
+											   		<div class="col-sm-3">
+														<div class="input-group">
+															<span class="input-group-addon label1" id="basic-addon1">
+															Opération <i style="color: red">*</i>
+															</span> 
+															<select ui-select2
+																		ng-model="listeTraitementMiseTeinturePES[indexXPES].traitementId"
+																		data-placeholder="..." style="width: 100%">
+																	<option ng-repeat="traitement in listeTraitementCaches"
+																	value="{{traitement.id}}">{{traitement.designation}}</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-sm-3">
+														<div class="input-group">
+															<span class="input-group-addon label1" id="basic-addon1">Machine</span>
+															<select ui-select2
+																ng-model="listeTraitementMiseTeinturePES[indexXPES].machineId"
+																data-placeholder="..." style="width: 100%">
+																<option
+																	ng-repeat="machine in listeMachines"
+																	value="{{machine.id}}"> {{machine.designation}}</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-sm-5">
+														<div class="input-group">
+															<span class="input-group-addon label1" id="basic-addon1">Observation
+															</span> <input class="form-control"
+																ng-model="listeTraitementMiseTeinturePES[indexXPES].observations"/>
+														</div>
+													</div>
+													<div class="col-sm-1">
+														<button class="btn pull-right btn-default" ng-click="removeTraitementMiseTeinturePES(indexXPES)"> (-)</button> 
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+												    <!-- Tab RecetteTeinturePES -->
+												  	<table
+												  		class="table table-bordered table-hover table-condensed table-head-color">
+												  		<thead>
+												  			<tr>
+												  				<th style="width: 10%">Référence</th>
+												  				<th style="width: 25%">Designation</th>
+												  				<th style="width: 15%">Famille</th>
+												  				<th style="width: 5%">%</th>
+												  				<th style="width: 10%">Méthode</th>
+												  				<th style="width: 5%">Poids</th>
+												  				<th style="width: 5%">Rajout</th>
+												  				<th style="width: 5%">T°c</th>
+												  				<th style="width: 5%">Temps</th>
+												  				<th style="width: 5%">PH</th>
+												  				<th style="width: 10%">Observations</th>
+												  				<th></th>
+												  			</tr>
+												  		</thead>
+												  		<tr ng-repeat="(indexYPES,value) in objectPES.listElementRecetteMise track by indexYPES">
+												  		  <td>
+																<select ui-select2
+																	ng-model="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].articleId"
+																	e-ng-change="remplirRecetteArticle(listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].articleId, $index)" 
+																	data-placeholder="..." style="width: 100%" ng-disabled="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].checked">
+																	<option ng-repeat="article in listeArticle"
+																		value="{{article.id}}">{{article.ref}}</option>
+																</select>
+															</td>
+															<td>
+																{{ showArticleDetails(listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].articleId , "designation") || 'empty' }}
+															</td>
+															<td>
+																{{ showArticleDetails(listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].articleId , "sousFamille") || 'empty' }}
+															</td>
+												  		  <td><input type=text class="form-control" ng-model="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].pourcentage"/></td>
+												  		  <td>
+												  		  	<select ui-select2
+																ng-model="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].methode"
+																data-placeholder="..." style="width: 100%">
+																<option ng-repeat="methode in listeMethodeTeinturePES"
+																	value="{{methode.value}}">{{methode.designation}}</option>
+															</select>
+														  </td>
+												  		  <td><input type=text class="form-control" ng-model="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].poids"/></td>
+												  		  <td><input type=text class="form-control" ng-model="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].rajout"/></td>
+												  		  <td><input type=text class="form-control" ng-model="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].temperature"/></td>
+												  		  <td><input type=text class="form-control" ng-model="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].temps"/></td>
+												  		  <td><input type=text class="form-control" ng-model="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].ph"/></td>
+												  		  <td><input type=text class="form-control" ng-model="listeTraitementMiseTeinturePES[indexXPES].listElementRecetteMise[indexYPES].observations"/></td>
+												  		  <td>
+															<button ng-click="removeRecetteTeinturePES(indexXPES,indexYPES)" data-nodrag class="btn btn-sm glyphicon glyphicon-trash"></button>
+													  	   </td>
+												  		</tr>
+												  	</table>
+												 	<button class="btn btn-action pull-right spacer2" ng-click="AjouterRecetteTeinturePES(indexXPES)">Ajouter</button>
+												</div>
+											</div>
+
+											
+									  </div>
+								</form>
+									
+
+								
+								<!-- Tab ControlePES -->
+								<!-- modeCreation 
+								<div ng-show="modePdf != 'actif'" class="panel panel-primary">
+									<table
+										class="table table-bordered table-hover table-condensed tableOperation-head-color">
+										<thead>
+											<tr>
+												<th style="width: 10%">Controle</th>
+												<th style="width: 10%">Norme</th>
+												<th style="width: 10%">Temps</th>
+												<th style="width: 20%">Resultat1</th>
+												<th style="width: 10%">Correction</th>
+												<th style="width: 20%">Resultat2</th>
+												<th style="width: 10%">Observation</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tr ng-repeat="controle in listControlePESInit">
+											<td>
+												<span
+												editable-select="controle.controleId" e-name="controleId"
+												e-form="rowform"
+												e-ng-options="s.id as s.designation for s in listeControles">
+													{{ showControleDetails(controle.controleId , "designation") || 'empty' }} </span> 
+											</td>
+											<td>
+												<span
+												editable-text="controle.methode" e-name="methode"
+												e-form="rowform" e-required> {{ controle.methode
+													|| '--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.temps" e-name="temps"
+												e-form="rowform" e-required> {{ controle.temps
+													|| '--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeur" e-name="valeur"
+												e-form="rowform" e-required> {{ controle.valeur ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeurCorrige" e-name="valeurCorrige"
+												e-form="rowform" e-required> {{ controle.valeurCorrige ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeurTheorique" e-name="valeurTheorique"
+												e-form="rowform" e-required> {{ controle.valeurTheorique ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.observations" e-name="observations"
+												e-form="rowform" e-required> {{ controle.observations ||
+													'--' }} </span>
+											</td>
+											<td>
+												<form editable-form name="rowform"
+													onbeforesave="saveControlePES($data, controle.produitId)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="inserted == controle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddFicheSuiveuse(rowform, $index, controle.id, controle.controleId, listControlePESInit)"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button ng-click="rowform.$show()" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"></button>
+													<button ng-click="removeControlePESInit($index)" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"></button>
+												</div>
+											</td>
+										</tr>
+									</table>
+
+									<button class="btn btn-default" ng-click="addControlePESInit()">Ajouter</button>
+								</div> -->
+
+								<!-- modeModification 
+								<div ng-show="modePdf == 'actif'" class="panel panel-primary">-->
+									<table
+										class="table table-bordered table-hover table-condensed tableOperation-head-color">
+										<thead>
+											<tr>
+												<th style="width: 10%">Controle</th>
+												<th style="width: 10%">Norme</th>
+												<th style="width: 10%">Temps</th>
+												<th style="width: 20%">Resultat1</th>
+												<th style="width: 10%">Correction</th>
+												<th style="width: 20%">Resultat2</th>
+												<th style="width: 10%">Observation</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tr ng-repeat="controle in listControlePES">
+											<td>
+												<!-- TODO: ID => Designation & DropList Field -->  <span
+												editable-select="controle.controleId" e-name="controleId"
+												e-form="rowform"
+												e-ng-options="s.id as s.designation for s in listeControles">
+													{{ showControleDetails(controle.controleId , "designation") || 'empty' }} </span> 
+											</td>
+											<td>
+												<!-- editable methode (text with validation) --> <span
+												editable-text="controle.methode" e-name="methode"
+												e-form="rowform" e-required> {{ controle.methode
+													|| '--' }} </span>
+											</td>
+											<td>
+												<!-- editable temps (text with validation) --> <span
+												editable-text ="controle.temps" e-name="temps"
+												e-form="rowform" e-required> {{ controle.temps
+													|| '--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeur (text with validation) --> <span
+												editable-text="controle.valeur" e-name="valeur"
+												e-form="rowform" e-required> {{ controle.valeur ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeurCorrige (text with validation) --> <span
+												editable-text="controle.valeurCorrige" e-name="valeurCorrige"
+												e-form="rowform" e-required> {{ controle.valeurCorrige ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeurTheorique (text with validation) --> <span
+												editable-text="controle.valeurTheorique" e-name="valeurTheorique"
+												e-form="rowform" e-required> {{ controle.valeurTheorique ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable observations (text with validation) --> <span
+												editable-text="controle.observations" e-name="observations"
+												e-form="rowform" e-required> {{ controle.observations ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveControlePES($data, controle.produitId)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="inserted == controle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddFicheSuiveuse(rowform, $index, controle.id, controle.controleId, listControlePES)"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button ng-click="rowform.$show()" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"></button>
+													<button ng-click="removeControlePES($index)" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"></button>
+												</div>
+											</td>
+										</tr>
+									</table>
+									<button class="btn btn-default" ng-click="addControlePES()">Ajouter</button>
+								<!-- </div> end modeCreation -->
+
+							</div>
+						</div><!-- endTeinture - PES -->
+
+						<!-- Teinture - Coton -->
+						<div style="display: none" id="panel-articles">
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="title-ajout2">
+										Teinture - Coton<span id="fournituresBtn"
+											class="fadeOut pull-right hidePlusFourniture">-</span>
+									</div>
+								</div>
+							</div>
+							<div class="line4"></div>
+							<div id="fournitures">
+								<!-- Operation -->
+								<div class="form-group">
+									<div class="row">
+										<button class="btn pull-right btn-default" ng-click="AjouterBlocTeintureCoton()"> (+)</button> 
+									</div>
+								</div>
+								
+								<form class="form-horizontal" name="teintureCotonForm"
+											id="teintureCotonForm">
+										
+										<!-- new Version -->
+										<div ng-repeat="(indexXCoton,objectPES) in listeTraitementsMiseTeintureCoton track by indexXCoton">
+											<div class="form-group">
+												<div class="row">
+													<!--  Bloc : {{indexXCoton}} <br>  -->
+													<div class="col-sm-3">
+														<div class="input-group">
+															<span class="input-group-addon label1" id="basic-addon1">
+																Opération <i style="color: red">*</i>
+															</span> 
+															<select ui-select2
+																ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].traitementId"
+																data-placeholder="..." style="width: 100%">
+																<option ng-repeat="traitement in listeTraitementCaches"
+																value="{{traitement.id}}">{{traitement.designation}}</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-sm-3">
+														<div class="input-group">
+															<span class="input-group-addon label1" id="basic-addon1">Machine</span>
+															<select ui-select2
+																ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].machineId"
+																data-placeholder="..." style="width: 100%">
+																<option
+															ng-repeat="machine in listeMachines"
+															value="{{machine.id}}"> {{machine.designation}}</option>
+															</select>
+														</div>
+													</div>
+													<div class="col-sm-5">
+														<div class="input-group">
+															<span class="input-group-addon label1" id="basic-addon1">Observation
+															</span> <input class="form-control"
+															ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].observations"/>
+														</div>
+													</div>
+													<div class="col-sm-1">
+														<button class="btn pull-right btn-default" ng-click="removeTraitementMiseTeintureCoton(indexXCoton)"> (-)</button> 
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<!-- Tab RecetteTeinturePES -->
+													<table
+													class="table table-bordered table-hover table-condensed table-head-color">
+													<thead>
+														<tr>
+															<th style="width: 10%">Référence</th>
+											  				<th style="width: 25%">Designation</th>
+											  				<th style="width: 15%">Famille</th>
+											  				<th style="width: 5%">%</th>
+											  				<th style="width: 10%">Méthode</th>
+											  				<th style="width: 5%">Poids</th>
+											  				<th style="width: 5%">Rajout</th>
+											  				<th style="width: 5%">T°c</th>
+											  				<th style="width: 5%">Temps</th>
+											  				<th style="width: 5%">PH</th>
+											  				<th style="width: 10%">Observations</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tr ng-repeat="(indexYCoton,value) in objectPES.listElementRecetteMise track by indexYCoton">
+
+														<td>
+															<select ui-select2
+															ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].articleId"
+															e-ng-change="remplirRecetteArticle(listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].articleId, $index)" 
+															data-placeholder="..." style="width: 100%" ng-disabled="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].checked">
+															<option ng-repeat="article in listeArticle"
+															value="{{article.id}}">{{article.ref}}</option>
+														</select>
+														</td>
+														<td>
+															{{ showArticleDetails(listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].articleId , "designation") || 'empty' }}
+														</td>
+														<td>
+															{{ showArticleDetails(listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].articleId , "sousFamille") || 'empty' }}
+														</td>
+														<td><input type=text class="form-control" ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].pourcentage"/></td>
+														<td>
+															<select ui-select2
+																ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].methode"
+																data-placeholder="..." style="width: 100%">
+																<option ng-repeat="methode in listeMethodeTeintureCoton"
+																	value="{{methode.value}}">{{methode.designation}}</option>
+															</select>
+														</td>
+														<td><input type=text class="form-control" ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].poids"/></td>
+														<td><input type=text class="form-control" ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].rajout"/></td>
+														<td><input type=text class="form-control" ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].temperature"/></td>
+														<td><input type=text class="form-control" ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].temps"/></td>
+														<td><input type=text class="form-control" ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].ph"/></td>
+														<td><input type=text class="form-control" ng-model="listeTraitementsMiseTeintureCoton[indexXCoton].listElementRecetteMise[indexYCoton].observations"/></td>
+														<td>
+															<button ng-click="removeRecetteTeintureCoton(indexXCoton,indexYCoton)" data-nodrag class="btn btn-sm glyphicon glyphicon-trash"></button>
+													  </td>
+													</tr>
+												</table>
+												<button class="btn btn-action pull-right spacer2" ng-click="AjouterRecetteTeintureCoton(indexXCoton)">Ajouter</button>
+											</div>
+										</div>
+										
+									</div>
+								</form>
+									
+
+								<!-- Tab ControleCoton -->
+								<!-- modeCreation 
+								<div ng-show="modePdf != 'actif'" class="panel panel-primary">
+									<table
+										class="table table-bordered table-hover table-condensed tableOperation-head-color">
+										<thead>
+											<tr>
+												<th style="width: 10%">Controle</th>
+												<th style="width: 10%">Norme</th>
+												<th style="width: 10%">Temps</th>
+												<th style="width: 20%">Resultat1</th>
+												<th style="width: 10%">Correction</th>
+												<th style="width: 20%">Resultat2</th>
+												<th style="width: 10%">Observation</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tr ng-repeat="controle in listControleCotonInit">
+											<td>
+												<span
+												editable-select="controle.controleId" e-name="controleId"
+												e-form="rowform"
+												e-ng-options="s.id as s.designation for s in listeControles">
+													{{ showControleDetails(controle.controleId , "designation") || 'empty' }} </span> 
+											</td>
+											<td>
+												<span
+												editable-text="controle.methode" e-name="methode"
+												e-form="rowform" e-required> {{ controle.methode
+													|| '--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.temps" e-name="temps"
+												e-form="rowform" e-required> {{ controle.temps
+													|| '--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeur" e-name="valeur"
+												e-form="rowform" e-required> {{ controle.valeur ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeurCorrige" e-name="valeurCorrige"
+												e-form="rowform" e-required> {{ controle.valeurCorrige ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeurTheorique" e-name="valeurTheorique"
+												e-form="rowform" e-required> {{ controle.valeurTheorique ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.observations" e-name="observations"
+												e-form="rowform" e-required> {{ controle.observations ||
+													'--' }} </span>
+											</td>
+											<td>
+												
+												<form editable-form name="rowform"
+													onbeforesave="saveControleCoton($data, controle.controleId)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="inserted == controle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddFicheSuiveuse(rowform, $index, controle.id, controle.controleId, listControleCotonInit)"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button ng-click="rowform.$show()" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"></button>
+													<button ng-click="removeControleCotonInit($index)" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"></button>
+												</div>
+											</td>
+										</tr>
+									</table>
+
+									<button class="btn btn-default" ng-click="addControleCotonInit()">Ajouter</button>
+								</div> -->
+
+								<!-- modeModification 
+								<div ng-show="modePdf == 'actif'" class="panel panel-primary">-->
+									<table
+										class="table table-bordered table-hover table-condensed tableOperation-head-color">
+										<thead>
+											<tr>
+												<th style="width: 10%">Controle</th>
+												<th style="width: 10%">Norme</th>
+												<th style="width: 10%">Temps</th>
+												<th style="width: 20%">Resultat1</th>
+												<th style="width: 10%">Correction</th>
+												<th style="width: 20%">Resultat2</th>
+												<th style="width: 10%">Observation</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tr ng-repeat="controle in listControleCoton">
+											<td>
+												<!-- TODO: ID => Designation & DropList Field -->  <span
+												editable-select="controle.controleId" e-name="controleId"
+												e-form="rowform"
+												e-ng-options="s.id as s.designation for s in listeControles">
+													{{ showControleDetails(controle.controleId , "designation") || 'empty' }} </span> 
+
+
+												<!-- editable controleId (text with validation) --> <!-- <span
+												editable-text="controle.controleId" e-name="controleId"
+												e-form="rowform" e-required> {{ controle.controleId
+													|| '--' }} </span> -->
+											</td>
+											<td>
+												<!-- editable methode (text with validation) --> <span
+												editable-text="controle.methode" e-name="methode"
+												e-form="rowform" e-required> {{ controle.methode
+													|| '--' }} </span>
+											</td>
+											<td>
+												<!-- editable temps (text with validation) --> <span
+												editable-text ="controle.temps" 
+												e-name="temps" e-form="rowform" e-required> {{ controle.temps
+													|| '--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeur (text with validation) --> <span
+												editable-text="controle.valeur" e-name="valeur"
+												e-form="rowform" e-required> {{ controle.valeur ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeurCorrige (text with validation) --> <span
+												editable-text="controle.valeurCorrige" e-name="valeurCorrige"
+												e-form="rowform" e-required> {{ controle.valeurCorrige ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeurTheorique (text with validation) --> <span
+												editable-text="controle.valeurTheorique" e-name="valeurTheorique"
+												e-form="rowform" e-required> {{ controle.valeurTheorique ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable observations (text with validation) --> <span
+												editable-text="controle.observations" e-name="observations"
+												e-form="rowform" e-required> {{ controle.observations ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveControleCoton($data, controle.produitId)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="inserted == controle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddFicheSuiveuse(rowform, $index, controle.id, controle.controleId, listControleCoton)"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button ng-click="rowform.$show()" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"></button>
+													<button ng-click="removeControleCoton($index)" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"></button>
+												</div>
+											</td>
+										</tr>
+									</table>
+									<button class="btn btn-default" ng-click="addControleCoton()">Ajouter</button>
+								<!-- </div> endModeCreation -->
+
+							</div>
+						</div><!-- endTeinture - Coton -->
+
+						<!-- Finissage -->
+						<div style="display: none" id="panel-articles">
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="title-ajout2">
+										Finissage<span id="tissuBtn"
+											class="fadeOut pull-right hidePlusTissu">-</span>
+									</div>
+								</div>
+							</div>
+							<div class="line4"></div>
+							<div id="tissu">
+								<!-- Operation -->
+								<div class="form-group">
+									<div class="row">
+										<button class="btn pull-right btn-default" ng-click="AjouterBlocFinissage()"> (+)</button> 
+									</div>
+								</div>
+								
+								<form class="form-horizontal" name="finissageForm"
+											id="finissageForm">
+										<!-- new Version -->
+									<div ng-repeat="(indexXFini,objectFini) in listeTraitementsMiseFinissage track by indexXFini">
+									<div class="form-group">
+										<div class="row">
+									 <!--  Bloc : {{indexXFini}} <br>  -->
+										   	<div class="col-sm-3">
+													<div class="input-group">
+														<span class="input-group-addon label1" id="basic-addon1">
+														Opération <i style="color: red">*</i>
+														</span> 
+														<select ui-select2
+															ng-model="listeTraitementsMiseFinissage[indexXFini].traitementId"
+															data-placeholder="..." style="width: 100%">
+															<option ng-repeat="traitement in listeTraitementCaches"
+															value="{{traitement.id}}">{{traitement.designation}}</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-sm-3">
+													<div class="input-group">
+														<span class="input-group-addon label1" id="basic-addon1">Machine</span>
+														<select ui-select2
+																ng-model="listeTraitementsMiseFinissage[indexXFini].machineId"
+																data-placeholder="..." style="width: 100%">
+																<option
+																	ng-repeat="machine in listeMachines"
+																	value="{{machine.id}}"> {{machine.designation}}</option>
+																</select>
+													</div>
+												</div>
+												<div class="col-sm-5">
+													<div class="input-group">
+														<span class="input-group-addon label1" id="basic-addon1">Observation
+														</span> <input class="form-control"
+															ng-model="listeTraitementsMiseFinissage[indexXFini].observations"/>
+													</div>
+												</div>
+												<div class="col-sm-1">
+														<button class="btn pull-right btn-default" ng-click="removeTraitementMiseFinissage(indexXFini)"> (-)</button> 
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+											    <!-- Tab RecetteTeinturePES -->
+											  	<table
+											  		class="table table-bordered table-hover table-condensed table-head-color">
+											  		<thead>
+											  			<tr>
+											  				<th style="width: 10%">Référence</th>
+											  				<th style="width: 25%">Designation</th>
+											  				<th style="width: 15%">Famille</th>
+											  				<th style="width: 5%">%</th>
+											  				<th style="width: 10%">Méthode</th>
+											  				<th style="width: 5%">Poids</th>
+											  				<th style="width: 5%">Rajout</th>
+											  				<th style="width: 5%">T°c</th>
+											  				<th style="width: 5%">Temps</th>
+											  				<th style="width: 5%">PH</th>
+											  				<th style="width: 10%">Observations</th>
+											  				<th></th>
+											  			</tr>
+											  		</thead>
+											  		<tr ng-repeat="(indexYFini,value) in objectFini.listElementRecetteMise track by indexYFini">
+											  		  <td class ="hidden">{{indexXFini}} - {{indexYFini}}</td>
+											  		  <td>
+															<select ui-select2
+																ng-model="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].articleId"
+																e-ng-change="remplirRecetteArticle(listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].articleId, $index)" 
+																data-placeholder="..." style="width: 100%" ng-disabled="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].checked">
+																<option ng-repeat="article in listeArticle"
+																	value="{{article.id}}">{{article.ref}}</option>
+															</select>
+														</td>
+														<td>
+															{{ showArticleDetails(listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].articleId , "designation") || 'empty' }}
+														</td>
+														<td>
+															{{ showArticleDetails(listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].articleId , "sousFamille") || 'empty' }}
+														</td>
+											  		  <td><input type=text class="form-control" ng-model="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].pourcentage"/></td>
+											  		  <td>
+											  		  	<select ui-select2
+															ng-model="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].methode"
+															data-placeholder="..." style="width: 100%">
+															<option ng-repeat="methode in listeMethodeCalcule"
+																value="{{methode.value}}">{{methode.designation}}</option>
+														</select>
+													  </td>
+											  		  <td><input type=text class="form-control" ng-model="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].poids"/></td>
+											  		  <td><input type=text class="form-control" ng-model="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].rajout"/></td>
+											  		  <td><input type=text class="form-control" ng-model="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].temperature"/></td>
+											  		  <td><input type=text class="form-control" ng-model="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].temps"/></td>
+											  		  <td><input type=text class="form-control" ng-model="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].ph"/></td>
+											  		  <td><input type=text class="form-control" ng-model="listeTraitementsMiseFinissage[indexXFini].listElementRecetteMise[indexYFini].observations"/></td>
+											  		  <td>
+														<button ng-click="removeRecetteFinissage(indexXFini,indexYFini)" data-nodrag class="btn btn-sm glyphicon glyphicon-trash"></button>
+													  </td>
+											  		</tr>
+											  	</table>
+											  	<button class="btn btn-action pull-right spacer2" ng-click="AjouterRecetteFinissage(indexXFini)">Ajouter</button>
+									 		</div>
+									 	</div>
+									 	
+									</div>
+								</form>
+									
+								
+								<!-- Tab ControleFinissage -->
+								<!-- modeCreation 
+								<div ng-show="modePdf != 'actif'" class="panel panel-primary">
+									<table
+										class="table table-bordered table-hover table-condensed tableOperation-head-color">
+										<thead>
+											<tr>
+												<th style="width: 10%">Controle</th>
+												<th style="width: 10%">Norme</th>
+												<th style="width: 10%">Temps</th>
+												<th style="width: 20%">Resultat1</th>
+												<th style="width: 10%">Correction</th>
+												<th style="width: 20%">Resultat2</th>
+												<th style="width: 10%">Observation</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tr ng-repeat="controle in listControleFinissageInit">
+											<td>
+												<span
+												editable-select="controle.controleId" e-name="controleId"
+												e-form="rowform"
+												e-ng-options="s.id as s.designation for s in listeControles">
+													{{ showControleDetails(controle.controleId , "designation") || 'empty' }} </span> 
+											</td>
+											<td>
+												<span
+												editable-text="controle.methode" e-name="methode"
+												e-form="rowform" e-required> {{ controle.methode
+													|| '--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.temps" e-name="temps"
+												e-form="rowform" e-required> {{ controle.temps
+													|| '--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeur" e-name="valeur"
+												e-form="rowform" e-required> {{ controle.valeur ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeurCorrige" e-name="valeurCorrige"
+												e-form="rowform" e-required> {{ controle.valeurCorrige ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.valeurTheorique" e-name="valeurTheorique"
+												e-form="rowform" e-required> {{ controle.valeurTheorique ||
+													'--' }} </span>
+											</td>
+											<td>
+												<span
+												editable-text="controle.observations" e-name="observations"
+												e-form="rowform" e-required> {{ controle.observations ||
+													'--' }} </span>
+											</td>
+											<td>
+												<form editable-form name="rowform"
+													onbeforesave="saveControleFinissage($data, controle.produitId)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="inserted == controle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddFicheSuiveuse(rowform, $index, controle.id, controle.controleId, listControleFinissageInit)"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button ng-click="rowform.$show()" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"></button>
+													<button ng-click="removeControleFinissageInit($index)" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"></button>
+												</div>
+											</td>
+										</tr>
+									</table>
+
+									<button class="btn btn-default" ng-click="addControleFinissageInit()">Ajouter</button>
+								</div> -->
+
+								<!-- modeModification 
+								<div ng-show="modePdf == 'actif'" class="panel panel-primary">-->
+									<table
+										class="table table-bordered table-hover table-condensed tableOperation-head-color">
+										<thead>
+											<tr>
+												<th style="width: 10%">Controle</th>
+												<th style="width: 10%">Norme</th>
+												<th style="width: 10%">Temps</th>
+												<th style="width: 20%">Resultat1</th>
+												<th style="width: 10%">Correction</th>
+												<th style="width: 20%">Resultat2</th>
+												<th style="width: 10%">Observation</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tr ng-repeat="controle in listControleFinissage">
+											<td>
+												<!-- TODO: ID => Designation & DropList Field -->  <span
+												editable-select="controle.controleId" e-name="controleId"
+												e-form="rowform"
+												e-ng-options="s.id as s.designation for s in listeControles">
+													{{ showControleDetails(controle.controleId , "designation") || 'empty' }} </span> 
+
+
+												<!-- editable controleId (text with validation) --> <!-- <span
+												editable-text="controle.controleId" e-name="controleId"
+												e-form="rowform" e-required> {{ controle.controleId
+													|| '--' }} </span> -->
+											</td>
+											<td>
+												<!-- editable methode (text with validation) --> <span
+												editable-text="controle.methode" e-name="methode"
+												e-form="rowform" e-required> {{ controle.methode
+													|| '--' }} </span>
+											</td>
+											<td>
+												<!-- editable temps (text with validation) --> <span
+												editable-text ="controle.temps" e-name="temps"
+												e-form="rowform" e-required> {{ controle.temps
+													|| '--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeur (text with validation) --> <span
+												editable-text="controle.valeur" e-name="valeur"
+												e-form="rowform" e-required> {{ controle.valeur ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeurCorrige (text with validation) --> <span
+												editable-text="controle.valeurCorrige" e-name="valeurCorrige"
+												e-form="rowform" e-required> {{ controle.valeurCorrige ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable valeurTheorique (text with validation) --> <span
+												editable-text="controle.valeurTheorique" e-name="valeurTheorique"
+												e-form="rowform" e-required> {{ controle.valeurTheorique ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- editable observations (text with validation) --> <span
+												editable-text="controle.observations" e-name="observations"
+												e-form="rowform" e-required> {{ controle.observations ||
+													'--' }} </span>
+											</td>
+											<td>
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveControleFinissage($data, controle.articleId)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="inserted == controle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddFicheSuiveuse(rowform, $index, controle.id, controle.controleId, listControleFinissage)"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button ng-click="rowform.$show()" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"></button>
+													<button ng-click="removeControleFinissage($index)" data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"></button>
+												</div>
+											</td>
+										</tr>
+									</table>
+
+									<button class="btn btn-default" ng-click="addControleFinissage()">Ajouter</button>
+								<!-- </div> endModeCreation -->
+							</div>
+						</div><!-- endFinissage -->
+
+					</div><!-- endPanel-body -->
+				</div><!-- panel panel-primary -->
+			</div><!-- title-ajout -->
+		
+		</div><!-- endcol-sm-12 -->
+						
+	</div>
+
+	<!-- container Grid-->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-md-12">
+			<div class="title-ajout line">Liste des fiches</div>
+			
+			<div class="row">
+				<div class="input-icon right mb10 col-md-3 pull-right">
+				<input placeholder="Taper un terme de recherche" type="text" ng-model="filterOptions.filterText"
+					class="form-control">
+				</div>
+			</div>
+			
+			<div style="height: 500px;" ng-grid="gridOptions"></div>
+		</div>
+	</div>
+
+	<!-- Popup de la suppression -->
+	<div id="light" class="white_content">
+		<pop-up type="delete-fiche"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+	<!-- Fin Popup de la suppression -->
+
+
+</div>

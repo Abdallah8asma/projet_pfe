@@ -1,0 +1,42 @@
+<!-- Menu Magasin -->
+<div ng-controller="MenuMagasinController">
+		<ul class="nav nav-gpro">
+		    <li ng-class="{active:ITEM == 'production' }"><a ng-click="goProduction()">Production</a></li>
+			<li ng-class="{active:ITEM == 'rouleau' }"><a ng-click="goRouleau()">Enroulage </a></li>
+			<li ng-class="{active:ITEM == 'stockage' }"><a ng-click="goStockage()">Stockage</a></li>
+			<li ng-class="{active:ITEM == 'bonSortie' }"><a ng-click="goBonSortie()">Exp&eacute;dition</a></li>
+			<li ng-class="{active:ITEM == 'vente' }"><a ng-click="goVente()">Livraison</a></li>
+			<li ng-class="{active:ITEM == 'inventaire' }"><a ng-click="goInventaire()">Inventaire</a></li>
+			<li ng-class="{active:ITEM == 'facon' }"><a ng-click="goFacon()">Lancement</a></li>
+			<li ng-class="{active:ITEM == 'reporting' }"><a ng-click="goReporting()">Reporting</a></li>
+		</ul>
+
+   <div ng-if="ITEM == 'production'">
+     <div ng-include="'views/front/logistique/production/production.html'"></div>	
+   </div>
+   <div ng-if="ITEM == 'rouleau'">
+     <div ng-include="'views/front/logistique/enroulage/enroulage.html'"></div>
+   </div>
+   <div ng-if="ITEM == 'stockage'">
+     <div ng-include="'views/front/logistique/stockage/stockage.html'"></div>	
+   </div>
+   <div ng-if="ITEM == 'bonSortie'">
+     <div ng-include="'views/front/logistique/expedition/bonSortie.html'"></div>
+   </div>
+   <div ng-if="ITEM == 'vente'">
+      <div ng-include="'views/front/logistique/livraison/bonLivraison.html'"></div>
+   </div>
+    <div ng-if="ITEM == 'gestionStock'">
+      <div ng-include="'views/front/logistique/gestionStock/stock.html'"></div>
+   </div>
+    <div ng-if="ITEM == 'inventaire'">
+     <div ng-include="'views/front/logistique/inventaire/inventaire.html'"></div>	
+   </div>
+   <div ng-if="ITEM == 'facon'">
+      <div ng-include="'views/front/logistique/facon/faconLogistique.html'"></div>
+   </div>
+   <div ng-if="ITEM == 'reporting'">
+      <div ng-include="'views/front/logistique/reporting/reportingLogistique.html'"></div>
+   </div> 
+ 
+ </div>	
