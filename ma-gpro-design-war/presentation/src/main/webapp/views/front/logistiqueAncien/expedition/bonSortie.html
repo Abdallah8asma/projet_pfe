@@ -1,0 +1,443 @@
+<!-- Front -->
+<div class="container-fluid" ng-controller="bonSortieController"
+	style="background-color: #fff;">
+	<!-- critere de recherche -->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-sm-12">
+			<button class="btn btn-action2 pull-right"
+				ng-click="AffectationBonSortie(bonSortieCourant)">Ajouter</button>
+		</div>
+		<div class="col-sm-12">
+			<div class="title-ajout">Crit&eacute;re de recherche</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="rechercheBonSortieForm"
+						id="rechercheBonSortieForm">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f
+											BS :</span> <input class="form-control"
+											ng-init="bonSortieCourantS.reference =''"
+											ng-model="bonSortieCourantS.reference" />
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Type</span>
+										<select ui-select2
+										    name = "type"
+										     ng-model="bonSortieCourantS.type"
+										     ng-init = "bonSortieCourantS.type = bonSortieCourantS.listeTypeBS[0].designation"
+											style="width: 100%"
+											data-placeholder=""
+											ng-options="type.id as type.designation for type in bonSortieCourantS.listeTypeBS track by type.designation">
+<!-- 											ng-options="type.id as type.designation for type in bonSortieCourantS.listeTypeBS track by type.id" -->
+<!-- 											<option value ="1">Expédition</option> -->
+<!-- 											<option value ="{{type.id}}">{{type.designation}}</option> -->
+<!-- 											<option ng-repeat="type in listeTypeBS" value="{{type.designation}}">{{type.designation}}</option> -->
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Client</span>
+										<select ui-select2
+											ng-model="bonSortieCourantS.partieInt"
+											ng-init="bonSortieCourantS.partieInt =''"
+											data-placeholder=""
+											 style="width: 100%">
+											<option value="">Tous les Clients</option>
+											<option ng-repeat="client in listeClientCache"
+												value="{{client.id}}">{{client.abreviation}}</option>
+										</select>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-4" ng-controller="DatepickerDController">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+											S.Entre: </span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="bonSortieCourantS.dateSortieMin =''"
+											ng-model="bonSortieCourantS.dateSortieMin" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="input-group"
+										ng-controller="DatepickerDController"> <span
+											class="input-group-addon label1" id="basic-addon1">Et
+											: </span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="bonSortieCourantS.dateSortieMax =''"
+											ng-model="bonSortieCourantS.dateSortieMax" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Rempli :</span>
+										<select class="form-control"
+											ng-model="bonSortieCourantS.rempli"
+											ng-init="bonSortieCourantS.rempli =''">
+											<option value="">Tous</option>
+											<option ng-repeat="rempli in listVerifRempli"
+												value="{{rempli.value}}">{{rempli.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="pull-right">
+						<button class="btn-action btn"
+						ng-click="downloadAllBonSortie(bonSortieCourantS)">G&eacute;n&eacute;rer</button>
+						<button class="btn-action btn"
+								ng-click="rechercherBonSortie(bonSortieCourantS)">Recherecher</button>
+						<button class="btn-action btn" ng-click="annulerAjout()">Annuler</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- container d'ajout,  modification et de consultation d'un Bon de Sortie -->
+	<div class="row" ng-show="displayMode == 'edit'">
+		<div class="col-sm-12">
+			<div class="pull-right">
+			<button ng-show="modePdf == 'actif'" class="btn btn-action" ng-click="redirectToVenteBL(bonSortieCourant.reference, bonSortieCourant.dateSortie,1 )">BL</button>
+				<button class="btn btn-action" ng-disabled="!creationBonSortie.$valid;"
+					ng-click="sauvegarderBonSortie(bonSortieCourant)">Enregistrer</button>
+				
+				<span ng-show="modePdf == 'actif'" class="option pull-right">
+		            <span class="btn-toolbar">
+		                <span class="btn-group" dropdown>
+		                    <button type="button" class="btn btn btn-action dropdown-toggle">
+		                       G&eacute;n&eacute;rer <span class="caret"></span>
+		                    </button>
+		                    <ul class="dropdown-menu" role="menu">
+		                    	<li>
+		                    		<a><span class="fa fa-file-text-o clickable" style="margin-right: 5px;"
+									ng-click="download(bonSortieCourant.id, 0)">  Sans Mise</span></a></li>
+								<li><a><span class="fa fa-file-text-o clickable" style="margin-right: 5px;"
+									ng-click="download(bonSortieCourant.id, 1)">  Avec Mise</span></a></li>
+		                    </ul>
+		                </span>
+		            </span>
+		    	</span>
+				<button class="btn btn-action2" ng-click="annulerAjout()">Retour</button>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="title-ajout" ng-show="modePdf == 'actif'"> Modification Bon De Sortie</div>
+			<div class="title-ajout" ng-show="modePdf != 'actif'"> Creation Bon De Sortie</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form id="creationBonSortie" name="creationBonSortie">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Reference
+											BS : 
+										</span> <input class="form-control"
+											ng-model="bonSortieCourant.reference" ng-init="codeBarre=''" name="codeBarre"
+											ng-keyup="keyPress($event.keyCode, codeBarre)"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Type
+											BS : 
+										</span> <select ui-select2 ng-model="bonSortieCourant.type"
+											ng-init="bonSortieCourant.type =''" data-placeholder="..."
+											style="width: 100%">
+											<option ng-repeat="type in listeTypeBS" value="{{type.designation}}">{{type.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class=" col-sm-4">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Client
+										</span> <select ui-select2 ng-model="bonSortieCourant.partieInt"
+											ng-init="bonSortieCourant.partieInt =''"
+											data-placeholder="..." style="width: 100%">
+											<option ng-repeat="pi in listeClientCache"
+												value="{{pi.id}}">{{pi.abreviation}}</option>
+										</select>
+									</div>
+								</div> 
+								<div class="col-sm-4">
+									<div class="input-group input-group-sm">
+										<div class="col-sm-12" ng-controller="DateIntroCtrl">
+											<div class="input-group input-group-sm">
+												<span class="input-group-addon label1" id="basic-addon1">Date
+													Sortie <i
+											style="color: red">*</i> : </span> 
+													<input type="text"
+													class="form-control datepicker"
+													datepicker-popup="{{format}}"
+													ng-model="bonSortieCourant.dateSortie" 
+													ng-init="bonSortieCourant.dateSortie = today" is-open="opened"
+													ng-required="true" 
+													datepicker-options="dateOptions"
+													date-="enabled(date, mode)" close-text="Close" />
+												<div class="input-group-btn">
+													<button type="button" class="btn btn-default"
+														ng-click="open($event)">
+														<i class="glyphicon glyphicon-calendar"></i>
+													</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">NB
+											Colis : </span>
+											<!-- modeCodeABarre -->
+											<input ng-show="displayView == 'view1'" class="form-control" readonly="readonly"
+											value="{{nbrColis}}" />
+											<!-- modeRouleau -->
+											<input ng-show="displayView != 'view1'"class="form-control" readonly="readonly"
+											value="{{nbrColis}}" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" ng-show="displayView == 'view1'">
+							<div class="row">
+								<!-- codeABare manuel -->
+								<div class="col-sm-4">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Code
+											&aacute; Barre</span> <input class="form-control"
+											ng-model="codeBarre" ng-init="codeBarre=''" name="codeBarre"
+											ng-keyup="keyPress($event.keyCode, codeBarre)" />
+									</div>
+								</div>
+								<!-- codeABarre PDA -->
+								<div class="col-sm-2">
+									<div class="input-group input-group-sm">
+										<!-- <span class="input-group-addon label1" id="basic-addon1">CSV file : </span>  -->
+										<ng-csv-import 
+								            class="btn btn-action"
+								            content="csv.content"
+								            header="csv.header" 
+								            header-visible="csv.headerVisible" 
+								            separator="csv.separator"
+								            separator-visible="csv.separatorVisible"
+								            result="csv.result"
+								            encoding="csv.encoding"
+								            encoding-visible="csv.encodingVisible"></ng-csv-import>
+									</div>
+								</div>
+    
+								<!-- Valider -->
+								<div class="col-sm-2">
+									<div class="input-group input-group-sm">
+										<button type="button" class="btn btn-action"
+											ng-click="validerCode(bonSortieCourant)"
+											ng-disabled="!modeValider">Valider</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<!-- view1:tableauCodeABarre -->
+								<div class="col-sm-4" ng-show="displayView == 'view1'">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Code
+											&aacute; Barre</span>
+									</div>
+									<table
+										class="table table-bordered table-condensed table-head-color">
+										<tbody ng-repeat="code in listCode track by $index ">
+											<tr>
+												<td>{{code}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Observations</span>
+										<input class="form-control"
+											ng-model="bonSortieCourant.observation" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<!-- view2: tableauComplet -->
+					<div class="title-ajout" ng-show="displayView != 'view1'">Liste des Rouleaux</div>
+					<div class="panel-body" ng-show="displayView != 'view1'">
+
+						<div class="form-group">
+							<div class="row">
+								<div class="panel panel-primary">
+									<table
+										class="table table-bordered table-condensed table-head-color">
+										<thead>
+											<tr>
+												<th>R&eacute;f.Rou.(code &aacute; barre)</th>
+												<th>R&eacute;f Tissu</th>
+												<th>Tissu</th>
+												<th>Type</th>
+												<th>Composition</th>
+												<th>Laize</th>
+												<th>Cr.Qualit&eacute;</th>
+												<th>Poids</th>
+												<th>Metrage</th>
+												<th>Mise</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="rouleauFini in listeRouleauFini">
+												<td>{{rouleauFini.reference}}</td>
+												<td>{{rouleauFini.produitReference}}</td>
+												<td>{{rouleauFini.produitIdDesignation}}</td>
+												<td>{{rouleauFini.produitIdSousFamille}}</td>
+												<td>{{rouleauFini.produitIdComposition}}</td>
+												<td>{{rouleauFini.laize}}</td>
+												<td>{{showChoix(rouleauFini.choix)}}</td>
+												<td>{{rouleauFini.poids}}</td>
+												<td><span editable-text="rouleauFini.metrage"
+													e-name="metrage" e-form="rowform" e-required> {{
+														rouleauFini.metrage || 'empty' }} </span></td>
+												<td>{{rouleauFini.referenceMise}}</td>
+												<td style="white-space: nowrap" class="pull-right">
+													<!-- form -->
+													<form editable-form name="rowform"
+														onbeforesave="saveRouleau($data, rouleauFini.id, $index)"
+														ng-show="rowform.$visible"
+														class="form-buttons form-inline"
+														shown="rouleauInserree == rouleauFini">
+														<button type="submit" ng-disabled="!rowform.$valid"
+															class="btn btn-sm glyphicon glyphicon-save"
+															aria-hidden="true"></button>
+														<button type="button" ng-disabled="rowform.$waiting"
+															ng-click="cancelAddRouleau(rowform, $index, rouleauFini.id, rouleauFini.reference, listeRouleauFini )"
+															class="btn btn-sm glyphicon glyphicon-remove"></button>
+													</form>
+													<div class="buttons" ng-show="!rowform.$visible">
+														<button data-nodrag
+															class="btn btn-sm glyphicon glyphicon-pencil"
+															ng-click="rowform.$show()"></button>
+														<button data-nodrag
+															class="btn btn-sm glyphicon glyphicon-trash"
+															ng-click="removeRouleau($index)"></button>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Solder Mise -->
+                    <div class="title-ajout">Solder Mise 
+                      	<i class="fa fa-chevron-down clickable"
+						style="margin-right: 5px;"  ng-click="isCollapsed = !isCollapsed"></i>
+					</div> 
+					<div class="panel-body" ng-show="displayMode == 'edit'">
+						<div class="row">
+							<div class="panel panel-primary">
+								<form class="form-horizontal"
+									id="creationPavetSolderMiseForm"
+									name="creationPavetSolderMiseForm">
+									<div class="form-group" collapse="isCollapsed">
+										<div class="row">
+											<div class="col-sm-3">
+												<div class="input-group input-group-sm">
+													<span class="input-group-addon label1" id="basic-addon1">Mise : 
+													</span> <select ui-select2 ng-model="refrenceMise"
+														ng-init="refrenceMise =''" data-placeholder="..."
+														style="width: 100%">
+														<option ng-repeat="ref in listeRefMiseREF track by $index" value="{{listeRefMiseREF[$index]}}">{{listeRefMiseREF[$index]}}</option>
+													</select>
+												</div>
+											</div>
+											<!-- Verifier -->
+											<div class="col-sm-1">
+												<div class="input-group input-group-sm">
+													<button type="button" class="btn btn-action"
+														ng-click="verifierRefMise(refrenceMise)">Verifier</button>
+												</div>
+											</div>
+											<div class="col-sm-2">
+												<div class="input-group">
+													<span class="input-group-addon label1" id="basic-addon1">Nb. Rlx. Restant :
+													</span> <input class="form-control" readonly="readonly" value="{{nbRouleauFiniRestant}}" />
+												</div>
+											</div>
+											<!-- Solder -->
+											<div class="col-sm-1">
+												<div class="input-group input-group-sm">
+													<button type="button" class="btn btn-action"
+														ng-click="solderCode()">Solder</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- container Grid-->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-md-12">
+			<div class="title-ajout line">Liste des Bons de Sortie</div>
+			<div style="height: 500px;" ng-grid="gridOptions"></div>
+		</div>
+	</div>
+
+	<!-- Popup de la suppression -->
+	<div id="light" class="white_content">
+		<pop-up type="delete-bonSortie"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+</div>
+

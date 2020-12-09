@@ -128,13 +128,7 @@ angular.module('gpro.etatMP', [])
 					url = UrlAtelier+ "/reportgs/etatStockDetaille?type=xls&articleType=" + $scope.etatCourant.typeArticle+"&typeRapport="+ typeRapport ;
 				}
 					
-			/*downloadService.download(url).then(
-					function(success) {
-						//$log.debug('success : ' + success);
-						//$scope.annulerAjout();
-					}, function(error) {
-						//$log.debug('error : ' + error);
-					});*/
+			
 
 
 					var a = document.createElement('a');
@@ -157,6 +151,7 @@ angular.module('gpro.etatMP', [])
 				});
 
 		};	
+		
 
 			   /*** PDF ***/
 			   $scope.downloadBarCode = function(etatCourant) {

@@ -14,7 +14,8 @@ angular
 						'UrlAtelier',
 						'UrlCommun',
 						'downloadService',
-						function($scope, $http, $filter,$log,UrlAtelier, UrlCommun,downloadService) {
+						'$window',
+						function($scope, $http, $filter,$log,UrlAtelier, UrlCommun,downloadService,$window) {
 							// declaration variable
 							$scope.historiqueCourant = {};
 							$scope.myData = [];
@@ -176,7 +177,7 @@ angular
 						
 							$scope.download = function(historique, type) {
                                  //redondance de code  a noter!!!!!!!!!!
-								if ($scope.historiqueCourant.type == "1") {
+			/* 					if ($scope.historiqueCourant.type == "1") {
 								         var type = 1;
 									$scope.displayEtat = "fourniture";
 									$scope.rechercherHistorique($scope.historiqueCourant);
@@ -193,7 +194,33 @@ angular
 								} else {
 									$scope.displayEtat = "alert";
 								}
-								//$log.debug("-- id" + id);
+ */
+
+							
+								var url = UrlAtelier
+										+ "/reportgs/mouvementStockHistory?type=xls&historique=" + historique 
+										+ "&articleType=" + type +"&ofId="+$scope.historiqueCourant.ofId;
+
+								var a = document.createElement('a');
+								document.body.appendChild(a);
+								downloadService.download(url).then(function (result) {
+									var heasersFileName = result.headers(['content-disposition']).substring(17);
+								var fileName = heasersFileName.split('.');
+							var typeFile = result.headers(['content-type']);
+							var file = new Blob([result.data], {type: typeFile});
+							var fileURL = window.URL.createObjectURL(file);
+			
+			
+							a.download = fileName[0];
+							$window.open(fileURL)
+							 a.click();
+			
+								
+							$scope.traitementEnCoursGenererLivraison="false";
+			
+							});
+
+								/* //$log.debug("-- id" + id);
 								var url = UrlAtelier
 										+ "/reportgs/mouvementStockHistory?type=xls&historique=" + historique 
 										+ "&articleType=" + type +"&ofId="+$scope.historiqueCourant.ofId;;
@@ -203,7 +230,7 @@ angular
 											//$scope.annulerAjout();
 										}, function(error) {
 											//$log.debug('error : ' + error);
-										});
+										}); */
 
 							};
 							

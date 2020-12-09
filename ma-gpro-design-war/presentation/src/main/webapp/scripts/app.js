@@ -84,7 +84,7 @@ angular
     'atelier.stockage',
     'atelier.rouleau',
     'atelier.bonSortie',
-    'atelier.production',
+    /*'atelier.production',*/
     'gpro.back-commercial',
     'gpro.back-generateur',
     'atelier.menuGC',
@@ -134,9 +134,9 @@ angular
 
     /** ************ Nouveaux controllers *********** */
     'atelier.couts',
-    'atelier.facon',
+    /*'atelier.facon',*/
     'gpro.reportingLogistique',
-    'atelier.inventaire',
+    /*'atelier.inventaire',*/
 
     /** **********gestion de stock******************** */
     'gpro.etat',
@@ -201,7 +201,13 @@ angular
   'gpro.historiqueMP',
   'gpro.stockMPmenu',
   'gpro.PopupStockEntreeMP',
-  'gpro.PopupStockSortieMP'
+  'gpro.PopupStockSortieMP',
+   /************* logistique nv *******************/
+
+   'atelier.logistique',
+   'atelier.suivieOF'
+   
+
 	
 	
   ])
@@ -690,12 +696,33 @@ angular
             );
           },
         })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /**
-         * ********************** Logistique
+         * ********************** Logistique Ancien******************
          * ***************************
          */
 
-        .when('/logistique', {
+       /*  .when('/logistique', {
           // templateUrl: function (param)
           // { return
           // 'views/front/logistique/'+param.templateFile+'.html'
@@ -769,6 +796,23 @@ angular
           },
         })
 
+
+
+
+
+
+ */
+
+
+
+
+
+
+
+
+
+
+
         // gestion de stock
         .when('/stock', {
           templateUrl: 'views/front/gestionStock/mvtStock/stock.html',
@@ -803,6 +847,18 @@ angular
             );
           },
         })
+
+
+
+
+
+
+
+
+
+
+
+
 
         /*
          * .when('/front/stock/stockEntree:templateFile', {
@@ -1045,7 +1101,86 @@ angular
           },
         })
 
+
+
+
+
+
+         /**
+         * ********************** Logistique nv
+         * ***************************
+         */
+
+        .when('/logistique', {
        
+          templateUrl: 'views/front/logistique/logistique.html',
+        })
+        .when('/logistique/:type', {
+         
+          templateUrl: 'views/front/logistique/logistique.html',
+        })
+        .when('/front/logistique/production/:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/logistique/production/' +
+              param.templateFile + '.html'
+            );
+          },
+        })
+
+
+        .when('/front/logistique/suivieof:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/logistique/suivieof/' + param.templateFile + '.html'
+            );
+          },
+        })
+
+        .when('/front/logistique/stockage/:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/logistique/stockage/' + param.templateFile + '.html'
+            );
+          },
+        })
+
+        .when('/front/logistique/expedition:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/logistique/expedition/' + param.templateFile + '.html'
+            );
+          },
+        })
+
+   
+
+        .when('/front/logistique/reporting:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/logistique/reporting/' + param.templateFile + '.html'
+            );
+          },
+        })
+
+        .when('/front/logistique/of:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/logistique/of/' + param.templateFile + '.html'
+            );
+          },
+        })
+
+        .when('/front/logistique/livraison:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/logistique/livraison/' + param.templateFile + '.html'
+            );
+          },
+        })
+
+
+
 
         /**
          * ********************** Finance
