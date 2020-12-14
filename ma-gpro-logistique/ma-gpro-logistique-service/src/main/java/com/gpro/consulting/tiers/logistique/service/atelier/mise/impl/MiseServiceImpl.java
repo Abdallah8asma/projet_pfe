@@ -94,4 +94,16 @@ public class MiseServiceImpl implements IMiseService {
 		return vMiseDomaine.listRefMiseParRefBR(referenceBR);
 	}
 
+	
+	@Override
+	public List<MiseValue> getReferenceMise() {
+		// TODO Auto-generated method stub
+		return vMiseDomaine.getReferenceMise();
+	}
+	
+	@Override
+	public MiseValue rechercheMiseParReference(Long reference) {
+		
+		return vMiseDomaine.rechercheMiseParReference(reference);
+	}
 }

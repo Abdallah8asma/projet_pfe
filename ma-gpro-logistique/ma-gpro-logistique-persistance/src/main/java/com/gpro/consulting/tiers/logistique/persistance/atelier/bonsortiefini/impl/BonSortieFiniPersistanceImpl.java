@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.PartieInteresseEntite;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniOptimizedValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.RechercheMulticritereBonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ResultatRechecheBonSortieFiniValue;
@@ -51,6 +52,8 @@ public class BonSortieFiniPersistanceImpl extends AbstractPersistance implements
 	private String PREDICATE_DATESORTIE = "dateSortie";
 	private String PREDICATE_FINI = "fini";
 	private String PERCENT = "%"; 
+	
+	private String PREDICATE_EN_COURS = "enCours";
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -282,6 +285,102 @@ public class BonSortieFiniPersistanceImpl extends AbstractPersistance implements
 	    resultat.setList(new TreeSet<>(list));
 	    
 	    return resultat;
+	}
+
+
+	@Override
+	public List<BonSortieFiniOptimizedValue> getBonSortieEnCours() {
+		logger.info("rechercher getBonSortieEnCours");
+		Boolean requestVide =true;
+		
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		
+		Root<BonSortieFiniEntity> root = criteriaQuery.from(BonSortieFiniEntity.class);
+		
+		Expression<Boolean> expression = root.get(PREDICATE_EN_COURS);
+		whereClause.add(criteriaBuilder.isTrue(expression));
+	
+	    
+		
+		criteriaQuery.select(criteriaBuilder.array(root.get("id").as(Long.class), root.get("reference").as(String.class),root.get("type").as(String.class)))
+		.where(whereClause.toArray(new Predicate[] {}));
+		  
+		 criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
+		
+	    List <Object[]> resultatEntite = null;
+	 
+
+	    resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	    
+	    List<BonSortieFiniOptimizedValue> vListeResultat = new ArrayList<BonSortieFiniOptimizedValue>();
+
+		for (Object[] element : resultatEntite) {
+
+			BonSortieFiniOptimizedValue vBonSortieFiniOptimizedValue = new BonSortieFiniOptimizedValue();
+
+			vBonSortieFiniOptimizedValue.setId((Long) element[0]);
+			vBonSortieFiniOptimizedValue.setReference((String) element[1]);
+			vBonSortieFiniOptimizedValue.setType((String) element[2]);
+
+
+			vListeResultat.add(vBonSortieFiniOptimizedValue);
+		}
+	  
+	
+	    
+	    return vListeResultat;
+	}
+
+
+	@Override
+	public BonSortieFiniOptimizedValue getBonSortieFiniOptimizedById(Long id) {
+CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		
+		Root<BonSortieFiniEntity> root = criteriaQuery.from(BonSortieFiniEntity.class);
+		
+		
+		whereClause.add(criteriaBuilder.equal(root.get("id"), id));
+	
+	    
+		
+		criteriaQuery.select(criteriaBuilder.array(root.get("id").as(Long.class),
+				                                   root.get("reference").as(String.class),
+				                                   root.get("dateSortie").as(Calendar.class),
+				                                   root.get("enCours").as(boolean.class),
+				                                   root.get("type").as(String.class)))
+		.where(whereClause.toArray(new Predicate[] {}));
+		  
+		// criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
+		
+	     Object[] resultatEntite = null;
+	 
+	     BonSortieFiniOptimizedValue vBonSortieFiniOptimizedValue =null;
+	     
+	    resultatEntite = this.entityManager.createQuery(criteriaQuery).getSingleResult();
+	    
+	    if (resultatEntite != null)
+	    {
+		    vBonSortieFiniOptimizedValue = new BonSortieFiniOptimizedValue();
+
+			vBonSortieFiniOptimizedValue.setId((Long) resultatEntite[0]);
+			vBonSortieFiniOptimizedValue.setReference((String) resultatEntite[1]);
+			vBonSortieFiniOptimizedValue.setDateSortie((Calendar) resultatEntite[2]);
+			vBonSortieFiniOptimizedValue.setEnCours((boolean) resultatEntite[3]);
+			vBonSortieFiniOptimizedValue.setType((String) resultatEntite[4]);
+	    }
+
+		
+		
+		
+		return vBonSortieFiniOptimizedValue;
+	    
+	    
 	}
 
 

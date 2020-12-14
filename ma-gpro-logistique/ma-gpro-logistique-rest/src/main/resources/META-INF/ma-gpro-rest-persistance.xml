@@ -211,6 +211,12 @@
 	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity</class>
          <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationProduitEntity</class>
 	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationArticleProduitEntity</class>
+	     
+	     	<!-- entity PrepMoule -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.prepMoule.entity.PrepMouleEntity</class>
+		
+		
+	    <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MoldsEntite</class>
 	
 		
 		<properties>

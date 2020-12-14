@@ -42,6 +42,180 @@ public class ElementRechecheMiseValue implements Comparable{
 	private Double metrage;
 
 	private String reference;
+	
+	
+	
+	
+
+	//from thermo
+	
+	
+	/** Reference BR */
+	private String referenceBR;
+
+	/** poidsFini */
+	private Double poidFini;
+
+	/** The destination produit. */
+	private String destinationProduit;
+
+	/** The quantite. */
+	private Double quantite;
+	/** The statut. */
+	private String statut;
+
+	/** The date fin. */
+	private Calendar dateFin;
+	
+	private String typeOF;
+
+	private Long qteProduite;
+	
+	private Long nbrColis;
+	
+	
+	private Calendar dateDebutProduction;
+	
+
+	private Calendar dateFinProduction;
+	
+	
+	private Long produitId;
+	
+	
+	private Double qteExpedition;
+	
+	
+	private Long nbrColisExpedition ;
+	
+	
+	
+	private String machine;
+	
+	
+	
+	
+	
+
+	public String getReferenceBR() {
+		return referenceBR;
+	}
+
+	public void setReferenceBR(String referenceBR) {
+		this.referenceBR = referenceBR;
+	}
+
+	public Double getPoidFini() {
+		return poidFini;
+	}
+
+	public void setPoidFini(Double poidFini) {
+		this.poidFini = poidFini;
+	}
+
+	public String getDestinationProduit() {
+		return destinationProduit;
+	}
+
+	public void setDestinationProduit(String destinationProduit) {
+		this.destinationProduit = destinationProduit;
+	}
+
+	public Double getQuantite() {
+		return quantite;
+	}
+
+	public void setQuantite(Double quantite) {
+		this.quantite = quantite;
+	}
+
+	public String getStatut() {
+		return statut;
+	}
+
+	public void setStatut(String statut) {
+		this.statut = statut;
+	}
+
+	public Calendar getDateFin() {
+		return dateFin;
+	}
+
+	public void setDateFin(Calendar dateFin) {
+		this.dateFin = dateFin;
+	}
+
+	public String getTypeOF() {
+		return typeOF;
+	}
+
+	public void setTypeOF(String typeOF) {
+		this.typeOF = typeOF;
+	}
+
+	public Long getQteProduite() {
+		return qteProduite;
+	}
+
+	public void setQteProduite(Long qteProduite) {
+		this.qteProduite = qteProduite;
+	}
+
+	public Long getNbrColis() {
+		return nbrColis;
+	}
+
+	public void setNbrColis(Long nbrColis) {
+		this.nbrColis = nbrColis;
+	}
+
+	public Calendar getDateDebutProduction() {
+		return dateDebutProduction;
+	}
+
+	public void setDateDebutProduction(Calendar dateDebutProduction) {
+		this.dateDebutProduction = dateDebutProduction;
+	}
+
+	public Calendar getDateFinProduction() {
+		return dateFinProduction;
+	}
+
+	public void setDateFinProduction(Calendar dateFinProduction) {
+		this.dateFinProduction = dateFinProduction;
+	}
+
+	public Long getProduitId() {
+		return produitId;
+	}
+
+	public void setProduitId(Long produitId) {
+		this.produitId = produitId;
+	}
+
+	public Double getQteExpedition() {
+		return qteExpedition;
+	}
+
+	public void setQteExpedition(Double qteExpedition) {
+		this.qteExpedition = qteExpedition;
+	}
+
+	public Long getNbrColisExpedition() {
+		return nbrColisExpedition;
+	}
+
+	public void setNbrColisExpedition(Long nbrColisExpedition) {
+		this.nbrColisExpedition = nbrColisExpedition;
+	}
+
+	public String getMachine() {
+		return machine;
+	}
+
+	public void setMachine(String machine) {
+		this.machine = machine;
+	}
 
 	@Override
 	  public int compareTo(Object o) {

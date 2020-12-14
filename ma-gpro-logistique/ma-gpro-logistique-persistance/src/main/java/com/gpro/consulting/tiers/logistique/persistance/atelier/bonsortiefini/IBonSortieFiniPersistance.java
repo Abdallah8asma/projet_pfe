@@ -2,6 +2,7 @@ package com.gpro.consulting.tiers.logistique.persistance.atelier.bonsortiefini;
 
 import java.util.List;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniOptimizedValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.RechercheMulticritereBonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ResultatRechecheBonSortieFiniValue;
@@ -34,4 +35,9 @@ public interface IBonSortieFiniPersistance {
 	
 	public ResultatRechecheBonSortieFiniValue getBSByFnReportingRegionDate(
 			RechercheMulticritereFnReportingtValue request);
+
+	public List<BonSortieFiniOptimizedValue> getBonSortieEnCours();
+	
+	public BonSortieFiniOptimizedValue getBonSortieFiniOptimizedById(Long id);
+
 }

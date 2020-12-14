@@ -82,6 +82,28 @@ public class MisePersistanceUtilities {
 	  entity.setPartieintId(dto.getPartieintId());
 	  entity.setFini(dto.isFini());
 	  
+	  
+
+	  //from thermo
+		entity.setPoidFini(dto.getPoidFini());
+		entity.setQuantite(dto.getQuantite());
+		entity.setDateFin(dto.getDateFin());
+		entity.setStatut(dto.getStatut());
+		entity.setDestinationProduit(dto.getDestinationProduit());
+        entity.setTypeEtiquette(dto.getTypeEtiquette());
+		entity.setTypeOF(dto.getTypeOF());
+		entity.setPackaging(dto.getPackaging());
+		entity.setDestination(dto.getDestination());
+		entity.setMachine(dto.getMachine());
+		
+		entity.setQteProduite(dto.getQteProduite());
+		entity.setNbrColis(dto.getNbrColis());
+		entity.setDateDebutProduction(dto.getDateDebutProduction());
+		entity.setDateFinProduction(dto.getDateFinProduction());
+		
+		entity.setNbrColisExpedition(dto.getNbrColisExpedition());
+		entity.setQteExpedition(dto.getQteExpedition());
+	  
 	  /*
 	  if(dto.getListeTraitements()!=null){
 		  
@@ -143,6 +165,31 @@ public class MisePersistanceUtilities {
 	dto.setPartieintId(entity.getPartieintId());
 	dto.setProduitId(entity.getProduitId());
 	dto.setFini(entity.isFini());
+	
+
+	//from thermo
+	dto.setPoidFini(entity.getPoidFini());
+	dto.setQuantite(entity.getQuantite());
+	dto.setStatut(entity.getStatut());
+	dto.setDestinationProduit(entity.getDestinationProduit());
+	dto.setDateFin(entity.getDateFin());
+
+	dto.setTypeEtiquette(entity.getTypeEtiquette());
+	dto.setTypeOF(entity.getTypeOF());
+	dto.setPackaging(entity.getPackaging());
+	dto.setDestination(entity.getDestination());	
+	
+	dto.setMachine(entity.getMachine());
+		
+	dto.setQteProduite(entity.getQteProduite());
+	dto.setNbrColis(entity.getNbrColis());
+	dto.setDateDebutProduction(entity.getDateDebutProduction());
+	dto.setDateFinProduction(entity.getDateFinProduction());
+	
+	dto.setNbrColisExpedition(entity.getNbrColisExpedition());
+	dto.setQteExpedition(entity.getQteExpedition());
+	
+	
 	 
 	 /* 
 	 if(pMiseEntity.getListeTraitements()!=null) { 
@@ -174,6 +221,28 @@ public class MisePersistanceUtilities {
       vElementRechecheMiseValue.setMetrage(vMiseEntite.getMetrage());
       vElementRechecheMiseValue.setDateIntroduction(vMiseEntite.getDateIntroduction());
       vElementRechecheMiseValue.setDesignationProduit(vMiseEntite.getProduitId());
+      
+      
+      vElementRechecheMiseValue.setReferenceBR(vMiseEntite.getRefBonreception());
+		vElementRechecheMiseValue.setPoidFini(vMiseEntite.getPoidFini());
+		vElementRechecheMiseValue.setDateFin(vMiseEntite.getDateFin());
+		vElementRechecheMiseValue.setQuantite(vMiseEntite.getQuantite());
+		vElementRechecheMiseValue.setDestinationProduit(vMiseEntite.getDestinationProduit());
+      vElementRechecheMiseValue.setTypeOF(vMiseEntite.getTypeOF());
+      
+      vElementRechecheMiseValue.setStatut(vMiseEntite.getStatut());
+      
+      vElementRechecheMiseValue.setDateDebutProduction(vMiseEntite.getDateDebutProduction());
+      vElementRechecheMiseValue.setDateFinProduction(vMiseEntite.getDateFinProduction());
+      vElementRechecheMiseValue.setQteProduite(vMiseEntite.getQteProduite());
+      vElementRechecheMiseValue.setNbrColis(vMiseEntite.getNbrColis());
+      
+      vElementRechecheMiseValue.setDesignationProduitDesignation(vMiseEntite.getDestinationProduit());
+      
+      vElementRechecheMiseValue.setNbrColisExpedition(vMiseEntite.getNbrColisExpedition());
+      vElementRechecheMiseValue.setQteExpedition(vMiseEntite.getQteExpedition());
+      
+      vElementRechecheMiseValue.setMachine(vMiseEntite.getMachine());
       return vElementRechecheMiseValue;
   }
 

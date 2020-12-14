@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniOptimizedValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListProduitElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListTraitFaconElementValue;
@@ -93,5 +94,24 @@ public class BonSortieFiniServiceImpl implements IBonSortieFiniService{
 		return bonSortieFiniDomain.getTraitFaconElementList(refBonLivraisonList, factureVenteId);
 	}
 
+	@Override
+	public List<String> getListBonSortieFaconRef() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<BonSortieFiniOptimizedValue> getBonSortieEnCours() {
+		// TODO Auto-generated method stub
+		return bonSortieFiniDomain.getBonSortieEnCours();
+	}
+
+
+	@Override
+	public List<BonSortieFiniValue> getListByBonSortieList(List<String> refBonSortieList) {
+		// TODO Auto-generated method stub
+		return bonSortieFiniDomain.getListByBonSortieList(refBonSortieList);
+	}
 	
 }

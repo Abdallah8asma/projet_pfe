@@ -99,6 +99,21 @@ public class RouleauFiniPersistanceUtilities {
 		rouleauFiniEntity.setInfoModif(value.getInfoModif());
 	    
 	    rouleauFiniEntity.setFini(value.isFini());
+	    
+	    
+	    rouleauFiniEntity.setUserId(value.getUserId());
+	    rouleauFiniEntity.setTypeOf(value.getTypeOf());
+	    rouleauFiniEntity.setResponsable(value.getResponsable());
+		
+	    rouleauFiniEntity.setDateSortieReel(value.getDateSortieReel());
+		
+	
+		
+	    rouleauFiniEntity.setUserIdExpedition(value.getUserIdExpedition());
+	    rouleauFiniEntity.setResponsableExpedition(value.getResponsableExpedition());
+	    rouleauFiniEntity.setPremierMetrage(value.getPremierMetrage());
+	    
+
 
 	    return rouleauFiniEntity;
 	}
@@ -170,9 +185,29 @@ public class RouleauFiniPersistanceUtilities {
 		
 		dto.setFini(entity.isFini());
 		
+		
+		dto.setMetrageAncien(entity.getMetrage());
+		
 		if(entity.getEntrepot() != null){
 			dto.setEntrepot((entity.getEntrepot().getId()));
 		}
+		
+		
+		
+		
+		
+		dto.setUserId(entity.getUserId());
+		dto.setTypeOf(entity.getTypeOf());
+		dto.setResponsable(entity.getResponsable());
+		
+		dto.setDateSortieReel(entity.getDateSortieReel());
+		
+	
+		
+		dto.setUserIdExpedition(entity.getUserIdExpedition());
+		dto.setResponsableExpedition(entity.getResponsableExpedition());
+		dto.setPremierMetrage(entity.getPremierMetrage());
+		
 		
 		return dto;
 	}
@@ -209,6 +244,18 @@ public class RouleauFiniPersistanceUtilities {
 		entity.setDateIntroduction(dto.getDateIntroduction());
 		entity.setMetrageModif(dto.isMetrageModif());
 		entity.setInfoModif(dto.getInfoModif());
+		
+		
+		entity.setUserId(dto.getUserId());
+		entity.setTypeOf(dto.getTypeOf());
+		entity.setResponsable(dto.getResponsable());
+		
+		entity.setDateSortieReel(dto.getDateSortieReel());
+		
+		entity.setUserIdExpedition(dto.getUserIdExpedition());
+		entity.setResponsableExpedition(dto.getResponsableExpedition());
+		entity.setPremierMetrage(dto.getPremierMetrage());
+		
 		
 		return entity;
 	}
@@ -269,6 +316,19 @@ public class RouleauFiniPersistanceUtilities {
 		entity.setDateIntroduction(dto.getDateIntroduction());
 		entity.setMetrageModif(dto.isMetrageModif());
 		entity.setInfoModif(dto.getInfoModif());
+		
+		
+		
+		entity.setUserId(dto.getUserId());
+		entity.setTypeOf(dto.getTypeOf());
+		entity.setResponsable(dto.getResponsable());
+		
+		entity.setDateSortieReel(dto.getDateSortieReel());
+		
+		entity.setUserIdExpedition(dto.getUserIdExpedition());
+		entity.setResponsableExpedition(dto.getResponsableExpedition());
+		entity.setPremierMetrage(dto.getPremierMetrage());
+	
 
 		
 		return entity;

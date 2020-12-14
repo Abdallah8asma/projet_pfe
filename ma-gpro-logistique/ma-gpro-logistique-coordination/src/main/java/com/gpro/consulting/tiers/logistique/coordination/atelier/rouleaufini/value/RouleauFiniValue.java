@@ -50,9 +50,148 @@ public class RouleauFiniValue implements Comparable<RouleauFiniValue>{
 		private Long bonInventaire;
 	
 		private Calendar dateInventaire;
+		
+		private Double metrageAncien;
+		
+		
+		
+		
+
+
+		private String typeOf;
+
+		private Long userId;
+		
+		private String responsable;
+		
+		
+		
+		private Long qtyByBox;
+		
+		
+		private Calendar dateSortieReel;
+		
+		
+		private String responsableExpedition;
+		
+		private Long userIdExpedition;
+		
+		private String palette;
+		
+		
+		private Long numberOfBox;
+		
+		
+		private Double premierMetrage;
+		
+		
+		
+		
+		
+		
 
 		
-    @Override
+    public String getTypeOf() {
+			return typeOf;
+		}
+
+		public void setTypeOf(String typeOf) {
+			this.typeOf = typeOf;
+		}
+
+		public Long getUserId() {
+			return userId;
+		}
+
+		public void setUserId(Long userId) {
+			this.userId = userId;
+		}
+
+		public String getResponsable() {
+			return responsable;
+		}
+
+		public void setResponsable(String responsable) {
+			this.responsable = responsable;
+		}
+
+		public Long getQtyByBox() {
+			return qtyByBox;
+		}
+
+		public void setQtyByBox(Long qtyByBox) {
+			this.qtyByBox = qtyByBox;
+		}
+
+		public Calendar getDateSortieReel() {
+			return dateSortieReel;
+		}
+
+		public void setDateSortieReel(Calendar dateSortieReel) {
+			this.dateSortieReel = dateSortieReel;
+		}
+
+		public String getResponsableExpedition() {
+			return responsableExpedition;
+		}
+
+		public void setResponsableExpedition(String responsableExpedition) {
+			this.responsableExpedition = responsableExpedition;
+		}
+
+		public Long getUserIdExpedition() {
+			return userIdExpedition;
+		}
+
+		public void setUserIdExpedition(Long userIdExpedition) {
+			this.userIdExpedition = userIdExpedition;
+		}
+
+		public String getPalette() {
+			return palette;
+		}
+
+		public void setPalette(String palette) {
+			this.palette = palette;
+		}
+
+		public Long getNumberOfBox() {
+			return numberOfBox;
+		}
+
+		public void setNumberOfBox(Long numberOfBox) {
+			this.numberOfBox = numberOfBox;
+		}
+
+		public Double getPremierMetrage() {
+			return premierMetrage;
+		}
+
+		public void setPremierMetrage(Double premierMetrage) {
+			this.premierMetrage = premierMetrage;
+		}
+
+	public Double getMetrageAncien() {
+			return metrageAncien;
+		}
+
+		public void setMetrageAncien(Double metrageAncien) {
+			this.metrageAncien = metrageAncien;
+		}
+
+		public Boolean getBlSuppression() {
+			return blSuppression;
+		}
+
+		public Boolean getMetrageModif() {
+			return metrageModif;
+		}
+
+		public Boolean getFini() {
+			return fini;
+		}
+
+	@Override
 	  public int compareTo(RouleauFiniValue o) {
 		RouleauFiniValue element= (RouleauFiniValue)o;
 	    return (element.getId().compareTo(id));
