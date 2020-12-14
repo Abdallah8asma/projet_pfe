@@ -13,8 +13,9 @@ angular
 						'downloadService',
 						'UrlCommun',
 						'UrlAtelier',
+						'$window',
 						function($scope, $filter, $http, $log, $parse,
-								downloadService, UrlCommun, UrlAtelier) {
+								downloadService, UrlCommun, UrlAtelier,$window) {
 
 						
 							
@@ -71,7 +72,7 @@ angular
 							 {
 									var url;
 
-									url = UrlAtelier + "/fiches/of?state=" + objectCourant.statut
+									url = UrlAtelier + "/fichesLogistique/of?state=" + objectCourant.statut
 										 					 + "&type=" + objectCourant.type
 															 + "&num="+objectCourant.referenceOF
 															 + "&reference="+objectCourant.referenceProduit
@@ -92,29 +93,87 @@ angular
 															 + "&etatShipped="+objectCourant.etatShipped 
 															 + "&machine="+objectCourant.machine ;
 														
-										
+									/*	
 					                   $log.debug("-- URL--- :" + url );
 									 downloadService.download(url).then(
 											 function(success) {
 												// $log.debug('success : ' + success);
 											 }, function(error) {
 												// $log.debug('error : ' + error);
-											 });
+											 });*/
+
+
+											 var a = document.createElement('a');
+											 document.body.appendChild(a);
+											 downloadService.download(url).then(function (result) {
+												 var heasersFileName = result.headers(['content-disposition']).substring(17);
+											 var fileName = heasersFileName.split('.');
+										 var typeFile = result.headers(['content-type']);
+										 var file = new Blob([result.data], {type: typeFile});
+										 var fileURL = window.URL.createObjectURL(file);
+										 if(typeFile == 'application/vnd.ms-excel'){
+				 
+										  // a.href = fileURL;
+											  a.download = fileName[0];
+											 $window.open(fileURL)
+											  a.click();
+						 
+										 }else{
+									 
+											 a.href = fileURL;
+											 a.download = fileName[0];
+										  $window.open(fileURL)
+											 a.click();
+						 
+										 }
+											 
+										 $scope.traitementEnCoursGenererLivraison="false";
+	 
+										 });
 							 }
 							
 							
 							 $scope.downloadMachineOF = function() {
 									var url;
 
-									url = UrlAtelier + "/fiches/machine-of";
+									url = UrlAtelier + "/fichesLogistique/machine-of";
 										 
 					                   $log.debug("-- URL--- :" + url );
-									 downloadService.download(url).then(
+									/* downloadService.download(url).then(
 											 function(success) {
 												// $log.debug('success : ' + success);
 											 }, function(error) {
 												// $log.debug('error : ' + error);
-											 });
+											 });*/
+
+
+											 var a = document.createElement('a');
+											 document.body.appendChild(a);
+											 downloadService.download(url).then(function (result) {
+												 var heasersFileName = result.headers(['content-disposition']).substring(17);
+											 var fileName = heasersFileName.split('.');
+										 var typeFile = result.headers(['content-type']);
+										 var file = new Blob([result.data], {type: typeFile});
+										 var fileURL = window.URL.createObjectURL(file);
+										 if(typeFile == 'application/vnd.ms-excel'){
+				 
+										  // a.href = fileURL;
+											  a.download = fileName[0];
+											 $window.open(fileURL)
+											  a.click();
+						 
+										 }else{
+									 
+											 a.href = fileURL;
+											 a.download = fileName[0];
+										  $window.open(fileURL)
+											 a.click();
+						 
+										 }
+											 
+										 $scope.traitementEnCoursGenererLivraison="false";
+	 
+										 });
 								 };
 							
 						
@@ -378,12 +437,42 @@ angular
 														 + "&type=pdf";
 									
 				                   $log.debug("-- URL--- :" + url );
-								 downloadService.download(url).then(
+								/* downloadService.download(url).then(
 										 function(success) {
 											// $log.debug('success : ' + success);
 										 }, function(error) {
 											// $log.debug('error : ' + error);
-										 });
+										 });*/
+
+		
+										 var a = document.createElement('a');
+										 document.body.appendChild(a);
+										 downloadService.download(url).then(function (result) {
+											 var heasersFileName = result.headers(['content-disposition']).substring(17);
+										 var fileName = heasersFileName.split('.');
+									 var typeFile = result.headers(['content-type']);
+									 var file = new Blob([result.data], {type: typeFile});
+									 var fileURL = window.URL.createObjectURL(file);
+									 if(typeFile == 'application/vnd.ms-excel'){
+			 
+									  // a.href = fileURL;
+										  a.download = fileName[0];
+										 $window.open(fileURL)
+										  a.click();
+					 
+									 }else{
+								 
+										 a.href = fileURL;
+										 a.download = fileName[0];
+									  $window.open(fileURL)
+										 a.click();
+					 
+									 }
+										 
+									 $scope.traitementEnCoursGenererLivraison="false";
+ 
+									 });
+
 							 };
 							 
 							 
@@ -546,11 +635,11 @@ angular
 											function() {
 												$scope.colDefs = [
 												                  
-                                                       {
+                                                    /*    {
                                                     	   	field : 'typeOF',
                                                     	   	displayName : 'type',
                                                     	   	width : '9%'
-                                                       },
+                                                       }, */
                                                        
                                                         {
                                                     	   	field : 'machine',
@@ -595,13 +684,30 @@ angular
 															displayName : 'Quantity By Box',
 															width : '9%'
 														},
-														{
+													/* 	{
 															field : '',
 															width : '5%',
 															cellTemplate : '<div class="buttons" ng-show="!rowform.$visible">'
 																	+ '<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerMise()"> <i class="fa fa-fw fa-pencil"></i></button>'
 																	+ '<button data-nodrag class="btn btn-default btn-xs" ng-click="supprimerMise()"><i class="fa fa-fw fa-trash-o"></i></button>'
-														} ];
+														} 
+													
+													 */
+													
+														{
+															field: '',
+															//width: '5%',
+															cellTemplate:
+																`<div class="ms-CommandButton float-right"  ng-show="!rowform.$visible" >
+																<button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerMise()">
+															<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+															</button>
+																<button class="ms-CommandButton-button"  ng-click="supprimerMise()" permission="['Vente_Delete']">
+																<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+																</button>
+																</div>`,
+						
+						                                }];
 											});
 
 							$scope.totalServerItems = 0;
