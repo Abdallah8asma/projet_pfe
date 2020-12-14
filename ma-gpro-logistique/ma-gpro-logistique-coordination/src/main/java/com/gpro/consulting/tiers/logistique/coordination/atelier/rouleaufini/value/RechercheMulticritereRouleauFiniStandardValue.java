@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value;
 
+import java.util.Calendar;
+
 /**
  * DTO Request pour la recherche multicriteres pour les RouleauFini Standard 
  * 
@@ -36,6 +38,47 @@ public class RechercheMulticritereRouleauFiniStandardValue {
 		//Added on 15/11/2016 by Zeineb
 		private String idProduitReference;
 		
+		
+		
+		
+		
+		private String username;
+		
+		private Calendar dateProductionDe;
+		private Calendar dateProductionA;
+		
+		
+		private String typeOf;
+		
+		
+		
+		
+		
+		
+		public String getUsername() {
+			return username;
+		}
+		public void setUsername(String username) {
+			this.username = username;
+		}
+		public Calendar getDateProductionDe() {
+			return dateProductionDe;
+		}
+		public void setDateProductionDe(Calendar dateProductionDe) {
+			this.dateProductionDe = dateProductionDe;
+		}
+		public Calendar getDateProductionA() {
+			return dateProductionA;
+		}
+		public void setDateProductionA(Calendar dateProductionA) {
+			this.dateProductionA = dateProductionA;
+		}
+		public String getTypeOf() {
+			return typeOf;
+		}
+		public void setTypeOf(String typeOf) {
+			this.typeOf = typeOf;
+		}
 		public String getNumMise() {
 			return numMise;
 		}

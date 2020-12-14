@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniOptimizedValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListProduitElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListTraitFaconElementValue;
@@ -48,4 +49,14 @@ public interface IBonSortieFiniService {
 	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public ListTraitFaconElementValue getTraitFaconElementList(
 			List<String> refBonLivraisonList, Long factureVenteId);
+	
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<String> getListBonSortieFaconRef();
+	
+	
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<BonSortieFiniOptimizedValue> getBonSortieEnCours();
+	
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<BonSortieFiniValue> getListByBonSortieList(List<String> refBonSortieList);
 }

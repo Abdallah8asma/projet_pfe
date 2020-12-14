@@ -67,6 +67,59 @@ public class DetLivraisonVenteValue implements Comparable<DetLivraisonVenteValue
 	private String description;
 
 	private Long taxeId;
+	
+	
+	
+	
+	
+	
+	//nouveau from thermo
+	private String palette;
+	
+	private String numeroOF;
+	
+	
+	
+	private String couleurProduit;
+	
+	
+	private String typeProduit;
+	
+	
+	
+	
+
+	public String getPalette() {
+		return palette;
+	}
+
+	public void setPalette(String palette) {
+		this.palette = palette;
+	}
+
+	public String getNumeroOF() {
+		return numeroOF;
+	}
+
+	public void setNumeroOF(String numeroOF) {
+		this.numeroOF = numeroOF;
+	}
+
+	public String getCouleurProduit() {
+		return couleurProduit;
+	}
+
+	public void setCouleurProduit(String couleurProduit) {
+		this.couleurProduit = couleurProduit;
+	}
+
+	public String getTypeProduit() {
+		return typeProduit;
+	}
+
+	public void setTypeProduit(String typeProduit) {
+		this.typeProduit = typeProduit;
+	}
 
 	public Long getTaxeId() {
 		return taxeId;

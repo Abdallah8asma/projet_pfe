@@ -18,6 +18,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitVa
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamilleProduitValue;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.ISousFamilleProduitPersistance;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniOptimizedValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListProduitElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListTraitFaconElementValue;
@@ -930,6 +931,24 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 	
 		return resultat;
 
+	}
+
+	@Override
+	public List<BonSortieFiniOptimizedValue> getBonSortieEnCours() {
+		// TODO Auto-generated method stub
+		return bonSortieFiniPersistance.getBonSortieEnCours();
+	}
+
+	@Override
+	public BonSortieFiniOptimizedValue getBonSortieFiniOptimizedById(Long id) {
+		// TODO Auto-generated method stub
+		return bonSortieFiniPersistance.getBonSortieFiniOptimizedById(id);
+	}
+
+	@Override
+	public List<BonSortieFiniValue> getListByBonSortieList(List<String> refBonSortieList) {
+		// TODO Auto-generated method stub
+		return bonSortieFiniPersistance.getListByBonSortieList(refBonSortieList);
 	}
 }
 	

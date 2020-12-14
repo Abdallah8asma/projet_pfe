@@ -59,4 +59,8 @@ public interface IMisePersistance {
 	 public TraitementMiseValue getTraitementMiseById(Long id);
 	
 	 public List<String> getListRefMiseParRefBR(String referenceBR);
+	 
+	 public List<MiseValue> getReferenceMise();
+	 
+	 public MiseValue rechercheMiseParReference(Long pMise);
 }

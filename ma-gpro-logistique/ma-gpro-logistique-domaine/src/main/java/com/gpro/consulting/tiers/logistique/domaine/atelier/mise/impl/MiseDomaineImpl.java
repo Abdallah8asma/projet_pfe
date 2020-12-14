@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersistance;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.GuichetMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.MiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.RechercheMulticritereMiseValue;
@@ -32,6 +34,9 @@ public class MiseDomaineImpl implements IMiseDomaine {
 	
 	@Autowired
 	private IGuichetMiseDomaine guichetMiseDomaine;
+	
+	@Autowired
+	private IProduitPersistance produitPersistence;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MiseDomaineImpl.class);
 
@@ -47,14 +52,33 @@ public class MiseDomaineImpl implements IMiseDomaine {
 			dto.setFini(false);
 		}
 		 */
-		if (dto.isFini().equals(true)){
-			/* ref = S+####+/+Annee */
-			if(dto.getReference()==null || dto.getReference().equals("")){
-				dto.setReference(getNumeroMise(Calendar.getInstance()));
-			      
-			}
+		
+		
+		dto.setNbrColis(0l);
+		dto.setQteProduite(0l);
+		
+		dto.setQteExpedition(0d);
+		dto.setNbrColisExpedition(0l);
+		
+		
+		if (dto.getReference() == null || dto.getReference().equals("")) {
+			dto.setReference(getNumeroMise(Calendar.getInstance()));
+
 		}
+		
+		
+//		if (dto.isFini() != null && dto.isFini().equals(true)){
+//			/* ref = S+####+/+Annee */
+//			if(dto.getReference()==null || dto.getReference().equals("")){
+//				dto.setReference(getNumeroMise(Calendar.getInstance()));
+//			      
+//			}
+//		}
 		dto.setDateIntroduction(Calendar.getInstance());
+		
+		
+		 if (dto.getStatut() != null && dto.getStatut().equals("En cours"))
+        	 dto.setDateDebutProduction(Calendar.getInstance());
 
 		return vMisePersitance.creerMise(dto);
 	}
@@ -76,6 +100,12 @@ public class MiseDomaineImpl implements IMiseDomaine {
 			dto.setFini(false);
 		}
 		 */
+		
+		   if (dto.getStatut() != null && dto.getStatut().equals("En cours") && dto.getDateDebutProduction() == null)
+	        	 dto.setDateDebutProduction(Calendar.getInstance());
+		   
+	       if (dto.getStatut() != null && dto.getStatut().equals("Produit") && dto.getDateFinProduction() == null)
+	        	 dto.setDateFinProduction(Calendar.getInstance());
 		
 		return vMisePersitance.modifierMise(dto);
 	}
@@ -128,6 +158,12 @@ public class MiseDomaineImpl implements IMiseDomaine {
 	public ResultatRechercheMiseValue rechercherMiseMultiCritere(
 			RechercheMulticritereMiseValue request) {
 		
+		
+		if(request.getEtatProduced() != null && request.getEtatProduced().equals("PLUS")) request.setEtatProduced("+");
+		if(request.getEtatShipped() != null && request.getEtatShipped().equals("PLUS")) request.setEtatShipped("+");
+		
+		
+		
 		return vMisePersitance.rechercherMiseMultiCritere(request);
 	}
 
@@ -172,5 +208,25 @@ public class MiseDomaineImpl implements IMiseDomaine {
 		//System.out.println("------concatinatedList----------"+concatinatedList);
 		return concatinatedList;
 	}
+	
+	@Override
+	public List<MiseValue> getReferenceMise() {
+		// TODO Auto-generated method stub
+		return vMisePersitance.getReferenceMise();
+	}
 
+	@Override
+	public MiseValue rechercheMiseParReference(Long pId) {
+		
+		MiseValue mv = vMisePersitance.rechercheMiseParReference(pId);
+		ProduitValue produit = null ;
+		
+		if (mv != null && mv.getProduitId() != null)
+		  produit=produitPersistence.rechercheProduitById(mv.getProduitId());
+		
+		if (produit != null )
+		mv.setReferenceProduit(produit.getReference());
+		
+		return mv;
+	}
 }

@@ -26,6 +26,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.GrosseurV
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ImpressionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MatiereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MetrageValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MoldsValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OperationArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OperationProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleProduitValue;
@@ -71,6 +72,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurE
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MoldsEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationArticleProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity;
@@ -2973,6 +2975,30 @@ public class PersistanceUtilities {
 	    
 	    return ebCouleurValue;
 	  }
+	  
+	  //molds
+	  
+	  
+		public static MoldsEntite toEntity(MoldsValue moldsValue) {
+			MoldsEntite vEbMoldsEntite = new MoldsEntite();
+			if (moldsValue.getId() != null) {
+				vEbMoldsEntite.setId(moldsValue.getId());
+			}
+			vEbMoldsEntite.setDesignation(moldsValue.getDesignation());
+			vEbMoldsEntite.setReference(moldsValue.getReference());
+			vEbMoldsEntite.setEmplacement(moldsValue.getEmplacement());
+			return vEbMoldsEntite;
+		}
+
+		/** Converstion MoldsEntite entite en MoldsValue **/
+		public static MoldsValue toValue(MoldsEntite moldsEntite) {
+			MoldsValue ebMoldsValue = new MoldsValue();
+			ebMoldsValue.setId(moldsEntite.getId());
+			ebMoldsValue.setDesignation(moldsEntite.getDesignation());
+			ebMoldsValue.setReference(moldsEntite.getReference());
+			ebMoldsValue.setEmplacement(moldsEntite.getEmplacement());
+			return ebMoldsValue;
+		}
 	
 
 }

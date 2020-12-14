@@ -95,6 +95,119 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	
 	
 	
+	
+	
+	
+	//column from thermo
+
+	
+	private Long cavity;
+	
+	
+	//ADDED BY zeineb g
+	/*** color tag **//////
+	private String colorTag;
+		
+	/*** gross weight **//////
+	private Double grossWeight;
+		
+	/*** net weight **//////
+	private Double netWeight;
+		
+	/*** moule **//////
+	private String moule;
+		 
+	/*** JIG **//////
+	private String jig;
+		 
+		
+	/*** gty box **//////
+	private Long qtyBox;
+		
+	/*** cliches **//////
+	private String cliches;
+		
+	private String refPrixUnitaire;
+	
+	
+	
+	
+	
+	
+	
+	
+
+	public Long getCavity() {
+		return cavity;
+	}
+
+	public void setCavity(Long cavity) {
+		this.cavity = cavity;
+	}
+
+	public String getColorTag() {
+		return colorTag;
+	}
+
+	public void setColorTag(String colorTag) {
+		this.colorTag = colorTag;
+	}
+
+	public Double getGrossWeight() {
+		return grossWeight;
+	}
+
+	public void setGrossWeight(Double grossWeight) {
+		this.grossWeight = grossWeight;
+	}
+
+	public Double getNetWeight() {
+		return netWeight;
+	}
+
+	public void setNetWeight(Double netWeight) {
+		this.netWeight = netWeight;
+	}
+
+	public String getMoule() {
+		return moule;
+	}
+
+	public void setMoule(String moule) {
+		this.moule = moule;
+	}
+
+	public String getJig() {
+		return jig;
+	}
+
+	public void setJig(String jig) {
+		this.jig = jig;
+	}
+
+	public Long getQtyBox() {
+		return qtyBox;
+	}
+
+	public void setQtyBox(Long qtyBox) {
+		this.qtyBox = qtyBox;
+	}
+
+	public String getCliches() {
+		return cliches;
+	}
+
+	public void setCliches(String cliches) {
+		this.cliches = cliches;
+	}
+
+	public String getRefPrixUnitaire() {
+		return refPrixUnitaire;
+	}
+
+	public void setRefPrixUnitaire(String refPrixUnitaire) {
+		this.refPrixUnitaire = refPrixUnitaire;
+	}
 
 	public boolean isFodec() {
 		return fodec;

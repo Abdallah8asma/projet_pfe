@@ -35,6 +35,11 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.
  *
  */
 public interface IGestionnaireReportGcService {
+	
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public BonLivraisonReportValue getBonLivraisonReportValue(Long id, String avecPrix) throws IOException;
+	
+	
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public BonLivraisonReportValue getBonLivraisonReportValue(Long id, String avecPrix,Long typerapport) throws IOException;

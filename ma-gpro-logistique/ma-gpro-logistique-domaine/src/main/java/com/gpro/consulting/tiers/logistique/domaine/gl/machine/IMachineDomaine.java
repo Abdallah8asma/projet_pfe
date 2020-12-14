@@ -2,6 +2,7 @@ package com.gpro.consulting.tiers.logistique.domaine.gl.machine;
 
 import java.util.List;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.MachineOFValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.MachineValue;
 
 /**
@@ -21,4 +22,6 @@ public interface IMachineDomaine {
 	public String update(MachineValue machineValue);
 
 	public void delete(Long id);
+	
+	public List<MachineOFValue> getAllMachineOFvalue();
 }

@@ -10,6 +10,11 @@ package com.gpro.consulting.tiers.logistique.coordination.atelier;
 public interface IConstanteLogistique {
 
 	/** Liste des Tables */
+	
+	// Séquence prep moule
+	public static String SEQUENCE_PREP_MOULE = "gl_prep_m_seq";
+	
+	public static String TABLE_PREP_MOULE = "gl_preparation_moule";
 
 	/** table Personnel */
 	public static String TABLE_GL_PERSONNEL = "gl_personnel";

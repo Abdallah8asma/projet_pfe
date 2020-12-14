@@ -71,6 +71,13 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 	private String PREDICATE_DATE_INVENTAIRE = "dateInventaire";
 	private String PREDICATE_ID = "id";
 	private String PREDICATE_PRODUIT_ID = "produitId";
+	
+	private String PREDICATE_PRODUCTION = "production";
+	
+	private String PREDICATE_TYPE_OF = "typeOf";
+	
+	private String PREDICATE_USERNAME = "responsable";
+	
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -235,6 +242,28 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 		if (estNonVide(request.getEmplacement())) {
 			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_EMPLACEMENT), request.getEmplacement()));
 		}
+		
+		
+		// Set request.emplacement on whereClause if not empty or null
+				if (estNonVide(request.getUsername())) {
+					whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_USERNAME), request.getUsername()));
+				}
+
+				if (request.getDateProductionDe() != null && !request.getDateProductionDe().equals("")) {
+					whereClause.add(criteriaBuilder.greaterThanOrEqualTo(root.<Calendar>get(PREDICATE_DATE_INTRODUCTION),
+							request.getDateProductionDe()));
+				}
+				if (request.getDateProductionA() != null && !request.getDateProductionA().equals("")) {
+					whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Calendar>get(PREDICATE_DATE_INTRODUCTION),
+							request.getDateProductionA()));
+				}
+				
+				
+
+				// Set request.emplacement on whereClause if not empty or null
+				if (estNonVide(request.getTypeOf())) {
+					whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_TYPE_OF), request.getTypeOf()));
+				}
 		
 		/** Set request.inBonDeSortie on whereClause if not empty or null.
 			if inBonDeSortie = oui  --> cherche only RouleauFini that have a BONSORTIE.
