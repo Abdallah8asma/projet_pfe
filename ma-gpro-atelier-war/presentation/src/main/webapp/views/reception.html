@@ -1,0 +1,581 @@
+<div class="container-fluid " ng-controller="ReceptionController"
+	style="background-color: #fff;">
+
+	<div class="row">
+
+		<!-- mainContent -->
+		<div class="col-md-9">
+			<!-- MenuReception -->
+			<div class="row">
+				<div class="col-md-12" style="background-color: #999; color: #fff">
+					<div class="col-md-8">
+						<span style="font-size: 30pt;"> <a href="#/"
+							data-toggle="modal" style="color: #fff; text-decoration: none;">
+								<i class="fa fa-download"></i>
+						</a> Reception <em style="font-size: 50%"><b>{{bonReceptionCourant.reference}}</b></em></span>
+					</div>
+					<div class="col-md-4">
+						<span class="pull-right" style="zoom: 3"> <i 
+							ng-show="modePdf == 'actif'" class="fa fa-file-text-o clickable"
+							style="margin-right: 5px;"
+							ng-click="download(bonReceptionCourant.id)"></i> <i
+							class="fa fa-cogs clickable" data-toggle="collapse"
+							data-target="#traitement" style="margin-right: 5px;"> </i> <i
+							class="fa fa-floppy-o clickable" style="margin-right: 5px;"
+							ng-click="sauvegarderAjout(bonReceptionCourant)"
+							ng-disabled="!creationBonReception.$valid;"></i> <i
+							class="fa fa-ban clickable" style="margin-right: 5px;"
+							ng-click="annulerAjout()"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- MainContent -->
+			<div class="row LineHeight">
+				<!-- RechercheBonReception -->
+				<div class="col-md-5" style="background-color: white;">
+					<!-- Critere de recherche -->
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="title-ajout">Crit&eacute;re de recherche</div>
+							<div class="panel panel-primary">
+								<div class="panel-body">
+									<form class="form-horizontal"
+										name="rechercheReceptionFormCritere"
+										id="rechercheReceptionFormCritere">
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="input-group">
+														<div class="input-group input-group-sm"
+															ng-controller="DatepickerDController">
+															<span class="input-group-addon label1" id="basic-addon1">Date
+																Introduction</span> <input type="text"
+																class="form-control datepicker"
+																datepicker-popup="{{format}}"
+																ng-model="bonReceptionCourantRecherche.dateIntroduction"
+																is-open="opened" datepicker-options="dateOptions"
+																date-="enabled(date, mode)" close-text="Close" />
+															<div class="input-group-btn">
+																<button type="button" class="btn btn-default"
+																	ng-click="open($event)">
+																	<i class="glyphicon glyphicon-calendar"></i>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-9">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Client
+														</span> <select ui-select2 ng-model="bonReceptionCourantRecherche.client"
+															data-placeholder="Pick a client" style="width: 100%">
+															<option ng-repeat="client in listeClient"
+																value="{{client.id}}">{{client.abreviation}}</option>
+														</select>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-9">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Tissu
+															</span> <select ui-select2
+																ng-model="bonReceptionCourantRecherche.produitId"
+																data-placeholder="choisir un Tissu" style="width: 100%">
+																<option ng-repeat="tissu in listeTissu"
+																	value="{{tissu.id}}">{{tissu.reference}}</option>
+															</select>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+									<div class="pull-right">
+										<button class="btn btn-action"
+											ng-click="rechercherBonReception(bonReceptionCourantRecherche)">Recherecher</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Grid -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="title-ajout line">Liste des Bons de Reception</div>
+							<div panel-class="panel panel-primary">
+								<div style="height: 500px;" ng-grid="gridOptions"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Ajout/Modification/Consultation d'un BonRecepetion -->
+				<div class="col-md-7" style="background-color: white;">
+					<div class="row">
+						<div class="col-md-12">
+
+							<!--  Traitement -->
+							<div id="traitement" class="collapse">
+								<div class="row pull-right">
+									<i class="fa fa-plus-square"
+										style="zoom: 2; cursor: pointer; color: #28ABE3; margin-left: 5px;"
+										ng-click="plusTraitement()"></i>
+								</div>
+
+								<div class="title-ajout">Traitement</div>
+								<div class="panel-body">
+									<div class="form-group">
+										<div class="row">
+											<div class="panel panel-primary">
+												<!-- Removed : {{traitementIdRemove}} -->
+												<table
+													class="table table-bordered table-condensed table-head-color">
+													<thead>
+														<tr>
+															<th>Rang</th>
+															<th>Traitement</th>
+															<th>Observation</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="traitement in listeTraitements track by $index">
+															<td>{{$index+1}}</td>
+															<td>
+																{{testNullTraitement(traitement.traitementId)}}
+																<!-- modeCreation -->
+																<span ng-show="dropList == 'ON'">
+																<!-- creation : -->
+																	<select class="form-control"
+																	ng-model="traitement.traitementId" 
+																	ng-change="changeTraitement(listeTraitements[$index].traitementId, $index)">
+																		<option ng-repeat="trait in listeTraitementCaches | filter:filterTraitement()"
+																			value="{{trait.id}}">	
+																			 {{refreshTraitement(listeTraitements[$index].traitementId)}}
+																			 {{showTraitement(trait.id, traitement.traitementId)}}</option>
+																	</select> 
+																</span> 
+																<!-- modeModification -->
+																<span ng-show="dropList != 'ON'"> 
+																 	<span href="#" editable-select="listeTraitements[$index].traitementId"
+																	 e-ng-options="s.id as s.designation for s in listeTraitementCaches| filter:filterTraitement()"
+																	 e-ng-change="changeTraitementAfterCreation(traitement.traitementId,listeTraitements[$index].traitementId, $index)">
+																	   {{refreshTraitement(listeTraitements[$index].traitementId)}}  
+																	   {{showTraitement(trait.id, traitement.traitementId)}}
+																	</span>
+																</span>
+															</td>
+															<td><input ng-model="traitement.observations"
+																e-name="observations" e-form="rowform" value=""
+																class="form-control" e-required /></td>
+															<td style="white-space: nowrap" class="pull-right">
+																<div class="buttons" ng-show="!rowform.$visible">
+																	<button data-nodrag
+																		class="btn btn-sm glyphicon glyphicon-trash"
+																		ng-click="removeTraitement($index)"></button>
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<!-- BonReception -->
+							<div class="title-ajout" ng-show="modePdf != 'actif'">Creation  Bon de Reception</div>
+							<div class="title-ajout" ng-show="modePdf=='actif'">Modification Bon de Reception</div>
+							<div class="panel panel-primary">
+								<div class="panel-body">
+									<form id="creationBonReception" name="creationBonReception">
+										<div class="col-sm-8">
+											<!-- <div class="form-group">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">R&eacute;f&eacute;rence</span>
+															<input class="form-control"
+																ng-model="bonReceptionCourant.reference"/>
+														</div>
+													</div>
+												</div>
+											</div> -->
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Client
+															</span> <select ui-select2
+																ng-model="bonReceptionCourant.partieInteressee"
+																data-placeholder="choisissez un client"
+																style="width: 100%">
+																<option ng-repeat="client in listeClient"
+																	value="{{client.id}}">{{client.abreviation}}</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class=" col-sm-12">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">BC
+																-Client </span> <input class="form-control"
+																ng-model="bonReceptionCourant.bcClient" value=""
+																required />
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Tissu
+															</span> <select ui-select2
+																ng-model="bonReceptionCourant.produit"
+																data-placeholder="choisir un Tissu" style="width: 100%"
+																ng-change="remplirTypeProduit(bonReceptionCourant.produit)">
+																<option ng-repeat="tissu in listeTissu"
+																	value="{{tissu.id}}">{{tissu.reference}}</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Type</span>
+
+															<!-- modeCreationMise -->
+															<div ng-show="creation">
+																<input ng-show="remplir" class="form-control"
+																	ng-model="bonReceptionCourant.type" readonly="readonly"
+																	value="{{resultatRechercheProduit.sousFamilleDesignation}}" />
+															</div>
+															<div ng-show="creation">
+																<input ng-hide="remplir" class="form-control"
+																	placeholder="" disabled />
+															</div>
+
+															<!-- modeModificationMise -->
+															<input ng-hide="creation" class="form-control"
+																readonly="readonly"
+																value="{{resultatRechercheProduit.sousFamilleDesignation}}" />
+
+
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Laize
+																Finie finale</span> <input class="form-control"
+																ng-model="bonReceptionCourant.laizeFini" value="" />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="form-group">
+												<div class="row">
+													<div class="input-group input-group-sm">
+														<div class="form-group">
+															<div class="row">
+																<div class="col-sm-12">
+																	<div class="input-group">
+																		<span class="input-group-addon label1"
+																			id="basic-addon1">Observations</span>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="form-group">
+															<div class="row">
+																<div class="col-sm-12">
+																	<div class="input-group">
+																		<textarea rows="9" cols="" class="form-control"
+																			ng-model="bonReceptionCourant.observations"></textarea>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="input-group input-group-sm">
+														<div class="input-group">
+															<div class="input-group input-group-sm"
+																ng-controller="DatepickerDController">
+																<span class="input-group-addon label1" id="basic-addon1">D&eacute;lai
+																	Livraison</span> <input type="text"
+																	class="form-control datepicker"
+																	datepicker-popup="{{format}}"
+																	ng-model="bonReceptionCourant.dateLivraison"
+																	is-open="opened" datepicker-options="dateOptions"
+																	date-="enabled(date, mode)" close-text="Close" />
+																<div class="input-group-btn">
+																	<button type="button" class="btn btn-default"
+																		ng-click="open($event)">
+																		<i class="glyphicon glyphicon-calendar"></i>
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">M&eacute;trage
+															annonc&eacute;</span> <input class="form-control"
+															ng-model="bonReceptionCourant.metrageAnnonce" />
+													</div>
+												</div>
+												<!-- ngShow True: metrageTrouvé -->
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm"
+														ng-show="metrageTrouve">
+														<span class="input-group-addon label1" id="basic-addon1">M&eacute;trage
+															trouv&eacute;</span> <input class="form-control"
+															ng-model="bonReceptionCourant.metrageTrouve" />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Poids
+															annonc&eacute;</span> <input class="form-control"
+															ng-model="bonReceptionCourant.poidsAnnonce" />
+													</div>
+												</div>
+												<!-- ngSow True: PoidsTrouvé -->
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm"
+														ng-show="metrageTrouve">
+														<span class="input-group-addon label1" id="basic-addon1">Poids
+															trouv&eacute;</span> <input class="form-control"
+															ng-model="bonReceptionCourant.poidsTrouve" />
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Nbre.Rouleaux</span>
+														<!-- creation -->
+														<div ng-show="!metrageTrouve">
+															<input class="form-control"
+																ng-model="bonReceptionCourant.nombreRouleau"
+																ng-change="rowsDetailsLength()" value="" />
+														</div>
+														<!-- modification -->
+														<div ng-show="metrageTrouve">
+															<input class="form-control"
+																ng-model="bonReceptionCourant.nombreRouleau"
+																value=""
+																placeholder="{{bonReceptionCourant.nombreRouleau}}"
+																disabled />
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+
+									<!-- Rouleaux -->
+									<div class="row pull-right" style="margin-top: 0px;"
+										ng-show="metrageTrouve">
+										<div class="col-sm-12">
+											<i class="fa fa-plus-square"
+												style="zoom: 2; cursor: pointer; color: #28ABE3; margin-left: 10px;"
+												ng-click="plusDetail()"></i>
+										</div>
+									</div>
+
+									<div class="title-ajout">Rouleaux</div>
+									<div class="panel-body">
+										<div class="form-group">
+											<div class="row">
+												<div class="panel panel-primary">
+													<table
+														class="table table-bordered table-condensed table-head-color">
+														<thead>
+															<tr>
+																<th>R&eacute;f</th>
+																<th>Poids</th>
+																<th>M&eacute;trage</th>
+																<th></th>
+															</tr>
+														</thead>
+														<tr ng-repeat="detail in listeDetails">
+															<td><input ng-model="detail.reference" e-name="ref"
+																e-form="rowform" value="" class="form-control"
+																e-required /></td>
+															<td><input ng-model="detail.poidsAnnonce"
+																e-name="poids" e-form="rowform" value=""
+																class="form-control" e-required /></td>
+															<td><input ng-model="detail.metrageAnnonce"
+																e-name="metrage" e-form="rowform" value=""
+																class="form-control" e-required value="" /></td>
+															<td style="white-space: nowrap" class="pull-right">
+																<div class="buttons" ng-show="!rowform.$visible">
+																	<button data-nodrag
+																		class="btn btn-sm glyphicon glyphicon-trash"
+																		ng-click="removeRouleau($index)"></button>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- endMainContent -->
+
+		<!-- leftContent -->
+		<div class="col-md-3 col-sm-6">
+			<div class="row">
+				<div class="col-md-12 ">
+					<a class="info-tiles tiles-danger" href="#">
+						<div class="tiles-heading">
+							<div class="pull-left">
+								<i class="fa fa-group"></i> Admin STIT
+							</div>
+							<div class="pull-right"></div>
+						</div>
+						<div class="tiles-body" ng-controller='TimeCtrl'>
+							<div class="pull-left">
+								<i class="glyphicon glyphicon-time"></i>{{ clock |
+								date:'HH:mm'}}<br> <span
+									style="color: #fff; font-size: 16px"> {{ clock |
+									date:'EEEE' }} <br>{{ clock | date:'dd MMM' }}
+								</span>
+							</div>
+							<div class="pull-right">
+								<img src="images/admin.png" style="width: 80px; height: 80px" />
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a class="info-tiles tiles-grape" href="#">
+						<div class="tiles-heading">
+							<div class="pull-left">
+								<i class="glyphicon glyphicon-comment"></i> Rappel / Annonces
+							</div>
+							<div class="pull-right"></div>
+						</div>
+						<div class="tiles-body">
+							<p>
+								Bienvenue &agrave; <b>STIT</b>
+							<p />
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a class="info-tiles tiles-success" href="#">
+						<div class="tiles-heading">
+							<div class="pull-left">
+								<i class="glyphicon glyphicon-stats"></i> Statistiques
+								Journali&egrave;res
+							</div>
+							<div class="pull-right"></div>
+						</div>
+						<div class="tiles-body">
+							<div class="menu-item color">
+								<div class="row" style="margin-bottom: 5px; text-align: left;">
+									<div class="col-md-12">
+										<div class="col-md-3 green">
+											<span style="font-size: 20pt">--</span>
+										</div>
+										<div class="col-md-9">
+											<span style="font-size: 14pt; line-height: 2;">Rouleaux
+												Exp&eacute;di&eacute;s</span>
+										</div>
+									</div>
+								</div>
+								<div class="row" style="margin-bottom: 5px; text-align: left;">
+									<div class="col-md-12">
+										<div class="col-md-3 green">
+											<span style="font-size: 20pt">--%</span>
+										</div>
+										<div class="col-md-9">
+											<span style="font-size: 14pt; line-height: 2;">Rendement
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="row" style="margin-bottom: 5px; text-align: left;">
+									<div class="col-md-12">
+										<div class="col-md-3 green">
+											<span style="font-size: 20pt">--</span>
+										</div>
+										<div class="col-md-9">
+											<span style="font-size: 14pt; line-height: 2;">Retard
+												Prod./Liv.</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+	<!-- endRow -->
+
+	<!-- Popup de la suppression -->
+	<div id="light" class=" center white_content">
+		<pop-up type="delete-BR"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+	<!-- Fin Popup de la suppression -->
+</div>
+
