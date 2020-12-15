@@ -308,7 +308,7 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 	@RequestMapping(value="/listEtatStockBarCode", method = RequestMethod.GET)
 	public void generateListEtatStockBarCodeReport(
 			
-			@RequestParam("type") String type,
+			
 			
 			@RequestParam("typeArticle") String typeArticle,
 
@@ -317,6 +317,10 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("article") String article,
 			
 			@RequestParam("magasin") String magasin,
+			
+			@RequestParam("numeroBonEntree") String numeroBonEntree,
+			
+			@RequestParam("type") String type,
 	
 			
 			
@@ -330,6 +334,7 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		request.setFamilleArticle(familleArticle);
 		request.setArticle(article);
 		request.setMagasin(magasin);
+		request.setNumeroBonEntree(numeroBonEntree);
 		
 		
     	FicheColisReportValue report = gestionnaireReportGsService.generateListEtatStockBarCodeReport(request);
@@ -341,6 +346,39 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 
 	}
 	
+	
+	
+	
+	@RequestMapping(value="/listEtatStockBarCodeFromBE", method = RequestMethod.GET)
+	public void generateListEtatStockBarCodeFromBEReport(
+			
+			
+			
+			@RequestParam("id") Long id,
+
+
+			@RequestParam("type") String type,
+	
+			
+			
+			HttpServletResponse response ) throws JRException, IOException {
+		
+		logger.info("Generate a {} Report Etat Stock  Bar Code List From BE",type);
+		
+		RechercheMulticritereEntiteStockValue request = new RechercheMulticritereEntiteStockValue();
+		
+	
+		
+		
+		
+    	FicheColisReportValue report = gestionnaireReportGsService.generateListEtatStockBarCodeFromBEReport(id);
+		
+	
+		
+		this.download( type , report.getReportStream() ,report.getParams(), 
+				report.getFileName(),report.getjRBeanCollectionDataSource(), response);
+
+	}
 	
 	
 	

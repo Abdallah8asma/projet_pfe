@@ -11,7 +11,9 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.MiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.CritereRechercheRouleauStandardValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ElementResultatRechecheRouleauStandardValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.GuichetRouleauFiniValue;
@@ -22,6 +24,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.val
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.rouleaufini.IGuichetRouleauFiniDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.rouleaufini.IRouleauFiniDomaine;
+import com.gpro.consulting.tiers.logistique.persistance.atelier.mise.IMisePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.rouleaufini.IRouleauFiniPersistance;
 
 /**
@@ -45,6 +48,10 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 	@Autowired
 	private IGuichetRouleauFiniDomaine guichetRouleauFiniDomaine;
 	
+	
+	@Autowired
+	private IMisePersistance misePersitance;
+	
 	@Override
 	public ResultatRechecheRouleauFiniValue rechercherMultiCritere(RechercheMulticritereRouleauFiniValue request) {
 		
@@ -66,25 +73,118 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 	@Override
 	public String updateRouleauFini(RouleauFiniValue request) {
 		
+		//Recherche de Mise et mise à jour poids fini
+				List<MiseValue> listMise= misePersitance.getMiseByReference(request.getReferenceMise());
+				
+				MiseValue miseValue= listMise.get(0);
+				
+								
+				miseValue.setQteProduite(miseValue.getQteProduite() - request.getMetrageAncien().longValue() + request.getMetrage().longValue());
+				
+				misePersitance.modifierMise(miseValue);
+		
+		
+		
 		return rouleauFiniPersitance.updateRouleauFini(request);
 	}
 
 	@Override
 	public void deleteRouleauFini(Long id) {
 		
+		RouleauFiniValue rouleau = rouleauFiniPersitance.getRouleauFiniById(id);
+		
+		List<MiseValue> listMise= misePersitance.getMiseByReference(rouleau.getReferenceMise());
+		
+		if(listMise.size() > 0) {
+			
+			MiseValue miseValue= listMise.get(0);
+			
+			miseValue.setQteProduite(miseValue.getQteProduite() - rouleau.getMetrageAncien().longValue());
+			
+			miseValue.setNbrColis(miseValue.getNbrColis()  -1 );
+			
+			misePersitance.modifierMise(miseValue);
+			
+		}
+		
+		
+		
 		rouleauFiniPersitance.deleteRouleauFini(id);
 	}
 
 	@Override
 	public String createRouleauFini(RouleauFiniValue request) {
-		//LOGGER.info("B--RefBR "+  request.getReference());
-		request.setReference(getNumero(Calendar.getInstance()));
-		 // LOGGER.info("A--RefBR "+  request.getReference());
 		
+		List<String> ids = new ArrayList<String>();
+	
 		
 		request.setDateIntroduction(Calendar.getInstance());
 		
-		return rouleauFiniPersitance.createRouleauFini(request);
+		if(request.getNumberOfBox() == null)
+			request.setNumberOfBox(1l);
+		
+		
+		
+		
+		for(int i = 0 ; i< request.getNumberOfBox().intValue() ; i++) {
+			
+			request.setReference(getNumero(Calendar.getInstance()));
+			 // LOGGER.info("A--RefBR "+  request.getReference());
+			
+			
+		
+			
+			//request.setPremierMetrage(request.getMetrage());
+			
+			//Recherche de Mise et mise à jour poids fini
+			List<MiseValue> listMise= misePersitance.getMiseByReference(request.getReferenceMise());
+			
+			MiseValue miseValue= listMise.get(0);
+			
+			
+			Long qteProduite=miseValue.getQteProduite();
+			Long nbrColis=miseValue.getNbrColis();
+			nbrColis ++;
+			
+			if(request.getMetrage()!=null && qteProduite!=null )
+				qteProduite+=request.getMetrage().longValue();
+			
+			//TODO modifier par samer le 28.06.19 afin d'utiliser le poidsFini comme étant quantite par box
+			//miseValue.setPoidFini(poidsFini);
+			
+			miseValue.setQteProduite(qteProduite);
+			miseValue.setNbrColis(nbrColis);
+			
+			
+			if(miseValue.getQteProduite() >=  miseValue.getQuantite().longValue())
+			{
+				miseValue.setStatut("Produit");
+			}
+			
+			
+			misePersitance.modifierMise(miseValue);
+			
+			
+		
+			
+			     String idRouleau =  rouleauFiniPersitance.createRouleauFini(request);
+			
+			         ids.add(idRouleau);
+			
+			
+		}
+		
+		
+		
+		
+		return org.apache.commons.lang3.StringUtils.join(ids,",") ;
+	
+		
+		
+		
+	
+		//LOGGER.info("B--RefBR "+  request.getReference());
+		
 	}
 	/**
 	   * Récuperer le numéro du Bon de receptionà partir du Guichet Bon Reception

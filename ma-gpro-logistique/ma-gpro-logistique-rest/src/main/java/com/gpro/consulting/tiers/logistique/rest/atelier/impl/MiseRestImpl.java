@@ -44,7 +44,7 @@ public class MiseRestImpl {
 				.rechercherMiseMultiCritere(pRechercheMulticritereMise);
 
 		// Traitement : transformation de l'Id a sa propre Designation
-		for (ElementRechecheMiseValue elementRechecheMise : vResultatRecherche.getListeElementRechecheMiseValeur()) {
+	/*	for (ElementRechecheMiseValue elementRechecheMise : vResultatRecherche.getListeElementRechecheMiseValeur()) {
 
 			// Client, Produit
 			Map<String, String> mapA = gestionnaireLogistiqueCacheService.rechercherDesignationParId(
@@ -55,7 +55,7 @@ public class MiseRestImpl {
 			// Produit (Tissu)
 			elementRechecheMise.setReferenceProduit(mapA.get("produitRef"));
 
-		}
+		}*/
 		return vResultatRecherche;
 	}
 
@@ -97,6 +97,7 @@ public class MiseRestImpl {
 	@RequestMapping(value = "/creerMise", method = RequestMethod.POST)
 	public @ResponseBody String creerMise(@RequestBody MiseValue pMiseValue) {
 
+		gestionnaireLogistiqueCacheService.reloadLogistiqueCache();
 		return this.vMiseService.creerMise(pMiseValue);
 	}
 
@@ -115,6 +116,12 @@ public class MiseRestImpl {
 	public @ResponseBody String listRefMiseParRefBR(@RequestBody String referenceBR) {
 		return vMiseService.listRefMiseParRefBR(referenceBR);
 
+	}
+	
+	
+	@RequestMapping(value = "/getReferenceMise", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<MiseValue> getReferenceMise() {
+		return vMiseService.getReferenceMise();
 	}
 
 	// //Hajer Amri 02/02/2017

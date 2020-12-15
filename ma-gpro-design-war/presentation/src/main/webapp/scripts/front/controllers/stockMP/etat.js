@@ -128,15 +128,30 @@ angular.module('gpro.etatMP', [])
 					url = UrlAtelier+ "/reportgs/etatStockDetaille?type=xls&articleType=" + $scope.etatCourant.typeArticle+"&typeRapport="+ typeRapport ;
 				}
 					
-			downloadService.download(url).then(
-					function(success) {
-						//$log.debug('success : ' + success);
-						//$scope.annulerAjout();
-					}, function(error) {
-						//$log.debug('error : ' + error);
-					});
+			
+
+
+					var a = document.createElement('a');
+					document.body.appendChild(a);
+					downloadService.download(url).then(function (result) {
+						var heasersFileName = result.headers(['content-disposition']).substring(17);
+					var fileName = heasersFileName.split('.');
+				var typeFile = result.headers(['content-type']);
+				var file = new Blob([result.data], {type: typeFile});
+				var fileURL = window.URL.createObjectURL(file);
+
+
+				a.download = fileName[0];
+				$window.open(fileURL)
+				 a.click();
+
+					
+				$scope.traitementEnCoursGenererLivraison="false";
+
+				});
 
 		};	
+		
 
 			   /*** PDF ***/
 			   $scope.downloadBarCode = function(etatCourant) {
@@ -155,6 +170,8 @@ angular.module('gpro.etatMP', [])
 										 + "&familleArticle="+etatCourant.familleArticle 
 										 + "&article="+etatCourant.article 
 										 + "&magasin="+etatCourant.magasin 	
+										 + "&numeroBonEntree="+etatCourant.numeroBonEntree 	
+										 
 										 + "&type=pdf";
 
 				var a = document.createElement('a');
@@ -221,6 +238,13 @@ angular.module('gpro.etatMP', [])
 
 				
 	}
+
+	$scope.etatCourant.typeArticle = "1";
+	$scope.voirEtat();
+
+
+
+	//$scope.rechercherEtat({});
 	
 	
 //	$scope.getArticle = function(articleId) {
@@ -320,25 +344,45 @@ angular.module('gpro.etatMP', [])
 	$scope.gridOptions = {
 		data : 'myData',
 		columnDefs : [
+
+			{
+				field: 'dateEntree',
+				displayName: 'Date Entree',
+				cellFilter: 'date:\'dd-MM-yyyy\'',
+					width : '7%'
+			},
+			{
+				field : 'numeroBonEntree',
+				displayName : 'N° B.E',
+				width :'10%'
+			},
+			
 				{
 					field : 'referenceArticle',
 					displayName : 'Ref.',
-					width :'10%'
+					width :'15%'
 				},
 				{
 					field : 'libelleArticle',
 					displayName : 'Description',
-					width :'30%'
+					width :'25%'
 				},
 				{
 					field : 'familleArticle',
 					displayName : 'Family',
 					width :'10%'
 				},
+
+				{
+					field : 'qteEntree',
+					displayName : 'Q.Entree',
+					width :'8%'
+
+				},
 				
 				{
 					field : 'qteActuelle',
-					displayName : 'Quantity',
+					displayName : 'Q.Actuelle.',
 					width :'8%'
 
 				},
@@ -352,21 +396,21 @@ angular.module('gpro.etatMP', [])
 					displayName : 'PMP',
 					width :'6%'
 				}, */
-				{
+				/*{
 					field : 'prixTotal',
 					displayName : 'Total P.',
 					width :'8%'
-				},
+				},*/
 				{
 					field : 'designationMagasin',
 					displayName : 'Store',
 					width :'10%'
-				},
-				{
+				}
+		/* 		{
 					field : 'emplacement',
 					displayName : 'Placement',
 					width :'10%'
-				}
+				} */
 				 ],
 		enablePaging : true,
 		showFooter : true,

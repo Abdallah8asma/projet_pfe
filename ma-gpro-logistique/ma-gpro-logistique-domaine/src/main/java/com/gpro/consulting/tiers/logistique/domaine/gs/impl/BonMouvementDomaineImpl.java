@@ -83,8 +83,12 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 
 			switch (bonMouvementStock.getType()) {
 			case IConstante.TYPE_MVT_ENT:
+				String numeroBonEntree = this.getNumeroBonMouvementEntre(bonMouvementStock.getDate());
+				bonMouvementStock.setNumero(numeroBonEntree);
 				request = enrichirBonEntree(bonMouvementStock);
-				request.setNumero(this.getNumeroBonMouvementEntre(bonMouvementStock.getDate()));
+				
+				//request.setNumero(numeroBonEntree);
+			
 				break;
 
 			case IConstante.TYPE_MVT_SORT:
@@ -125,9 +129,75 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 		Double vPMP = new Double(0);
 		return vPMP;
 	}
-
+	
 	// enrichirBonEntree
 	public BonMouvementStockValue enrichirBonEntree(BonMouvementStockValue pBonMouvementStockValue) {
+
+		BonMouvementStockValue vBonMouvementStockValue = pBonMouvementStockValue;
+		Set<MouvementStockValue> vListMouvementResultat = new HashSet<MouvementStockValue>();
+
+		for (MouvementStockValue mouvement : vBonMouvementStockValue.getMouvements()) {
+
+			// A changer
+			ArticleValue vArticleValue = new ArticleValue();
+
+			vArticleValue.setId(mouvement.getIdArticle());
+			vArticleValue = articleDomaine.rechercheArticleParId(vArticleValue);
+
+			EntiteStockValue vEntiteStock = new EntiteStockValue();
+
+	
+			// Creation de l'entité stock si elle n'existe pas
+			
+			if(vArticleValue != null && mouvement.getQuantiteReelle() != null) {
+				
+				
+				vEntiteStock.setNumeroBonEntree(pBonMouvementStockValue.getNumero());
+				vEntiteStock.setDateEntree(pBonMouvementStockValue.getDate());
+				
+				
+				vEntiteStock.setArticle(mouvement.getIdArticle());
+				vEntiteStock.setReferenceArticle(vArticleValue.getRef());
+				vEntiteStock.setLibelleArticle(vArticleValue.getDesignation());
+				
+				
+				vEntiteStock.setMagasin(mouvement.getIdMagasin());
+				vEntiteStock.setPmp(new Double(0));
+				vEntiteStock.setPrixUnitaire(new Double(0));
+				vEntiteStock.setEmplacement(IConstante.VIDE);
+				
+				vEntiteStock.setQteActuelle(new Double(0));
+				vEntiteStock.setQteReservee(new Double(0));
+				
+				vEntiteStock.setQteActuelle(mouvement.getQuantiteReelle());
+				
+				vEntiteStock.setQteEntree(mouvement.getQuantiteReelle());
+				
+				vEntiteStock.setPrixUnitaire(mouvement.getPrixUnitaire());
+				
+				
+				vEntiteStock.setReferenceLot(mouvement.getLot());
+
+				mouvement.setEntiteStock(vEntiteStock.getId());
+				mouvement.setEntiteStockValue(vEntiteStock);
+				
+				
+				
+				
+				
+				vListMouvementResultat.add(mouvement);
+				
+			}
+
+
+		
+		}
+		vBonMouvementStockValue.setMouvements(vListMouvementResultat);
+		return vBonMouvementStockValue;
+	}
+
+	// enrichirBonEntree
+	public BonMouvementStockValue enrichirBonEntreeAncien(BonMouvementStockValue pBonMouvementStockValue) {
 
 		BonMouvementStockValue vBonMouvementStockValue = pBonMouvementStockValue;
 		Set<MouvementStockValue> vListMouvementResultat = new HashSet<MouvementStockValue>();

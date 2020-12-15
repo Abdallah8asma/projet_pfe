@@ -3,7 +3,9 @@ package com.gpro.consulting.tiers.logistique.rest.atelier.report.impl;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.erp.socle.j2ee.mt.socle.report.impl.AbstractGestionnaireDownloadImpl;
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.RechercheMulticritereBonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.bonReception.value.BonReceptionReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.boninventaire.BonInventaireReportValue;
@@ -26,6 +29,8 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.report.bonsorti
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.inventaire.value.InventaireReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.rouleaufini.value.EtiquetteRouleauFiniReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.CritereRechercheRouleauStandardValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereEntiteStockValue;
 import com.gpro.consulting.tiers.logistique.service.atelier.report.IGestionnaireReportService;
 
 /**
@@ -73,34 +78,121 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 		
 	}
 	
-	@RequestMapping(value="/inventaire", method = RequestMethod.GET)
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value="/list-etiquette-rouleau", method = RequestMethod.GET)
+	public void genererListEtiquetteRouleauReport(
+			
+			
+			
+			@RequestParam("reference") String reference,
+
+			@RequestParam("refMise") String refMise,
+			
+			@RequestParam("produitId") String produitId,
+			
+			@RequestParam("numberOfBox") String numberOfBox,
+			
+			@RequestParam("metrage") String metrage,
+			
+			@RequestParam("ids") String ids,
+			
+			@RequestParam("type") String type,
+	
+			
+			
+			HttpServletResponse response ) throws JRException, IOException {
+		
+		logger.info("Generate a {} Report genererListEtiquetteRouleauReport",type);
+		
+		RechercheMulticritereRouleauFiniValue request = new RechercheMulticritereRouleauFiniValue();
+		
+		
+		request.setReference(reference);
+		
+		request.setRefMise(refMise);
+		
+		
+		if(isNotEmty(ids)) {
+			
+			List<Long> idLong = new ArrayList<Long>();
+			
+			String[] idString =  ids.split(",") ;
+			
+			for(String id : idString) {
+				idLong.add(Long.parseLong(id)) ;
+			}
+				
+			
+		
+			request.setIds(idLong);
+			
+		}
+		
+			
+	 
+		
+		if(isNotEmty(metrage)) 
+			request.setMetrage(Double.parseDouble(metrage)) ;
+		
+	
+		
+		if(isNotEmty(numberOfBox)) 
+			request.setNumberOfBox(Long.parseLong(numberOfBox)) ;
+		
+		
+		if(isNotEmty(produitId))
+			request.setProduitId(Long.parseLong(produitId));
+		
+		
+		
+		
+
+		
+    	FicheColisReportValue report = gestionnaireReportService.genererListEtiquetteRouleauReport(request);
+		
+	
+		
+		this.download( type , report.getReportStream() ,report.getParams(), 
+				report.getFileName(),report.getjRBeanCollectionDataSource(), response);
+
+	}
+	
+	@RequestMapping(value = "/inventaire", method = RequestMethod.GET)
 	public void genererInventaireReport(
-//			@RequestParam("critereRechercheRouleauStandard") CritereRechercheRouleauStandardValue critereRechercheRouleauStandard,
-			@RequestParam("client") Long client,
+			// @RequestParam("critereRechercheRouleauStandard")
+			// CritereRechercheRouleauStandardValue
+			// critereRechercheRouleauStandard,
+			@RequestParam("client") Long client, 
+			
 			@RequestParam("nombreColieDu") Long nombreColieDu,
-			@RequestParam("nombreColieA") Long nombreColieA,
-			@RequestParam("entrepot") Long entrepot,
-			@RequestParam("emplacement") String emplacement,
+			
+			@RequestParam("nombreColieA") Long nombreColieA, 
+			//@RequestParam("entrepot") Long entrepot,
+		//	@RequestParam("emplacement") String emplacement, 
 			@RequestParam("metrageDu") Double metrageDu,
-			@RequestParam("metrageA") Double metrageA,
-			@RequestParam("dateEtat") String dateEtat,
+			@RequestParam("metrageA") Double metrageA, @RequestParam("dateEtat") String dateEtat,
 			@RequestParam("designationQuiContient") String designationQuiContient,
-			
-			//Hajer Amri 06/02/2017
+
+			// Hajer Amri 06/02/2017
 			@RequestParam("referenceProduit") String referenceProduit,
-			
-			@RequestParam("fini") String fini,
-			@RequestParam("orderBy") String orderBy,
-			@RequestParam("type") String type,HttpServletResponse response) throws JRException, IOException {
-		
-		//logger.info("Generate a {} Report Inventaire",type);
-		
+
+			@RequestParam("fini") String fini, @RequestParam("orderBy") String orderBy,
+			@RequestParam("typeOf") String typeOf,
+			@RequestParam("type") String type, HttpServletResponse response) throws JRException, IOException {
+
+		logger.info("Generate a {} Report Inventaire", type);
+
 		CritereRechercheRouleauStandardValue critereRechercheRouleauStandard = new CritereRechercheRouleauStandardValue();
 		critereRechercheRouleauStandard.setClient(client);
 		critereRechercheRouleauStandard.setDateEtat(stringToCalendar(dateEtat));
 		critereRechercheRouleauStandard.setDesignationQuiContient(designationQuiContient);
-		critereRechercheRouleauStandard.setEmplacement(emplacement);
-		critereRechercheRouleauStandard.setEntrepot(entrepot);
+	//	critereRechercheRouleauStandard.setEmplacement(emplacement);
+	//	critereRechercheRouleauStandard.setEntrepot(entrepot);
 		critereRechercheRouleauStandard.setMetrageA(metrageA);
 		critereRechercheRouleauStandard.setMetrageDu(metrageDu);
 		critereRechercheRouleauStandard.setNombreColieA(nombreColieA);
@@ -108,12 +200,17 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 		critereRechercheRouleauStandard.setOrderBy(orderBy);
 		critereRechercheRouleauStandard.setFini(fini);
 		critereRechercheRouleauStandard.setReferenceProduit(referenceProduit);
-
 		
-		InventaireReportValue vInventaireReport = gestionnaireReportService.getInventaireReportValue(critereRechercheRouleauStandard);
+		
+		
+		
+		//critereRechercheRouleauStandard.setTypeOf(typeOf);
 
-		this.download( type , vInventaireReport.getReportStream() ,vInventaireReport.getParams(), 
-				vInventaireReport.getFileName(),vInventaireReport.getJRBeanCollectionDataSource(), response);
+		InventaireReportValue vInventaireReport = gestionnaireReportService
+				.getInventaireReportValue(critereRechercheRouleauStandard);
+
+		this.download(type, vInventaireReport.getReportStream(), vInventaireReport.getParams(),
+				vInventaireReport.getFileName(), vInventaireReport.getJRBeanCollectionDataSource(), response);
 	}
 	
 	@RequestMapping(value="/bonsortiefini", method = RequestMethod.GET)
@@ -195,7 +292,7 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 	}
 	
 	private boolean isNotEmty(String value) {
-		return value != null && !"".equals(value);
+		return value != null && !"".equals(value) && !"undefined".equals(value) && !"null".equals(value);
 
 	}
 	

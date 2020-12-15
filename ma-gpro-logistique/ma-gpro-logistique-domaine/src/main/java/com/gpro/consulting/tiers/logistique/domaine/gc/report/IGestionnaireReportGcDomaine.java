@@ -39,6 +39,9 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.
  *
  */
 public interface IGestionnaireReportGcDomaine {
+	
+	public BonLivraisonReportValue getBonLivraisonParId(Long id, String avecPrix) throws IOException;
+
 
 	public BonLivraisonReportValue getBonLivraisonParId(Long id, String avecPrix, Long typerapport) throws IOException;
 

@@ -130,7 +130,7 @@
 								</div>
 							</div>
 
-							<div class="col-sm-3">
+				<!-- 			<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -138,10 +138,27 @@
 										</div>
 
 										<select class="form-control" ng-model="bonMouvementStockCourante.fournisseur"
-											ng-change="bonMouvementStockCourante.fournisseur = bonMouvementStockCourante.fournisseur.toUpperCase()"
+											
 											data-placeholder="...">
 											<option ng-repeat="fournisseur in listeFournisseurCache"
 												value="{{fournisseur.id}}">{{fournisseur.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+							</div> -->
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text  ms-Label is required">Fournisseur</span>
+										</div>
+										<select ui-select2 ng-model="bonMouvementStockCourante.fournisseur"
+											ng-init="bonMouvementStockCourante.fournisseur=''" data-placeholder="..."
+											class="form-control ">
+											<option value="">Tous</option>
+											<option ng-repeat="pi in listePartieInteressee" value="{{pi.id}}">{{pi.raisonSociale}}</option>
 										</select>
 									</div>
 								</div>
@@ -157,7 +174,7 @@
 											ng-change="bonMouvementStockCourante.etat = bonMouvementStockCourante.etat.toUpperCase()">
 
 
-											<option value="Valide Conforme">validation Conforme</option>
+											<option value="Valide Conforme">Validation Conforme</option>
 											<option value="Valide Non Conforme">Aucune Validation Conforme</option>
 											<option value="Non Valide">Attente de validation</option>
 										</select>
@@ -353,6 +370,31 @@
 							</button>
 						</div>
 
+
+
+						<div class="ms-CommandButton ms-CommandButton--dropdown">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+										class="ms-Icon ms-Icon--Generate"></i></span> <span
+									class="ms-CommandButton-label">G&eacute;n&eacute;rer</span> <span
+									class="ms-CommandButton-dropdownIcon"><i
+										class="ms-Icon ms-Icon--ChevronDown"></i></span>
+							</button>
+							<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+	
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
+									ng-click="downloadBarCode(bonMouvementStockCourante)">Code à barre</a></li>
+	
+	
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
+										ng-click="downloadBonEntree(bonMouvementStockCourante.id)">PDF</a></li>
+
+
+								<!-- <li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
+										ng-click="downloadAllProduitsExcel(produitCourante)">Excel</a></li> -->
+							</ul>
+						</div>
+
 						<div class="ms-CommandButton">
 							<button class="ms-CommandButton-button" ng-click="annulerAjout()">
 								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span> <span
@@ -409,22 +451,29 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">N°.BE</span>
 										</div>
-										<input type="text" class="form-control" ng-model="bonMouvementStockCourante.nBE"
-											ng-change="bonMouvementStockCourante.nBE = bonMouvementStockCourante.nBE.toUpperCase()" />
+										<input type="text" class="form-control" ng-model="bonMouvementStockCourante.numero"
+											 />
 									</div>
 								</div>
 							</div>
 
 
-							<div class="col-sm-4">
+							
+
+
+
+							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Fournisseur</span>
+											<span class="input-group-text  ms-Label is required">Fournisseur</span>
 										</div>
-										<input type="text" class="form-control"
-											ng-model="bonMouvementStockCourante.fournisseur"
-											ng-change="bonMouvementStockCourante.fournisseur= bonMouvementStockCourante.fournisseur.toUpperCase()" />
+										<select ui-select2 ng-model="bonMouvementStockCourante.partieintId"
+											ng-init="bonMouvementStockCourante.partieintId=''" data-placeholder="..."
+											class="form-control ">
+											<option value="">Tous</option>
+											<option ng-repeat="pi in listePartieInteressee" value="{{pi.id}}">{{pi.raisonSociale}}</option>
+										</select>
 									</div>
 								</div>
 							</div>
@@ -443,8 +492,8 @@
 												Date </span>
 										</div>
 										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-											ng-init="receptionAchatCourante.dateIntroductionDu =''"
-											ng-model="receptionAchatCourante.dateIntroductionDu" is-open="opened"
+											ng-init="bonMouvementStockCourante.date =''"
+											ng-model="bonMouvementStockCourante.date" is-open="opened"
 											datepicker-options="dateOptions" date-="enabled(date, mode)"
 											ng-required="true" close-text="Close" />
 
@@ -515,9 +564,10 @@
 										<select class="form-control" ng-model="bonMouvementStockCourante.etat"
 											ng-change="bonMouvementStockCourante.etat = bonMouvementStockCourante.etat.toUpperCase()">
 
-											<option value="Valide Conforme">validation Conforme</option>
+											<option value="Valide Conforme">Validation Conforme</option>
 											<option value="Valide Non Conforme">Aucune Validation Conforme</option>
 											<option value="Non Valide">Attente de validation</option>
+											
 										</select>
 									</div>
 								</div>
@@ -654,7 +704,7 @@
 											<tr>
 												<th style="width: 10%">Réf.</th>
 												<th style="width: 30%">Désignation</th>
-												<th style="width: 10%">Lot</th>
+												<th style="width: 10%">Palette</th>
 												<th style="width: 10%">Famille</th>
 												<!--<th>S.Famille</th>-->
 												<th style="width: 6%">Q.BL</th>

@@ -1,0 +1,578 @@
+
+<!-- Front -->
+<div class="container-fluid" ng-controller="ArticleController"
+	style="background-color: #fff;">
+
+	<!-- Critere de recherche -->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-sm-12">
+			<button class="btn btn-action2 pull-right"
+				ng-click="AffectationArticle(articleCourante)">Ajouter</button>
+		</div>
+		<div class="col-sm-12">
+			<div class="title-ajout">Crit&eacute;re de recherche</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="rechercheArticleForm"
+						id="rechercheArticleForm">
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f.Article</span>
+										<input class="form-control" ng-model="articleCourante.ref" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Article</span>
+										<input class="form-control"
+											ng-model="articleCourante.designation" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Type</span>
+										<select class="form-control"
+											ng-model="articleCourante.typeEntite">
+											<option ng-repeat="type in ListTypeArticleCache"
+												value="{{type.id}}">{{type.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Famille</span>
+										<select class="form-control"
+											ng-model="articleCourante.familleEntite">
+											<option ng-repeat="famille in ListFamilleArticleCache"
+												value="{{famille.id}}">{{famille.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Sous
+											Famille</span> <select class="form-control"
+											ng-model="articleCourante.sousFamilleEntite">
+											<option
+												ng-repeat="sousFamille in ListSousFamilleArticleCache"
+												value="{{sousFamille.id}}">{{sousFamille.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Prix
+											entre</span> <input type="number" step="any" class="form-control"
+											ng-model="articleCourante.prix_inf" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">ET</span>
+										<input class="form-control" type="number" step="any"
+											ng-model="articleCourante.prix_sup" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Site</span>
+										<select class="form-control" ng-model="articleCourante.site">
+											<option value=""></option>
+											<option ng-repeat="site in listeSitePartieInteresseeCache"
+												value="{{site.id}}">{{site.nom}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div ng-show="displayAlert == 'play'"
+						class="alert alert-danger pull-left" role="alert">prix min
+						doit etre inferieure a prix max</div>
+					<div class="pull-right">
+						<button class="btn-action btn">Generer</button>
+						<button class="btn-action btn"
+							ng-click="rechercherArticle(articleCourante)">Recherecher</button>
+						<button class="btn-action btn" ng-click="annulerAjout()">Annuler</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- container d'ajout,  modification et de consultation d'un article -->
+	<div class="row" ng-show="displayMode == 'edit'">
+		<div class="col-sm-12">
+			<div class="pull-right">
+				<button class="btn btn-action"
+					ng-click="sauvegarderAjout(articleCourante)"
+					ng-disabled="!creationArticleForm.$valid;">Enregistrer</button>
+				<button class="btn btn-action" ng-click="">Generer</button>
+				<button class="btn btn-action" ng-click="">Dupliquer</button>
+				<button class="btn btn-action" ng-click="annulerAjout()">Retour</button>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<div class="title-ajout">{{articleCourante.designation}}</div>
+				<div class="panel-body" ng-show="displayMode == 'edit'">
+					<form id="creationArticleForm" name="creationArticleForm">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f.Article<i
+											style="color: red">*</i></span> <input class="form-control"
+											ng-model="articleCourante.ref" required />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">D&eacute;signation<i
+											style="color: red">*</i></span> <input class="form-control"
+											ng-model="articleCourante.designation" required />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">SousFamille<i
+											style="color: red">*</i></span> <select ui-select2
+											ng-model="select2" data-placeholder="Pick a state"
+											style="width: 100%">
+											<optgroup ng-repeat="famille in ListFamilleArticleCache"
+												label="famille : {{famille.designation}} -- {{famille.designationType}}">
+												<option ng-repeat="sousFamille in famille.sousFamille"
+													value="{{sousFamille.id}}">{{sousFamille.designation}}</option>
+											</optgroup>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Unite</span>
+										<select name="selector1" id="selector1" class="form-control"
+											ng-model="articleCourante.uniteEntite">
+											<option ng-repeat="unite in ListUniteArticleCache"
+												value="{{unite.id}}">{{unite.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Prix
+											Unitaire</span> <input type="text" class="form-control"
+											ng-model="articleCourante.pu">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">P.M.P</span>
+										<input type="text" class="form-control"
+											ng-model="articleCourante.pmp" placeholder="Disabled Input"
+											disabled>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Producteur</span>
+										<input type="text" class="form-control"
+											ng-model="articleCourante.producteur">
+									</div>
+								</div>
+								<div class="col-sm-3" ng-controller="DatepickerDController2">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+											Intro</span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-model="articleCourante.dateIntroduction" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											max-date="{{maxToDay}}" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">M&eacute;thode
+											Gestion<i style="color: red">*</i>
+										</span> <select name="methodeGestion" id="methodeGestion"
+											class="form-control"
+											ng-model="articleCourante.methodeGestion">
+											<option></option>
+											<option>Methode1</option>
+											<option>Methode2</option>
+											<option>Methode3</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Site</span>
+										<select class="form-control"
+											ng-model="articleCourante.siteEntite">
+											<option ng-repeat="site in listeSitePartieInteresseeCache"
+												value="{{site.id}}">{{site.nom}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Emplacement</span>
+										<input type="text" class="form-control"
+											ng-model="articleCourante.emplacement">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Observation</span>
+										<input type="text" class="form-control"
+											ng-model="articleCourante.observation">
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- end Div Designation -->
+				<!-- Div Tissu -->
+				<div ng-show="selectedItem =='3'">
+					<div class="title-ajout">Fil a coudre</div>
+					<div class="panel panel-body">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Matiere</span>
+										**{{articleCourante.matiereEntite}} <select
+											class="form-control" ng-model="articleCourante.matiereEntite">
+											<option ng-repeat="matiere in ListMatiereArticleCache"
+												value="{{matiere.id}}">{{matiere.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Laize</span>
+										<input type="text" class="form-control"
+											ng-model="articleCourante.laize">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Poids</span>
+										**{{articleCourante.poids}} <input type="text"
+											class="form-control" ng-model="articleCourante.poids">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- EndTissu -->
+				<!-- Div FilACoudre -->
+				<div ng-show="selectedItem =='2'">
+					<div class="title-ajout">Fil a coudre</div>
+					<div class="panel panel-body">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Tare</span>
+										<input type="text" class="form-control"
+											ng-model="articleCourante.tare">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Poids
+											Brut</span> <input type="text" class="form-control"
+											ng-model="articleCourante.poidsBrut">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Grosseur</span>
+										<select class="form-control"
+											ng-model="articleCourante.grosseurEntite">
+											<option ng-repeat="grosseur in ListGrosseurArticleCache"
+												value="{{grosseur.id}}">{{grosseur.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Metrage</span>
+										<select class="form-control"
+											ng-model="articleCourante.metrageEntite">
+											<option ng-repeat="metrage in ListMetrageArticleCache"
+												value="{{metrage.id}}">{{metrage.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Seuils D'approvisionnement -->
+				<div class="title-ajout">Seuils D'approvisionnement</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<div class="row">
+							<div class="panel panel-primary">
+								<table
+									class="table table-bordered table-condensed table-head-color">
+									<thead>
+										<tr>
+											<th class="hidden" style="width: 10%">Id</th>
+											<th style="width: 20%">Periode Du</th>
+											<th style="width: 20%">Au</th>
+											<th style="width: 15%">Seuil Min</th>
+											<th style="width: 15%">Seuil Max</th>
+											<th style="width: 20%"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											ng-repeat="seuilApprovisionnement in listeSeuilApprovisionnement">
+											<td class="hidden">
+												<!-- editable representat (text with validation) --> <span
+												editable-text="seuilApprovisionnement.id" e-name="id"
+												e-form="rowform" e-required> {{
+													seuilApprovisionnement.id || 'empty' }} </span>
+											</td>
+											<td ng-controller="DatepickerControllerMin">
+												<div class="col-sm-12">
+													<div class="input-group input-group-sm">
+														<input ng-model="seuilApprovisionnement.dateDebut"
+															class="form-control datepicker"
+															ng-disabled="!rowform.$visible"
+															datepicker-popup="{{format}}" is-open="opened"
+															datepicker-options="dateOptions"
+															date-="enabled(date, mode)" ng-required="true"
+															close-text="Close" />
+														<div class="input-group-btn">
+															<button type="button" class="btn btn-default"
+																ng-click="open($event)" ng-disabled="!rowform.$visible">
+																<i class="glyphicon glyphicon-calendar"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+											</td>
+											<td ng-controller="DatepickerControllerMax">
+												<div class="col-sm-12">
+													<div class="input-group input-group-sm">
+														<input ng-model="seuilApprovisionnement.dateFin"
+															class="form-control datepicker"
+															ng-disabled="!rowform.$visible"
+															datepicker-popup="{{format}}" is-open="opened"
+															datepicker-options="dateOptions"
+															date-="enabled(date, mode)" ng-required="true"
+															close-text="Close" />
+														<div class="input-group-btn">
+															<button type="button" class="btn btn-default"
+																ng-click="open($event)" ng-disabled="!rowform.$visible">
+																<i class="glyphicon glyphicon-calendar"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+											</td>
+											<td>
+												<!-- editable group (select-remote) --> <input
+												ng-model="listeSeuilApprovisionnement[$index].minSeuil"
+												class="form-control input-group-sm"
+												ng-disabled="!rowform.$visible" e-name="minSeuil"
+												e-form="rowform" value="{{seuilApprovisionnement.minSeuil}}"
+												id="min{{$index}}" />
+											</td>
+											<td>
+												<!-- editable representat (text with validation) --> <input
+												ng-model="seuilApprovisionnement.maxSeuil"
+												class="form-control input-group-sm"
+												ng-disabled="!rowform.$visible" e-name="maxSeuil"
+												e-form="rowform" value="{{seuilApprovisionnement.maxSeuil}}"
+												id="max{{$index}}" />
+
+											</td>
+											<td style="white-space: nowrap">
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveSeuilApprovisionnement($data, seuilApprovisionnement.id,$index)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="SeuilApprovisionnementInserree == seuilApprovisionnement">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddArticle(rowform, $index, seuilApprovisionnement.id, seuilApprovisionnement.minSeuil, listeSeuilApprovisionnement )"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"
+														ng-click="rowform.$show();showBC()"></button>
+													<button data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"
+														ng-click="removeSeuilApprovisionnement($index)">
+													</button>
+												</div>
+											</td>
+										</tr>
+								</table>
+								<button class="btn btn-action pull-right spacer2"
+									ng-click="ajoutSeuilApprovisionnement()">Ajouter</button>
+
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				<!-- Documents -->
+				<div class="title-ajout">Documents</div>
+				<div class="panel-body" ng-show="displayMode == 'edit'">
+					<div class="form-group">
+						<div class="row">
+							<div class="panel panel-primary">
+								<table
+									class="table table-bordered table-condensed table-head-color">
+									<thead>
+										<tr>
+											<th class="hidden" style="width: 10%">Id</th>
+											<th style="width: 30%">Type Document</th>
+											<th style="width: 40%">Document</th>
+											<th style="width: 20%"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="documentArticle in listeDocumentArticle">
+											<td class="hidden">
+												<!-- editable documentArticle (text with validation) --> <span
+												editable-text="documentArticle.id" e-name="id"
+												e-form="rowform" e-required> {{ documentArticle.id ||
+													'empty' }} </span>
+											</td>
+											<td>
+												<!-- editable group (select-remote) --> <span
+												editable-select="documentArticle.typeDocumentEntite"
+												e-ng-options="s.id as s.designation for s in ListTypeDocumentCache"
+												e-name="idTypeDocPI" e-form="rowform">
+													{{showStatus(documentArticle.typeDocumentEntite) }} </span>
+											</td>
+											<td ng-controller="UploadCtrl">
+												<!-- Upload Document File -->
+												<div class="form-group">
+													<div class="col-sm-12">
+														<div class="fileinput fileinput-new"
+															data-provides="fileinput">
+															<input class="hidden" type="text" ng-model="name" /> <span
+																class="btn btn-file btn-sm" style="background: #e6e9ee"
+																ng-show="!isUploaded && rowform.$visible"> <span
+																class="fileinput-new">Selectionner fichier</span> <input
+																type="file" class="custom-file-input"
+																file-model="myFile"> <span href="#"
+																class="close fileinput-exists pull-right"
+																style="float: none; padding: 0" data-dismiss="fileinput"
+																ng-show="!isUploaded && rowform.$visible">x</span>
+															</span> <span class="fileinput-filename"
+																ng-model="documentPi.path" e-name="path"
+																e-form="rowform" e-required>{{documentArticle.path}}</span>
+														</div>
+														<a class="btn btn-danger btn-sm pull-right"
+															ng-click="downloadFile(documentArticle.uidDocument)"
+															ng-href="{{urlFile}}" ng-show="!rowform.$visible"> <span
+															class="glyphicon glyphicon-cloud-download"></span>
+														</a> <a ng-click="uploadFile()"
+															ng-show="!isUploaded && rowform.$visible"
+															class="btn btn-info btn-sm fileinput-upload glyphicon glyphicon-cloud-upload pull-right">
+														</a> <a class="btn btn-success btn-sm pull-right"
+															href="D:/archive/{{documentArticle.uidDocument}}/{{documentArticle.path}}"
+															ng-show="!rowform.$visible"> <span
+															class="glyphicon glyphicon-cloud-download"></span>
+														</a>
+													</div>
+												</div> <input class="hidden"
+												ng-model="documentArticle.uidDocument" e-name="uidDocument"
+												e-form="rowform" e-required
+												value="{{ documentArticle.uidDocument ||
+															'empty' }} " />
+											</td>
+											<td style="white-space: nowrap">
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveDocumentArticle($data, documentArticle.id)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="DocumentArticleInserree == documentArticle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddArticle(rowform, $index, documentArticle.id, documentArticle.typeDocumentEntite, listeDocumentArticle )"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"
+														ng-click="rowform.$show()"></button>
+													<button data-nodrag
+														class="btn btn-sm glyphicon glyphicon-trash"
+														ng-click="removeDocumentArticle($index)"></button>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-action pull-right spacer2"
+									ng-click="ajoutDocumentArticle()">Ajouter</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- container Grid-->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-md-12">
+			<div class="title-ajout line">Liste Articles</div>
+			<div style="height: 500px;" ng-grid="gridOptions"></div>
+		</div>
+	</div>
+
+	<!-- Popup de la suppression -->
+	<div id="light" class="white_content">
+		<pop-up type="delete-article"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+	<!-- Fin Popup de la suppression -->
+</div>
+

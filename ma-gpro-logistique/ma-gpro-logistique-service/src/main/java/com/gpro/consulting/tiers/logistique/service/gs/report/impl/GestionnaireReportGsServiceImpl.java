@@ -99,6 +99,12 @@ public class GestionnaireReportGsServiceImpl implements IGestionnaireReportGsSer
 		return gestionnaireReportGsDomaine.generateListEtatStockBarCodeReport(request);
 	}
 
+	@Override
+	public FicheColisReportValue generateListEtatStockBarCodeFromBEReport(Long id) throws IOException {
+		// TODO Auto-generated method stub
+		return gestionnaireReportGsDomaine.generateListEtatStockBarCodeFromBEReport(id);
+	}
+
 
 	
 	

@@ -58,6 +58,29 @@ public class EntiteStockMouvementValue implements Comparable<Object>{
 	private Integer nbRouleau;
 	
 	
+	private String numeroBonEntree;
+	
+	
+	private Double qteEntree;
+	
+	
+	
+	public Double getQteEntree() {
+		return qteEntree;
+	}
+
+	public void setQteEntree(Double qteEntree) {
+		this.qteEntree = qteEntree;
+	}
+
+	public String getNumeroBonEntree() {
+		return numeroBonEntree;
+	}
+
+	public void setNumeroBonEntree(String numeroBonEntree) {
+		this.numeroBonEntree = numeroBonEntree;
+	}
+
 	public Double getPT() {
 		return PT;
 	}

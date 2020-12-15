@@ -62,4 +62,7 @@ public interface IGestionnaireReportGsService {
 	public FicheColisReportValue generateListEtatStockBarCodeReport(
 			RechercheMulticritereEntiteStockValue request) throws IOException;
 
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public FicheColisReportValue generateListEtatStockBarCodeFromBEReport(Long id) throws IOException;
+
 }

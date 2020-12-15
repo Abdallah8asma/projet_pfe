@@ -3110,5 +3110,66 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 
 		return detLivraisonVentePersistance.rechercherTop10Groupe(request);
 	}
+
+	@Override
+	public BonLivraisonReportValue getBonLivraisonParId(Long id, String avecPrix) throws IOException {
+		BonLivraisonReportValue bonLivraisonReport = new BonLivraisonReportValue();
+		LivraisonVenteValue livraisonVente = bonLivraisonPersitance.getBonLivraisonById(id);
+
+		// enrechissement des param du report
+		bonLivraisonReport.setFileName(REPORT_NAME_BONLIVRAISON);
+		if (livraisonVente.getNatureLivraison().equals("FINI")) {
+		bonLivraisonReport
+				.setReportStream(new FileInputStream("C://ERP/Lib/GPRO_BonLivraison/bon_livraison_report.jrxml"));
+		}
+		else {
+			bonLivraisonReport
+			.setReportStream(new FileInputStream("C://ERP/Lib/GPRO_BonLivraison/bon_livraison_fac_report.jrxml"));
+		}
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("p_PathLogo", "/report/logoSTIT.png");
+
+		if (livraisonVente.getNatureLivraison().equals("FINI")) {
+			params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/GPRO_BonLivraison/bon_livraison_sub_report.jasper");
+		} else if (livraisonVente.getNatureLivraison().equals("FACON")) {
+			params.put("SUBREPORT_INVENTAIRE_PATH",
+					"C://ERP/Lib/GPRO_BonLivraison/bon_livraison_facon_sub_report.jasper");
+		}
+
+		bonLivraisonReport.setParams(params);
+
+		if (avecPrix.equals(IConstanteLogistique.YES)) {
+
+			// enrichissement du report
+			enrichmentBonLivraisonReport(bonLivraisonReport, livraisonVente);
+
+			BigDecimal bigDecimal = new BigDecimal(livraisonVente.getMontantTTC());
+			BigDecimal bigDecimalScalled = bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP);
+			BigDecimal fraction = bigDecimalScalled.remainder(BigDecimal.ONE).multiply(new BigDecimal(1000));
+
+			int dinars = bigDecimal.intValue();
+			int millimes = fraction.intValue();
+
+			String montantTTCToWords = FrenchNumberToWords.convert(dinars) + DINARS + ET
+					+ FrenchNumberToWords.convert(millimes) + MILLIMES;
+
+			bonLivraisonReport.setMontantTTCToWords(montantTTCToWords);
+
+		} else {
+			// enrichissement du report
+			enrichmentBonLivraisonReportWithOutPrix(bonLivraisonReport, livraisonVente);
+
+		}
+
+		ArrayList<BonLivraisonReportValue> dataList = new ArrayList<BonLivraisonReportValue>();
+		dataList.add(bonLivraisonReport);
+
+		JRBeanCollectionDataSource jRBeanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
+
+		bonLivraisonReport.setJRBeanCollectionDataSourceProduct(jRBeanCollectionDataSource);
+
+		return bonLivraisonReport;
+	}
 	
 }

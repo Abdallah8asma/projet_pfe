@@ -1,0 +1,567 @@
+	<div class="container-fluid " ng-controller="MiseController"
+		style="background-color: #fff;">
+
+		<div class="row">
+
+			<!-- mainContent -->
+			<div class="col-md-9">
+				<!-- MenuReception -->
+				<div class="row">
+					<div class="col-md-12" style="background-color: #999; color: #fff">
+						<div class="col-md-8">
+							<span style="font-size: 30pt;"> <a href="#/"
+								data-toggle="modal" style="color: #fff; text-decoration: none;">
+									<i class="glyphicon glyphicon-cog"></i>
+							</a> Lot <em style="font-size: 50%"><b>{{miseCourante.reference}}</b></em></span>
+						</div>
+
+						<div class="col-md-4">
+							<span class="pull-right" style="zoom: 3"> <i ng-show="modePdf == 'actif'"
+								class="fa fa-file-text-o clickable" style="margin-right: 5px;"
+								ng-click=""></i> <i
+								class="fa fa-floppy-o clickable" style="margin-right: 5px;"
+								ng-click="sauvegarderAjout(miseCourante)"
+								ng-disabled="!creationMise.$valid;"></i> <i
+								class="fa fa-ban clickable" style="margin-right: 5px;"
+								ng-click="annulerAjout()"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- MainContent -->
+				<div class="row LineHeight">
+					<!-- RechercheMise -->
+					<div class="col-md-5" style="background-color: white;">
+						<!-- Critere de recherche -->
+						<div class="row" ng-show="displayMode != 'edit'">
+							<div class="col-sm-12">
+								<div class="title-ajout">Crit&eacute;re de recherche</div>
+								<div class="panel panel-primary">
+									<div class="panel-body">
+										<form class="form-horizontal" name="rechercheMiseFormCritere"
+											id="rechercheMiseFormCritere">
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="input-group">
+															<div class="input-group input-group-sm"
+																ng-controller="DatepickerDController">
+																<span class="input-group-addon label1" id="basic-addon1">Date
+																	Introduction</span> <input type="text" 
+																	class="form-control datepicker"
+																	datepicker-popup="{{format}}"
+																	ng-model="miseCouranteRecherche.dateIntroduction"
+																	is-open="opened" datepicker-options="dateOptions"
+																	date-="enabled(date, mode)" close-text="Close"
+																	max-date="{{maxToDay}}" />
+																<div class="input-group-btn">
+																	<button type="button" class="btn btn-default"
+																		ng-click="open($event)">
+																		<i class="glyphicon glyphicon-calendar"></i>
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-9">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Client
+															</span> 
+															<select ui-select2
+																ng-model="miseCouranteRecherche.client"
+																data-placeholder="Pick a client" style="width: 100%">
+																<option ng-repeat="client in listeClient"
+																	value="{{client.id}}">{{client.abreviation}}</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</form>
+										<div class="pull-right">
+											<button class="btn btn-action"
+												ng-click="rechercherMise(miseCouranteRecherche)">Recherecher</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+
+					<!-- Ajout/Modification/Consultation d'un BonRecepetion -->
+					<div class="col-md-7" style="background-color: white;">
+						<div class="row" ng-show="displayMode != 'edit'">
+							<div class="col-md-12">
+
+
+								<div class="title-ajout">Lot</div>
+								<div class="panel panel-primary">
+									<div class="panel-body">
+										<form id="creationMise" name="creationMise">
+										
+
+
+							<!-- 				<div class="form-group">
+												<div class="row">
+													<div class="col-sm-12">                    
+						
+														<div class="checkbox">
+														  <label>
+														   <span><strong>Finie:</strong>&nbsp;</span>
+														   <input icheck type="checkbox" value = "{{checkboxModel.isStitClient}}" ng-model="checkboxModel.isStitClient">
+														  </label>
+														</div>
+														
+													</div>
+												</div>
+											</div> -->
+												
+												
+											<div class="form-group">
+													<div class="row">
+														<div class="col-sm-12">
+															<div class="input-group input-group-sm">
+																<span class="input-group-addon label1" id="basic-addon1">R&eacute;f&eacute;rence</span>
+																<input class="form-control" 
+																	
+																
+																value="{{miseCourante.reference}}"
+																ng-model="miseCourante.reference"/>
+																
+															</div>
+														</div>
+													</div>
+												</div>
+								<!-- 			<div class="form-group">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">N&deg;
+																BR :</span>
+															modeCreationMise
+															<select ng-show="creation" ui-select2
+																data-placeholder="---" style="width: 100%"
+																ng-model="id"
+																ng-change="remplirMise(id)">
+																<option ng-repeat="bonReception in listeBonReceptionDrop"
+																	value="{{bonReception.idBonReception}}">{{bonReception.referenceBR}}</option>
+															</select>
+															modeModificationMise
+															<input ng-hide="creation" class="form-control"
+																readonly="readonly" value="{{resultatRechercheBonReception.refBonreception}}"/>
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Date
+																Livraison :</span>
+															modeCreationMise
+															<div ng-show="creation">
+																
+																<input ng-show="remplir" type="text" class="form-control datepicker"
+																readonly="readonly" value="{{resultatRechercheBonReception.dateLivraison | date:'dd-MM-yyyy'}}" />
+																
+																<input ng-hide="remplir" type="text" class="form-control datepicker"
+																placeholder=""  />
+															</div>
+															
+															modeModificationMise
+															<input ng-hide="creation" type="text" class="form-control datepicker"
+																readonly="readonly" value="{{resultatRechercheBonReception.dateLivraison | date:'dd-MM-yyyy'}}" />
+															
+															<div class="input-group-btn">
+																<span class="btn btn-default">
+																	<i class="glyphicon glyphicon-calendar"></i>
+																</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div> -->
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Client
+															</span>
+															<!--  -->
+															<select ui-select2
+																ng-model="miseCourante.partieintId"
+																data-placeholder="Pick a client" style="width: 100%">
+																<option ng-repeat="client in listeClient"
+																	value="{{client.id}}">{{client.abreviation}}</option>
+															</select>
+															<!--  -->
+															<!-- modeCreationMise -->
+														<!-- 	<div ng-show="creation">
+																<input ng-show="remplir" class="form-control"
+																	readonly="readonly" value="{{resultatRechercheBonReception.clientAbreviation}}"/>
+																
+															</div>
+															<div ng-show="creation">
+																<input ng-hide="remplir" class="form-control"
+																	placeholder="" disabled />
+															</div> -->
+
+															<!-- modeModificationMise -->
+															<!-- <input ng-hide="creation" class="form-control"
+																readonly="readonly" value="{{resultatRechercheBonReception.clientAbreviation}}"/> -->
+														</div>
+													</div>
+													
+													   
+														   <div class="col-sm-6">
+															   <div class="input-group input-group-sm">
+																	<span class="input-group-addon label1" id="basic-addon1">Produit
+																	</span>
+													
+																	<select ui-select2
+																		ng-model="miseCourante.produitId"
+																		data-placeholder="Pick a client" style="width: 100%">
+																		<option ng-repeat="client in listeProduit"
+																			value="{{client.id}}">{{client.designation}}</option>
+																	</select>
+														
+														
+														
+													
+														
+															<!--  -->
+															<!-- modeCreationMise -->
+														<!-- 	<div ng-show="creation">
+																<input ng-show="remplir" class="form-control"
+																	readonly="readonly" value="{{resultatRechercheBonReception.clientAbreviation}}"/>
+																
+															</div>
+															<div ng-show="creation">
+																<input ng-hide="remplir" class="form-control"
+																	placeholder="" disabled />
+															</div> -->
+
+															<!-- modeModificationMise -->
+															<!-- <input ng-hide="creation" class="form-control"
+																readonly="readonly" value="{{resultatRechercheBonReception.clientAbreviation}}"/> -->
+																</div>
+															</div>
+												</div>
+											</div>		
+													
+											<div class="form-group">
+														<div class="row">
+														   <div class="col-sm-6">
+																<div class="input-group input-group-sm">
+																	<span class="input-group-addon label1" id="basic-addon1">Lot MP
+																	</span>
+																	<!--  -->
+																	<select ui-select2 ng-show="creation"
+																		ng-model="miseCourante.refBonreception"
+																		ng-change="remplirReference(miseCourante.refBonreception)"
+																		data-placeholder="Pick a client" style="width: 100%">
+																		<option ng-repeat="client in listeLot"
+																			value="{{client}}">{{client}}</option>
+																	</select>
+																<input ng-hide="creation" class="form-control"
+																		readonly="readonly"
+																		value="{{miseCourante.refBonreception}}" />
+														
+														
+														
+													
+														
+															
+															<!-- modeCreationMise -->
+														<!-- 	<div ng-show="creation">
+																<input ng-show="remplir" class="form-control"
+																	readonly="readonly" value="{{resultatRechercheBonReception.clientAbreviation}}"/>
+																
+															</div>
+															<div ng-show="creation">
+																<input ng-hide="remplir" class="form-control"
+																	placeholder="" disabled />
+															</div> -->
+
+															<!-- modeModificationMise -->
+															<!-- <input ng-hide="creation" class="form-control"
+																readonly="readonly" value="{{resultatRechercheBonReception.clientAbreviation}}"/> -->
+														</div>
+													</div>
+											 
+													
+														<div class="col-sm-6">
+															   <div class="input-group input-group-sm">
+															   <span class="input-group-addon label1" id="basic-addon1">Poids
+																:</span> <input class="form-control"
+																ng-model="miseCourante.poids" />
+															  </div>
+														</div>
+													
+	<!-- 												<div class="col-sm-6"> 
+	<!-- 													<div class="input-group input-group-sm"> 
+	<!-- 														<span class="input-group-addon label1" id="basic-addon1">Produit 
+	<!-- 															:</span> -->
+	<!-- 															 
+	<!-- 														<select ui-select2 -->
+	<!-- 															ng-model="miseCouranteRecherche.client" -->
+	<!-- 															data-placeholder="Pick a client" style="width: 100%"> -->
+	<!-- 															<option ng-repeat="p in resultatRechercheBonReception" -->
+	<!-- 																value="{{p.reference}}">{{p.reference}}</option> -->
+	<!-- 														</select> -->
+	<!-- 														 
+	<!-- 														modeCreationMise -->
+	<!-- 														<div ng-show="creation">
+	<!-- 															<input ng-show="remplir" class="form-control" -->
+	<!-- 																readonly="readonly" value="{{resultatRechercheBonReception.reference}}" /> -->
+	<!-- 														</div> -->
+	<!-- 														<div ng-show="creation"> -->
+	<!-- 															<input ng-hide="remplir" class="form-control" -->
+	<!-- 																placeholder="" disabled /> -->
+	<!-- 														</div> -->
+	<!--  -->
+	<!-- 														modeModificationMise -->
+	<!-- 														<input ng-hide="creation" class="form-control"
+	<!-- 															readonly="readonly" value="{{resultatRechercheBonReception.reference}}" /> -->
+	<!--  --> 
+	<!-- 													</div> -->
+	<!-- 												</div> -->
+												</div>
+											</div>
+											 <!--</div>
+											</div>-->
+													
+											<!-- <div class="form-group">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Type
+																:</span>
+															modeCreationMise
+															<div ng-show="creation">
+																<input ng-show="remplir" class="form-control"
+																	readonly="readonly" value="{{resultatRechercheBonReception.sousFamille}}" />
+															</div>
+															<div ng-show="creation">
+																<input ng-hide="remplir" class="form-control"
+																	placeholder="" disabled />
+															</div>
+
+															modeModificationMise
+															<input ng-hide="creation" class="form-control"
+																readonly="readonly" value="{{resultatRechercheBonReception.sousFamille}}" />
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Composition
+																:</span> 
+																modeCreationMise
+															<div ng-show="creation">
+																<input ng-show="remplir" class="form-control"
+																	readonly="readonly" value="{{resultatRechercheBonReception.composition}}" />
+															</div>
+															<div ng-show="creation">
+																<input ng-hide="remplir" class="form-control"
+																	placeholder="" disabled />
+															</div>
+
+															modeModificationMise
+															<input ng-hide="creation" class="form-control"
+																readonly="readonly" value="{{resultatRechercheBonReception.composition}}" />
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Nbr.Mise
+																:</span> <input class="form-control" placeholder="-??-" disabled />
+														</div>
+													</div>
+													<div class="col-sm-6">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">M&eacute;trage
+																/Mise :</span>
+															modeCreationMise
+															<div ng-show="creation">
+																<input ng-show="remplir" class="form-control"
+																	readonly="readonly" value="{{resultatRechercheBonReception.metrageAnnonce}}" />
+															</div>
+															<div ng-show="creation">
+																<input ng-hide="remplir" class="form-control"
+																	placeholder="" disabled />
+															</div>
+
+															modeModificationMise
+															<input ng-hide="creation" class="form-control"
+																readonly="readonly" value="{{resultatRechercheBonReception.metrageAnnonce}}" />
+
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-6">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Poids
+																:</span> <input class="form-control"
+																ng-model="miseCourante.poids" />
+														</div>
+													</div>
+
+													<div class="col-sm-6">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Metrage
+																:</span> <input class="form-control"
+																ng-model="miseCourante.metrage" />
+														</div>
+													</div>
+												</div>
+											</div> 
+											<div class="form-group">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">Observations
+																:</span>
+															<textarea rows="12" cols="" class="form-control"
+																ng-model="miseCourante.observations"></textarea>
+
+														</div>
+													</div>
+												</div>
+											</div>-->
+										</form>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Grid -->
+				<div class="row">
+						<div class="row" ng-show="displayMode != 'edit'">
+							<div class="col-md-12">
+								<div class="title-ajout line">Liste des Lots</div>
+								<div panel-class="panel panel-primary">
+									<div style="height: 255px;" ng-grid="gridOptions"></div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+			<!-- endMainContent -->
+
+			<!-- leftContent -->
+			<div class="col-md-3 col-sm-6">
+				<div class="row">
+					<div class="col-md-12 ">
+						<a class="info-tiles tiles-danger" href="#">
+							<div class="tiles-heading">
+								<div class="pull-left">
+									<i class="fa fa-group"></i> Admin GREENLINE
+								</div>
+								<div class="pull-right"></div>
+							</div>
+							<div class="tiles-body" ng-controller='TimeCtrl'>
+								<div class="pull-left">
+									<i class="glyphicon glyphicon-time"></i>{{ clock |
+									date:'HH:mm'}}<br> <span
+										style="color: #fff; font-size: 16px"> {{ clock |
+										date:'EEEE' }} <br>{{ clock | date:'dd MMM' }}
+									</span>
+								</div>
+								<div class="pull-right">
+									<img src="images/admin.png" style="width: 80px; height: 80px" />
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<a class="info-tiles tiles-grape" href="#">
+							<div class="tiles-heading">
+								<div class="pull-left">
+									<i class="glyphicon glyphicon-comment"></i> Rappel / Annonces
+								</div>
+								<div class="pull-right"></div>
+							</div>
+							<div class="tiles-body">
+								<p>
+									Bienvenue &agrave; <b>GREENLINE</b>
+								<p />
+							</div>
+						</a>
+					</div>
+				</div>
+			<!-- 	<div class="row">
+					<div class="col-md-12">
+						<a class="info-tiles tiles-success" href="#">
+							<div class="tiles-heading">
+								<div class="pull-left">
+									<i class="glyphicon glyphicon-stats"></i> Statistiques
+									Journali&egrave;res
+								</div>
+								<div class="pull-right"></div>
+							</div>
+							<div class="tiles-body">
+								<div class="menu-item color">
+									<div class="row" style="margin-bottom: 5px; text-align: left;">
+										<div class="col-md-12">
+											<div class="col-md-3 green">
+												<span style="font-size: 20pt">--</span>
+											</div>
+											<div class="col-md-9">
+												<span style="font-size: 14pt; line-height: 2;">Rouleaux
+													Exp&eacute;di&eacute;s</span>
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin-bottom: 5px; text-align: left;">
+										<div class="col-md-12">
+											<div class="col-md-3 green">
+												<span style="font-size: 20pt">--%</span>
+											</div>
+											<div class="col-md-9">
+												<span style="font-size: 14pt; line-height: 2;">Rendement
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin-bottom: 5px; text-align: left;">
+										<div class="col-md-12">
+											<div class="col-md-3 green">
+												<span style="font-size: 20pt">--</span>
+											</div>
+											<div class="col-md-9">
+												<span style="font-size: 14pt; line-height: 2;">Retard
+													Prod./Liv.</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div> -->
+			</div>
+
+		</div><!-- endRow -->
+		
+		<!-- Popup de la suppression -->
+		<div id="light" class="white_content">
+			<pop-up type="delete-Mise"></pop-up>
+		</div>
+		<div id="fade" class="black_overlay"></div>
+		<!-- Fin Popup de la suppression -->
+	</div>
+

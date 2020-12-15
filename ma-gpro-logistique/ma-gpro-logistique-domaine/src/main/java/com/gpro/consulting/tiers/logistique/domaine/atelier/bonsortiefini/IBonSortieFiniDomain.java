@@ -2,6 +2,7 @@ package com.gpro.consulting.tiers.logistique.domaine.atelier.bonsortiefini;
 
 import java.util.List;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniOptimizedValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListProduitElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListTraitFaconElementValue;
@@ -93,4 +94,13 @@ public interface IBonSortieFiniDomain {
 	// Added on 03/10/2016, by Zeineb Medimagh
 	public ListTraitFaconElementValue getTraitFaconElementList(
 			List<String> refBonLivraisonList, Long factureVenteId);
+
+
+
+	public List<BonSortieFiniOptimizedValue> getBonSortieEnCours();
+	
+	public BonSortieFiniOptimizedValue getBonSortieFiniOptimizedById(Long id);
+	
+	public List<BonSortieFiniValue> getListByBonSortieList(List<String> refBonSortieList);
+
 }

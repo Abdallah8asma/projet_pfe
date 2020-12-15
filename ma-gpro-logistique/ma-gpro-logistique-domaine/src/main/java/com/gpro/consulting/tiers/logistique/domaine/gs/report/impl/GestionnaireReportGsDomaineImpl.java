@@ -1,6 +1,7 @@
 package com.gpro.consulting.tiers.logistique.domaine.gs.report.impl;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1106,11 +1107,87 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
 		List<ColisValue> list = new ArrayList<ColisValue>();
 			for (EntiteStockValue det :result.getEntiteStock()){
         	    ColisValue detail=new ColisValue();
+        	    
+        	    detail.setChoix(det.getNumeroBonEntree());
+        	    
         	    detail.setProduitReference(det.getId().toString());
         	      	    
         	    detail.setCouleurDesignation(det.getReferenceArticle());
         	    detail.setProduitDesignation(det.getLibelleArticle());
+        	    
+        	    detail.setPoidsNet(det.getQteEntree());
+        	    
+        	    
+        	    detail.setCarton(det.getReferenceLot());
+        	    
         	 
+        	
+        	list.add(detail);
+        }
+		
+		
+		report.setColisList(list);    
+		ArrayList<FicheColisReportValue> dataList = new ArrayList<FicheColisReportValue>();
+		dataList.add(report);
+
+
+		JRBeanCollectionDataSource jRBeanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
+		report.setjRBeanCollectionDataSource(jRBeanCollectionDataSource);
+
+		return report;
+	}
+
+	@Override
+	public FicheColisReportValue generateListEtatStockBarCodeFromBEReport(Long id) throws IOException {
+		// TODO Auto-generated method stub
+		FicheColisReportValue report = new FicheColisReportValue();
+
+		report.setFileName("article");
+		report.setReportStream(new FileInputStream("C:/ERP/Lib/COM_INDUSTRIEL/Stock_MP/Etat/Bar_Code/fiche_etat_bar_code.jrxml"));
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		
+		BonMouvementStockValue bm = bonMouvementDomaine.rechercheBonMouvementParId(id);
+		
+		List<Long> idsEntiteStock = new ArrayList<Long>();
+		
+		
+		if(bm.getMouvements() != null) {
+			
+			
+			
+			for(MouvementStockValue mv :bm.getMouvements()) {
+				
+				idsEntiteStock.add(mv.getEntiteStock());
+				
+				
+			}
+			
+			
+		}
+		
+		RechercheMulticritereEntiteStockValue request = new RechercheMulticritereEntiteStockValue();
+			
+		request.setIds(idsEntiteStock);
+
+		ResultatRechecheEntiteStockStockValue result = entiteStockPersistance.rechercherEntiteStockMultiCritere(request);
+		
+		List<ColisValue> list = new ArrayList<ColisValue>();
+			for (EntiteStockValue det :result.getEntiteStock()){
+        	    ColisValue detail=new ColisValue();
+        	    
+        	    detail.setChoix(det.getNumeroBonEntree());
+        	    
+        	    detail.setProduitReference(det.getId().toString());
+        	      	    
+        	    detail.setCouleurDesignation(det.getReferenceArticle());
+        	    detail.setProduitDesignation(det.getLibelleArticle());
+        	    
+        	    detail.setPoidsNet(det.getQteEntree());
+        	    
+        	 
+        	    detail.setCarton(det.getReferenceLot());
         	
         	list.add(detail);
         }

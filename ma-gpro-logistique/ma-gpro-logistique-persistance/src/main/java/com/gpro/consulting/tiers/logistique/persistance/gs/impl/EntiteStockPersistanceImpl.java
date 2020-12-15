@@ -86,6 +86,8 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
         private String MAGASIN_ID = "id";
         private String refLot="referenceLot";
         
+    	private String numeroBonEntree="numeroBonEntree";
+        
 	@Override
 	public ResultatRechecheEntiteStockStockValue rechercherEntiteStockMultiCritere(
 			RechercheMulticritereEntiteStockValue pRechercheMulticritereEntiteStockValue) {
@@ -264,6 +266,24 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 	    	
 	    	vWhereClause.add(vBuilder.in(vRootEntiteStock.get("id")).value(subquery).not());
 	    }
+	    
+	    
+	    
+	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getNumeroBonEntree())) {
+		      vWhereClause.add(vBuilder.equal(vRootEntiteStock.get(numeroBonEntree),
+		    	 pRechercheMulticritereEntiteStockValue.getNumeroBonEntree()));
+	    }
+	    
+	    
+	    if (pRechercheMulticritereEntiteStockValue.getIds() != null && pRechercheMulticritereEntiteStockValue.getIds().size()>0 ) {
+	    	
+	    	 vWhereClause.add(vRootEntiteStock.get(id).in(pRechercheMulticritereEntiteStockValue.getIds() ));
+	 	    
+		    //  vWhereClause.add(vBuilder.in(vRootEntiteStock.get(id)).value( pRechercheMulticritereEntiteStockValue.getIds())) ;
+		    		
+	    }
+	    
+	   
 	   
 	    /** execute query and do something with result **/
 

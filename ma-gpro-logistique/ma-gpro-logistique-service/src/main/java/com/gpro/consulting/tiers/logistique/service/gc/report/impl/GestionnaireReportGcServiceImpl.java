@@ -137,6 +137,12 @@ public class GestionnaireReportGcServiceImpl implements IGestionnaireReportGcSer
 		// TODO Auto-generated method stub
 		return gestionnaireReportGcDomaine.getFactureReportElementRecapValue(request);
 	}
+
+	@Override
+	public BonLivraisonReportValue getBonLivraisonReportValue(Long id, String avecPrix) throws IOException {
+		return gestionnaireReportGcDomaine.getBonLivraisonParId(id, avecPrix);
+		
+	}
 	
 
 }

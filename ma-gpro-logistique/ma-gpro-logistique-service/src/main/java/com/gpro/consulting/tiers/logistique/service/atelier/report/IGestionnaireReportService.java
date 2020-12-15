@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.RechercheMulticritereBonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.bonReception.value.BonReceptionReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.boninventaire.BonInventaireReportValue;
@@ -12,6 +13,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.report.bonsorti
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.inventaire.value.InventaireReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.rouleaufini.value.EtiquetteRouleauFiniReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.CritereRechercheRouleauStandardValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniValue;
 
 /**
  * GestionnaireReport Service Interface
@@ -39,4 +41,8 @@ public interface IGestionnaireReportService {
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public BonInventaireReportValue getBonInventaireReportValue(Long id, String avecMise) throws IOException ;
+	
+	
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public FicheColisReportValue genererListEtiquetteRouleauReport(RechercheMulticritereRouleauFiniValue request)throws IOException ;
 }

@@ -12,8 +12,9 @@ angular
 					'UrlAtelier',
 					'UrlCommun',
 					'$rootScope',
+					'$window',
 					function($scope, $http, $filter, $log, downloadService,
-							UrlAtelier, UrlCommun, $rootScope) {
+							UrlAtelier, UrlCommun, $rootScope,$window ) {
 						var data;
 
 						$scope.myData = [];
@@ -330,6 +331,8 @@ angular
 
 						$scope.rechercherStockSortie = function(
 								mouvementCourante) {
+
+									mouvementCourante.typeBonMouvement = 'SORTIE';
 							
 							$log.debug("----------mouvementCourante"+ JSON.stringify(mouvementCourante,null," "));
 							
@@ -729,18 +732,31 @@ angular
 
 						//generer rapport apres creation d'un bon de d'Sortie. mode : Modification/Consultation
 						$scope.downloadBonSortie = function(id) {
-							//$log.debug("-- id"+id);
+							
 							var url = UrlAtelier
 									+ "/reportgs/bonMouvementStockEntreeSortieById?id="
 									+ id + "&type=pdf";
-							downloadService.download(url).then(
-									function(success) {
-										$log.debug('success : ' + success);
-										//$scope.annulerAjout();
-									}, function(error) {
-										$log.debug('error : ' + error);
-									});
+
+									var a = document.createElement('a');
+										document.body.appendChild(a);
+										downloadService.download(url).then(function (result) {
+											var heasersFileName = result.headers(['content-disposition']).substring(17);
+										var fileName = heasersFileName.split('.');
+									var typeFile = result.headers(['content-type']);
+									var file = new Blob([result.data], {type: typeFile});
+									var fileURL = window.URL.createObjectURL(file);
+				
+				
+									a.download = fileName[0];
+									$window.open(fileURL)
+									 a.click();
+				
+										
+									$scope.traitementEnCoursGenererLivraison="false";
+										});
 						};
+
+
 
 						/*
 						 * ******* gestion gridStock*******

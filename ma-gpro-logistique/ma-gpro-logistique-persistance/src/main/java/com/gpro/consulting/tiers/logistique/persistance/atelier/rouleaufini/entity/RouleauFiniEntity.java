@@ -116,6 +116,130 @@ public class RouleauFiniEntity implements Serializable{
 		
 	@Column(name="DATE_INVENTAIRE")
 	private Calendar dateInventaire;
+	
+	
+	
+	
+	
+	
+	@Column(name="production")
+	private Boolean production;
+	
+	
+	@Column(name="type_of")
+	private String typeOf;
+	
+	@Column(name="user_id")
+	private Long userId;
+	
+	
+	@Column(name = "responsable")
+	private String responsable;
+	
+	
+	@Column(name="DATE_SORTIE_REEL")
+	private Calendar dateSortieReel;
+	
+	@Column(name="user_id_expedition")
+	private Long userIdExpedition;
+	
+	
+	@Column(name = "responsable_expedition")
+	private String responsableExpedition;
+	
+	
+	
+	@Column(name="PREMIER_METRAGE")
+	private Double premierMetrage;
+	
+	
+	
+	
+	@Column(name="number_of_box")
+	private Long numberOfBox;
+	
+	
+	
+	
+	
+	
+	
+	public Long getNumberOfBox() {
+		return numberOfBox;
+	}
+
+	public void setNumberOfBox(Long numberOfBox) {
+		this.numberOfBox = numberOfBox;
+	}
+
+	public Boolean getProduction() {
+		return production;
+	}
+
+	public void setProduction(Boolean production) {
+		this.production = production;
+	}
+
+	public String getTypeOf() {
+		return typeOf;
+	}
+
+	public void setTypeOf(String typeOf) {
+		this.typeOf = typeOf;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getResponsable() {
+		return responsable;
+	}
+
+	public void setResponsable(String responsable) {
+		this.responsable = responsable;
+	}
+
+	public Calendar getDateSortieReel() {
+		return dateSortieReel;
+	}
+
+	public void setDateSortieReel(Calendar dateSortieReel) {
+		this.dateSortieReel = dateSortieReel;
+	}
+
+	public Long getUserIdExpedition() {
+		return userIdExpedition;
+	}
+
+	public void setUserIdExpedition(Long userIdExpedition) {
+		this.userIdExpedition = userIdExpedition;
+	}
+
+	public String getResponsableExpedition() {
+		return responsableExpedition;
+	}
+
+	public void setResponsableExpedition(String responsableExpedition) {
+		this.responsableExpedition = responsableExpedition;
+	}
+
+	public Double getPremierMetrage() {
+		return premierMetrage;
+	}
+
+	public void setPremierMetrage(Double premierMetrage) {
+		this.premierMetrage = premierMetrage;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	/**
 	 * @return the id
 	 */

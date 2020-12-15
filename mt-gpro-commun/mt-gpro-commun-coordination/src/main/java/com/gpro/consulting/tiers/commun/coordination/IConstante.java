@@ -72,6 +72,11 @@ public interface IConstante {
 	public static String TABLE_OPERATION_ARTICLE_PRODUIT="eb_operation_articleprod";
 	
 	public static String TABLE_EB_UTILS = "eb_utils";
+	
+	
+	  /*Moule*/
+	  public static String TABLE_MOULE = "eb_moule";
+	  public static String SEQUENCE_MOULE="eml_seq";
 	//
 	// public static String TABLE_EB_PRODUITDEPOT="eb_produitdepot";
 

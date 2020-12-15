@@ -26,6 +26,188 @@ public class MiseValue {
 	
 	//added on 20/01/2016, by Wahid Gazzah
 	private Boolean fini;
+	
+	
+	
+	
+	//column from thermo
+
+
+	/** The partie intersse designation. */
+	private String partieIntersseDesignation;
+
+	/** The reference produit. */
+	private String referenceProduit;
+
+	/** The poid fini. */
+	private Double poidFini;
+
+	/** The quantite. */
+	private Double quantite;
+
+	/** The destination produit. */
+	private String destinationProduit;
+
+	/** The statut. */
+	private String statut;
+
+	/** The date fin. */
+	private Calendar dateFin;
+
+	
+	private String destination ;
+	
+	
+	private String packaging ;
+	
+	
+	private String typeEtiquette ;
+	
+	
+	private String typeOF;
+	
+	
+	private String machine;
+	
+
+	private Long qteProduite;
+	
+	
+
+	private Long nbrColis;
+	
+	
+	
+
+	private Calendar dateDebutProduction;
+	
+
+	private Calendar dateFinProduction;
+	
+	
+	private Double qteExpedition;
+	
+	
+	private Long nbrColisExpedition ;
+	
+	
+	
+	
+	
+	
+	
+	
+	public String getPartieIntersseDesignation() {
+		return partieIntersseDesignation;
+	}
+	public void setPartieIntersseDesignation(String partieIntersseDesignation) {
+		this.partieIntersseDesignation = partieIntersseDesignation;
+	}
+	public String getReferenceProduit() {
+		return referenceProduit;
+	}
+	public void setReferenceProduit(String referenceProduit) {
+		this.referenceProduit = referenceProduit;
+	}
+	public Double getPoidFini() {
+		return poidFini;
+	}
+	public void setPoidFini(Double poidFini) {
+		this.poidFini = poidFini;
+	}
+	public Double getQuantite() {
+		return quantite;
+	}
+	public void setQuantite(Double quantite) {
+		this.quantite = quantite;
+	}
+	public String getDestinationProduit() {
+		return destinationProduit;
+	}
+	public void setDestinationProduit(String destinationProduit) {
+		this.destinationProduit = destinationProduit;
+	}
+	public String getStatut() {
+		return statut;
+	}
+	public void setStatut(String statut) {
+		this.statut = statut;
+	}
+	public Calendar getDateFin() {
+		return dateFin;
+	}
+	public void setDateFin(Calendar dateFin) {
+		this.dateFin = dateFin;
+	}
+	public String getDestination() {
+		return destination;
+	}
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+	public String getPackaging() {
+		return packaging;
+	}
+	public void setPackaging(String packaging) {
+		this.packaging = packaging;
+	}
+	public String getTypeEtiquette() {
+		return typeEtiquette;
+	}
+	public void setTypeEtiquette(String typeEtiquette) {
+		this.typeEtiquette = typeEtiquette;
+	}
+	public String getTypeOF() {
+		return typeOF;
+	}
+	public void setTypeOF(String typeOF) {
+		this.typeOF = typeOF;
+	}
+	public String getMachine() {
+		return machine;
+	}
+	public void setMachine(String machine) {
+		this.machine = machine;
+	}
+	public Long getQteProduite() {
+		return qteProduite;
+	}
+	public void setQteProduite(Long qteProduite) {
+		this.qteProduite = qteProduite;
+	}
+	public Long getNbrColis() {
+		return nbrColis;
+	}
+	public void setNbrColis(Long nbrColis) {
+		this.nbrColis = nbrColis;
+	}
+	public Calendar getDateDebutProduction() {
+		return dateDebutProduction;
+	}
+	public void setDateDebutProduction(Calendar dateDebutProduction) {
+		this.dateDebutProduction = dateDebutProduction;
+	}
+	public Calendar getDateFinProduction() {
+		return dateFinProduction;
+	}
+	public void setDateFinProduction(Calendar dateFinProduction) {
+		this.dateFinProduction = dateFinProduction;
+	}
+	public Double getQteExpedition() {
+		return qteExpedition;
+	}
+	public void setQteExpedition(Double qteExpedition) {
+		this.qteExpedition = qteExpedition;
+	}
+	public Long getNbrColisExpedition() {
+		return nbrColisExpedition;
+	}
+	public void setNbrColisExpedition(Long nbrColisExpedition) {
+		this.nbrColisExpedition = nbrColisExpedition;
+	}
+	public Boolean getFini() {
+		return fini;
+	}
 	/**
 	 * @return the id
 	 */

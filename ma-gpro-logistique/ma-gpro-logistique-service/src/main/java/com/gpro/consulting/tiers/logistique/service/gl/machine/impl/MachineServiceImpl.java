@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.MachineOFValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.MachineValue;
 import com.gpro.consulting.tiers.logistique.domaine.gl.machine.IMachineDomaine;
 import com.gpro.consulting.tiers.logistique.service.gl.machine.IMachineService;
@@ -60,5 +61,12 @@ public class MachineServiceImpl implements IMachineService{
 	public void delete(Long id) {
 		//logger.info("delete: Delegating request to Domaine layer.");
 		machineDomaine.delete(id);
+	}
+	
+	
+	@Override
+	public List<MachineOFValue> getAllMachineOFvalue() {
+		// TODO Auto-generated method stub
+		return machineDomaine.getAllMachineOFvalue();
 	}
 }

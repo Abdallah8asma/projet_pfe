@@ -68,4 +68,13 @@ public interface IMiseService {
  
   @Transactional(readOnly = true, rollbackFor = Exception.class)
   public String listRefMiseParRefBR(String referenceBR);
+
+  @Transactional(readOnly = true, rollbackFor = Exception.class)
+  public List<MiseValue> getReferenceMise();
+  
+  
+  @Transactional(readOnly = true, rollbackFor = Exception.class)
+  public MiseValue rechercheMiseParReference(Long reference);
+  
+
 }

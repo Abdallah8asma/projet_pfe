@@ -55,6 +55,11 @@ public class PersistanceUtilitiesGs {
 		vEntiteStockMouvementValue.setQteActuel(pEntiteStockEntite.getQteActuelle());
 
 		vEntiteStockMouvementValue.setCone(pEntiteStockEntite.getConesActuel());
+		
+		vEntiteStockMouvementValue.setNumeroBonEntree(pEntiteStockEntite.getNumeroBonEntree());
+		
+		vEntiteStockMouvementValue.setQteEntree(pEntiteStockEntite.getQteEntree());
+		
 		if (pEntiteStockEntite.getArticle() != null) {
 
 			// vEntiteStockMouvementValue.se
@@ -249,6 +254,12 @@ public class PersistanceUtilitiesGs {
 		entiteStock.setReferenceLot(pEntiteStockEntite.getReferenceLot());
 		entiteStock.setRouleauxActuel(pEntiteStockEntite.getRouleauxActuel());
 		entiteStock.setRouleauxReserve(pEntiteStockEntite.getRouleauxReserve());
+		
+		entiteStock.setNumeroBonEntree(pEntiteStockEntite.getNumeroBonEntree());
+		
+		entiteStock.setQteEntree(pEntiteStockEntite.getQteEntree());
+		
+		
 		return entiteStock;
 	}
 
@@ -280,6 +291,12 @@ public class PersistanceUtilitiesGs {
 		entiteStock.setReferenceLot(pEntiteStockValue.getReferenceLot());
 		entiteStock.setRouleauxActuel(pEntiteStockValue.getRouleauxActuel());
 		entiteStock.setRouleauxReserve(pEntiteStockValue.getRouleauxReserve());
+		
+		entiteStock.setNumeroBonEntree(pEntiteStockValue.getNumeroBonEntree());
+		
+		entiteStock.setQteEntree(pEntiteStockValue.getQteEntree());
+		
+		
 		return entiteStock;
 	}
 

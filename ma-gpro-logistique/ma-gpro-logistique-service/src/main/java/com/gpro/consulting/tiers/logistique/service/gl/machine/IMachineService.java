@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.MachineOFValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.MachineValue;
 
 /**
@@ -26,5 +27,8 @@ public interface IMachineService {
 
 	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public void delete(Long id);
+	
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<MachineOFValue> getAllMachineOFvalue();
 	
 }

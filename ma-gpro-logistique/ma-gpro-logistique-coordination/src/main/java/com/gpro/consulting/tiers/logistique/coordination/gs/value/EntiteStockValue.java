@@ -35,6 +35,30 @@ public class EntiteStockValue implements Comparable<Object>{
 	private Double pmp;
 	private String OA ;
 	
+	private String numeroBonEntree;
+	
+	private Double qteEntree;
+	
+	
+	
+	
+	
+	public Double getQteEntree() {
+		return qteEntree;
+	}
+
+	public void setQteEntree(Double qteEntree) {
+		this.qteEntree = qteEntree;
+	}
+
+	public String getNumeroBonEntree() {
+		return numeroBonEntree;
+	}
+
+	public void setNumeroBonEntree(String numeroBonEntree) {
+		this.numeroBonEntree = numeroBonEntree;
+	}
+
 	public EntiteStockValue() {
 		// TODO Auto-generated constructor stub
 	}

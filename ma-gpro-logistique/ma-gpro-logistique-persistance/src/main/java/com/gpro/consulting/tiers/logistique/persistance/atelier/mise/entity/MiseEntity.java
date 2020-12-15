@@ -64,16 +64,234 @@ public class MiseEntity implements Serializable {
 	@Column(name = "FINI")
 	private Boolean fini;
 	
+	
+	//nouvelles column from thermo
+	
+
+
+	/** The poid fini. */
+	@Column(name = "poid_fini")
+	private Double poidFini;
+
+	/** The quantite. */
+	@Column(name = "quantite")
+	private Double quantite;
+
+	/** The destination produit. */
+	@Column(name = "destination_produit")
+	private String destinationProduit;
+
+	/** The statut. */
+	@Column(name = "statut")
+	private String statut;
+
+	/** The date fin. */
+	@Column(name = "date_fin")
+	private Calendar dateFin;
+
+	
+	@Column(name = "destination")
+
+    private String destination ;
+	
+	@Column(name = "packaging")
+
+	private String packaging ;
+	
+	@Column(name = "type_etiquette")
+
+	private String typeEtiquette ;
+	
+	
+	@Column(name = "type_of")
+
+	private String typeOF ;
+	
+	
+	@Column(name = "machine")
+
+	private String machine ;
+	
+	/** The quantity produced. */
+	@Column(name = "qte_produite")
+	private Long qteProduite;
+	
+	
+	/** The number of colis. */
+	@Column(name = "nb_colis")
+	private Long nbrColis;
+	
+	
+	/** The date debut production. */
+	@Column(name = "debut_production")
+	private Calendar dateDebutProduction;
+	
+	/** The date fin production. */
+	@Column(name = "fin_production")
+	private Calendar dateFinProduction;
+	
+	
+	
+	/** The shipped quantity . */
+	@Column(name = "qte_expedition")
+	private Double qteExpedition;
+	
+	
+	/** The number of shipped colis . */
+	@Column(name = "nbr_colis_expedition")
+	private Long nbrColisExpedition ;
+	
+	
+	
+	
+	
+	
+	
 	/* Les traitements. 
 	@OneToMany(mappedBy = "mise", cascade = CascadeType.ALL)
 	private Set<TraitementMiseEntity> listeTraitements;
 	 */
+	
+	
+	
 	
 	/**
 	 * @return the id
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	public Double getPoidFini() {
+		return poidFini;
+	}
+
+	public void setPoidFini(Double poidFini) {
+		this.poidFini = poidFini;
+	}
+
+	public Double getQuantite() {
+		return quantite;
+	}
+
+	public void setQuantite(Double quantite) {
+		this.quantite = quantite;
+	}
+
+	public String getDestinationProduit() {
+		return destinationProduit;
+	}
+
+	public void setDestinationProduit(String destinationProduit) {
+		this.destinationProduit = destinationProduit;
+	}
+
+	public String getStatut() {
+		return statut;
+	}
+
+	public void setStatut(String statut) {
+		this.statut = statut;
+	}
+
+	public Calendar getDateFin() {
+		return dateFin;
+	}
+
+	public void setDateFin(Calendar dateFin) {
+		this.dateFin = dateFin;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public String getPackaging() {
+		return packaging;
+	}
+
+	public void setPackaging(String packaging) {
+		this.packaging = packaging;
+	}
+
+	public String getTypeEtiquette() {
+		return typeEtiquette;
+	}
+
+	public void setTypeEtiquette(String typeEtiquette) {
+		this.typeEtiquette = typeEtiquette;
+	}
+
+	public String getTypeOF() {
+		return typeOF;
+	}
+
+	public void setTypeOF(String typeOF) {
+		this.typeOF = typeOF;
+	}
+
+	public String getMachine() {
+		return machine;
+	}
+
+	public void setMachine(String machine) {
+		this.machine = machine;
+	}
+
+	public Long getQteProduite() {
+		return qteProduite;
+	}
+
+	public void setQteProduite(Long qteProduite) {
+		this.qteProduite = qteProduite;
+	}
+
+	public Long getNbrColis() {
+		return nbrColis;
+	}
+
+	public void setNbrColis(Long nbrColis) {
+		this.nbrColis = nbrColis;
+	}
+
+	public Calendar getDateDebutProduction() {
+		return dateDebutProduction;
+	}
+
+	public void setDateDebutProduction(Calendar dateDebutProduction) {
+		this.dateDebutProduction = dateDebutProduction;
+	}
+
+	public Calendar getDateFinProduction() {
+		return dateFinProduction;
+	}
+
+	public void setDateFinProduction(Calendar dateFinProduction) {
+		this.dateFinProduction = dateFinProduction;
+	}
+
+	public Double getQteExpedition() {
+		return qteExpedition;
+	}
+
+	public void setQteExpedition(Double qteExpedition) {
+		this.qteExpedition = qteExpedition;
+	}
+
+	public Long getNbrColisExpedition() {
+		return nbrColisExpedition;
+	}
+
+	public void setNbrColisExpedition(Long nbrColisExpedition) {
+		this.nbrColisExpedition = nbrColisExpedition;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	/**
