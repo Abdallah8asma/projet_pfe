@@ -456,17 +456,20 @@ angular
 							$scope.creerRouleau = function(rouleau) {
 								//Affectation du attributs recherchés par la le BonReception
 								
-								$log.debug("--FiniMise "+$scope.resultatRechercheMise.fini);
+							//	$log.debug("--FiniMise "+$scope.resultatRechercheMise.fini);
 								rouleau.fini = $scope.resultatRechercheMise.fini;
 								
-								$log.debug("--ReferenceMise "+$scope.resultatRechercheMise.referenceMise);
+							//	$log.debug("--ReferenceMise "+$scope.resultatRechercheMise.referenceMise);
 								rouleau.referenceMise = $scope.resultatRechercheMise.referenceMise;
 								
-								$log.debug("--TissuId "+ $scope.resultatRechercheMise.produitId);
+							//	$log.debug("--TissuId "+ $scope.resultatRechercheMise.produitId);
 								rouleau.produitId = $scope.resultatRechercheMise.produitId;
 								
-								$log.debug("--ClientId "+ $scope.clientId.status);
+							//	$log.debug("--ClientId "+ $scope.clientId.status);
 								rouleau.partieInteresseeId = $scope.clientId.status;
+
+
+								rouleau.ids = null;
 								
 								$http
 									.post(
@@ -475,9 +478,20 @@ angular
 												rouleau)
 										.success(
 												function(idBon) {
-													$log.debug("Success Creation IdBon : "+idBon);
+													//$log.debug("Success Creation IdBon : "+idBon);
 
-													// getRouleau
+
+												//	var listIdRouleau = idBon.split(",");
+
+
+													if(idBon.indexOf(",") === -1){
+
+														console.log("creation une rouleau");
+
+
+												
+
+	// getRouleau
 													$http.get(UrlAtelier + "/rouleaufini/getRouleauFiniById:"
 																		 + idBon)
 															.success(
@@ -492,6 +506,20 @@ angular
 																		//$scope.annulerAjout();
 																	});
 
+
+													}else
+
+													{
+
+														console.log("creation plusieurs rouleau");
+
+														rouleau.ids =  idBon; 
+														$scope.rouleauCourant.ids =  idBon;
+
+													}
+
+												
+
 																	 
 												});
 
@@ -499,6 +527,8 @@ angular
 
 							// modifier bon de reception
 							$scope.modifierRouleau = function(rouleau) {
+
+								rouleau.ids = null;
 								$http
 										.post(
 												UrlAtelier
@@ -608,6 +638,143 @@ angular
 
 
 							};
+
+
+
+								/**** Etiquette PDF ** */
+								$scope.downloadListRouleau = function(rechrechRouleau) {
+									$log.debug("-- id"+id);
+									
+									var url = UrlAtelier+"/report/list-etiquette-rouleau?reference="+ rechrechRouleau.reference
+									
+									+ "&refMise="+rechrechRouleau.refMise  
+
+									+ "&produitId="+rechrechRouleau.produitId  
+
+									+ "&numberOfBox="+rechrechRouleau.numberOfBox 
+									
+
+									+ "&metrage="+rechrechRouleau.metrage  
+
+
+									+ "&ids="+rechrechRouleau.ids   
+
+
+									+ "&type=pdf";
+								/*	downloadService.download(url)
+											.then(
+													function(success) {
+														$log.debug('success : '
+																+ success);
+														$scope.annulerAjout();
+													},
+													function(error) {
+														$log.debug('error : '
+																+ error);
+													});*/
+	
+													var a = document.createElement('a');
+													document.body.appendChild(a);
+													downloadService.download(url).then(function (result) {
+														var heasersFileName = result.headers(['content-disposition']).substring(17);
+														var fileName = heasersFileName.split('.');
+													var typeFile = result.headers(['content-type']);
+													var file = new Blob([result.data], {type: typeFile});
+													var fileURL = window.URL.createObjectURL(file);
+													if(typeFile == 'application/vnd.ms-excel'){
+							
+													 // a.href = fileURL;
+														 a.download = fileName[0];
+														$window.open(fileURL)
+														 a.click();
+									
+													}else{
+												
+														a.href = fileURL;
+														a.download = fileName[0];
+													 $window.open(fileURL)
+														a.click();
+									
+													}
+													$scope.traitementEnCoursGenererAll = "false";
+					
+													 
+													});
+	
+	
+								};
+
+
+
+
+
+
+
+
+
+
+
+								$scope.downloadListRouleauParIds = function(ids) {
+									
+									
+									var url = UrlAtelier+"/report/list-etiquette-rouleau?reference="+ ""
+									
+									+ "&refMise="+""  
+
+									+ "&produitId="+""  
+
+									+ "&numberOfBox="+""
+									
+
+									+ "&metrage="+""
+
+
+									+ "&ids="+ids   
+
+
+									+ "&type=pdf";
+								/*	downloadService.download(url)
+											.then(
+													function(success) {
+														$log.debug('success : '
+																+ success);
+														$scope.annulerAjout();
+													},
+													function(error) {
+														$log.debug('error : '
+																+ error);
+													});*/
+	
+													var a = document.createElement('a');
+													document.body.appendChild(a);
+													downloadService.download(url).then(function (result) {
+														var heasersFileName = result.headers(['content-disposition']).substring(17);
+														var fileName = heasersFileName.split('.');
+													var typeFile = result.headers(['content-type']);
+													var file = new Blob([result.data], {type: typeFile});
+													var fileURL = window.URL.createObjectURL(file);
+													if(typeFile == 'application/vnd.ms-excel'){
+							
+													 // a.href = fileURL;
+														 a.download = fileName[0];
+														$window.open(fileURL)
+														 a.click();
+									
+													}else{
+												
+														a.href = fileURL;
+														a.download = fileName[0];
+													 $window.open(fileURL)
+														a.click();
+									
+													}
+													$scope.traitementEnCoursGenererAll = "false";
+					
+													 
+													});
+	
+	
+								};
 
 							// print Bon Reception methode Windows.open
 							// javascript

@@ -15,7 +15,15 @@
 						</a> Colis <em style="font-size: 50%"><b>{{rouleauCourant.reference}}</b></em></span>
 					</div>
 					<div class="col-md-4">
-						<span class="pull-right" style="zoom: 3"> <i
+						<span class="pull-right" style="zoom: 3"> 
+							
+							<i
+							ng-show="rouleauCourant.ids != null"
+							class="glyphicon glyphicon-align-justify clickable"
+							style="margin-right: 5px;" ng-click="downloadListRouleauParIds(rouleauCourant.ids)"></i>
+							
+							
+							<i
 							ng-show="modePdf == 'actif'"
 							class="glyphicon glyphicon-barcode clickable"
 							style="margin-right: 5px;" ng-click="download(rouleauCourant.id)"></i>
@@ -57,6 +65,33 @@
 												</div>
 											</div>
 										</div>
+
+
+										<div class="form-group">
+											<div class="row">
+											
+
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Nbr Colis
+															:</span> <input class="form-control"
+															ng-model="rouleauCourantRecherche.numberOfBox" />
+													</div>
+												</div>	
+
+
+
+
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Quantite
+															 :</span> <input class="form-control"
+															ng-model="rouleauCourantRecherche.metrage" />
+													</div>
+												</div>
+
+											</div>
+										</div>
 								<!-- 		<div class="form-group">
 											<div class="row">
 												<div class="col-sm-12">
@@ -74,6 +109,10 @@
 										</div> -->
 									</form>
 									<div class="pull-right">
+										<button class="btn btn-action"
+											ng-click="genererListRouleau(rouleauCourantRecherche)">Generer</button>
+
+
 										<button class="btn btn-action"
 											ng-click="rechercherRouleau(rouleauCourantRecherche)">Recherecher</button>
 									</div>
@@ -270,6 +309,20 @@
 										</div> -->
 										<div class="form-group">
 											<div class="row">
+
+
+
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Nbr Colis
+															:</span> <input class="form-control"
+															ng-model="rouleauCourant.numberOfBox" />
+													</div>
+												</div>	
+
+
+
+
 												<div class="col-sm-6">
 													<div class="input-group input-group-sm">
 														<span class="input-group-addon label1" id="basic-addon1">Quantite
@@ -277,6 +330,12 @@
 															ng-model="rouleauCourant.metrage" />
 													</div>
 												</div>
+
+
+
+												
+
+	
 
 												<!-- <div class="col-sm-6">
 													<div class="input-group input-group-sm">
@@ -305,13 +364,11 @@
 													</div>
 												</div> -->
 										
-												<div class="col-sm-6">
-													<div class="input-group input-group-sm">
-														<span class="input-group-addon label1" id="basic-addon1">Info
-															:</span> <input class="form-control"
-															ng-model="rouleauCourant.info" />
-													</div>
-												</div>	
+										
+
+
+
+
 												</div>
 										</div>
 										<div class="form-group">
@@ -351,8 +408,17 @@
 										</div>
 										<div class="form-group">
 											<div class="row">
-											<div class="col-sm-6">
-											</div>
+										
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Info
+															:</span> <input class="form-control"
+															ng-model="rouleauCourant.info" />
+													</div>
+												</div>
+
+
+
 											<div class="col-sm-6">
 													<div class="input-group input-group-sm">
 														<span class="input-group-addon label1" id="basic-addon1">Poids.OF
@@ -404,7 +470,7 @@
 					<a class="info-tiles tiles-danger" href="#">
 						<div class="tiles-heading">
 							<div class="pull-left">
-								<i class="fa fa-group"></i> {{getFromStorageName()}}
+								<i class="fa fa-group"></i>        <!--          ajout username            -->
 							</div>
 							<div class="pull-right"></div>
 						</div>
