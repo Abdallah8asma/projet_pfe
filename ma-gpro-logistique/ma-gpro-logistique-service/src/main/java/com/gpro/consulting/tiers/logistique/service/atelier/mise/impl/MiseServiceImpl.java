@@ -1,17 +1,20 @@
 package com.gpro.consulting.tiers.logistique.service.atelier.mise.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.ElementRechecheMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.MiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.RechercheMulticritereMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.ResultatRechercheMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.TraitementMiseValue;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.mise.IMiseDomaine;
+import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 import com.gpro.consulting.tiers.logistique.service.atelier.mise.IMiseService;
 
 /**
@@ -28,6 +31,8 @@ public class MiseServiceImpl implements IMiseService {
 	@Autowired
 	private IMiseDomaine vMiseDomaine;
 
+	@Autowired
+	private IGestionnaireLogistiqueCacheService gestionnaireLogistiqueCacheService;
 	/**
 	 * {@inheritDoc}
 	 */
@@ -66,7 +71,27 @@ public class MiseServiceImpl implements IMiseService {
 	public ResultatRechercheMiseValue rechercherMiseMultiCritere(
 			RechercheMulticritereMiseValue pRechercheMiseMulitCritere) {
 
-		return vMiseDomaine.rechercherMiseMultiCritere(pRechercheMiseMulitCritere);
+
+		
+		//System.out.println("inn rech mise multicritère..");
+
+		ResultatRechercheMiseValue vResultatRecherche = vMiseDomaine.rechercherMiseMultiCritere(pRechercheMiseMulitCritere);
+
+		// Traitement : transformation de l'Id a sa propre Designation
+		for (ElementRechecheMiseValue elementRechecheMise : vResultatRecherche.getListeElementRechecheMiseValeur()) {
+
+			// Client, Produit
+			Map<String, String> mapA = gestionnaireLogistiqueCacheService.rechercherDesignationParId(
+					elementRechecheMise.getAbreviationClient(), elementRechecheMise.getDesignationProduit(), null,
+					null);
+			// Client
+			elementRechecheMise.setAbreviationClientDesignation(mapA.get("client"));
+			// Produit (Tissu)
+			elementRechecheMise.setReferenceProduit(mapA.get("produitRef"));
+
+		}
+		
+		return vResultatRecherche;
 	}
 
 	@Override

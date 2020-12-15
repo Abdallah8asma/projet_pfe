@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.RechercheMulticritereBonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.bonReception.value.BonReceptionReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.boninventaire.BonInventaireReportValue;
@@ -15,6 +16,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.report.bonsorti
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.inventaire.value.InventaireReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.rouleaufini.value.EtiquetteRouleauFiniReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.CritereRechercheRouleauStandardValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.report.IGestionnaireReportDomaine;
 import com.gpro.consulting.tiers.logistique.service.atelier.report.IGestionnaireReportService;
 
@@ -72,6 +74,13 @@ public class GestionnaireReportServiceImpl implements IGestionnaireReportService
 	@Override
 	public BonInventaireReportValue getBonInventaireReportValue(Long id, String avecMise) throws IOException {
 		return gestionnaireReportDomaine.getBonInventaireReportValue(id,avecMise);
+	}
+
+	@Override
+	public FicheColisReportValue genererListEtiquetteRouleauReport(RechercheMulticritereRouleauFiniValue request)
+			throws IOException {
+		// TODO Auto-generated method stub
+		return gestionnaireReportDomaine.genererListEtiquetteRouleauReport(request);
 	}
 	
 }
