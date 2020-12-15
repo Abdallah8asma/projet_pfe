@@ -13,8 +13,9 @@ angular
 						'downloadService',
 						'UrlCommun',
 						'UrlAtelier',
+						'$window',
 						function($scope, $filter, $http, $log, $parse,
-								downloadService, UrlCommun, UrlAtelier) {
+								downloadService, UrlCommun, UrlAtelier,$window) {
 
 						
 							
@@ -516,7 +517,7 @@ angular
                                                        },
                                                             {
                                                     	   	field : 'machine',
-                                                    	   	displayName : 'Mach.',
+                                                    	   	displayName : 'Machine',
                                                     	   	width : '4%'
                                                        },
 												                  
@@ -537,35 +538,35 @@ angular
 														},
 														{
 															field : 'dateDebutProduction',
-															displayName : 'Begin Prod. Date',
+															displayName : 'D.Deb. Prod.',
 															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss"',
 															width : '10%'
 														},
 														{
 															field : 'dateFinProduction',
-															displayName : 'End Prod. Date',
+															displayName : 'D.Fin Prod.',
 															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss"',
 															width : '10%'
 														},
 														{
 															field : 'dateFin',
-															displayName : 'Calculated End Date',
+															displayName : 'Date Fin Calc.',
 															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss"',
 															width : '10%'
 														},
 														{
 															field : 'quantite',
-															displayName : 'Quantity',
+															displayName : 'Qte',
 															width : '6%'
 														},
 														{
 															field : 'qteProduite',
-															displayName : 'Prod.Qty',
+															displayName : 'Qte Prod.',
 															width : '6%'
 														},
 														{
 															field : 'qteExpedition',
-															displayName : 'Ship.Qty',
+															displayName : 'Qte Exp.',
 															width : '6%'
 														},
 														{
@@ -575,7 +576,7 @@ angular
 														},
 														{
 															field : 'nbrColisExpedition',
-															displayName : 'Ship.Pack.',
+															displayName : 'Nbr Col. Exp.',
 															width : '6%'
 														}/*,
 														{

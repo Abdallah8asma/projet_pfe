@@ -579,10 +579,10 @@
 											ng-change="onChangeOfType(miseCourant.typeOF)"
 											 >
 											<option value="">Tous</option>
-											<option value="Injection">Injection</option>
+										<!-- 	<option value="Injection">Injection</option>
 											<option value="Tempographie">Tempographie</option>
 											<option value="Assemblage">Assemblage</option>
-											<option value="Spread">Spread</option>
+											<option value="Spread">Spread</option> -->
 										</select>
 									</div>
 								</div>
@@ -764,7 +764,7 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ">Qantité by box</label>
+											<label class="input-group-text ">Qantité par Colis</label>
 										</div>
 										<input type="number" step="any" class="form-control" ng-model="miseCourant.poidFini"
 										      ng-init="miseCourant.poidFini=''"
@@ -832,9 +832,9 @@
 										    ng-init="miseCourant.statut =''" >
 											 <option value="">TOUS</option>
 											 <option value="Preparation">Preparation</option>
-											 <option value="En cours">Doing</option>
-											 <option value="Produit">Done</option>
-											 <option value="Livre">Shipped</option>
+											 <option value="En cours">En cours</option>
+											 <option value="Produit">Produit</option>
+											 <option value="Livre">Livre</option>
 										</select>
 									</div>
 								</div>
