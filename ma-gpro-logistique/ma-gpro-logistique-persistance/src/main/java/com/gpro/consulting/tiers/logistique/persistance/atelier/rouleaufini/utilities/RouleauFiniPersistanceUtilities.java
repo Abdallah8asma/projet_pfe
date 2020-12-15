@@ -113,6 +113,8 @@ public class RouleauFiniPersistanceUtilities {
 	    rouleauFiniEntity.setResponsableExpedition(value.getResponsableExpedition());
 	    rouleauFiniEntity.setPremierMetrage(value.getPremierMetrage());
 	    
+	    
+	    rouleauFiniEntity.setNumberOfBox(value.getNumberOfBox());
 
 
 	    return rouleauFiniEntity;
@@ -208,6 +210,8 @@ public class RouleauFiniPersistanceUtilities {
 		dto.setResponsableExpedition(entity.getResponsableExpedition());
 		dto.setPremierMetrage(entity.getPremierMetrage());
 		
+		dto.setNumberOfBox(entity.getNumberOfBox());
+		
 		
 		return dto;
 	}
@@ -256,6 +260,7 @@ public class RouleauFiniPersistanceUtilities {
 		entity.setResponsableExpedition(dto.getResponsableExpedition());
 		entity.setPremierMetrage(dto.getPremierMetrage());
 		
+		entity.setNumberOfBox(dto.getNumberOfBox());
 		
 		return entity;
 	}
@@ -329,6 +334,8 @@ public class RouleauFiniPersistanceUtilities {
 		entity.setResponsableExpedition(dto.getResponsableExpedition());
 		entity.setPremierMetrage(dto.getPremierMetrage());
 	
+		
+		entity.setNumberOfBox(dto.getNumberOfBox());
 
 		
 		return entity;

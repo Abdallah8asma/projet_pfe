@@ -44,7 +44,7 @@ public class MiseRestImpl {
 				.rechercherMiseMultiCritere(pRechercheMulticritereMise);
 
 		// Traitement : transformation de l'Id a sa propre Designation
-		for (ElementRechecheMiseValue elementRechecheMise : vResultatRecherche.getListeElementRechecheMiseValeur()) {
+	/*	for (ElementRechecheMiseValue elementRechecheMise : vResultatRecherche.getListeElementRechecheMiseValeur()) {
 
 			// Client, Produit
 			Map<String, String> mapA = gestionnaireLogistiqueCacheService.rechercherDesignationParId(
@@ -55,7 +55,7 @@ public class MiseRestImpl {
 			// Produit (Tissu)
 			elementRechecheMise.setReferenceProduit(mapA.get("produitRef"));
 
-		}
+		}*/
 		return vResultatRecherche;
 	}
 

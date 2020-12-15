@@ -3,7 +3,9 @@ package com.gpro.consulting.tiers.logistique.rest.atelier.report.impl;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.erp.socle.j2ee.mt.socle.report.impl.AbstractGestionnaireDownloadImpl;
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.RechercheMulticritereBonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.bonReception.value.BonReceptionReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.boninventaire.BonInventaireReportValue;
@@ -26,6 +29,8 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.report.bonsorti
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.inventaire.value.InventaireReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.report.rouleaufini.value.EtiquetteRouleauFiniReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.CritereRechercheRouleauStandardValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereEntiteStockValue;
 import com.gpro.consulting.tiers.logistique.service.atelier.report.IGestionnaireReportService;
 
 /**
@@ -71,6 +76,89 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 		this.download( type , etiquette.getReportStream() ,etiquette.getParams(), 
 				etiquette.getFileName(),etiquette.getJRBeanCollectionDataSource(), response);
 		
+	}
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value="/list-etiquette-rouleau", method = RequestMethod.GET)
+	public void genererListEtiquetteRouleauReport(
+			
+			
+			
+			@RequestParam("reference") String reference,
+
+			@RequestParam("refMise") String refMise,
+			
+			@RequestParam("produitId") String produitId,
+			
+			@RequestParam("numberOfBox") String numberOfBox,
+			
+			@RequestParam("metrage") String metrage,
+			
+			@RequestParam("ids") String ids,
+			
+			@RequestParam("type") String type,
+	
+			
+			
+			HttpServletResponse response ) throws JRException, IOException {
+		
+		logger.info("Generate a {} Report genererListEtiquetteRouleauReport",type);
+		
+		RechercheMulticritereRouleauFiniValue request = new RechercheMulticritereRouleauFiniValue();
+		
+		request.setReference(reference);
+		
+		request.setRefMise(refMise);
+		
+		
+		if(isNotEmty(ids)) {
+			
+			List<Long> idLong = new ArrayList<Long>();
+			
+			String[] idString =  ids.split(",") ;
+			
+			for(String id : idString) {
+				idLong.add(Long.parseLong(id)) ;
+			}
+				
+			
+		
+			request.setIds(idLong);
+			
+		}
+		
+			
+	 
+		
+		if(isNotEmty(metrage)) 
+			request.setMetrage(Double.parseDouble(metrage)) ;
+		
+	
+		
+		if(isNotEmty(numberOfBox)) 
+			request.setNumberOfBox(Long.parseLong(numberOfBox)) ;
+		
+		
+		if(isNotEmty(produitId))
+			request.setProduitId(Long.parseLong(produitId));
+		
+		
+		
+		
+
+		
+    	FicheColisReportValue report = gestionnaireReportService.genererListEtiquetteRouleauReport(request);
+		
+	
+		
+		this.download( type , report.getReportStream() ,report.getParams(), 
+				report.getFileName(),report.getjRBeanCollectionDataSource(), response);
+
 	}
 	
 	@RequestMapping(value="/inventaire", method = RequestMethod.GET)
@@ -195,7 +283,7 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 	}
 	
 	private boolean isNotEmty(String value) {
-		return value != null && !"".equals(value);
+		return value != null && !"".equals(value) && !"undefined".equals(value) && !"null".equals(value);
 
 	}
 	

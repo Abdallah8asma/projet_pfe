@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.tiers.commun.coordination.report.value.ColisValue;
+import com.gpro.consulting.tiers.commun.coordination.report.value.FicheColisReportValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamilleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
@@ -46,8 +48,12 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.val
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ElementResultatRechecheRouleauStandardComparator;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ElementResultatRechecheRouleauStandardValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.EntrepotValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ResultatRechecheRouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ResultatRechecheRouleauStandardValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RouleauFiniValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.value.EntiteStockValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechecheEntiteStockStockValue;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.cache.IGestionnaireLogistiqueCacheDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.report.IGestionnaireReportDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.rouleaufini.IChoixRouleauDomaine;
@@ -822,6 +828,94 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 
 		return bonSortieFinieReportValue;
 
+	}
+
+	@Override
+	public FicheColisReportValue genererListEtiquetteRouleauReport(RechercheMulticritereRouleauFiniValue request)
+			throws IOException {
+		FicheColisReportValue report = new FicheColisReportValue();
+
+		report.setFileName("colis");
+		
+		
+		report.setReportStream(new FileInputStream("C://ERP/Lib/STIT_EtiquetteRouleauFini/list/etiquette_rouleau_fini_list_report.jrxml"));
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+
+	
+		
+		
+		ResultatRechecheRouleauFiniValue result = rouleauFiniPersistance.rechercherMultiCritere(request);
+		
+		List<ColisValue> list = new ArrayList<ColisValue>();
+			for (RouleauFiniValue rouleauFinivalue :result.getList()){
+				
+				
+				
+        	    ColisValue etiquetteRouleauFiniReportValue=new ColisValue();
+        	    
+        	    
+        	    
+        		etiquetteRouleauFiniReportValue.setProduitReference(rouleauFinivalue.getReference());
+        		
+        		etiquetteRouleauFiniReportValue.setPoidsNet(rouleauFinivalue.getMetrage());
+        		
+        		
+        		
+        		etiquetteRouleauFiniReportValue.setCouleurDesignation(rouleauFinivalue.getReferenceMise());
+        		
+        		
+
+
+        		// traitement
+        		PartieInteresseValue partieInteresseValueTrouve = null;
+        		ProduitValue produitValue = null;
+
+        
+        			if (rouleauFinivalue.getProduitId() != null) {
+        				PartieInteresseValue partieInteresseValue = new PartieInteresseValue();
+        				partieInteresseValue.setId(rouleauFinivalue.getPartieInteresseeId());
+        				partieInteresseValueTrouve = partieInteresseePersistance
+        						.recherchePartieInteresseeParId(partieInteresseValue);
+        				produitValue = produitPersistance.rechercheProduitById(rouleauFinivalue.getProduitId());
+        			}
+        		
+
+        		if (partieInteresseValueTrouve != null) {
+        			etiquetteRouleauFiniReportValue.setCarton(partieInteresseValueTrouve.getAbreviation());
+        		}
+
+        		if (produitValue != null) {
+        			etiquetteRouleauFiniReportValue.setProduitDesignation(produitValue.getDesignation());
+        			//etiquetteRouleauFiniReportValue.setComposition(produitValue.getComposition());
+        			etiquetteRouleauFiniReportValue.setQuantiteDesignation(produitValue.getReference());
+        		}
+
+        		if (rouleauFinivalue.getChoix() != null) {
+        			ChoixRouleauValue choixRouleau = choixRouleauDomaine.getChoixRouleauById(rouleauFinivalue.getChoix());
+        			if (choixRouleau != null) {
+        				etiquetteRouleauFiniReportValue.setChoix(choixRouleau.getDesignation());
+        			}
+        		}
+        	    
+        	    
+        	            	    
+        			    
+        	 
+        	
+        	list.add(etiquetteRouleauFiniReportValue);
+        }
+		
+		
+		report.setColisList(list);    
+		ArrayList<FicheColisReportValue> dataList = new ArrayList<FicheColisReportValue>();
+		dataList.add(report);
+
+
+		JRBeanCollectionDataSource jRBeanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
+		report.setjRBeanCollectionDataSource(jRBeanCollectionDataSource);
+
+		return report;
 	}
 
 }

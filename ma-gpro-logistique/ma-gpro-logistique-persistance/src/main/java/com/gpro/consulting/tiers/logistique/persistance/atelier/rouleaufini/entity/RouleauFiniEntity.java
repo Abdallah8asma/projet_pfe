@@ -155,10 +155,23 @@ public class RouleauFiniEntity implements Serializable{
 	
 	
 	
+	@Column(name="number_of_box")
+	private Long numberOfBox;
 	
 	
 	
 	
+	
+	
+	
+	public Long getNumberOfBox() {
+		return numberOfBox;
+	}
+
+	public void setNumberOfBox(Long numberOfBox) {
+		this.numberOfBox = numberOfBox;
+	}
+
 	public Boolean getProduction() {
 		return production;
 	}

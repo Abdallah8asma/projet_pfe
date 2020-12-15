@@ -1,5 +1,6 @@
 package com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value;
 
+import java.util.List;
 
 /**
  * @author Wahid Gazzah
@@ -16,6 +17,41 @@ public class RechercheMulticritereRouleauFiniValue {
 	private Long partieInteresseeId;
 	private String infoModif;
 	
+	
+	
+	
+	private Long numberOfBox;
+	
+	private Double metrage;	
+	
+	private List<Long> ids;
+	
+	
+	
+	
+	
+	
+	
+	
+	public Long getNumberOfBox() {
+		return numberOfBox;
+	}
+	public void setNumberOfBox(Long numberOfBox) {
+		this.numberOfBox = numberOfBox;
+	}
+	public List<Long> getIds() {
+		return ids;
+	}
+	public void setIds(List<Long> ids) {
+		this.ids = ids;
+	}
+
+	public Double getMetrage() {
+		return metrage;
+	}
+	public void setMetrage(Double metrage) {
+		this.metrage = metrage;
+	}
 	public String getReference() {
 		return reference;
 	}

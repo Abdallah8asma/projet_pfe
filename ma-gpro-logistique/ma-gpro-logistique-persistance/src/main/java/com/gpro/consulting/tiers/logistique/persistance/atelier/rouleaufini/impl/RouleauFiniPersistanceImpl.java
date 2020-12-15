@@ -78,6 +78,8 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 	
 	private String PREDICATE_USERNAME = "responsable";
 	
+	private String PREDICATE_numberOfBox = "numberOfBox";
+	
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -140,6 +142,30 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 			Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getInfoModif().toUpperCase() + PERCENT);
 			whereClause.add(criteriaBuilder.and(predicate));
 		}
+		
+		
+		
+		// Set request.refMise on whereClause if not null
+	    if (request.getMetrage() != null) {
+	    	whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_METRAGE), request.getMetrage()));
+	    }	  
+	    
+	    
+	 // Set request.refMise on whereClause if not null
+	    if (request.getNumberOfBox() != null) {
+	    	whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_numberOfBox), request.getNumberOfBox()));
+	    }	
+		
+		
+	    if (request.getIds() != null && request.getIds().size()>0 ) {
+	    	
+	    	whereClause.add(root.get("id").in(request.getIds() ));
+	 	    
+		    //  vWhereClause.add(vBuilder.in(vRootEntiteStock.get(id)).value( pRechercheMulticritereEntiteStockValue.getIds())) ;
+		    		
+	    }
+	    
+	    
 	    
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	    List < RouleauFiniEntity > resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
