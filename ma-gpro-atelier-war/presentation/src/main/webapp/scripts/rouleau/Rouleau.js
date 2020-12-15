@@ -643,7 +643,7 @@ angular
 
 								/**** Etiquette PDF ** */
 								$scope.downloadListRouleau = function(rechrechRouleau) {
-									$log.debug("-- id"+id);
+									//$log.debug("-- id"+id);
 									
 									var url = UrlAtelier+"/report/list-etiquette-rouleau?reference="+ rechrechRouleau.reference
 									

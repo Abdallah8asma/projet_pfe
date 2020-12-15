@@ -58,6 +58,8 @@
 														</span> <select ui-select2
 															ng-model="rouleauCourantRecherche.refMise"
 															data-placeholder="choisir .." style="width: 100%">
+
+															<option value="">Tous</option>
 															<option ng-repeat="mise in listeMise"
 																value="{{mise.reference}}">{{mise.reference}}</option>
 														</select>
@@ -110,7 +112,7 @@
 									</form>
 									<div class="pull-right">
 										<button class="btn btn-action"
-											ng-click="genererListRouleau(rouleauCourantRecherche)">Generer</button>
+											ng-click="downloadListRouleau(rouleauCourantRecherche)">Generer</button>
 
 
 										<button class="btn btn-action"

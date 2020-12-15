@@ -12,7 +12,8 @@ angular
 						'downloadService',
 						'UrlCommun',
 						'UrlAtelier',
-						function($scope, $filter, $http ,$log, downloadService, UrlCommun, UrlAtelier) {
+						'$window',
+						function($scope, $filter, $http ,$log, downloadService, UrlCommun, UrlAtelier,$window) {
 							// Déclaration des variables globales utilisés
 							$log.info("============= nouveau stockage ===============");
 							var data;
@@ -50,7 +51,7 @@ angular
 								}else{
 									$log.debug("==dateEtat Undefined");
 								}
-								var url = UrlAtelier+"/report/inventaire?client="+inventaireCourant.client+
+							/*	var url = UrlAtelier+"/report/inventaire?client="+inventaireCourant.client+
 															  "&nombreColieDu="+inventaireCourant.nombreColieDu+
 															  "&nombreColieA="+inventaireCourant.nombreColieA+
 															  "&entrepot="+inventaireCourant.entrepot+
@@ -63,7 +64,25 @@ angular
 															  "&fini="+inventaireCourant.fini+
 															  "&orderBy="+inventaireCourant.orderBy+
 															  "&type=pdf";
-								downloadService.download(url)
+
+															  */
+
+
+															  var url = UrlAtelier+"/report/inventaire?client="+inventaireCourant.client+
+															  "&nombreColieDu="+
+															  "&nombreColieA="+
+															 
+														
+															  "&metrageDu="+inventaireCourant.metrageDu+
+															  "&metrageA="+inventaireCourant.metrageA+
+															  "&dateEtat="+newdateFormat+
+															  "&designationQuiContient="+inventaireCourant.designationQuiContient+
+															  "&referenceProduit="+inventaireCourant.idProduitParRef+
+															  "&fini="+inventaireCourant.fini+
+															  "&orderBy="+inventaireCourant.orderBy+
+															  "&typeOf="+inventaireCourant.typeOf+
+															  "&type=pdf";
+								/*downloadService.download(url)
 										.then(
 												function(success) {
 													$log.debug('success : '
@@ -72,7 +91,40 @@ angular
 												function(error) {
 													$log.debug('error : '
 															+ error);
-												});
+												});*/
+
+
+
+
+												var a = document.createElement('a');
+												document.body.appendChild(a);
+												downloadService.download(url).then(function (result) {
+													var heasersFileName = result.headers(['content-disposition']).substring(17);
+												var fileName = heasersFileName.split('.');
+											var typeFile = result.headers(['content-type']);
+											var file = new Blob([result.data], {type: typeFile});
+											var fileURL = window.URL.createObjectURL(file);
+											if(typeFile == 'application/vnd.ms-excel'){
+					
+											 // a.href = fileURL;
+												 a.download = fileName[0];
+												$window.open(fileURL)
+												 a.click();
+							
+											}else{
+										
+												a.href = fileURL;
+												a.download = fileName[0];
+											 $window.open(fileURL)
+												a.click();
+							
+											}
+												
+											$scope.traitementEnCoursGenererLivraison="false";
+		
+											});
+
+
 							};
 
 							// Annulation de l'ajout
