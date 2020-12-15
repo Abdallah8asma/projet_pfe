@@ -111,6 +111,7 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 		
 		RechercheMulticritereRouleauFiniValue request = new RechercheMulticritereRouleauFiniValue();
 		
+		
 		request.setReference(reference);
 		
 		request.setRefMise(refMise);
@@ -161,34 +162,37 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 
 	}
 	
-	@RequestMapping(value="/inventaire", method = RequestMethod.GET)
+	@RequestMapping(value = "/inventaire", method = RequestMethod.GET)
 	public void genererInventaireReport(
-//			@RequestParam("critereRechercheRouleauStandard") CritereRechercheRouleauStandardValue critereRechercheRouleauStandard,
-			@RequestParam("client") Long client,
+			// @RequestParam("critereRechercheRouleauStandard")
+			// CritereRechercheRouleauStandardValue
+			// critereRechercheRouleauStandard,
+			@RequestParam("client") Long client, 
+			
 			@RequestParam("nombreColieDu") Long nombreColieDu,
-			@RequestParam("nombreColieA") Long nombreColieA,
-			@RequestParam("entrepot") Long entrepot,
-			@RequestParam("emplacement") String emplacement,
+			
+			@RequestParam("nombreColieA") Long nombreColieA, 
+			//@RequestParam("entrepot") Long entrepot,
+		//	@RequestParam("emplacement") String emplacement, 
 			@RequestParam("metrageDu") Double metrageDu,
-			@RequestParam("metrageA") Double metrageA,
-			@RequestParam("dateEtat") String dateEtat,
+			@RequestParam("metrageA") Double metrageA, @RequestParam("dateEtat") String dateEtat,
 			@RequestParam("designationQuiContient") String designationQuiContient,
-			
-			//Hajer Amri 06/02/2017
+
+			// Hajer Amri 06/02/2017
 			@RequestParam("referenceProduit") String referenceProduit,
-			
-			@RequestParam("fini") String fini,
-			@RequestParam("orderBy") String orderBy,
-			@RequestParam("type") String type,HttpServletResponse response) throws JRException, IOException {
-		
-		//logger.info("Generate a {} Report Inventaire",type);
-		
+
+			@RequestParam("fini") String fini, @RequestParam("orderBy") String orderBy,
+			@RequestParam("typeOf") String typeOf,
+			@RequestParam("type") String type, HttpServletResponse response) throws JRException, IOException {
+
+		logger.info("Generate a {} Report Inventaire", type);
+
 		CritereRechercheRouleauStandardValue critereRechercheRouleauStandard = new CritereRechercheRouleauStandardValue();
 		critereRechercheRouleauStandard.setClient(client);
 		critereRechercheRouleauStandard.setDateEtat(stringToCalendar(dateEtat));
 		critereRechercheRouleauStandard.setDesignationQuiContient(designationQuiContient);
-		critereRechercheRouleauStandard.setEmplacement(emplacement);
-		critereRechercheRouleauStandard.setEntrepot(entrepot);
+	//	critereRechercheRouleauStandard.setEmplacement(emplacement);
+	//	critereRechercheRouleauStandard.setEntrepot(entrepot);
 		critereRechercheRouleauStandard.setMetrageA(metrageA);
 		critereRechercheRouleauStandard.setMetrageDu(metrageDu);
 		critereRechercheRouleauStandard.setNombreColieA(nombreColieA);
@@ -196,12 +200,17 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 		critereRechercheRouleauStandard.setOrderBy(orderBy);
 		critereRechercheRouleauStandard.setFini(fini);
 		critereRechercheRouleauStandard.setReferenceProduit(referenceProduit);
-
 		
-		InventaireReportValue vInventaireReport = gestionnaireReportService.getInventaireReportValue(critereRechercheRouleauStandard);
+		
+		
+		
+		//critereRechercheRouleauStandard.setTypeOf(typeOf);
 
-		this.download( type , vInventaireReport.getReportStream() ,vInventaireReport.getParams(), 
-				vInventaireReport.getFileName(),vInventaireReport.getJRBeanCollectionDataSource(), response);
+		InventaireReportValue vInventaireReport = gestionnaireReportService
+				.getInventaireReportValue(critereRechercheRouleauStandard);
+
+		this.download(type, vInventaireReport.getReportStream(), vInventaireReport.getParams(),
+				vInventaireReport.getFileName(), vInventaireReport.getJRBeanCollectionDataSource(), response);
 	}
 	
 	@RequestMapping(value="/bonsortiefini", method = RequestMethod.GET)

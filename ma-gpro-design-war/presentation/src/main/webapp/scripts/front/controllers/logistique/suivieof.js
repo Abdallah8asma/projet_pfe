@@ -291,12 +291,44 @@ angular
 														 + "&type=pdf";
 									
 				                   $log.debug("-- URL--- :" + url );
-								 downloadService.download(url).then(
+								/* downloadService.download(url).then(
 										 function(success) {
 											// $log.debug('success : ' + success);
 										 }, function(error) {
 											// $log.debug('error : ' + error);
-										 });
+										 });*/
+
+
+
+										 var a = document.createElement('a');
+										 document.body.appendChild(a);
+										 downloadService.download(url).then(function (result) {
+											 var heasersFileName = result.headers(['content-disposition']).substring(17);
+										 var fileName = heasersFileName.split('.');
+									 var typeFile = result.headers(['content-type']);
+									 var file = new Blob([result.data], {type: typeFile});
+									 var fileURL = window.URL.createObjectURL(file);
+									 if(typeFile == 'application/vnd.ms-excel'){
+			 
+									  // a.href = fileURL;
+										  a.download = fileName[0];
+										 $window.open(fileURL)
+										  a.click();
+					 
+									 }else{
+								 
+										 a.href = fileURL;
+										 a.download = fileName[0];
+									  $window.open(fileURL)
+										 a.click();
+					 
+									 }
+										 
+									 $scope.traitementEnCoursGenererLivraison="false";
+ 
+									 });
+
+
 							 };
 							 
 							 $scope.generateReport= function (objectCourant)

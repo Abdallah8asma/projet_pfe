@@ -481,7 +481,7 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 	  }
 
 	private boolean estNonVide(String val) {
-		return val != null && !"".equals(val);
+		return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 	}
 	
 	
