@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -23,6 +25,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersista
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInteresseePersistance;
 import com.gpro.consulting.tiers.logistique.coordination.gs.IConstante;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.BonMouvementStockReportValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatGlobalMapValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatMouvementElementReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatMouvementReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.report.value.EtatStockDetailleElementReportValue;
@@ -966,7 +969,7 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
 		return report;
 	}
 
-	private void enrichissementEtatGlobalReport(EtatStockGlobalReportValue report, ResultatRechecheEntiteStockStockValue result) {
+	private void enrichissementEtatGlobalReport1(EtatStockGlobalReportValue report, ResultatRechecheEntiteStockStockValue result) {
 		
 		Set<EtatStockGlobalElementReportValue> elementsList = report.getElementsList();
 		
@@ -1001,6 +1004,123 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
 		report.setElementsList(elementsList);
 		
 	}
+	
+	
+	  private void enrichissementEtatGlobalReport(EtatStockGlobalReportValue report, ResultatRechecheEntiteStockStockValue result)
+	  {
+	    Set<EtatStockGlobalElementReportValue> elementsList = report.getElementsList();
+	    
+	    Map<Long, EtatGlobalMapValue> mapByArticle = new HashMap();
+	    for (EntiteStockValue entiteStock : result.getEntiteStock())
+	    {
+	      Double qteActuelleTotal = Double.valueOf(0.0D);
+	      Double qteReserveeTotal = Double.valueOf(0.0D);
+	      Long nbRouleauxActuelsTotal = Long.valueOf(0L);
+	      Long nbRouleauxReservesTotal = Long.valueOf(0L);
+	      
+	      EtatGlobalMapValue values = new EtatGlobalMapValue();
+	      if (mapByArticle.containsKey(entiteStock.getArticle()))
+	      {
+	        values = (EtatGlobalMapValue)mapByArticle.get(entiteStock.getArticle());
+	        
+	        qteActuelleTotal = values.getQteActuelle();
+	        qteReserveeTotal = values.getQteReservee();
+	        nbRouleauxActuelsTotal = values.getNbRouleauxActuels();
+	        nbRouleauxReservesTotal = values.getNbRouleauxReserves();
+	        if (entiteStock.getQteActuelle() != null)
+	        {
+	          qteActuelleTotal = Double.valueOf(qteActuelleTotal.doubleValue() + entiteStock.getQteActuelle().doubleValue());
+	          values.setQteActuelle(qteActuelleTotal);
+	        }
+	        if (entiteStock.getQteReservee() != null)
+	        {
+	          qteReserveeTotal = Double.valueOf(qteReserveeTotal.doubleValue() + entiteStock.getQteReservee().doubleValue());
+	          values.setQteReservee(qteReserveeTotal);
+	        }
+	        if (entiteStock.getRouleauxActuel() != null)
+	        {
+	          nbRouleauxActuelsTotal = Long.valueOf(nbRouleauxActuelsTotal.longValue() + entiteStock.getRouleauxActuel().longValue());
+	          values.setNbRouleauxActuels(nbRouleauxActuelsTotal);
+	        }
+	        if (entiteStock.getRouleauxReserve() != null)
+	        {
+	          nbRouleauxReservesTotal = Long.valueOf(nbRouleauxReservesTotal.longValue() + entiteStock.getRouleauxReserve().longValue());
+	          values.setNbRouleauxReserves(nbRouleauxReservesTotal);
+	        }
+	        
+	        mapByArticle.remove(entiteStock.getArticle());
+	        mapByArticle.put(entiteStock.getArticle(), values);
+	      }
+	      else
+	      {
+	        values.setId(entiteStock.getId());
+	        
+	        values.setQteActuelle(Double.valueOf(0.0D));
+	        if (entiteStock.getQteActuelle() != null) {
+	          values.setQteActuelle(entiteStock.getQteActuelle());
+	        }
+	        values.setQteReservee(Double.valueOf(0.0D));
+	        if (entiteStock.getQteReservee() != null) {
+	          values.setQteReservee(entiteStock.getQteReservee());
+	        }
+	        values.setNbRouleauxActuels(Long.valueOf(0L));
+	        if (entiteStock.getRouleauxActuel() != null) {
+	          values.setNbRouleauxActuels(entiteStock.getRouleauxActuel());
+	        }
+	        values.setNbRouleauxReserves(Long.valueOf(0L));
+	        if (entiteStock.getRouleauxReserve() != null) {
+	          values.setNbRouleauxReserves(entiteStock.getRouleauxReserve());
+	        }
+	        if (entiteStock.getArticle() != null)
+	        {
+	          values.setFamilleArticle(entiteStock.getFamilleArticle());
+	          values.setLibelleArticle(entiteStock.getLibelleArticle());
+	          values.setReferenceArticle(entiteStock.getReferenceArticle());
+	          values.setPrixTotal(entiteStock.getPrixTotal());
+	          values.setPrixUnitaire(entiteStock.getPrixUnitaire());
+	          values.setIdArticle(entiteStock.getArticle());
+	          mapByArticle.put(entiteStock.getArticle(), values);
+	        }
+	      }
+	    }
+	    Iterator it = mapByArticle.entrySet().iterator();
+	    while (it.hasNext())
+	    {
+	      Map.Entry<Long, Map<Double, Long>> pair = (Map.Entry)it.next();
+	      
+	      Long currentArticle = (Long)pair.getKey();
+	      
+	      ArticleValue article = this.articlePersistance.getArticleParId(currentArticle);
+	      
+	      EtatStockGlobalElementReportValue elementReport = new EtatStockGlobalElementReportValue();
+	      
+	      EtatGlobalMapValue values = (EtatGlobalMapValue)mapByArticle.get(currentArticle);
+	      elementReport.setId(values.getId());
+	      elementReport.setQteActuelle(values.getQteActuelle());
+	      elementReport.setQteReservee(values.getQteReservee());
+	      
+	      if (values.getQteActuelle() != null && values.getQteReservee() != null)
+	      elementReport.setQteLibre(values.getQteActuelle()-values.getQteReservee());
+	      
+	      elementReport.setRouleauActuel(values.getNbRouleauxActuels());
+	      elementReport.setRouleauReserve(values.getNbRouleauxReserves());
+	      
+	      elementReport.setFamilleArticle(values.getFamilleArticle());
+	      elementReport.setLibelleArticle(values.getLibelleArticle());
+	      elementReport.setPrixTotal(values.getPrixTotal());
+	      elementReport.setPrixUnitaire(values.getPrixUnitaire());
+	      elementReport.setReferenceArticle(values.getReferenceArticle());
+	      elementReport.setArticleId(values.getIdArticle());
+	      
+	      elementReport.setCouleur(article.getCouleur());
+	      elementReport.setCodeFournisseur(article.getCodeFournisseur());
+	      elementReport.setProducteur(article.getProducteur());
+	      elementReport.setSousFamilleArticle(article.getSousFamilleArtEntiteDesignation());
+	      
+	      elementsList.add(elementReport);
+	    }
+	    report.setElementsList(elementsList);
+	  }
 	
 	@Override
 	public EtatStockDetailleReportValue getEtatDetailleReport(RechercheMulticritereEntiteStockValue critere, String typeRapport) throws IOException {
