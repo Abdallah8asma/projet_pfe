@@ -316,7 +316,7 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 	}
 	
 	  private boolean estNonVide(String val) {
-		    return val != null && !"".equals(val) && !"undefined".equals(val);
+		    return val != null && !"".equals(val) && !"undefined".equals(val)  && !"null".equals(val);
 
 		  }
 
