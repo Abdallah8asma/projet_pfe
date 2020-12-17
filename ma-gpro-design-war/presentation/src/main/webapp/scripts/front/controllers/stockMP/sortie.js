@@ -783,11 +783,11 @@ angular
 												},
 												{
 													field : 'date | date : "dd/MM/yyyy"',
-													displayName : 'Output Date'
+													displayName : 'Date Sortie'
 												},
 												{
 													field : 'raisonMouvementDesignation',
-													displayName : ' Output Reason'
+													displayName : ' Raison Sortie '
 												},
 
 												{
@@ -796,7 +796,7 @@ angular
 												},
 												{
 													field : 'etat',
-													displayName : 'State'
+													displayName : 'Etat'
 												},
 												{   field: 'origineFSuiveuse',
 													displayName: 'PDA Origin',

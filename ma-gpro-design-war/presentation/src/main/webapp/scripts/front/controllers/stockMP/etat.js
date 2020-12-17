@@ -408,7 +408,7 @@ angular.module('gpro.etatMP', [])
 				},
 				{
 					field : 'familleArticle',
-					displayName : 'Family',
+					displayName : 'Famille',
 					width :'10%'
 				},
 
