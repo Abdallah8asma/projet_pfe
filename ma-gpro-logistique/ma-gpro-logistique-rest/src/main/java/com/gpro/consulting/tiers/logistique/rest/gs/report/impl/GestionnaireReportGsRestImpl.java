@@ -121,6 +121,15 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 	@RequestMapping(value="/etatStock", method = RequestMethod.GET)
 	public void generateetatStockReport(
 			@RequestParam("articleType") String articleType,
+			
+			
+			@RequestParam("familleArticle") String familleArticle,
+			@RequestParam("article") String article,
+			@RequestParam("magasin") String magasin,			
+			@RequestParam("emplacement") String emplacement,
+			
+						
+			
 			@RequestParam("type") String type,
 			@RequestParam("typeRapport") String typeRapport,
 			HttpServletResponse response ) throws JRException, IOException {
@@ -129,6 +138,16 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		
 		RechercheMulticritereEntiteStockValue critere = new RechercheMulticritereEntiteStockValue();
 		critere.setTypeArticle(articleType);
+		
+		critere.setArticle(article);
+		
+		critere.setFamilleArticle(familleArticle);
+		
+		critere.setMagasin(magasin);		
+		
+		critere.setEmplacement(emplacement);
+		
+		
 		
 		EtatStockReportValue report = gestionnaireReportGsService.getEtatReport(critere, typeRapport);
 		
@@ -208,15 +227,32 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 	@SuppressWarnings("static-access")
 	@RequestMapping(value="/etatStockGlobal", method = RequestMethod.GET)
 	public void generateetatStockGlobalReport(
+		
+			
+        	@RequestParam("type") String type,		
 			@RequestParam("articleType") String articleType,
-			@RequestParam("type") String type,
-			@RequestParam("typeRapport") String typeRapport,
+	    	@RequestParam("familleArticle") String familleArticle,
+			@RequestParam("article") String article,
+			@RequestParam("magasin") String magasin,			
+			@RequestParam("emplacement") String emplacement,
+            @RequestParam("typeRapport") String typeRapport,
+			
+	
 			HttpServletResponse response ) throws JRException, IOException {
 		
 		logger.info("Generate a {} Report EtatStockGlobal",type);
 	//System.out.println("Generate a {} Report EtatStockGlobal rest layer");
 		RechercheMulticritereEntiteStockValue critere = new RechercheMulticritereEntiteStockValue();
 		critere.setTypeArticle(articleType);
+		
+		
+	     critere.setArticle(article);
+		
+		critere.setFamilleArticle(familleArticle);
+		
+		critere.setMagasin(magasin);		
+		
+		critere.setEmplacement(emplacement);
 		
 		EtatStockGlobalReportValue report = gestionnaireReportGsService.getEtatGlobalReport(critere, typeRapport);
 		
@@ -227,14 +263,30 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 	@SuppressWarnings("static-access")
 	@RequestMapping(value="/etatStockDetaille", method = RequestMethod.GET)
 	public void generateetatStockDetailleReport(
+			
+			@RequestParam("type") String type,		
 			@RequestParam("articleType") String articleType,
-			@RequestParam("type") String type,
-			@RequestParam("typeRapport") String typeRapport,
+	    	@RequestParam("familleArticle") String familleArticle,
+			@RequestParam("article") String article,
+			@RequestParam("magasin") String magasin,			
+			@RequestParam("emplacement") String emplacement,
+            @RequestParam("typeRapport") String typeRapport,
+            
+            
 			HttpServletResponse response ) throws JRException, IOException {
 		
 		logger.info("Generate a {} Report EtatStockGlobal",type);
 		RechercheMulticritereEntiteStockValue critere = new RechercheMulticritereEntiteStockValue();
 		critere.setTypeArticle(articleType);
+		
+		
+	    critere.setArticle(article);
+			
+		critere.setFamilleArticle(familleArticle);
+		
+		critere.setMagasin(magasin);		
+		
+		critere.setEmplacement(emplacement);
 		
 		EtatStockDetailleReportValue report = gestionnaireReportGsService.getEtatDetailleReport(critere, typeRapport);
 		

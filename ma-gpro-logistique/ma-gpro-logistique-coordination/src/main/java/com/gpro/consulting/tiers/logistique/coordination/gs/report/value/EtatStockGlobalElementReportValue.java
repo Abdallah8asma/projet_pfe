@@ -16,6 +16,28 @@ public class EtatStockGlobalElementReportValue extends EtatStockElementReportVal
 	private Long rouleauActuel;
 	private Long rouleauReserve;
 	
+	private Long articleId;
+	
+	
+	
+	private Double qteLibre;
+	
+	
+	
+	
+	
+	public Double getQteLibre() {
+		return qteLibre;
+	}
+	public void setQteLibre(Double qteLibre) {
+		this.qteLibre = qteLibre;
+	}
+	public Long getArticleId() {
+		return articleId;
+	}
+	public void setArticleId(Long articleId) {
+		this.articleId = articleId;
+	}
 	public String getSousFamilleArticle() {
 		return sousFamilleArticle;
 	}

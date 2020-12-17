@@ -116,16 +116,55 @@ angular.module('gpro.etatMP', [])
 			var url;
 			
 				if (typeRapport == "Basique"){
-					url = UrlAtelier+ "/reportgs/etatStock?type=xls&articleType=" + $scope.etatCourant.typeArticle+"&typeRapport="+ typeRapport ;
+					url = UrlAtelier+ "/reportgs/etatStock?type=xls&articleType=" + $scope.etatCourant.typeArticle+
+					
+					
+				     "&familleArticle="+  $scope.etatCourant.familleArticle +
+
+                     "&article="+  $scope.etatCourant.article +
+
+
+                     "&magasin="+  $scope.etatCourant.magasin +
+
+                     "&emplacement="+  $scope.etatCourant.emplacement +
+
+					
+					"&typeRapport="+ typeRapport ;
 				} 
 					
 				else if (typeRapport == "Global"){
-					url = UrlAtelier+ "/reportgs/etatStockGlobal?type=xls&articleType=" + $scope.etatCourant.typeArticle+"&typeRapport="+ typeRapport ;
+					url = UrlAtelier+ "/reportgs/etatStockGlobal?type=xls&articleType=" + $scope.etatCourant.typeArticle+
+					
+					     "&familleArticle="+  $scope.etatCourant.familleArticle +
+
+                     "&article="+  $scope.etatCourant.article +
+
+
+                     "&magasin="+  $scope.etatCourant.magasin +
+
+                     "&emplacement="+  $scope.etatCourant.emplacement +
+					
+					
+					"&typeRapport="+ typeRapport ;
 
 				} 
 									
 				else{
-					url = UrlAtelier+ "/reportgs/etatStockDetaille?type=xls&articleType=" + $scope.etatCourant.typeArticle+"&typeRapport="+ typeRapport ;
+					url = UrlAtelier+ "/reportgs/etatStockDetaille?type=xls&articleType=" + $scope.etatCourant.typeArticle+
+					
+					  "&familleArticle="+  $scope.etatCourant.familleArticle +
+
+                     "&article="+  $scope.etatCourant.article +
+
+
+                     "&magasin="+  $scope.etatCourant.magasin +
+
+                     "&emplacement="+  $scope.etatCourant.emplacement +
+					
+					
+					
+					
+					"&typeRapport="+ typeRapport ;
 				}
 					
 			

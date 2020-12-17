@@ -138,9 +138,34 @@ public class ArticleValue implements Comparable<ArticleValue>{
 	
 	private String grammage;
 
+	
+	
+	private String couleur ;
+	
+
+	
+	private String codeFournisseur ;
 
 
 	
+	
+	
+	public String getCouleur() {
+		return couleur;
+	}
+
+	public void setCouleur(String couleur) {
+		this.couleur = couleur;
+	}
+
+	public String getCodeFournisseur() {
+		return codeFournisseur;
+	}
+
+	public void setCodeFournisseur(String codeFournisseur) {
+		this.codeFournisseur = codeFournisseur;
+	}
+
 	public String getDimension() {
 		return dimension;
 	}
