@@ -884,20 +884,20 @@ angular
 														},
 														{
 															field : 'date | date : "dd/MM/yyyy"',
-															displayName : 'Input Date'
+															displayName : 'Date Entree'
 														},
 														{
 															field : 'raisonMouvementDesignation',
-															displayName : ' Input Reason'
+															displayName : ' Raison Entree'
 														},
 
 														{
 															field : 'valeur',
-															displayName : 'Value'
+															displayName : 'Valeur'
 														},
 														{
 															field : 'etat',
-															displayName : 'State'
+															displayName : 'Etat'
 														},
 														{
 															field : '',
