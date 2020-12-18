@@ -786,40 +786,40 @@
 <script type="text/ng-template" id="myModalContent.html">
 
 	<div class="modal-header justify-content-center" style=" height: 100px;
-	width: 200%; background-color: #fff;" >
+	width: 170%; background-color: #fff;" >
 	   <div class='title-ajout'>Ajouter des Articles</div>
 	</div>
 	<div class="modal-body"  style=" height: 600px;
-	width: 200%; 
+	width: 170%; 
 	
 	background-color: #fff;
   " >
    
-		   <div class="panel-body">
+		   <div class="panel-body" >
 			   <div class="form-group"> 
 					   
 					   <!-- Recherche avec un champ universel -->
 					   
 					 <div class="row">
-						   <div class="col-sm-5">
+						   <div class="col-sm-6">
 							   <div class="input-group input-group-sm">
-								   <span class="input-group-addon label1" id="basic-addon1">1er crit&egrave;re de recherche :
-								   </span> 
+								   <label class="input-group-addon label1" id="basic-addon1">1&egrave;re crit&egrave;re :
+								   </label> 
 								   <input type="text" ng-model="articleCourantrecherchePopup.query1" class="form-control">	
 							   </div>
 						   </div>
    
-						   <div class="col-sm-5">
+						   <div class="col-sm-6">
 							   <div class="input-group input-group-sm">
-								   <span class="input-group-addon label1" id="basic-addon1">2&egrave;me crit&egrave;re de recherche :
-								   </span> 
+								   <label class="input-group-addon label1" id="basic-addon1">2&egrave;re crit&egrave;re :
+								   </label> 
 								   <input type="text" ng-model="articleCourantrecherchePopup.query2" class="form-control">	
 							   </div>
 						   </div>
    
-					   <div class="pull-right">
-						   <button class="btn-action3 btn" ng-click="annulerAjoutPopUp()">Annuler</button>
-					   </div>
+					<!--    <div class="pull-right">
+						<button type="button" class="btn btn-secondary" ng-click="cancel()">Cancel</button>
+					   </div> -->
 				   </div>
 			   </div>
    
@@ -870,10 +870,11 @@
 										   </table>
 				   </div>
 			   </div>
-		   <div class="modal-footer">
-			   <button class="btn-action btn" ng-click="ok()">OK</button>
-			   <button class="btn-action btn" ng-click="cancel()">Cancel</button>
-		   </div>
+			   <div class="modal-footer">
+				<button type="button" class="btn btn-primary" data-dismiss="modal"  ng-click="ok()">OK</button>
+				<button type="button" class="btn btn-secondary" ng-click="cancel()">Cancel</button>
+			  </div>
+		 
    
 
 		</div>
