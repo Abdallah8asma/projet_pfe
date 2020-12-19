@@ -37,4 +37,8 @@ public interface IRouleauFiniDomaine {
 	public List<String> getListRefMiseRouleauNonSortie();
 	
 	public List<String> getListCodeBarreByRefMiseAndIdBSisNull(String refMise);
+
+	public Double getQteExpedierByMiseRef(String refMise);
+
+	public Long getNbrColisExpedierByMiseRef(String refMise);
 }
