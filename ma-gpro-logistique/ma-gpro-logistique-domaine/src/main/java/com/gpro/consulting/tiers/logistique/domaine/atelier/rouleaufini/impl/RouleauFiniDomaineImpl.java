@@ -320,5 +320,17 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 	public List<String> getListCodeBarreByRefMiseAndIdBSisNull(String refMise) {
 		return rouleauFiniPersitance.getListCodeBarreByRefMiseAndIdBSisNull(refMise);
 	}
+
+	@Override
+	public Double getQteExpedierByMiseRef(String refMise) {
+		// TODO Auto-generated method stub
+		return rouleauFiniPersitance.getQteExpedierByMiseRef(refMise);
+	}
+
+	@Override
+	public Long getNbrColisExpedierByMiseRef(String refMise) {
+		// TODO Auto-generated method stub
+		return rouleauFiniPersitance.getNbrColisExpedierByMiseRef(refMise);
+	}
 	  
 }

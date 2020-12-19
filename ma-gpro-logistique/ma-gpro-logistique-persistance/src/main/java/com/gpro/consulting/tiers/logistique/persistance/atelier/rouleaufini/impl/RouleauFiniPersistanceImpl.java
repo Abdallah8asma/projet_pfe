@@ -733,4 +733,36 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 	    return listRouleau;
 	    
 	}
+
+	@Override
+	public Double getQteExpedierByMiseRef(String refMise) {
+		String requete ="select SUM(r.metrage) from RouleauFiniEntity r where r.referenceMise =:referenceMise and r.bonSortie is not null)";
+		 
+		Double result =  (Double) entityManager.createQuery(requete)
+				    .setParameter("referenceMise", refMise).getSingleResult();
+		 
+		 if(result != null)
+		      return result;
+		 
+		 
+		 return new Double(0) ;
+	}
+
+	@Override
+	public Long getNbrColisExpedierByMiseRef(String refMise) {
+		String requete ="select count(*) from RouleauFiniEntity r where r.referenceMise =:referenceMise and r.bonSortie is not null)";
+		 
+		Long result =  (Long) entityManager.createQuery(requete)
+				    .setParameter("referenceMise", refMise).getSingleResult();
+		 
+		 if(result != null)
+		      return result;
+		 
+		 
+		 return new Long(0) ;
+	}
+	
+	
+
+
 }

@@ -48,4 +48,8 @@ public interface IRouleauFiniPersistance {
 
 	List<RouleauFiniValue> getRouleauFiniInventaireListByBarreCodeList(
 			List<String> barreCodeList, Long id);
+
+	public Double getQteExpedierByMiseRef(String refMise);
+
+	public Long getNbrColisExpedierByMiseRef(String refMise);
 }
