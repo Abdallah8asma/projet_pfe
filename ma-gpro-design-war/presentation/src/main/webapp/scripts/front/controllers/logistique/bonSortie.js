@@ -854,10 +854,25 @@
               								{
               									field : '',
                                 width:'10%',
-              									cellTemplate : '<div class="buttons" ng-show="!rowform.$visible">'
+												  cellTemplate :
+												  `<div class="ms-CommandButton float-right"  ng-show="!rowform.$visible" >
+																<button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerBonSortie()">
+															<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+															</button>
+																<button class="ms-CommandButton-button"  ng-click="showPopupDelete(4)" permission="['Production_Expedition_Delete']">
+																<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+																</button>
+																</div>`,
+	/* 											 
+												  '<div class="buttons" ng-show="!rowform.$visible">'
                                       +'<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerBonSortie()"> <i class="fa fa-fw fa-pencil"></i></button>'
               												+'<button data-nodrag class="btn btn-default btn-xs" ng-click="showPopupDelete(4)"><i class="fa fa-fw fa-trash-o"></i></button>'
-              												+'<button class="btn btn-action2" ng-click="redirectToVenteBL(row.entity.reference, row.entity.dateSortie,1 )">BL</button></div>'} ];
+															  +'<button class="btn btn-action2" ng-click="redirectToVenteBL(row.entity.reference, row.entity.dateSortie,1 )">BL</button></div>'
+														
+														 */
+														
+														
+															} ];
               									});
               								$scope.filterOptions = {
               									filterText : "",
