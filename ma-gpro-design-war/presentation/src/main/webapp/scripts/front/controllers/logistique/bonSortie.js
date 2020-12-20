@@ -863,13 +863,6 @@
 																<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
 																</button>
 																</div>`,
-	/* 											 
-												  '<div class="buttons" ng-show="!rowform.$visible">'
-                                      +'<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerBonSortie()"> <i class="fa fa-fw fa-pencil"></i></button>'
-              												+'<button data-nodrag class="btn btn-default btn-xs" ng-click="showPopupDelete(4)"><i class="fa fa-fw fa-trash-o"></i></button>'
-															  +'<button class="btn btn-action2" ng-click="redirectToVenteBL(row.entity.reference, row.entity.dateSortie,1 )">BL</button></div>'
-														
-														 */
 														
 														
 															} ];
