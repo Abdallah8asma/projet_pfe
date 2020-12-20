@@ -1210,9 +1210,18 @@ angular
 						                   {
 						                	   field : '',
 						                	   width:'5%',
-						                	   cellTemplate : '<div class="buttons" ng-show="!rowform.$visible">'
-						                		   + '<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerBonLVente()">	<i class="fa fa-fw fa-pencil"></i></button>'
-						                		   + '<button data-nodrag class="btn btn-default btn-xs" ng-click="showPopupDelete(5)">	<i class="fa fa-fw fa-trash-o"></i></button></div>'
+											   cellTemplate : 
+											   `<div class="ms-CommandButton float-right"  ng-show="!rowform.$visible" >
+											   <button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerBonLVente()">
+										   <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+										   </button>
+											   <button class="ms-CommandButton-button"  ng-click="showPopupDelete(5)" permission="['Production_Expedition_Delete']">
+											   <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+											   </button>
+											   </div>`,
+											 
+											 
+											 
 						                   } ];
 					 });
 
