@@ -315,15 +315,15 @@
 							</button>
 							<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
 								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
-										ng-click="downloadExcelByArticle(bonSortieCourant.id, 1)">Excel</a></li>
-								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
+										ng-click="download(bonSortieCourant.id, 1)">PDF</a></li>
+							<!-- 	<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
 										ng-click="downloadExcelWhithOF(bonSortieCourant.id, 1)">Excel Avec OF</a></li>
 
 								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
 										ng-click="downloadExcelWhithoutOF(bonSortieCourant.id, 1)">Excel Sans OF</a></li>
 
 								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
-										ng-click="download(bonSortieCourant.id, 1)">PDF Avec OF</a></li>
+										ng-click="download(bonSortieCourant.id, 1)">PDF Avec OF</a></li> -->
 
 							</ul>
 
@@ -371,7 +371,7 @@
 					<div class="ms-ListItem-primaryText" ng-show="modePdf == 'actif'"> Modification Bon De Sortie</div>
 					<div class="ms-ListItem-primaryText" ng-show="modePdf != 'actif'"> Creation Bon De Sortie</div>
 
-
+				
 					<form class="form-horizontal" id="creationBonSortie" name="creationBonSortie">
 						<div class="row">
 
@@ -427,7 +427,7 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Client</span>
+											<label class="input-group-text">Client</label>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourant.partieInt"
 											ng-init="bonSortieCourant.partieInt =''">
@@ -507,7 +507,7 @@
 								<div class="col-sm-2"  >
 									<div class="input-group input-group-sm">
 										<!-- <span class="input-group-addon label1" id="basic-addon1">CSV file : </span>  -->
-										<ng-csv-import class="btn btn-action" content="csv.content" header="csv.header"
+										<ng-csv-import type="button" class="btn btn-primary" content="csv.content" header="csv.header"
 											header-visible="csv.headerVisible" separator="csv.separator"
 											separator-visible="csv.separatorVisible" result="csv.result"
 											encoding="csv.encoding" encoding-visible="csv.encodingVisible">
@@ -518,7 +518,7 @@
 	                          <!-- Valider -->
 	                             <div class="col-sm-2">
 		                        <div class="input-group input-group-sm">
-			                     <button type="button" class="btn btn-action"
+			                     <button type="button" class="btn btn-primary"
 				                   ng-click="validerCode(bonSortieCourant)"
 				                      ng-disabled="!modeValider">Validate</button>
 		                           </div>
@@ -576,27 +576,29 @@
 					</form>
 
 		 <!-- view2: tableauComplet -->
-		 <div class="title-ajout" ng-show="displayView != 'view1'">Liste des Rouleaux</div>
+		 <div class="title-ajout" ng-show="displayView != 'view1'">Liste des colis</div>
 		 <div class="panel-body" ng-show="displayView != 'view1'">
 
 			<div class="form-group">
 				<div class="row">
-					<div class="panel panel-primary">
+					<div class="panel panel-primary" style=" height: 300px;
+					width: 100%; "
+					 >
 						<table
 							class="table table-bordered table-condensed table-head-color">
 							<thead>
 								<tr>
-									<th>Reference</th>
-									<th>Ref Article</th>
-									<th>Article</th>
-									<th>Type</th>
-									<th>Cycle Time</th>
+									<th style="width:10%">Reference</th>
+									<th style="width:10%">Ref Article</th>
+									<th style="width:10%">Article</th>
+									<th style="width:10%">Type</th>
+									<th style="width:10%">Cycle Time</th> 
 								<!-- 	<th>Laize</th>
 									<th>Cr.Qualit&eacute;</th> -->
-									<th>Weight</th>
-									<th>Qty</th>
-									<th>OF</th>
-									<th></th>
+									<th style="width:10%">Weight</th> 
+									<th style="width:10%">Qte</th>
+									<th style="width:10%">OF</th>
+									<th style="width:10%"></th>
 								</tr>
 							</thead>
 							<tbody>
@@ -645,7 +647,7 @@
 			</div>
 		 </div>
 			<!-- Solder Mise -->
-			<div class="title-ajout">Solder Lot 
+			<!-- <div class="title-ajout">Solder Lot 
 				<i class="fa fa-chevron-down clickable"
 			  style="margin-right: 5px;"  ng-click="isCollapsed = !isCollapsed"></i>
 		  </div> 
@@ -667,7 +669,7 @@
 										  </select>
 									  </div>
 								  </div>
-								  <!-- Verifier -->
+								 ---Verifier ---------
 								  <div class="col-sm-3">
 									  <div class="input-group input-group-sm">
 										  <button type="button" class="btn btn-action"
@@ -680,7 +682,7 @@
 										  </span> <input class="form-control" readonly="readonly" value="{{nbRouleauFiniRestant}}" />
 									  </div>
 								  </div>
-								  <!-- Solder -->
+								  ----------Solder ------
 								  <div class="col-sm-3">
 									  <div class="input-group input-group-sm">
 										  <button type="button" class="btn btn-action"
@@ -692,12 +694,12 @@
 					  </form>
 				  </div>
 			  </div>
-		     </div>
+		    </div> -->
+					
 
+		</div>
 
-		    </div>
-
-			</div>
+		</div>
 		</div>
 	</div>
 
