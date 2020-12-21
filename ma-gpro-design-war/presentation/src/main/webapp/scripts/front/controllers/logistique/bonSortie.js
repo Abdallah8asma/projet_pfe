@@ -12,8 +12,9 @@
               				'$parse',
               				'downloadService',
               				'UrlCommun',
-              				'UrlAtelier',
-              				function($scope, $filter, $http, $log, $parse, downloadService, UrlCommun, UrlAtelier) {
+							  'UrlAtelier',
+							  '$window',
+              				function($scope, $filter, $http, $log, $parse, downloadService, UrlCommun, UrlAtelier,$window) {
               					$log.info("=========Bon Sortie========");
               					// Déclaration des variables globales utilisés
               					$scope.today = new Date();
@@ -691,7 +692,39 @@
         												},
         												function(error) {
         													$log.debug('error : '+ error);
-        												});
+														});
+														
+
+														var a = document.createElement('a');
+														document.body.appendChild(a);
+														downloadService.download(url).then(function (result) {
+															var heasersFileName = result.headers(['content-disposition']).substring(17);
+														var fileName = heasersFileName.split('.');
+													var typeFile = result.headers(['content-type']);
+													var file = new Blob([result.data], {type: typeFile});
+													var fileURL = window.URL.createObjectURL(file);
+													if(typeFile == 'application/vnd.ms-excel'){
+							
+													 // a.href = fileURL;
+														 a.download = fileName[0];
+														$window.open(fileURL)
+														 a.click();
+									
+													}else{
+												
+														a.href = fileURL;
+														a.download = fileName[0];
+													 $window.open(fileURL)
+														a.click();
+									
+													}
+														
+													$scope.traitementEnCoursGenererLivraison="false";
+				
+													});
+
+
+
         							};
         							
         							//generer rapport de tous les bons de sortie. mode : List 

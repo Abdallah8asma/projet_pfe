@@ -966,11 +966,11 @@ angular
 
 			 /*** PDF ***/
 			 //generer rapport apres creation d'un bon de Livraison. mode : Modification/Consultation 
-			 $scope.download = function(id, pRapportPrix) {
+			 $scope.download = function(id) {
 			 	//init checkbox : 'non' :rapport sans Prix / 'oui' rapport avec prix
-			 	 $scope.checkboxModel= {
+			 /* 	 $scope.checkboxModel= {
 			       rapportPrix : "oui"
-			     };
+			     }; */
 
 				 $log.debug("-- id" + id + pRapportPrix);
 				 var url = UrlAtelier+ "/reportgc/bonlivraison?id=" + id 

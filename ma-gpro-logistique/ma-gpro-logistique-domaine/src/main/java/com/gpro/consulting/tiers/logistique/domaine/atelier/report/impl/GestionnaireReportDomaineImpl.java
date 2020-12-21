@@ -418,7 +418,7 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 				.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonSortieFini/bonsortiefini_report.jrxml"));
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("p_PathLogo", "/report/logoSTIT.jpg");
+		params.put("p_PathLogo", "C:\\ERP\\logos_clients\\officiel.png");
 
 		params.put("SUBREPORT_BONSORTIE_PATH", "C://ERP/Lib/STIT_BonSortieFini/bonsortiefini_sub_report.jasper");
 
