@@ -166,7 +166,7 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Date Liv.Entree</span>
+											<span class="input-group-text">Date Liv.Entre</span>
 										</div>
 										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
 											ng-init="bonLivraisonVenteCourant.dateLivraisonMin=''"
@@ -318,8 +318,8 @@
 										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.avecFacture"
 											ng-init="bonLivraisonVenteCourant.avecFacture= ''">
 											<option value="">Tous</option>
-											<option value="ouiFacture">Yes</option>
-											<option value="nonFacture">No</option>
+											<option value="ouiFacture">oui</option>
+											<option value="nonFacture">Non</option>
 										</select>
 									</div>
 								</div>
@@ -362,7 +362,7 @@
 				</div>
 				<div class="ms-CommandBar-mainArea">
 					<div class="ms-CommandButton">
-						<button class="ms-CommandButton-button"
+						<button class="ms-CommandButton-button" permission="['Production_Livraison_Edit']" 
 							ng-click="sauvegarderBonVente(bonLivraisonVenteCourant)">
 							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span> <span
 								class="ms-CommandButton-label">Enregistrer</span>
@@ -549,7 +549,7 @@
 						<div class="col-sm-3">
 							<div class="input-group">
 								<span class="input-group-addon label1" id="basic-addon1">
-									TTC Amount </span><input class="form-control" readonly="readonly"
+									Montant TTC :</span><input class="form-control" readonly="readonly"
 									value="{{bonLivraisonVenteCourant.montantTTC | prixFiltre}}" />
 							</div>
 						</div>
@@ -575,15 +575,15 @@
 								class="table table-bordered table-hover table-condensed table-head-color">
 								<thead>
 									<tr style="font-weight: bold">
-										<th style="width: 10%">Article ref.</th>
+										<th style="width: 10%">ref Article </th>
 										<th style="width: 20%">Article</th>
-										<th style="width: 10%">Quantity</th>
+										<th style="width: 10%">Quantite</th>
 								
-										<th style="width: 10%">Number of Box </th>
-										<th style="width: 10%">Unit Price Pre-Tax</th>
+										<th style="width: 10%">Nbr.Colis</th>
+										<th style="width: 10%">P.U.H.T</th>
 									
 								
-										<th style="width: 10%">Total Price Pre-Tax</th>
+										<th style="width: 10%">P.T.H.Tx</th>
 									</tr>
 								</thead>
 								<tr ng-repeat="detLivVente in listDetLivraisonVentePRBS">
@@ -634,12 +634,12 @@
 										<tr style="font-weight: bold">
 											<th style="width: 10%">Designation</th>
 											<th style="width: 10%">Of ref.</th>
-											<th style="width: 10%">Quantity</th>
+											<th style="width: 10%">Quantite</th>
 											<th style="width: 10%">Unit</th>
-											<th style="width: 10%">Num. of box</th>
-											<th style="width: 10%">Unit Pr. Pre-Tax</th>
-											<th style="width: 10%">Discount</th>
-											<th style="width: 10%">Total Pr. Pre-Tax</th>
+											<th style="width: 10%">Nbr.Colis</th>
+											<th style="width: 10%">P.U.H.T</th>
+											<th style="width: 10%">Remise</th>
+											<th style="width: 10%">P.T.H.Tx</th>
 										</tr>
 									</thead>
 									<tr ng-repeat="detLivVente in listDetLivraisonVentePRBS">

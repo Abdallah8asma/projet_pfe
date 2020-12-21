@@ -702,7 +702,7 @@ angular
 																<button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerMise()">
 															<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
 															</button>
-																<button class="ms-CommandButton-button"  ng-click="supprimerMise()" permission="['Vente_Delete']">
+																<button class="ms-CommandButton-button"  ng-click="supprimerMise()" permission="['Production_OF_Delete']">
 																<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
 																</button>
 																</div>`,
