@@ -283,7 +283,7 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 	   
 	   HashMap<String, Object> params = new HashMap<String, Object>();
 	   /** Liste des paramètres : logo et critères de recherche*/
-	   params.put("p_PathLogo", "/report/logoSTIT.jpg");
+	   params.put("p_PathLogo", "C:\\ERP\\logos_clients\\officiel.png");
 	   params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_Inventaire/inventaire_sub_report.jasper");
 	   
 	   inventaireReport.setParams(params);
