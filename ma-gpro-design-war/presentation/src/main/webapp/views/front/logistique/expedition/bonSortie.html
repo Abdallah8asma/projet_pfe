@@ -127,7 +127,7 @@
 											<label class="input-group-text ">Type</label>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourantS.type"
-											ng-init="bonSortieCourantS.type =''">
+											ng-init="bonSortieCourantS.type =''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option value="Kanbans">Kanbans</option>
 											<option value="MTS">MTS</option>
@@ -144,7 +144,7 @@
 											<span class="input-group-text">Client</span>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourantS.partieInt"
-											ng-init="bonSortieCourantS.partieInt=''">
+											ng-init="bonSortieCourantS.partieInt=''" style="border: 1px solid #e5eaee !important;">
 
 											<option value="">Tous clients</option>
 											<option ng-repeat="client in listeClientCache" value="{{client.id}}">
@@ -230,7 +230,7 @@
 											<span class="input-group-text">Remlpi </span>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourantS.rempli"
-											ng-init="bonSortieCourantS.rempli=''">
+											ng-init="bonSortieCourantS.rempli=''" style="border: 1px solid #e5eaee !important;" >
 
 											<option value="">Tous clients</option>
 											<option ng-repeat="rempli in listVerifRempli" value="{{rempli.value}}">
@@ -253,7 +253,7 @@
 											<span class="input-group-text">En Cours</span>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourantS.enCours"
-											ng-init="bonSortieCourantS.enCours=''">
+											ng-init="bonSortieCourantS.enCours=''" style="border: 1px solid #e5eaee !important;" >
 
 											<option value="">Tous clients</option>
 											<option ng-repeat="rempli in listVerifRempli" value="{{rempli.value}}">
@@ -411,7 +411,7 @@
 											<label class="input-group-text ">Type</label>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourant.type"
-											ng-init="bonSortieCourant.type ='Kanbans'">
+											ng-init="bonSortieCourant.type ='Kanbans'" style="border: 1px solid #e5eaee !important;" >
 											<option value="Kanbans">Kanbans</option>
 											<option value="MTS">MTS</option>
 										</select>
@@ -430,7 +430,7 @@
 											<label class="input-group-text">Client</label>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourant.partieInt"
-											ng-init="bonSortieCourant.partieInt =''">
+											ng-init="bonSortieCourant.partieInt =''" style="border: 1px solid #e5eaee !important;" >
 											<option ng-repeat="pi in listeClientCache" value="{{pi.id}}">
 												{{pi.abreviation}}</option>
 										</select>
@@ -592,10 +592,10 @@
 									<th style="width:10%">Ref Article</th>
 									<th style="width:10%">Article</th>
 									<th style="width:10%">Type</th>
-									<th style="width:10%">Cycle Time</th> 
+								<!-- 	<th style="width:10%">Cycle Time</th>  -->
 								<!-- 	<th>Laize</th>
 									<th>Cr.Qualit&eacute;</th> -->
-									<th style="width:10%">Weight</th> 
+								<!-- 	<th style="width:10%">Weight</th>  -->
 									<th style="width:10%">Qte</th>
 									<th style="width:10%">OF</th>
 									<th style="width:10%"></th>
@@ -607,10 +607,10 @@
 									<td>{{rouleauFini.produitReference}}</td>
 									<td>{{rouleauFini.produitIdDesignation}}</td>
 									<td>{{rouleauFini.produitIdSousFamille}}</td>
-									<td>{{rouleauFini.produitIdComposition}}</td>
+									<!-- <td>{{rouleauFini.produitIdComposition}}</td> -->
 									<!-- <td>{{rouleauFini.laize}}</td>
 									<td>{{showChoix(rouleauFini.choix)}}</td> -->
-									<td>{{rouleauFini.poids}}</td>
+									<!-- <td>{{rouleauFini.poids}}</td> -->
 									<td><span editable-text="rouleauFini.metrage"
 										e-name="metrage" e-form="rowform" e-required> {{
 											rouleauFini.metrage || 'empty' }} </span></td>

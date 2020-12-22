@@ -650,7 +650,7 @@ angular
 														{
 															field : 'reference',
 															displayName : 'NUMERO',
-															width : '7%'
+															width : '10%'
 														},
 														{
 															field : 'referenceProduit',
@@ -664,25 +664,25 @@ angular
 														},
 														{
 															field : 'dateIntroduction',
-															displayName : 'Introduction Date',
+															displayName : 'Date Introduction',
 															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss"',
 															width : '14%'
 														},
 														{
 															field : 'dateFin',
-															displayName : 'End Date',
+															displayName : 'Date Fin',
 															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss"',
-															width : '13%'
+															width : '15%'
 														},
 														{
 															field : 'quantite',
-															displayName : 'Quantity',
+															displayName : 'Quantite',
 															width : '9%'
 														},
 														{
 															field : 'poidFini',
-															displayName : 'Quantity By Box',
-															width : '9%'
+															displayName : 'Quantite colis',
+															width : '10%'
 														},
 													/* 	{
 															field : '',

@@ -151,7 +151,7 @@
 											<span class="input-group-text">Client</span>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.partieIntId"
-											ng-init="bonLivraisonVenteCourant.partieIntId=''">
+											ng-init="bonLivraisonVenteCourant.partieIntId=''" style="border: 1px solid #e5eaee !important;" >
 											<option value="">Tous Clients</option>
 											<option ng-repeat="client in listePartieInteresseeCache"
 												value="{{client.id}}">{{client.abreviation}}</option>
@@ -297,7 +297,7 @@
 										</div>
 
 										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.natureLivraison"
-											ng-init="bonLivraisonVenteCourant.natureLivraison= ''">
+											ng-init="bonLivraisonVenteCourant.natureLivraison= ''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option value="Injection">Injection</option>
 											<option value="Tempographie">Tempographie</option>
@@ -316,7 +316,7 @@
 										</div>
 
 										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.avecFacture"
-											ng-init="bonLivraisonVenteCourant.avecFacture= ''">
+											ng-init="bonLivraisonVenteCourant.avecFacture= ''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option value="ouiFacture">oui</option>
 											<option value="nonFacture">Non</option>
@@ -430,7 +430,7 @@
 									<span class="input-group-text">Référence</span>
 								</div>
 								<input class="form-control" ng-model="bonLivraisonVenteCourant.reference"
-									ng-init="bonLivraisonVenteCourant.reference=''" />
+									ng-init="bonLivraisonVenteCourant.reference=''" style="border: 1px solid #e5eaee !important;" />
 							</div>
 						</div>
 					</div>
@@ -448,7 +448,7 @@
 									<label class="input-group-text">R&eacute;f BS</label>
 								</div>
 								<input class="form-control" ui-select2="select2TaggingOptions"
-									ng-model="tagReferenceBSList" />
+									ng-model="tagReferenceBSList" style="border: 1px solid #e5eaee !important;" />
 							</div>
 						</div>
 					</div>
@@ -530,7 +530,7 @@
 						
 									<label class="input-group-text">Observations</label>
 								</div>
-								<input class="form-control"  ng-model="bonLivraisonVenteCourant.observations" >
+								<input class="form-control"  ng-model="bonLivraisonVenteCourant.observations" style="border: 1px solid #e5eaee !important;" >
 
 								</input>
 
