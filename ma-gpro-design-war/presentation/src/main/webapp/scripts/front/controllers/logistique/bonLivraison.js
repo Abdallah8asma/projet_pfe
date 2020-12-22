@@ -1186,23 +1186,23 @@ angular
 						                   },
 						                   {
 						                	   field : 'infoSortie',
-						                	   displayName : 'Exit Pass Ref.',
+						                	   displayName : 'Ref Sortie .',
 						                	   width:'10%'
 						                   },
 						                   {
 						                	   field : 'date',
-						                	   displayName : 'Delivery Date',
+						                	   displayName : 'Date livraison',
 						                	   cellFilter: "date: 'yyyy-MM-dd'",
 						                	   width:'10%'
 						                   },
 						                   {
 						                	   field : 'metrageTotal',
-						                	   displayName : 'Total Quantity',
+						                	   displayName : 'Quantite Total',
 						                	   width:'10%'
 						                   },
 						                   {
 						                	   field : 'montantTTC',
-						                	   displayName : 'Total price',
+						                	   displayName : 'prix Total ',
 						                	   cellFilter: 'prixFiltre',
 						                	   width:'10%'
 						                   },

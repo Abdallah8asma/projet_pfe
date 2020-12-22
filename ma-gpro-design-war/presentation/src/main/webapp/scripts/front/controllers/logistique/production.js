@@ -236,7 +236,7 @@ angular
 									$scope.colDefs = [
                                         	{
 															field : 'dateIntroduction',
-															displayName : 'Introduction Date',
+															displayName : 'Date Introduction',
 															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss" : timezone ',
 															width : '12%'
 											},
