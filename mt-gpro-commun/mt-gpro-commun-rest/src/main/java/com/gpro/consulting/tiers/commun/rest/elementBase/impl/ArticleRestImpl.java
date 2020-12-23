@@ -102,6 +102,9 @@ public class ArticleRestImpl implements IArticleRest {
 		  
 		//Site
 		article.setSiteEntiteDesignation(mapA.get("site"));
+		
+	
+		
     }
     return vResultatRecherche;
   }

@@ -655,7 +655,7 @@ angular
 													{
 														field : 'designation',
 														displayName : $translate.instant('article'),
-														width:'30%'
+														width:'20%'
 													},
 													{
 														field : 'typeArticleDesignation',
@@ -682,13 +682,23 @@ angular
 														displayName : $translate.instant('pmp'),
 														width:'5%'
 													},
-													{
+												/* 	{
 														field : 'siteEntiteDesignation',
 														displayName : $translate.instant('site'),
 														width:'10%'
+													}, */
+												
+													{
+														field : 'dimension',
+														displayName : $translate.instant('dimension'),
+														width:'5%'
 													},
 												
-												
+													{
+														field : 'grammage',
+														displayName : $translate.instant('grammage'),
+														width:'5%'
+													},
 												
 													{
 														field: '',

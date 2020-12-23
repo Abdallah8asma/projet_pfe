@@ -20,10 +20,34 @@ public class RecherecheMulticritereArticleValue {
 	/** ID Magasin. */
 	private Long idMAgasin;
 	
+	
+
+	
+	
+	private String dimension;
+	
+	
+	private String grammage;
+
+	
+	
+	
 	/**
 	 * @return the pIdMAgasin
 	 */
 	
+	public String getDimension() {
+		return dimension;
+	}
+	public void setDimension(String dimension) {
+		this.dimension = dimension;
+	}
+	public String getGrammage() {
+		return grammage;
+	}
+	public void setGrammage(String grammage) {
+		this.grammage = grammage;
+	}
 	/**
 	 * @return the ref
 	 */
