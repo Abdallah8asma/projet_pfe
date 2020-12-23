@@ -47,6 +47,10 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
       private String id="id";
       private String typeArticle="typeArticle";
 
+
+      
+      private String dimension="dimension";
+      private String grammage="grammage";
 	@Override
 	public String creerArticle(ArticleValue pArticleValue) {
 		// TODO Auto-generated method stub
@@ -201,6 +205,18 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
 		  	    Expression<Double> rootValeur =vRootArticle.get(pu);
 		        vWhereClause.add(vBuilder.le(rootValeur, pRechercheArticleMulitCritere.getPrix_sup()));
 		      }
+	      
+	      
+	     
+		    if (estNonVide(pRechercheArticleMulitCritere.getDimension())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(dimension),
+			    		  pRechercheArticleMulitCritere.getDimension()));
+			    }
+
+		    if (estNonVide(pRechercheArticleMulitCritere.getGrammage())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(grammage),
+			    		  pRechercheArticleMulitCritere.getGrammage()));
+			    }
 	    
 	    /** execute query and do something with result **/
 
@@ -214,6 +230,9 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
 	      ArticleValue vPv = PersistanceUtilities.toArticleValue(vArticleEntite);
 	      vListeResultat.add(vPv);
 	    }
+	    
+	    
+
 
 	    /** retour de list de recherche et le nombre de resultat **/
 	    ResultatRechecheArticleValue vResultatRechecheArticleValue = new ResultatRechecheArticleValue();
