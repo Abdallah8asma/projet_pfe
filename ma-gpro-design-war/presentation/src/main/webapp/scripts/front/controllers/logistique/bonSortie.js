@@ -876,12 +876,12 @@
               								},
               								{
               									field : 'nbColis',
-              									displayName : 'Nbre.Rouleau',
+              									displayName : 'Nbre.Colis',
                                 width:'10%'
               								},
               								{
               									field : 'metrageTotal',
-              									displayName : 'Metrage Total',
+              									displayName : 'Qte Total',
                                 width:'10%'
               								},
               								{

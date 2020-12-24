@@ -129,8 +129,8 @@
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourantS.type"
 											ng-init="bonSortieCourantS.type =''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
-											<option value="Kanbans">Kanbans</option>
-											<option value="MTS">MTS</option>
+										<!-- 	<option value="Kanbans">Kanbans</option>
+											<option value="MTS">MTS</option> -->
 										</select>
 									</div>
 								</div>
@@ -227,12 +227,12 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Remlpi </span>
+											<span class="input-group-text">Rempli </span>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourantS.rempli"
 											ng-init="bonSortieCourantS.rempli=''" style="border: 1px solid #e5eaee !important;" >
 
-											<option value="">Tous clients</option>
+											<option value="">Tous</option>
 											<option ng-repeat="rempli in listVerifRempli" value="{{rempli.value}}">
 												{{rempli.designation}}</option>
 
@@ -255,7 +255,7 @@
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourantS.enCours"
 											ng-init="bonSortieCourantS.enCours=''" style="border: 1px solid #e5eaee !important;" >
 
-											<option value="">Tous clients</option>
+											<option value="">Tous</option>
 											<option ng-repeat="rempli in listVerifRempli" value="{{rempli.value}}">
 												{{rempli.designation}}</option>
 
@@ -389,7 +389,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 
 								<div class="form-group">
 									<div class="input-group">
@@ -404,16 +404,17 @@
 								</div>
 							</div>
 
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<label class="input-group-text ">Type</label>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourant.type"
-											ng-init="bonSortieCourant.type ='Kanbans'" style="border: 1px solid #e5eaee !important;" >
-											<option value="Kanbans">Kanbans</option>
-											<option value="MTS">MTS</option>
+											ng-init="bonSortieCourant.type =''" style="border: 1px solid #e5eaee !important;" >
+											<option value="">Tous</option>
+										<!-- 	<option value="Kanbans">Kanbans</option>
+											<option value="MTS">MTS</option> -->
 										</select>
 									</div>
 								</div>
@@ -423,7 +424,7 @@
 
 						<div class="row">
 
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -439,7 +440,7 @@
 							</div>
 
 
-							<div class="col-sm-3" ng-controller="DatepickerDemoController">
+							<div class="col-sm-4" ng-controller="DatepickerDemoController">
 
 
 								<div class="form-group">
@@ -468,7 +469,7 @@
 
 							</div>
 
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -490,7 +491,7 @@
 						<div class="form-group" ng-show="displayView == 'view1'">
 
 							<div class="row">
-								<div class="col-sm-4">
+								<div class="col-sm-6">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
