@@ -1323,6 +1323,20 @@ public class PersistanceUtilities {
 	    vArticleEntity.setSousFamilleArtEntite(pSousFamilleEntite);
 	    /** Site */
 	    vArticleEntity.setSiteEntite(pArticleValue.getSiteEntite());
+	    
+	    
+	    
+	    vArticleEntity.setIdTaxe(pArticleValue.getIdTaxe());
+	    
+	    vArticleEntity.setTva(pArticleValue.getTva());
+	    vArticleEntity.setPuTTC(pArticleValue.getPuTTC());
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    /** Grosseur */
 	    if (pGrosseurEntite != null && pGrosseurEntite.getId() != null) {
 	      vArticleEntity.setGrosseurEntite(pGrosseurEntite);
@@ -1420,6 +1434,14 @@ public class PersistanceUtilities {
 	    vArticleValue.setSiteEntite(pArticleEntity.getSiteEntite());
 	    
 	    vArticleValue.setUnite2Entite(pArticleEntity.getUnite2Entite());
+	    
+	    
+	    
+	    vArticleValue.setTva(pArticleEntity.getTva());
+	    vArticleValue.setPuTTC(pArticleEntity.getPuTTC());
+	    vArticleValue.setIdTaxe(pArticleEntity.getIdTaxe());
+	    
+	    
 	    
 	    /** Sous Famille */
 	    if (pArticleEntity.getSousFamilleArtEntite() != null) {

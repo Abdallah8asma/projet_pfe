@@ -148,8 +148,38 @@ public class ArticleValue implements Comparable<ArticleValue>{
 
 
 	
+	private Double tva;
+	
+	private Double puTTC;
+	private Long idTaxe;
 	
 	
+	
+	
+	public Long getIdTaxe() {
+		return idTaxe;
+	}
+
+	public void setIdTaxe(Long idTaxe) {
+		this.idTaxe = idTaxe;
+	}
+
+	public Double getTva() {
+		return tva;
+	}
+
+	public void setTva(Double tva) {
+		this.tva = tva;
+	}
+
+	public Double getPuTTC() {
+		return puTTC;
+	}
+
+	public void setPuTTC(Double puTTC) {
+		this.puTTC = puTTC;
+	}
+
 	public String getCouleur() {
 		return couleur;
 	}
