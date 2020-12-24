@@ -177,6 +177,11 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 				
 				
 				vEntiteStock.setReferenceLot(mouvement.getLot());
+				
+				
+				vEntiteStock.setEmplacement(mouvement.getEmplacement());
+				
+				
 
 				mouvement.setEntiteStock(vEntiteStock.getId());
 				mouvement.setEntiteStockValue(vEntiteStock);

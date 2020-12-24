@@ -1240,6 +1240,16 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
         	    
         	    detail.setCarton(det.getReferenceLot());
         	    
+        	    
+	           //date Entree
+        	    
+        	    detail.setDateSortie(det.getDateEntree());
+        	     	    
+        	    //emplacement
+        	    
+        	    detail.setOrdreNumero(det.getEmplacement());
+        	    
+        	    
         	 
         	
         	list.add(detail);
@@ -1308,6 +1318,16 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
         	    
         	 
         	    detail.setCarton(det.getReferenceLot());
+        	    
+        	    
+        	    //date Entree
+        	    
+        	    detail.setDateSortie(det.getDateEntree());
+        	     	    
+        	    //emplacement
+        	    
+        	    detail.setOrdreNumero(det.getEmplacement());
+        	    
         	
         	list.add(detail);
         }
