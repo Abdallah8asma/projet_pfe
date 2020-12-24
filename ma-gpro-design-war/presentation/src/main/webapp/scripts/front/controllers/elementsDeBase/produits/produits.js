@@ -437,8 +437,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
       if (angular.isDefined(element[0]) && prixAchatHT != null) {
         var valeurTaxe = element[0].valeur;
 
-        $scope.produitCourante.prixAchatTTC =
-        	prixAchatHT * (1 + valeurTaxe / 100);
+        $scope.produitCourante.prixAchatTTC =prixAchatHT * (1 + valeurTaxe / 100);
         
        // $scope.produitCourante.prixAchatTTC.toFixed(3);
         $scope.produitCourante.prixAchatTTC = Math.round($scope.produitCourante.prixAchatTTC*1000)/1000;
