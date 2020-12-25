@@ -994,7 +994,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 
 				ProduitValue produitValue = produitService.rechercheProduitById(detLivraisonVente.getProduitId());
 
-				if (produitValue != null && bonLivraisonValue.getStock() == true) {
+				if (produitValue != null && bonLivraisonValue.getStock()!=null && bonLivraisonValue.getStock() == true) {
 					Double qte = (produitValue.getQuantite() + detLivraisonVente.getQuantite());
 					produitValue.setQuantite(qte);
 					produitService.modifierProduit(produitValue);
@@ -1585,7 +1585,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 
 					}
 
-					if (bonLivraisonValue.getStock() == true) {
+					if (bonLivraisonValue.getStock()!=null && bonLivraisonValue.getStock() == true) {
 						Double qte = (produitValue.getQuantite() - detLivraisonVente.getQuantite());
 						produitValue.setQuantite(qte);
 						produitService.modifierProduit(produitValue);
