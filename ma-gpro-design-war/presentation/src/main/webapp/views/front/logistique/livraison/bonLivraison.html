@@ -371,6 +371,43 @@
 
 					</div>
 
+					<div class="ms-CommandButton ms-CommandButton--dropdown">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+									class="ms-Icon ms-Icon--Generate"></i></span> <span
+								class="ms-CommandButton-label">G&eacute;n&eacute;rer</span> <span
+								class="ms-CommandButton-dropdownIcon"><i
+									class="ms-Icon ms-Icon--ChevronDown"></i></span>
+						</button>
+						<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+
+						
+
+              <li class="ms-ContextualMenu-item">
+
+
+                <div class="row">
+                  <div class="col-sm-8">
+                    <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                      ng-click="download(bonLivraisonVenteCourant.id,'oui',3)">PDF </a>
+
+                  </div>
+
+    
+                </div>
+
+ 
+              </li>
+
+
+
+							
+
+						</ul>
+					</div>
+
+
+
 					<div class="ms-CommandButton">
 						<button class="ms-CommandButton-button" ng-click="annulerAjout()">
 							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span> <span
@@ -434,6 +471,27 @@
 							</div>
 						</div>
 					</div>
+
+
+					<div class="col-sm-4">
+
+
+						<div class="form-group">
+						  <div class="input-group">
+							<div class="input-group-prepend">
+							  <label class="input-group-text ms-Label is-required">Magasin</label>
+							</div>
+							<select ui-select2 required ng-model="bonLivraisonVenteCourant.idDepot"
+							  ng-init="bonLivraisonVenteCourant.idDepot =''" data-placeholder="" required class="form-control"
+							  style="border: 1px solid #e5eaee !important;">
+							  <option ng-repeat="magazin in listeMagazinCache" value="{{magazin.id}}">{{magazin.designation}}
+							  </option>
+							</select>
+						  </div>
+						</div>
+					  </div>
+
+
 
 				</div>
 
