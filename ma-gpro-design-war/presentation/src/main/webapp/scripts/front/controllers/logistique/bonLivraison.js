@@ -12,7 +12,8 @@ angular
 		 'UrlAtelier',
 		 'BonLivraisonServices',
 		 'traitementFaconServices',
-		 function($scope, $filter, $http, $log, downloadService, UrlCommun, UrlAtelier, BonLivraisonServices,traitementFaconServices ) {
+		 '$window',
+		 function($scope, $filter, $http, $log, downloadService, UrlCommun, UrlAtelier, BonLivraisonServices,traitementFaconServices,$window) {
 			$log.info("=========Vente========");
 			
 			$scope.tagReferenceBSList = [];
@@ -38,7 +39,27 @@ angular
 			
 			$scope.msg = "";
 			
-			
+				// REST SERVICE MAGAZINS
+				$scope.listeMagazinCache = function() {
+					$http
+							.get(
+									UrlAtelier
+											+ "/magasin/depots")
+							.success(
+									function(dataMagazin) {
+										
+										
+										$scope.listeMagazinCache = dataMagazin;
+										$log
+												.debug("listeMagazinCache : "
+														+ dataMagazin.length)
+
+									});
+				}
+				
+
+
+
 			//Tableau de Taxe Prédefini 
 			 
 			 $scope.listTaxeLivraisonInitMethod= function(){
@@ -183,7 +204,7 @@ angular
 			 //$scope.listeMarche();
 			 $scope.listeModePaiement();
 			 $scope.getListeTraitementFacon();
-
+              $scope.listeMagazinCache();
 			 /***************************************************
 			  * Conversion des Ids/Designation
 			  **************************************************/
@@ -600,7 +621,20 @@ angular
 				 $scope.natureLivraison ="FINI";
 				 $scope.listTaxeLivraisonInitMethod();
 				 $scope.initTaxeRemoved();
-				 $scope.bonLivraisonVenteCourant = {};
+				// $scope.bonLivraisonVenteCourant = {};
+
+				 var defaultIdDepot = 1;
+				 if($scope.listeMagazinCache && $scope.listeMagazinCache.length >0)
+					 defaultIdDepot = $scope.listeMagazinCache[0].id;
+				 
+				 
+				 $scope.bonLivraisonVenteCourant = {"date" : new Date(),
+												 "idDepot" : defaultIdDepot,
+												   "modepaiementId" : 1,
+												   "declare":true };
+
+
+
 			/*	 $scope.bonLivraisonVenteCourant = bonLVente ? angular
 						 .copy(bonLVente) : {};*/
 
@@ -966,7 +1000,7 @@ angular
 
 			 /*** PDF ***/
 			 //generer rapport apres creation d'un bon de Livraison. mode : Modification/Consultation 
-			 $scope.download = function(id) {
+			 $scope.download = function(id,pRapportPrix,typerapport) {
 			 	//init checkbox : 'non' :rapport sans Prix / 'oui' rapport avec prix
 			 /* 	 $scope.checkboxModel= {
 			       rapportPrix : "oui"
@@ -975,15 +1009,37 @@ angular
 				 $log.debug("-- id" + id + pRapportPrix);
 				 var url = UrlAtelier+ "/reportgc/bonlivraison?id=" + id 
 									 + "&avecPrix="+pRapportPrix
+									 +"&typerapport=" +typerapport
 									 + "&type=pdf";
 
-				 downloadService.download(url).then(
-						 function(success) {
-							 $log.debug('success : ' + success);
-							 //$scope.annulerAjout();
-						 }, function(error) {
-							 $log.debug('error : ' + error);
-						 });
+							
+										var a = document.createElement('a');
+										document.body.appendChild(a);
+										downloadService.download(url).then(function (result) {
+											var heasersFileName = result.headers(['content-disposition']).substring(17);
+										var fileName = heasersFileName.split('.');
+									var typeFile = result.headers(['content-type']);
+									var file = new Blob([result.data], {type: typeFile});
+									var fileURL = window.URL.createObjectURL(file);
+									if(typeFile == 'application/vnd.ms-excel'){
+			
+									 // a.href = fileURL;
+										 a.download = fileName[0];
+										$window.open(fileURL)
+										 a.click();
+					
+									}else{
+								
+										a.href = fileURL;
+										a.download = fileName[0];
+									 $window.open(fileURL)
+										a.click();
+					
+									}
+										
+									$scope.traitementEnCoursGenererLivraison="false";
+
+									});
 			 };
 			 
 			 
