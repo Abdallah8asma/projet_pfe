@@ -914,7 +914,7 @@
 																	ng-change="clickProduit(produit.produitId, $index)" data-placeholder="..."
 																	class="form-control ">
 																	<option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">
-																		{{produit.reference}}
+																		{{produit.ref}}
 																	</option>
 																</select>
 															</td>
@@ -927,7 +927,7 @@
 																	</option>
 																</select></td>
 
-															<td><span e-form="rowform"> {{produit.sousFamille
+															<td><span e-form="rowform"> {{produit.sousFamilleArtEntite
 																		|| 'EMPTY' }} </span></td>
 															<td>
 
@@ -1128,14 +1128,14 @@
 																	ng-change="clickProduit(produit.produitId, $index)" data-placeholder="..."
 																	style="width: 100%" ng-disabled="produit.checked" class="form-control ">
 																	<option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">
-																		{{produit.reference}}
+																		{{produit.ref}}
 																	</option>
 																</select>
 															</td>
 															<td><span e-form="rowform">{{produit.designation
 																		|| 'EMPTY'}}</span>
 															</td>
-															<td><span e-form="rowform"> {{produit.sousFamille
+															<td><span e-form="rowform"> {{produit.sousFamilleArtEntite
 																		|| 'EMPTY' }} </span></td>
 															</td>
 															<td><input type="number" class="form-control" ng-model="produit.quantite" /></td>

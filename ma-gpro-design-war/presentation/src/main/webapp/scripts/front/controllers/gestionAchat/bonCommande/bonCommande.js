@@ -180,10 +180,13 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
       });
     };
 
+
+
+
     // Liste des produits
     $scope.listeProduitCache = function () {
       $http
-        .get(UrlAtelier + '/gestionnaireLogistiqueCache/listeProduitCache')
+        .get(UrlCommun + '/article/all')
         .success(function (data) {
           console.log('listeProduitCache ' + data.length);
           $scope.listeProduitCache = data;
@@ -683,18 +686,23 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
     $scope.isLoading = false;
 
     // Ajout et Modification commandeAchat
-    $scope.modifierOuCreercommandeAchat = function () {
+    $scope.modifierOuCreercommandeAchat = function (id) {
       $scope.isLoading = true;
 
-      var index = this.row.rowIndex;
+     var index = this.row.rowIndex;
       // getcommandeAchat
       $http
         .get(
           UrlAtelier +
           '/commandeAchat/getById:' +
-          $scope.myDatacommandeAchat[index].id
-        )
+         
+
+           $scope.myDatacommandeAchat[index].id
+        ) 
+
+        
         .success(function (datagetcommandeAchat) {
+          
           $log.debug(
             'getById : ' +
             $scope.myDatacommandeAchat[index].id +
@@ -1361,58 +1369,58 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
         {
           field: 'reference',
           displayName: 'Réf.BC',
-          //	width : '12%'
+          	width : '20%'
         },
         {
           field: 'partieIntersseAbbreviation',
           displayName: 'Fournisseur',
-          //	width : '30%'
+          width : '20%'
         },
         {
           field: 'dateIntroduction',
           displayName: 'Date Cmd.',
           cellFilter: "date:'dd-MM-yyyy'",
-          //	width : '7%'
+          	width : '10%'
         },
         {
           field: 'dateLivraison',
           displayName: 'Date Liv.',
           cellFilter: "date:'dd-MM-yyyy'",
-          //	width : '7%'
+          	width : '10%'
         },
         {
           field: 'quantite',
           displayName: 'Quantite',
-          //	width : '8%'
+          	width : '5%'
         },
         {
           field: 'prixTotal',
           displayName: 'Montant HT',
-          //	width:'10%'
+          	width:'7%'
         },
         {
           field: 'montantTaxe',
           displayName: 'Montant Taxe',
-          //	width:'10%'
+          	width:'7%'
         },
         {
           field: 'montantTTC',
           displayName: 'Montant TTC',
-          //	width:'10%'
+          	width:'7%'
         },
 
         {
           field: '',
-          //	width : '5%',
+          	width : '10%',
           cellTemplate:
-            '<div class="ms-CommandButton float-right">' +
-            '<button class="ms-CommandButton-button ms-CommandButton-Gpro" ng-click="modifierOuCreercommandeAchat()">' +
-            '<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>' +
-            '</button>' +
-            '<button class="ms-CommandButton-button"  ng-click="showPopupDelete(18)" permission="[Achat_Delete]">' +
-            '<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>' +
-            '</button>' +
-            '	</div> ',
+          `<div class="ms-CommandButton float-right"> 
+            <button class="ms-CommandButton-button ms-CommandButton-Gpro" ng-click="modifierOuCreercommandeAchat(row.entity.id)"> 
+            <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span> 
+            </button> 
+            <button class="ms-CommandButton-button"  ng-click="showPopupDelete(18)" permission="['Achat_Delete']"> 
+            <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span> 
+            </button> 
+            	</div> `,
 
           // '<div class="buttons">'
           // 		+ '<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreercommandeAchat()"><i class="fa fa-fw fa-pencil"></i></button>'
