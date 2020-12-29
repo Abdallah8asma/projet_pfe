@@ -32,6 +32,19 @@ public class RecherecheMulticritereArticleValue {
 	
 	
 	
+	
+	private String partieInteressee ;
+	
+	
+	
+	
+	
+	public String getPartieInteressee() {
+		return partieInteressee;
+	}
+	public void setPartieInteressee(String partieInteressee) {
+		this.partieInteressee = partieInteressee;
+	}
 	/**
 	 * @return the pIdMAgasin
 	 */

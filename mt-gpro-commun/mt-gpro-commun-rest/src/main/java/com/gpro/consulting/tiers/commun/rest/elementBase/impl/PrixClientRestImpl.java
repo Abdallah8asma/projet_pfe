@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherchePrixClientValue;
@@ -159,6 +160,21 @@ public class PrixClientRestImpl implements IPrixClientRest {
    
    Long idSupp= Long.parseLong(id);
    prixclientService.supprimerPrixClient(Long.valueOf(idSupp));
+  }
+  
+  
+  
+  
+  @RequestMapping(value = "/creerPrixArticleClient", method = RequestMethod.POST)
+  public @ResponseBody String creerPrixArticleClient(@RequestBody List <ArticleValue> pProduitValue ) {
+	  //System.out.println(" inn create prix client id"+id);
+	//  System.out.println("list: "+pProduitValue.size());
+	  
+	  
+	//  System.out.println("######   ID Client :  "+pProduitValue.get(0).getPartieIntersseId());
+	//  System.out.println("######   Prix Client :  "+pProduitValue.get(0).getPrixSpecial());
+	  //return null;
+    return this.prixclientService.creerPrixArticleClient(pProduitValue);
   }
   
 }
