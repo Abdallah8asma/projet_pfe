@@ -40,7 +40,7 @@ public class DetFactureAchatEntity implements Serializable {
 	@Column(name = "NOMBRE_COLIS")
 	private Long nombreColis;
 
-	@Column(name = "EB_PRODUIT_ID")
+	@Column(name = "EB_ARTICLE_ID")
 	private Long produitId;
 
 	@Column(name = "REMISE")
