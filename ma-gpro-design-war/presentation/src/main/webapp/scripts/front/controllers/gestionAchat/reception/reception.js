@@ -541,8 +541,11 @@ angular
 				$scope.listeProduitCache = function () {
 					$http
 						.get(
-							UrlAtelier
-							+ "/gestionnaireLogistiqueCache/listeProduitCache")
+							UrlCommun
+							+ "/article/all")
+
+							//+ "/gestionnaireLogistiqueCache/listeProduitCache")
+
 						.success(
 							function (data) {
 								console
