@@ -154,8 +154,19 @@ public class ArticleValue implements Comparable<ArticleValue>{
 	private Long idTaxe;
 	
 	
+	//article Inexsitant dans l'entite
+	private boolean serialisable;
 	
-	
+
+
+	public boolean isSerialisable() {
+		return serialisable;
+	}
+
+	public void setSerialisable(boolean serialisable) {
+		this.serialisable = serialisable;
+	}
+
 	public Long getIdTaxe() {
 		return idTaxe;
 	}

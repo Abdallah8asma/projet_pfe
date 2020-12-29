@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListProduitElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
@@ -80,6 +82,9 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 	/** The bon livraison persistance. */
 	@Autowired
 	private IReceptionAchatPersistance receptionAchatPersistance;
+	
+	@Autowired
+	private IArticleService articleService;
 
 	/**
 	 * Creates the.
@@ -138,14 +143,23 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 			}
 
 			produitCommande.setDateLivraison(bonCommandeValue.getDateLivraison());
-
-			ProduitValue produitValue = produitService.rechercheProduitById(produitCommande.getProduitId());
+			
+			//ProduitValue produitValue = produitService.rechercheProduitById(produitCommande.getProduitId());
+			
+			ArticleValue articleValue=new ArticleValue();
+			articleValue.setId(produitCommande.getProduitId());
+			
+			ArticleValue produitValue=articleService.rechercheArticleParId(articleValue);
+			
+			
+			
 			produitCommande.setTaxeId(produitValue.getIdTaxe());
 			
 			Double totalProduitCommande = (produitCommande.getPrixUnitaire() * produitCommande.getQuantite());
 			if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
 
 				produitTaxeMap.put(produitValue.getIdTaxe(), totalProduitCommande);
+				
 
 			} else {
 				Double assietteValue = produitTaxeMap.get(produitValue.getIdTaxe()) + totalProduitCommande;
@@ -275,7 +289,13 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 				coutCommandeVenteTotal += (produitCommande.getPrixUnitaire() * produitCommande.getQuantite());
 			}
 
-			ProduitValue produitValue = produitService.rechercheProduitById(produitCommande.getProduitId());
+			//ProduitValue produitValue = produitService.rechercheProduitById(produitCommande.getProduitId());
+			
+			
+			ArticleValue articleValue =new ArticleValue();
+			articleValue.setId(produitCommande.getProduitId());
+			ArticleValue produitValue=articleService.rechercheArticleParId(articleValue);
+			
 			produitCommande.setTaxeId(produitValue.getIdTaxe());
 			Double totalProduitCommande = (produitCommande.getPrixUnitaire() * produitCommande.getQuantite());
 			if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
@@ -612,7 +632,7 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 			mapDetLivraison.get(map).add(detail);
 		}
 
-		ProduitValue produitValue = null;
+		ArticleValue produitValue = null;
 
 		Iterator it = mapDetLivraison.entrySet().iterator();
 		List<DetLivraisonVenteValue> listDetFactureVente = new ArrayList<DetLivraisonVenteValue>();
@@ -671,15 +691,22 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 				}
 			}
 
+			ArticleValue articleValue=new ArticleValue();
+			articleValue.setId(element.getProduitId());
+			
 			if (element.getProduitId() != null) {
-				produitValue = produitService.rechercheProduitById(element.getProduitId());
+				
+				//produitValue = produitService.rechercheProduitById(element.getProduitId());
+				
+				produitValue=articleService.rechercheArticleParId(articleValue);
+				
 				if (produitValue != null) {
 
 					element.setSerialisable(produitValue.isSerialisable());
 			
 
 					element.setProduitDesignation(produitValue.getDesignation());
-					element.setProduitReference(produitValue.getReference());
+					element.setProduitReference(produitValue.getRef());
 
 					/*** appel fonction rechercheMC prix special *****/
 
@@ -687,8 +714,8 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 					// TO O DO A changer
 					// Commented
 
-					if (element.getPrixUnitaireHT() == null && produitValue.getPrixUnitaire() != null)
-						element.setPrixUnitaireHT(produitValue.getPrixUnitaire());
+					if (element.getPrixUnitaireHT() == null && produitValue.getPu() != null)
+						element.setPrixUnitaireHT(produitValue.getPu());
 
 					if (element.getPrixUnitaireHT() != null && element.getQuantite() != null) {
 						element.setPrixTotalHT(element.getPrixUnitaireHT() * element.getQuantite());

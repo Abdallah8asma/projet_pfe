@@ -96,6 +96,9 @@ public class CommandeAchatEntity {
 	/** many-to-one association to ProduitCommande. */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "commandeAchat", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProduitCommandeAchatEntity> listProduitCommandes;
+	
+	
+	
 
 	/** The montant H taxe. */
 	@Column(name = "MONTANTHTAXE")

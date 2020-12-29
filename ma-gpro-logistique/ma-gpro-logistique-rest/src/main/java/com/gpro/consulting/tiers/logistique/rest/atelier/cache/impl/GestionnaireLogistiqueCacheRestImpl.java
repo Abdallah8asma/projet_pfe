@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseCacheValue;
+import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.MachineValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.TraitementValue;
@@ -43,6 +45,7 @@ public class GestionnaireLogistiqueCacheRestImpl {
 	
 	@Autowired
 	private ITaxeService taxeService;
+	
 
 	/** Logger */
 	private static final Logger LOGGER = LoggerFactory.getLogger(GestionnaireLogistiqueCacheRestImpl.class);
@@ -69,6 +72,7 @@ public class GestionnaireLogistiqueCacheRestImpl {
 		//LOGGER.info("Entrer Cache Produit");
 		//reloadLogistiqueCache();
 		List<ProduitValue> liste = produitService.listeProduit();
+		
 		
 		/*for (ProduitValue produit : liste) {
 

@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IArticlePersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitSerialisablePersistance;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
@@ -114,6 +116,9 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 	@Autowired
 	private IElementReglementAchatPersistance elementReglementAchatPersistance;
 	
+	@Autowired
+	private IArticlePersistance articlePersistance;
+	
 
 	@Override
 	public String create(ReceptionAchatValue bonReceptionValue) {
@@ -181,17 +186,27 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 
 		List<ProduitReceptionAchatValue> vListDetails = new ArrayList<ProduitReceptionAchatValue>();
 
-		for (ProduitReceptionAchatValue produitReception : bonReceptionValue.getListProduitReceptions()) {
 
+		for (ProduitReceptionAchatValue produitReception : bonReceptionValue.getListProduitReceptions()) {
+			
+			ArticleValue articleValue=new ArticleValue();
+			articleValue.setId(produitReception.getProduitId());
+			
+			
 			if (produitReception.getQuantite() != null) {
 
 				quantiteCommandeVenteTotal += produitReception.getQuantite();
 
+				
+			
 				// MAJ Qte Produit
 				if (produitReception.getProduitId() != null) {
 
-					ProduitValue produitValue = produitPersistance
-							.rechercheProduitById(produitReception.getProduitId());
+					//ProduitValue produitValue = produitPersistance.rechercheProduitById(produitReception.getProduitId());
+					
+					
+					ArticleValue produitValue=articlePersistance.rechercheArticleParId(articleValue);
+					
 					produitReception.setTaxeId(produitValue.getIdTaxe());
 
 					if (produitReception.getPrixUnitaire() != null && produitReception.getQuantite() != null) {
@@ -229,7 +244,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 						}
 					}
 
-					if (produitValue.isSerialisable())
+			/*		if (produitValue.isSerialisable())
 						produitReception.setSerialisable(true);
 					Double qte = 0D;
 					if (produitValue.getQuantite() != null) {
@@ -239,8 +254,15 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 					}
 
 					produitValue.setQuantite(qte);
-					produitPersistance.modifierProduit(produitValue);
+					
+					//produitPersistance.modifierProduit(produitValue);
+					
+					articlePersistance.modifierArticle(articleValue);
 
+					*/
+					
+					//ArticleSerialisableValue n'existe pas
+					
 					if (produitReception.getProduitsSerialisable() != null) {
 
 						String numeroSeries = "";
@@ -278,6 +300,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 							produitReception.setNumeroSeries(numeroSeries);
 						}
 					}
+
 
 					if (bonReceptionValue.getIdDepot() != null) {
 
@@ -502,8 +525,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		
 		MagasinValue magasin = null;
 		
-		if(bonReceptionValue.getIdDepot() != null)
-		      magasin = magasinPersistance.rechercheMagasinParId(bonReceptionValue.getIdDepot()) ;
+		//if(bonReceptionValue.getIdDepot() != null)
+		//      magasin = magasinPersistance.rechercheMagasinParId(bonReceptionValue.getIdDepot()) ;
 		
 		
 		
@@ -520,6 +543,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		List<ProduitReceptionAchatValue> vListDetails = new ArrayList<ProduitReceptionAchatValue>();
 
 		for (ProduitReceptionAchatValue produitReception : bonReceptionValue.getListProduitReceptions()) {
+			
 
 			if (produitReception.getQuantite() != null) {
 
@@ -527,9 +551,13 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 
 				// MAJ Qte Produit
 				if (produitReception.getProduitId() != null) {
+					
+				
 
-					ProduitValue produitValue = produitPersistance
-							.rechercheProduitById(produitReception.getProduitId());
+					//ProduitValue produitValue = produitPersistance.rechercheProduitById(produitReception.getProduitId());
+					
+					ArticleValue produitValue=articlePersistance.getArticleParId(produitReception.getProduitId());
+					
 					produitReception.setTaxeId(produitValue.getIdTaxe());
 
 					if (produitReception.getPrixUnitaire() != null && produitReception.getQuantite() != null) {
@@ -582,87 +610,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 						}
 					}
 
-					if (produitValue.isSerialisable())
-						produitReception.setSerialisable(true);
-					Double qte = 0D;
-					if (produitValue.getQuantite() != null) {
-						qte = produitValue.getQuantite() + produitReception.getQuantite();
-					} else {
-						qte = produitReception.getQuantite();
-					}
+		
 
-					produitValue.setQuantite(qte);
-					produitPersistance.modifierProduit(produitValue);
-
-					if (produitReception.getProduitsSerialisable() != null) {
-
-						String numeroSeries = "";
-
-						for (ProduitSerialisableValue produitSerialisable : produitReception
-								.getProduitsSerialisable()) {
-
-							produitSerialisable.setProduitId(produitReception.getProduitId());
-							produitSerialisable.setPrixAchat(produitReception.getPrixUnitaire());
-							produitSerialisable.setFournisseurId(bonReceptionValue.getPartieIntersseId());
-							produitSerialisable.setDateAchat(bonReceptionValue.getDateLivraison());
-							produitSerialisable.setNumBonReception(bonReceptionValue.getReference());
-							
-							
-							if(magasin != null) {
-								
-								produitSerialisable.setMagasinId(magasin.getId());
-								produitSerialisable.setMagasinDesignation(magasin.getDesignation());
-								produitSerialisable.setBoutiqueId(magasin.getBoutiqueId());
-								
-							}
-
-							produitSerialisablePersistance.creerProduitSerialisable(produitSerialisable);
-
-							numeroSeries += produitSerialisable.getNumSerie();
-							numeroSeries += "&";
-
-						}
-
-						if (numeroSeries != null && numeroSeries.length() > 0
-								&& numeroSeries.charAt(numeroSeries.length() - 1) == '&') {
-							numeroSeries = numeroSeries.substring(0, numeroSeries.length() - 1);
-							produitReception.setNumeroSeries(numeroSeries);
-						}else {
-							produitReception.setNumeroSeries(null);
-						}
-							
-					}
-
-					if (bonReceptionValue.getIdDepot() != null) {
-
-						RechercheMulticritereProduitDepotValue request = new RechercheMulticritereProduitDepotValue();
-
-						request.setIdDepot(bonReceptionValue.getIdDepot());
-						request.setIdProduit(produitReception.getProduitId());
-
-						ResultatRechercheProduitDepotValue produitDepot = produitDepotPersistance
-								.rechercheMulticritere(request);
-
-						if (produitDepot == null || produitDepot.getProduitdepotvalues().size() == 0) {
-
-							// Creation
-
-							ProduitDepotValue vProduitDepot = new ProduitDepotValue();
-
-							vProduitDepot.setIdDepot(bonReceptionValue.getIdDepot());
-							vProduitDepot.setIdProduit(produitReception.getProduitId());
-							vProduitDepot.setQuantite(produitReception.getQuantite());
-
-							produitDepotPersistance.create(vProduitDepot);
-
-						} else {
-							ProduitDepotValue vProduitDepot = produitDepot.getProduitdepotvalues().iterator().next();
-							vProduitDepot.setQuantite(produitReception.getQuantite() + vProduitDepot.getQuantite());
-							produitDepotPersistance.modifier(vProduitDepot);
-
-						}
-
-					}
 
 					/*
 					 * if (produitReception.getChoix() != null) {
@@ -858,37 +807,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		
 	    MagasinValue magasin = null;
 		
-		if(bonReceptionValue.getIdDepot() != null)
-		      magasin = magasinPersistance.rechercheMagasinParId(bonReceptionValue.getIdDepot()) ;
-		
-		
 
-		updateStockAfterDeleteDetReceptionAchat(bonReceptionValue);
 
-		// TODO optimisation
-		/** récupération de l'ancien ReceptionAchatValue **/
-		ReceptionAchatValue receptionAchatAncien = this.getById(bonReceptionValue.getId());
-
-		for (ProduitReceptionAchatValue produitReceptionAchatValue : receptionAchatAncien.getListProduitReceptions()) {
-
-			if (produitReceptionAchatValue.isSerialisable()
-					&& produitReceptionAchatValue.getProduitsSerialisable() != null) {
-
-				for (ProduitSerialisableValue prodSerialisable : produitReceptionAchatValue.getProduitsSerialisable()) {
-
-					/**
-					 * SI un produit serialisable a été supprimé lors de la modification et cette
-					 * produit n'est pas livré
-					 **/
-					if (notIn(prodSerialisable, bonReceptionValue) && prodSerialisable.getNumBonLivraison() == null) {
-
-						produitSerialisablePersistance.supprimerProduitSerialisable(prodSerialisable.getId());
-					}
-
-				}
-
-			}
-		}
 
 		if (bonReceptionValue.getTotalPourcentageRemise() != null
 				&& bonReceptionValue.getTotalPourcentageRemise() != 0) {
@@ -913,103 +833,14 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 			produitReception.setDateLivraison(bonReceptionValue.getDateLivraison());
 
 			// TODO Reception update MAJ des quantités
+			
 
 			if (produitReception.getProduitId() != null) {
 
-				/** Debut update stock si qte a ete modifie **/
 
-				if (produitReception.getId() != null && produitReception.getQuantite() != null
-						&& produitReception.getQuantiteAncien() != null
-						&& !produitReception.getQuantite().equals(produitReception.getQuantiteAncien())) {
 
-					ProduitValue produitValue = produitPersistance
-							.rechercheProduitById(produitReception.getProduitId());
-					
-					produitReception.setTaxeId(produitValue.getIdTaxe());
-
-					Double qte = (produitValue.getQuantite() - produitReception.getQuantiteAncien()
-							+ produitReception.getQuantite());
-					produitValue.setQuantite(qte);
-					produitPersistance.modifierProduit(produitValue);
-					// MAJ des DEPOTS
-
-					if (bonReceptionValue.getIdDepot() != null) {
-
-						RechercheMulticritereProduitDepotValue request = new RechercheMulticritereProduitDepotValue();
-
-						request.setIdDepot(bonReceptionValue.getIdDepot());
-						request.setIdProduit(produitReception.getProduitId());
-
-						ResultatRechercheProduitDepotValue produitDepot = produitDepotPersistance
-								.rechercheMulticritere(request);
-
-						if (produitDepot != null && produitDepot.getProduitdepotvalues() != null
-								&& produitDepot.getProduitdepotvalues().size() > 0) {
-							ProduitDepotValue vProduitDepot = produitDepot.getProduitdepotvalues().iterator().next();
-							vProduitDepot.setQuantite(vProduitDepot.getQuantite() - produitReception.getQuantiteAncien()
-									+ produitReception.getQuantite());
-							produitDepotPersistance.modifier(vProduitDepot);
-						}
-					}
-				}
-				/** Fin update stock si qte a ete modifie **/
-
-				/** Debut update stock si un nouveau produit a ete ajoute **/
-
-				if (produitReception.getId() == null && produitReception.getQuantite() != null) {
-
-					ProduitValue produitValue = produitPersistance
-							.rechercheProduitById(produitReception.getProduitId());
-
-					produitReception.setTaxeId(produitValue.getIdTaxe());
-					if (produitValue.isSerialisable())
-						produitReception.setSerialisable(true);
-
-					Double qte = (produitValue.getQuantite() + produitReception.getQuantite());
-
-					produitValue.setQuantite(qte);
-					produitPersistance.modifierProduit(produitValue);
-					// MAJ des DEPOTS
-
-					if (bonReceptionValue.getIdDepot() != null) {
-
-						RechercheMulticritereProduitDepotValue request = new RechercheMulticritereProduitDepotValue();
-
-						request.setIdDepot(bonReceptionValue.getIdDepot());
-						request.setIdProduit(produitReception.getProduitId());
-
-						ResultatRechercheProduitDepotValue produitDepot = produitDepotPersistance
-								.rechercheMulticritere(request);
-
-						if (produitDepot != null && produitDepot.getProduitdepotvalues() != null
-								&& produitDepot.getProduitdepotvalues().size() > 0) {
-							ProduitDepotValue vProduitDepot = produitDepot.getProduitdepotvalues().iterator().next();
-							vProduitDepot.setQuantite(vProduitDepot.getQuantite() + produitReception.getQuantite());
-
-							produitDepotPersistance.modifier(vProduitDepot);
-						}
-
-						else
-
-						{
-
-							ProduitDepotValue vProduitDepot = new ProduitDepotValue();
-
-							vProduitDepot.setIdDepot(bonReceptionValue.getIdDepot());
-							vProduitDepot.setIdProduit(produitReception.getProduitId());
-							vProduitDepot.setQuantite(produitReception.getQuantite());
-
-							produitDepotPersistance.create(vProduitDepot);
-
-						}
-					}
-				}
-				/** Fin update stock si un nouveau produit a ete ajoute **/
-
-				if (produitReception.getProduitId() != null) {
-
-					ProduitValue produitValue = produitPersistance
-							.rechercheProduitById(produitReception.getProduitId());
+					//ProduitValue produitValue = produitPersistance.rechercheProduitById(produitReception.getProduitId());
+				ArticleValue produitValue=articlePersistance.getArticleParId(produitReception.getProduitId());
 					
 					produitReception.setTaxeId(produitValue.getIdTaxe());
 
@@ -1074,55 +905,11 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 						}
 					}
 
-				}
+				
 
 			}
 
-			if (produitReception.getProduitsSerialisable() != null) {
-
-				String numeroSeries = "";
-
-				for (ProduitSerialisableValue produitSerialisable : produitReception.getProduitsSerialisable()) {
-
-					/** Si un nouveau numéro de serie a été ajoutée **/
-					if (produitSerialisable.getId() == null && produitSerialisable.getNumSerie() != null) {
-
-						// System.out.println("un nouveau numéro de serie a été ajoutée");
-						// System.out.println(produitSerialisable.getNumSerie() );
-
-						produitSerialisable.setProduitId(produitReception.getProduitId());
-						produitSerialisable.setPrixAchat(produitReception.getPrixUnitaire());
-						produitSerialisable.setFournisseurId(bonReceptionValue.getPartieIntersseId());
-						produitSerialisable.setDateAchat(bonReceptionValue.getDateLivraison());
-						produitSerialisable.setNumBonReception(bonReceptionValue.getReference());
-						
-						
-						if(magasin != null) {
-							
-							produitSerialisable.setMagasinId(magasin.getId());
-							produitSerialisable.setMagasinDesignation(magasin.getDesignation());
-							produitSerialisable.setBoutiqueId(magasin.getBoutiqueId());
-							
-						}
-
-						produitSerialisablePersistance.creerProduitSerialisable(produitSerialisable);
-
-					}
-
-					numeroSeries += produitSerialisable.getNumSerie();
-					numeroSeries += "&";
-
-				}
-
-				if (numeroSeries != null && numeroSeries.length() > 0
-						&& numeroSeries.charAt(numeroSeries.length() - 1) == '&') {
-					numeroSeries = numeroSeries.substring(0, numeroSeries.length() - 1);
-					produitReception.setNumeroSeries(numeroSeries);
-				}else {
-					produitReception.setNumeroSeries(null);
-				}
-
-			}
+	
 
 			vListDetails.add(produitReception);
 
@@ -1648,41 +1435,11 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 	@Override
 	public String delete(Long id) {
 
-		ReceptionAchatValue receptionAchatValue = this.getById(id);
 		
+
+		receptionAchatPersistance.delete(id);
 		
-		if(receptionAchatValue.getType().equals(IConstanteCommerciale.RECEPTION_ACHAT_TYPE_ACHAT)) {
-			
-			
-			
-			if (!hasBonLivraison(receptionAchatValue)) {
-
-				updateProduitSerialisable(receptionAchatValue);
-
-				updateStockAfterDeleteBonReceptionAchat(receptionAchatValue);
-
-				receptionAchatPersistance.delete(id);
-				
-				
-				deleteElementReglementAchatByRefBR(receptionAchatValue.getReference());
-				
-				
-
-				return "OK";
-
-			}
-
-			else {
-				return "NOT_OK";
-
-			}
-			
-			
-			
-		}else
-			return "NOT_OK";
-
-
+		return "OK";
 
 	}
 	
