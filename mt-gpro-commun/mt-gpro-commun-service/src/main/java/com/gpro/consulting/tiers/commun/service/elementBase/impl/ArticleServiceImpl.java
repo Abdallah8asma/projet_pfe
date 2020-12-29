@@ -66,4 +66,12 @@ public class ArticleServiceImpl implements IArticleService {
 		return articleDomaine.listeArticleCache();
 	}
 
+	@Override
+	public ResultatRechecheArticleValue rechercherArticleMultiCritereClient(
+			RecherecheMulticritereArticleValue pRechercheMultiCritere) {
+		// TODO Auto-generated method stub
+		return articleDomaine
+				.rechercherArticleMultiCritereClient(pRechercheMultiCritere);
+	}
+
 }

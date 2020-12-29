@@ -155,8 +155,45 @@ public class ArticleValue implements Comparable<ArticleValue>{
 	
 	
 	private boolean serialisable;
+	private Long partieIntersseId;
+	
+	private Double prixSpecial;
+	private Double remise;
+	private Long groupeClientId;
 	
 
+
+	public Long getGroupeClientId() {
+		return groupeClientId;
+	}
+
+	public void setGroupeClientId(Long groupeClientId) {
+		this.groupeClientId = groupeClientId;
+	}
+
+	public Double getPrixSpecial() {
+		return prixSpecial;
+	}
+
+	public void setPrixSpecial(Double prixSpecial) {
+		this.prixSpecial = prixSpecial;
+	}
+
+	public Double getRemise() {
+		return remise;
+	}
+
+	public void setRemise(Double remise) {
+		this.remise = remise;
+	}
+
+	public Long getPartieIntersseId() {
+		return partieIntersseId;
+	}
+
+	public void setPartieIntersseId(Long partieIntersseId) {
+		this.partieIntersseId = partieIntersseId;
+	}
 
 	public boolean isSerialisable() {
 		return serialisable;

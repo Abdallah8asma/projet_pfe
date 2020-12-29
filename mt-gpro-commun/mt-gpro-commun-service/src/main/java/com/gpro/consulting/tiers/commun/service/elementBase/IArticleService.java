@@ -68,5 +68,10 @@ public interface IArticleService {
 		@Transactional(readOnly = true, rollbackFor = Exception.class)
 		public List<ArticleCacheValue> listeArticleCache();
 
+		
+		@Transactional(readOnly = true, rollbackFor = Exception.class)
+		public ResultatRechecheArticleValue rechercherArticleMultiCritereClient(
+				RecherecheMulticritereArticleValue pRechercheMultiCritere);
+
 	
 }

@@ -59,6 +59,9 @@ public interface IArticleDomaine {
 		 * @return the list article cache(designation,reference,id)
 		 */
 	  public List < ArticleCacheValue > listeArticleCache();
+
+		public ResultatRechecheArticleValue rechercherArticleMultiCritereClient(
+				RecherecheMulticritereArticleValue pRechercheMultiCritere);
 	
 	
     

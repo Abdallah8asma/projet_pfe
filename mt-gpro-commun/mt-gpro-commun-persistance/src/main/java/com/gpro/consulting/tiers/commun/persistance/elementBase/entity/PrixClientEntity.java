@@ -61,9 +61,8 @@ public class PrixClientEntity implements Serializable  {
 	/**the date creation*/
 	@Column(name = "date_creation")
 	private Calendar datecreation;
-	
-	
-	@Column(name = "eb_produit_id")
+
+	@Column(name = "eb_article_id")
 	private Long ebproduitid;
 		
 	

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 //import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientCacheValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
@@ -66,6 +66,12 @@ public class PrixClientServiceImpl implements IPrixClientService {
 			RecherchePrixClientValue pRecherchePrixClientMulitCritere) {
 
 		return prixclientDomaine.rechchercheMultiCriterePrixClient(pRecherchePrixClientMulitCritere);
+	}
+
+	@Override
+	public String creerPrixArticleClient(List<ArticleValue> pProduitValue) {
+		// TODO Auto-generated method stub
+		return prixclientDomaine.creerPrixArticleClient(pProduitValue);
 	}
 	
 	
