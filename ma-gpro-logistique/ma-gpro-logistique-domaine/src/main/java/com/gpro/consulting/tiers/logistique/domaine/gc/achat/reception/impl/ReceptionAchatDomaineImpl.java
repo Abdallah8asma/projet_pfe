@@ -1708,7 +1708,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 			mapDetLivraison.get(map).add(detail);
 		}
 
-		ProduitValue produitValue = null;
+		//ProduitValue produitValue = null;
+		ArticleValue produitValue = null;
 
 		Iterator it = mapDetLivraison.entrySet().iterator();
 		List<DetFactureAchatValue> listDetFactureVente = new ArrayList<DetFactureAchatValue>();
@@ -1790,7 +1791,10 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 			
 
 			if (element.getProduitId() != null) {
-				produitValue = produitPersistance.rechercheProduitById(element.getProduitId());
+				
+				//produitValue = produitPersistance.rechercheProduitById(element.getProduitId());
+				produitValue=articlePersistance.getArticleParId(element.getProduitId());
+				
 				if (produitValue != null) {
 
 					element.setSerialisable(produitValue.isSerialisable());
@@ -1818,7 +1822,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 					}
 
 					element.setProduitDesignation(produitValue.getDesignation());
-					element.setProduitReference(produitValue.getReference());
+					element.setProduitReference(produitValue.getRef());
 
 					/*** appel fonction rechercheMC prix special *****/
 
@@ -1826,8 +1830,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 					// TO O DO A changer
 					// Commented
 
-					if (element.getPrixUnitaireHT() == null && produitValue.getPrixUnitaire() != null)
-						element.setPrixUnitaireHT(produitValue.getPrixUnitaire());
+					if (element.getPrixUnitaireHT() == null && produitValue.getPu() != null)
+						element.setPrixUnitaireHT(produitValue.getPu());
 
 					if (element.getPrixUnitaireHT() != null && element.getQuantite() != null) {
 						element.setPrixTotalHT(element.getPrixUnitaireHT() * element.getQuantite());

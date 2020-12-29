@@ -14,11 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherchePrixClientValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheProduitValue;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IArticlePersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IPrixClientPersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersistance;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
@@ -87,6 +91,9 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 	
 	@Autowired
 	private IBonStockDomaine bonStockDomaine;
+	
+	@Autowired
+	private IArticlePersistance articlePersistance;
 
 	@Override
 	public ResultatRechecheFactureAchatValue rechercherMultiCritere(RechercheMulticritereFactureAchatValue request) {
@@ -172,8 +179,10 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 				}
 				// MAJ Qte Produit
 			if (detFactureAchat.getProduitId() != null) {
-
-					ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
+				
+                     ArticleValue produitValue=articlePersistance.getArticleParId(detFactureAchat.getProduitId());
+                     
+					//ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
 					
 					    detFactureAchat.setTaxeId(produitValue.getIdTaxe());
 						detFactureAchat.setSerialisable(produitValue.isSerialisable());
@@ -448,8 +457,10 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			
 			//Ajouter par samer le 11.09.20  pour calculer la taxe apres la remise.
 			if (detFactureAchat.getProduitId() != null) {
-
-				ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
+				
+				
+                     ArticleValue produitValue=articlePersistance.getArticleParId(detFactureAchat.getProduitId());
+				//ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
 				
 				    detFactureAchat.setTaxeId(produitValue.getIdTaxe());
 					detFactureAchat.setSerialisable(produitValue.isSerialisable());
@@ -644,17 +655,21 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			for (DetFactureAchatValue detFactureAchat : factureAchat.getListDetFactureAchat()) {
 
 				if (detFactureAchat.getProduitId() != null) {
-					ProduitValue produit = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
+					
+					 ArticleValue produit=articlePersistance.getArticleParId(detFactureAchat.getProduitId());
+					//ProduitValue produit = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
+					
+					
 					if (produit != null) {
 						detFactureAchat.setProduitDesignation(produit.getDesignation());
-						detFactureAchat.setProduitReference(produit.getReference());
+						detFactureAchat.setProduitReference(produit.getRef());
 						
 						if(detFactureAchat.getPrixUnitaireHT() == null && detFactureAchat.getPrixTotalHT() == null) {
 							
 							
 							
-							detFactureAchat.setPrixUnitaireHT(produit.getPrixUnitaire());
-							detFactureAchat.setPrixTotalHT(produit.getPrixUnitaire() * detFactureAchat.getQuantite());	
+							detFactureAchat.setPrixUnitaireHT(produit.getPu());
+							detFactureAchat.setPrixTotalHT(produit.getPu() * detFactureAchat.getQuantite());	
 							
 							
 						}
@@ -859,13 +874,15 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 		ListProduitElementValue listProduitElementValue = new ListProduitElementValue();
 
-		RechercheMulticritereProduitValue requetRechProduit = new RechercheMulticritereProduitValue();
+		//RechercheMulticritereProduitValue requetRechProduit = new RechercheMulticritereProduitValue();
+		RecherecheMulticritereArticleValue requetRechProduit=new RecherecheMulticritereArticleValue();
+		//requetRechProduit.setRetour("oui");
+		
+		
+		ResultatRechecheArticleValue reultat=articlePersistance.rechercherArticleMultiCritere(requetRechProduit);
+		//ResultatRechecheProduitValue reultat = produitPersistance.rechercherProduitMultiCritere(requetRechProduit);
 
-		requetRechProduit.setRetour("oui");
-
-		ResultatRechecheProduitValue reultat = produitPersistance.rechercherProduitMultiCritere(requetRechProduit);
-
-		for (ProduitValue element : reultat.getProduitValues()) {
+		for (ArticleValue element : reultat.getArticleValues()) {
 
 			DetFactureAchatValue detFactureVente = new DetFactureAchatValue();
 			detFactureVente.setQuantite(1d);
@@ -873,9 +890,9 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			detFactureVente.setProduitId(element.getId());
 
 			detFactureVente.setProduitDesignation(element.getDesignation());
-			detFactureVente.setProduitReference(element.getReference());
-			detFactureVente.setPrixUnitaireHT(element.getPrixUnitaire());
-			detFactureVente.setPrixTotalHT(element.getPrixUnitaire() * detFactureVente.getQuantite());
+			detFactureVente.setProduitReference(element.getRef());
+			detFactureVente.setPrixUnitaireHT(element.getPu());
+			detFactureVente.setPrixTotalHT(element.getPu() * detFactureVente.getQuantite());
 
 			if (clientId != null) {
 
