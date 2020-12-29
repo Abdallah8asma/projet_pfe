@@ -62,7 +62,7 @@ angular
 
 				$scope.listTaxeFactureInitMethod = function () {
 					
-					scope.listTaxeFactureInit = [
+					$scope.listTaxeFactureInit = [
 						/*
 						 * {//FODEC taxeId: 1, pourcentage: 1,
 						 * montant: '', },

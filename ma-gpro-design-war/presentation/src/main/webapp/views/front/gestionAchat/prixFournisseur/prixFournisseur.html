@@ -178,8 +178,8 @@
 
 										</div>
 										<input class="form-control"
-											ng-model="produitCourante.reference"
-											ng-init="produitCourante.reference=''" />
+											ng-model="produitCourante.ref"
+											ng-init="produitCourante.ref=''" />
 									</div>
 								</div>
 							</div>
@@ -209,8 +209,8 @@
 
 										</div>
 										<select class="form-control"
-											ng-model="produitCourante.famille"
-											ng-init="produitCourante.famille=''">
+											ng-model="produitCourante.familleEntite"
+											ng-init="produitCourante.familleEntite=''">
 											<option ng-repeat="famille in ListFamilleProduitCache"
 												value="{{famille.id}}">{{famille.designation}}</option>
 										</select>
@@ -227,8 +227,8 @@
 
 										</div>
 										<select class="form-control"
-											ng-model="produitCourante.sousfamille"
-											ng-init="produitCourante.sousfamille=''">
+											ng-model="produitCourante.sousFamilleEntite"
+											ng-init="produitCourante.sousFamilleEntite=''">
 											<option
 												ng-repeat="sousFamille in ListSousFamilleProduitCache"
 												value="{{sousFamille.id}}">{{sousFamille.designation}}</option>
