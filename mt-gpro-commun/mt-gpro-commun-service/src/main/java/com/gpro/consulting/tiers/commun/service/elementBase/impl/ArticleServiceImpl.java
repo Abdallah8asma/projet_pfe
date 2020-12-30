@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleCacheValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheArticleValue;
 import com.gpro.consulting.tiers.commun.domaine.elementBase.IArticleDomaine;
@@ -73,5 +74,12 @@ public class ArticleServiceImpl implements IArticleService {
 		return articleDomaine
 				.rechercherArticleMultiCritereClient(pRechercheMultiCritere);
 	}
+
+	@Override
+	public ArticleValue rechercheProduitParReference(String reference) {
+		
+		return articleDomaine.rechercheProduitParReference(reference);
+	}
+	
 
 }

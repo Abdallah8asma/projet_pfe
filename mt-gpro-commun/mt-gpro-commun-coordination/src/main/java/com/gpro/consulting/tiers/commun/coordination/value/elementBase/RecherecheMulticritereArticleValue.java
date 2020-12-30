@@ -35,10 +35,23 @@ public class RecherecheMulticritereArticleValue {
 	
 	private String partieInteressee ;
 	
+	private Long FamillePiId;
+	
+	private Long getGroupeClientId;
 	
 	
-	
-	
+	public Long getFamillePiId() {
+		return FamillePiId;
+	}
+	public void setFamillePiId(Long famillePiId) {
+		FamillePiId = famillePiId;
+	}
+	public Long getGetGroupeClientId() {
+		return getGroupeClientId;
+	}
+	public void setGetGroupeClientId(Long getGroupeClientId) {
+		this.getGroupeClientId = getGroupeClientId;
+	}
 	public String getPartieInteressee() {
 		return partieInteressee;
 	}

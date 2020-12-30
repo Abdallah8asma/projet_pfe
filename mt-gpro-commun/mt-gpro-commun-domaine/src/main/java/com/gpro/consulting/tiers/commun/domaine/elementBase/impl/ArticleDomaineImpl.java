@@ -144,6 +144,19 @@ public class ArticleDomaineImpl implements IArticleDomaine{
 		return result;
 	}
 
+	@Override
+	public ArticleValue rechercheProduitParReference(String reference) {
+		
+		ArticleValue article = articlePersistance.rechercheProduitParReference(reference);
+		return article;
+	}
+
+	@Override
+	public ArticleValue getArticleParId(Long id) {
+		// TODO Auto-generated method stub
+		return articlePersistance.getArticleParId(id);
+	}
+
 
 
 }
