@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
@@ -33,6 +34,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.L
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.bonCommande.IBonCommandeAchatDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.bonlivraison.utilities.DetLivraisonVenteComparator;
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetAnnuelDomaine;
+import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetMensuelDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.boncommande.IBonCommandeAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.IReceptionAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.IGuichetAnnuelPersistance;
@@ -85,6 +87,10 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 	
 	@Autowired
 	private IArticleService articleService;
+	
+	
+	@Autowired
+	private IGuichetMensuelDomaine guichetierMensuelDomaine;
 
 	/**
 	 * Creates the.
@@ -118,6 +124,10 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 				|| bonCommandeValue.getReference() == null) {
 
 			bonCommandeValue.setReference(this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true));
+			
+			
+			//bonCommandeValue.setReference(getReferenceBonCommandeAchatFromGuichetMensuel(Calendar.getInstance(),true));  
+			
 
 			//logger.info("----- auto reference ----------" + bonCommandeValue.getReference());
 
@@ -125,6 +135,8 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 			
 		{
 			 if(bonCommandeValue.getRefAvantChangement() != null && bonCommandeValue.getReference().equals(bonCommandeValue.getRefAvantChangement())) {
+				 
+				// getReferenceBonCommandeAchatFromGuichetMensuel(Calendar.getInstance(),true);
 				 this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true);
            }
 			
@@ -750,6 +762,51 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 		listProduitElementValue.setListDetLivraisonVente(listDetFactureVente);
 
 		return listProduitElementValue;
+	}
+	
+	
+	
+	private String getReferenceBonCommandeAchatFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
+////////////
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonLivraisonReference();
+		/** Année courante. */
+		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
+		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
+
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vAnneeCourante);
+		vNumBonLiv.append(String.format("%02d", moisActuel));
+		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+		/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+		vGuichetValeur.setId(new Long(idMensuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumReferenceBonLivraisonCourant(new Long(vNumGuichetBonLiv + 1L));
+
+		/** Modification de la valeur en base du numéro. */
+		
+		if(increment)
+			//////////////////
+		this.guichetierMensuelDomaine.modifierGuichetBonLivraisonMensuel(vGuichetValeur);
+		
+		
+
+		return vNumBonLiv.toString();
+
+	}
+
+	@Override
+	public String getCurrentReferenceMensuel(Calendar instance, boolean b) {
+		// TODO Auto-generated method stub
+		return this.getReferenceBonCommandeAchatFromGuichetMensuel(instance, b);
 	}
 
 }

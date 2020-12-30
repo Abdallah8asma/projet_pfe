@@ -46,4 +46,6 @@ public interface IBonCommandeAchatService {
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public ListProduitElementValue getProduitElementList(List<String> refBonCommandesList, Long receptionAchatId);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public String getCurrentReferenceMensuel(Calendar instance, boolean b);
 }
