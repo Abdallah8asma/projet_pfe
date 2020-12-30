@@ -515,7 +515,7 @@ angular
 								 
 								produitCourant.famillePiId=2;
 								$http({
-									url: UrlCommun + "/fiches/listPrixClient",
+									url: UrlCommun + "/fiches/listPrixClientArticle",
 									method: "POST",
 									data: produitCourant, // this is your json
 																	// data string
