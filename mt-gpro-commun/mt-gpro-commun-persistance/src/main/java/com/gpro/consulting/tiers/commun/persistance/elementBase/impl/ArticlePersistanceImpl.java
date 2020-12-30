@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleCacheValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheArticleValue;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IArticlePersistance;
@@ -27,6 +28,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleAr
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SousFamilleArticleEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.TypeArticleEntity;
 import com.gpro.consulting.tiers.commun.persistance.utilities.PersistanceUtilities;
@@ -296,6 +298,60 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
 
 		return dto;
 	}
+
+
+	@Override
+	public ArticleValue rechercheProduitParReference(String reference) {
+	
+			  CriteriaBuilder vBuilder = this.entityManager.getCriteriaBuilder();
+			    /** entity principale **/
+			    CriteriaQuery < ArticleEntite > vCriteriaQuery = vBuilder.createQuery(ArticleEntite.class);
+			    List < Predicate > vWhereClause = new ArrayList < Predicate >();
+
+			    /** create liste resultat ***/
+
+			    /************ entity jointure *****************/
+			    Root < ArticleEntite > vRootProduit = vCriteriaQuery.from(ArticleEntite.class);
+
+			    /***************** Predicate *************/
+			    
+			    
+			  
+			    
+			    
+			    
+			   
+			    
+			    
+			    
+			    if (ref!=null) {
+			      vWhereClause.add(vBuilder.equal(vRootProduit.get(reference),
+			    		 ref));
+			    }
+	  
+			  
+			    /** execute query and do something with result **/
+
+			    vCriteriaQuery.select(vRootProduit).where(vWhereClause.toArray(new Predicate[] {}));
+			    List < ArticleEntite > resultatEntite = this.entityManager.createQuery(vCriteriaQuery).getResultList();
+
+			    /** Conversion de la liste en valeur */
+			    List < ArticleValue > vListeResultat = new ArrayList < ArticleValue >();
+
+			    for (ArticleEntite vProduitEntite : resultatEntite) {
+			    	ArticleValue vPv = PersistanceUtilities.toArticleValue(vProduitEntite);
+			      vListeResultat.add(vPv);
+			    }
+
+			   
+
+			    if(vListeResultat!=null && vListeResultat.size()>0)
+			    	return vListeResultat.get(0);
+			  
+					return null;
+
+		}
+	
 	
 
 

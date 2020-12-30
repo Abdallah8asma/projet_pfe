@@ -161,7 +161,15 @@ public class ArticleValue implements Comparable<ArticleValue>{
 	private Double remise;
 	private Long groupeClientId;
 	
+	private Long sousFamilleId;
 
+	public Long getSousFamilleId() {
+		return sousFamilleId;
+	}
+
+	public void setSousFamilleId(Long sousFamilleId) {
+		this.sousFamilleId = sousFamilleId;
+	}
 
 	public Long getGroupeClientId() {
 		return groupeClientId;
