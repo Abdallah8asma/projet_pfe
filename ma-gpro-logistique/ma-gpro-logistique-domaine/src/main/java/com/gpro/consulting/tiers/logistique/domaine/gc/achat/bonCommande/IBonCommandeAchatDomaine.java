@@ -35,4 +35,6 @@ public interface IBonCommandeAchatDomaine {
 	public String getCurrentReferenceByType(String type,Calendar instance, boolean b);
 
 	public ListProduitElementValue getProduitElementList(List<String> refBonCommandesList, Long receptionAchatId);
+
+	public String getCurrentReferenceMensuel(Calendar instance, boolean b);
 }

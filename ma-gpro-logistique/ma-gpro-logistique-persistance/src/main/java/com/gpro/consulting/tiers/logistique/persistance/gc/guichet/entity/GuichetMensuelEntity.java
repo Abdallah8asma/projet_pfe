@@ -36,6 +36,20 @@ public class GuichetMensuelEntity {
 	  /** Numéro courant. */
 	  @Column(name = "ref_bl")
 	  private Long numReferenceBonLivraisonCourante;
+	  
+	  
+	  
+	  
+	  /************** Achat   ****************/
+	  
+	  
+	  
+	  
+	  
+	  
+	  /********* Fin Achat   ****************/
+	  
+	  
 
 	  
 	/**

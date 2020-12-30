@@ -80,4 +80,10 @@ public class BonCommandeAchatServiceImpl implements IBonCommandeAchatService {
 		return bonCommandeDomaine.getProduitElementList(refBonCommandesList,receptionAchatId);
 	}
 
+	@Override
+	public String getCurrentReferenceMensuel(Calendar instance, boolean b) {
+		// TODO Auto-generated method stub
+		return  bonCommandeDomaine.getCurrentReferenceMensuel(instance,b);
+	}
+
 }
