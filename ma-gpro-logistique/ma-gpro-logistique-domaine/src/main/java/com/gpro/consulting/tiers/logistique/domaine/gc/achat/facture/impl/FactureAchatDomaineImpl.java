@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
@@ -44,6 +45,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gs.value.BonStockValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture.IFactureAchatDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture.utilities.DetFactureAchatComparator;
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetAnnuelDomaine;
+import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetMensuelDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gs.IBonStockDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.bonsortiefini.IBonSortieFiniPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.rouleaufini.IChoixRouleauPersistance;
@@ -94,7 +96,10 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 	
 	@Autowired
 	private IArticlePersistance articlePersistance;
-
+	
+	@Autowired
+	private IGuichetMensuelDomaine guichetierMensuelDomaine;
+	
 	@Override
 	public ResultatRechecheFactureAchatValue rechercherMultiCritere(RechercheMulticritereFactureAchatValue request) {
 
@@ -128,7 +133,12 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			if (factureValue.getType() != null) {
 				
 				
-				factureValue.setReference(getCurrentReference(factureValue.getType(), factureValue.getDate(), true));
+				//factureValue.setReference(getCurrentReference(factureValue.getType(), factureValue.getDate(), true));
+				factureValue.setReference(getReferenceFactureFromGuichetMensuel(Calendar.getInstance(),true)); 
+				
+				
+				
+				
 				
 				/*if (factureValue.getType().equalsIgnoreCase(FACTURE_TYPE_AVOIRE)) {
 				//	factureValue.setReference(this.getNumeroAvoirAchat(factureValue.getDate()));
@@ -144,7 +154,10 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			
 			
 			 if(factureValue.getRefAvantChangement() != null && factureValue.getReference().equals(factureValue.getRefAvantChangement())) {
-				 this.getCurrentReference(factureValue.getType(),factureValue.getDate(),true);
+				 
+					this.getReferenceFactureFromGuichetMensuel(factureValue.getDateIntroduction(), true); 
+				 
+				 //this.getCurrentReference(factureValue.getType(),factureValue.getDate(),true);
            }
 			
 		}
@@ -921,5 +934,96 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 	public BLReportElementRecapValue getDepenseFacturebyMonth(RechercheMulticritereFactureAchatValue request) {
 		
 		return factureAchatPersistance.getDepenseFacturebyMonth(request);
+	}
+	
+	
+	private String getReferenceFactureFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
+
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureReference(); 
+		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
+		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
+
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vAnneeCourante);
+		vNumBonLiv.append(String.format("%02d", moisActuel));
+		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+		/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+		vGuichetValeur.setId(new Long(idMensuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumReferenceFactureCourante(new Long(vNumGuichetBonLiv + 1L));
+		/** Modification de la valeur en base du numéro. */
+		
+		//if(increment)
+		
+		//this.guichetierMensuelDomaine.modifierGuichetFactureMensuel(vGuichetValeur);  
+		
+
+		return vNumBonLiv.toString();
+
+	}
+
+	private String getReferenceFactureAvoirFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
+		
+
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureAvoirReference(); 
+		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
+		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
+
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vAnneeCourante);
+		vNumBonLiv.append(String.format("%02d", moisActuel));
+		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+		/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+		vGuichetValeur.setId(new Long(idMensuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumReferenceAvoirCourante(new Long(vNumGuichetBonLiv + 1L));     
+
+		/** Modification de la valeur en base du numéro. */
+		
+		//if(increment)
+		
+		//this.guichetierMensuelDomaine.modifierGuichetFactureAvoirMensuel(vGuichetValeur);  
+		
+
+		return vNumBonLiv.toString();
+
+	}
+	
+	
+	
+	
+
+	@Override
+	public String getCurrentReferenceMensuel(String type, Calendar instance, boolean b) {
+		
+		if (type.equals(FACTURE_TYPE_AVOIRE))
+
+			return getReferenceFactureAvoirFromGuichetMensuel(instance, b);
+
+		else
+			return getReferenceFactureFromGuichetMensuel(instance, b);
+		
+		
+
+		
+		
 	}
 }

@@ -3,6 +3,7 @@ package com.gpro.consulting.tiers.logistique.domaine.gc.guichet.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetMensuelDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.IGuichetMensuelPersistance;
@@ -52,7 +53,51 @@ public class GuichetMensuelDomaineImpl implements IGuichetMensuelDomaine{
 	}
 
 	
-	
-	
+	@Override
+	public Long getNextNumBonCommandeReference() {
+		
+		return this.guichetMensuelPersistance.getNextNumBonCommandeReference();
+	}
 
+	@Override
+	public Long modifierGuichetBonCommandeMensuel(GuichetMensuelValue pGuichetValeur) {
+	
+		 return this.guichetMensuelPersistance.modifierGuichetBonCommandeMensuel(pGuichetValeur);
+	}
+
+	@Override
+	public Long getNextNumBonReceptionReference() {
+		return this.guichetMensuelPersistance.getNextNumBonReceptionReference();
+	}
+
+	@Override
+	public Long modifierGuichetBonReceptionMensuel(GuichetMensuelValue pGuichetValeur) {
+		 return this.guichetMensuelPersistance.modifierGuichetBonReceptionMensuel(pGuichetValeur);
+	}
+
+	@Override
+	public Long getNextNumfactureReference() {
+		return this.guichetMensuelPersistance.getNextNumfactureReference();
+	}
+
+	@Override
+	public Long modifierGuichetFactureMensuel(GuichetMensuelValue pGuichetValeur) {
+		return this.guichetMensuelPersistance.modifierGuichetFactureMensuel(pGuichetValeur);
+	}
+
+	@Override
+	public Long getNextNumfactureAvoirReference() {
+		return this.guichetMensuelPersistance.getNextNumfactureAvoirReference();
+	}
+
+	@Override
+	public Long modifierGuichetFactureAvoirMensuel(GuichetMensuelValue pGuichetValeur) {
+		return this.guichetMensuelPersistance.modifierGuichetFactureAvoirMensuel(pGuichetValeur);
+	}
+	
+	@Override
+	public GuichetMensuelValue getCurrentGuichetMensuel() {
+		// TODO Auto-generated method stub
+		return guichetMensuelPersistance.getCurrentGuichetMensuel();
+	}
 }

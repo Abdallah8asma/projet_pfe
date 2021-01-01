@@ -230,5 +230,12 @@ public class ReceptionAchatRestImpl {
 		return receptionService.validerBL(reference);
 	}
 	
+	
+	@RequestMapping(value = "/getCurrentReferenceMensuel", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuel() {
+ 		
+ 		return  receptionService.getCurrentReferenceMensuel(Calendar.getInstance(),false);
+ 	}
+	
 
 }
