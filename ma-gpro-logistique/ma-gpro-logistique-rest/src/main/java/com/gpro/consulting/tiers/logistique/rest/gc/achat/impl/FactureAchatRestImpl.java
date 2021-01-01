@@ -249,5 +249,10 @@ public class FactureAchatRestImpl {
 		
 	}
 	
-	
+
+	@RequestMapping(value = "/getCurrentReferenceMensuel:{type}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuel(@PathVariable String type) {
+ 		
+ 		return  factureService.getCurrentReferenceMensuel(type,Calendar.getInstance(),false);
+ 	}
 }

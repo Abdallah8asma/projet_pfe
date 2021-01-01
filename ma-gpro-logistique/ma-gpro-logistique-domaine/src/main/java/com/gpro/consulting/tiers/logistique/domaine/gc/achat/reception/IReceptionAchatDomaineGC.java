@@ -83,4 +83,6 @@ public interface IReceptionAchatDomaineGC {
 	public ReceptionAchatValue validerFactureAvoirRetour(String reference);
 
 	public ReceptionAchatValue validerBL(String reference);
+
+	public String getCurrentReferenceMensuel(Calendar instance, boolean b);
 }

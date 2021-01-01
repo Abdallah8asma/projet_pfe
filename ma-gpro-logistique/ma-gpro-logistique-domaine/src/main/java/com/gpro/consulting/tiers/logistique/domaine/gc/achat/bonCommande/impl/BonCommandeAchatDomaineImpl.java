@@ -123,10 +123,10 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 		if ((bonCommandeValue.getReference() != null && bonCommandeValue.getReference().equals(""))
 				|| bonCommandeValue.getReference() == null) {
 
-			bonCommandeValue.setReference(this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true));
+			//bonCommandeValue.setReference(this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true));
 			
 			
-			//bonCommandeValue.setReference(getReferenceBonCommandeAchatFromGuichetMensuel(Calendar.getInstance(),true));  
+			bonCommandeValue.setReference(this.getReferenceBonCommandeAchatFromGuichetMensuel(Calendar.getInstance(),true));  
 			
 
 			//logger.info("----- auto reference ----------" + bonCommandeValue.getReference());
@@ -136,8 +136,9 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 		{
 			 if(bonCommandeValue.getRefAvantChangement() != null && bonCommandeValue.getReference().equals(bonCommandeValue.getRefAvantChangement())) {
 				 
-				// getReferenceBonCommandeAchatFromGuichetMensuel(Calendar.getInstance(),true);
-				 this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true);
+				this.getReferenceBonCommandeAchatFromGuichetMensuel(Calendar.getInstance(),true);
+				 //this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true);
+				
            }
 			
 		}
@@ -767,8 +768,13 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 	
 	
 	private String getReferenceBonCommandeAchatFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
-////////////
-		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonLivraisonReference();
+
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonCommandeReference();
+		
+	//GuichetMensuelValue currentGuichetAnnuel = guichetierMensuelDomaine.getCurrentGuichetMensuel();
+		
+		//Long numeroBonCommandeAchat = currentGuichetAnnuel.getNumReferenceBonCommandeCourante();  
+		
 		/** Année courante. */
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
 		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
@@ -789,13 +795,16 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 
 		vGuichetValeur.setId(new Long(idMensuel));
 		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
-		vGuichetValeur.setNumReferenceBonLivraisonCourant(new Long(vNumGuichetBonLiv + 1L));
+		vGuichetValeur.setNumReferenceBonCommandeCourante(new Long(vNumGuichetBonLiv + 1L));  
 
 		/** Modification de la valeur en base du numéro. */
+		vNumBonLiv.append( vNumGuichetBonLiv);
 		
-		if(increment)
-			//////////////////
-		this.guichetierMensuelDomaine.modifierGuichetBonLivraisonMensuel(vGuichetValeur);
+
+		
+		//if(increment)
+	
+		//this.guichetierMensuelDomaine.modifierGuichetBonCommandeMensuel(vGuichetValeur);
 		
 		
 
@@ -805,7 +814,7 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 
 	@Override
 	public String getCurrentReferenceMensuel(Calendar instance, boolean b) {
-		// TODO Auto-generated method stub
+		
 		return this.getReferenceBonCommandeAchatFromGuichetMensuel(instance, b);
 	}
 

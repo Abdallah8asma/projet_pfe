@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.entity.GuichetAnnuelEntity;
+import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.entity.GuichetMensuelEntity;
 
 /**
  * Mapping Class from DTO to Entity, and from Entity to DTO
@@ -164,5 +166,28 @@ public class GuichetPersistanceUtilities {
 	}
 	
 	
+	public static GuichetMensuelValue toMensuelValue(GuichetMensuelEntity entity) {
+		
+		GuichetMensuelValue gmv = new GuichetMensuelValue();
+		
+		gmv.setId(entity.getId());		
+		
+		gmv.setAnnee(entity.getAnnee());
+		gmv.setMois(entity.getMois());
+		gmv.setNumReferenceAvoirCourante(entity.getNumReferenceAvoirCourante());
+		gmv.setNumReferenceBonReceptionCourante(entity.getNumReferenceBonReceptionCourante());
+		gmv.setNumReferenceFactureCourante(entity.getNumReferenceFactureCourante());
+	
+		gmv.setNumReferenceBonCommandeCourante(entity.getNumReferenceBonCommandeCourante());
+		
+		
+		return gmv;
+		
+		
+	}
+	}
+	
+	
+	
+	
 
-}

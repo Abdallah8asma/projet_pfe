@@ -137,4 +137,10 @@ public class FactureAchatServiceImpl implements IFactureAchatService {
 		return factureDomaine.getArticleAvoir(clientId);
 	}
 
+	
+	@Override
+	public String getCurrentReferenceMensuel(String type, Calendar instance, boolean b) {
+		return factureDomaine.getCurrentReferenceMensuel(type,instance,b);
+	}
+
 }

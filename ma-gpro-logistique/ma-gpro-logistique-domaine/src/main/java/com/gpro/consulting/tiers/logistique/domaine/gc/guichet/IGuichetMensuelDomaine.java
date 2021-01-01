@@ -37,5 +37,23 @@ public interface IGuichetMensuelDomaine {
 
 	public void modifierGuichetBonComptoirMensuel(GuichetMensuelValue vGuichetValeur);
 
-		
+
+	public Long getNextNumBonCommandeReference();
+
+	public Long modifierGuichetBonCommandeMensuel(GuichetMensuelValue pGuichetValeur);
+	
+	public Long getNextNumBonReceptionReference();
+
+	public Long modifierGuichetBonReceptionMensuel(GuichetMensuelValue pGuichetValeur);
+	
+	public Long getNextNumfactureReference();	
+	public Long modifierGuichetFactureMensuel(GuichetMensuelValue pGuichetValeur);
+	
+	public Long getNextNumfactureAvoirReference();	
+	public Long modifierGuichetFactureAvoirMensuel(GuichetMensuelValue pGuichetValeur);
+
+
+	public GuichetMensuelValue getCurrentGuichetMensuel();
+	
+	
 }
