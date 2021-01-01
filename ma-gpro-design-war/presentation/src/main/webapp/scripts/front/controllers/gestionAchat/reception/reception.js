@@ -626,7 +626,7 @@ angular
 					$http
 						.get(
 							UrlAtelier
-							+ "/receptionAchat/getCurrentReference"
+							+ "/receptionAchat/getCurrentReferenceMensuel"
 						)
 						.success(
 							function (data) {
