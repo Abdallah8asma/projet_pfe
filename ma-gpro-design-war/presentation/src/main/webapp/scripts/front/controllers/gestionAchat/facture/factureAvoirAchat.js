@@ -543,7 +543,7 @@ angular
 					/* $scope.factureVenteCourant = factureVente ? angular
 							 .copy(factureVente) : {};*/
 
-					$http.get(UrlAtelier + "/factureAchat/getCurrentReferenceByTypeFacture:Avoir")
+					$http.get(UrlAtelier + "/factureAchat/getCurrentReferenceMensuel:Avoir")
 						.success(
 							function (res) {
 

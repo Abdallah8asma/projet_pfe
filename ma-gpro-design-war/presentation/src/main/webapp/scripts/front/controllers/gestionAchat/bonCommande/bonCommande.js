@@ -230,7 +230,7 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
       $scope.commandeAchatCourante = {};
 
       $http
-        .get(UrlAtelier + '/commandeAchat/getCurrentReferenceByType:Commande')
+        .get(UrlAtelier + '/commandeAchat/getCurrentReferenceMensuel')
         .success(function (res) {
           $scope.commandeAchatCourante.reference = res;
           $scope.commandeAchatCourante.refAvantChangement = res;
