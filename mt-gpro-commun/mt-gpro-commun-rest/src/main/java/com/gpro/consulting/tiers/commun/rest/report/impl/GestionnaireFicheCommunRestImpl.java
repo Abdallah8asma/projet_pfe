@@ -1546,6 +1546,7 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 			@RequestParam("groupeClientId") String groupeClientId,
 			@RequestParam("vTypePartieInteressee") String vTypePartieInteressee, @RequestParam("actif") String actif,
 			@RequestParam("vFamillePartieInteressee") Long vFamillePartieInteressee,
+			@RequestParam("nature") String nature,
 
 			HttpServletResponse response) throws WriteException, IOException {
 
@@ -1590,6 +1591,7 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 		sheet3.setColumnView(12, 15);
 
 		sheet3.setColumnView(13, 30);
+		sheet3.setColumnView(14, 15);
 
 		/**************************************************************************/
 
@@ -1649,7 +1651,7 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 			sheet3.addCell(new Label(2, 7, "   Liste des Fournisseurs", ExcelUtils.boldTitre));
 		}
 
-		sheet3.mergeCells(2, 7, 13, 8);
+		sheet3.mergeCells(2, 7, 14, 8);
 		/*
 		 * // sheet3.addCell(new Label(2, 6, "Le : " + dateFormat2.format(d),
 		 * boldRed3));
@@ -1701,6 +1703,20 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 		 * request.setPrix_sup(prixSup);
 		 * 
 		 */
+		
+		if (isNotEmty(nature))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Nature. :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, nature, ExcelUtils.boldRed3));
+
+			request.setNature(nature);
+
+		}
+		
+		
 		if (isNotEmty(vReference))
 
 		{
@@ -1831,7 +1847,8 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 		//sheet3.addCell(new Label(11, i - 1, "Registre.Comm", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(10, i - 1, "Code Postale", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(11, i - 1, "Adresse", ExcelUtils.boldRed2));
-
+		sheet3.addCell(new Label(12, i - 1, "Nature", ExcelUtils.boldRed2));
+		
 		Double quantiteTotale = 0d;
 
 		for (PartieInteresseValue element : res.getPartieInteresseValues()) {
@@ -1951,6 +1968,14 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 
 			} else {
 				sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
+
+			}
+
+			if (element.getNature() != null) {
+				sheet3.addCell(new Label(12, i, element.getNature() + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(12, i, "", ExcelUtils.boldRed));
 
 			}
 

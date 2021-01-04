@@ -332,6 +332,11 @@ public class PersistanceUtilities {
 		
 		vPartieInteresseEntite.setCodeProduit(pPartieInteresseValue.getCodeProduit());
 		
+		
+		vPartieInteresseEntite.setNature(pPartieInteresseValue.getNature());
+		
+		
+		
 		// Liste Document
 		if (pPartieInteresseValue.getDocuments() != null) {
 
@@ -459,6 +464,8 @@ public class PersistanceUtilities {
 		vPartieInteresseValue.setEmail2(pPartieInteresseEntity.getEmail2());
 		
 		vPartieInteresseValue.setCodeProduit(pPartieInteresseEntity.getCodeProduit());
+		
+		vPartieInteresseValue.setNature(pPartieInteresseEntity.getNature());
 		
 		// Liste Document
 		if (pPartieInteresseEntity.getDocumentEntites() != null) {

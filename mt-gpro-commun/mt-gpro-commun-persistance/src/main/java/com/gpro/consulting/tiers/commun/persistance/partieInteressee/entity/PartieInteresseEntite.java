@@ -196,8 +196,21 @@ public class PartieInteresseEntite implements Serializable {
 	
 	
 	
+	@Column(name = "nature")
+	private String nature;
 	
 	
+	
+
+
+
+	public String getNature() {
+		return nature;
+	}
+
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
 
 	public String getEmail2() {
 		return email2;
