@@ -36,7 +36,7 @@ public class ProduitCommandeAchatEntity {
 
 	/** many-to-one association to Produit**. */
 
-	@Column(name = "EB_PRODUIT_ID")
+	@Column(name = "EB_ARTICLE_ID")
 	private Long produit;
 
 	/** The prix. */
