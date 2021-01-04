@@ -74,7 +74,12 @@ public interface IArticleService {
 		public ResultatRechecheArticleValue rechercherArticleMultiCritereClient(
 				RecherecheMulticritereArticleValue pRechercheMultiCritere);
 		
+		@Transactional(readOnly = true, rollbackFor = Exception.class)
 		public ArticleValue rechercheProduitParReference(String reference);
+		
+		
+		@Transactional(readOnly = true, rollbackFor = Exception.class)
+		public ArticleValue getArticleParId(Long id);
 
 	
 }

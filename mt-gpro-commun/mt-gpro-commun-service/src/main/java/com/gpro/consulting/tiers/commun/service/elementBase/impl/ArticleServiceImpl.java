@@ -81,5 +81,12 @@ public class ArticleServiceImpl implements IArticleService {
 		return articleDomaine.rechercheProduitParReference(reference);
 	}
 	
+	
+	@Override
+	public ArticleValue getArticleParId(Long id) {
+		
+		
+		return articleDomaine.getArticleParId(id);
+	}
 
 }
