@@ -134,7 +134,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 				
 				
 				//factureValue.setReference(getCurrentReference(factureValue.getType(), factureValue.getDate(), true));
-				factureValue.setReference(getReferenceFactureFromGuichetMensuel(Calendar.getInstance(),true)); 
+				factureValue.setReference(getReferenceFactureFromGuichetMensuel(factureValue.getType(),Calendar.getInstance(),true)); 
 				
 				
 				
@@ -155,7 +155,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			
 			 if(factureValue.getRefAvantChangement() != null && factureValue.getReference().equals(factureValue.getRefAvantChangement())) {
 				 
-					this.getReferenceFactureFromGuichetMensuel(factureValue.getDateIntroduction(), true); 
+					this.getReferenceFactureFromGuichetMensuel(factureValue.getType(),factureValue.getDateIntroduction(), true); 
 				 
 				 //this.getCurrentReference(factureValue.getType(),factureValue.getDate(),true);
            }
@@ -937,7 +937,22 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 	}
 	
 	
-	private String getReferenceFactureFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
+	private String getReferenceFactureFromGuichetMensuel(final String typeFacture , final Calendar pDateBonLiv , final boolean increment) {
+		
+		if(typeFacture.equals(FACTURE_TYPE_AVOIRE))
+			return getReferenceFactureAvoirFromGuichetMensuel(pDateBonLiv, increment) ;
+		else
+			return getReferenceFactureNormalFromGuichetMensuel(pDateBonLiv, increment) ;
+		
+		
+		
+	}
+	
+	
+	private String getReferenceFactureNormalFromGuichetMensuel( final Calendar pDateBonLiv , final boolean increment) {
+		
+
+			
 
 		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureReference(); 
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
@@ -962,9 +977,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		vGuichetValeur.setNumReferenceFactureCourante(new Long(vNumGuichetBonLiv + 1L));
 		/** Modification de la valeur en base du numéro. */
 		
-		//if(increment)
-		
-		//this.guichetierMensuelDomaine.modifierGuichetFactureMensuel(vGuichetValeur);  
+		if(increment)
+		this.guichetierMensuelDomaine.modifierGuichetFactureMensuel(vGuichetValeur);  
 		
 
 		return vNumBonLiv.toString();
@@ -998,9 +1012,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 		/** Modification de la valeur en base du numéro. */
 		
-		//if(increment)
-		
-		//this.guichetierMensuelDomaine.modifierGuichetFactureAvoirMensuel(vGuichetValeur);  
+		if(increment)
+		this.guichetierMensuelDomaine.modifierGuichetFactureAvoirMensuel(vGuichetValeur);  
 		
 
 		return vNumBonLiv.toString();
@@ -1019,7 +1032,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			return getReferenceFactureAvoirFromGuichetMensuel(instance, b);
 
 		else
-			return getReferenceFactureFromGuichetMensuel(instance, b);
+			return getReferenceFactureFromGuichetMensuel(type,instance, b);
 		
 		
 

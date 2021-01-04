@@ -181,6 +181,7 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 
 	@Override
 	public Long modifierGuichetFactureMensuel(GuichetMensuelValue pGuichetValeur) {
+		
 		   GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
 			
 		    vGuichetEntite.setNumReferenceFactureCourante(pGuichetValeur.getNumReferenceFactureCourante()); 

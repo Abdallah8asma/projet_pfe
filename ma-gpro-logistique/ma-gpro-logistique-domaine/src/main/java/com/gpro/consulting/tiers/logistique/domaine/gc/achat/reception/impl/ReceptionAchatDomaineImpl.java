@@ -167,7 +167,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		if ((bonReceptionValue.getReference() != null && bonReceptionValue.getReference().equals(""))
 				|| bonReceptionValue.getReference() == null) {
 
-			bonReceptionValue.setReference(this.getCurrentReference(bonReceptionValue.getDateIntroduction(), true));
+			//bonReceptionValue.setReference(this.getCurrentReference(bonReceptionValue.getDateIntroduction(), true));
+			bonReceptionValue.setReference(getReferenceReceptionFromGuichetMensuel(Calendar.getInstance(),true));  
 
 			// logger.info("----- auto reference ----------" +
 			// bonReceptionValue.getReference());
@@ -177,7 +178,9 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		{
 			if (bonReceptionValue.getRefAvantChangement() != null
 					&& bonReceptionValue.getReference().equals(bonReceptionValue.getRefAvantChangement())) {
-				this.getCurrentReference(bonReceptionValue.getDateIntroduction(), true);
+				
+				this.getReferenceReceptionFromGuichetMensuel(Calendar.getInstance(),true);
+				//this.getCurrentReference(bonReceptionValue.getDateIntroduction(), true);
 			}
 
 		}
@@ -2066,9 +2069,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		vGuichetValeur.setNumReferenceBonReceptionCourante(new Long(vNumGuichetBonLiv + 1L));
 		/** Modification de la valeur en base du numéro. */
 		
-		//if(increment)
-		
-		//this.guichetierMensuelDomaine.modifierGuichetBonReceptionMensuel(vGuichetValeur); 
+		if(increment)
+		this.guichetierMensuelDomaine.modifierGuichetBonReceptionMensuel(vGuichetValeur); 
 		
 		
 
