@@ -516,7 +516,7 @@ angular
 
 					console.log("Apres  validerNatureFini");
 
-					$http.get(UrlAtelier + "/factureAchat/getCurrentReferenceMensuel:normal")
+					$http.get(UrlAtelier + "/factureAchat/getCurrentReferenceMensuel:Normal")
 						.success(
 							function (res) {
 
@@ -850,7 +850,7 @@ angular
 					$http
 						.get(
 							UrlAtelier
-							+ "/factureAchat/getCurrentReferenceMensuel:normal"
+							+ "/factureAchat/getCurrentReferenceMensuel:Normal"
 						)
 						.success(
 							function (res) {
