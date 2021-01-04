@@ -568,7 +568,18 @@
 					<form class="form-horizontal" id="creationMise" name="creationMise">
 
 						<div class="row">
-
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">NUM</label>
+										</div>
+										<input type="text" class="form-control" ng-model="miseCourant.reference"
+										ng-init="miseCourant.reference =''" style="border: 1px solid #e5eaee !important;"
+											/>
+									</div>
+								</div>
+							</div>
 							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
@@ -589,18 +600,7 @@
 							</div>
 
 
-							<div class="col-sm-3">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label">NUM</label>
-										</div>
-										<input type="text" class="form-control" ng-model="miseCourant.reference"
-										ng-init="miseCourant.reference =''" style="border: 1px solid #e5eaee !important;"
-											/>
-									</div>
-								</div>
-							</div>
+					
 
 							<div class="col-sm-3" ng-if="currentMode == 'ADD'">
 								<div class="form-group">
