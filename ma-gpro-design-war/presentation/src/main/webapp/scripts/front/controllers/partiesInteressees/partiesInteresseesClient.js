@@ -83,7 +83,12 @@ angular
             partieInteresseeCourante.vTypePartieInteressee +
             '&actif=' +
             partieInteresseeCourante.actif +
-            '&vFamillePartieInteressee=1';
+            '&vFamillePartieInteressee=1'  +
+
+            '&nature=' +
+            partieInteresseeCourante.nature
+            
+            ;
 
           $log.debug('-- URL--- :' + url);
 
@@ -321,7 +326,9 @@ angular
           $scope.partieInteresseeCourante = {
             dateIntroduction: new Date(),
             actif: true,
+           nature :'Client'
           };
+       
           $scope.creationPartieInteressee.$setPristine();
           $scope.listeRepresentant = [];
           $scope.listeDocument = [];
@@ -632,6 +639,13 @@ angular
               width: '8%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },
+            {
+              field: 'nature',
+              displayName: 'Nature',
+              width: '8%',
+              fontfamily: 'Poppins, Helvetica, sans-serif',
+            },
+
 
             {
               field: '',
