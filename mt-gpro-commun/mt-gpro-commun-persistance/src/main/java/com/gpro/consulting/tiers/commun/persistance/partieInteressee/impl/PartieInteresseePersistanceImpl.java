@@ -215,6 +215,11 @@ public class PartieInteresseePersistanceImpl extends AbstractPersistance impleme
         vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("payementTerme"),
           pRecherchePartieInteresseMulitCritere.getPayementTerme()));
       }
+    
+    if (estNonVide(pRecherchePartieInteresseMulitCritere.getNature())) {
+        vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("nature"),
+          pRecherchePartieInteresseMulitCritere.getNature()));
+      }
     /** execute query and do something with result **/
 
     vCriteriaQuery.select(vRootParitieInteresse).where(vWhereClause.toArray(new Predicate[] {}));
