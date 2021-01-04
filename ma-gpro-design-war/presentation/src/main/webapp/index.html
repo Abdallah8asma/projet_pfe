@@ -1569,6 +1569,22 @@
                           </a>
                         </li>
                         <li
+                        class="menu-item"
+                        aria-haspopup="true"
+                        permission="['V_Livraison_Consult']"
+                      >
+                        <a
+                          href="#/gestionCommerciale/livraisonBS"
+                          ng-click="upSelectedMenu('Vente ',' LivraisonBS')"
+                          class="menu-link"
+                        >
+                          <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                          </i>
+                          <span class="menu-text">LivraisonBS</span>
+                        </a>
+                      </li>
+                        <li
                           class="menu-item"
                           aria-haspopup="true"
                           permission="['Detailles_Livraison_Consult']"
@@ -5335,7 +5351,8 @@
     <script src="scripts/front/controllers/gestionCommerciale/factureRetour/factureRetourVente.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/reporting/reportingGC.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/remise/remiseVente.js"></script>
-	<script src="scripts/front/controllers/gestionCommerciale/package/packageVente.js"></script>
+  <script src="scripts/front/controllers/gestionCommerciale/package/packageVente.js"></script>
+  <script src="scripts/front/controllers/gestionCommerciale/livraisonBS/bonLivraisonBS.js"></script>
 
     <!----------------- Gestion Achat -------------------->
 

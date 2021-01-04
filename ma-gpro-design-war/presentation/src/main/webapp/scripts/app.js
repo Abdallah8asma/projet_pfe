@@ -107,7 +107,8 @@ angular
     'gpro.factureRetourVente',
     'gpro.back-logistique',
     'gpro.gcAchatBC',
-	'gpro.remiseVente','gpro.packageVente',
+  'gpro.remiseVente','gpro.packageVente',
+  'gpro.bondelivraisonBS',
 
     /** ************ modules Achat *********** */
 
@@ -926,6 +927,16 @@ angular
           },
         })
 
+        .when('/front/gestionCommerciale/livraisonBS:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/gestionCommerciale/LivraisonBS' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
+
         .when('/front/gestionCommerciale/detlivraison/:templateFile', {
           templateUrl: function (param) {
             return (
@@ -935,6 +946,7 @@ angular
             );
           },
         })
+
 
         .when('/front/gestionCommerciale/reception/:templateFile', {
           templateUrl: function (param) {

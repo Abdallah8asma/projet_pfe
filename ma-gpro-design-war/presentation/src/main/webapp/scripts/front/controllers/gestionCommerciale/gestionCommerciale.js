@@ -101,6 +101,9 @@ angular
 				case 'livraison':
 					$scope.ITEM = 'livraison';
 					break;
+					case 'livraisonBS':
+					$scope.ITEM = 'livraisonBS';
+					break;
 				case 'detlivraison':
 					$scope.ITEM = 'detlivraison';
 					break;
