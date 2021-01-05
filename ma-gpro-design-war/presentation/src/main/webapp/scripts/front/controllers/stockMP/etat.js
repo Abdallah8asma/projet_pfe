@@ -440,6 +440,17 @@ angular.module('gpro.etatMP', [])
 					displayName : 'Total P.',
 					width :'8%'
 				},*/
+
+				{
+					field : 'grammageArticle',
+					displayName : 'grammage',
+					width :'5%'
+				},
+				{
+					field : 'dimensionArticle',
+					displayName : 'dimension',
+					width :'5%'
+				},
 				{
 					field : 'designationMagasin',
 					displayName : 'Store',
