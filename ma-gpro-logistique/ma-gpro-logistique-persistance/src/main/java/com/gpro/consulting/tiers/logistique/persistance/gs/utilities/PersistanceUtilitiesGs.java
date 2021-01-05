@@ -80,6 +80,7 @@ public class PersistanceUtilitiesGs {
 			if (pEntiteStockEntite.getArticle().getUniteEntite() != null) {
 				vEntiteStockMouvementValue.setUnite(pEntiteStockEntite.getArticle().getUniteEntite().toString());// unitearticle
 			}
+			
 		}
 		// vEntiteStockMouvementValue.setQteOf(pEntiteStockEntite.getQteActuelle());
 		// qte OF
@@ -228,6 +229,17 @@ public class PersistanceUtilitiesGs {
 							.getFamilleArticle().getDesignation());
 				}
 			}
+			///////////////////////////
+			if (pEntiteStockEntite.getArticle().getGrammage()!= null) {
+		
+					entiteStock.setGrammageArticle(pEntiteStockEntite.getArticle().getGrammage());
+				
+			}
+			if (pEntiteStockEntite.getArticle().getDimension()!= null) {
+				
+				entiteStock.setDimensionArticle(pEntiteStockEntite.getArticle().getDimension());
+			
+		}
 
 		}
 		entiteStock.setConeReserve(pEntiteStockEntite.getConeReserve());

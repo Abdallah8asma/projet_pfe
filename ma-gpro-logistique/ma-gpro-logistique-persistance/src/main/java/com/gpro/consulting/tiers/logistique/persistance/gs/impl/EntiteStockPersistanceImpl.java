@@ -85,7 +85,8 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
         private String MAGASIN_ENTITI = "magasin";
         private String MAGASIN_ID = "id";
         private String refLot="referenceLot";
-        
+        private String dimension="dimension";
+        private String grammage="grammage";
     	private String numeroBonEntree="numeroBonEntree";
         
 	@Override
@@ -122,7 +123,17 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(id),
 		    		  pRechercheMulticritereEntiteStockValue.getArticle()));
 		    }
-		    
+	    
+	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getGrammageArticle())) {
+	    	   Join<EntiteStockEntite, ArticleEntite> jointureEnstkArt = vRootEntiteStock.join(article);
+		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(grammage),
+		    		  pRechercheMulticritereEntiteStockValue.getGrammageArticle()));
+		    }
+	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getDimensionArticle())) {
+	    	   Join<EntiteStockEntite, ArticleEntite> jointureEnstkArt = vRootEntiteStock.join(article);
+		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(dimension),
+		    		  pRechercheMulticritereEntiteStockValue.getDimensionArticle()));
+		    }
 	    
 //	    if (pRechercheMulticritereEntiteStockValue.getDate()!=null) {
 //		      vWhereClause.add(vBuilder.equal(vRootEntiteStock.get(date),
@@ -251,6 +262,8 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		      vWhereClause.add(vBuilder.equal(jointureMagSite.get(id),               
 		    		  pRechercheMulticritereEntiteStockValue.getSite()));
 		    }
+	    
+	  
 	 
 	 /**********************************Fin Jointure Referentiel ******************************************/
 	   
