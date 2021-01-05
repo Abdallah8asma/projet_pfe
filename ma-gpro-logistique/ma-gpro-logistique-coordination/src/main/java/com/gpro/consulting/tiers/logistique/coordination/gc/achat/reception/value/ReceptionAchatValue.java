@@ -85,7 +85,6 @@ public class ReceptionAchatValue implements Comparable<ReceptionAchatValue> {
 	private String refFacture;
 
 	private Long boutiqueId;
-
 	public Long getBoutiqueId() {
 		return boutiqueId;
 	}
