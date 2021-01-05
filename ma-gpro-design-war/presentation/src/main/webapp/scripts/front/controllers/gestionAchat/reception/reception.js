@@ -593,6 +593,7 @@ angular
 					$scope.receptionAchatCourante = {
 						"dateIntroduction": new Date(),
 						"dateLivraison": new Date()
+					
 					};
 					$scope.listTaxeReceptionAchat = [
 						/*
