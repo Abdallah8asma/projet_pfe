@@ -54,6 +54,15 @@ public interface IGuichetMensuelDomaine {
 
 
 	public GuichetMensuelValue getCurrentGuichetMensuel();
+
+
+	public String getPrefix();
+	
+	public String getPrefixFacture();
+	public String getPrefixFactureAvoir();
+
+
+	public String getPrefixBonReception();
 	
 	
 }

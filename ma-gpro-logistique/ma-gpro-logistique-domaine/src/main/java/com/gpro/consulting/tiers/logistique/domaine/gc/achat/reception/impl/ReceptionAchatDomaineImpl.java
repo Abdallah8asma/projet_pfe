@@ -2047,11 +2047,13 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 	private String getReferenceReceptionFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
 
 		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonReceptionReference(); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixBonReception();
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
 		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
 
 		/** Format du numero de la Bon Reception= AAAA-NN. */
 		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vNumGuichetPrefix);
 		vNumBonLiv.append(vAnneeCourante);
 		vNumBonLiv.append(String.format("%02d", moisActuel));
 		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));

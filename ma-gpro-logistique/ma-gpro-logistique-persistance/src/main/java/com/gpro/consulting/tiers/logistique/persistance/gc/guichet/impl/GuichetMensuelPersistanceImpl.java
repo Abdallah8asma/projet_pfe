@@ -240,4 +240,67 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 	    GuichetMensuelEntity GuichetMensuelEntity = this.rechercherParId(new Long(idCurrentYear), GuichetMensuelEntity.class);
 	    return GuichetPersistanceUtilities.toMensuelValue(GuichetMensuelEntity);
 	}
+
+
+	@Override
+	public String getPrefix() {
+	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	       Query vQuery = this.entityManager.createQuery(
+	      "select g.prefixeBC from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+	    Object vResult = vQuery.getSingleResult();
+	    String vNextNumBonReception= (String) vResult;
+	 
+	    return vNextNumBonReception;
+	}
+	
+	
+	
+	@Override
+	public String getPrefixBonReception() {
+	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	       Query vQuery = this.entityManager.createQuery(
+	      "select g.prefixeBonReception from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+	    Object vResult = vQuery.getSingleResult();
+	    String vNextNumBonReception= (String) vResult;
+	 
+	    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public String getPrefixFacture() {
+	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	       Query vQuery = this.entityManager.createQuery(
+	      "select g.prefixeFacture from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+	    Object vResult = vQuery.getSingleResult();
+	    String vNextNumBonReception= (String) vResult;
+	 
+	    return vNextNumBonReception;
+	}
+	
+
+	@Override
+	public String getPrefixFactureAvoir() {
+	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	       Query vQuery = this.entityManager.createQuery(
+	      "select g.prefixeAvoir from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+	    Object vResult = vQuery.getSingleResult();
+	    String vNextNumBonReception= (String) vResult;
+	 
+	    return vNextNumBonReception;
+	}
+	
+	
+	
+	
+	
+	
 }

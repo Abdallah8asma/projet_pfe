@@ -61,7 +61,13 @@ public interface IGuichetMensuelPersistance {
 
 
 	public GuichetMensuelValue getCurrentGuichetMensuel();
-
 	
+
+	public String getPrefix();
+
+
+	public String getPrefixBonReception();
+	public String getPrefixFacture();
+	public String getPrefixFactureAvoir();
 	
 }

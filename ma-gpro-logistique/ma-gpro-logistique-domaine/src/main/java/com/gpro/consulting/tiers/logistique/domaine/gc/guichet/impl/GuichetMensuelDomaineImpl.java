@@ -100,4 +100,26 @@ public class GuichetMensuelDomaineImpl implements IGuichetMensuelDomaine{
 		// TODO Auto-generated method stub
 		return guichetMensuelPersistance.getCurrentGuichetMensuel();
 	}
+	@Override
+public String getPrefix() {
+		
+		return this.guichetMensuelPersistance.getPrefix();
+	}
+
+	
+
+	@Override
+	public String getPrefixFacture() {
+		return this.guichetMensuelPersistance.getPrefixFacture();
+	}
+
+	@Override
+	public String getPrefixFactureAvoir() {
+		return this.guichetMensuelPersistance.getPrefixFactureAvoir();
+	}
+
+	@Override
+	public String getPrefixBonReception() {
+		return this.guichetMensuelPersistance.getPrefixBonReception();
+	}
 }
