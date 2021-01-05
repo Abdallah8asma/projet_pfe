@@ -36,12 +36,26 @@ public class RechercheMulticritereEntiteStockValue {
 	
 	
 	
+	
 	private List<Long> ids;
 	
+	private String grammageArticle;
+	private String dimensionArticle;
 	
 	
 	
-	
+	public String getGrammageArticle() {
+		return grammageArticle;
+	}
+	public void setGrammageArticle(String grammageArticle) {
+		this.grammageArticle = grammageArticle;
+	}
+	public String getDimensionArticle() {
+		return dimensionArticle;
+	}
+	public void setDimensionArticle(String dimenssionArticle) {
+		this.dimensionArticle = dimenssionArticle;
+	}
 	public List<Long> getIds() {
 		return ids;
 	}
