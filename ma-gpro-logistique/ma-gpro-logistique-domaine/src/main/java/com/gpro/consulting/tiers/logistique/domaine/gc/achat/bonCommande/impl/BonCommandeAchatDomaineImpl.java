@@ -770,6 +770,7 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 	private String getReferenceBonCommandeAchatFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
 
 		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonCommandeReference();
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefix();
 
 		/** Année courante. */
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
@@ -777,6 +778,7 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 
 		/** Format du numero de la Bon Reception= AAAA-NN. */
 		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vNumGuichetPrefix);
 		vNumBonLiv.append(vAnneeCourante);
 		vNumBonLiv.append(String.format("%02d", moisActuel));
 		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));

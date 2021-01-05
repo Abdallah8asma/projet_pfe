@@ -955,11 +955,13 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			
 
 		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureReference(); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFacture();
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
 		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
 
 		/** Format du numero de la Bon Reception= AAAA-NN. */
 		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vNumGuichetPrefix);
 		vNumBonLiv.append(vAnneeCourante);
 		vNumBonLiv.append(String.format("%02d", moisActuel));
 		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
@@ -989,11 +991,13 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		
 
 		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureAvoirReference(); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFactureAvoir();
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
 		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
 
 		/** Format du numero de la Bon Reception= AAAA-NN. */
 		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vNumGuichetPrefix);
 		vNumBonLiv.append(vAnneeCourante);
 		vNumBonLiv.append(String.format("%02d", moisActuel));
 		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
