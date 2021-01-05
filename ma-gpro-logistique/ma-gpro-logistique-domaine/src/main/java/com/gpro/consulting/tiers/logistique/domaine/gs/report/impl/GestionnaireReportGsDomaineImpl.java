@@ -1237,6 +1237,8 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
         	    
         	    detail.setPoidsNet(det.getQteEntree());
         	    
+        	    detail.setPoidsBrut(det.getQteActuelle());
+        	    
         	    
         	    detail.setCarton(det.getReferenceLot());
         	    
@@ -1315,6 +1317,8 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
         	    detail.setProduitDesignation(det.getLibelleArticle());
         	    
         	    detail.setPoidsNet(det.getQteEntree());
+        	    
+        	    detail.setPoidsBrut(det.getQteActuelle());
         	    
         	 
         	    detail.setCarton(det.getReferenceLot());

@@ -542,7 +542,7 @@ angular
 											function() {
 												$scope.colDefs = [
 												                  
-                                                       {
+                                                /*       {
                                                     	   	field : 'typeOF',
                                                     	   	displayName : 'type',
                                                     	   	width : '8%'
@@ -551,7 +551,7 @@ angular
                                                     	   	field : 'machine',
                                                     	   	displayName : 'Machine',
                                                     	   	width : '4%'
-                                                       },
+                                                       },*/
 												                  
 														{
 															field : 'reference',
