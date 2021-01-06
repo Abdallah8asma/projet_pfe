@@ -336,7 +336,7 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 					}
 					
 					//chang. de .contains() par .equals()
-					if(critereRechercheRouleauStandard.getDesignationQuiContient() != null){
+					if(estNonVide(critereRechercheRouleauStandard.getDesignationQuiContient() )){
 						exist = (produitValue.getDesignation().toUpperCase().equals(
 								critereRechercheRouleauStandard.getDesignationQuiContient().toUpperCase()));
 					}
@@ -357,7 +357,7 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 	    	      			
 	    	    &&(exist)
 	      	){
-	      		 if(critereRechercheRouleauStandard.getReferenceProduit() != null){
+	      		 if(estNonVide(critereRechercheRouleauStandard.getReferenceProduit())){
 	       			if (critereRechercheRouleauStandard.getReferenceProduit().equals(element.getReferenceProduit())) {
 	       				
 	       				elementsListToSet.add(element);
@@ -406,6 +406,13 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 	   
 	   return inventaireReport;
 	}
+	
+	
+	
+	private boolean estNonVide(String val) {
+	    return val != null && !"".equals(val)  && !"undefined".equals(val);
+	}
+
 
 	@Override
 	public BonSortieFinieReportValue getBonsortieFinieReportValue(Long id, String avecMise) throws IOException {
