@@ -78,7 +78,7 @@ angular
 															  "&dateEtat="+newdateFormat+
 															  "&designationQuiContient="+inventaireCourant.designationQuiContient+
 															  "&referenceProduit="+inventaireCourant.idProduitParRef+
-															  "&fini="+inventaireCourant.fini+
+															  "&fini=" +
 															  "&orderBy="+inventaireCourant.orderBy+
 															  "&typeOf="+inventaireCourant.typeOf+
 															  "&type=pdf";
