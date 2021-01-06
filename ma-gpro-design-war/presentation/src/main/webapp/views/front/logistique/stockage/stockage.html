@@ -126,6 +126,7 @@
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="inventaireCourant.client"
 												ng-init="inventaireCourant.client=''" style="border: 1px solid #e5eaee !important;" >
+												<option value="">Tous</option>
 												<option ng-repeat="pi in listeClientCache" value="{{pi.id}}">{{pi.abreviation}}</option>
 											</select>
 										</div>
@@ -184,6 +185,7 @@
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="inventaireCourant.idProduitParRef"
 												ng-init="inventaireCourant.idProduitParRef=''" style="border: 1px solid #e5eaee !important;" >
+												<option value="">Tous</option>
 												<option ng-repeat="pi in listeProduitCache"
 												value="{{pi.reference}}">{{pi.reference}}</option>
 											</select>
