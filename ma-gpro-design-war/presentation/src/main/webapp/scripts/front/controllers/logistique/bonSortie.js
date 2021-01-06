@@ -468,6 +468,9 @@
               							$scope.bonSortieCourant = {};
               							$scope.bonSortieCourant = bonSortie ? angular
               									.copy(bonSortie) : {};
+
+                                       $scope.bonSortieCourant.dateSortie = new Date();
+
               							
               						//mode edit activé
               							$scope.displayMode = "edit";

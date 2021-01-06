@@ -72,14 +72,14 @@ angular
 					                                 },
 					                                 {//TVA
 					                                	 taxeId: 2,
-					                                	 pourcentage: 18,
+					                                	 pourcentage: 19,
 					                                	 montant: '',
 					                                 }];
 				 }else{
 					 $scope.listTaxeLivraisonInit = [
 					                                 {//TVA
 					                                	 taxeId: 2,
-					                                	 pourcentage: 18,
+					                                	 pourcentage: 19,
 					                                	 montant: '',
 					                                 }];
 				 }
@@ -633,6 +633,22 @@ angular
 												   "modepaiementId" : 1,
 												   "declare":true };
 
+	         
+									
+									$http
+									.get(
+											UrlAtelier
+													+ "/bonlivraison/getCurrentReference"
+													)
+									.success(
+											function(res) {
+												
+												$scope.bonLivraisonVenteCourant.reference = res;
+												$scope.bonLivraisonVenteCourant.refAvantChangement = res;
+											});
+									
+									
+								
 
 
 			/*	 $scope.bonLivraisonVenteCourant = bonLVente ? angular
@@ -693,13 +709,18 @@ angular
 									 
 									 $scope.tagReferenceBSList = refBS;
 
-									 //Liste des TaxeLivraisonVente (pour la table Taxe) & detailsLivraisonVente ( pour la table Produit ) correspendants à ce bon de vente
 									 $scope.listDetLivraisonVentePRBS = [];
+								
+								
+								     $scope.listDetLivraisonVentePRBS = datagetBonVente.listDetLivraisonVente;
 									 
 									///bouton Valider en mode : Actif :afficher le tableau resultant de DetLivVene
 									 $scope.modeValider = "actif";
 									 if($scope.natureLivraison == "FINI"){
-										 BonLivraisonServices.validateFini($scope.tagReferenceBSList,datagetBonVente.id).then(function(resultat){
+										
+										
+										
+										/* BonLivraisonServices.validateFini($scope.tagReferenceBSList,datagetBonVente.id).then(function(resultat){
 												
 											 //listDetLivraisonVente
 											 $scope.listDetLivraisonVentePRBS = resultat.listDetLivraisonVente;
@@ -709,7 +730,7 @@ angular
 											 }
 											 ,function(error){
 												 console.log(error.statusText);
-											 });
+											 });*/
 									 }
 										// Pour type façon pas besoin d'appeler validerFacon. Pas de nécessité de calcul
 									 	// Les champs de calcul (prix) sont introduit dans detailLivraison
@@ -779,7 +800,8 @@ angular
 				 
 				 var urlValider = UrlAtelier+ "/bonlivraison/validate?livraisonVenteId="+bonLVente.id;
 				 $log.debug("--------URL "+urlValider);
-				 $http
+			
+			/*	 $http
 				 .post(urlValider,$scope.tagReferenceBSList)
 				 .success(
 						 function(resultat) {
@@ -789,6 +811,7 @@ angular
 							 $scope.listDetLivraisonVentePRBS = resultat.listDetLivraisonVente;
 							 $scope.traitementEnCours = "false";
 						 });
+					*/
 				 $log.debug("Update------ listDetLivraisonVentePRBS :" );
 				 $log.debug(JSON.stringify($scope.listDetLivraisonVentePRBS, null, "    ") );
 
@@ -950,7 +973,7 @@ angular
 											 var urlValider = UrlAtelier+ "/bonlivraison/validate?livraisonVenteId="+bonLVenteId;
 											 $log.debug("--------URL "+urlValider);
 											 $log.debug("--------contenu----- "+JSON.stringify($scope.tagReferenceBSList, null, " "));
-											 $http
+											/* $http
 											 .post(urlValider,$scope.tagReferenceBSList)
 											 .success(
 													 function(resultat) {
@@ -959,6 +982,7 @@ angular
 														 //listDetLivraisonVente
 														 $scope.listDetLivraisonVentePRBS = resultat.listDetLivraisonVente;
 													 });
+												*/
 											 $log.debug("OLD------ listDetLivraisonVentePRBS :" );
 											 $log.debug(JSON.stringify($scope.listDetLivraisonVentePRBS, null, "    ") );
 										}
