@@ -25,5 +25,7 @@ public interface IGuichetRouleauFiniPersistance {
 	   */
 	  public Long modifierGuichetRouleauFini(GuichetRouleauFiniValue pGuichetValeur);
 
+	public Integer getPrefixe();
+
 
 }

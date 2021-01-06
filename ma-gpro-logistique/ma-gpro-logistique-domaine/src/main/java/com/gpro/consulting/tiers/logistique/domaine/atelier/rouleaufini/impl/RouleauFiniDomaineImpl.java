@@ -200,12 +200,16 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 	private String getNumero(final Calendar pDateMise) {
 
 		Long vNumGuichetMise = this.guichetRouleauFiniDomaine.getNextNumReference();
+		
+		Integer vPrefixe= this.guichetRouleauFiniDomaine.getPrefixe();
+		
+		
 	    /** Année courante. */
 	    int vAnneeCourante = pDateMise.get(Calendar.YEAR);
 	    /** Format du numero de la Bon Reception= AAAA-NNNNNN. */
 	    StringBuilder vNumMise = new StringBuilder("");
         //TODO A changer 
-	    vNumMise.append(1);
+	    vNumMise.append(vPrefixe);
 	   // vNumMise.append("-");
 	    vNumMise.append(String.format("%06d", vNumGuichetMise));
 	    /** Inserer une nouvelle valeur dans Guichet Mise. */

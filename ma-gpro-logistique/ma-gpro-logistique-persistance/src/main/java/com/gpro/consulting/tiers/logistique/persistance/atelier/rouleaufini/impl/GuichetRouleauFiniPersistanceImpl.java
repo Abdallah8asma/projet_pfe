@@ -86,4 +86,18 @@ public class GuichetRouleauFiniPersistanceImpl extends AbstractPersistance
         LockModeType.PESSIMISTIC_WRITE);
     return vGuichetEntite;
   }
+
+@Override
+public Integer getPrefixe() {
+	  // Année courante
+    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+    // Chercher le dernier numéro dans la base et le charger
+    Query vQuery = this.entityManager.createQuery(
+      "select g.prefixe from GuichetRouleauFiniEntity g where g.annee =" + vAnneeCourante);
+
+    Object vResult = vQuery.getSingleResult();
+    Integer vNextNumBonReception = (Integer) vResult;
+    // Format du Numéro du bon de reception : NNNNNNN
+    return vNextNumBonReception;
+}
 }
