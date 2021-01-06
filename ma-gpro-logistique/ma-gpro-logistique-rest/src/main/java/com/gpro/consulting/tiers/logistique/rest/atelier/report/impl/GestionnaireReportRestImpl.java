@@ -190,7 +190,7 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 		CritereRechercheRouleauStandardValue critereRechercheRouleauStandard = new CritereRechercheRouleauStandardValue();
 		critereRechercheRouleauStandard.setClient(client);
 		critereRechercheRouleauStandard.setDateEtat(stringToCalendar(dateEtat));
-		//critereRechercheRouleauStandard.setDesignationQuiContient(designationQuiContient);
+		critereRechercheRouleauStandard.setDesignationQuiContient(designationQuiContient);
 		////critereRechercheRouleauStandard.setEmplacement(emplacement);
 	////	critereRechercheRouleauStandard.setEntrepot(entrepot);
 		critereRechercheRouleauStandard.setMetrageA(metrageA);
@@ -199,7 +199,7 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 		critereRechercheRouleauStandard.setNombreColieDu(nombreColieDu);
 		critereRechercheRouleauStandard.setOrderBy(orderBy);
 		//critereRechercheRouleauStandard.setFini(fini);
-		//critereRechercheRouleauStandard.setReferenceProduit(referenceProduit);
+		critereRechercheRouleauStandard.setReferenceProduit(referenceProduit);
 		
 		
 		

@@ -37,6 +37,16 @@ angular
 							/** ** PDF ** */
 							$scope.download = function(inventaireCourant) {
 								
+								
+								if(inventaireCourant.metrageDu == null)
+							     	inventaireCourant.metrageDu ='';
+			
+				
+								if(inventaireCourant.metrageA == null)
+							     	inventaireCourant.metrageA ='';
+			
+			
+								
 								var newdateFormat=null;
 								if(angular.isDefined(inventaireCourant.dateEtat)){
 									//$log.debug("==dateEtat "+inventaireCourant.dateEtat);
