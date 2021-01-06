@@ -431,7 +431,7 @@
 											<label class="input-group-text">Client</label>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonSortieCourant.partieInt"
-											ng-init="bonSortieCourant.partieInt =''" style="border: 1px solid #e5eaee !important;" >
+											ng-init="bonSortieCourant.partieInt =''" style="border: 1px solid #e5eaee !important;" required >
 											<option ng-repeat="pi in listeClientCache" value="{{pi.id}}">
 												{{pi.abreviation}}</option>
 										</select>
