@@ -497,7 +497,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 					detLivraisonVente.setSerialisable(true);
 
 				/** Debut update stock si qte a ete modifie **/
-				if (detLivraisonVente.getId() != null && bonLivraisonValue.getStock() == true
+				if (detLivraisonVente.getId() != null && bonLivraisonValue.getStock()!= null  && bonLivraisonValue.getStock() == true
 						&& detLivraisonVente.getQuantite() != null && detLivraisonVente.getQuantiteAncien() != null
 						&& !detLivraisonVente.getQuantite().equals(detLivraisonVente.getQuantiteAncien())) {
 
