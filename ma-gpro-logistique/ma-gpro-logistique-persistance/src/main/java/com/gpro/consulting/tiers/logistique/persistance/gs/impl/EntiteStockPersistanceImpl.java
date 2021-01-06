@@ -139,7 +139,7 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 //		      vWhereClause.add(vBuilder.equal(vRootEntiteStock.get(date),
 //		    		  pRechercheMulticritereEntiteStockValue.getDate()));
 //		    }
-		    
+	/*	    
 		if (pRechercheMulticritereEntiteStockValue.getQuantite() != null) {
 			Expression<Double> qte = vRootEntiteStock.get(qteActuelle);
 			switch (pRechercheMulticritereEntiteStockValue
@@ -172,7 +172,41 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 				break;
 			default:
 			}
+		}*/
+		
+		if (pRechercheMulticritereEntiteStockValue.getOperateurQuantite()!= null) {
+		Expression<Double> qte = vRootEntiteStock.get(qteActuelle);
+		switch (pRechercheMulticritereEntiteStockValue
+				.getOperateurQuantite()) {
+		case IConstante.OPERATEUR_EGALE:
+			vWhereClause.add(vBuilder.equal(
+					vRootEntiteStock.get(qteActuelle),
+					vRootEntiteStock.get("qteEntree")));
+			break;
+		case IConstante.OPERATEUR_INFERIEUR:
+			vWhereClause.add(vBuilder.lt(qte,
+					vRootEntiteStock.<Double>get("qteEntree")));
+			break;
+		case IConstante.OPERATEUR_SUPERIEUR:
+			vWhereClause.add(vBuilder.gt(qte,
+					vRootEntiteStock.<Double>get("qteEntree")));
+			break;
+		case IConstante.OPERATEUR_INF_EGAL:
+			vWhereClause.add(vBuilder.le(qte,
+					vRootEntiteStock.<Double>get("qteEntree")));
+
+			break;
+		case IConstante.OPERATEUR_SUP_EGALE:
+			vWhereClause.add(vBuilder.ge(qte,
+					vRootEntiteStock.<Double>get("qteEntree")));
+			break;
+		case IConstante.OPERATEUR_DEFFERENT:
+			vWhereClause.add(vBuilder.notEqual(qte,
+					vRootEntiteStock.<Double>get("qteEntree")));
+			break;
+		default:
 		}
+	}
 		// TODO (calculer la quantite) afficher entiteStock suivant zoneDispo
 		// choisi (rouge,vert)
 
