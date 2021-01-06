@@ -139,7 +139,7 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 //		      vWhereClause.add(vBuilder.equal(vRootEntiteStock.get(date),
 //		    		  pRechercheMulticritereEntiteStockValue.getDate()));
 //		    }
-	/*	    
+		    
 		if (pRechercheMulticritereEntiteStockValue.getQuantite() != null) {
 			Expression<Double> qte = vRootEntiteStock.get(qteActuelle);
 			switch (pRechercheMulticritereEntiteStockValue
@@ -172,8 +172,8 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 				break;
 			default:
 			}
-		}*/
-		
+		}
+		/*
 		if (pRechercheMulticritereEntiteStockValue.getOperateurQuantite()!= null) {
 		Expression<Double> qte = vRootEntiteStock.get(qteActuelle);
 		switch (pRechercheMulticritereEntiteStockValue
@@ -207,6 +207,7 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		default:
 		}
 	}
+	*/
 		// TODO (calculer la quantite) afficher entiteStock suivant zoneDispo
 		// choisi (rouge,vert)
 
