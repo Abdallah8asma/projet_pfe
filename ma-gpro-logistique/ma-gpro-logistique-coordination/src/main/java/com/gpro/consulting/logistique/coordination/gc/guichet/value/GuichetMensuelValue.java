@@ -33,6 +33,29 @@ public class GuichetMensuelValue {
 	private String prefixeBonReception;
 	
 	
+	
+	private Long numReferenceBonReceptionNonDeclarerCourante;
+	private String prefixeBonReceptionNonDeclarer;
+	
+	
+	
+	
+	public Long getNumReferenceBonReceptionNonDeclarerCourante() {
+		return numReferenceBonReceptionNonDeclarerCourante;
+	}
+
+	public void setNumReferenceBonReceptionNonDeclarerCourante(Long numReferenceBonReceptionNonDeclarerCourante) {
+		this.numReferenceBonReceptionNonDeclarerCourante = numReferenceBonReceptionNonDeclarerCourante;
+	}
+
+	public String getPrefixeBonReceptionNonDeclarer() {
+		return prefixeBonReceptionNonDeclarer;
+	}
+
+	public void setPrefixeBonReceptionNonDeclarer(String prefixeBonReceptionNonDeclarer) {
+		this.prefixeBonReceptionNonDeclarer = prefixeBonReceptionNonDeclarer;
+	}
+
 	public Long getNumReferenceBonCommandeCourante() {
 		return numReferenceBonCommandeCourante;
 	}

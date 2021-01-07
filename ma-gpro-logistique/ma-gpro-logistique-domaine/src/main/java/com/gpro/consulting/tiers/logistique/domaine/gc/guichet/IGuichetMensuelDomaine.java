@@ -63,6 +63,15 @@ public interface IGuichetMensuelDomaine {
 
 
 	public String getPrefixBonReception();
+
+
+	public Long modifierGuichetBonReceptionNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur);
+
+
+	public Long getNextNumBonReceptionReferenceNonDeclarer();
+
+
+	public String getPrefixBonReceptionNonDeclarer();
 	
 	
 }

@@ -142,4 +142,10 @@ public class ReceptionAchatServiceImpl implements IReceptionAchatService {
 		return receptionDomaineGC.getCurrentReferenceMensuel(instance,b);
 	}
 
+	@Override
+	public String getCurrentReferenceMensuelByType(String type, Calendar instance, boolean b) {
+		// TODO Auto-generated method stub
+		return receptionDomaineGC.getCurrentReferenceMensuelByType(type,instance,b);
+	}
+
 }

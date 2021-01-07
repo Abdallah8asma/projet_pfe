@@ -122,4 +122,22 @@ public String getPrefix() {
 	public String getPrefixBonReception() {
 		return this.guichetMensuelPersistance.getPrefixBonReception();
 	}
+
+	@Override
+	public Long modifierGuichetBonReceptionNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur) {
+		 return this.guichetMensuelPersistance.modifierGuichetBonReceptionNonDeclarerMensuel(vGuichetValeur);
+		
+	}
+
+	@Override
+	public Long getNextNumBonReceptionReferenceNonDeclarer() {
+		// TODO Auto-generated method stub
+		 return this.guichetMensuelPersistance.getNextNumBonReceptionReferenceNonDeclarer();
+	}
+
+	@Override
+	public String getPrefixBonReceptionNonDeclarer() {
+		// TODO Auto-generated method stub
+		 return this.guichetMensuelPersistance.getPrefixBonReceptionNonDeclarer();
+	}
 }

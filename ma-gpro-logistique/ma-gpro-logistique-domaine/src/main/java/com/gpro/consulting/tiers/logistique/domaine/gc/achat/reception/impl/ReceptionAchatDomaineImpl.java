@@ -2054,9 +2054,12 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		/** Format du numero de la Bon Reception= AAAA-NN. */
 		StringBuilder vNumBonLiv = new StringBuilder("");
 		vNumBonLiv.append(vNumGuichetPrefix);
-		vNumBonLiv.append(vAnneeCourante);
-		vNumBonLiv.append(String.format("%02d", moisActuel));
+		
+		//vNumBonLiv.append(vAnneeCourante);
+		//vNumBonLiv.append(String.format("%02d", moisActuel));
 		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+		
+		
 		/** Inserer une nouvelle valeur dans Guichet BonReception. */
 		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
 		/** idMensuel = (annuelcourante - 2016) + moisCourant */
@@ -2079,6 +2082,47 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		return vNumBonLiv.toString();
 
 	}
+	
+	
+	private String getReferenceReceptionFromGuichetMensuelNonDeclarer(final Calendar pDateBonLiv , final boolean increment) {
+
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonReceptionReferenceNonDeclarer(); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixBonReceptionNonDeclarer();
+		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
+		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
+
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vNumGuichetPrefix);
+		
+		//vNumBonLiv.append(vAnneeCourante);
+		//vNumBonLiv.append(String.format("%02d", moisActuel));
+		
+		
+		
+		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+		/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+		vGuichetValeur.setId(new Long(idMensuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumReferenceBonReceptionNonDeclarerCourante(new Long(vNumGuichetBonLiv + 1L));
+		/** Modification de la valeur en base du numéro. */
+		
+		if(increment)
+		this.guichetierMensuelDomaine.modifierGuichetBonReceptionNonDeclarerMensuel(vGuichetValeur); 
+		
+		
+
+		return vNumBonLiv.toString();
+
+	}
 
 	
 
@@ -2086,6 +2130,19 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 	@Override
 	public String getCurrentReferenceMensuel(Calendar instance, boolean b) {
 		return this.getReferenceReceptionFromGuichetMensuel(instance, b);
+	}
+
+
+
+	@Override
+	public String getCurrentReferenceMensuelByType(String type, Calendar instance, boolean b) {
+		
+		if(type.equals("declare"))
+			return getReferenceReceptionFromGuichetMensuel(instance, b);
+		else
+			
+			return getReferenceReceptionFromGuichetMensuelNonDeclarer(instance, b);
+	
 	}
 
 }

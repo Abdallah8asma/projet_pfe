@@ -88,24 +88,35 @@ public class GuichetAnnuelValue {
 
 	// Fin Transfert
 
-	
-	
-	
-	
-	
-	//GS
-	  
-	  
-	  /** Numéro Bon de mouvement entre. */
-	  private Long numBonMouvementEntre;
+	// GS
 
-	  
-	  /** Numéro Bon de mouvement de sortie. */
-	  private Long numBonMouvementSortie;
-	  
-	
-	
-	
+	/** Numéro Bon de mouvement entre. */
+	private Long numBonMouvementEntre;
+
+	/** Numéro Bon de mouvement de sortie. */
+	private Long numBonMouvementSortie;
+
+	// BL ND
+	/** Numéro Réference Bon Livraison ND courant. */
+	private Long numReferenceBonLivraisonNDCourante;
+	private String prefixeBLND;
+
+	public Long getNumReferenceBonLivraisonNDCourante() {
+		return numReferenceBonLivraisonNDCourante;
+	}
+
+	public void setNumReferenceBonLivraisonNDCourante(Long numReferenceBonLivraisonNDCourante) {
+		this.numReferenceBonLivraisonNDCourante = numReferenceBonLivraisonNDCourante;
+	}
+
+	public String getPrefixeBLND() {
+		return prefixeBLND;
+	}
+
+	public void setPrefixeBLND(String prefixeBLND) {
+		this.prefixeBLND = prefixeBLND;
+	}
+
 	public Long getNumBonMouvementEntre() {
 		return numBonMouvementEntre;
 	}

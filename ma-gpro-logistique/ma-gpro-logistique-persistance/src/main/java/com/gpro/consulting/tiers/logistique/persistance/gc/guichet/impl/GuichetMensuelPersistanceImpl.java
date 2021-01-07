@@ -297,6 +297,45 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 	 
 	    return vNextNumBonReception;
 	}
+
+
+	@Override
+	public Long modifierGuichetBonReceptionNonDeclarerMensuel(GuichetMensuelValue pGuichetValeur) {
+		  GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
+			
+		    vGuichetEntite.setNumReferenceBonReceptionNonDeclarerCourante(pGuichetValeur.getNumReferenceBonReceptionNonDeclarerCourante());   
+		    this.entityManager.merge(vGuichetEntite);
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+	}
+
+
+	@Override
+	public Long getNextNumBonReceptionReferenceNonDeclarer() {
+		   int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+		    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.numReferenceBonReceptionNonDeclarerCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    Long vNextNumBonReception= (Long) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public String getPrefixBonReceptionNonDeclarer() {
+		   int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+		    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.prefixeBonReceptionNonDeclarer from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    String vNextNumBonReception= (String) vResult;
+		 
+		    return vNextNumBonReception;
+	}
 	
 	
 	

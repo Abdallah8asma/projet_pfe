@@ -93,4 +93,6 @@ public interface IGuichetAnnuelPersistance {
 
 	public Long modifierGuichetBonMouvementSortieAnnuel(GuichetAnnuelValue pGuichetValeur);
 
+	public Long modifierGuichetBLNDAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
 }
