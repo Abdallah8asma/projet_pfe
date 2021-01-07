@@ -464,7 +464,7 @@
 										<div class="input-group-prepend">
 											<label class="input-group-text ms-Label">OF</label>
 										</div>
-										<select class="form-control" ng-model="bonMouvementStockCourante.ofId" required>
+										<select  ui-select2="true" class="form-control" ng-model="bonMouvementStockCourante.ofId" style="border: 1px solid #e5eaee !important;" required>
 											<option ng-repeat="mise in ListeMises" value="{{mise.id}}">
 												{{mise.reference}}</option>
 										</select>

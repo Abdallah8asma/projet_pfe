@@ -112,6 +112,34 @@ angular.module('gpro.etatMP', [])
 		
 		   /*** PDF ***/
 		$scope.download = function(typeRapport) {
+
+			if(typeof $scope.etatCourant.dateDu === 'undefined'  || $scope.etatCourant.dateDu == null   || $scope.etatCourant.dateDu == ''){
+				var dateDu = "";
+			}
+			else{
+				var longDateMin = Date.parse($scope.etatCourant.dateDu);
+				var varDateMin = new Date(longDateMin);
+				var dateDu = varDateMin.getFullYear()  +'-'+ (varDateMin.getMonth() + 1) +'-'+ varDateMin.getDate();
+			}
+
+			if(typeof $scope.etatCourant.dateA === 'undefined'   ||  $scope.etatCourant.dateA == null || $scope.etatCourant.dateA == '' ){
+				var dateA = "";
+			}
+			else{
+				var longDateMax = Date.parse($scope.etatCourant.dateA);
+				var varDateMax = new Date(longDateMax);
+				var dateA = varDateMax.getFullYear()  +'-'+ (varDateMax.getMonth() + 1) +'-'+ varDateMax.getDate();
+			}
+			//$log.debug("PI  "+produitCourant.partieInteressee );
+				if(typeof $scope.etatCourant.quantite === 'undefined'){
+				var quantite = "";
+			}
+			else{
+				var quantite=$scope.etatCourant.quantite;
+			}
+	
+
+
 			
 			var url;
 			
@@ -127,9 +155,14 @@ angular.module('gpro.etatMP', [])
                      "&magasin="+  $scope.etatCourant.magasin +
 
                      "&emplacement="+  $scope.etatCourant.emplacement +
-
+	                 "&quantite="+ quantite
+					+ "&dimensionArticle="+  $scope.etatCourant.dimensionArticle
+					 + "&grammageArticle="+  $scope.etatCourant.grammageArticle
+					 + "&operateurQuantite="+  $scope.etatCourant.operateurQuantite
+					+ "&dateA="+ dateA
+					+"&dateDu="+ dateDu
 					
-					"&typeRapport="+ typeRapport ;
+					+"&typeRapport="+ typeRapport ;
 				} 
 					
 				else if (typeRapport == "Global"){
@@ -143,9 +176,15 @@ angular.module('gpro.etatMP', [])
                      "&magasin="+  $scope.etatCourant.magasin +
 
                      "&emplacement="+  $scope.etatCourant.emplacement +
-					
-					
-					"&typeRapport="+ typeRapport ;
+	
+						
+					 "&quantite="+ quantite
+					 + "&dimensionArticle="+ $scope.etatCourant.dimensionArticle
+					  + "&grammageArticle="+ $scope.etatCourant.grammageArticle
+					  + "&operateurQuantite="+  $scope.etatCourant.operateurQuantite
+					 + "&dateA="+ dateA
+					 +"&dateDu="+ dateDu
+					+"&typeRapport="+ typeRapport ;
 
 				} 
 									
@@ -161,10 +200,15 @@ angular.module('gpro.etatMP', [])
 
                      "&emplacement="+  $scope.etatCourant.emplacement +
 					
+					 "&quantite="+ quantite
+					 + "&dimensionArticle="+ $scope.etatCourant.dimensionArticle
+					  + "&grammageArticle="+ $scope.etatCourant.grammageArticle
+					  + "&operateurQuantite="+  $scope.etatCourant.operateurQuantite
+					 + "&dateA="+ dateA
+					 +"&dateDu="+ dateDu
 					
 					
-					
-					"&typeRapport="+ typeRapport ;
+					+"&typeRapport="+ typeRapport ;
 				}
 					
 			
@@ -199,8 +243,31 @@ angular.module('gpro.etatMP', [])
 								 	
 							
 				var url;
+
+				if(typeof $scope.etatCourant.dateDu === 'undefined'  || $scope.etatCourant.dateDu == null   || $scope.etatCourant.dateDu == ''){
+					var dateDu = "";
+				}
+				else{
+					var longDateMin = Date.parse($scope.etatCourant.dateDu);
+					var varDateMin = new Date(longDateMin);
+					var dateDu = varDateMin.getFullYear()  +'-'+ (varDateMin.getMonth() + 1) +'-'+ varDateMin.getDate();
+				}
+
+				if(typeof $scope.etatCourant.dateA === 'undefined'   ||  $scope.etatCourant.dateA == null || $scope.etatCourant.dateA == '' ){
+					var dateA = "";
+				}
+				else{
+					var longDateMax = Date.parse($scope.etatCourant.dateA);
+					var varDateMax = new Date(longDateMax);
+					var dateA = varDateMax.getFullYear()  +'-'+ (varDateMax.getMonth() + 1) +'-'+ varDateMax.getDate();
+				}
 				//$log.debug("PI  "+produitCourant.partieInteressee );
-				
+					if(typeof $scope.etatCourant.quantite === 'undefined'){
+					var quantite = "";
+				}
+				else{
+					var quantite=$scope.etatCourant.quantite;
+				}
 			
 				
 				//$log.debug("-- produitCourant After" + JSON.stringify(produitCourant, null, "  ") );
@@ -210,8 +277,14 @@ angular.module('gpro.etatMP', [])
 										 + "&article="+etatCourant.article 
 										 + "&magasin="+etatCourant.magasin 	
 										 + "&numeroBonEntree="+etatCourant.numeroBonEntree 	
-										 
+										 + "&quantite="+ quantite
+										 + "&dimensionArticle="+etatCourant.dimensionArticle
+										 + "&grammageArticle="+etatCourant.grammageArticle
+										 + "&dateA="+ dateA
+										 +"&dateDu="+ dateDu
+										 + "&operateurQuantite="+etatCourant.operateurQuantite
 										 + "&type=pdf";
+										 
 
 				var a = document.createElement('a');
 						document.body.appendChild(a);
