@@ -592,7 +592,8 @@ angular
 				$scope.AffectationAchatBC = function () {
 					$scope.receptionAchatCourante = {
 						"dateIntroduction": new Date(),
-						"dateLivraison": new Date()
+						"dateLivraison": new Date(),
+						"facture" : true
 					
 					};
 					$scope.listTaxeReceptionAchat = [
@@ -624,10 +625,30 @@ angular
 					// .copy(reception) : {};
 
 
-					$http
+				$scope.getCurrentReferenceMensuelleByType($scope.receptionAchatCourante.facture);
+
+
+
+
+
+					$scope.displayMode = "edit";
+				}
+				
+				
+				$scope.getCurrentReferenceMensuelleByType  = function (declarer) {
+					
+					var type ="";
+					
+					if(declarer == true)
+					 type = 'declarer';
+				   else
+	                 type = 'non-declarer';
+				
+					
+							$http
 						.get(
 							UrlAtelier
-							+ "/receptionAchat/getCurrentReferenceMensuel"
+							+ "/receptionAchat/getCurrentReferenceMensuelByType:"+type
 						)
 						.success(
 							function (data) {
@@ -636,13 +657,8 @@ angular
 
 							}
 						);
-
-
-
-
-
-					$scope.displayMode = "edit";
-				}
+					
+					}
 
 				// Annulation de l'ajout
 				$scope.annulerAjout = function () {

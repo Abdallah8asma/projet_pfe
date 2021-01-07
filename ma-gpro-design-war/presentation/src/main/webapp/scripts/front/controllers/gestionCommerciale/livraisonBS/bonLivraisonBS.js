@@ -633,22 +633,9 @@ angular
 												   "modepaiementId" : 1,
 												   "declare":true };
 
-	         
-									
-									$http
-									.get(
-											UrlAtelier
-													+ "/bonlivraison/getCurrentReference"
-													)
-									.success(
-											function(res) {
-												
-												$scope.bonLivraisonVenteCourant.reference = res;
-												$scope.bonLivraisonVenteCourant.refAvantChangement = res;
-											});
-									
 									
 								
+				$scope.getCurrentReferenceByType($scope.bonLivraisonVenteCourant.declare)		;
 
 
 			/*	 $scope.bonLivraisonVenteCourant = bonLVente ? angular
@@ -657,6 +644,39 @@ angular
 						 //mode edit activé
 						 $scope.displayMode = "edit";
 			 }
+		
+		
+		
+	         
+									
+								
+									
+									
+							$scope.getCurrentReferenceByType  = function (declarer) {
+					
+					var type ="";
+					
+					if(declarer == true)
+					 type = 'declarer';
+				   else
+	                 type = 'non-declarer';
+				
+					
+							$http
+						.get(
+							UrlAtelier
+							+ "/bonlivraison/getCurrentReferenceByType:"+type
+						)
+						.success(
+							function (res) {
+									$scope.bonLivraisonVenteCourant.reference = res;
+												$scope.bonLivraisonVenteCourant.refAvantChangement = res;
+
+							}
+						);
+					
+					}				
+									
 			 
 			// AffectationBLFaconVente BonLivVente
 			 $scope.affectationBLFaconVente = function(bonLVente) {
@@ -1289,7 +1309,7 @@ angular
 						                   
 						                   {
 						                	   field : '',
-						                	   width:'5%',
+						                	   //width:'10%',
 											   cellTemplate : 
 											   `<div class="ms-CommandButton float-right"  ng-show="!rowform.$visible" >
 											   <button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerBonLVente()">

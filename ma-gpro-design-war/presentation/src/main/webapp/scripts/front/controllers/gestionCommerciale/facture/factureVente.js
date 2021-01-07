@@ -449,11 +449,13 @@ angular
 					
 					
 					$scope.listTaxeFactureInit = [
-						/*
-* {//FODEC taxeId: 1,
-* pourcentage: 1,
-* montant: '', },
-*/
+						
+					{//FODEC 
+					 taxeId: 1,
+					 pourcentage: 1,
+					 montant: '', 
+				    },
+
 						{// TVA
 							taxeId: 2,
 							pourcentage: 19,
