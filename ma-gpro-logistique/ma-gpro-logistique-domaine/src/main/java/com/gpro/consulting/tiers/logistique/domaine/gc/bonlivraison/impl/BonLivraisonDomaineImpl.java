@@ -750,7 +750,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 					
 					if (taxeLivraisonIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
 						
-						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * 1/100 )* taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
+						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() /100 )* taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
 						
 					}else 
 						
@@ -1833,7 +1833,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 					
 					if (taxeLivraisonIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
 						
-						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * 1/100 )* taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
+						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() /100 )* taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
 						
 					}else 
 						
@@ -2340,7 +2340,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 	public String getCurrentReferenceByType(String type, Calendar instance, boolean b) {
 		
 		
-		if(type.equals("declare"))
+		if(type.equals("declarer"))
 			
 		{
 			
