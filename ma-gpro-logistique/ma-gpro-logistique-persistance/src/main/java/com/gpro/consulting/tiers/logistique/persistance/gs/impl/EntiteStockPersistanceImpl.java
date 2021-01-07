@@ -124,21 +124,19 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		    		  pRechercheMulticritereEntiteStockValue.getArticle()));
 		    }
 	    
-	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getGrammageArticle())) {
-	    	   Join<EntiteStockEntite, ArticleEntite> jointureEnstkArt = vRootEntiteStock.join(article);
-		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(grammage),
-		    		  pRechercheMulticritereEntiteStockValue.getGrammageArticle()));
-		    }
-	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getDimensionArticle())) {
-	    	   Join<EntiteStockEntite, ArticleEntite> jointureEnstkArt = vRootEntiteStock.join(article);
-		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(dimension),
-		    		  pRechercheMulticritereEntiteStockValue.getDimensionArticle()));
-		    }
 	    
-//	    if (pRechercheMulticritereEntiteStockValue.getDate()!=null) {
-//		      vWhereClause.add(vBuilder.equal(vRootEntiteStock.get(date),
-//		    		  pRechercheMulticritereEntiteStockValue.getDate()));
-//		    }
+		if (pRechercheMulticritereEntiteStockValue.getDateDu() != null) {
+			Expression<Calendar> dateE = vRootEntiteStock.get(date);
+			
+			vWhereClause.add(vBuilder.greaterThanOrEqualTo(dateE, pRechercheMulticritereEntiteStockValue.getDateDu()));
+
+		}
+
+		if (pRechercheMulticritereEntiteStockValue.getDateA() != null) {
+			Expression<Calendar> dateStock = vRootEntiteStock.get(date);
+		
+			vWhereClause.add(vBuilder.lessThanOrEqualTo(dateStock, pRechercheMulticritereEntiteStockValue.getDateA()));
+		}
 		    
 		if (pRechercheMulticritereEntiteStockValue.getQuantite() != null) {
 			Expression<Double> qte = vRootEntiteStock.get(qteActuelle);
@@ -173,41 +171,7 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 			default:
 			}
 		}
-		/*
-		if (pRechercheMulticritereEntiteStockValue.getOperateurQuantite()!= null) {
-		Expression<Double> qte = vRootEntiteStock.get(qteActuelle);
-		switch (pRechercheMulticritereEntiteStockValue
-				.getOperateurQuantite()) {
-		case IConstante.OPERATEUR_EGALE:
-			vWhereClause.add(vBuilder.equal(
-					vRootEntiteStock.get(qteActuelle),
-					vRootEntiteStock.get("qteEntree")));
-			break;
-		case IConstante.OPERATEUR_INFERIEUR:
-			vWhereClause.add(vBuilder.lt(qte,
-					vRootEntiteStock.<Double>get("qteEntree")));
-			break;
-		case IConstante.OPERATEUR_SUPERIEUR:
-			vWhereClause.add(vBuilder.gt(qte,
-					vRootEntiteStock.<Double>get("qteEntree")));
-			break;
-		case IConstante.OPERATEUR_INF_EGAL:
-			vWhereClause.add(vBuilder.le(qte,
-					vRootEntiteStock.<Double>get("qteEntree")));
-
-			break;
-		case IConstante.OPERATEUR_SUP_EGALE:
-			vWhereClause.add(vBuilder.ge(qte,
-					vRootEntiteStock.<Double>get("qteEntree")));
-			break;
-		case IConstante.OPERATEUR_DEFFERENT:
-			vWhereClause.add(vBuilder.notEqual(qte,
-					vRootEntiteStock.<Double>get("qteEntree")));
-			break;
-		default:
-		}
-	}
-	*/
+		
 		// TODO (calculer la quantite) afficher entiteStock suivant zoneDispo
 		// choisi (rouge,vert)
 
@@ -331,6 +295,17 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		    		
 	    }
 	    
+	    
+	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getGrammageArticle())) {
+	    	   Join<EntiteStockEntite, ArticleEntite> jointureEnstkArt = vRootEntiteStock.join(article);
+		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(grammage),
+		    		  pRechercheMulticritereEntiteStockValue.getGrammageArticle()));
+		    }
+	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getDimensionArticle())) {
+	    	   Join<EntiteStockEntite, ArticleEntite> jointureEnstkArt = vRootEntiteStock.join(article);
+		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(dimension),
+		    		  pRechercheMulticritereEntiteStockValue.getDimensionArticle()));
+		    }
 	   
 	   
 	    /** execute query and do something with result **/
