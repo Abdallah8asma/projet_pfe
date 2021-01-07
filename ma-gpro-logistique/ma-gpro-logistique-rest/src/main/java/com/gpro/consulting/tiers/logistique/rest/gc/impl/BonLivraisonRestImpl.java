@@ -304,6 +304,13 @@ public class BonLivraisonRestImpl {
  		return  bonLivraisonService.getCurrentReference(Calendar.getInstance(),false);
  	}
 	
+	@RequestMapping(value = "/getCurrentReferenceByType:{type}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceByType(@PathVariable String type) {
+ 		
+ 		return  bonLivraisonService.getCurrentReferenceByType(type,Calendar.getInstance(),false);
+ 	}
+	
+	
 
 	public boolean checkForOptimization(RechercheMulticritereBonLivraisonValue request) {
 

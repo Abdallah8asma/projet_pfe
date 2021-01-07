@@ -237,5 +237,12 @@ public class ReceptionAchatRestImpl {
  		return  receptionService.getCurrentReferenceMensuel(Calendar.getInstance(),false);
  	}
 	
+	
+	@RequestMapping(value = "/getCurrentReferenceMensuelByType:{type}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuelByType(@PathVariable String type) {
+ 		
+ 		return  receptionService.getCurrentReferenceMensuelByType(type,Calendar.getInstance(),false);
+ 	}
+	
 
 }

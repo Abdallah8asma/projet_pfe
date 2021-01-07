@@ -85,4 +85,6 @@ public interface IReceptionAchatDomaineGC {
 	public ReceptionAchatValue validerBL(String reference);
 
 	public String getCurrentReferenceMensuel(Calendar instance, boolean b);
+
+	public String getCurrentReferenceMensuelByType(String type, Calendar instance, boolean b);
 }

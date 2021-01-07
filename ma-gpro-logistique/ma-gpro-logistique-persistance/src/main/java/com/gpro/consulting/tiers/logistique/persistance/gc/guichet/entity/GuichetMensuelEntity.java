@@ -80,6 +80,15 @@ public class GuichetMensuelEntity {
 	  private String prefixeAvoir ;
 	  
 	  
+	  /** Numéro bon reception courant. */
+	  @Column(name = "ref_bon_reception_nd")
+	  private Long numReferenceBonReceptionNonDeclarerCourante;
+	  
+		
+	  @Column(name = "prefixe_bon_reception_nd ")
+	  private String prefixeBonReceptionNonDeclarer ;
+	  
+	  
 	  
 	  
 	  /********* Fin Achat   ****************/
@@ -95,6 +104,22 @@ public class GuichetMensuelEntity {
 	 */
 	public Long getAnnee() {
 		return annee;
+	}
+
+	public Long getNumReferenceBonReceptionNonDeclarerCourante() {
+		return numReferenceBonReceptionNonDeclarerCourante;
+	}
+
+	public void setNumReferenceBonReceptionNonDeclarerCourante(Long numReferenceBonReceptionNonDeclarerCourante) {
+		this.numReferenceBonReceptionNonDeclarerCourante = numReferenceBonReceptionNonDeclarerCourante;
+	}
+
+	public String getPrefixeBonReceptionNonDeclarer() {
+		return prefixeBonReceptionNonDeclarer;
+	}
+
+	public void setPrefixeBonReceptionNonDeclarer(String prefixeBonReceptionNonDeclarer) {
+		this.prefixeBonReceptionNonDeclarer = prefixeBonReceptionNonDeclarer;
 	}
 
 	public Long getNumReferenceBonCommandeCourante() {
