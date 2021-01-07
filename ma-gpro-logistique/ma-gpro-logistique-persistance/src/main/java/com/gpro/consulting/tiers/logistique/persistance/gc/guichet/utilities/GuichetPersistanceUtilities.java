@@ -89,6 +89,9 @@ public class GuichetPersistanceUtilities {
 		entity.setNumBonMouvementEntre(dto.getNumBonMouvementEntre());
 		entity.setNumBonMouvementSortie(dto.getNumBonMouvementSortie());
 		
+		entity.setNumReferenceBonLivraisonNDCourante(dto.getNumReferenceBonLivraisonNDCourante());
+		entity.setPrefixeBLND(dto.getPrefixeBLND());
+		
 		return entity;
 	}
 
@@ -160,6 +163,9 @@ public class GuichetPersistanceUtilities {
 		dto.setNumBonMouvementEntre(entity.getNumBonMouvementEntre());
 		dto.setNumBonMouvementSortie(entity.getNumBonMouvementSortie());
 		
+		
+		dto.setNumReferenceBonLivraisonNDCourante(entity.getNumReferenceBonLivraisonNDCourante());
+		dto.setPrefixeBLND(entity.getPrefixeBLND());
 		
 		
 		return dto;

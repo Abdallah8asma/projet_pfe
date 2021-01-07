@@ -2137,7 +2137,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 	@Override
 	public String getCurrentReferenceMensuelByType(String type, Calendar instance, boolean b) {
 		
-		if(type.equals("declare"))
+		if(type.equals("declarer"))
 			return getReferenceReceptionFromGuichetMensuel(instance, b);
 		else
 			
