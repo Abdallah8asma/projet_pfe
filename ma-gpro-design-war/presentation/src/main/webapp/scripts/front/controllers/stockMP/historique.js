@@ -194,12 +194,51 @@ angular
 								} else {
 									$scope.displayEtat = "alert";
 								}
+
+
  */
+
+
+ if(typeof $scope.historiqueCourant.dateDu ==='undefined'  || $scope.historiqueCourant.dateDu== null || $scope.historiqueCourant.dateDu== ''){
+var dateDu="";
+ }
+
+else{
+	var longDateMin=Date.parse($scope.historiqueCourant.dateDu);
+	var varDateMin=new Date(longDateMin);
+	var dateDu=varDateMin.getFullYear() +'-'+ (varDateMin.getMonth()+1) +'-'+ varDateMin.getDate;
+}
+
+if(typeof $scope.historiqueCourant.dateA ==='undefined'  || $scope.historiqueCourant.dateA== null || $scope.historiqueCourant.dateA== ''){
+	var dateA="";
+	 }
+	
+	else{
+		var longDateMin=Date.parse($scope.historiqueCourant.dateDu);
+		var varDateMin=new Date(longDateMin);
+		var dateA=varDateMin.getFullYear() +'-'+ (varDateMin.getMonth()+1) +'-'+ varDateMin.getDate;
+	}
+	
+	if(typeof $scope.historiqueCourant.sousFamille ==='undefined'  || $scope.historiqueCourant.sousFamille== null || $scope.historiqueCourant.sousFamille== ''){
+		var sousFamille= "";
+		 }
+		 else{
+			var sousFamille=$scope.historiqueCourant.sousFamille ;
+		 } 
 
 							
 								var url = UrlAtelier
 										+ "/reportgs/mouvementStockHistory?type=xls&historique=" + historique 
-										+ "&articleType=" + type +"&ofId="+$scope.historiqueCourant.ofId;
+										+ "&articleType=" + type +
+									"&ofId="+$scope.historiqueCourant.ofId+
+									"&dateDu="+ dateDu +
+									"&dateA="+ dateA +
+									"&sousFamille="+ sousFamille +
+									"&famille="+$scope.historiqueCourant.famille +
+									"&refArticle="+$scope.historiqueCourant.refArticle +
+									"&article="+$scope.historiqueCourant.article;
+									
+						
 
 								var a = document.createElement('a');
 								document.body.appendChild(a);
