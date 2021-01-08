@@ -67,6 +67,16 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 	public void generateMouvementStockHistoryReport(
 			@RequestParam("historique") String historique,
 			@RequestParam("articleType") String articleType,
+			@RequestParam("ofId") Long ofId,
+			@RequestParam("dateDu") String dateDu,
+			@RequestParam("dateA") String dateA,
+			@RequestParam("sousFamille") String sousFamille,
+			@RequestParam("famille") String famille,
+			@RequestParam("refArticle") String refArticle,
+			@RequestParam("article") String article,
+			
+			
+			
 			@RequestParam("type") String type, HttpServletResponse response ) throws JRException, IOException {
 		
 		logger.info("Generate a {} Report MouvementStockHistory",type);
@@ -74,6 +84,16 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		RechercheMulticritereMouvementValue critere = new RechercheMulticritereMouvementValue();
 		critere.setHistorique(historique);
 		critere.setType(articleType);
+		critere.setOfId(ofId);
+		critere.setDateA(stringToCalendar(dateA));
+		critere.setDateDu(stringToCalendar(dateDu));
+		critere.setFamille(famille);
+		critere.setSousFamille(sousFamille);
+		critere.setRefArticle(refArticle);
+		critere.setArticle(article);
+		
+		
+		
 		
 		MouvementStockHistoryReportValue report = gestionnaireReportGsService.getHistoryReport(critere);
 		

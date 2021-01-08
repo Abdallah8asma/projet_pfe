@@ -224,13 +224,13 @@ public class MouvementPersistanceImpl extends AbstractPersistance implements IMo
 		    }
 		    
 			/************** OF ******************/
-//		    if(pRechercheMulticritereMouvementValue.getOfId()!=null){
-//			      Join<MouvementEntite, BonMouvementEntite> jointureMvtBmvt = vRootMouvement.join(bonMouvement);
-//		    	  Expression<Long> ofIdExpression =jointureMvtBmvt.get(PREDICATE_OF_ID);
-//				  Long ofId = pRechercheMulticritereMouvementValue.getOfId(); 
-//		    	 vWhereClause.add(vBuilder.equal(ofIdExpression,ofId));
-//		    	
-//		    }
+	    if(pRechercheMulticritereMouvementValue.getOfId()!=null){
+			      Join<MouvementEntite, BonMouvementEntite> jointureMvtBmvt = vRootMouvement.join(bonMouvement);
+		    	  Expression<Long> ofIdExpression =jointureMvtBmvt.get(PREDICATE_OF_ID);
+				  Long ofId = pRechercheMulticritereMouvementValue.getOfId(); 
+		    	 vWhereClause.add(vBuilder.equal(ofIdExpression,ofId));
+		    	
+		    }
 	
 		    
 		    /** execute query and do something with result **/
@@ -264,7 +264,8 @@ public class MouvementPersistanceImpl extends AbstractPersistance implements IMo
 	 	 * @return true, if successful
 	 	 */
 		  private boolean estNonVide(String val) {
-		    return val != null && !"".equals(val);
+		   
+		    return val != null && !"".equals(val) && !"undefined".equals(val)  && !"null".equals(val);
 
 		  }
 
