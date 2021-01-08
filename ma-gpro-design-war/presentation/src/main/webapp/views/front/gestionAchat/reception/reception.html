@@ -344,8 +344,26 @@
 											</select>
 										</div>
 									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Declare</span>
+											</div>
+											<select ui-select2 ng-model="receptionAchatCourante.declare"
+												ng-init="receptionAchatCourante.declare =''" data-placeholder="" class="form-control ">
+												<option value="">Tous</option>
+												<option value="oui">OUI</option>
+												<option value="non">NON</option>
+
+											</select>
+										</div>
+									</div>
 
 								</div>
+
+							
 
 							</div>
 
@@ -810,7 +828,7 @@
 										<div class="input-group-prepend">
 										  <div class="input-group-text">
 											<label class="checkbox checkbox-square checkbox-primary">
-											  <input type="checkbox" class="form-control" ng-init="receptionAchatCourante.facture=false"
+											  <input type="checkbox" class="form-control" 
 												ng-model="receptionAchatCourante.facture" ng-change="getCurrentReferenceMensuelleByType(receptionAchatCourante.facture)" />
 					
 											  <span></span></label>

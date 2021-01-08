@@ -691,7 +691,8 @@ angular
 						"quantiteA": "",
 						"coutDu": "",
 						"coutA": "",
-						"idDepot": ""
+						"idDepot": "",
+						"facture": ""
 					};
 
 
