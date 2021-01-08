@@ -242,6 +242,23 @@ public class ReceptionAchatPersistanceImpl extends AbstractPersistance implement
 		if (estNonVide(request.getRefAvoirRetour())) {
 			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_refAvoirRetour), request.getRefAvoirRetour()));
 		}
+		if (estNonVide(request.getDeclare())) {
+			Expression<Boolean> expression = root.get("facture");
+			switch (request.getDeclare()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.isTrue(expression));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.isFalse(expression));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
+		
+		
 
 		/* Reception */
 		/*

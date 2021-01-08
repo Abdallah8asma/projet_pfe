@@ -68,8 +68,17 @@ public class RechercheMulticritereBonReceptionAchatValue {
 	private Long boutiqueId;
 	
 	
+	private String declare;
 	
 	
+
+	public String getDeclare() {
+		return declare;
+	}
+
+	public void setDeclare(String declare) {
+		this.declare = declare;
+	}
 
 	public Long getBoutiqueId() {
 		return boutiqueId;
