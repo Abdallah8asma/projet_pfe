@@ -475,7 +475,17 @@
 							</div>
 
 
-
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Réf Commande</label>
+										</div>
+										<input class="form-control" ng-model="miseCourant.refCommande"
+											ng-init="miseCourant.refCommande=''" style="border: 1px solid #e5eaee !important;" />
+									</div>
+								</div>
+							</div>
 
 
 
@@ -566,6 +576,27 @@
 				<div class="panel-body" ng-show="displayMode == 'edit'">
 
 					<form class="form-horizontal" id="creationMise" name="creationMise">
+						
+						<div class="col-sm-12">
+
+
+							<div class="form-group">
+							  <div class="input-group">
+								<div class="input-group-prepend">
+								  <label class="input-group-text ms-Label">R&eacute;f BC</label>
+								</div>
+								<select  ng-model="miseCourant.refCommande" class="form-control"
+								ng-init="miseCourant.refCommande =''"
+								  style="border: 1px solid #e5eaee !important;" >
+								  <option ng-repeat="commande in listReferenceBC"
+								  value="{{commande.reference}}">{{commande.reference}}</option>
+								</select>
+							  </div>
+							</div>
+			
+						  </div>
+			
+						</div>
 
 						<div class="row">
 							<div class="col-sm-3">
@@ -929,7 +960,6 @@
 
 	</div>
 
-
  
 	<div class="row" ng-show="displayMode != 'edit'">
 		<div class="col-md-12">
@@ -940,7 +970,7 @@
 
 
 
-			<div style="height: 500px;" ng-grid="gridOptions"></div>
+			<div style="height: 500px;"  ng-grid="gridOptions"></div>
 		</div>
 	</div>
 

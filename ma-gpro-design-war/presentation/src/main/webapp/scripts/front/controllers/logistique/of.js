@@ -52,13 +52,36 @@ angular
 							
 							$scope.listMiseEncours=[];
 							
-							
+							$scope.listReferenceBC=[];
 							$scope.changeProduitsIsEntredFirstTime = "false";
 							
 							$scope.currentMode = "SEARCH";
 							
 							
 							
+
+					
+
+
+
+
+
+						
+
+                       $scope.listReferenceBC = function (){
+							$http
+								.get(UrlAtelier + "/commandeVente/getAll")
+								.success(
+									function(data) {
+									  
+									  $scope.listReferenceBC = data;
+
+									});
+						  }
+					   		
+						  $scope.listReferenceBC();
+
+
 							//init urlValider
 							$scope.urlValider = "";
 							//Pavet SolderMise ne s'affiche pas au demarrage de la page
@@ -604,6 +627,7 @@ angular
 									 "destinationProduit": "",
 									 "statut": "",
 									"dateFin": "",
+									"refCommande":"",
 								};
 
 								$scope.nbrColis = 0;
