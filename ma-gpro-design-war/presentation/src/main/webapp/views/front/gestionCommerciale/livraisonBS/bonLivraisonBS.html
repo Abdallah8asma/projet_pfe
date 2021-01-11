@@ -161,6 +161,36 @@
 							</div>
 
 
+							<div class="col-sm-3" ng-show="clientActif.blackMode">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Facture</span>
+										</div>
+
+										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.avecFacture"
+											ng-init="bonLivraisonVenteCourant.avecFacture= ''" style="border: 1px solid #e5eaee !important;"    
+											
+											>
+											<option value="">Tous</option>
+											<option value="ouiFacture">oui</option>
+											<option value="nonFacture">Non</option>
+										</select>
+									</div>
+								</div>
+							</div>
+			
+
+
+
+
+
+						</div>
+
+
+
+						<div class="row">
+
 
 							<div class="col-sm-3" ng-controller="DatepickerDemoController">
 								<div class="form-group">
@@ -187,13 +217,6 @@
 								</div>
 
 							</div>
-
-
-						</div>
-
-
-
-						<div class="row">
 							<div class="col-sm-3" ng-controller="DatepickerDemoController">
 								<div class="form-group">
 									<div class="input-group">
@@ -246,6 +269,12 @@
 								</div>
 							</div>
 
+
+
+						</div>
+						<div class="row">
+
+							
 							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
@@ -258,10 +287,6 @@
 									</div>
 								</div>
 							</div>
-
-
-						</div>
-						<div class="row">
 
 							<div class="col-sm-3">
 								<div class="form-group">
@@ -308,22 +333,7 @@
 								</div>
 							</div>
 
-							<div class="col-sm-3">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Facture</span>
-										</div>
-
-										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.avecFacture"
-											ng-init="bonLivraisonVenteCourant.avecFacture= ''" style="border: 1px solid #e5eaee !important;">
-											<option value="">Tous</option>
-											<option value="ouiFacture">oui</option>
-											<option value="nonFacture">Non</option>
-										</select>
-									</div>
-								</div>
-							</div>
+			
 
 						</div>
 
@@ -619,7 +629,7 @@
 					</div>
 					
 					
-					<div class="col-sm-2">
+					<div class="col-sm-2" ng-show="clientActif.blackMode">
 
 
                 <div class="form-group">
@@ -631,7 +641,11 @@
                       <div class="input-group-text">
                         <label class="checkbox checkbox-square checkbox-primary">
                           <input type="checkbox" class="form-control" ng-init="bonLivraisonVenteCourant.declare=false"
-                            ng-model="bonLivraisonVenteCourant.declare" ng-change="getCurrentReferenceByType(bonLivraisonVenteCourant.declare)"  />
+							ng-model="bonLivraisonVenteCourant.declare" ng-change="getCurrentReferenceByType(bonLivraisonVenteCourant.declare)" 
+							
+							
+							
+							/>
 
                           <span></span></label>
                       </div>
@@ -687,14 +701,14 @@
 									<tr ng-repeat="taxeBLiv in listTaxeLivraisonInit">
 										<td>
 											 <span
-											editable-select="taxeBLiv.taxeId" e-name="taxeId"
+											editable-select="taxeBLiv.taxeId" e-name="taxeId" 
 											e-form="rowform"
 											e-ng-options="s.id as s.designation for s in listeTaxes | filter:filterTaxes()">
 												{{ showTaxe(taxeBLiv.taxeId) || 'empty' }} </span>
 										</td>
 										<td>
 											<span
-											editable-text="taxeBLiv.pourcentage" e-name="pourcentage"
+											editable-text="taxeBLiv.pourcentage" e-name="pourcentage"  
 											e-form="rowform" e-required> {{ taxeBLiv.pourcentage
 												|| '--' }} </span>
 										</td>
