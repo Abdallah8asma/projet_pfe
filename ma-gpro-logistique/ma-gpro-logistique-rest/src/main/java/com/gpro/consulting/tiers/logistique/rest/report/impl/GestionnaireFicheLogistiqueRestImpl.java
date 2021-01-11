@@ -951,7 +951,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 		WritableImage image = new WritableImage(2, 1, // column, row
 				1, 6, // width, height in terms of number of cells
-				new File("C:/ERP/logos_clients/thermoplastics.png")); // Supports only 'png' images
+				new File("C:/ERP/logos_clients/logo_client.png")); // Supports only 'png' images
 
 		sheet3.addImage(image);
 

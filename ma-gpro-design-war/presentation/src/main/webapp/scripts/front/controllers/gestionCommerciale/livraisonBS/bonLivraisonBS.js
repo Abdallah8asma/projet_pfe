@@ -656,10 +656,47 @@ angular
 					
 					var type ="";
 					
-					if(declarer == true)
-					 type = 'declarer';
+					if(declarer == true){
+
+						type = 'declarer';
+
+
+
+						$scope.listTaxeLivraisonInit = [
+							{//FODEC
+								taxeId: 1,
+								pourcentage: 1,
+								montant: '',
+							},
+							{//TVA
+								taxeId:2,
+								pourcentage: 10,
+								montant: '',
+							}];
+    	
+
+					}
+					
 				   else
-	                 type = 'non-declarer';
+				   {
+
+					type = 'non-declarer';
+
+					$scope.listTaxeLivraisonInit = [
+							{//FODEC
+								taxeId: 1,
+								pourcentage: 1,
+								montant: '',
+							},
+						{//TVA
+							taxeId: 2,
+							pourcentage: 19,
+							montant: '',
+						}];
+
+ 
+				   }
+	               
 				
 					
 							$http
