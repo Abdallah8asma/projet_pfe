@@ -145,7 +145,8 @@ public class MiseEntity implements Serializable {
 	
 	
 	
-	
+	@Column(name = "ref_commande")
+	private String refCommande ;
 	
 	/* Les traitements. 
 	@OneToMany(mappedBy = "mise", cascade = CascadeType.ALL)
@@ -160,6 +161,14 @@ public class MiseEntity implements Serializable {
 	 */
 	public Long getId() {
 		return id;
+	}
+
+	public String getRefCommande() {
+		return refCommande;
+	}
+
+	public void setRefCommande(String refCommande) {
+		this.refCommande = refCommande;
 	}
 
 	public Double getPoidFini() {

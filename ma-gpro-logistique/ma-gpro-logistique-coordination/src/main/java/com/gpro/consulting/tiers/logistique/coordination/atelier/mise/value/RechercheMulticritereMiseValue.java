@@ -55,8 +55,16 @@ public class RechercheMulticritereMiseValue {
 		
 		private String machine;
 		
+		private String refCommande;
 		
-		
+
+	public String getRefCommande() {
+			return refCommande;
+		}
+
+		public void setRefCommande(String refCommande) {
+			this.refCommande = refCommande;
+		}
 
 	public String getReferenceMise() {
 			return referenceMise;
