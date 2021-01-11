@@ -103,7 +103,7 @@ public class MisePersistanceUtilities {
 		
 		entity.setNbrColisExpedition(dto.getNbrColisExpedition());
 		entity.setQteExpedition(dto.getQteExpedition());
-	  
+	  entity.setRefCommande(dto.getRefCommande());
 	  /*
 	  if(dto.getListeTraitements()!=null){
 		  
@@ -146,7 +146,7 @@ public class MisePersistanceUtilities {
 	dto.setDateSuppression(entity.getDateSuppression());
 	dto.setVersion(entity.getVersion());
 	dto.setPu(entity.getPu());
-	
+
 	return dto;
   }
   
@@ -189,7 +189,7 @@ public class MisePersistanceUtilities {
 	dto.setNbrColisExpedition(entity.getNbrColisExpedition());
 	dto.setQteExpedition(entity.getQteExpedition());
 	
-	
+	dto.setRefCommande(entity.getRefCommande());
 	 
 	 /* 
 	 if(pMiseEntity.getListeTraitements()!=null) { 
