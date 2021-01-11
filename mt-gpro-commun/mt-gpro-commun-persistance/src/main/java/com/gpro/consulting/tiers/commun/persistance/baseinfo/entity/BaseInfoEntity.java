@@ -164,9 +164,19 @@ public class BaseInfoEntity implements Serializable{
 	
 	
 	
+	@Column(name = "black_mode")
+	private boolean blackMode;
 	
 	
 	
+	public boolean isBlackMode() {
+		return blackMode;
+	}
+
+	public void setBlackMode(boolean blackMode) {
+		this.blackMode = blackMode;
+	}
+
 	public String getExcelDirectory() {
 		return excelDirectory;
 	}

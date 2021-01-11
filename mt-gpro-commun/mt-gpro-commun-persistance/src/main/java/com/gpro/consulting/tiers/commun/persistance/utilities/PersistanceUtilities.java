@@ -183,6 +183,7 @@ public class PersistanceUtilities {
         dto.setLogoPNG(entity.getLogoPNG());
         
         dto.setExcelDirectory(entity.getExcelDirectory());
+        dto.setBlackMode(entity.isBlackMode());
         
 		return dto;
 	}
@@ -234,7 +235,8 @@ public class PersistanceUtilities {
 		entity.setLogoPNG(dto.getLogoPNG());
 		
 		entity.setExcelDirectory(dto.getExcelDirectory());
-		
+		entity.setBlackMode(dto.isBlackMode());
+	
 		return entity;
 	}
 	
