@@ -585,12 +585,23 @@
 								<div class="input-group-prepend">
 								  <label class="input-group-text ms-Label">R&eacute;f BC</label>
 								</div>
-								<select  ng-model="miseCourant.refCommande" class="form-control"
+
+								<input ui-select2="select2TaggingOptions" ng-model="tagReferenceBLivList" class="form-control"
+								style="border: 1px solid #e5eaee !important;" 
+								
+								
+								/>
+
+
+								<!-- <select  ng-model="miseCourant.refCommande" class="form-control"
 								ng-init="miseCourant.refCommande =''"
 								  style="border: 1px solid #e5eaee !important;" >
+
 								  <option ng-repeat="commande in listReferenceBC"
 								  value="{{commande.reference}}">{{commande.reference}}</option>
-								</select>
+								</select> -->
+
+
 							  </div>
 							</div>
 			

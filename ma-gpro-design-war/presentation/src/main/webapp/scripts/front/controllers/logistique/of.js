@@ -52,34 +52,140 @@ angular
 							
 							$scope.listMiseEncours=[];
 							
-							$scope.listReferenceBC=[];
+						
 							$scope.changeProduitsIsEntredFirstTime = "false";
 							
 							$scope.currentMode = "SEARCH";
 							
 							
-							
+							$scope.tagReferenceBLivList = [];
+							$scope.listReferenceBC=[];
+			
 
+
+
+
+							
+/* 
+                       $scope.getrefbc = function (){
+						$scope.listReferenceBC = [];
+
+							$http
+								.get(UrlAtelier + "/commandeVente/getAll")
+								.success(
+									function(resultat) {
+
+										
+										angular.forEach(resultat, function(element, key){
+											console.log("==>elemet: "+element.reference);
+											$scope.listReferenceBC.push(element.reference);
+											
+											
+										});
+									});
+										
+						  }
+					   		 */
 					
 
 
 
 
 
-						
 
-                       $scope.listReferenceBC = function (){
-							$http
-								.get(UrlAtelier + "/commandeVente/getAll")
-								.success(
-									function(data) {
-									  
-									  $scope.listReferenceBC = data;
 
-									});
+
+
+
+
+						  $scope.select2TaggingOptions = {
+							'multiple': true,
+							'simple_tags': true,
+							'tags': function () {
+									// reload de la liste des RefBC
+										$scope.listNewReferenceBC = [];
+										
+										$scope.listNewReferenceBC = $scope.listReferenceBC;
+
+									   $log.debug("----OnClicklistNewReferenceBC : "+JSON.stringify($scope.listNewReferenceBC, null, "    "));
+									   console.log("----OnClicklistNewReferenceBC : "+JSON.stringify($scope.listNewReferenceBC, null, "    "));
+
+									   return $scope.listNewReferenceBC;
+								   }
+							 
+					};
+
+
+
+					$scope.listReferenceBC = [];
+
+					$scope.getAvailableRefBCByClient = function (idClient) {
+					  $scope.listReferenceBC = [];
+					  $scope.listeMarche=[];
+
+					  if(angular.isDefined(idClient)){
+						  if(idClient != null){
+							  
+							  
+							  // TODO SEARCH TYPE PI
+						  /* 	  var element = $scope.listePartieInteresseeCache.filter(function(node) {
+								  return node.id==idClient;
+							  });
+					
+							  $scope.bonLivraisonVenteCourant.typePartieInteressee = element[0].typePartieInteressee;
+							  
+							  $scope.bonLivraisonVenteCourant.groupeClientId = element[0].groupeClientId; */
+							  
+							  $http
+							  .get(
+									  UrlAtelier
+									  + "/commandeVente/getAvailableListBonCommandeRefByClient:"+idClient)
+									  .success(
+											  function(resultat) {
+												  $log.debug("----ResultatListBC "+resultat.length);
+												  
+												  angular.forEach(resultat, function(element, key){
+													  console.log("==>elemet: "+element.reference);
+													  $scope.listReferenceBC.push(element.reference);
+													  
+													  
+												  });
+												  
+								
+									   });
+							  }
+						  
+					/*	  if(idClient != null){
+							  console.log("enter: to List ");
+							  $http
+							  .get(
+									  UrlAtelier
+									  + "/marche/getListById:"+idClient)
+									  .success(
+											  function(resultat) {
+											
+												  angular.forEach(resultat, function(element, key){
+												
+													  $scope.listeMarche.push(element);
+													  
+													  
+												  });
+								
+									   });
+							  }*/
+						   
 						  }
-					   		
-						  $scope.listReferenceBC();
+					  }
+					  
+
+
+
+
+
+
+
+
+
 
 
 							//init urlValider
@@ -230,6 +336,10 @@ angular
 											// data, page,pageSize
 										
 										});
+
+
+										$scope.getAvailableRefBCByClient( element[0].partieIntersseId);
+
 								
 								
 								
@@ -389,11 +499,17 @@ angular
 							$scope.creerMise = function(mise) {
 
 								mise.dateIntroduction = new Date();
+								mise.refCommande = $scope.tagReferenceBLivList.join('-');
 								$http
 										.post(UrlAtelier + "/mise/creerMise",
 												mise).success(function(idMise) {
+
+													
+										
 											$scope.annulerAjout();
 										});
+
+									
 
 							}
 
@@ -413,6 +529,8 @@ angular
 															break;
 														}
 													}
+
+								
 
 													//get mise by id
 
@@ -572,7 +690,14 @@ angular
 													
 													$scope.miseCourant = dataGetMise;
 											
+
+													var refBC = dataGetMise.refCommande.split("-");
+												
+													$scope.tagReferenceBLivList = refBC;
+												
 													
+
+
 													//$scope.dateIntro=
 													if(dataGetMise.produitId!= null){
 														$http
@@ -646,6 +771,7 @@ angular
 								$scope.displayView = "view1";
 								
 								$scope.currentMode = "SEARCH";
+								$scope.tagReferenceBLivList = [];
 							}
 
 							/***************************************************
