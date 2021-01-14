@@ -133,9 +133,20 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	
 	
 	
+	private Long devise;
 	
 	
 	
+	
+	
+
+	public Long getDevise() {
+		return devise;
+	}
+
+	public void setDevise(Long devise) {
+		this.devise = devise;
+	}
 
 	public Long getCavity() {
 		return cavity;

@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.commun.coordination.value.elementBase;
 
+import java.util.Calendar;
+
 public class RecherecheMulticritereArticleValue {
 	/** The ref. */
 	private String ref;
@@ -40,6 +42,72 @@ public class RecherecheMulticritereArticleValue {
 	private Long getGroupeClientId;
 	
 	
+	private Calendar dateCreation;
+	
+	
+	private Calendar dateIntroduction;
+	
+	 private String nbrCouleur ;
+	 
+	 private String dimensionPapier;
+		
+		
+		private String nbrPose ;
+		
+		private String fichier;
+		
+		 private Long produitId ;
+	
+		 private Long  piEntite;
+		 
+	public Long getPiEntite() {
+			return piEntite;
+		}
+		public void setPiEntite(Long piEntite) {
+			this.piEntite = piEntite;
+		}
+	public Long getProduitId() {
+			return produitId;
+		}
+		public void setProduitId(Long produitId) {
+			this.produitId = produitId;
+		}
+	public String getFichier() {
+			return fichier;
+		}
+		public void setFichier(String fichier) {
+			this.fichier = fichier;
+		}
+	public String getNbrCouleur() {
+			return nbrCouleur;
+		}
+		public void setNbrCouleur(String nbrCouleur) {
+			this.nbrCouleur = nbrCouleur;
+		}
+		public String getDimensionPapier() {
+			return dimensionPapier;
+		}
+		public void setDimensionPapier(String dimensionPapier) {
+			this.dimensionPapier = dimensionPapier;
+		}
+		public String getNbrPose() {
+			return nbrPose;
+		}
+		public void setNbrPose(String nbrPose) {
+			this.nbrPose = nbrPose;
+		}
+	public Calendar getDateCreation() {
+		return dateCreation;
+	}
+	public void setDateCreation(Calendar dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+	public Calendar getDateIntroduction() {
+		return dateIntroduction;
+	}
+	public void setDateIntroduction(Calendar dateIntroduction) {
+		this.dateIntroduction = dateIntroduction;
+	}
 	public Long getFamillePiId() {
 		return FamillePiId;
 	}

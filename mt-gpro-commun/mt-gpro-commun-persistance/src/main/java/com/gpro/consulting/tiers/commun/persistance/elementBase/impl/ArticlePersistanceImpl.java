@@ -53,6 +53,15 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
       
       private String dimension="dimension";
       private String grammage="grammage";
+      private String dimensionPapier="dimensionPapier";
+      
+      private String nbrCouleur="nbrCouleur";
+      private String fichier="fichier";
+      private String nbrPose="nbrPose"; 
+      
+      private String produitId="produitId"; 
+      private String  piEntite="piEntite";
+      
 	@Override
 	public String creerArticle(ArticleValue pArticleValue) {
 		// TODO Auto-generated method stub
@@ -220,6 +229,31 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
 			    		  pRechercheArticleMulitCritere.getGrammage()));
 			    }
 	    
+		    if (estNonVide(pRechercheArticleMulitCritere.getDimensionPapier())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(dimensionPapier),
+			    		  pRechercheArticleMulitCritere.getDimensionPapier()));
+			    }
+		    if (estNonVide(pRechercheArticleMulitCritere.getNbrCouleur())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(nbrCouleur),
+			    		  pRechercheArticleMulitCritere.getNbrCouleur()));
+			    }
+		    
+		    if (estNonVide(pRechercheArticleMulitCritere.getFichier())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(fichier),
+			    		  pRechercheArticleMulitCritere.getFichier()));
+			    }
+		    
+		    if (pRechercheArticleMulitCritere.getProduitId()!=null) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(produitId),
+			    		  pRechercheArticleMulitCritere.getProduitId()));
+			    }
+		    
+		    if (pRechercheArticleMulitCritere.getPiEntite()!=null) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(piEntite),
+			    		  pRechercheArticleMulitCritere.getPiEntite()));
+			    }
+		    
+		    
 	    /** execute query and do something with result **/
 
 	    vCriteriaQuery.select(vRootArticle).where(vWhereClause.toArray(new Predicate[] {}));
