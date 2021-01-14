@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.MiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.CritereRechercheRouleauStandardValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ElementResultatRechecheRouleauStandardValue;
@@ -40,7 +41,7 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 	
 	private static final Double SOMME_ZERO=0D;
 	private static final Long ZERO = 0L;
-	
+
 	@Autowired
 	private IRouleauFiniPersistance rouleauFiniPersitance;
 
@@ -117,6 +118,9 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 		
 		List<String> ids = new ArrayList<String>();
 	
+		
+		if(request.getChoix() == null)
+			request.setChoix(IConstanteLogistique.CHOIX_ROULEAU_FINI_1);
 		
 		request.setDateIntroduction(Calendar.getInstance());
 		

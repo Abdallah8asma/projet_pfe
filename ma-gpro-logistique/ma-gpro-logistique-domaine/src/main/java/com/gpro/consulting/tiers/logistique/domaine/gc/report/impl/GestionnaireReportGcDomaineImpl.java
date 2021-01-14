@@ -635,8 +635,8 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			bonLivraisonReportValue.setGroupeClientDesignation(groupe.getDesignation());
 		}
 		bonLivraisonReportValue.setClientId(clientId);
-		/*
-		if (livraisonVente.getPartieIntId() != null && !livraisonVente.getPartieIntId().equals(passager)) {
+		////////////
+	if (livraisonVente.getPartieIntId() != null && !livraisonVente.getPartieIntId().equals(passager)) {
 			clientId = livraisonVente.getPartieIntId();
 			bonLivraisonReportValue.setClientId(clientId);
 		}
@@ -647,7 +647,8 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			bonLivraisonReportValue.setAdresse(clientIdMap.get(clientId).getAdresse());
 			bonLivraisonReportValue.setTelephone(clientIdMap.get(clientId).getTelephone());
 			bonLivraisonReportValue.setFax(clientIdMap.get(clientId).getFax());
-		}*
+			bonLivraisonReportValue.setGroupeClientDesignation(clientIdMap.get(clientId).getReference());
+		}
 
 		
 		if (livraisonVente.getPartieIntId().equals(passager)) {
@@ -657,8 +658,9 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			else
 				bonLivraisonReportValue.setClient("PASSAGER");
 
-		}*/
+		}
 		
+		/////////////////
 		
 		PartieInteresseValue pi = clientIdMap.get(livraisonVente.getPartieIntId()) ;
 		
@@ -1296,6 +1298,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			FactureVenteValue factureVente) {
 
 		BaseInfoValue baseInfo = baseInfoPersistance.getClientActif();
+		Map<Long, GroupeClientValue> groupePiIdMap = gestionnaireLogistiqueCacheDomaine.mapGroupePIById();
 
 		if (factureVente.getType() != null) {
 			if (factureVente.getType().equals(IConstanteCommerciale.FACTURE_TYPE_AVOIR)) {
@@ -1319,6 +1322,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		factureReport.setFaxCompagnie(baseInfo.getFax());
 		factureReport.setEmailCompagnie(baseInfo.getEmail());
 		factureReport.setMatriculeFiscalCompagnie(baseInfo.getMatriculeFiscal());
+		
 
 		factureReport.getParams().put("p_PathLogo", baseInfo.getLogo());
 
@@ -1453,6 +1457,10 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			reportValue.setAdresse(clientIdMap.get(clientId).getAdresse());
 			reportValue.setTelephone(clientIdMap.get(clientId).getTelephone());
 			reportValue.setFax(clientIdMap.get(clientId).getFax());
+			
+			
+			reportValue.setGroupeClientDesignation(clientIdMap.get(clientId).getReference());
+			
 		}
 		reportValue.setType(factureVente.getType());
 		reportValue.setExistFodec(false);

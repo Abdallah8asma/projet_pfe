@@ -961,9 +961,10 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 		/** Format du numero de la Bon Reception= AAAA-NN. */
 		StringBuilder vNumBonLiv = new StringBuilder("");
+	
 		vNumBonLiv.append(vNumGuichetPrefix);
-		vNumBonLiv.append(vAnneeCourante);
-		vNumBonLiv.append(String.format("%02d", moisActuel));
+		//vNumBonLiv.append(vAnneeCourante);
+		//vNumBonLiv.append(String.format("%02d", moisActuel));
 		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
 		/** Inserer une nouvelle valeur dans Guichet BonReception. */
 		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
@@ -998,8 +999,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		/** Format du numero de la Bon Reception= AAAA-NN. */
 		StringBuilder vNumBonLiv = new StringBuilder("");
 		vNumBonLiv.append(vNumGuichetPrefix);
-		vNumBonLiv.append(vAnneeCourante);
-		vNumBonLiv.append(String.format("%02d", moisActuel));
+		//vNumBonLiv.append(vAnneeCourante);
+		//vNumBonLiv.append(String.format("%02d", moisActuel));
 		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
 		/** Inserer une nouvelle valeur dans Guichet BonReception. */
 		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();

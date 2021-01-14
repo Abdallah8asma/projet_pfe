@@ -125,11 +125,19 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 	public String createBonSortieFini(BonSortieFiniValue bonSortieFiniValue) {
 
 		if (bonSortieFiniValue.getReference() == null || bonSortieFiniValue.getReference().equals("")) {
-			bonSortieFiniValue.setReference(getNumeroBonSotie(Calendar.getInstance()));
+			bonSortieFiniValue.setReference(getNumeroBonSotie(Calendar.getInstance(),true));
 			//bonSortieFiniValue.getReference().concat(getNumeroBonSotie(Calendar.getInstance()));
 
 		}
-
+		
+/*		
+     else if(bonSortieFiniValue.getRefAvantChangement() != null && bonSortieFiniValue.getReference().equals(bonSortieFiniValue.getRefAvantChangement())) {
+				 
+				this.getNumeroBonSotie(Calendar.getInstance(),true);
+				
+				
+           }
+*/
 		List<RouleauFiniValue> listeRouleauFini = bonSortieFiniValue.getListeRouleauFini();
 
 		Map<Long, Double> metrageMap = new HashMap<Long, Double>();
@@ -581,7 +589,7 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 	 *            la date de la Bon Reception
 	 * @return le numéro du prochaine Bon Reception à insérer
 	 */
-	private String getNumeroBonSotie(final Calendar pDateBonSortie) {
+	private String getNumeroBonSotie(final Calendar pDateBonSortie,final boolean increment) {
 
 		Long vNumGuichetBonSortie = this.guichetierMensuelDomaine.getNextNumBonSortieReference();
 		/** Année courante. */
@@ -606,7 +614,11 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
 		vGuichetValeur.setNumReferenceBonSortieCourante(new Long(vNumGuichetBonSortie + 1L));
 		/** Modification de la valeur en base du numéro. */
+		
+		if(increment)
 		this.guichetierMensuelDomaine.modifierGuichetBonSortieMensuel(vGuichetValeur);
+		
+		
 		return vNumBonSortie.toString();
 
 	}

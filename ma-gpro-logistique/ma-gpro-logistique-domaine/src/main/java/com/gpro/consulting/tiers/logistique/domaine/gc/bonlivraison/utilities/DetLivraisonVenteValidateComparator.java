@@ -20,7 +20,7 @@ public class DetLivraisonVenteValidateComparator implements Comparator<DetLivrai
 		 
 	    return ComparisonChain.start()
 	        .compare(o1.getProduitReference(), o2.getProduitReference())
-	        .compare(o1.getChoix(), o2.getChoix())
+	    .compare(o1.getChoix(), o2.getChoix())
 	        .result();
     }
 }
