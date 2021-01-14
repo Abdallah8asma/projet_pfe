@@ -670,7 +670,7 @@ angular
 							},
 							{//TVA
 								taxeId:2,
-								pourcentage: 10,
+								pourcentage: 19,
 								montant: '',
 							}];
     	
@@ -690,7 +690,7 @@ angular
 							},
 						{//TVA
 							taxeId: 2,
-							pourcentage: 19,
+							pourcentage: 10,
 							montant: '',
 						}];
 
@@ -765,6 +765,7 @@ angular
 									 //affectation des references à la liste sous le format X,Y,Z
 									 
 									 $scope.tagReferenceBSList = refBS;
+									 
 
 									 $scope.listDetLivraisonVentePRBS = [];
 								

@@ -26,6 +26,14 @@ angular
 					case 'produitFinancier':
 						$scope.ITEM = 'produitFinancier';
 						break;
+
+				
+						case 'film':
+							$scope.ITEM = 'film';
+							break;		
+							case 'forme':
+								$scope.ITEM = 'forme';
+								break;	
 			}
 
 
