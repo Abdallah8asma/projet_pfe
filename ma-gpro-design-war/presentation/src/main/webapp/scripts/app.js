@@ -206,7 +206,9 @@ angular
    /************* logistique nv *******************/
 
    'atelier.logistique',
-   'atelier.suivieOF'
+   'atelier.suivieOF',
+   'gpro.film',
+   'gpro.forme'
    
 
 	
@@ -671,6 +673,24 @@ angular
           },
         })
 
+        .when('/front/elementsDeBase/film/:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/elementsDeBase/film/' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
+        .when('/front/elementsDeBase/forme/:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/elementsDeBase/forme/' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
         // Articles est redirigée vers produits
         .when('/articles', {
           templateUrl: function (param) {

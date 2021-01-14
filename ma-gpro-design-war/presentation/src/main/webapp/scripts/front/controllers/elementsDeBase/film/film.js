@@ -1,8 +1,8 @@
 'use strict'
 angular
-		.module('gpro.articles', [ "ngResource" ])
+		.module('gpro.film', [ "ngResource" ])
 		.controller(
-				'ArticleController',
+				'filmController',
 				[
 						'$scope',
 						'$rootScope',
@@ -45,17 +45,14 @@ angular
 							$scope.articleCourante = {};
 
 							$scope.ListeTaxe = [];
+							$scope.ListProduits=[];
+							$scope.ListClients=[];
 							/***************************************************
 							 * Gestion de Cache des Referentiels *
 							 **************************************************/
 							
 							// Liste des TypesCache
-
-							  
-							$scope.articleCourante ={
-								"typeEntite":'Matiere'
-							}
-							$scope.listeTypesArticleCache = function() {
+							/*$scope.listeTypesArticleCache = function() {
 								$http
 										.get(
 												UrlCommun
@@ -68,7 +65,7 @@ angular
 
 												});
 							}
-
+*/
 							// Liste des FamilleCache
 							$scope.ListFamillesArticleCache = function() {
 								$http
@@ -189,7 +186,28 @@ angular
 												});
 							}
 
+
+							$scope.ListProduits = function () {
+								$http
+								  .get(UrlCommun + '/produit/all')
+								  .success(function (Produits) {
+								
+									$scope.ListProduits = Produits;
+								  });
+							  };
+
+							  
+							$scope.ListClients = function () {
+								$http
+								  .get(UrlCommun + '/partieInteressee/all')
+								  .success(function (clients) {
+								
+									$scope.ListClients = clients;
+								  });
+							  };
 							//$scope.listeTypesArticleCache();
+							$scope.ListClients();
+							$scope.ListProduits();
 							$scope.ListFamillesArticleCache();
 							$scope.ListSousFamillesArticleCache();
 							$scope.listeSitesPartieInteresseeCache();
@@ -246,7 +264,7 @@ angular
 							
 							// Rechercher Article
 							$scope.rechercherArticle = function(articleCourante) {
-								articleCourante.typeEntite = "1";
+								articleCourante.typeEntite = "2";
 								$http
 										.post(
 												UrlCommun

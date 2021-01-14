@@ -515,12 +515,14 @@ angular
 
 							// modifier bon de reception
 							$scope.modifierMise = function(mise) {
+
+								mise.refCommande = $scope.tagReferenceBLivList.join('-');
 								$http
 										.post(UrlAtelier + "/mise/modifieMise",
 												mise)
 										.success(
 												function(miseModifiee) {
-
+											
 													for (var i = 0; i < $scope.myData.length; i++) {
 
 														if ($scope.myData[i].id == miseModifiee.id) {
@@ -687,13 +689,14 @@ angular
 										.success(function(dataGetMise) {
 											
 										//	console.log('DataGetMise ::::::::::',dataGetMise);
-													
-													$scope.miseCourant = dataGetMise;
+										var refBC = dataGetMise.refCommande.split("-");
+												
+										$scope.tagReferenceBLivList = refBC;
+
+										$scope.miseCourant = dataGetMise;
 											
 
-													var refBC = dataGetMise.refCommande.split("-");
 												
-													$scope.tagReferenceBLivList = refBC;
 												
 													
 

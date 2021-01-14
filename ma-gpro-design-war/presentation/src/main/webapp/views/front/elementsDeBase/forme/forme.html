@@ -10,7 +10,7 @@
 	}
 </script>
 
-<div class="container-fluid" ng-controller="ArticleController" style="background-color: #fff;">
+<div class="container-fluid" ng-controller="formeController" style="background-color: #fff;">
 
 	<div class="row" ng-show="displayMode != 'edit'">
 
@@ -120,7 +120,9 @@
 				<div class="panel-body">
 					<form class="form-horizontal" name="rechercheArticleForm" id="rechercheArticleForm">
 						<div class="row">
-							<div class="col-sm-4">
+					
+							
+							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -131,7 +133,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -143,31 +145,122 @@
 								</div>
 							</div>
 
+							<div class="col-sm-3" ng-controller="DatepickerDemoController">
 
-							<!-- <div class="col-sm-4">
+
+
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Type</span>
+											<span class="input-group-text">
+												Date </span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.typeEntite"
-											ng-init="articleCourante.typeEntite=''">
-											<option ng-repeat="type in ListTypeArticleCache" value="{{type.id}}">{{type.designation}}</option>
-										</select>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											ng-init="articleCourante.date =''"
+											ng-model="articleCourante.date" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default" ng-click="open($event)"
+												style="
+														color: rgb(54, 153, 255);
+														background-color: rgb(225, 240, 255);
+													">
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+											</button>
+										</div>
 									</div>
 								</div>
-							</div> -->
+
+							</div>
 
 
 
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Emplacement </span>
+										</div>
+										<input class="form-control" ng-model="articleCourante.emplacement"
+											ng-init="articleCourante.emplacement=''" />
+									</div>
+								</div>
+							</div>		
+							
+
+					
+
+					
 						
 						</div>
 
 						<div class="row">
 
 
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Dimension</span>
+										</div>
+										<input class="form-control" ng-model="articleCourante.dimension"
+											ng-init="articleCourante.dimension=''" />
+									</div>
+								</div>
+							</div>
+				
 
-							<div class="col-sm-4">
+				
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Dimension Papier</span>
+										</div>
+										<input class="form-control" ng-model="articleCourante.dimensionPapier"
+											ng-init="articleCourante.dimensionPapier=''" />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">No De Pose</span>
+										</div>
+										<input class="form-control" ng-model="articleCourante.nbrPose"
+											ng-init="articleCourante.nbrPose=''" />
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Montant</label>
+										</div>
+										<input type="number" step="0.001" class="form-control" min="0"
+											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
+											name="prixUnitaire" ng-model="articleCourante.pu"
+											 />
+									
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+
+						<div class="row">
+					
+
+							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -175,9 +268,9 @@
 										</div>
 										<select class="form-control" ng-model="articleCourante.familleEntite"
 											ng-init="articleCourante.familleEntite=''">
-											<option value="">Tous</option>
+											<option value=""></option>
 											<option
-												ng-repeat="famille in ListFamilleArticleCache | filter : {idTypeArticle :1}"
+												ng-repeat="famille in ListFamilleArticleCache | filter : {idTypeArticle :3}"
 												value="{{famille.id}}">{{famille.designation}}</option>
 										</select>
 									</div>
@@ -185,87 +278,106 @@
 							</div>
 
 
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
 											<span class="input-group-text">Sous Famille</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.sousFamilleEntite"
-											ng-init="articleCourante.sousFamilleEntite=''">
-											<option value="">Tous</option>
+										<select class="form-control" ng-model="articleCourante.sousFamilleArtEntite"
+											ng-init="articleCourante.sousFamilleArtEntite=''">
+											<option value=""></option>
 											<option
-												ng-repeat="sousFamille in ListSousFamilleArticleCache "
+												ng-repeat="sousFamille in ListSousFamilleArticleCache | filter : {idFamilleArticle : articleCourante.familleEntite}"
 												value="{{sousFamille.id}}">{{sousFamille.designation}}</option>
 										</select>
 									</div>
 								</div>
 							</div>
 
-
-							<div class="col-sm-4">
+							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">dimension</span>
+											<label
+												class="input-group-text ms-Label ">Nom du fichier</label>
 										</div>
-										<input class="form-control" ng-model="articleCourante.dimension"
-											ng-init="articleCourante.dimension=''" />
+										<input type="text" class="form-control" style="text-transform: uppercase;"
+											ng-model="articleCourante.fichier"
+										
+											 />
 									</div>
 								</div>
 							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label
+												class="input-group-text ms-Label is-required">Observation</label>
+										</div>
+										<input type="text" class="form-control" style="text-transform: uppercase;"
+											ng-model="articleCourante.observation"
+										
+											 />
+									</div>
+								</div>
+							</div>
+
+
+		<div class="row">
+
+			<div class="col-sm-3">
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Client   </span>
+						</div>
+						<select class="form-control" ng-model="articleCourante.piEntite"
+							ng-init="articleCourante.piEntite=''">
+							<option value="">Tous</option>
+							<option
+								ng-repeat="client in ListClients"
+								value="{{client.id}}">{{client.raisonSociale}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-sm-3">
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Produit</span>
+						</div>
+						<select class="form-control" ng-model="articleCourante.produitId"
+							ng-init="articleCourante.produitId=''">
+							<option value="">Tous</option>
+							<option
+								ng-repeat="famille in ListProduits"
+								value="{{famille.id}}">{{famille.designation}}</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
 
 
 						</div>
 
 
-						<div class="row">
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Prix Entre</span>
-										</div>
-										<input type="number" step="any" class="form-control"
-											ng-model="articleCourante.prix_inf" ng-init="articleCourante.prix_inf=''" />
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Et</span>
-										</div>
-										<input type="number" step="any" class="form-control"
-											ng-model="articleCourante.prix_sup" ng-init="articleCourante.prix_sup=''" />
-									</div>
-								</div>
-							</div>
-
-
-
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">grammage</span>
-										</div>
-										<input class="form-control" ng-model="articleCourante.grammage"
-											ng-init="articleCourante.grammage=''" />
-									</div>
-								</div>
-							</div>
-
-
-						</div>
 					</form>
 
 				</div>
 			</div>
 		</div>
+	
 	</div>
-
 
 	<div class="row" ng-show="displayMode == 'edit'">
 
@@ -345,39 +457,148 @@
 
 					<form class="form-horizontal" id="creationArticleForm" name="creationArticleForm">
 						<div class="row">
-							<div class="col-sm-4">
+					
+
+			
+							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">RÃ©f.</label>
+											<span class="input-group-text">RÃ©f.</span>
 										</div>
-										<input type="text" class="form-control" ng-model="articleCourante.ref"
-										
-											required />
+										<input class="form-control" ng-model="articleCourante.ref"
+											ng-init="articleCourante.ref=''" />
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-8">
+							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label
-												class="input-group-text ms-Label is-required">D&eacute;signation</label>
+											<span class="input-group-text">DÃ©signation</span>
 										</div>
-										<input type="text" class="form-control" style="text-transform: uppercase;"
-											ng-model="articleCourante.designation"
-										
-											required />
+										<input class="form-control" ng-model="articleCourante.designation"
+											ng-init="articleCourante.designation=''" />
 									</div>
 								</div>
 							</div>
 
+							
+						
+							<div class="col-sm-3" ng-controller="DatepickerDemoController">
 
 
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												Date </span>
+										</div>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											ng-init="articleCourante.dateIntroduction =''"
+											ng-model="articleCourante.dateIntroduction" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default" ng-click="open($event)"
+												style="
+														color: rgb(54, 153, 255);
+														background-color: rgb(225, 240, 255);
+													">
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Emplacement </span>
+										</div>
+										<input class="form-control" ng-model="articleCourante.emplacement"
+											ng-init="articleCourante.emplacement=''" />
+									</div>
+								</div>
+							</div>		
+							
+
+				
+
+					
+						
 						</div>
 
 						<div class="row">
 
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Dimension</span>
+										</div>
+										<input class="form-control" ng-model="articleCourante.dimension"
+											ng-init="articleCourante.dimension=''" />
+									</div>
+								</div>
+							</div>
+				
+
+				
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Dimension Papier</span>
+										</div>
+										<input class="form-control" ng-model="articleCourante.dimensionPapier"
+											ng-init="articleCourante.dimensionPapier=''" />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">No De Couleur</span>
+										</div>
+										<input class="form-control" ng-model="articleCourante.NoCouleur"
+											ng-init="articleCourante.NoCouleur=''" />
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Montant</label>
+										</div>
+										<input type="number" step="0.001" class="form-control" min="0"
+											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
+											name="prixUnitaire" ng-model="articleCourante.pu"
+											 />
+									
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+
+						<div class="row">
+					
 
 							<div class="col-sm-3">
 								<div class="form-group">
@@ -389,7 +610,7 @@
 											ng-init="articleCourante.familleEntite=''">
 											<option value=""></option>
 											<option
-												ng-repeat="famille in ListFamilleArticleCache | filter : {idTypeArticle :1}"
+												ng-repeat="famille in ListFamilleArticleCache  | filter : {idTypeArticle :3}"
 												value="{{famille.id}}">{{famille.designation}}</option>
 										</select>
 									</div>
@@ -413,258 +634,87 @@
 									</div>
 								</div>
 							</div>
-
-
-							
-						<!-- 	<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Sous Famille</span>
-										</div>
-										<select ui-select2
-										ng-model="articleCourante.sousFamilleArtEntite" data-placeholder="Pick a state"
-										class="form-control" style="border: 1px solid #e5eaee !important;">
-										<optgroup ng-repeat="famille in ListFamilleArticleCache"
-											label="famille : {{famille.designation}} -- {{famille.designationType}}">
-											<option ng-repeat="sousFamille in famille.sousFamille" value="{{sousFamille.id}}">
-												{{sousFamille.designation}}</option>
-										</optgroup>
-									</select>
-									</div>
-								</div>
-							</div> -->
-
-
 							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Unite 1</span>
+											<label
+												class="input-group-text ms-Label ">Nom du fichier</label>
 										</div>
-										<select class="form-control" ng-model="articleCourante.uniteEntite"
-											ng-init="articleCourante.uniteEntite=''">
-											<OPTION value="">Toutes les UnitÃ©s</OPTION>
-											<option ng-repeat="unite in ListUniteArticleCache" value="{{unite.id}}">{{unite.designation}}
-											</option>
-											
-										</select>
+										<input type="text" class="form-control" style="text-transform: uppercase;"
+											ng-model="articleCourante.fichier"
+										
+											 />
 									</div>
 								</div>
 							</div>
-
-	
-
 							<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Unite 2</span>
+											<span class="input-group-text">Client   </span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.unite2Entite"
-											ng-init="articleCourante.unite2Entite=''">
-											<OPTION value="">Toutes les UnitÃ©s</OPTION>
-											<option ng-repeat="unite in ListUniteArticleCache" value="{{unite.id}}">{{unite.designation}}
-											</option>
-											
+										<select class="form-control" ng-model="articleCourante.piEntite"
+											ng-init="articleCourante.piEntite=''">
+											<option value="">Tous</option>
+											<option
+												ng-repeat="client in ListClients"
+												value="{{client.id}}">{{client.raisonSociale}}</option>
 										</select>
 									</div>
 								</div>
 							</div>
-
-					
-
-
-
-
 
 						</div>
+					<div class="row">
 
-
-						<div class="row">
-
-				
-							<div class="col-sm-3">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">TVA</label>
-										</div>
-										<select ui-select2 ng-model="articleCourante.idTaxe" required
-											ng-init="articleCourante.idTaxe=''" ng-required="true"
-											data-placeholder="Choisir TVA"
-											ng-change="calculerPrixAchatTTC(articleCourante.pu,articleCourante.idTaxe)"
-											class="form-control" style="border: 1px solid #e5eaee !important;">
-											<option value=""></option>
-											<option ng-repeat=" lt in ListeTaxe" value="{{lt.id}}">{{lt.designation}}
-											</option>
-										</select>
-									</div>
-								</div>
-							</div>
-
-							<div class="col-sm-3">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label">Prix
-												Achat HT</label>
-										</div>
-										<input type="number" step="0.001" class="form-control" min="0"
-											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
-											name="prixUnitaire" ng-model="articleCourante.pu"
-											ng-change="calculerPrixAchatTTC(articleCourante.pu,articleCourante.idTaxe)"
-										  />
-
-
-									</div>
-									<div ng-show="creationArticleForm.pu.$dirty && creationArticleForm.pu.$invalid" class="error">
-
-									</div>
-                          
-										<div ng-show="creationArticleForm.pu.$error">
-											La valeur doit Ãªtre supÃ©rieure ou Ã©gale Ã  0 !</div>
-									</div>
-								</div>
-
-
-								<div class="col-sm-3">
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<label class="input-group-text ms-Label">Prix Achat TTC</label>
-											</div>
-											<input type="number" step="0.001" class="form-control" min="0"
-												pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
-												name="prixUnitaire" ng-model="articleCourante.puTTC"
-												ng-change="calculerPrixAchatHT(articleCourante.puTTC,articleCourante.idTaxe)" />
-										
-										</div>
-									</div>
-								</div>
+					
+	
 	
 								<div class="col-sm-3">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
-												<label
-													class="input-group-text ms-Label">P.M.P</label>
+												<span class="input-group-text">Produit</span>
 											</div>
-											<input type="text" class="form-control" 
-												ng-model="articleCourante.pmp"
-											
-												 />
+											<select class="form-control" ng-model="articleCourante.produitId"
+												ng-init="articleCourante.produitId=''">
+												<option value="">Tous</option>
+												<option
+													ng-repeat="produit in ListProduits"
+													value="{{produit.id}}">{{produit.designation}}</option>
+											</select>
 										</div>
 									</div>
 								</div>
+	
+						
 
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label
+												class="input-group-text ms-Label is-required">Observation</label>
+										</div>
+										<input type="text" class="form-control" style="text-transform: uppercase;"
+											ng-model="articleCourante.observation"
+										
+											 />
+									</div>
+								</div>
+							</div>
+					</div>
 
+					
 						
 
 
 
 
-							</div>
-
-							<div class="row">
-
-
-								<div class="col-sm-4">
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<label
-													class="input-group-text ms-Label">Producteur</label>
-											</div>
-											<input type="text" class="form-control" 
-												ng-model="articleCourante.producteur"
-											
-												 />
-										</div>
-									</div>
-								</div>
-
-
-								<div class="col-sm-4">
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<label class="input-group-text ms-Label is-required">MÃ©thode</label>
-											</div>
-											<select class="form-control" ng-model="articleCourante.methodeGestion"
-												ng-init="articleCourante.methodeGestion=''">
-												
-												<option>STANDARD</option>
-												<option>LOT</option>
-												<option>ENTREE</option>
-	
-											</select>
-	
-
-	
-										</div>
-									</div>
-								</div>
-
-
-								<div class="col-sm-4">
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<label
-													class="input-group-text ms-Label is-required">Observation</label>
-											</div>
-											<input type="text" class="form-control" style="text-transform: uppercase;"
-												ng-model="articleCourante.observation"
-											
-												 />
-										</div>
-									</div>
-								</div>
-
-
-							</div>
-
-
-							<div class="row">
-
-
-								<div class="col-sm-4">
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<label
-													class="input-group-text ms-Label">Dimension</label>
-											</div>
-											<input type="text" class="form-control" 
-												ng-model="articleCourante.dimension"
-											
-												 />
-										</div>
-									</div>
-								</div>
-
-
-								<div class="col-sm-4">
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<label
-													class="input-group-text ms-Label">Grammage</label>
-											</div>
-											<input type="text" class="form-control" 
-												ng-model="articleCourante.grammage"
-											
-												 />
-										</div>
-									</div>
-								</div>
-
-							</div>
-
 			
 			
-						</div>
+						
 
 					</form>
 
@@ -811,15 +861,15 @@
 			</div>
 			</div>
 		
+	     </div>
+
 	</div>
-
-
 	<div class="row" ng-show="displayMode != 'edit'">
 		<div class="col-md-12">
 
 
 			<br /> <span class="ms-ListItem-primaryText">Liste des
-				articles</span> <br />
+				Formes</span> <br />
 			<div class="title-ajout line"></div>
 
 
