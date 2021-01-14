@@ -153,14 +153,7 @@ public class ArticleEntite implements Serializable {
 	@Column(name = "eb_unite_2_id")
 	private Long unite2Entite;
 	
-	
-//////// added on 23/12/2020, by semia kh
-	
 
-	
-	
-
-/////////////////////////////////
 	
 	
 	
@@ -195,6 +188,69 @@ public class ArticleEntite implements Serializable {
 	 private Long idTaxe ;
 	
 	
+	@Column(name="produit_id")
+	 private Long produitId ;
+	
+	
+	@Column(name="nbr_couleur")
+	 private String nbrCouleur ;
+	
+	
+	@Column(name = "dimension_papier")
+	private String dimensionPapier;
+	
+	
+	@Column(name = "fichier")
+	private String fichier;
+	
+	@Column(name = "nbr_pose")
+	private String nbrPose;	
+
+
+	public String getFichier() {
+		return fichier;
+	}
+
+	public void setFichier(String fichier) {
+		this.fichier = fichier;
+	}
+
+
+
+	public String getNbrPose() {
+		return nbrPose;
+	}
+
+	public void setNbrPose(String nbrPose) {
+		this.nbrPose = nbrPose;
+	}
+
+	public String getDimensionPapier() {
+		return dimensionPapier;
+	}
+
+	public void setDimensionPapier(String dimensionPapier) {
+		this.dimensionPapier = dimensionPapier;
+	}
+
+	
+
+	public String getNbrCouleur() {
+		return nbrCouleur;
+	}
+
+	public void setNbrCouleur(String nbrCouleur) {
+		this.nbrCouleur = nbrCouleur;
+	}
+
+	public Long getProduitId() {
+		return produitId;
+	}
+
+	public void setProduitId(Long produitId) {
+		this.produitId = produitId;
+	}
+
 	public Double getTva() {
 		return tva;
 	}

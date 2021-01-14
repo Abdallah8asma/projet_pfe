@@ -162,6 +162,71 @@ public class ArticleValue implements Comparable<ArticleValue>{
 	private Long groupeClientId;
 	
 	private Long sousFamilleId;
+	
+	 private Long produitId ;
+	 
+	 private String nbrCouleur ;
+	 
+	 private String dimensionPapier;
+		private Calendar dateCreation;
+		
+		private String nbrPose ;
+		
+		private String fichier;
+		
+	public String getFichier() {
+			return fichier;
+		}
+
+		public void setFichier(String fichier) {
+			this.fichier = fichier;
+		}
+
+	public String getNbrPose() {
+			return nbrPose;
+		}
+
+		public void setNbrPose(String nbrPose) {
+			this.nbrPose = nbrPose;
+		}
+
+	public Calendar getDateCreation() {
+			return dateCreation;
+		}
+
+		public void setDateCreation(Calendar dateCreation) {
+			this.dateCreation = dateCreation;
+		}
+
+
+		
+
+	public String getNbrCouleur() {
+			return nbrCouleur;
+		}
+
+		public void setNbrCouleur(String nbrCouleur) {
+			this.nbrCouleur = nbrCouleur;
+		}
+
+
+
+
+	public String getDimensionPapier() {
+		return dimensionPapier;
+	}
+
+	public void setDimensionPapier(String dimensionPapier) {
+		this.dimensionPapier = dimensionPapier;
+	}
+
+	public Long getProduitId() {
+		return produitId;
+	}
+
+	public void setProduitId(Long produitId) {
+		this.produitId = produitId;
+	}
 
 	public Long getSousFamilleId() {
 		return sousFamilleId;
