@@ -1498,7 +1498,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
         
         
         if(bonLivraisonValue.getDeclare() != null && bonLivraisonValue.getDeclare() == true)
-        	type = "declare";
+        	type = "declarer";
         else
          	type = "non-declare";
 		

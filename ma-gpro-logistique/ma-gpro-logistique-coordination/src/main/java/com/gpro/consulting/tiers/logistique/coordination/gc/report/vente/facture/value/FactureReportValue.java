@@ -97,6 +97,19 @@ public class FactureReportValue {
 	private String matriculeFiscalCompagnie;
 
 	private String raison;
+	
+	
+	
+	private String groupeClientDesignation;
+
+	
+	public String getGroupeClientDesignation() {
+		return groupeClientDesignation;
+	}
+
+	public void setGroupeClientDesignation(String groupeClientDesignation) {
+		this.groupeClientDesignation = groupeClientDesignation;
+	}
 
 	public String getMatriculeFiscalCompagnie() {
 		return matriculeFiscalCompagnie;

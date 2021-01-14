@@ -154,4 +154,13 @@ public interface IConstanteLogistique {
 	// Séquence BON Inventaire FINI
 	public static String SEQUENCE_GL_MVT_CAISSE = "MVT_CAISSE_SEQ";
 
+	
+	
+	
+	//constantes choix rouleaufini
+	public static Long CHOIX_ROULEAU_FINI_1 = 1L;
+	public static Long CHOIX_ROULEAU_FINI_2 = 2L;
+	
+	
+	
 }
