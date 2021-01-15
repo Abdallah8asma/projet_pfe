@@ -757,6 +757,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
         "serialisable":false,
         "retour":false,
         "fodec":false,
+        "devise":"2",
         
         "articleProduits":[{
           'articleId':'',
