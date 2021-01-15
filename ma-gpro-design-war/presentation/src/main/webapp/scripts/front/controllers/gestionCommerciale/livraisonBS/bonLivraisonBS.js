@@ -13,7 +13,8 @@ angular
 		 'BonLivraisonServices',
 		 'traitementFaconServices',
 		 '$window',
-		 function($scope, $filter, $http, $log, downloadService, UrlCommun, UrlAtelier, BonLivraisonServices,traitementFaconServices,$window) {
+		 '$rootScope',
+		 function($scope, $filter, $http, $log, downloadService, UrlCommun, UrlAtelier, BonLivraisonServices,traitementFaconServices,$window,$rootScope) {
 			$log.info("=========Vente========");
 			
 			$scope.tagReferenceBSList = [];
@@ -199,6 +200,17 @@ angular
   				}); 
              }
 			 
+
+			 		     // Liste des Devises
+						  $scope.ListeDevise = function () {
+							$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+							 $scope.ListeDevise = dataDevise;
+									 });
+								 };
+								 
+	 
+								 
+			$scope.ListeDevise();
 			 $scope.listePartieInteresseeCache();
 			 $scope.listeTaxes();
 			 //$scope.listeMarche();
@@ -515,6 +527,14 @@ angular
 
 			 //Recherche des Bons de Vente
 			 $scope.rechercherBonLivraisonVente = function(bonLivraisonVenteCourant) {
+
+				
+				if($scope.clientActif.blackMode==false){
+					bonLivraisonVenteCourant.declare="oui";
+
+				 }
+			
+
 				 bonLivraisonVenteCourant.natureLivraison = "FINI";
 				 $log.debug("----Livraison--*** --bonLivraisonVenteCourant : recherche avant---"+ JSON.stringify(bonLivraisonVenteCourant, null, " "));
 				 $http
@@ -631,7 +651,9 @@ angular
 				 $scope.bonLivraisonVenteCourant = {"date" : new Date(),
 												 "idDepot" : defaultIdDepot,
 												   "modepaiementId" : 1,
-												   "declare":true };
+												   "declare":true,
+												   "devise":"2"
+												};
 
 									
 								
@@ -1383,12 +1405,16 @@ angular
 
 			 $scope.getPagedDataAsync = function(pageSize, page,
 					 searchText) {
+						
 				 setTimeout(
 						 function() {
 							 var data;
 							 var bonLivraisonVenteCourant  = $scope.bonLivraisonVenteCourant;
 							 bonLivraisonVenteCourant.natureLivraison = "FINI";
-
+							 if($scope.clientActif.blackMode==false){
+								bonLivraisonVenteCourant.declare="oui";
+			
+							 }
 							 if (searchText) {
 								 var ft = searchText.toLowerCase();
 								 $http
@@ -1409,6 +1435,7 @@ angular
 
 							 } else {
 								 bonLivraisonVenteCourant.natureLivraison = "FINI";
+
 								 $http
 								 .post(
 										 UrlAtelier
