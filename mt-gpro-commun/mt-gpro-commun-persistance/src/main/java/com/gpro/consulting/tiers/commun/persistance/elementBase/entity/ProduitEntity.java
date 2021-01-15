@@ -187,8 +187,21 @@ public class ProduitEntity implements Serializable {
 	
 	
 	
+	@Column(name = "devise")
+	private Long devise;
 	
 	
+	
+	
+	
+	public Long getDevise() {
+		return devise;
+	}
+
+	public void setDevise(Long devise) {
+		this.devise = devise;
+	}
+
 	public boolean isFodec() {
 		return fodec;
 	}
