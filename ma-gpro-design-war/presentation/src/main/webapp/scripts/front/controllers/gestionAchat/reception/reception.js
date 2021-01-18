@@ -251,51 +251,23 @@ angular
 								
 								*/
 
+							$http
+								.get(
+									UrlAtelier
+									+ "/commandeAchat/getAvailableListBonCommandeRefByFournisseur:" + idClient)
+								.success(
+									function (resultat) {
+										//$log.debug("----ResultatListBC "+resultat.length);
 
-								if($scope.clientActif.blackMode==false){
+										angular.forEach(resultat, function (element, key) {
+											//console.log("==>elemet: "+element.reference);
+											$scope.listReferenceBC.push(element.reference);
 
-									$http
-									.get(
-										UrlAtelier
-										+ "/commandeAchat/getAvailableListBonCommandeRefByFournisseurDeclarer:" + idClient)
-									.success(
-										function (resultat) {
-											//$log.debug("----ResultatListBC "+resultat.length);
-	
-											angular.forEach(resultat, function (element, key) {
-												//console.log("==>elemet: "+element.reference);
-												$scope.listReferenceBC.push(element.reference);
-	
-	
-											});
-	
-	
+
 										});
 
-								}else
-								{
 
-									$http
-									.get(
-										UrlAtelier
-										+ "/commandeAchat/getAvailableListBonCommandeRefByFournisseur:" + idClient)
-									.success(
-										function (resultat) {
-											//$log.debug("----ResultatListBC "+resultat.length);
-	
-											angular.forEach(resultat, function (element, key) {
-												//console.log("==>elemet: "+element.reference);
-												$scope.listReferenceBC.push(element.reference);
-	
-	
-											});
-	
-	
-										});
-
-								}
-
-						
+									});
 						}
 
 
