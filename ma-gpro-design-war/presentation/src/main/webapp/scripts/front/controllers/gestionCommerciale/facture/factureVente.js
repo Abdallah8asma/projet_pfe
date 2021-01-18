@@ -23,7 +23,7 @@ angular
 				$scope.displayMode = "list";
 				// bouton pdf hide
 				$scope.modePdf = "notActive";
-				$scope.factureVenteCourant = { "type": "Normal" };
+				$scope.factureVenteCourant = { "type": "Normal"};
 				// mode list activé
 				$scope.displayMode = "list";
 				$scope.listeBonSortie = [];
@@ -36,7 +36,7 @@ angular
 				$scope.listTaxeFacture = [];
 				$scope.listBLDetaille = [];
 				// Tableau de Taxe Prédefini
-
+				$scope.ListeDevise=[];
 
 
 
@@ -145,6 +145,17 @@ angular
 							});
 				}
 				$scope.listTypes();
+				
+			 		     // Liste des Devises
+						  $scope.ListeDevise = function () {
+							$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+							 $scope.ListeDevise = dataDevise;
+									 });
+								 };
+								 
+	 
+								 
+			$scope.ListeDevise();
 
 				// Mise à jour des Reglements
 				$scope.updateReglement = function (reglement) {
@@ -810,7 +821,10 @@ angular
 							$scope.factureVenteCourant.typePartieInteressee = element[0].typePartieInteressee;
 							$scope.factureVenteCourant.groupeClientId = element[0].groupeClientId;
 
-							$http
+
+							if($scope.clientActif.blackMode == false){
+
+								$http
 								.get(
 									UrlAtelier
 									+ "/bonlivraison/getAvailableListBonLivraisonRefByClientAndDeclare:" + idClient)
@@ -825,6 +839,28 @@ angular
 										// $log.debug("listBL : "+resultat.list.length);
 										//$log.debug("--listReferenceBL : "+JSON.stringify($scope.listReferenceBL, null, "    "));
 									});
+
+							}else
+
+							{
+								$http
+								.get(
+									UrlAtelier
+									+ "/bonlivraison/getAvailableListBonLivraisonRefByClient:" + idClient)
+								.success(
+									function (resultat) {
+										$log.debug("----ResultatListBL " + resultat.length);
+
+										angular.forEach(resultat, function (element, key) {
+											$scope.listReferenceBL.push(element.referenceBL);
+										});
+
+										// $log.debug("listBL : "+resultat.list.length);
+										//$log.debug("--listReferenceBL : "+JSON.stringify($scope.listReferenceBL, null, "    "));
+									});
+
+							}
+						
 							// updated by samer le 11.03.20
 							/*
 							 * 
@@ -1207,6 +1243,7 @@ angular
 						"metrageMin": "",
 						"metrageMax": "",
 						"type": "Normal"
+						
 					};
 					// init de la Grid
 					// $scope.rechercherFactureVente($scope.factureVenteCourant);
@@ -1231,7 +1268,10 @@ angular
 					$scope.natureLivraison = "FINI";
 					$scope.listTaxeFactureInitMethod();
 					$scope.initTaxeRemoved();
-					$scope.factureVenteCourant = { date: new Date(), modepaiementId: 1 };
+					$scope.factureVenteCourant = { date: new Date(), modepaiementId: 1 ,
+					"devise":"2"
+					
+					};
 					// $scope.factureVenteCourant = factureVente ? angular
 					// .copy(factureVente) : {};
 
@@ -2256,6 +2296,7 @@ angular
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
+							+ "&devise=" + factureVenteCourant.devise
 							+ "&type=pdf";
 
 					} else {
@@ -2271,6 +2312,7 @@ angular
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
+							+ "&devise=" + factureVenteCourant.devise
 							+ "&type=pdf";
 					}
 					$log.debug("-- URL" + url);
@@ -2371,6 +2413,7 @@ angular
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
+							+ "&devise=" + factureVenteCourant.devise
 							+ "&type=pdf";
 
 					} else {
@@ -2386,6 +2429,7 @@ angular
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
+							+ "&devise=" + factureVenteCourant.devise
 							+ "&type=pdf";
 					}
 					$log.debug("-- URL" + url);
@@ -2710,6 +2754,7 @@ angular
 									cellFilter: 'prixFiltre',
 									//	width: '8%'
 								},
+								
 
 								/* 
 								 {

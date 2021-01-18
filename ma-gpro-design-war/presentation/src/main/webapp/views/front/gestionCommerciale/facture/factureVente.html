@@ -435,6 +435,28 @@
                 </div>
               </div>
             </div>
+
+            
+            <div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Devise </span>
+										</div>
+										<select class="form-control" ng-model="factureVenteCourant.devise"
+                      ng-init="factureVenteCourant.devise=''">
+                      <option value="">Tous</option>
+											<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
+											{{dev.designation}}</option>
+										</select>
+									</div>
+								</div>
+								</div>
+              </div>
+              
+
+
           </form>
         </div>
       </div>
@@ -739,6 +761,42 @@
 
             </div>
 
+
+            <div class="row">
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Devise </span>
+                    </div>
+                    <select class="form-control" ng-model="factureVenteCourant.devise"
+                      ng-init="factureVenteCourant.devise=''">
+                      <option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
+                      {{dev.designation}}</option>
+                    </select>
+                  </div>
+                </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label ">Taux Conversion  </label>
+                      </div>
+                      <input class="form-control" type="number" step="any"  ng-model="factureVenteCourant.tauxConversion " 
+                    
+                        ng-init="factureVenteCourant.tauxConversion =''" />
+                      
+                      
+                    </div>
+                  </div>
+                  </div>
+
+
+            </div>
+
+
             <div class="row">
               <div class="col-sm-12">
 
@@ -754,6 +812,9 @@
                 </div>
               </div>
             </div>
+
+
+
 
             <div class="alert alert-primary" ng-show="modePdf == 'actif'">
               <div class="row">
@@ -810,6 +871,22 @@
                     </div>
                   </div>
                 </div>
+
+
+                <div class="col-sm-4">
+
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label is-required">Montant Converti </label>
+                      </div>
+                      <input class="form-control" readonly="readonly"
+                        value="{{factureVenteCourant.montantConverti | prixFiltre}}" />
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
             <br>

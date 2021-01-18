@@ -110,7 +110,7 @@ angular
 							$scope.listeSitePartieInteresseeCache = [];
 							$scope.ListTypeDocumentCache = [];
 							$scope.ListSousFamilleProduitCache = [];
-							
+							$scope.ListeDevise = [];
 							// Liste des PartieInteressee (avec FamilleId=1)
 							$scope.listeClientCache = function() {
 								$http
@@ -196,7 +196,17 @@ angular
 
 										});
 							}
-							
+									     // Liste des Devises
+										 $scope.ListeDevise = function () {
+											$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+											 $scope.ListeDevise = dataDevise;
+													 });
+												 };
+												 
+					 
+												 
+							$scope.ListeDevise();
+					 
 							$scope.listeClientCache();
 							$scope.listeTaxes();
 //							$scope.listeTypeCommandeenteCache();
@@ -233,7 +243,9 @@ angular
 								$scope.listTaxeLivraisonInitMethod();
 								$scope.initTaxeRemoved();
 
-								$scope.commandeVenteCourante={dateIntroduction : new Date()};
+								$scope.commandeVenteCourante={dateIntroduction : new Date(),
+									"devise":"2"
+								};
 								
 								
 								

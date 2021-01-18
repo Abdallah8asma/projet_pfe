@@ -251,23 +251,51 @@ angular
 								
 								*/
 
-							$http
-								.get(
-									UrlAtelier
-									+ "/commandeAchat/getAvailableListBonCommandeRefByFournisseur:" + idClient)
-								.success(
-									function (resultat) {
-										//$log.debug("----ResultatListBC "+resultat.length);
 
-										angular.forEach(resultat, function (element, key) {
-											//console.log("==>elemet: "+element.reference);
-											$scope.listReferenceBC.push(element.reference);
+								if($scope.clientActif.blackMode==false){
 
-
+									$http
+									.get(
+										UrlAtelier
+										+ "/commandeAchat/getAvailableListBonCommandeRefByFournisseurDeclarer:" + idClient)
+									.success(
+										function (resultat) {
+											//$log.debug("----ResultatListBC "+resultat.length);
+	
+											angular.forEach(resultat, function (element, key) {
+												//console.log("==>elemet: "+element.reference);
+												$scope.listReferenceBC.push(element.reference);
+	
+	
+											});
+	
+	
 										});
 
+								}else
+								{
 
-									});
+									$http
+									.get(
+										UrlAtelier
+										+ "/commandeAchat/getAvailableListBonCommandeRefByFournisseur:" + idClient)
+									.success(
+										function (resultat) {
+											//$log.debug("----ResultatListBC "+resultat.length);
+	
+											angular.forEach(resultat, function (element, key) {
+												//console.log("==>elemet: "+element.reference);
+												$scope.listReferenceBC.push(element.reference);
+	
+	
+											});
+	
+	
+										});
+
+								}
+
+						
 						}
 
 
@@ -710,6 +738,10 @@ angular
 
 				$scope.rechercherReceptionAchat = function (
 					receptionAchatCourante) {
+						if(clientActif.blackMode==false){
+							receptionAchatCourante.facture=true;
+						}
+						receptionAchatCourante.facture=true;
 					receptionAchatCourante.type = 'Achat';
 					$http
 						.post(
@@ -2075,6 +2107,10 @@ angular
 							var data;
 							var receptionAchatCourante = $scope.receptionAchatCourante;
 							receptionAchatCourante.type = 'Achat';
+							if($scope.clientActif.blackMode==false){
+								bonLivraisonVenteCourant.declare="oui";
+			
+							 }
 							if (searchText) {
 								var ft = searchText
 									.toLowerCase();
