@@ -32,6 +32,16 @@ public class FactureReportElementValue {
 	private String natureLivraison;
 
 	private String groupePiDesignation;
+	private Long devise;
+	
+
+	public Long getDevise() {
+		return devise;
+	}
+
+	public void setDevise(Long devise) {
+		this.devise = devise;
+	}
 
 	public String getGroupePiDesignation() {
 		return groupePiDesignation;

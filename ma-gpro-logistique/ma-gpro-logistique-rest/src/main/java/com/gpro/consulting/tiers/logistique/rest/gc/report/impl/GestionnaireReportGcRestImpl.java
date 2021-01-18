@@ -150,7 +150,7 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("prixMax") Double prixMax, @RequestParam("typeFacture") String typeFacture,
 			@RequestParam("natureLivraison") String natureLivraison,
 			@RequestParam("groupeClientId") Long groupeClientId,
-			
+			@RequestParam("devise") Long devise,
 			
 			HttpServletResponse response)
 			throws JRException, IOException {
@@ -171,6 +171,7 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		
 		request.setGroupeClientId(groupeClientId);
 		
+		request.setDevise(devise);
 		
 		request.setOptimized(this.checkForOptimization(request));
 		

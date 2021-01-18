@@ -214,6 +214,46 @@ public class CommandeVenteEntity {
 	/** The montant remise. */
 	@Column(name = "MONTANT_REMISE")
 	private Double montantRemise;
+	
+
+	
+	
+	@Column(name = "devise")
+	private Long devise;
+	
+	
+	@Column(name = "taux_conversion")
+	private Double tauxConversion;
+	 
+	@Column(name = "montant_converti")
+	private Double montantConverti;
+	
+	
+	
+	 
+	public Long getDevise() {
+		return devise;
+	}
+
+	public void setDevise(Long devise) {
+		this.devise = devise;
+	}
+
+	public Double getTauxConversion() {
+		return tauxConversion;
+	}
+
+	public void setTauxConversion(Double tauxConversion) {
+		this.tauxConversion = tauxConversion;
+	}
+
+	public Double getMontantConverti() {
+		return montantConverti;
+	}
+
+	public void setMontantConverti(Double montantConverti) {
+		this.montantConverti = montantConverti;
+	}
 
 	/** many-to-one association to TaxeCommande. added on 27/03/2018 */
 	@OneToMany(mappedBy = "commandeVente", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -100,4 +100,6 @@ public interface IReceptionAchatService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 
 	public String getCurrentReferenceMensuelByType(String type, Calendar instance, boolean b);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<BonReceptionVue> getListBonReceptionRefByFournisseurDeclarer(Long idFournisseur);
 }

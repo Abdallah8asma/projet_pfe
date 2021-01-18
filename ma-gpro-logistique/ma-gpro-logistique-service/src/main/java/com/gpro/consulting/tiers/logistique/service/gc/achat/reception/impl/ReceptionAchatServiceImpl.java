@@ -148,4 +148,10 @@ public class ReceptionAchatServiceImpl implements IReceptionAchatService {
 		return receptionDomaineGC.getCurrentReferenceMensuelByType(type,instance,b);
 	}
 
+	@Override
+	public List<BonReceptionVue> getListBonReceptionRefByFournisseurDeclarer(Long idFournisseur) {
+		// TODO Auto-generated method stub
+		return receptionDomaineGC.getListBonReceptionRefByFournisseurDeclarer(idFournisseur);
+	}
+
 }

@@ -61,6 +61,11 @@ public class BonCommandePersistanceUtilities {
 		entity.setReglementId(value.getReglementId());
 		
 		entity.setBoutiqueId(value.getBoutiqueId());
+		
+		entity.setDevise(value.getDevise());
+		entity.setMontantConverti(value.getMontantConverti());
+		entity.setTauxConversion(value.getTauxConversion());
+		
 
 		if (value.getListProduitCommandes() != null) {
 
@@ -132,6 +137,11 @@ public class BonCommandePersistanceUtilities {
 		value.setReglementId(entity.getReglementId());
 		
 		value.setBoutiqueId(entity.getBoutiqueId());
+		
+		
+		value.setDevise(entity.getDevise());
+		value.setMontantConverti(entity.getMontantConverti());
+	    value.setTauxConversion(entity.getTauxConversion());
 
 		/**********/
 		if (entity.getListProduitCommandes() != null) {

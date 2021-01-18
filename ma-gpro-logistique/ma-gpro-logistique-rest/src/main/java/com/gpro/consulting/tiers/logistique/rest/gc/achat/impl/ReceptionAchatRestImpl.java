@@ -199,6 +199,14 @@ public class ReceptionAchatRestImpl {
 		// logger.info("getAvailableListBonLivraisonRefByClient");
 		return receptionService.getListBonReceptionRefByFournisseur(idFournisseur);
 	}
+	
+	
+	@RequestMapping(value = "/getAvailableListBonReceptionRefByFournisseurDeclarer:{idFournisseur}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<BonReceptionVue> getListBonReceptionRefByFournisseurDeclarer(@PathVariable Long idFournisseur) {
+
+		// logger.info("getAvailableListBonLivraisonRefByClient");
+		return receptionService.getListBonReceptionRefByFournisseurDeclarer(idFournisseur);
+	}
 
 	
 	@RequestMapping(value = "/getAllListBonReceptionRefByFournisseur:{idFournisseur}", method = RequestMethod.GET, produces = "application/json")

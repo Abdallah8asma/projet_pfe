@@ -211,7 +211,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.setColumnView(7, 15);
 		sheet3.setColumnView(8, 15);
 		sheet3.setColumnView(9, 15);
-
+		sheet3.setColumnView(10, 15);
+		
 		/**************************************************************************/
 
 		// Nom du rapport et la date
@@ -386,7 +387,17 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		}
 		
-		  
+		if (isNotEmty(request.getDevise()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Devise :", ExcelUtils.boldRed3));
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, request.getDevise().toString(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+		}
 
 		/*
 		 * if (isNotEmty(request.getBoutiqueId()))
@@ -418,7 +429,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(7, i - 1, "Montant HT", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(8, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(9, i - 1, "Montant TTC", ExcelUtils.boldRed2));
-
+		sheet3.addCell(new Label(10, i - 1, "Devise", ExcelUtils.boldRed2));
 
 
 
@@ -533,7 +544,18 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			}
 			
 			
-			
+			if(element.getDevise()!=null) {
+				
+				 
+				sheet3.addCell(new Label(10, i, element.getDevise()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+				 
+
+			}
 			
 			 
 			
@@ -1801,7 +1823,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		request.setStock(stock);
 		request.setIdDepot(idDepot);
-
+       
+		
 		if (isNotEmty(referenceBl))
 
 		{
@@ -1810,6 +1833,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, referenceBl, ExcelUtils.boldRed3));
 
 			request.setReferenceBl(referenceBl);
+			
 		}
 
 		if (isNotEmty(groupeClientId))
@@ -2574,7 +2598,10 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			@RequestParam("metrageMax") Double metrageMax, @RequestParam("prixMin") Double prixMin,
 			@RequestParam("prixMax") Double prixMax, @RequestParam("typeFacture") String typeFacture,
 			@RequestParam("natureLivraison") String natureLivraison,
-			@RequestParam("groupeClientId") Long groupeClientId, HttpServletResponse response)
+			@RequestParam("groupeClientId") Long groupeClientId,
+			@RequestParam("devise") Long devise,
+			
+			HttpServletResponse response)
 			throws WriteException, IOException {
 
 		// logger.info("Generate a {} Report BonLivraison", type);
@@ -2835,6 +2862,16 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 			request.setNatureLivraison(natureLivraison);
 		}
+		
+		if (isNotEmty(devise))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Devise :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, devise.toString(), ExcelUtils.boldRed3));
+
+			request.setDevise(devise);
+		}
 
 		request.setOptimized(this.checkForOptimization(request));
 
@@ -2867,7 +2904,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(9, i - 1, "Montant Remise", ExcelUtils.boldRed2));
 
 		sheet3.addCell(new Label(10, i - 1, "Quantite Totale", ExcelUtils.boldRed2));
-
+		
 		Double mantantTtcTotale = 0d;
 		Double remiseTotale = 0d;
 		Double quantiteTotale = 0d;
@@ -2954,6 +2991,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			} else {
 				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
 			}
+		
 
 			i++;
 

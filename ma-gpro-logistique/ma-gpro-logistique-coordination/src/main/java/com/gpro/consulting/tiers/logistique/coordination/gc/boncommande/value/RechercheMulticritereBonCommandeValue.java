@@ -46,6 +46,19 @@ public class RechercheMulticritereBonCommandeValue {
 	private String livre;
 
 	private Long boutiqueId;
+	
+	
+	private Long devise;
+	
+	
+
+	public Long getDevise() {
+		return devise;
+	}
+
+	public void setDevise(Long devise) {
+		this.devise = devise;
+	}
 
 	public Long getBoutiqueId() {
 		return boutiqueId;
