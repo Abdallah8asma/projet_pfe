@@ -456,8 +456,16 @@ public class FactureDomaineImpl implements IFactureDomaine {
 
 		} else {
 			factureValue.setMontantTTC(montantTTCTotal);
+			
 		}
 
+		
+      if(factureValue.getTauxConversion()!=null)
+			factureValue.setMontantConverti(factureValue.getTauxConversion()*montantTTCTotal);
+      else
+    	  factureValue.setMontantConverti(ZERO);
+		
+		
 		String factureId =  facturePersistance.createFacture(factureValue);
 		
 		
@@ -770,6 +778,11 @@ public class FactureDomaineImpl implements IFactureDomaine {
 		factureValue.setMontantTTC(montantTTC);
 		factureValue.setMetrageTotal(metrageTotal);
 
+		
+	
+		factureValue.setMontantConverti(factureValue.getTauxConversion()*montantTTC);
+		
+		
 		/***
 		 * Si Client .type exonoré Alors TVA=0 au niveau de Facture et Bon de livraison
 		 ***/

@@ -648,18 +648,6 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			/////////////////////////////////////
 
 			if (detLivraisonVente.getPrixTotalHT() != null) {
 				montantHTaxeTotal += detLivraisonVente.getPrixTotalHT();
@@ -819,6 +807,11 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		} else {
 			bonLivraisonValue.setMontantTTC(montantTTC);
 		}
+		
+		if(bonLivraisonValue.getTauxConversion()!=null)
+		bonLivraisonValue.setMontantConverti(bonLivraisonValue.getTauxConversion()*montantTTC);
+		else
+			bonLivraisonValue.setMontantConverti(ZERO);
 		
 		//Si une livraison correspant a une seule commande
 		if(estNonVide(bonLivraisonValue.getRefCommande()) && !bonLivraisonValue.getRefCommande().contains(SEPARATOR)) {
@@ -1918,9 +1911,15 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		} else {
 			bonLivraisonValue.setMontantTTC(montantTTCTotal);
 		}
+
 		
+	
 		
+		if(bonLivraisonValue.getTauxConversion()!=null)
+		bonLivraisonValue.setMontantConverti(bonLivraisonValue.getTauxConversion()*montantTTCTotal);
 		
+		else 
+			bonLivraisonValue.setMontantConverti(ZERO);
 		
 		//Si une livraison correspant a une seule commande
 		if(estNonVide(bonLivraisonValue.getRefCommande()) && !bonLivraisonValue.getRefCommande().contains(SEPARATOR)) {

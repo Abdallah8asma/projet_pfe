@@ -2145,4 +2145,38 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 	
 	}
 
+
+
+	@Override
+	public List<BonReceptionVue> getListBonReceptionRefByFournisseurDeclarer(Long idFournisseur) {
+
+
+		List<String> listBonLivraisonToRemove = new ArrayList<String>();
+
+		List<FactureAchatValue> factureVenteList = factureAchatPersistance.getAll();
+
+		for (FactureAchatValue livraisonVente : factureVenteList) {
+
+			String infoSortieSplitted[];
+
+			if (livraisonVente.getInfoLivraison() != null) {
+
+				infoSortieSplitted = livraisonVente.getInfoLivraison().split(SEPARATOR);
+
+				for (int index = 0; index < infoSortieSplitted.length; index++) {
+
+					listBonLivraisonToRemove.add(infoSortieSplitted[index]);
+
+				}
+			}
+
+		}
+
+		List<BonReceptionVue> bonLivraisonlist = receptionAchatPersistance.getReferenceBRByFournisseurIdDeclarer(idFournisseur);
+
+		bonLivraisonlist.removeAll(listBonLivraisonToRemove);
+
+		return bonLivraisonlist;
+	}
+
 }

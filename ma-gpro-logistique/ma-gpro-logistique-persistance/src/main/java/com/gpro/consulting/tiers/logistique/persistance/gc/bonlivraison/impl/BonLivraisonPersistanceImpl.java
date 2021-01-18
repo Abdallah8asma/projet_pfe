@@ -84,6 +84,8 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 	private int FIRST_INDEX = 0;
 	
 	private int MAX_RESULTS = 52;
+	
+	private String devise = "devise";
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -255,7 +257,10 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 				Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getEmailPassager().toUpperCase() + PERCENT);
 				whereClause.add(criteriaBuilder.and(predicate));
 			}
-		
+			if (request.getDevise()!= null) {
+				whereClause.add(criteriaBuilder.equal(root.get(devise), request.getDevise()));
+			}
+			
 		// Set request.getNatureLivraison on whereClause if not null
 //		if (estNonVide(request.getNatureLivraison())) {
 //			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_NATURELIVRAISON), request.getNatureLivraison()));
@@ -287,8 +292,9 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 		 			root.get("totalPourcentageRemise").as(Double.class),	
 		 			root.get("typePartieInteressee").as(Long.class),
 		 			root.get("groupeClientId").as(Long.class),
-		 			root.get("idDepot").as(Long.class)	
-					
+		 			root.get("idDepot").as(Long.class),	
+		 			root.get("devise").as(Long.class),
+		 			root.get("montantConverti").as(Double.class)
 		 			
 		 			
 					)).where(whereClause.toArray(new Predicate[] {}));
@@ -336,7 +342,9 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 	    	
 	    	entity.setIdDepot((Long) element[16]);
 	    	
-	    	
+	    	entity.setDevise((Long) element[17]);
+	    	entity.setMontantConverti((Double) element[18]);
+	    	////////////////////////////
 	    	LivraisonVenteValue dto = bonLivraisonPersistanceUtilities.toValue(entity);
 	    	list.add(dto);
 	    }

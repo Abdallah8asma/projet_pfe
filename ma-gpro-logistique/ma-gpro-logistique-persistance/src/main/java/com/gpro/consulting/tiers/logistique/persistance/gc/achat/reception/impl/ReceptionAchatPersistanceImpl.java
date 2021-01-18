@@ -701,4 +701,39 @@ CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
 	    return 0D;
 	}
 
+	@Override
+	public List<BonReceptionVue> getReferenceBRByFournisseurIdDeclarer(Long idFournisseur) {
+
+
+		List<BonReceptionVue> resultat = new ArrayList<BonReceptionVue>();
+
+		// Set clientId on whereClause if not null
+		if (idFournisseur != null) {
+
+			CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+
+			CriteriaQuery<ReceptionAchatEntity> criteriaQuery = criteriaBuilder.createQuery(ReceptionAchatEntity.class);
+			List<Predicate> whereClause = new ArrayList<Predicate>();
+
+			Root<ReceptionAchatEntity> root = criteriaQuery.from(ReceptionAchatEntity.class);
+
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_CLIENT), idFournisseur));
+			
+			whereClause.add(criteriaBuilder.equal(root.get("facture"), true));
+
+			criteriaQuery.multiselect(root.get("reference")).where(whereClause.toArray(new Predicate[] {}));
+
+			List<ReceptionAchatEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+			if (resultatEntite != null) {
+
+				for (ReceptionAchatEntity entity : resultatEntite) {
+
+					resultat.add(receptionAchatPersistanceUtilities.toVue(entity));
+				}
+			}
+		}
+
+		return resultat;
+	}
+
 }
