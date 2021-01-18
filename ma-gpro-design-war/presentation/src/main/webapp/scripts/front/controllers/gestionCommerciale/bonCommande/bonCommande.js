@@ -19,6 +19,8 @@ angular
 							//** Variables Recherche
 							$scope.listProduitCommandes = [];
 							$scope.ListClientCommandeVenteCache = [];
+
+							$scope.ListeDevise = [];
 							
 							$scope.hiddenNotif ="true";
 							
@@ -55,7 +57,8 @@ angular
 													  "quantiteA": "",
 													  "coutDu": "",
 													  "coutA": "",
-													   "type" :""
+													   "type" :"",
+													   "devise":"2"
 													};
 							
 							
@@ -194,7 +197,6 @@ angular
 					        $scope.AffectationReglement = function(bc) {
 					        	
 
-			                	
 				                   
 			                    $('.elementReglement').hide();
 			                      $('.BL_FACT_Reglement').show();
@@ -523,7 +525,20 @@ angular
 
 										});
 							}
+
+
+
+							     // Liste des Devises
+                     $scope.ListeDevise = function () {
+                       $http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+                        $scope.ListeDevise = dataDevise;
+                                });
+                            };
 							
+
+							
+							$scope.ListeDevise();
+
 							$scope.listeClientCache();
 							$scope.listeTaxes();
 //							$scope.listeTypeCommandeenteCache();
@@ -560,7 +575,10 @@ angular
 								$scope.listTaxeLivraisonInitMethod();
 								$scope.initTaxeRemoved();
 
-								$scope.commandeVenteCourante={dateIntroduction : new Date()};
+								$scope.commandeVenteCourante={dateIntroduction : new Date(),
+									"devise":"2"
+								
+								};
 								
 								$http
 								.get(

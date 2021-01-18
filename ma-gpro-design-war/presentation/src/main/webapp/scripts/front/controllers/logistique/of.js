@@ -689,9 +689,15 @@ angular
 										.success(function(dataGetMise) {
 											
 										//	console.log('DataGetMise ::::::::::',dataGetMise);
+										
+										
+										if(dataGetMise.refCommande != null){
 										var refBC = dataGetMise.refCommande.split("-");
 												
 										$scope.tagReferenceBLivList = refBC;
+										
+										}
+										
 
 										$scope.miseCourant = dataGetMise;
 											

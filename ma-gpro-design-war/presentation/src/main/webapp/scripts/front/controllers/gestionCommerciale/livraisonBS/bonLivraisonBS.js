@@ -32,7 +32,8 @@ angular
 					 "prixMin" : '',
 					 "prixMax" : '',
 					 "natureLivraison" : '',
-					 "avecFacture": ''
+					 "avecFacture": '',
+					 "devise":'2'
 				};
 			
 			

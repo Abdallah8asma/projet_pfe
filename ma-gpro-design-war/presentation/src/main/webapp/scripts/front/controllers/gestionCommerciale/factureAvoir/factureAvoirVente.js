@@ -27,6 +27,10 @@ angular
 			 //liste des ReferencesBS
 			 $scope.tagReferenceBLivList = [];
 			 $scope.listTaxeFacture = [];
+
+			 $scope.ListeDevise=[];
+
+
 			 //Tableau de Taxe Prédefini 
 			 $scope.listTaxeFactureInit = [
 			                                 /*{//FODEC
@@ -149,6 +153,17 @@ angular
 
 									});
 				}
+
+						     // Liste des Devises
+							 $scope.ListeDevise = function () {
+								$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+								 $scope.ListeDevise = dataDevise;
+										 });
+									 };
+									 
+		 
+									 
+				$scope.ListeDevise();
 				
 				
 				$scope.listGroupeClient();
@@ -519,7 +534,7 @@ angular
 			 $scope.affectationBLVente = function(factureVente) {
 
 				 $scope.factureVenteCourant = {"date":new Date(),"nature":"Retour",
-						 "avecRetourStock":false};
+						 "avecRetourStock":false, "devise":"2"};
 				/* $scope.factureVenteCourant = factureVente ? angular
 						 .copy(factureVente) : {};*/
 						 
@@ -978,7 +993,8 @@ angular
 										 + "&prixMin="+factureVenteCourant.prixMin
 										 + "&prixMax="+factureVenteCourant.prixMax
 										 + "&natureLivraison="
-										 + "&groupeClientId="+factureVenteCourant.groupeClientId		 
+										 + "&groupeClientId="+factureVenteCourant.groupeClientId
+										 + "&devise=" + factureVenteCourant.devise		 
 										 + "&type=pdf";
 										 
                   }else{
@@ -993,6 +1009,7 @@ angular
 										 + "&prixMin="+factureVenteCourant.prixMin
 										 + "&prixMax="+factureVenteCourant.prixMax
 										 + "&groupeClientId="+factureVenteCourant.groupeClientId	
+										 + "&devise=" + factureVenteCourant.devise
 										 + "&type=pdf";
                    }
 									 $log.debug("-- URL" + url );

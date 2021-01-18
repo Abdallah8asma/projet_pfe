@@ -336,6 +336,25 @@
 			
 
 						</div>
+						
+                        <div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Devise </span>
+										</div>
+										<select class="form-control" ng-model="bonLivraisonVenteCourant.devise"
+											ng-init="bonLivraisonVenteCourant.devise=''">
+
+											<option value="">Tous</option>
+											<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
+											{{dev.designation}}</option>
+										</select>
+									</div>
+								</div>
+								</div>
+							</div>
 
 
 						<div class="row">
@@ -722,9 +741,9 @@
 							</div>
 						</div>
 
-					</div>
+					
 
-					<div class="row">
+				
 			
 
 						<div class="col-sm-5">
