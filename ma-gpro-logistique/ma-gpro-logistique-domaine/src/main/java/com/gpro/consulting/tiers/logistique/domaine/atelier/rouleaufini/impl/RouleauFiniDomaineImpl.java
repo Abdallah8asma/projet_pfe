@@ -146,6 +146,15 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 			MiseValue miseValue= listMise.get(0);
 			
 			
+			if(miseValue.getDateDebutProduction() == null) {
+				miseValue.setDateDebutProduction(Calendar.getInstance());
+				miseValue.setStatut("En cours");
+				
+				
+			}
+				
+			
+			
 			Long qteProduite=miseValue.getQteProduite();
 			Long nbrColis=miseValue.getNbrColis();
 			nbrColis ++;
@@ -162,6 +171,11 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 			
 			if(miseValue.getQteProduite() >=  miseValue.getQuantite().longValue())
 			{
+				if(miseValue.getDateFinProduction() == null)
+				miseValue.setDateFinProduction(Calendar.getInstance());
+				
+				
+				
 				miseValue.setStatut("Produit");
 			}
 			
