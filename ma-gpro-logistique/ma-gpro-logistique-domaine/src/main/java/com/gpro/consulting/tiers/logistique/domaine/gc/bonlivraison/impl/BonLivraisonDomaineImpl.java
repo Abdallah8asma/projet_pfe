@@ -471,6 +471,10 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		List<DetLivraisonVenteValue> vListDetails = new ArrayList<DetLivraisonVenteValue>();
 		for (DetLivraisonVenteValue detLivraisonVente : bonLivraisonValue.getListDetLivraisonVente()) {
 			
+			if(detLivraisonVente.getPrixUnitaireHT() == null)
+				detLivraisonVente.setPrixUnitaireHT(ZERO);
+
+			
 			if(detLivraisonVente.getId() == null && detLivraisonVente.getFicheId() == null) {
 				maxOrdre ++;
 				detLivraisonVente.setFicheId(maxOrdre);
@@ -529,7 +533,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 				/** Fin update stock si qte a ete modifie **/
 
 				/** Debut update stock si un produit a ete ajoute **/
-				if (detLivraisonVente.getId() == null && bonLivraisonValue.getStock() == true
+				if (detLivraisonVente.getId() == null && bonLivraisonValue.getStock() != null &&  bonLivraisonValue.getStock() == true
 						&& detLivraisonVente.getQuantite() != null) {
 
 					Double qte = (produitValue.getQuantite() - detLivraisonVente.getQuantite());
@@ -1548,6 +1552,11 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		Long ordreDetailLivraison = new Long(0);
 
 		for (DetLivraisonVenteValue detLivraisonVente : bonLivraisonValue.getListDetLivraisonVente()) {
+			
+			if(detLivraisonVente.getPrixUnitaireHT() == null)
+				detLivraisonVente.setPrixUnitaireHT(ZERO);
+			
+			
 			// Sortir du Stock Negatif
 			// Vérifier si la quantité reçu < quantité disponible
 			// if(detLivraisonVente.isErrorQte()){

@@ -473,6 +473,9 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 
 			} else {
+				
+				
+				
 				sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
 				 
 
@@ -1697,9 +1700,13 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			@RequestParam("partieIntId") Long partieIntId, @RequestParam("dateLivraisonMin") String dateLivraisonMin,
 			@RequestParam("dateLivraisonMax") String dateLivraisonMax, @RequestParam("metrageMin") Double metrageMin,
 			@RequestParam("metrageMax") Double metrageMax, @RequestParam("prixMin") Double prixMin,
-			@RequestParam("prixMax") Double prixMax, @RequestParam("natureLivraison") String natureLivraison,
-			@RequestParam("avecFacture") String avecFacture, @RequestParam("stock") Boolean stock,
-			@RequestParam("idDepot") Long idDepot, @RequestParam("groupeClientId") Long groupeClientId,
+			@RequestParam("prixMax") Double prixMax, 
+			//@RequestParam("natureLivraison") String natureLivraison,
+			@RequestParam("avecFacture") String avecFacture,
+			//@RequestParam("stock") Boolean stock,
+			//@RequestParam("idDepot") Long idDepot, 
+			//@RequestParam("groupeClientId") Long groupeClientId,
+			@RequestParam("devise") Long devise,
 			HttpServletResponse response) throws WriteException, IOException {
 
 		// logger.info("Generate a {} Report BonLivraison", type);
@@ -1731,6 +1738,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.setColumnView(7, 10);
 		sheet3.setColumnView(8, 10);
 		sheet3.setColumnView(9, 10);
+		sheet3.setColumnView(10, 10);
 		/**************************************************************************/
 
 		/*
@@ -1817,14 +1825,13 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		RechercheMulticritereBonLivraisonValue request = new RechercheMulticritereBonLivraisonValue();
 
-		request.setReferenceBs(referenceBs);
 
-		request.setNatureLivraison(natureLivraison);
+		//request.setNatureLivraison(natureLivraison);
 
-		request.setStock(stock);
-		request.setIdDepot(idDepot);
+		//request.setStock(stock);
+		//request.setIdDepot(idDepot);
        
-		
+	
 		if (isNotEmty(referenceBl))
 
 		{
@@ -1836,7 +1843,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			
 		}
 
-		if (isNotEmty(groupeClientId))
+	/*	if (isNotEmty(groupeClientId))
 
 		{
 
@@ -1850,7 +1857,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 			request.setGroupeClientId(groupeClientId);
 		}
-
+*/
 		if (isNotEmty(partieIntId))
 
 		{
@@ -1943,7 +1950,16 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 			request.setAvecFacture(avecFacture);
 		}
+		if (isNotEmty(devise))
 
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Devise :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, devise.toString() +"", ExcelUtils.boldRed3));
+
+			request.setDevise(devise);
+			
+		}
 		request.setOptimized(this.checkForOptimization(request));
 
 		if (request.getDateLivraisonMin() == null) {
@@ -1974,7 +1990,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(8, i - 1, "Montant Remise", ExcelUtils.boldRed2));
 
 		sheet3.addCell(new Label(9, i - 1, "Montant Totale", ExcelUtils.boldRed2));
-
+		sheet3.addCell(new Label(10, i - 1, "Devise", ExcelUtils.boldRed2));
+		
 		Double mantantTtcTotale = 0d;
 		Double remiseTotale = 0d;
 		Double quantiteTotale = 0d;
@@ -2053,7 +2070,15 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			} else {
 				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
 			}
+			
+			if (element.getDevise()!= null) {
+				sheet3.addCell(new Label(10, i, element.getDevise() + "", ExcelUtils.boldRed));
 
+			
+			} else {
+				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+			}
+			
 			i++;
 
 		}

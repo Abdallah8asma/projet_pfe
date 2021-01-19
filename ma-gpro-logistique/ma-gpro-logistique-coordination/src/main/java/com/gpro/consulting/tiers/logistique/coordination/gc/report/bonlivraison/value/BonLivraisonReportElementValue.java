@@ -27,8 +27,15 @@ public class BonLivraisonReportElementValue {
 	//Added on 07/10/2016 by Zeineb Medimagh
 	private String natureLivraison;
 	private String groupePiDesignation;
+	private Long Devise;
 	
 	
+	public Long getDevise() {
+		return Devise;
+	}
+	public void setDevise(Long devise) {
+		Devise = devise;
+	}
 	public String getGroupePiDesignation() {
 		return groupePiDesignation;
 	}
