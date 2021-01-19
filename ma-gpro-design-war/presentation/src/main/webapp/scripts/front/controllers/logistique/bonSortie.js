@@ -281,7 +281,30 @@
 	                								});
                                     	}else{
                                     		//IDVIDE
-                                    		$log.debug("$scope.idBonSortie vide! ");
+											$log.debug("$scope.idBonSortie vide! ");
+											
+
+
+													
+											//Url With idBonSortie
+											$scope.urlValider = UrlAtelier + "/bonsortiefini/validateBonSortieFini";
+											//$log.debug("-- urlValider Sans idBonSortie : "+ $scope.urlValider );
+										
+											//Invocation du service Validate qui nous recupere la liste des RouleauxFini qui ne soont PAS affectés au BonSortie Auparavant.
+										  $http
+												 .post(
+														$scope.urlValider,$scope.listCode)
+										   .success(
+												   function(resultat) {
+													   //listeRouleauFini
+													   $scope.listeRouleauFini = resultat;
+													   //inc nbrColi
+													  $scope.nbrColis = resultat.length;
+									  
+  
+													   $log.debug("listeRouleauFini : "+ resultat.length);
+													   $log.debug("-- listeRouleauFini : "+JSON.stringify($scope.listeRouleauFini, null, "    ") );
+												   });
                                     	}
                                     }else{
                                 		//Url With idBonSortie
