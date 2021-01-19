@@ -808,10 +808,8 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			bonLivraisonValue.setMontantTTC(montantTTC);
 		}
 		
-		if(bonLivraisonValue.getTauxConversion()!=null)
+		
 		bonLivraisonValue.setMontantConverti(bonLivraisonValue.getTauxConversion()*montantTTC);
-		else
-			bonLivraisonValue.setMontantConverti(ZERO);
 		
 		//Si une livraison correspant a une seule commande
 		if(estNonVide(bonLivraisonValue.getRefCommande()) && !bonLivraisonValue.getRefCommande().contains(SEPARATOR)) {
