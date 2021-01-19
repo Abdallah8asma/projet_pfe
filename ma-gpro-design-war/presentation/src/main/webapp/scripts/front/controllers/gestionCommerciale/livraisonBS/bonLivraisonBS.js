@@ -559,20 +559,6 @@ angular
 
 									 $scope.rechercheBLVenteForm.$setPristine();
 
-										$scope.bonLivraisonVenteCourant = {
-												"referenceBl" : '',
-												 "referenceBs=" : '',
-												 "partieIntId" : '',
-												 "dateLivraisonMin" : '',
-												 "dateLivraisonMax": '',
-												 "metrageMin" : '',
-												 "metrageMax" : '',
-												 "prixMin" : '',
-												 "prixMax" : '',
-												 "natureLivraison" : "FINI",
-												 "avecFacture": ''
-											};
-									 $log.debug("----$scope.bonLivraisonVenteCourant : rechrche fin---"+ JSON.stringify($scope.bonLivraisonVenteCourant, null, " "));
 								 });
 
 			 }
@@ -653,7 +639,8 @@ angular
 												 "idDepot" : defaultIdDepot,
 												   "modepaiementId" : 1,
 												   "declare":true,
-												   "devise":"2"
+												   "devise":"2",
+												   "stock":false
 												};
 
 									
@@ -1340,20 +1327,14 @@ angular
 				bonLivraisonVenteCourant) {
 		//	$scope.traitementEnCoursGenererAll = "true";
 
-			bonLivraisonVenteCourant.referenceBs='';
+		//	bonLivraisonVenteCourant.referenceBs='';
 	/* 		if($scope.checkboxModelRech.stock=="oui"){
 				bonLivraisonVenteCourant.stock=true;
 			}else
 				bonLivraisonVenteCourant.stock=false */
 				
 
-				console.log("etat stock generer: "+bonLivraisonVenteCourant.stock);
-			console
-					.log("---Objet recherche : bonLivraisonVenteCourant----"
-							+ JSON
-									.stringify(
-											bonLivraisonVenteCourant,
-											null, " "));
+	
 			var newdateLivMinFormat = "";
 			if (angular
 					.isDefined(bonLivraisonVenteCourant.dateLivraisonMin)) {
@@ -1399,19 +1380,23 @@ angular
 							bonLivraisonVenteCourant, null,
 							"  "));
 			
-			var newIdDepot = '';
+		/* 	var newIdDepot = '';
 			if(angular.isDefined(bonLivraisonVenteCourant.idDepot)){
 				newIdDepot = bonLivraisonVenteCourant.idDepot;
 				
 			}
-			
+			 */
 			
 			var newPartieIntId = '';
 			if(angular.isDefined(bonLivraisonVenteCourant.partieIntId)){
 				newPartieIntId = bonLivraisonVenteCourant.partieIntId;
 				
 			}
-			
+			var newDevise = '';
+			if(angular.isDefined(bonLivraisonVenteCourant.devise)){
+				newDevise = bonLivraisonVenteCourant.devise;
+				
+			}
 	
 			var url = UrlAtelier
 					+ "/fiches/listbonlivraison?referenceBl="
@@ -1432,13 +1417,13 @@ angular
 					+ bonLivraisonVenteCourant.prixMin
 					+ "&prixMax="
 					+ bonLivraisonVenteCourant.prixMax
-					+ "&natureLivraison="
-					+ bonLivraisonVenteCourant.natureLivraison
+					//+ "&natureLivraison="+ bonLivraisonVenteCourant.natureLivraison
 					+ "&avecFacture="
 					+ bonLivraisonVenteCourant.avecFacture
-					+ "&stock="+""
-					+ "&idDepot="+newIdDepot
-					+ "&groupeClientId="+""
+					//+ "&stock="+""
+					//+ "&idDepot="+newIdDepot
+				//	+ "&groupeClientId="+""
+					+ "&devise="+newDevise
 					+ "&type=pdf";
 
 			$log.debug("--downloadAllBonLiv URL" + url);

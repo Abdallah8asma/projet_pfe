@@ -505,7 +505,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Devise </span>
                       </div>
-                      <select class="form-control" ng-model="factureVenteCourant.devise"
+                      <select ui-select2="true" class="form-control" ng-model="factureVenteCourant.devise"
                         ng-init="factureVenteCourant.devise=''">
                         <option value="">Tous</option>
                         <option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
@@ -912,7 +912,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text">Devise </span>
                     </div>
-                    <select class="form-control" ng-model="factureVenteCourant.devise"
+                    <select ui-select2="true" class="form-control" ng-model="factureVenteCourant.devise"
                       ng-init="factureVenteCourant.devise=''">
                       <option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
                       {{dev.designation}}</option>
