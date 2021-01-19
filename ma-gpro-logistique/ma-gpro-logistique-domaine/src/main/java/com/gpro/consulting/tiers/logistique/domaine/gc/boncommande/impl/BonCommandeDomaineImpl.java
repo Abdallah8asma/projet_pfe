@@ -399,10 +399,9 @@ public class BonCommandeDomaineImpl implements IBonCommandeDomaine {
 		Double montantTTC = bonCommandeValue.getPrixTotal() + montantTaxesTotal - montantRemiseTotal;
 		bonCommandeValue.setMontantTTC(montantTTC);
 		
-		if(bonCommandeValue.getTauxConversion()!=null)
+
 		bonCommandeValue.setMontantConverti(bonCommandeValue.getTauxConversion()*montantTTC);
-		else
-			bonCommandeValue.setMontantConverti(ZERO);
+	
 		
 		PartieInteresseValue pi = partieInteresseePersistance.getById(bonCommandeValue.getPartieIntersseId());
 		if (pi.getTypePartieInteressee() != null
