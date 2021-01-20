@@ -35,10 +35,18 @@ public class RechercheMulticritereEntiteStockValue {
 	
 	private String numeroBonEntree;
 	
+	private String orderBy;
 	
 	
 	
 	
+	public String getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+
 	private List<Long> ids;
 	
 	private String grammageArticle;

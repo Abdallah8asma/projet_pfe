@@ -153,6 +153,7 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("operateurQuantite") String operateurQuantite,
 			@RequestParam("dateA") String dateA,
 			@RequestParam("dateDu") String dateDu,
+			@RequestParam("orderBy") String orderBy,
 			
 						
 			
@@ -179,7 +180,7 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		critere.setDateA(stringToCalendar(dateA));
 		critere.setDateDu(stringToCalendar(dateDu));
 		critere.setOperateurQuantite(operateurQuantite);
-		
+		critere.setOrderBy(orderBy);
 		
 		EtatStockReportValue report = gestionnaireReportGsService.getEtatReport(critere, typeRapport);
 		
