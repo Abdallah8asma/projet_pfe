@@ -14,11 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherchePrixClientValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheProduitValue;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IArticlePersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IPrixClientPersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersistance;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
@@ -40,6 +45,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gs.value.BonStockValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture.IFactureAchatDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture.utilities.DetFactureAchatComparator;
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetAnnuelDomaine;
+import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetMensuelDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gs.IBonStockDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.bonsortiefini.IBonSortieFiniPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.rouleaufini.IChoixRouleauPersistance;
@@ -87,7 +93,13 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 	
 	@Autowired
 	private IBonStockDomaine bonStockDomaine;
-
+	
+	@Autowired
+	private IArticlePersistance articlePersistance;
+	
+	@Autowired
+	private IGuichetMensuelDomaine guichetierMensuelDomaine;
+	
 	@Override
 	public ResultatRechecheFactureAchatValue rechercherMultiCritere(RechercheMulticritereFactureAchatValue request) {
 
@@ -121,7 +133,12 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			if (factureValue.getType() != null) {
 				
 				
-				factureValue.setReference(getCurrentReference(factureValue.getType(), factureValue.getDate(), true));
+				//factureValue.setReference(getCurrentReference(factureValue.getType(), factureValue.getDate(), true));
+				factureValue.setReference(getReferenceFactureFromGuichetMensuel(factureValue.getType(),Calendar.getInstance(),true)); 
+				
+				
+				
+				
 				
 				/*if (factureValue.getType().equalsIgnoreCase(FACTURE_TYPE_AVOIRE)) {
 				//	factureValue.setReference(this.getNumeroAvoirAchat(factureValue.getDate()));
@@ -137,7 +154,10 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			
 			
 			 if(factureValue.getRefAvantChangement() != null && factureValue.getReference().equals(factureValue.getRefAvantChangement())) {
-				 this.getCurrentReference(factureValue.getType(),factureValue.getDate(),true);
+				 
+					this.getReferenceFactureFromGuichetMensuel(factureValue.getType(),factureValue.getDateIntroduction(), true); 
+				 
+				 //this.getCurrentReference(factureValue.getType(),factureValue.getDate(),true);
            }
 			
 		}
@@ -172,8 +192,10 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 				}
 				// MAJ Qte Produit
 			if (detFactureAchat.getProduitId() != null) {
-
-					ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
+				
+                     ArticleValue produitValue=articlePersistance.getArticleParId(detFactureAchat.getProduitId());
+                     
+					//ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
 					
 					    detFactureAchat.setTaxeId(produitValue.getIdTaxe());
 						detFactureAchat.setSerialisable(produitValue.isSerialisable());
@@ -448,8 +470,10 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			
 			//Ajouter par samer le 11.09.20  pour calculer la taxe apres la remise.
 			if (detFactureAchat.getProduitId() != null) {
-
-				ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
+				
+				
+                     ArticleValue produitValue=articlePersistance.getArticleParId(detFactureAchat.getProduitId());
+				//ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
 				
 				    detFactureAchat.setTaxeId(produitValue.getIdTaxe());
 					detFactureAchat.setSerialisable(produitValue.isSerialisable());
@@ -644,17 +668,21 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			for (DetFactureAchatValue detFactureAchat : factureAchat.getListDetFactureAchat()) {
 
 				if (detFactureAchat.getProduitId() != null) {
-					ProduitValue produit = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
+					
+					 ArticleValue produit=articlePersistance.getArticleParId(detFactureAchat.getProduitId());
+					//ProduitValue produit = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
+					
+					
 					if (produit != null) {
 						detFactureAchat.setProduitDesignation(produit.getDesignation());
-						detFactureAchat.setProduitReference(produit.getReference());
+						detFactureAchat.setProduitReference(produit.getRef());
 						
 						if(detFactureAchat.getPrixUnitaireHT() == null && detFactureAchat.getPrixTotalHT() == null) {
 							
 							
 							
-							detFactureAchat.setPrixUnitaireHT(produit.getPrixUnitaire());
-							detFactureAchat.setPrixTotalHT(produit.getPrixUnitaire() * detFactureAchat.getQuantite());	
+							detFactureAchat.setPrixUnitaireHT(produit.getPu());
+							detFactureAchat.setPrixTotalHT(produit.getPu() * detFactureAchat.getQuantite());	
 							
 							
 						}
@@ -859,13 +887,15 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 		ListProduitElementValue listProduitElementValue = new ListProduitElementValue();
 
-		RechercheMulticritereProduitValue requetRechProduit = new RechercheMulticritereProduitValue();
+		//RechercheMulticritereProduitValue requetRechProduit = new RechercheMulticritereProduitValue();
+		RecherecheMulticritereArticleValue requetRechProduit=new RecherecheMulticritereArticleValue();
+		//requetRechProduit.setRetour("oui");
+		
+		
+		ResultatRechecheArticleValue reultat=articlePersistance.rechercherArticleMultiCritere(requetRechProduit);
+		//ResultatRechecheProduitValue reultat = produitPersistance.rechercherProduitMultiCritere(requetRechProduit);
 
-		requetRechProduit.setRetour("oui");
-
-		ResultatRechecheProduitValue reultat = produitPersistance.rechercherProduitMultiCritere(requetRechProduit);
-
-		for (ProduitValue element : reultat.getProduitValues()) {
+		for (ArticleValue element : reultat.getArticleValues()) {
 
 			DetFactureAchatValue detFactureVente = new DetFactureAchatValue();
 			detFactureVente.setQuantite(1d);
@@ -873,9 +903,9 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			detFactureVente.setProduitId(element.getId());
 
 			detFactureVente.setProduitDesignation(element.getDesignation());
-			detFactureVente.setProduitReference(element.getReference());
-			detFactureVente.setPrixUnitaireHT(element.getPrixUnitaire());
-			detFactureVente.setPrixTotalHT(element.getPrixUnitaire() * detFactureVente.getQuantite());
+			detFactureVente.setProduitReference(element.getRef());
+			detFactureVente.setPrixUnitaireHT(element.getPu());
+			detFactureVente.setPrixTotalHT(element.getPu() * detFactureVente.getQuantite());
 
 			if (clientId != null) {
 
@@ -904,5 +934,114 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 	public BLReportElementRecapValue getDepenseFacturebyMonth(RechercheMulticritereFactureAchatValue request) {
 		
 		return factureAchatPersistance.getDepenseFacturebyMonth(request);
+	}
+	
+	
+	private String getReferenceFactureFromGuichetMensuel(final String typeFacture , final Calendar pDateBonLiv , final boolean increment) {
+		
+		if(typeFacture.equals(FACTURE_TYPE_AVOIRE))
+			return getReferenceFactureAvoirFromGuichetMensuel(pDateBonLiv, increment) ;
+		else
+			return getReferenceFactureNormalFromGuichetMensuel(pDateBonLiv, increment) ;
+		
+		
+		
+	}
+	
+	
+	private String getReferenceFactureNormalFromGuichetMensuel( final Calendar pDateBonLiv , final boolean increment) {
+		
+
+			
+
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureReference(); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFacture();
+		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
+		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
+
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonLiv = new StringBuilder("");
+	
+		vNumBonLiv.append(vNumGuichetPrefix);
+		//vNumBonLiv.append(vAnneeCourante);
+		//vNumBonLiv.append(String.format("%02d", moisActuel));
+		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+		/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+		vGuichetValeur.setId(new Long(idMensuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumReferenceFactureCourante(new Long(vNumGuichetBonLiv + 1L));
+		/** Modification de la valeur en base du numéro. */
+		
+		if(increment)
+		this.guichetierMensuelDomaine.modifierGuichetFactureMensuel(vGuichetValeur);  
+		
+
+		return vNumBonLiv.toString();
+
+	}
+
+	private String getReferenceFactureAvoirFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
+		
+
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureAvoirReference(); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFactureAvoir();
+		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
+		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
+
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vNumGuichetPrefix);
+		//vNumBonLiv.append(vAnneeCourante);
+		//vNumBonLiv.append(String.format("%02d", moisActuel));
+		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+		/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+		vGuichetValeur.setId(new Long(idMensuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumReferenceAvoirCourante(new Long(vNumGuichetBonLiv + 1L));     
+
+		/** Modification de la valeur en base du numéro. */
+		
+		if(increment)
+		this.guichetierMensuelDomaine.modifierGuichetFactureAvoirMensuel(vGuichetValeur);  
+		
+
+		return vNumBonLiv.toString();
+
+	}
+	
+	
+	
+	
+
+	@Override
+	public String getCurrentReferenceMensuel(String type, Calendar instance, boolean b) {
+		
+		if (type.equals(FACTURE_TYPE_AVOIRE))
+
+			return getReferenceFactureAvoirFromGuichetMensuel(instance, b);
+
+		else
+			return getReferenceFactureFromGuichetMensuel(type,instance, b);
+		
+		
+
+		
+		
 	}
 }

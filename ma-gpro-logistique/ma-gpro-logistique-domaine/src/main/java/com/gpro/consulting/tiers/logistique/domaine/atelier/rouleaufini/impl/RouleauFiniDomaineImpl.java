@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.MiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.CritereRechercheRouleauStandardValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ElementResultatRechecheRouleauStandardValue;
@@ -40,7 +41,7 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 	
 	private static final Double SOMME_ZERO=0D;
 	private static final Long ZERO = 0L;
-	
+
 	@Autowired
 	private IRouleauFiniPersistance rouleauFiniPersitance;
 
@@ -118,6 +119,9 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 		List<String> ids = new ArrayList<String>();
 	
 		
+		if(request.getChoix() == null)
+			request.setChoix(IConstanteLogistique.CHOIX_ROULEAU_FINI_1);
+		
 		request.setDateIntroduction(Calendar.getInstance());
 		
 		if(request.getNumberOfBox() == null)
@@ -142,6 +146,15 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 			MiseValue miseValue= listMise.get(0);
 			
 			
+			if(miseValue.getDateDebutProduction() == null) {
+				miseValue.setDateDebutProduction(Calendar.getInstance());
+				miseValue.setStatut("En cours");
+				
+				
+			}
+				
+			
+			
 			Long qteProduite=miseValue.getQteProduite();
 			Long nbrColis=miseValue.getNbrColis();
 			nbrColis ++;
@@ -158,6 +171,11 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 			
 			if(miseValue.getQteProduite() >=  miseValue.getQuantite().longValue())
 			{
+				if(miseValue.getDateFinProduction() == null)
+				miseValue.setDateFinProduction(Calendar.getInstance());
+				
+				
+				
 				miseValue.setStatut("Produit");
 			}
 			
@@ -200,12 +218,16 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 	private String getNumero(final Calendar pDateMise) {
 
 		Long vNumGuichetMise = this.guichetRouleauFiniDomaine.getNextNumReference();
+		
+		Integer vPrefixe= this.guichetRouleauFiniDomaine.getPrefixe();
+		
+		
 	    /** Année courante. */
 	    int vAnneeCourante = pDateMise.get(Calendar.YEAR);
 	    /** Format du numero de la Bon Reception= AAAA-NNNNNN. */
 	    StringBuilder vNumMise = new StringBuilder("");
         //TODO A changer 
-	    vNumMise.append(1);
+	    vNumMise.append(vPrefixe);
 	   // vNumMise.append("-");
 	    vNumMise.append(String.format("%06d", vNumGuichetMise));
 	    /** Inserer une nouvelle valeur dans Guichet Mise. */
@@ -319,6 +341,18 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 	@Override
 	public List<String> getListCodeBarreByRefMiseAndIdBSisNull(String refMise) {
 		return rouleauFiniPersitance.getListCodeBarreByRefMiseAndIdBSisNull(refMise);
+	}
+
+	@Override
+	public Double getQteExpedierByMiseRef(String refMise) {
+		// TODO Auto-generated method stub
+		return rouleauFiniPersitance.getQteExpedierByMiseRef(refMise);
+	}
+
+	@Override
+	public Long getNbrColisExpedierByMiseRef(String refMise) {
+		// TODO Auto-generated method stub
+		return rouleauFiniPersitance.getNbrColisExpedierByMiseRef(refMise);
 	}
 	  
 }

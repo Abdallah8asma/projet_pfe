@@ -62,7 +62,7 @@ angular
 
 				$scope.listTaxeFactureInitMethod = function () {
 					
-					scope.listTaxeFactureInit = [
+					$scope.listTaxeFactureInit = [
 						/*
 						 * {//FODEC taxeId: 1, pourcentage: 1,
 						 * montant: '', },
@@ -516,7 +516,7 @@ angular
 
 					console.log("Apres  validerNatureFini");
 
-					$http.get(UrlAtelier + "/factureAchat/getCurrentReferenceByTypeFacture:Normal")
+					$http.get(UrlAtelier + "/factureAchat/getCurrentReferenceMensuel:Normal")
 						.success(
 							function (res) {
 
@@ -850,7 +850,7 @@ angular
 					$http
 						.get(
 							UrlAtelier
-							+ "/factureAchat/getCurrentReferenceByTypeFacture:Normal"
+							+ "/factureAchat/getCurrentReferenceMensuel:Normal"
 						)
 						.success(
 							function (res) {

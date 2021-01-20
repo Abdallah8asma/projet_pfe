@@ -94,4 +94,12 @@ public interface IReceptionAchatService {
 	public ReceptionAchatValue validerFactureAvoirRetour(String reference);
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public ReceptionAchatValue validerBL(String reference);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public String getCurrentReferenceMensuel(Calendar instance, boolean b);
+
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+
+	public String getCurrentReferenceMensuelByType(String type, Calendar instance, boolean b);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<BonReceptionVue> getListBonReceptionRefByFournisseurDeclarer(Long idFournisseur);
 }

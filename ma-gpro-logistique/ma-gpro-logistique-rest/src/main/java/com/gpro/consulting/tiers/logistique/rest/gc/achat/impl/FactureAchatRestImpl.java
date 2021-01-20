@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
+import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.DetFactureAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.FactureAchatValue;
@@ -66,6 +68,9 @@ public class FactureAchatRestImpl {
 	
 	@Autowired
 	private IProduitService produitService;
+	
+	@Autowired
+	private IArticleService articleService;
 
 	/** Facture **/
 	@RequestMapping(value = "/validate", method = RequestMethod.POST)
@@ -167,9 +172,15 @@ public class FactureAchatRestImpl {
 	            for(DetFactureAchatValue factureDet :factureAchatValue.getListDetFactureAchat()) {
 				
 				if(factureDet.getProduitId() != null) {
-					ProduitValue prod = produitService.rechercheProduitById(factureDet.getProduitId());
 					
-					factureDet.setProduitReference(prod.getReference());
+					
+				//	ProduitValue prod = produitService.rechercheProduitById(factureDet.getProduitId());
+					ArticleValue articleValue=new ArticleValue();
+					articleValue.setId(factureDet.getProduitId());
+					
+					
+					ArticleValue prod=articleService.rechercheArticleParId(articleValue);
+					factureDet.setProduitReference(prod.getRef());
 					factureDet.setProduitDesignation(prod.getDesignation());
 				
 				}
@@ -238,5 +249,10 @@ public class FactureAchatRestImpl {
 		
 	}
 	
-	
+
+	@RequestMapping(value = "/getCurrentReferenceMensuel:{type}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuel(@PathVariable String type) {
+ 		
+ 		return  factureService.getCurrentReferenceMensuel(type,Calendar.getInstance(),false);
+ 	}
 }

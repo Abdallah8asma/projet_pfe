@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleCacheValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheArticleValue;
 
@@ -67,6 +68,18 @@ public interface IArticleService {
 		 */
 		@Transactional(readOnly = true, rollbackFor = Exception.class)
 		public List<ArticleCacheValue> listeArticleCache();
+
+		
+		@Transactional(readOnly = true, rollbackFor = Exception.class)
+		public ResultatRechecheArticleValue rechercherArticleMultiCritereClient(
+				RecherecheMulticritereArticleValue pRechercheMultiCritere);
+		
+		@Transactional(readOnly = true, rollbackFor = Exception.class)
+		public ArticleValue rechercheProduitParReference(String reference);
+		
+		
+		@Transactional(readOnly = true, rollbackFor = Exception.class)
+		public ArticleValue getArticleParId(Long id);
 
 	
 }

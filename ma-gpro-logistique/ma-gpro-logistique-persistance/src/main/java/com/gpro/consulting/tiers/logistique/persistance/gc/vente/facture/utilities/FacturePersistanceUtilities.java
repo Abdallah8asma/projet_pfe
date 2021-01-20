@@ -93,6 +93,12 @@ public class FacturePersistanceUtilities {
 	    dto.setIdDepot(entity.getIdDepot());
 	    
 	    
+	    dto.setDevise(entity.getDevise());
+	    dto.setTauxConversion(entity.getTauxConversion());
+	    dto.setMontantConverti(entity.getMontantConverti());
+	    
+	    
+	    
 		if(entity.getListDetFactureVente() != null){
 	    	List<DetFactureVenteValue> list = new ArrayList <DetFactureVenteValue>();
 		     for (DetFactureVenteEntity detFactureVenteEntity : entity.getListDetFactureVente()) {
@@ -170,6 +176,14 @@ public class FacturePersistanceUtilities {
 	    
 	    
 	    entity.setIdDepot(dto.getIdDepot());
+	    
+	    
+	    entity.setDevise(dto.getDevise());
+	    entity.setTauxConversion(dto.getTauxConversion());
+	    entity.setMontantConverti(dto.getMontantConverti());
+	    
+	    
+	    
 	    
 		if(dto.getListDetFactureVente() != null){
 		     Set<DetFactureVenteEntity> list = new HashSet <DetFactureVenteEntity>();
@@ -267,6 +281,7 @@ public class FacturePersistanceUtilities {
 		entity.setDescription(dto.getDescription());
 		
 		entity.setTaxeId(dto.getTaxeId());
+	
 		
 		return entity;
 	}
@@ -296,7 +311,7 @@ public class FacturePersistanceUtilities {
 		dto.setDescription(entity.getDescription());
 		
 		dto.setTaxeId(entity.getTaxeId());
-		
+	
 		
 		return dto;
 	}

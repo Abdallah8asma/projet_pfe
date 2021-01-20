@@ -25,7 +25,17 @@ public class BonSortieFiniValue implements Comparable<BonSortieFiniValue>{
 	private String partieIntDesignation;
 	private Double poidsFini;
 	private Double poidsEcru;
+	
+	
+	private String refAvantChangement;
+	
 
+	public String getRefAvantChangement() {
+		return refAvantChangement;
+	}
+	public void setRefAvantChangement(String refAvantChangement) {
+		this.refAvantChangement = refAvantChangement;
+	}
 
 	private List<RouleauFiniValue> listeRouleauFini = new ArrayList<RouleauFiniValue>();
 	

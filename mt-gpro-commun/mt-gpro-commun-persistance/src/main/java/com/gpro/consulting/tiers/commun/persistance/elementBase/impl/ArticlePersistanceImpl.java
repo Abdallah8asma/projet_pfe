@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleCacheValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheArticleValue;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IArticlePersistance;
@@ -27,6 +28,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleAr
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SousFamilleArticleEntity;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.TypeArticleEntity;
 import com.gpro.consulting.tiers.commun.persistance.utilities.PersistanceUtilities;
@@ -47,6 +49,19 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
       private String id="id";
       private String typeArticle="typeArticle";
 
+
+      
+      private String dimension="dimension";
+      private String grammage="grammage";
+      private String dimensionPapier="dimensionPapier";
+      
+      private String nbrCouleur="nbrCouleur";
+      private String fichier="fichier";
+      private String nbrPose="nbrPose"; 
+      
+      private String produitId="produitId"; 
+      private String  piEntite="piEntite";
+      
 	@Override
 	public String creerArticle(ArticleValue pArticleValue) {
 		// TODO Auto-generated method stub
@@ -201,7 +216,44 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
 		  	    Expression<Double> rootValeur =vRootArticle.get(pu);
 		        vWhereClause.add(vBuilder.le(rootValeur, pRechercheArticleMulitCritere.getPrix_sup()));
 		      }
+	      
+	      
+	     
+		    if (estNonVide(pRechercheArticleMulitCritere.getDimension())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(dimension),
+			    		  pRechercheArticleMulitCritere.getDimension()));
+			    }
+
+		    if (estNonVide(pRechercheArticleMulitCritere.getGrammage())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(grammage),
+			    		  pRechercheArticleMulitCritere.getGrammage()));
+			    }
 	    
+		    if (estNonVide(pRechercheArticleMulitCritere.getDimensionPapier())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(dimensionPapier),
+			    		  pRechercheArticleMulitCritere.getDimensionPapier()));
+			    }
+		    if (estNonVide(pRechercheArticleMulitCritere.getNbrCouleur())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(nbrCouleur),
+			    		  pRechercheArticleMulitCritere.getNbrCouleur()));
+			    }
+		    
+		    if (estNonVide(pRechercheArticleMulitCritere.getFichier())) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(fichier),
+			    		  pRechercheArticleMulitCritere.getFichier()));
+			    }
+		    
+		    if (pRechercheArticleMulitCritere.getProduitId()!=null) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(produitId),
+			    		  pRechercheArticleMulitCritere.getProduitId()));
+			    }
+		    
+		    if (pRechercheArticleMulitCritere.getPiEntite()!=null) {
+			      vWhereClause.add(vBuilder.equal(vRootArticle.get(piEntite),
+			    		  pRechercheArticleMulitCritere.getPiEntite()));
+			    }
+		    
+		    
 	    /** execute query and do something with result **/
 
 	    vCriteriaQuery.select(vRootArticle).where(vWhereClause.toArray(new Predicate[] {}));
@@ -214,6 +266,9 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
 	      ArticleValue vPv = PersistanceUtilities.toArticleValue(vArticleEntite);
 	      vListeResultat.add(vPv);
 	    }
+	    
+	    
+
 
 	    /** retour de list de recherche et le nombre de resultat **/
 	    ResultatRechecheArticleValue vResultatRechecheArticleValue = new ResultatRechecheArticleValue();
@@ -277,6 +332,60 @@ public class ArticlePersistanceImpl extends AbstractPersistance implements IArti
 
 		return dto;
 	}
+
+
+	@Override
+	public ArticleValue rechercheProduitParReference(String reference) {
+	
+			  CriteriaBuilder vBuilder = this.entityManager.getCriteriaBuilder();
+			    /** entity principale **/
+			    CriteriaQuery < ArticleEntite > vCriteriaQuery = vBuilder.createQuery(ArticleEntite.class);
+			    List < Predicate > vWhereClause = new ArrayList < Predicate >();
+
+			    /** create liste resultat ***/
+
+			    /************ entity jointure *****************/
+			    Root < ArticleEntite > vRootProduit = vCriteriaQuery.from(ArticleEntite.class);
+
+			    /***************** Predicate *************/
+			    
+			    
+			  
+			    
+			    
+			    
+			   
+			    
+			    
+			    
+			    if (ref!=null) {
+			      vWhereClause.add(vBuilder.equal(vRootProduit.get(reference),
+			    		 ref));
+			    }
+	  
+			  
+			    /** execute query and do something with result **/
+
+			    vCriteriaQuery.select(vRootProduit).where(vWhereClause.toArray(new Predicate[] {}));
+			    List < ArticleEntite > resultatEntite = this.entityManager.createQuery(vCriteriaQuery).getResultList();
+
+			    /** Conversion de la liste en valeur */
+			    List < ArticleValue > vListeResultat = new ArrayList < ArticleValue >();
+
+			    for (ArticleEntite vProduitEntite : resultatEntite) {
+			    	ArticleValue vPv = PersistanceUtilities.toArticleValue(vProduitEntite);
+			      vListeResultat.add(vPv);
+			    }
+
+			   
+
+			    if(vListeResultat!=null && vListeResultat.size()>0)
+			    	return vListeResultat.get(0);
+			  
+					return null;
+
+		}
+	
 	
 
 

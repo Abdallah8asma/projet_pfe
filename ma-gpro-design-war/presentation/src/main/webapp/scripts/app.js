@@ -107,7 +107,8 @@ angular
     'gpro.factureRetourVente',
     'gpro.back-logistique',
     'gpro.gcAchatBC',
-	'gpro.remiseVente','gpro.packageVente',
+  'gpro.remiseVente','gpro.packageVente',
+  'gpro.bondelivraisonBS',
 
     /** ************ modules Achat *********** */
 
@@ -205,7 +206,9 @@ angular
    /************* logistique nv *******************/
 
    'atelier.logistique',
-   'atelier.suivieOF'
+   'atelier.suivieOF',
+   'gpro.film',
+   'gpro.forme'
    
 
 	
@@ -670,6 +673,24 @@ angular
           },
         })
 
+        .when('/front/elementsDeBase/film/:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/elementsDeBase/film/' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
+        .when('/front/elementsDeBase/forme/:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/elementsDeBase/forme/' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
         // Articles est redirigée vers produits
         .when('/articles', {
           templateUrl: function (param) {
@@ -926,6 +947,16 @@ angular
           },
         })
 
+        .when('/front/gestionCommerciale/livraisonBS:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/gestionCommerciale/LivraisonBS' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
+
         .when('/front/gestionCommerciale/detlivraison/:templateFile', {
           templateUrl: function (param) {
             return (
@@ -935,6 +966,7 @@ angular
             );
           },
         })
+
 
         .when('/front/gestionCommerciale/reception/:templateFile', {
           templateUrl: function (param) {

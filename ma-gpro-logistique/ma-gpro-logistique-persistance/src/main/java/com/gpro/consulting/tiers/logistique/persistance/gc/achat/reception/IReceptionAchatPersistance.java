@@ -50,4 +50,6 @@ public interface IReceptionAchatPersistance {
 	public boolean existeBL(String reference);
 
 	public Double getSommeMontHT(RechercheMulticritereBonReceptionAchatValue requestBL);
+
+	public List<BonReceptionVue> getReferenceBRByFournisseurIdDeclarer(Long idFournisseur);
 }

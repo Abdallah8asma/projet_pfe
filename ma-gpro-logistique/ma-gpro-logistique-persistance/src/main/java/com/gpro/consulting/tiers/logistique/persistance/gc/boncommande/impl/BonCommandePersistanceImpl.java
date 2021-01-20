@@ -61,7 +61,7 @@ public class BonCommandePersistanceImpl extends AbstractPersistance implements I
 	private String boutiqueId = "boutiqueId";
 	
 	private int FIRST_INDEX = 0;
-
+	private String devise = "devise";
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -231,6 +231,10 @@ public class BonCommandePersistanceImpl extends AbstractPersistance implements I
 			whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Double> get(PREDICATE_COUT), request.getCoutA()));
 		}
 
+		if (request.getDevise()!= null) {
+			whereClause.add(criteriaBuilder.equal(root.get(devise), request.getDevise()));
+		}
+ 
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 		List<CommandeVenteEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
 

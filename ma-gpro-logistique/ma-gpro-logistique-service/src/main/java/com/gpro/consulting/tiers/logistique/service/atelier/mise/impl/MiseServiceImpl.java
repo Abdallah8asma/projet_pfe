@@ -14,6 +14,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.Rech
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.ResultatRechercheMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.TraitementMiseValue;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.mise.IMiseDomaine;
+import com.gpro.consulting.tiers.logistique.domaine.atelier.rouleaufini.IRouleauFiniDomaine;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 import com.gpro.consulting.tiers.logistique.service.atelier.mise.IMiseService;
 
@@ -30,6 +31,9 @@ public class MiseServiceImpl implements IMiseService {
 	/** Service Domaine */
 	@Autowired
 	private IMiseDomaine vMiseDomaine;
+	
+	@Autowired
+	private IRouleauFiniDomaine rouleauFiniDomaine;
 
 	@Autowired
 	private IGestionnaireLogistiqueCacheService gestionnaireLogistiqueCacheService;
@@ -88,6 +92,15 @@ public class MiseServiceImpl implements IMiseService {
 			elementRechecheMise.setAbreviationClientDesignation(mapA.get("client"));
 			// Produit (Tissu)
 			elementRechecheMise.setReferenceProduit(mapA.get("produitRef"));
+			
+			
+			
+			
+			
+			elementRechecheMise.setQteExpedition(rouleauFiniDomaine.getQteExpedierByMiseRef(elementRechecheMise.getReference()));
+			
+			elementRechecheMise.setNbrColisExpedition(rouleauFiniDomaine.getNbrColisExpedierByMiseRef(elementRechecheMise.getReference()));
+			
 
 		}
 		

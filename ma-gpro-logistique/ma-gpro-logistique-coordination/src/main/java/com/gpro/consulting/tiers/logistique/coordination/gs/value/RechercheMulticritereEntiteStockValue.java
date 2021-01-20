@@ -11,7 +11,9 @@ public class RechercheMulticritereEntiteStockValue {
 	private String grosseur; //done
 	private String metrage; //done
 	private String matiere; //done
-	private Calendar date; //Commenté
+	private Calendar dateA; //Commenté
+	
+	private Calendar dateDu;
 	private Double quantite; //done
 	private String magasin; //done
 	private String emplacement; //done
@@ -33,15 +35,49 @@ public class RechercheMulticritereEntiteStockValue {
 	
 	private String numeroBonEntree;
 	
+	private String orderBy;
 	
 	
 	
+	
+	public String getOrderBy() {
+		return orderBy;
+	}
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+
 	private List<Long> ids;
 	
+	private String grammageArticle;
+	private String dimensionArticle;
 	
 	
 	
-	
+	public Calendar getDateA() {
+		return dateA;
+	}
+	public void setDateA(Calendar dateA) {
+		this.dateA = dateA;
+	}
+	public Calendar getDateDu() {
+		return dateDu;
+	}
+	public void setDateDu(Calendar dateDu) {
+		this.dateDu = dateDu;
+	}
+	public String getGrammageArticle() {
+		return grammageArticle;
+	}
+	public void setGrammageArticle(String grammageArticle) {
+		this.grammageArticle = grammageArticle;
+	}
+	public String getDimensionArticle() {
+		return dimensionArticle;
+	}
+	public void setDimensionArticle(String dimenssionArticle) {
+		this.dimensionArticle = dimenssionArticle;
+	}
 	public List<Long> getIds() {
 		return ids;
 	}
@@ -120,12 +156,7 @@ public class RechercheMulticritereEntiteStockValue {
 	public void setProduit(String produit) {
 		this.produit = produit;
 	}
-	public Calendar getDate() {
-		return date;
-	}
-	public void setDate(Calendar date) {
-		this.date = date;
-	}
+
 	public Double getQuantite() {
 		return quantite;
 	}
@@ -215,8 +246,10 @@ public class RechercheMulticritereEntiteStockValue {
 			builder.append("refProduit=").append(refProduit).append(", ");
 		if (produit != null)
 			builder.append("produit=").append(produit).append(", ");
-		if (date != null)
-			builder.append("date=").append(date).append(", ");
+		if (dateDu != null)
+			builder.append("date=").append(dateDu).append(", ");
+		if (dateA != null)
+			builder.append("date=").append(dateA).append(", ");
 		if (quantite != null)
 			builder.append("quantite=").append(quantite).append(", ");
 		if (magasin != null)

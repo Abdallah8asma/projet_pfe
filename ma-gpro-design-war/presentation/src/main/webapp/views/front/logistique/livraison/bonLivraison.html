@@ -71,9 +71,9 @@
 						</button>
 						<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
 							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
-									ng-click="downloadAllProduits(bonMouvementStockCourante)">PDF</a></li>
+									ng-click="download(bonLivraisonVenteCourant.referenceBl)">PDF</a></li>
 							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
-									ng-click="downloadAllProduitsExcel(bonMouvementStockCourante)">Excel</a></li>
+									ng-click="">Excel</a></li>
 						</ul>
 					</div>
 
@@ -151,7 +151,7 @@
 											<span class="input-group-text">Client</span>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.partieIntId"
-											ng-init="bonLivraisonVenteCourant.partieIntId=''">
+											ng-init="bonLivraisonVenteCourant.partieIntId=''" style="border: 1px solid #e5eaee !important;" >
 											<option value="">Tous Clients</option>
 											<option ng-repeat="client in listePartieInteresseeCache"
 												value="{{client.id}}">{{client.abreviation}}</option>
@@ -166,7 +166,7 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Date Liv.Entree</span>
+											<span class="input-group-text">Date Liv.Entre</span>
 										</div>
 										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
 											ng-init="bonLivraisonVenteCourant.dateLivraisonMin=''"
@@ -297,7 +297,7 @@
 										</div>
 
 										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.natureLivraison"
-											ng-init="bonLivraisonVenteCourant.natureLivraison= ''">
+											ng-init="bonLivraisonVenteCourant.natureLivraison= ''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option value="Injection">Injection</option>
 											<option value="Tempographie">Tempographie</option>
@@ -316,10 +316,10 @@
 										</div>
 
 										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.avecFacture"
-											ng-init="bonLivraisonVenteCourant.avecFacture= ''">
+											ng-init="bonLivraisonVenteCourant.avecFacture= ''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
-											<option value="ouiFacture">Yes</option>
-											<option value="nonFacture">No</option>
+											<option value="ouiFacture">oui</option>
+											<option value="nonFacture">Non</option>
 										</select>
 									</div>
 								</div>
@@ -362,7 +362,7 @@
 				</div>
 				<div class="ms-CommandBar-mainArea">
 					<div class="ms-CommandButton">
-						<button class="ms-CommandButton-button"
+						<button class="ms-CommandButton-button" permission="['Production_Livraison_Edit']" 
 							ng-click="sauvegarderBonVente(bonLivraisonVenteCourant)">
 							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span> <span
 								class="ms-CommandButton-label">Enregistrer</span>
@@ -370,6 +370,43 @@
 
 
 					</div>
+
+					<div class="ms-CommandButton ms-CommandButton--dropdown">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+									class="ms-Icon ms-Icon--Generate"></i></span> <span
+								class="ms-CommandButton-label">G&eacute;n&eacute;rer</span> <span
+								class="ms-CommandButton-dropdownIcon"><i
+									class="ms-Icon ms-Icon--ChevronDown"></i></span>
+						</button>
+						<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+
+						
+
+              <li class="ms-ContextualMenu-item">
+
+
+                <div class="row">
+                  <div class="col-sm-8">
+                    <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                      ng-click="download(bonLivraisonVenteCourant.id,'oui',3)">PDF </a>
+
+                  </div>
+
+    
+                </div>
+
+ 
+              </li>
+
+
+
+							
+
+						</ul>
+					</div>
+
+
 
 					<div class="ms-CommandButton">
 						<button class="ms-CommandButton-button" ng-click="annulerAjout()">
@@ -430,10 +467,31 @@
 									<span class="input-group-text">Référence</span>
 								</div>
 								<input class="form-control" ng-model="bonLivraisonVenteCourant.reference"
-									ng-init="bonLivraisonVenteCourant.reference=''" />
+									ng-init="bonLivraisonVenteCourant.reference=''" style="border: 1px solid #e5eaee !important;" />
 							</div>
 						</div>
 					</div>
+
+
+					<div class="col-sm-4">
+
+
+						<div class="form-group">
+						  <div class="input-group">
+							<div class="input-group-prepend">
+							  <label class="input-group-text ms-Label is-required">Magasin</label>
+							</div>
+							<select ui-select2 required ng-model="bonLivraisonVenteCourant.idDepot"
+							  ng-init="bonLivraisonVenteCourant.idDepot =''" data-placeholder="" required class="form-control"
+							  style="border: 1px solid #e5eaee !important;">
+							  <option ng-repeat="magazin in listeMagazinCache" value="{{magazin.id}}">{{magazin.designation}}
+							  </option>
+							</select>
+						  </div>
+						</div>
+					  </div>
+
+
 
 				</div>
 
@@ -448,7 +506,7 @@
 									<label class="input-group-text">R&eacute;f BS</label>
 								</div>
 								<input class="form-control" ui-select2="select2TaggingOptions"
-									ng-model="tagReferenceBSList" />
+									ng-model="tagReferenceBSList" style="border: 1px solid #e5eaee !important;" />
 							</div>
 						</div>
 					</div>
@@ -530,7 +588,7 @@
 						
 									<label class="input-group-text">Observations</label>
 								</div>
-								<input class="form-control"  ng-model="bonLivraisonVenteCourant.observations" >
+								<input class="form-control"  ng-model="bonLivraisonVenteCourant.observations" style="border: 1px solid #e5eaee !important;" >
 
 								</input>
 
@@ -549,7 +607,7 @@
 						<div class="col-sm-3">
 							<div class="input-group">
 								<span class="input-group-addon label1" id="basic-addon1">
-									TTC Amount </span><input class="form-control" readonly="readonly"
+									Montant TTC :</span><input class="form-control" readonly="readonly"
 									value="{{bonLivraisonVenteCourant.montantTTC | prixFiltre}}" />
 							</div>
 						</div>
@@ -570,48 +628,20 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<div class="row">
-							<!-- modeValider: Btn Valider ON -->
-							<!-- <div ng-show="modeValider == 'actif'" class="panel panel-primary">
-							<table  class="table">
-									<thead   style="background-color:rgb(110, 178, 187);">
-										<tr style="font-weight: bold">
-											<th >Article ref.</th>
-											<th scope="col">Article</th>
-											<th scope="col">Quantity</th>
-									
-											<th scope="col">Number of Box </th>
-											<th scope="col">Unit Price Pre-Tax</th>
-									
-											<th scope="col">Total Price Pre-Tax</th>
-										</tr>
-									</thead>
-									<tbody>
-									<tr ng-repeat="detLivVente in listDetLivraisonVentePRBS">
-										<td>{{ detLivVente.produitReference || 'empty' }}</td>
-										<td>{{ detLivVente.produitDesignation || 'empty' }}</td>
-										<td>{{ detLivVente.quantite || 'empty' }}</td>
-									
-										<td>{{ detLivVente.nombreColis || 'empty' }}</td>
-										<td>{{ detLivVente.prixUnitaireHT || 'empty' }}</td>
-									
-										<td>{{ detLivVente.prixTotalHT | prixFiltre }}</td>
-									</tr>
-								</tbody>
-								</table>  -->
-
+						
 								<table
 								class="table table-bordered table-hover table-condensed table-head-color">
 								<thead>
 									<tr style="font-weight: bold">
-										<th style="width: 10%">Article ref.</th>
+										<th style="width: 10%">ref Article </th>
 										<th style="width: 20%">Article</th>
-										<th style="width: 10%">Quantity</th>
+										<th style="width: 10%">Quantite</th>
 								
-										<th style="width: 10%">Number of Box </th>
-										<th style="width: 10%">Unit Price Pre-Tax</th>
+										<th style="width: 10%">Nbr.Colis</th>
+										<th style="width: 10%">P.U.H.T</th>
 									
 								
-										<th style="width: 10%">Total Price Pre-Tax</th>
+										<th style="width: 10%">P.T.H.Tx</th>
 									</tr>
 								</thead>
 								<tr ng-repeat="detLivVente in listDetLivraisonVentePRBS">
@@ -638,7 +668,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+	
 		
 
 
@@ -662,12 +692,12 @@
 										<tr style="font-weight: bold">
 											<th style="width: 10%">Designation</th>
 											<th style="width: 10%">Of ref.</th>
-											<th style="width: 10%">Quantity</th>
+											<th style="width: 10%">Quantite</th>
 											<th style="width: 10%">Unit</th>
-											<th style="width: 10%">Num. of box</th>
-											<th style="width: 10%">Unit Pr. Pre-Tax</th>
-											<th style="width: 10%">Discount</th>
-											<th style="width: 10%">Total Pr. Pre-Tax</th>
+											<th style="width: 10%">Nbr.Colis</th>
+											<th style="width: 10%">P.U.H.T</th>
+											<th style="width: 10%">Remise</th>
+											<th style="width: 10%">P.T.H.Tx</th>
 										</tr>
 									</thead>
 									<tr ng-repeat="detLivVente in listDetLivraisonVentePRBS">

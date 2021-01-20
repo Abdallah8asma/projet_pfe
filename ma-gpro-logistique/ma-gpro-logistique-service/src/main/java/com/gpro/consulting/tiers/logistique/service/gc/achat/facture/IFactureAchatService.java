@@ -47,4 +47,8 @@ public interface IFactureAchatService {
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public ListProduitElementValue getArticleAvoir(Long clientId);
+	
+	
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public String getCurrentReferenceMensuel(String type, Calendar instance, boolean b);
 }

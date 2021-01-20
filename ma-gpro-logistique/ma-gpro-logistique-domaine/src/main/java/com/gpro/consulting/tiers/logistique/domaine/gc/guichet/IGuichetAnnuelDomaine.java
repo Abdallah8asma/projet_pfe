@@ -107,5 +107,8 @@ public interface IGuichetAnnuelDomaine {
 	  
 	  public Long modifierGuichetBonMouvementSortieAnnuel(GuichetAnnuelValue pGuichetValeur);
 
+
+	public Long modifierGuichetBLNDAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
 		
 }

@@ -236,6 +236,15 @@ public class BonCommandeDomaineImpl implements IBonCommandeDomaine {
 		bonCommandeValue.setMontantTTC(montantTTC);
 		
 		
+		
+		if(bonCommandeValue.getTauxConversion()!=null)
+		bonCommandeValue.setMontantConverti(bonCommandeValue.getTauxConversion()*montantTTC);
+		else
+			bonCommandeValue.setMontantConverti(ZERO_D)	;
+		
+		
+		
+		
 		PartieInteresseValue pi = partieInteresseePersistance.getById(bonCommandeValue.getPartieIntersseId());
 		if (pi.getTypePartieInteressee() != null
 				&& pi.getTypePartieInteressee().equals(IConstante.PI_TYPE_EXONORE)) {
@@ -389,6 +398,10 @@ public class BonCommandeDomaineImpl implements IBonCommandeDomaine {
 		bonCommandeValue.setMontantTaxe(montantTaxesTotal);
 		Double montantTTC = bonCommandeValue.getPrixTotal() + montantTaxesTotal - montantRemiseTotal;
 		bonCommandeValue.setMontantTTC(montantTTC);
+		
+
+		bonCommandeValue.setMontantConverti(bonCommandeValue.getTauxConversion()*montantTTC);
+	
 		
 		PartieInteresseValue pi = partieInteresseePersistance.getById(bonCommandeValue.getPartieIntersseId());
 		if (pi.getTypePartieInteressee() != null

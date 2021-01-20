@@ -349,7 +349,11 @@ public class MisePersistanceImpl extends AbstractPersistance implements
 		
 		
 		
-		
+		if (pRechercheMiseMulitCritere.getRefCommande() != null
+				&& !pRechercheMiseMulitCritere.getRefCommande().equals("")) {
+			vWhereClause.add(
+					vCriteriaBuilder.equal(vMiseRoot.get("refCommande"), pRechercheMiseMulitCritere.getRefCommande()));
+		}
 		
 		
 		

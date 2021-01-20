@@ -57,12 +57,12 @@
 
 
                 <div class="ms-CommandBar-mainArea">
-                    <div class="ms-CommandButton">
+                <!--     <div class="ms-CommandButton">
                         <button class="ms-CommandButton-button" ng-click="affectationMise(miseCourant)">
                             <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--CirclePlus"></i></span> <span
                                 class="ms-CommandButton-label">Ajouter</span>
                         </button>
-                    </div>
+                    </div> -->
 
 
                     <div class="ms-CommandButton ms-CommandButton--dropdown">
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="ms-CommandButton">
-                        <button class="ms-CommandButton-button" ng-click="rechercherMise(miseCourant)">
+                        <button class="ms-CommandButton-button" ng-click="rechercherRouleau(rouleauCourant)">
                             <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
                             <span class="ms-CommandButton-label">Rechercher</span>
                         </button>
@@ -128,7 +128,7 @@
                                                 <span class="input-group-text">OF</span>
                                             </div>
                                             <select ui-select2="true" class="form-control" ng-model="rouleauCourant.numMise"
-                                                ng-init="rouleauCourant.numMise=''">
+                                                ng-init="rouleauCourant.numMise=''" style="border: 1px solid #e5eaee !important;">
                                                 <option value="">Tous OF</option>
                                                 <option ng-repeat="mise in listeMise" value="{{mise.reference}}">
                                                     {{mise.reference}}</option>
@@ -145,7 +145,7 @@
                                                 <span class="input-group-text">Réf Article</span>
                                             </div>
                                             <select ui-select2="true" class="form-control" ng-model="rouleauCourant.idProduitReference"
-                                                ng-init="rouleauCourant.idProduitReference=''">
+                                                ng-init="rouleauCourant.idProduitReference=''" style="border: 1px solid #e5eaee !important;">
 
                                                 <option value="">Tous</option>
                                                 <option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">
@@ -163,7 +163,7 @@
                                                 <span class="input-group-text">Article</span>
                                             </div>
                                             <select ui-select2="true" class="form-control" ng-model="rouleauCourant.produitId"
-                                                ng-init="rouleauCourant.produitId=''">
+                                                ng-init="rouleauCourant.produitId=''" style="border: 1px solid #e5eaee !important;">
 
                                                 <option value="">Tous</option>
                                                 <option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">
@@ -178,7 +178,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <label class="input-group-text ">Réf Colis</label>
+                                                <span class="input-group-text ">Réf Colis</span>
                                             </div>
                                             <input class="form-control" type="number" step="any"
                                                 ng-model="rouleauCourant.reference"
@@ -200,7 +200,7 @@
                                                 <span class="input-group-text">Utilisateur</span>
                                             </div>
                                             <select ui-select2="true" class="form-control" ng-model="rouleauCourant.username"
-                                                ng-init="rouleauCourant.username=''">
+                                                ng-init="rouleauCourant.username=''" style="border: 1px solid #e5eaee !important;">
 
                                                 <option value="">Tous</option>
                                                 <option ng-repeat="user in listUser" value="{{user.userName}}">
@@ -218,7 +218,7 @@
                                                 <span class="input-group-text">Client</span>
                                             </div>
                                             <select ui-select2="true" class="form-control" ng-model="rouleauCourant.partieInteresseeId"
-                                                ng-init="rouleauCourant.partieInteresseeId=''">
+                                                ng-init="rouleauCourant.partieInteresseeId=''" style="border: 1px solid #e5eaee !important;" >
 
                                                 <option value="">Tous clients</option>
                                                 <option ng-repeat="client in listeClientCache" value="{{client.id}}">
@@ -234,7 +234,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <label class="input-group-text ">Quantité Entre</label>
+                                                <label class="input-group-text ms-Label ">Quantité Entre</label>
                                             </div>
                                             <input class="form-control" type="number" step="any"
                                                 ng-model="rouleauCourant.metrageMin"
@@ -247,7 +247,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <label class="input-group-text ">Et</label>
+                                                <label class="input-group-text ms-Label ">Et</label>
                                             </div>
                                             <input class="form-control" type="number" step="any"
                                                 ng-model="rouleauCourant.metrageMax"
@@ -269,7 +269,7 @@
                                                 <span class="input-group-text">Type</span>
                                             </div>
                                             <select ui-select2="true" class="form-control" ng-model="rouleauCourant.typeOf"
-                                                ng-init="rouleauCourant.typeOf=''">
+                                                ng-init="rouleauCourant.typeOf=''" style="border: 1px solid #e5eaee !important;">
 
                                                 <option value="">Tous</option>
                                                 <option value="Injection">Injection</option>
@@ -317,7 +317,7 @@
                                                 <span class="input-group-text">Sortie</span>
                                             </div>
                                             <select ui-select2="true" class="form-control" ng-model="rouleauCourant.inBonDeSortie"
-                                                ng-init="rouleauCourant.inBonDeSortie='Non'">
+                                                ng-init="rouleauCourant.inBonDeSortie='Non'" style="border: 1px solid #e5eaee !important;">
                                                 <option ng-repeat="sortie in listeSortie"
                                                     value="{{sortie.designation}}">{{sortie.designation}}y</option>
 

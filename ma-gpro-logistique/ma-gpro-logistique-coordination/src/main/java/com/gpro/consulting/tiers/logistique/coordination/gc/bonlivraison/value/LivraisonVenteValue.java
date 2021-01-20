@@ -55,6 +55,38 @@ public class LivraisonVenteValue implements Comparable<LivraisonVenteValue> {
 	private Long reglementId;
 
 	private Long boutiqueId;
+	
+	
+	
+	private Long devise;
+	private Double tauxConversion;
+	private Double montantConverti;
+	
+	
+
+	public Long getDevise() {
+		return devise;
+	}
+
+	public void setDevise(Long devise) {
+		this.devise = devise;
+	}
+
+	public Double getTauxConversion() {
+		return tauxConversion;
+	}
+
+	public void setTauxConversion(Double tauxConversion) {
+		this.tauxConversion = tauxConversion;
+	}
+
+	public Double getMontantConverti() {
+		return montantConverti;
+	}
+
+	public void setMontantConverti(Double montantConverti) {
+		this.montantConverti = montantConverti;
+	}
 
 	public Long getBoutiqueId() {
 		return boutiqueId;

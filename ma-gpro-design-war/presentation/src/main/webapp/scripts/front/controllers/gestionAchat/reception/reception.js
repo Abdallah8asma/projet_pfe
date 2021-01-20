@@ -541,8 +541,11 @@ angular
 				$scope.listeProduitCache = function () {
 					$http
 						.get(
-							UrlAtelier
-							+ "/gestionnaireLogistiqueCache/listeProduitCache")
+							UrlCommun
+							+ "/article/all")
+
+							//+ "/gestionnaireLogistiqueCache/listeProduitCache")
+
 						.success(
 							function (data) {
 								console
@@ -589,7 +592,9 @@ angular
 				$scope.AffectationAchatBC = function () {
 					$scope.receptionAchatCourante = {
 						"dateIntroduction": new Date(),
-						"dateLivraison": new Date()
+						"dateLivraison": new Date(),
+						"facture" : true
+					
 					};
 					$scope.listTaxeReceptionAchat = [
 						/*
@@ -620,10 +625,30 @@ angular
 					// .copy(reception) : {};
 
 
-					$http
+				$scope.getCurrentReferenceMensuelleByType($scope.receptionAchatCourante.facture);
+
+
+
+
+
+					$scope.displayMode = "edit";
+				}
+				
+				
+				$scope.getCurrentReferenceMensuelleByType  = function (declarer) {
+					
+					var type ="";
+					
+					if(declarer == true)
+					 type = 'declarer';
+				   else
+	                 type = 'non-declarer';
+				
+					
+							$http
 						.get(
 							UrlAtelier
-							+ "/receptionAchat/getCurrentReference"
+							+ "/receptionAchat/getCurrentReferenceMensuelByType:"+type
 						)
 						.success(
 							function (data) {
@@ -632,13 +657,8 @@ angular
 
 							}
 						);
-
-
-
-
-
-					$scope.displayMode = "edit";
-				}
+					
+					}
 
 				// Annulation de l'ajout
 				$scope.annulerAjout = function () {
@@ -671,7 +691,8 @@ angular
 						"quantiteA": "",
 						"coutDu": "",
 						"coutA": "",
-						"idDepot": ""
+						"idDepot": "",
+						"facture": ""
 					};
 
 
@@ -689,6 +710,10 @@ angular
 
 				$scope.rechercherReceptionAchat = function (
 					receptionAchatCourante) {
+						if(clientActif.blackMode==false){
+							receptionAchatCourante.facture=true;
+						}
+						receptionAchatCourante.facture=true;
 					receptionAchatCourante.type = 'Achat';
 					$http
 						.post(
@@ -2054,6 +2079,10 @@ angular
 							var data;
 							var receptionAchatCourante = $scope.receptionAchatCourante;
 							receptionAchatCourante.type = 'Achat';
+							if($scope.clientActif.blackMode==false){
+								bonLivraisonVenteCourant.declare="oui";
+			
+							 }
 							if (searchText) {
 								var ft = searchText
 									.toLowerCase();

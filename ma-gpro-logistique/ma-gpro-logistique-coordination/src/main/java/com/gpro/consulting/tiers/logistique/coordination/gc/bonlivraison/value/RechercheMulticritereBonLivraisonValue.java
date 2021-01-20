@@ -51,6 +51,19 @@ public class RechercheMulticritereBonLivraisonValue {
 	private String transporteur;
 
 	private Long boutiqueId;
+	
+	private Long devise;
+	
+
+
+
+	public Long getDevise() {
+		return devise;
+	}
+
+	public void setDevise(Long devise) {
+		this.devise = devise;
+	}
 
 	public Calendar getDateLivraison() {
 		return dateLivraison;

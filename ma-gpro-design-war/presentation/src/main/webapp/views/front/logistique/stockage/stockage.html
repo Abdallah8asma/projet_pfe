@@ -125,7 +125,8 @@
 												<span class="input-group-text">Client</span>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="inventaireCourant.client"
-												ng-init="inventaireCourant.client=''" >
+												ng-init="inventaireCourant.client=''" style="border: 1px solid #e5eaee !important;" >
+												<option value="">Tous</option>
 												<option ng-repeat="pi in listeClientCache" value="{{pi.id}}">{{pi.abreviation}}</option>
 											</select>
 										</div>
@@ -138,7 +139,7 @@
 												<span class="input-group-text">Type</span>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="inventaireCourant.typeOf"
-												ng-init="inventaireCourant.typeOf=''" >
+												ng-init="inventaireCourant.typeOf=''"style="border: 1px solid #e5eaee !important;"  >
 												<option value="">Tous</option>
 												<option value="Injection">Injection</option>
 												<option value="Tempographie">Tempographie</option>
@@ -183,7 +184,8 @@
 												<span class="input-group-text">Ref. Article</span>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="inventaireCourant.idProduitParRef"
-												ng-init="inventaireCourant.idProduitParRef=''" >
+												ng-init="inventaireCourant.idProduitParRef=''" style="border: 1px solid #e5eaee !important;" >
+												<option value="">Tous</option>
 												<option ng-repeat="pi in listeProduitCache"
 												value="{{pi.reference}}">{{pi.reference}}</option>
 											</select>
@@ -198,7 +200,7 @@
 												<label class="input-group-text ">Sorting</label>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="inventaireCourant.orderBy"
-												ng-init="inventaireCourant.orderBy=''" >
+												ng-init="inventaireCourant.orderBy=''" style="border: 1px solid #e5eaee !important;" >
 												<option ng-repeat="tri in listeTri"
 												value="{{tri.designation}}">{{tri.designation}}</option>
 											</select>
@@ -244,7 +246,7 @@
 												<span class="input-group-text">Description</span>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="inventaireCourant.designationQuiContient"
-												ng-init="inventaireCourant.designationQuiContient=''" >
+												ng-init="inventaireCourant.designationQuiContient=''" style="border: 1px solid #e5eaee !important;" >
 												<OPTION value="">Tous Les Articles</OPTION>
 												<option ng-repeat="pi in listeProduitCache"
 												value="{{pi.designation}}">{{pi.designation}}</option>
@@ -266,6 +268,16 @@
 							</div>
 
 
+	<div class="row">
+	
+		</div>
+		
+		<br><br><br><br><br>
+			<br><br><br><br><br>
+			<br><br><br><br><br>
+		
+	
+	
 						</form>
 					</div>
 

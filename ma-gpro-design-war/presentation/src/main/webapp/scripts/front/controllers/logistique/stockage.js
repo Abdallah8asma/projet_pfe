@@ -37,6 +37,16 @@ angular
 							/** ** PDF ** */
 							$scope.download = function(inventaireCourant) {
 								
+								
+								if(inventaireCourant.metrageDu == null)
+							     	inventaireCourant.metrageDu ='';
+			
+				
+								if(inventaireCourant.metrageA == null)
+							     	inventaireCourant.metrageA ='';
+			
+			
+								
 								var newdateFormat=null;
 								if(angular.isDefined(inventaireCourant.dateEtat)){
 									//$log.debug("==dateEtat "+inventaireCourant.dateEtat);
@@ -78,7 +88,7 @@ angular
 															  "&dateEtat="+newdateFormat+
 															  "&designationQuiContient="+inventaireCourant.designationQuiContient+
 															  "&referenceProduit="+inventaireCourant.idProduitParRef+
-															  "&fini="+inventaireCourant.fini+
+															  "&fini=" +
 															  "&orderBy="+inventaireCourant.orderBy+
 															  "&typeOf="+inventaireCourant.typeOf+
 															  "&type=pdf";

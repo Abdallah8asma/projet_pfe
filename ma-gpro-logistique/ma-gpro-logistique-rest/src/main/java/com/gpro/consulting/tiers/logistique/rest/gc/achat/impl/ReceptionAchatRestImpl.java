@@ -199,6 +199,14 @@ public class ReceptionAchatRestImpl {
 		// logger.info("getAvailableListBonLivraisonRefByClient");
 		return receptionService.getListBonReceptionRefByFournisseur(idFournisseur);
 	}
+	
+	
+	@RequestMapping(value = "/getAvailableListBonReceptionRefByFournisseurDeclarer:{idFournisseur}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody List<BonReceptionVue> getListBonReceptionRefByFournisseurDeclarer(@PathVariable Long idFournisseur) {
+
+		// logger.info("getAvailableListBonLivraisonRefByClient");
+		return receptionService.getListBonReceptionRefByFournisseurDeclarer(idFournisseur);
+	}
 
 	
 	@RequestMapping(value = "/getAllListBonReceptionRefByFournisseur:{idFournisseur}", method = RequestMethod.GET, produces = "application/json")
@@ -229,6 +237,20 @@ public class ReceptionAchatRestImpl {
 		// logger.info("getAvailableListBonLivraisonRefByClient");
 		return receptionService.validerBL(reference);
 	}
+	
+	
+	@RequestMapping(value = "/getCurrentReferenceMensuel", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuel() {
+ 		
+ 		return  receptionService.getCurrentReferenceMensuel(Calendar.getInstance(),false);
+ 	}
+	
+	
+	@RequestMapping(value = "/getCurrentReferenceMensuelByType:{type}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuelByType(@PathVariable String type) {
+ 		
+ 		return  receptionService.getCurrentReferenceMensuelByType(type,Calendar.getInstance(),false);
+ 	}
 	
 
 }

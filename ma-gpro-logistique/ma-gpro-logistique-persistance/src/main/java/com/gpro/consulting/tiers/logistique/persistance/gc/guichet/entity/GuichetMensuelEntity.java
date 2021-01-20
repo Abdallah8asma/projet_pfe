@@ -36,13 +36,154 @@ public class GuichetMensuelEntity {
 	  /** Numéro courant. */
 	  @Column(name = "ref_bl")
 	  private Long numReferenceBonLivraisonCourante;
+	  
+	  
+	  
+	  
+	  /************** Achat   ****************/
+	  
 
+	  /** Numéro BC courant. */
+	  @Column(name = "ref_bc")
+	  private Long numReferenceBonCommandeCourante;
+ 
+	  
+	  /** prefixe_bc  */
+	  @Column(name = "prefixe_bc ")
+	  private String prefixeBC ;
+	  
+	  /** Numéro bon reception courant. */
+	  @Column(name = "ref_bon_reception")
+	  private Long numReferenceBonReceptionCourante;
+	  
+		
+	  @Column(name = "prefixe_bon_reception ")
+	  private String prefixeBonReception ;
+	  
+	  
+	  
+	  /** Numéro Facture courant. */
+	  @Column(name = "ref_facture")
+	  private Long numReferenceFactureCourante;
+	  
+	  /** prefixe_fact  */
+	  @Column(name = "prefixe_facture ")
+	  private String prefixeFacture ;
+	  
+	  
+	  /** Numéro Avoir courant. */
+	  @Column(name = "ref_avoir")
+	  private Long numReferenceAvoirCourante;
+	  
+	  /** prefixe_avoir  */
+	  @Column(name = "prefixe_avoir ")
+	  private String prefixeAvoir ;
+	  
+	  
+	  /** Numéro bon reception courant. */
+	  @Column(name = "ref_bon_reception_nd")
+	  private Long numReferenceBonReceptionNonDeclarerCourante;
+	  
+		
+	  @Column(name = "prefixe_bon_reception_nd ")
+	  private String prefixeBonReceptionNonDeclarer ;
+	  
+	  
+	  
+	  
+	  /********* Fin Achat   ****************/
+	  
+	  
+
+	  
+	  
+	  
 	  
 	/**
 	 * @return the annee
 	 */
 	public Long getAnnee() {
 		return annee;
+	}
+
+	public Long getNumReferenceBonReceptionNonDeclarerCourante() {
+		return numReferenceBonReceptionNonDeclarerCourante;
+	}
+
+	public void setNumReferenceBonReceptionNonDeclarerCourante(Long numReferenceBonReceptionNonDeclarerCourante) {
+		this.numReferenceBonReceptionNonDeclarerCourante = numReferenceBonReceptionNonDeclarerCourante;
+	}
+
+	public String getPrefixeBonReceptionNonDeclarer() {
+		return prefixeBonReceptionNonDeclarer;
+	}
+
+	public void setPrefixeBonReceptionNonDeclarer(String prefixeBonReceptionNonDeclarer) {
+		this.prefixeBonReceptionNonDeclarer = prefixeBonReceptionNonDeclarer;
+	}
+
+	public Long getNumReferenceBonCommandeCourante() {
+		return numReferenceBonCommandeCourante;
+	}
+
+	public void setNumReferenceBonCommandeCourante(Long numReferenceCommandeCourante) {
+		this.numReferenceBonCommandeCourante = numReferenceCommandeCourante;
+	}
+
+	public String getPrefixeBC() {
+		return prefixeBC;
+	}
+
+	public void setPrefixeBC(String prefixeBC) {
+		this.prefixeBC = prefixeBC;
+	}
+
+	public Long getNumReferenceBonReceptionCourante() {
+		return numReferenceBonReceptionCourante;
+	}
+
+	public void setNumReferenceBonReceptionCourante(Long numReferenceBonReceptionCourante) {
+		this.numReferenceBonReceptionCourante = numReferenceBonReceptionCourante;
+	}
+
+	public String getPrefixeBonReception() {
+		return prefixeBonReception;
+	}
+
+	public void setPrefixeBonReception(String prefixeBonReception) {
+		this.prefixeBonReception = prefixeBonReception;
+	}
+
+	public Long getNumReferenceFactureCourante() {
+		return numReferenceFactureCourante;
+	}
+
+	public void setNumReferenceFactureCourante(Long numReferenceFactureCourante) {
+		this.numReferenceFactureCourante = numReferenceFactureCourante;
+	}
+
+	public String getPrefixeFacture() {
+		return prefixeFacture;
+	}
+
+	public void setPrefixeFacture(String prefixeFacture) {
+		this.prefixeFacture = prefixeFacture;
+	}
+
+	public Long getNumReferenceAvoirCourante() {
+		return numReferenceAvoirCourante;
+	}
+
+	public void setNumReferenceAvoirCourante(Long numReferenceAvoirCourante) {
+		this.numReferenceAvoirCourante = numReferenceAvoirCourante;
+	}
+
+	public String getPrefixeAvoir() {
+		return prefixeAvoir;
+	}
+
+	public void setPrefixeAvoir(String prefixeAvoir) {
+		this.prefixeAvoir = prefixeAvoir;
 	}
 
 	/**

@@ -32,6 +32,51 @@ public interface IGuichetMensuelPersistance {
 
 	  public Long modifierGuichetBonSortieMensuel(GuichetMensuelValue pGuichetValeur);
 
+
+	public Long getNextNumBonCommandeReference();
+
+
+	public Long modifierGuichetBonCommandeMensuel(GuichetMensuelValue pGuichetValeur);
+
+
+	public Long modifierGuichetFactureAvoirMensuel(GuichetMensuelValue pGuichetValeur);
+
+
+	public Long getNextNumfactureAvoirReference();
+
+
+	public Long modifierGuichetFactureMensuel(GuichetMensuelValue pGuichetValeur);
+
+
+	public Long getNextNumfactureReference();
+
+
+	public Long modifierGuichetBonReceptionMensuel(GuichetMensuelValue pGuichetValeur);
+
+
+	public Long getNextNumBonReceptionReference();
+
+
+
+
+
+	public GuichetMensuelValue getCurrentGuichetMensuel();
 	
+
+	public String getPrefix();
+
+
+	public String getPrefixBonReception();
+	public String getPrefixFacture();
+	public String getPrefixFactureAvoir();
+
+
+	public Long modifierGuichetBonReceptionNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur);
+
+
+	public Long getNextNumBonReceptionReferenceNonDeclarer();
+
+
+	public String getPrefixBonReceptionNonDeclarer();
 	
 }

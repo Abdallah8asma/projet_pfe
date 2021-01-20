@@ -13,9 +13,10 @@ angular
 						'downloadService',
 						'initReferentielService',
 						'UrlCommun',
+						'UrlAtelier',						
 						'$window',
-						function($scope, $rootScope, $translate, $filter, $http, $log, downloadService,	
-							initReferentielService, UrlCommun,$window) {
+						function($scope, $rootScope, $translate, $filter, $http, $log, downloadService,
+							initReferentielService, UrlCommun,UrlAtelier,$window) {
 							// Déclaration des variables globales utilisées
 							$log.info("=============ARTICLE===============");
 							/** ***Liste desVariables **** */
@@ -42,12 +43,19 @@ angular
 							$scope.ListMatiereArticleCache = [];
 							$scope.ListTypeDocumentCache = [];
 							$scope.articleCourante = {};
+
+							$scope.ListeTaxe = [];
 							/***************************************************
 							 * Gestion de Cache des Referentiels *
 							 **************************************************/
 							
 							// Liste des TypesCache
-							/*$scope.listeTypesArticleCache = function() {
+
+							  
+							$scope.articleCourante ={
+								"typeEntite":'Matiere'
+							}
+							$scope.listeTypesArticleCache = function() {
 								$http
 										.get(
 												UrlCommun
@@ -60,7 +68,7 @@ angular
 
 												});
 							}
-*/
+
 							// Liste des FamilleCache
 							$scope.ListFamillesArticleCache = function() {
 								$http
@@ -238,6 +246,7 @@ angular
 							
 							// Rechercher Article
 							$scope.rechercherArticle = function(articleCourante) {
+								articleCourante.typeEntite = "1";
 								$http
 										.post(
 												UrlCommun
@@ -624,6 +633,69 @@ angular
 															+ error);
 												});
 							};
+
+
+
+     // Liste des Taxes
+  	 $scope.ListeTaxe = function () {
+        $http.get(UrlAtelier + '/taxe/getTVA').success(function (dataTaxe) {
+          $scope.ListeTaxe = dataTaxe;
+        });
+      };
+
+      $scope.ListeTaxe();  
+
+
+ /***    calcule de prix de Achat HT       **/
+
+ $scope.calculerPrixAchatHT = function(prixAchatTTC,taxeId){
+			
+	var element = $scope.ListeTaxe.filter(function(node) {
+		return node.id==taxeId;
+	});
+	
+	if(angular.isDefined(element[0]) && prixAchatTTC != null){
+		
+		var valeurTaxe = element[0].valeur;
+		
+		$scope.articleCourante.pu = prixAchatTTC / (1+(valeurTaxe/100));
+		
+		//$scope.produitCourante.prixAchat.toFixed(3);
+		
+		$scope.articleCourante.pu = Math.round($scope.articleCourante.pu*1000)/1000;
+		
+	}
+	
+	
+}
+ 
+
+
+
+/***    calcule de prix de Achat TTC      **/
+ $scope.calculerPrixAchatTTC = function (prixAchatHT, taxeId) {
+var element = $scope.ListeTaxe.filter(function (node) {
+return node.id == taxeId;
+});
+
+if (angular.isDefined(element[0]) && prixAchatHT != null) {
+var valeurTaxe = element[0].valeur;
+$scope.articleCourante.tva=valeurTaxe; 
+$scope.articleCourante.puTTC =
+	prixAchatHT * (1 + valeurTaxe / 100);
+
+// $scope.produitCourante.prixAchatTTC.toFixed(3);
+$scope.articleCourante.puTTC = Math.round($scope.articleCourante.puTTC*1000)/1000;
+}
+};
+
+
+ 
+
+ 
+
+
+
 							/** Fin de gestion des DocumentArticle */
 
 							/**
@@ -682,13 +754,23 @@ angular
 														displayName : $translate.instant('pmp'),
 														width:'5%'
 													},
-													{
+												/* 	{
 														field : 'siteEntiteDesignation',
 														displayName : $translate.instant('site'),
 														width:'10%'
+													}, */
+												
+													{
+														field : 'dimension',
+														displayName : $translate.instant('dimension'),
+														width:'10%'
 													},
 												
-												
+													{
+														field : 'grammage',
+														displayName : $translate.instant('grammage'),
+														width:'10%'
+													},
 												
 													{
 														field: '',

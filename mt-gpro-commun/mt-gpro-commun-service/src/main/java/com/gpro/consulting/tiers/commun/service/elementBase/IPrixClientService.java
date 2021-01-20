@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherchePrixClientValue;
@@ -72,6 +73,10 @@ public interface IPrixClientService {
 	  
 		public List<PrixClientValue> rechchercheMultiCriterePrixClient(
 				RecherchePrixClientValue pRecherchePrixClientMulitCritere);
+		
+		
+		  @Transactional(readOnly = false, rollbackFor = Exception.class)
+	      public String creerPrixArticleClient(List<ArticleValue> pProduitValue);
 
 	
 }

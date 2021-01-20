@@ -99,4 +99,6 @@ public interface IFactureAchatDomaine {
 
 	public BLReportElementRecapValue getDepenseFacturebyMonth(RechercheMulticritereFactureAchatValue request);
 
+	public String getCurrentReferenceMensuel(String type, Calendar instance, boolean b);
+
 }

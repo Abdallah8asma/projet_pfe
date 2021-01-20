@@ -137,4 +137,21 @@ public class ReceptionAchatServiceImpl implements IReceptionAchatService {
 		return receptionDomaineGC.validerBL(reference);
 	}
 
+	@Override
+	public String getCurrentReferenceMensuel(Calendar instance, boolean b) {
+		return receptionDomaineGC.getCurrentReferenceMensuel(instance,b);
+	}
+
+	@Override
+	public String getCurrentReferenceMensuelByType(String type, Calendar instance, boolean b) {
+		// TODO Auto-generated method stub
+		return receptionDomaineGC.getCurrentReferenceMensuelByType(type,instance,b);
+	}
+
+	@Override
+	public List<BonReceptionVue> getListBonReceptionRefByFournisseurDeclarer(Long idFournisseur) {
+		// TODO Auto-generated method stub
+		return receptionDomaineGC.getListBonReceptionRefByFournisseurDeclarer(idFournisseur);
+	}
+
 }

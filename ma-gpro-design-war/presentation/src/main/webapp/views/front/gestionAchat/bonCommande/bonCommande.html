@@ -544,7 +544,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text ms-Label">R&eacute;f&eacute;rence</span>
 										</div>
-										<input type="text" class="form-control" ng-model="commandeAchatCourante.reference"
+										<input type="text" class="form-control" ng-model="commandeAchatCourante.reference"s
 											ng-disabled="modePdf != 'actif' && clientActif.disableAchat">
 									</div>
 								</div>
@@ -837,7 +837,7 @@
 																class="form-control " style="border: 1px solid #e5eaee !important;">
 																<OPTION value="">Tous</OPTION>
 																<option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">
-																	{{produit.reference}}</option>
+																	{{produit.ref}}</option>
 															</select></td>
 														<td><select ui-select2 ng-model="produit.produitId"
 																ng-change="clickProduit(produit.produitId, $index)" data-placeholder="..."
@@ -847,7 +847,7 @@
 																	{{produit.designation}}</option>
 															</select></td>
 														<td><span e-form="rowform">
-																{{produit.sousFamille || 'EMPTY' }} </span></td>
+																{{produit.sousFamilleArtEntite || 'EMPTY' }} </span></td>
 														<td><input type="number" min="1" class="form-control" ng-model="produit.quantite" required="required"
 																name="quantite" />
 
@@ -931,12 +931,12 @@
 																style="border: 1px solid #e5eaee !important;">
 																<OPTION value="">Tous</OPTION>
 																<option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">
-																	{{produit.reference}}</option>
+																	{{produit.ref}}</option>
 															</select></td>
 														<td><span e-form="rowform">{{produit.designation
 																|| 'EMPTY'}}</span></td>
 														<td><span e-form="rowform">
-																{{produit.sousFamille || 'EMPTY' }} </span></td>
+																{{produit.sousFamilleArtEntite || 'EMPTY' }} </span></td>
 														</td>
 														<td><input type="number" class="form-control" ng-model="produit.quantite" min="0" required="required"
 																pattern="^\d*(\.\d{0,2})?$" placeholder="0" value="0" name="quantite" />

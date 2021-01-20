@@ -148,8 +148,158 @@ public class ArticleValue implements Comparable<ArticleValue>{
 
 
 	
+	private Double tva;
+	
+	private Double puTTC;
+	private Long idTaxe;
 	
 	
+	private boolean serialisable;
+	private Long partieIntersseId;
+	
+	private Double prixSpecial;
+	private Double remise;
+	private Long groupeClientId;
+	
+	private Long sousFamilleId;
+	
+	 private Long produitId ;
+	 
+	 private String nbrCouleur ;
+	 
+	 private String dimensionPapier;
+		private Calendar dateCreation;
+		
+		private String nbrPose ;
+		
+		private String fichier;
+		
+	public String getFichier() {
+			return fichier;
+		}
+
+		public void setFichier(String fichier) {
+			this.fichier = fichier;
+		}
+
+	public String getNbrPose() {
+			return nbrPose;
+		}
+
+		public void setNbrPose(String nbrPose) {
+			this.nbrPose = nbrPose;
+		}
+
+	public Calendar getDateCreation() {
+			return dateCreation;
+		}
+
+		public void setDateCreation(Calendar dateCreation) {
+			this.dateCreation = dateCreation;
+		}
+
+
+		
+
+	public String getNbrCouleur() {
+			return nbrCouleur;
+		}
+
+		public void setNbrCouleur(String nbrCouleur) {
+			this.nbrCouleur = nbrCouleur;
+		}
+
+
+
+
+	public String getDimensionPapier() {
+		return dimensionPapier;
+	}
+
+	public void setDimensionPapier(String dimensionPapier) {
+		this.dimensionPapier = dimensionPapier;
+	}
+
+	public Long getProduitId() {
+		return produitId;
+	}
+
+	public void setProduitId(Long produitId) {
+		this.produitId = produitId;
+	}
+
+	public Long getSousFamilleId() {
+		return sousFamilleId;
+	}
+
+	public void setSousFamilleId(Long sousFamilleId) {
+		this.sousFamilleId = sousFamilleId;
+	}
+
+	public Long getGroupeClientId() {
+		return groupeClientId;
+	}
+
+	public void setGroupeClientId(Long groupeClientId) {
+		this.groupeClientId = groupeClientId;
+	}
+
+	public Double getPrixSpecial() {
+		return prixSpecial;
+	}
+
+	public void setPrixSpecial(Double prixSpecial) {
+		this.prixSpecial = prixSpecial;
+	}
+
+	public Double getRemise() {
+		return remise;
+	}
+
+	public void setRemise(Double remise) {
+		this.remise = remise;
+	}
+
+	public Long getPartieIntersseId() {
+		return partieIntersseId;
+	}
+
+	public void setPartieIntersseId(Long partieIntersseId) {
+		this.partieIntersseId = partieIntersseId;
+	}
+
+	public boolean isSerialisable() {
+		return serialisable;
+	}
+
+	public void setSerialisable(boolean serialisable) {
+		this.serialisable = serialisable;
+	}
+
+	public Long getIdTaxe() {
+		return idTaxe;
+	}
+
+	public void setIdTaxe(Long idTaxe) {
+		this.idTaxe = idTaxe;
+	}
+
+	public Double getTva() {
+		return tva;
+	}
+
+	public void setTva(Double tva) {
+		this.tva = tva;
+	}
+
+	public Double getPuTTC() {
+		return puTTC;
+	}
+
+	public void setPuTTC(Double puTTC) {
+		this.puTTC = puTTC;
+	}
+
 	public String getCouleur() {
 		return couleur;
 	}

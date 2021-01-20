@@ -1237,8 +1237,20 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
         	    
         	    detail.setPoidsNet(det.getQteEntree());
         	    
+        	    detail.setPoidsBrut(det.getQteActuelle());
+        	    
         	    
         	    detail.setCarton(det.getReferenceLot());
+        	    
+        	    
+	           //date Entree
+        	    
+        	    detail.setDateSortie(det.getDateEntree());
+        	     	    
+        	    //emplacement
+        	    
+        	    detail.setOrdreNumero(det.getEmplacement());
+        	    
         	    
         	 
         	
@@ -1306,8 +1318,20 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
         	    
         	    detail.setPoidsNet(det.getQteEntree());
         	    
+        	    detail.setPoidsBrut(det.getQteActuelle());
+        	    
         	 
         	    detail.setCarton(det.getReferenceLot());
+        	    
+        	    
+        	    //date Entree
+        	    
+        	    detail.setDateSortie(det.getDateEntree());
+        	     	    
+        	    //emplacement
+        	    
+        	    detail.setOrdreNumero(det.getEmplacement());
+        	    
         	
         	list.add(detail);
         }

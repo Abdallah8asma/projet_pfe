@@ -15,12 +15,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamilleArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamilleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.RegionValue;
+import com.gpro.consulting.tiers.commun.domaine.elementBase.IArticleDomaine;
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.IBaseInfoPersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitSerialisablePersistance;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.ISousFamilleArticlePersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.ISousFamilleProduitPersistance;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IGroupeClientPersistance;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInteresseePersistance;
@@ -256,6 +260,13 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 
 	@Autowired
 	private ISituationReportingDomaine situationReportingDomaine;
+	
+	
+	
+	@Autowired
+	private IArticleDomaine articleDomaine;
+	@Autowired
+	private ISousFamilleArticlePersistance sousFamilleArticlePersistance;
 
 	@Override
 	public BonCommandeReportValue getBonCommandeParIdReport(Long id, String typerapport, String avecPrix)
@@ -371,22 +382,27 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 
 		List<BonCommandeReportProductValue> listeProduitCommandes = new ArrayList<BonCommandeReportProductValue>();
 
-		Map<Long, ProduitValue> produitIdMap = gestionnaireLogistiqueCacheDomaine.mapProduitById();
+	//	Map<Long, ArticleValue> produitIdMap = gestionnaireLogistiqueCacheDomaine.mapProduitById();
 		//
 
 		Map<Long, Double> produitTaxeMap = new HashMap<Long, Double>();
 
 		for (ProduitCommandeAchatValue produitCommande : commandeVente.getListProduitCommandes()) {
+			
+			ArticleValue vArticle = articleDomaine.getArticleParId(produitCommande.getProduitId());
+			
+			
 
-			String referenceProduit = produitIdMap.get(produitCommande.getProduitId()).getReference();
-			String designationProduit = produitIdMap.get(produitCommande.getProduitId()).getDesignation();
+			String referenceProduit = vArticle.getRef();
+			String designationProduit =vArticle.getDesignation();
 
-			Long sousFamilleId = produitIdMap.get(produitCommande.getProduitId()).getSousFamilleId();
+			Long sousFamilleId = vArticle.getSousFamilleId();
 
 			String sousFamilleProduit = null;
 			if (sousFamilleId != null) {
-				SousFamilleProduitValue sousFamille = sousFamilleProduitPersistance
-						.rechercheSousFamilleProduitById(sousFamilleId);
+				
+				SousFamilleArticleValue sousFamille=sousFamilleArticlePersistance.rechercheSousFamilleArticleById(sousFamilleId);
+				//SousFamilleProduitValue sousFamille = sousFamilleProduitPersistance.rechercheSousFamilleProduitById(sousFamilleId);
 				sousFamilleProduit = sousFamille.getDesignation();
 			}
 
@@ -645,21 +661,26 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 
 		List<BReceptionReportProductValue> listeProduitReceptions = new ArrayList<BReceptionReportProductValue>();
 
-		Map<Long, ProduitValue> produitIdMap = gestionnaireLogistiqueCacheDomaine.mapProduitById();
+		//Map<Long, ProduitValue> produitIdMap = gestionnaireLogistiqueCacheDomaine.mapProduitById();
 
 		Map<Long, Double> produitTaxeMap = new HashMap<Long, Double>();
+		
+		
 
 		for (ProduitReceptionAchatValue produitReception : receptionVente.getListProduitReceptions()) {
+			
+			ArticleValue vArticle = articleDomaine.getArticleParId(produitReception.getProduitId());
 
 			Long produitId = produitReception.getProduitId();
 
-			String referenceProduit = produitIdMap.get(produitReception.getProduitId()).getReference();
-			String designationProduit = produitIdMap.get(produitReception.getProduitId()).getDesignation();
+			String referenceProduit = vArticle.getRef();
+			String designationProduit = vArticle.getDesignation();
 
-			Long sousFamilleId = produitIdMap.get(produitReception.getProduitId()).getSousFamilleId();
+			Long sousFamilleId = vArticle.getSousFamilleId();
 
 			String sousFamilleProduit = null;
 			if (sousFamilleId != null) {
+				
 				SousFamilleProduitValue sousFamille = sousFamilleProduitPersistance
 						.rechercheSousFamilleProduitById(sousFamilleId);
 				sousFamilleProduit = sousFamille.getDesignation();
@@ -1195,6 +1216,8 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 		bonCommandeReport.setTelephoneMoblieCompagnie(baseInfo.getTelephoneMoblie());
 		bonCommandeReport.setFaxCompagnie(baseInfo.getFax());
 		bonCommandeReport.setEmailCompagnie(baseInfo.getEmail());
+		
+		bonCommandeReport.getParams().put("p_PathLogo", baseInfo.getLogo());
 
 	}
 
@@ -1344,10 +1367,11 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 		List<FactureReportProductValue> productList = new ArrayList<FactureReportProductValue>();
 		List<FactureReportTraitementFaconValue> traitementFaconList = new ArrayList<FactureReportTraitementFaconValue>();
 
-		Map<Long, ProduitValue> produitIdMap = gestionnaireLogistiqueCacheDomaine.mapProduitById();
+		//Map<Long, ProduitValue> produitIdMap = gestionnaireLogistiqueCacheDomaine.mapProduitById();
 		Map<Long, Double> produitTaxeMap = new HashMap<Long, Double>();
 		//
 		for (DetFactureAchatValue detFactureVente : factureVente.getListDetFactureAchat()) {
+			ArticleValue vArticle = articleDomaine.getArticleParId(detFactureVente.getProduitId());
 
 			if (factureVente.getNatureLivraison().equals("FINI")) {
 
@@ -1370,7 +1394,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 
 				Long produitId = detFactureVente.getProduitId();
 
-				if (produitIdMap.containsKey(produitId)) {
+				if (vArticle!=null) {
 
 					detFactureVente.setPrixUnitaireHT(detFactureVente.getPrixUnitaireHT());
 
@@ -1393,7 +1417,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 					 * getDesignation()); }
 					 */
 
-					factureReportProduct.setProduitDesignation(produitIdMap.get(produitId).getDesignation());
+					factureReportProduct.setProduitDesignation(vArticle.getDesignation());
 
 					// enrichir designation produit avec description detaille
 					/*
@@ -1417,7 +1441,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 					 * }
 					 */
 
-					factureReportProduct.setProduitCode(produitIdMap.get(produitId).getReference());
+					factureReportProduct.setProduitCode(vArticle.getRef());
 
 					// ajouté 16/03/2018
 					factureReportProduct.setTauxTvaArt(detFactureVente.getTaxeId().intValue());

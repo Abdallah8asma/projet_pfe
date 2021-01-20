@@ -126,7 +126,7 @@
 												<span class="input-group-text">Etat </span>
 											</div>
 											<select  ui-select2="true" class="form-control" ng-model="miseCourant.statut"
-											ng-init="miseCourant.statut = ''">
+											ng-init="miseCourant.statut = ''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option value="Preparation">Preparation</option>
 											<option value="En cours">Doing</option>
@@ -144,7 +144,7 @@
 												<span class="input-group-text">Type</span>
 											</div>
 											<select  ui-select2="true" class="form-control" ng-model="miseCourant.type"
-											ng-init="miseCourant.type = ''">
+											ng-init="miseCourant.type = ''" style="border: 1px solid #e5eaee !important;" >
 											<option value="">Tous</option>
 											<option value="Injection">Injection</option>
 											<option value="Tempographie">Tempographie</option>
@@ -412,14 +412,14 @@
 							</div>
 							
 							<div class="row">
-								<div class="col-sm-3">
+								<div class="col-sm-4">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
 												<span class="input-group-text">Qantité Produit</span>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="miseCourant.etatProduced"
-												ng-init="miseCourant.etatProduced ='tout'" >
+												ng-init="miseCourant.etatProduced ='tout'" style="border: 1px solid #e5eaee !important;" >
 												<option value="tout">Tous</option>
 												<option value="0">0</option>
 												<option value="-" selected>-</option>
@@ -433,14 +433,14 @@
 								</div>
 
 
-								<div class="col-sm-3">
+								<div class="col-sm-4">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
 												<span class="input-group-text">Quantité Expédiée</span>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="miseCourant.etatShipped"
-												ng-init="miseCourant.etatShipped ='tout'" >
+												ng-init="miseCourant.etatShipped ='tout'" style="border: 1px solid #e5eaee !important;" >
 												<option value="tout">Tous</option>
 												<option value="0">0</option>
 												<option value="-" selected>-</option>
@@ -452,14 +452,14 @@
 										</div>
 									</div>
 								</div>
-								<div class="col-sm-3">
+								<div class="col-sm-4">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
 												<span class="input-group-text">Machine</span>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="miseCourant.machine"
-												ng-init="miseCourant.machine=''" >
+												ng-init="miseCourant.machine=''" style="border: 1px solid #e5eaee !important;" >
 	
 												<option value="">Tous</option>
 												<option ng-repeat="produit in listeMachines"

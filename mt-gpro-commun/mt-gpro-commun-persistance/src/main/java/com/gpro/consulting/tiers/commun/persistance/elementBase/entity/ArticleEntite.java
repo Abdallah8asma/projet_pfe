@@ -153,6 +153,10 @@ public class ArticleEntite implements Serializable {
 	@Column(name = "eb_unite_2_id")
 	private Long unite2Entite;
 	
+
+	
+	
+	
 	/** The document entites. */
 	
     @OneToMany(mappedBy = "article",cascade=CascadeType.ALL)
@@ -172,8 +176,105 @@ public class ArticleEntite implements Serializable {
 	private String grammage;
 	
 	
+	@Column(name = "tva")
+	private Double tva;
 	
 	
+	@Column(name="pu_ttc")
+	 private Double puTTC ;
+	
+	
+	@Column(name="id_taxe")
+	 private Long idTaxe ;
+	
+	
+	@Column(name="produit_id")
+	 private Long produitId ;
+	
+	
+	@Column(name="nbr_couleur")
+	 private String nbrCouleur ;
+	
+	
+	@Column(name = "dimension_papier")
+	private String dimensionPapier;
+	
+	
+	@Column(name = "fichier")
+	private String fichier;
+	
+	@Column(name = "nbr_pose")
+	private String nbrPose;	
+
+
+	public String getFichier() {
+		return fichier;
+	}
+
+	public void setFichier(String fichier) {
+		this.fichier = fichier;
+	}
+
+
+
+	public String getNbrPose() {
+		return nbrPose;
+	}
+
+	public void setNbrPose(String nbrPose) {
+		this.nbrPose = nbrPose;
+	}
+
+	public String getDimensionPapier() {
+		return dimensionPapier;
+	}
+
+	public void setDimensionPapier(String dimensionPapier) {
+		this.dimensionPapier = dimensionPapier;
+	}
+
+	
+
+	public String getNbrCouleur() {
+		return nbrCouleur;
+	}
+
+	public void setNbrCouleur(String nbrCouleur) {
+		this.nbrCouleur = nbrCouleur;
+	}
+
+	public Long getProduitId() {
+		return produitId;
+	}
+
+	public void setProduitId(Long produitId) {
+		this.produitId = produitId;
+	}
+
+	public Double getTva() {
+		return tva;
+	}
+
+	public void setTva(Double tva) {
+		this.tva = tva;
+	}
+
+
+	public Double getPuTTC() {
+		return puTTC;
+	}
+
+	public void setPuTTC(Double puTTC) {
+		this.puTTC = puTTC;
+	}
+
+	public Long getIdTaxe() {
+		return idTaxe;
+	}
+
+	public void setIdTaxe(Long idTaxe) {
+		this.idTaxe = idTaxe;
+	}
 	
 	public String getDimension() {
 		return dimension;

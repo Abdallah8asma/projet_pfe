@@ -427,7 +427,23 @@
 							</div>
 
 
-
+                        <div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Devise </span>
+										</div>
+										<select ui-select2="true" class="form-control" ng-model="commandeVenteCourante.devise"
+											ng-init="commandeVenteCourante.devise=''">
+											<option value="">Tous</option>
+											<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
+											{{dev.designation}}</option>
+										</select>
+									</div>
+								</div>
+								</div>
+							</div>
 						</form>
 
 					</div>
@@ -735,6 +751,38 @@
 							</div>
 
 
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Devise </span>
+											</div>
+											<select ui-select2="true" class="form-control" ng-model="commandeVenteCourante.devise"
+												ng-init="commandeVenteCourante.devise=''">
+												<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
+												{{dev.designation}}</option>
+											</select>
+										</div>
+									</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="form-group">
+											<div class="input-group">
+												<div class="input-group-prepend">
+													<label class="input-group-text ms-Label ">Taux Conversion  </label>
+												</div>
+												<input class="form-control" type="number" step="any"  ng-model="commandeVenteCourante.tauxConversion " 
+											
+													ng-init="commandeVenteCourante.tauxConversion =''" />
+												
+												
+											</div>
+										</div>
+										</div>
+
+
+							</div>
 
 
 							<div class="row" ng-show="modePdf == 'actif'">
@@ -902,6 +950,24 @@
 											</div>
 											<input class="form-control" readonly="readonly"
 												value="{{commandeVenteCourante.montantTTC | prixFiltre}}" />
+										</div>
+									</div>
+
+								</div>
+								
+								<div class="col-sm-4">
+
+
+
+
+
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<label class="input-group-text ms-Label">Montant Converti</label>
+											</div>
+											<input class="form-control" readonly="readonly"
+												value="{{commandeVenteCourante.montantConverti | prixFiltre}}" />
 										</div>
 									</div>
 

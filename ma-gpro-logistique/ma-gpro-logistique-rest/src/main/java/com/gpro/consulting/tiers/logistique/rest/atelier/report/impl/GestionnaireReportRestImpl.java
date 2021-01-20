@@ -173,7 +173,7 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 			
 			@RequestParam("nombreColieA") Long nombreColieA, 
 			//@RequestParam("entrepot") Long entrepot,
-		//	@RequestParam("emplacement") String emplacement, 
+			//@RequestParam("emplacement") String emplacement, 
 			@RequestParam("metrageDu") Double metrageDu,
 			@RequestParam("metrageA") Double metrageA, @RequestParam("dateEtat") String dateEtat,
 			@RequestParam("designationQuiContient") String designationQuiContient,
@@ -191,14 +191,14 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 		critereRechercheRouleauStandard.setClient(client);
 		critereRechercheRouleauStandard.setDateEtat(stringToCalendar(dateEtat));
 		critereRechercheRouleauStandard.setDesignationQuiContient(designationQuiContient);
-	//	critereRechercheRouleauStandard.setEmplacement(emplacement);
-	//	critereRechercheRouleauStandard.setEntrepot(entrepot);
+		////critereRechercheRouleauStandard.setEmplacement(emplacement);
+	////	critereRechercheRouleauStandard.setEntrepot(entrepot);
 		critereRechercheRouleauStandard.setMetrageA(metrageA);
 		critereRechercheRouleauStandard.setMetrageDu(metrageDu);
 		critereRechercheRouleauStandard.setNombreColieA(nombreColieA);
 		critereRechercheRouleauStandard.setNombreColieDu(nombreColieDu);
 		critereRechercheRouleauStandard.setOrderBy(orderBy);
-		critereRechercheRouleauStandard.setFini(fini);
+		//critereRechercheRouleauStandard.setFini(fini);
 		critereRechercheRouleauStandard.setReferenceProduit(referenceProduit);
 		
 		

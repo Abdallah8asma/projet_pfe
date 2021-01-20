@@ -64,5 +64,7 @@ public interface IArticlePersistance {
 	  
 	  
 	  public ArticleValue getArticleParId(Long id);
+
+	public ArticleValue rechercheProduitParReference(String reference);
 	  
 }

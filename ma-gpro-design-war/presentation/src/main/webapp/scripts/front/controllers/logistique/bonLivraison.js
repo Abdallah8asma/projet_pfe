@@ -12,7 +12,8 @@ angular
 		 'UrlAtelier',
 		 'BonLivraisonServices',
 		 'traitementFaconServices',
-		 function($scope, $filter, $http, $log, downloadService, UrlCommun, UrlAtelier, BonLivraisonServices,traitementFaconServices ) {
+		 '$window',
+		 function($scope, $filter, $http, $log, downloadService, UrlCommun, UrlAtelier, BonLivraisonServices,traitementFaconServices,$window) {
 			$log.info("=========Vente========");
 			
 			$scope.tagReferenceBSList = [];
@@ -34,6 +35,31 @@ angular
 				};
 			
 			
+		$scope.traitementEnCours = "false";
+			
+			$scope.msg = "";
+			
+				// REST SERVICE MAGAZINS
+				$scope.listeMagazinCache = function() {
+					$http
+							.get(
+									UrlAtelier
+											+ "/magasin/depots")
+							.success(
+									function(dataMagazin) {
+										
+										
+										$scope.listeMagazinCache = dataMagazin;
+										$log
+												.debug("listeMagazinCache : "
+														+ dataMagazin.length)
+
+									});
+				}
+				
+
+
+
 			//Tableau de Taxe Prédefini 
 			 
 			 $scope.listTaxeLivraisonInitMethod= function(){
@@ -178,7 +204,7 @@ angular
 			 //$scope.listeMarche();
 			 $scope.listeModePaiement();
 			 $scope.getListeTraitementFacon();
-
+              $scope.listeMagazinCache();
 			 /***************************************************
 			  * Conversion des Ids/Designation
 			  **************************************************/
@@ -376,6 +402,7 @@ angular
 			 $scope.validerNatureFini = function(){
 				 
 				 $log.debug("Log1: idBonLiv = " + $scope.idBonLivVente);
+					$scope.traitementEnCours = "true";
 				 
 				 BonLivraisonServices.validateFini($scope.tagReferenceBSList,$scope.idBonLivVente).then(function(resultat){
 					//bouton Valider en mode : Actif :afficher le tableau resultant de DetLivVene
@@ -387,7 +414,7 @@ angular
 					 $log.debug("-- listDetLivraisonVentePRBS Size : "+ $scope.listDetLivraisonVentePRBS.length);
 
 					 $log.debug("-- listDetLivraisonVentePRBS : "+ JSON.stringify($scope.listDetLivraisonVentePRBS,null,'  '));
-
+						$scope.traitementEnCours = "false";
 				 }
 				 ,function(error){
 					 console.log(error.statusText);
@@ -532,6 +559,9 @@ angular
 			 // Annuler Recherche
 			 $scope.annulerAjout = function(){
 				 
+				 
+				 $scope.traitementEnCours = "false";
+				 
 			 	//init checkbox : 'non' :rapport sans Prix / 'oui' rapport avec prix
 			 	 $scope.checkboxModel= {
 			       rapportPrix : "oui"
@@ -565,19 +595,19 @@ angular
 				 $scope.rechercheBLVenteForm.$setPristine();
 				 //init de l'objet courant  
 //				 $scope.bonLivraisonVenteCourant={};
-				 $scope.bonLivraisonVenteCourant = {
-						 "referenceBl" : '',
-						 "referenceBs" : '',
-						 "partieIntId" : '',
-						 "dateLivraisonMin" : '',
-						 "dateLivraisonMax": '',
-						 "metrageMin" : '',
-						 "metrageMax" : '',
-						 "prixMin" : '',
-						 "prixMax" : '',
-						 "natureLivraison" : "FINI",
-						 "avecFacture": ''
-					};
+//				 $scope.bonLivraisonVenteCourant = {
+//						 "referenceBl" : '',
+//						 "referenceBs" : '',
+//						 "partieIntId" : '',
+//						 "dateLivraisonMin" : '',
+//						 "dateLivraisonMax": '',
+//						 "metrageMin" : '',
+//						 "metrageMax" : '',
+//						 "prixMin" : '',
+//						 "prixMax" : '',
+//						 "natureLivraison" : "FINI",
+//						 "avecFacture": ''
+//					};
 				 
 				 
 				 $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
@@ -591,9 +621,22 @@ angular
 				 $scope.natureLivraison ="FINI";
 				 $scope.listTaxeLivraisonInitMethod();
 				 $scope.initTaxeRemoved();
-				 $scope.bonLivraisonVenteCourant = {};
-				 $scope.bonLivraisonVenteCourant = bonLVente ? angular
-						 .copy(bonLVente) : {};
+				// $scope.bonLivraisonVenteCourant = {};
+
+				 var defaultIdDepot = 1;
+				 if($scope.listeMagazinCache && $scope.listeMagazinCache.length >0)
+					 defaultIdDepot = $scope.listeMagazinCache[0].id;
+				 
+				 
+				 $scope.bonLivraisonVenteCourant = {"date" : new Date(),
+												 "idDepot" : defaultIdDepot,
+												   "modepaiementId" : 1,
+												   "declare":true };
+
+
+
+			/*	 $scope.bonLivraisonVenteCourant = bonLVente ? angular
+						 .copy(bonLVente) : {};*/
 
 						 //mode edit activé
 						 $scope.displayMode = "edit";
@@ -713,8 +756,6 @@ angular
 
 			 // Sauvegarder bon de Vente
 			 $scope.sauvegarderBonVente = function(bonVente) {
-				 
-				 console.log(" sauveagrde bonvente sans GC");
 
 				 if (angular.isDefined(bonVente.id)) {
 					 $log.debug("Sauvegarder Modification : " + bonVente.reference);
@@ -727,31 +768,14 @@ angular
 				 
 			 }
 
-			 
-             $scope.calculBonVente = function() {
-				 
-            		var prixTTC=0;
-    			 angular.forEach($scope.listDetLivraisonVente, function(listDetLivraisonVente,value){
-    				prixTTC+=(listDetLivraisonVente.prixTTC*listDetLivraisonVente.quantite);
-    			
-    			 })
-    			$scope.bonLivraisonVenteCourant.montantTTC =prixTTC;
-				 
-			 }
-			 
-			
-			
-			 
-			 
-			 
-			 
-			 
-			 
 			 // Mise à jour des Bons de Vente
 			 $scope.updateBonVente = function(bonLVente) {
+				 
+				 $scope.traitementEnCours = "true";
+				 
+				 
 				 //Liste des TaxeLivraisonVente (pour la table Taxe) & detailsLivraisonVente ( pour la table Produit ) correspendants à ce bon de vente
 				 $log.debug("-- tagReferenceBSList " + JSON.stringify($scope.tagReferenceBSList) );	
-				 console.log("innnn bon liv sans GC");
 				 
 				 var urlValider = UrlAtelier+ "/bonlivraison/validate?livraisonVenteId="+bonLVente.id;
 				 $log.debug("--------URL "+urlValider);
@@ -763,6 +787,7 @@ angular
 							 $scope.modeValider = "actif";
 							 //listDetLivraisonVente
 							 $scope.listDetLivraisonVentePRBS = resultat.listDetLivraisonVente;
+							 $scope.traitementEnCours = "false";
 						 });
 				 $log.debug("Update------ listDetLivraisonVentePRBS :" );
 				 $log.debug(JSON.stringify($scope.listDetLivraisonVentePRBS, null, "    ") );
@@ -785,6 +810,8 @@ angular
 
 				 $log.debug("Modification bonLVente : "+ JSON.stringify(bonLVente,null,"  "));
 
+				 $scope.traitementEnCours = "true";
+				 
 				 $http.post(UrlAtelier+ "/bonlivraison/updateBonLivraison",bonLVente)
 				 .success(
 						 function(bonLVenteId) {
@@ -836,7 +863,7 @@ angular
 											 $scope.taxeIdRemove.push($scope.listTaxeLivraison[int].taxeId);
 										}
 										 $scope.filterTaxes();
-										 
+										 $scope.traitementEnCours = "false"; 
 									 });
 						 });
 
@@ -844,9 +871,10 @@ angular
 
 			 // Création BonVente
 			 $scope.creerBonVente = function(bonLVente) {
+				 
+				 $scope.traitementEnCours = "true";
 				 //affectation des listes à l'objet 'bonLVente' pour le creer
 				 $log.debug("-------- listDetLivraisonVentePRBS :" );
-				 console.log("inn bon livrison..");
 				 $log.debug(JSON.stringify($scope.listDetLivraisonVentePRBS, null, "    ") );
 
 				 $log.debug("======== AVANT :" );
@@ -942,6 +970,9 @@ angular
 										}
 										 $scope.filterTaxes();
 									 });
+						 
+							 $scope.traitementEnCours = "false";
+						 
 						 });
 
 			 }
@@ -969,26 +1000,154 @@ angular
 
 			 /*** PDF ***/
 			 //generer rapport apres creation d'un bon de Livraison. mode : Modification/Consultation 
-			 $scope.download = function(id, pRapportPrix) {
+			 $scope.download = function(id,pRapportPrix,typerapport) {
 			 	//init checkbox : 'non' :rapport sans Prix / 'oui' rapport avec prix
-			 	 $scope.checkboxModel= {
+			 /* 	 $scope.checkboxModel= {
 			       rapportPrix : "oui"
-			     };
+			     }; */
 
 				 $log.debug("-- id" + id + pRapportPrix);
 				 var url = UrlAtelier+ "/reportgc/bonlivraison?id=" + id 
 									 + "&avecPrix="+pRapportPrix
+									 +"&typerapport=" +typerapport
 									 + "&type=pdf";
 
-				 downloadService.download(url).then(
-						 function(success) {
-							 $log.debug('success : ' + success);
-							 //$scope.annulerAjout();
-						 }, function(error) {
-							 $log.debug('error : ' + error);
-						 });
-			 };
+							
+										var a = document.createElement('a');
+										document.body.appendChild(a);
+										downloadService.download(url).then(function (result) {
+											var heasersFileName = result.headers(['content-disposition']).substring(17);
+										var fileName = heasersFileName.split('.');
+									var typeFile = result.headers(['content-type']);
+									var file = new Blob([result.data], {type: typeFile});
+									var fileURL = window.URL.createObjectURL(file);
+									if(typeFile == 'application/vnd.ms-excel'){
+			
+									 // a.href = fileURL;
+										 a.download = fileName[0];
+										$window.open(fileURL)
+										 a.click();
+					
+									}else{
+								
+										a.href = fileURL;
+										a.download = fileName[0];
+									 $window.open(fileURL)
+										a.click();
+					
+									}
+										
+									$scope.traitementEnCoursGenererLivraison="false";
 
+									});
+			 };
+			 
+			 
+			 $scope.downloadFacture = function(id) {
+				 	//init checkbox : 'non' :rapport sans Prix / 'oui' rapport avec prix
+				 	 $scope.checkboxModel= {
+				       rapportPrix : "oui"
+				     };
+
+				//	 $log.debug("-- id" + id + pRapportPrix);
+					 var url = UrlAtelier+ "/fiches/facture?id=" + id ;
+
+					 downloadService.download(url).then(
+							 function(success) {
+								 $log.debug('success : ' + success);
+								 //$scope.annulerAjout();
+							 }, function(error) {
+								 $log.debug('error : ' + error);
+							 });
+				 };
+				 
+				 
+				 $scope.downloadBL = function(id) {
+					 	//init checkbox : 'non' :rapport sans Prix / 'oui' rapport avec prix
+					 	 $scope.checkboxModel= {
+					       rapportPrix : "oui"
+					     };
+
+					//	 $log.debug("-- id" + id + pRapportPrix);
+						 var url = UrlAtelier+ "/fiches/bonlivraisonExc?refBonSortieList=" + 	 $scope.tagReferenceBSList 
+						 +"&idBonLivVente="+$scope.idBonLivVente ;
+						 
+				
+
+						 downloadService.download(url).then(
+								 function(success) {
+									 $log.debug('success : ' + success);
+									 //$scope.annulerAjout();
+								 }, function(error) {
+									 $log.debug('error : ' + error);
+								 });
+					 };
+
+					 
+					 $scope.downloadBLWithoutOF = function(id) {
+						 	//init checkbox : 'non' :rapport sans Prix / 'oui' rapport avec prix
+						 	 $scope.checkboxModel= {
+						       rapportPrix : "oui"
+						     };
+
+						//	 $log.debug("-- id" + id + pRapportPrix);
+							 var url = UrlAtelier+ "/fiches/bonlivraisonExc-without-of?refBonSortieList=" + 	 $scope.tagReferenceBSList 
+							 +"&idBonLivVente="+$scope.idBonLivVente ;
+							 
+					
+
+							 downloadService.download(url).then(
+									 function(success) {
+										 $log.debug('success : ' + success);
+										 //$scope.annulerAjout();
+									 }, function(error) {
+										 $log.debug('error : ' + error);
+									 });
+						 };
+						 
+						 
+						 $scope.downloadBLbyArticle = function(id) {
+							 	//init checkbox : 'non' :rapport sans Prix / 'oui' rapport avec prix
+							 	 $scope.checkboxModel= {
+							       rapportPrix : "oui"
+							     };
+
+							//	 $log.debug("-- id" + id + pRapportPrix);
+								 var url = UrlAtelier+ "/fiches/bonlivraisonExc-by-article?refBonSortieList=" + 	 $scope.tagReferenceBSList 
+								 +"&idBonLivVente="+$scope.idBonLivVente ;
+								 
+						
+
+								 downloadService.download(url).then(
+										 function(success) {
+											 $log.debug('success : ' + success);
+											 //$scope.annulerAjout();
+										 }, function(error) {
+											 $log.debug('error : ' + error);
+										 });
+							 };
+							 
+							 $scope.downloadBLbyArticleThermo = function(id) {
+								 	//init checkbox : 'non' :rapport sans Prix / 'oui' rapport avec prix
+								 	 $scope.checkboxModel= {
+								       rapportPrix : "oui"
+								     };
+
+								//	 $log.debug("-- id" + id + pRapportPrix);
+									 var url = UrlAtelier+ "/fiches/bonlivraisonExc-by-article-th?refBonSortieList=" + 	 $scope.tagReferenceBSList 
+									 +"&idBonLivVente="+$scope.idBonLivVente ;
+									 
+							
+
+									 downloadService.download(url).then(
+											 function(success) {
+												 $log.debug('success : ' + success);
+												 //$scope.annulerAjout();
+											 }, function(error) {
+												 $log.debug('error : ' + error);
+											 });
+								 };
+						 
 			 //generer rapport de tous les bons de livraison. mode : List 
 			 
 			  //conversion date en String
@@ -1073,7 +1232,7 @@ angular
 
 						                   {
 						                	   field : 'reference',
-						                	   displayName : 'Réf.BL',
+						                	   displayName : 'Reference',
 						                	   width:'10%'
 						                   },
 						                   {
@@ -1083,7 +1242,7 @@ angular
 						                   },
 						                   {
 						                	   field : 'infoSortie',
-						                	   displayName : 'Réf.BS',
+						                	   displayName : 'Ref Sortie .',
 						                	   width:'10%'
 						                   },
 						                   {
@@ -1094,26 +1253,31 @@ angular
 						                   },
 						                   {
 						                	   field : 'metrageTotal',
-						                	   displayName : 'Métrage Totale',
+						                	   displayName : 'Quantite Total',
 						                	   width:'10%'
 						                   },
 						                   {
 						                	   field : 'montantTTC',
-						                	   displayName : 'Prix Totale',
+						                	   displayName : 'prix Total ',
 						                	   cellFilter: 'prixFiltre',
 						                	   width:'10%'
 						                   },
-						                   {
-						                	   field : 'natureLivraison',
-						                	   displayName : 'Nature livraison',
-						                	   width:'10%'
-						                   },
+						                   
 						                   {
 						                	   field : '',
 						                	   width:'5%',
-						                	   cellTemplate : '<div class="buttons" ng-show="!rowform.$visible">'
-						                		   + '<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerBonLVente()">	<i class="fa fa-fw fa-pencil"></i></button>'
-						                		   + '<button data-nodrag class="btn btn-default btn-xs" ng-click="showPopupDelete(5)">	<i class="fa fa-fw fa-trash-o"></i></button></div>'
+											   cellTemplate : 
+											   `<div class="ms-CommandButton float-right"  ng-show="!rowform.$visible" >
+											   <button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerBonLVente()">
+										   <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+										   </button>
+											   <button class="ms-CommandButton-button"  ng-click="showPopupDelete(5)" permission="['Production_Expedition_Delete']">
+											   <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+											   </button>
+											   </div>`,
+											 
+											 
+											 
 						                   } ];
 					 });
 
@@ -1211,6 +1375,7 @@ angular
 					 enablePaging : true,
 					 showFooter : true,
 					 enableHighlighting : true,
+					 enableColumnResize	: true,
 					 totalServerItems : 'totalServerItems',
 					 pagingOptions : $scope.pagingOptions,
 					 selectedItems : $scope.selectedRows,

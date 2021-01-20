@@ -16,6 +16,118 @@ public class GuichetMensuelValue {
 	private Long NumReferenceBonComptoirCourant;
 
 	private Long mois;
+	
+	
+	
+	private Long numReferenceBonCommandeCourante;
+	
+	private Long numReferenceBonReceptionCourante;
+	
+	private Long numReferenceFactureCourante;
+	
+	private Long numReferenceAvoirCourante;
+	
+	
+	
+	private String prefixeBcAchat;
+	private String prefixeBonReception;
+	
+	
+	
+	private Long numReferenceBonReceptionNonDeclarerCourante;
+	private String prefixeBonReceptionNonDeclarer;
+	
+	
+	
+	
+	public Long getNumReferenceBonReceptionNonDeclarerCourante() {
+		return numReferenceBonReceptionNonDeclarerCourante;
+	}
+
+	public void setNumReferenceBonReceptionNonDeclarerCourante(Long numReferenceBonReceptionNonDeclarerCourante) {
+		this.numReferenceBonReceptionNonDeclarerCourante = numReferenceBonReceptionNonDeclarerCourante;
+	}
+
+	public String getPrefixeBonReceptionNonDeclarer() {
+		return prefixeBonReceptionNonDeclarer;
+	}
+
+	public void setPrefixeBonReceptionNonDeclarer(String prefixeBonReceptionNonDeclarer) {
+		this.prefixeBonReceptionNonDeclarer = prefixeBonReceptionNonDeclarer;
+	}
+
+	public Long getNumReferenceBonCommandeCourante() {
+		return numReferenceBonCommandeCourante;
+	}
+
+	public void setNumReferenceBonCommandeCourante(Long numReferenceBonCommandeCourante) {
+		this.numReferenceBonCommandeCourante = numReferenceBonCommandeCourante;
+	}
+
+	public Long getNumReferenceBonReceptionCourante() {
+		return numReferenceBonReceptionCourante;
+	}
+
+	public void setNumReferenceBonReceptionCourante(Long numReferenceBonReceptionCourante) {
+		this.numReferenceBonReceptionCourante = numReferenceBonReceptionCourante;
+	}
+
+	public Long getNumReferenceFactureCourante() {
+		return numReferenceFactureCourante;
+	}
+
+	public void setNumReferenceFactureCourante(Long numReferenceFactureCourante) {
+		this.numReferenceFactureCourante = numReferenceFactureCourante;
+	}
+
+	public Long getNumReferenceAvoirCourante() {
+		return numReferenceAvoirCourante;
+	}
+
+	public void setNumReferenceAvoirCourante(Long numReferenceAvoirCourante) {
+		this.numReferenceAvoirCourante = numReferenceAvoirCourante;
+	}
+
+	public String getPrefixeBcAchat() {
+		return prefixeBcAchat;
+	}
+
+	public void setPrefixeBcAchat(String prefixeBcAchat) {
+		this.prefixeBcAchat = prefixeBcAchat;
+	}
+
+	public String getPrefixeBonReception() {
+		return prefixeBonReception;
+	}
+
+	public void setPrefixeBonReception(String prefixeBonReception) {
+		this.prefixeBonReception = prefixeBonReception;
+	}
+
+	public String getPrefixeFacture() {
+		return prefixeFacture;
+	}
+
+	public void setPrefixeFacture(String prefixeFacture) {
+		this.prefixeFacture = prefixeFacture;
+	}
+
+	public String getPrefixeAvoir() {
+		return prefixeAvoir;
+	}
+
+	public void setPrefixeAvoir(String prefixeAvoir) {
+		this.prefixeAvoir = prefixeAvoir;
+	}
+
+	private String prefixeFacture;
+
+	private String prefixeAvoir;
+
+	
+	
+	
+	/***************** 
 
 	/**
 	 * Constructeur

@@ -74,7 +74,7 @@ angular
 								$http
 										.get(
 												UrlCommun
-														+ "/gestionnaireCache/listeFamilleProduitCache")
+														+ "/gestionnaireCache/listeFamilleArticleCache")
 										.success(
 												function(
 														dataFamilleProduitCache) {
@@ -105,7 +105,7 @@ angular
 								$http
 										.get(
 												UrlCommun
-														+ "/gestionnaireCache/listeSousFamilleProduitCache")
+														+ "/gestionnaireCache/listeSousFamilleArticleCache")
 										.success(
 												function(
 														dataSousFamilleProduitCache) {
@@ -298,14 +298,14 @@ angular
 								$http
 										.post(
 												UrlCommun
-														+ "/produit/rechercheProduitMulticritereClient",
+														+ "/article/rechercheArticleMulticritereClient",
 												produitCourante)
 										.success(
 												function(resultat) {
-													$log.debug("----listeProduitRecherchée--- : "+resultat.produitValues.length);
-													$log.debug("----listeProduitRecherchée--- : "+JSON.stringify(resultat.produitValues,null," "));
+												//	$log.debug("----listeProduitRecherchée--- : "+resultat.produitValues.length);
+												//	$log.debug("----listeProduitRecherchée--- : "+JSON.stringify(resultat.produitValues,null," "));
 
-													$scope.myData = resultat.produitValues;
+													$scope.myData = resultat.articleValues;
 													$scope.initMyData = $scope.myData;
 													
 													//data, page,pageSize
@@ -331,10 +331,10 @@ angular
 
 								$scope.closeNotif();
 								$scope.cnt = 0;
-								$scope.produitCourante = {"reference": "",
+								$scope.produitCourante = {"ref": "",
 														  "designation": "",
-														  "famille": "",
-														  "sousfamille": "",
+														  "familleEntite": "",
+														  "sousFamilleEntite": "",
 														  "partieInteressee": "",
 														  "prix_inf": "",
 														  "prix_sup": "",
@@ -364,7 +364,7 @@ angular
 								$http
 										.get(
 												UrlCommun
-														+ "/produit/getId:"
+														+ "/article/getId:"
 														+ $scope.myData[index].id)
 										.success(
 												function(datagetProduit) {
@@ -424,7 +424,7 @@ angular
 								//console.log("produitCourante.id: "+produit.id);
 								//console.log("produitCourante.partieInteresseId: "+produit.partieInteresseId);
 								
-								$http.post(UrlCommun + "/prixClient/creerPrixClient",$scope.myData
+								$http.post(UrlCommun + "/prixClient/creerPrixArticleClient",$scope.myData
 										).success(
 										function(response) {
 											$scope.traitementEnCours = "false";	
@@ -515,7 +515,7 @@ angular
 								 
 								produitCourant.famillePiId=2;
 								$http({
-									url: UrlCommun + "/fiches/listPrixClient",
+									url: UrlCommun + "/fiches/listPrixClientArticle",
 									method: "POST",
 									data: produitCourant, // this is your json
 																	// data string
@@ -717,7 +717,7 @@ angular
 											function() {
 												$scope.colDefs = [
 														{
-											field : 'reference',
+											field : 'ref',
 											displayName : 'Réf.Article',
 										},
 										{
@@ -729,12 +729,12 @@ angular
 											displayName : 'Unite',
 										},*/
 										{
-											field : 'familleDesignation',
+											field : 'familleArticleDesignation',
 											displayName : 'Famille',
 											width:130 
 										},
 										{
-											field : 'sousFamilleDesignation',
+											field : 'sousFamilleArtEntiteDesignation',
 											displayName : 'Sous Famille'
 											
 										},

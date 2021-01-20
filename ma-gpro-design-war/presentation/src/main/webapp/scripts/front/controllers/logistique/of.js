@@ -52,13 +52,142 @@ angular
 							
 							$scope.listMiseEncours=[];
 							
-							
+						
 							$scope.changeProduitsIsEntredFirstTime = "false";
 							
 							$scope.currentMode = "SEARCH";
 							
 							
+							$scope.tagReferenceBLivList = [];
+							$scope.listReferenceBC=[];
+			
+
+
+
+
 							
+/* 
+                       $scope.getrefbc = function (){
+						$scope.listReferenceBC = [];
+
+							$http
+								.get(UrlAtelier + "/commandeVente/getAll")
+								.success(
+									function(resultat) {
+
+										
+										angular.forEach(resultat, function(element, key){
+											console.log("==>elemet: "+element.reference);
+											$scope.listReferenceBC.push(element.reference);
+											
+											
+										});
+									});
+										
+						  }
+					   		 */
+					
+
+
+
+
+
+
+
+
+
+
+
+						  $scope.select2TaggingOptions = {
+							'multiple': true,
+							'simple_tags': true,
+							'tags': function () {
+									// reload de la liste des RefBC
+										$scope.listNewReferenceBC = [];
+										
+										$scope.listNewReferenceBC = $scope.listReferenceBC;
+
+									   $log.debug("----OnClicklistNewReferenceBC : "+JSON.stringify($scope.listNewReferenceBC, null, "    "));
+									   console.log("----OnClicklistNewReferenceBC : "+JSON.stringify($scope.listNewReferenceBC, null, "    "));
+
+									   return $scope.listNewReferenceBC;
+								   }
+							 
+					};
+
+
+
+					$scope.listReferenceBC = [];
+
+					$scope.getAvailableRefBCByClient = function (idClient) {
+					  $scope.listReferenceBC = [];
+					  $scope.listeMarche=[];
+
+					  if(angular.isDefined(idClient)){
+						  if(idClient != null){
+							  
+							  
+							  // TODO SEARCH TYPE PI
+						  /* 	  var element = $scope.listePartieInteresseeCache.filter(function(node) {
+								  return node.id==idClient;
+							  });
+					
+							  $scope.bonLivraisonVenteCourant.typePartieInteressee = element[0].typePartieInteressee;
+							  
+							  $scope.bonLivraisonVenteCourant.groupeClientId = element[0].groupeClientId; */
+							  
+							  $http
+							  .get(
+									  UrlAtelier
+									  + "/commandeVente/getAvailableListBonCommandeRefByClient:"+idClient)
+									  .success(
+											  function(resultat) {
+												  $log.debug("----ResultatListBC "+resultat.length);
+												  
+												  angular.forEach(resultat, function(element, key){
+													  console.log("==>elemet: "+element.reference);
+													  $scope.listReferenceBC.push(element.reference);
+													  
+													  
+												  });
+												  
+								
+									   });
+							  }
+						  
+					/*	  if(idClient != null){
+							  console.log("enter: to List ");
+							  $http
+							  .get(
+									  UrlAtelier
+									  + "/marche/getListById:"+idClient)
+									  .success(
+											  function(resultat) {
+											
+												  angular.forEach(resultat, function(element, key){
+												
+													  $scope.listeMarche.push(element);
+													  
+													  
+												  });
+								
+									   });
+							  }*/
+						   
+						  }
+					  }
+					  
+
+
+
+
+
+
+
+
+
+
+
 							//init urlValider
 							$scope.urlValider = "";
 							//Pavet SolderMise ne s'affiche pas au demarrage de la page
@@ -207,6 +336,10 @@ angular
 											// data, page,pageSize
 										
 										});
+
+
+										$scope.getAvailableRefBCByClient( element[0].partieIntersseId);
+
 								
 								
 								
@@ -366,22 +499,30 @@ angular
 							$scope.creerMise = function(mise) {
 
 								mise.dateIntroduction = new Date();
+								mise.refCommande = $scope.tagReferenceBLivList.join('-');
 								$http
 										.post(UrlAtelier + "/mise/creerMise",
 												mise).success(function(idMise) {
+
+													
+										
 											$scope.annulerAjout();
 										});
+
+									
 
 							}
 
 							// modifier bon de reception
 							$scope.modifierMise = function(mise) {
+
+								mise.refCommande = $scope.tagReferenceBLivList.join('-');
 								$http
 										.post(UrlAtelier + "/mise/modifieMise",
 												mise)
 										.success(
 												function(miseModifiee) {
-
+											
 													for (var i = 0; i < $scope.myData.length; i++) {
 
 														if ($scope.myData[i].id == miseModifiee.id) {
@@ -390,6 +531,8 @@ angular
 															break;
 														}
 													}
+
+								
 
 													//get mise by id
 
@@ -546,10 +689,24 @@ angular
 										.success(function(dataGetMise) {
 											
 										//	console.log('DataGetMise ::::::::::',dataGetMise);
-													
-													$scope.miseCourant = dataGetMise;
+										
+										
+										if(dataGetMise.refCommande != null){
+										var refBC = dataGetMise.refCommande.split("-");
+												
+										$scope.tagReferenceBLivList = refBC;
+										
+										}
+										
+
+										$scope.miseCourant = dataGetMise;
 											
+
+												
+												
 													
+
+
 													//$scope.dateIntro=
 													if(dataGetMise.produitId!= null){
 														$http
@@ -604,6 +761,7 @@ angular
 									 "destinationProduit": "",
 									 "statut": "",
 									"dateFin": "",
+									"refCommande":"",
 								};
 
 								$scope.nbrColis = 0;
@@ -622,6 +780,7 @@ angular
 								$scope.displayView = "view1";
 								
 								$scope.currentMode = "SEARCH";
+								$scope.tagReferenceBLivList = [];
 							}
 
 							/***************************************************
@@ -650,7 +809,7 @@ angular
 														{
 															field : 'reference',
 															displayName : 'NUMERO',
-															width : '7%'
+															width : '10%'
 														},
 														{
 															field : 'referenceProduit',
@@ -664,25 +823,25 @@ angular
 														},
 														{
 															field : 'dateIntroduction',
-															displayName : 'Introduction Date',
+															displayName : 'Date Introduction',
 															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss"',
 															width : '14%'
 														},
 														{
 															field : 'dateFin',
-															displayName : 'End Date',
+															displayName : 'Date Fin',
 															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss"',
-															width : '13%'
+															width : '15%'
 														},
 														{
 															field : 'quantite',
-															displayName : 'Quantity',
+															displayName : 'Quantite',
 															width : '9%'
 														},
 														{
 															field : 'poidFini',
-															displayName : 'Quantity By Box',
-															width : '9%'
+															displayName : 'Quantite colis',
+															width : '10%'
 														},
 													/* 	{
 															field : '',
@@ -702,7 +861,7 @@ angular
 																<button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerMise()">
 															<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
 															</button>
-																<button class="ms-CommandButton-button"  ng-click="supprimerMise()" permission="['Vente_Delete']">
+																<button class="ms-CommandButton-button"  ng-click="supprimerMise()" permission="['Production_OF_Delete']">
 																<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
 																</button>
 																</div>`,

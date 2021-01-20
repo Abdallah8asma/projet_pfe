@@ -43,6 +43,18 @@ public class RechercheMulticritereFactureValue {
 
 	private Long idDepot;
 
+	private Long devise;
+	
+	
+	
+	public Long getDevise() {
+		return devise;
+	}
+
+	public void setDevise(Long devise) {
+		this.devise = devise;
+	}
+
 	public Long getIdDepot() {
 		return idDepot;
 	}

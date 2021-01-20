@@ -684,7 +684,7 @@
                         </svg>
                         <!--end::Svg Icon-->
                       </span>
-                      <span class="menu-text">Matière Première</span>
+                      <span class="menu-text">Article</span>
                       <i class="menu-arrow"></i>
                     </a>
                     <div class="menu-submenu">
@@ -705,7 +705,7 @@
                         >
                           <a
                             href="#/elementsDeBase/article"
-                            ng-click="upSelectedMenu('Matière Première ',' Matière Première')"
+                            ng-click="upSelectedMenu(' Article ',' Matière Première')"
                             class="menu-link"
                           >
                             <i class="menu-bullet menu-bullet-dot">
@@ -714,6 +714,41 @@
                             <span class="menu-text">Matière Première</span>
                           </a>
                         </li>
+
+                        <li
+                        class="menu-item"
+                        aria-haspopup="true"
+                        permission="['Matiere_premiere_Consult']"
+                      >
+                        <a
+                          href="#/elementsDeBase/film"
+                          ng-click="upSelectedMenu('Article ',' Film')"
+                          class="menu-link"
+                        >
+                          <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                          </i>
+                          <span class="menu-text">Film</span>
+                        </a>
+                      </li>
+
+
+                      <li
+                      class="menu-item"
+                      aria-haspopup="true"
+                      permission="['Matiere_premiere_Consult']"
+                    >
+                      <a
+                        href="#/elementsDeBase/forme"
+                        ng-click="upSelectedMenu('Article ',' Forme De Decoupe')"
+                        class="menu-link"
+                      >
+                        <i class="menu-bullet menu-bullet-dot">
+                          <span></span>
+                        </i>
+                        <span class="menu-text">Forme De Decoupe</span>
+                      </a>
+                    </li>
                <!-- 
                         <li
                           class="menu-item"
@@ -1131,7 +1166,7 @@
                       </a>
                     </li>
                
-                     
+                 <!--     
                     <li class="menu-item" aria-haspopup="true" permission="['Production_Livraison_Consult']" >
                       <a
                         href="#/logistique/livraison"
@@ -1143,7 +1178,7 @@
                         </i>
                         <span class="menu-text">Livraison</span>
                       </a>
-                    </li>
+                    </li> -->
 
 
                     <li class="menu-item" aria-haspopup="true" permission="['Production_Reporting_Consult']" >
@@ -1552,6 +1587,9 @@
                             <span class="menu-text">Marché</span>
                           </a>
                         </li>
+
+
+                         
                         <li
                           class="menu-item"
                           aria-haspopup="true"
@@ -1568,6 +1606,25 @@
                             <span class="menu-text">Livraison</span>
                           </a>
                         </li>
+
+
+
+                        <li
+                        class="menu-item"
+                        aria-haspopup="true"
+                        permission="['V_Livraison_Consult']"
+                      >
+                        <a
+                          href="#/gestionCommerciale/livraisonBS"
+                          ng-click="upSelectedMenu('Vente ',' LivraisonBS')"
+                          class="menu-link"
+                        >
+                          <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                          </i>
+                          <span class="menu-text">LivraisonBS</span>
+                        </a>
+                      </li>
                         <li
                           class="menu-item"
                           aria-haspopup="true"
@@ -2184,7 +2241,7 @@
                           <span class="menu-text">Operations</span>
                         </a>
                       </li>
-
+<!-- 
                  <li
                       class="menu-item"
                       aria-haspopup="true" permission="['Societe_Consult']"
@@ -2200,11 +2257,11 @@
                         </i>
                         <span class="menu-text">Societes</span>
                       </a>
-                    </li>
+                    </li> -->
 
 
 
-                      <li
+         <!--              <li
                       class="menu-item"
                       aria-haspopup="true" permission="['Boutique_Consult']"
                      
@@ -2219,7 +2276,7 @@
                         </i>
                         <span class="menu-text">Boutiques</span>
                       </a>
-                    </li>
+                    </li> -->
                     
                     
                     
@@ -5264,6 +5321,8 @@
     <script src="scripts/front/controllers/elementsDeBase/flotte/chauffeur.js"></script>
     <script src="scripts/front/controllers/elementsDeBase/flotte/remorque.js"></script>
     <script src="scripts/front/controllers/elementsDeBase/reporting/elementDeBaseReporting.js"></script>
+    <script src="scripts/front/controllers/elementsDeBase/film/film.js"></script>
+    <script src="scripts/front/controllers/elementsDeBase/forme/forme.js"></script>
     <!----------------- Logistique -------------------->
 
 
@@ -5335,7 +5394,8 @@
     <script src="scripts/front/controllers/gestionCommerciale/factureRetour/factureRetourVente.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/reporting/reportingGC.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/remise/remiseVente.js"></script>
-	<script src="scripts/front/controllers/gestionCommerciale/package/packageVente.js"></script>
+  <script src="scripts/front/controllers/gestionCommerciale/package/packageVente.js"></script>
+  <script src="scripts/front/controllers/gestionCommerciale/livraisonBS/bonLivraisonBS.js"></script>
 
     <!----------------- Gestion Achat -------------------->
 

@@ -69,5 +69,7 @@ public interface IBonLivraisonService {
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public ListProduitElementValue getProduitElementListForPassager(ValiderBLPassagerValue request);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public String getCurrentReferenceByType(String type, Calendar instance, boolean b);
 	
 }

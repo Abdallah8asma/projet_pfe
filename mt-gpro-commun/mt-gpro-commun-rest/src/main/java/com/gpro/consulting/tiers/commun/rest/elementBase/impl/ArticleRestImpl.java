@@ -102,6 +102,9 @@ public class ArticleRestImpl implements IArticleRest {
 		  
 		//Site
 		article.setSiteEntiteDesignation(mapA.get("site"));
+		
+	
+		
     }
     return vResultatRecherche;
   }
@@ -125,5 +128,34 @@ public class ArticleRestImpl implements IArticleRest {
    Long idSupp= Long.parseLong(id);
    articleService.supprimerArticle(Long.valueOf(idSupp));
   }
+  
+  
+  
+  @RequestMapping(value = "/rechercheArticleMulticritereClient", method = RequestMethod.POST)
+  public @ResponseBody ResultatRechecheArticleValue rechercherArticleMultiCritereClient(
+    @RequestBody final RecherecheMulticritereArticleValue pRechercheMultiCritere) {
+   
+	  ResultatRechecheArticleValue vResultatRecherche = articleService.rechercherArticleMultiCritereClient(pRechercheMultiCritere);
+    //Traitement : transformation de l'Id sousFamille a sa propre Designation pour chaque Article
+    
+    for(ArticleValue article : vResultatRecherche.getArticleValues()){
+    	
+    	Map<String, String> mapA = gestionnaireCacheService.rechercherArticleParId(article.getSousFamilleArtEntite(), article.getSiteEntite());
+    	//SousFamille, Famille, Type
+    	article.setSousFamilleArtEntiteDesignation(mapA.get("sousFamille"));
+		article.setFamilleArticleDesignation(mapA.get("famille"));
+		article.setTypeArticleDesignation(mapA.get("type"));
+		  
+		//Site
+		article.setSiteEntiteDesignation(mapA.get("site"));
+		
+	
+		
+    }
+    return vResultatRecherche;
+  }
+  
+  
+  
   
 }

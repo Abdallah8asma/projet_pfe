@@ -91,12 +91,19 @@ public class MiseValue {
 	private Long nbrColisExpedition ;
 	
 	
+	private String refCommande;
 	
 	
 	
 	
 	
-	
+
+	public String getRefCommande() {
+		return refCommande;
+	}
+	public void setRefCommande(String refCommande) {
+		this.refCommande = refCommande;
+	}
 	public String getPartieIntersseDesignation() {
 		return partieIntersseDesignation;
 	}

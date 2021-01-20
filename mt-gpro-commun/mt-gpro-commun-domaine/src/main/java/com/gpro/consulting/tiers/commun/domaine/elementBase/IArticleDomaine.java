@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleCacheValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheArticleValue;
 
@@ -59,7 +60,14 @@ public interface IArticleDomaine {
 		 * @return the list article cache(designation,reference,id)
 		 */
 	  public List < ArticleCacheValue > listeArticleCache();
+
+		public ResultatRechecheArticleValue rechercherArticleMultiCritereClient(
+				RecherecheMulticritereArticleValue pRechercheMultiCritere);
+		
+		
+
+		public ArticleValue rechercheProduitParReference(String reference);
 	
 	
-    
+		  public ArticleValue getArticleParId(Long id);
 }

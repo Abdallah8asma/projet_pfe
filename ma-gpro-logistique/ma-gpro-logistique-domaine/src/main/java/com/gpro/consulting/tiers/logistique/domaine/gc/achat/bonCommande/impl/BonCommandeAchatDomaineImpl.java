@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListProduitElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
@@ -31,6 +34,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.L
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.bonCommande.IBonCommandeAchatDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.bonlivraison.utilities.DetLivraisonVenteComparator;
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetAnnuelDomaine;
+import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetMensuelDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.boncommande.IBonCommandeAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.IReceptionAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.IGuichetAnnuelPersistance;
@@ -80,6 +84,13 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 	/** The bon livraison persistance. */
 	@Autowired
 	private IReceptionAchatPersistance receptionAchatPersistance;
+	
+	@Autowired
+	private IArticleService articleService;
+	
+	
+	@Autowired
+	private IGuichetMensuelDomaine guichetierMensuelDomaine;
 
 	/**
 	 * Creates the.
@@ -112,7 +123,11 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 		if ((bonCommandeValue.getReference() != null && bonCommandeValue.getReference().equals(""))
 				|| bonCommandeValue.getReference() == null) {
 
-			bonCommandeValue.setReference(this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true));
+			//bonCommandeValue.setReference(this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true));
+			
+			
+			bonCommandeValue.setReference(this.getReferenceBonCommandeAchatFromGuichetMensuel(Calendar.getInstance(),true));  
+			
 
 			//logger.info("----- auto reference ----------" + bonCommandeValue.getReference());
 
@@ -120,7 +135,10 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 			
 		{
 			 if(bonCommandeValue.getRefAvantChangement() != null && bonCommandeValue.getReference().equals(bonCommandeValue.getRefAvantChangement())) {
-				 this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true);
+				 
+				this.getReferenceBonCommandeAchatFromGuichetMensuel(Calendar.getInstance(),true);
+				 //this.getCurrentReferenceByType(bonCommandeValue.getType(),bonCommandeValue.getDateIntroduction(),true);
+				
            }
 			
 		}
@@ -138,14 +156,23 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 			}
 
 			produitCommande.setDateLivraison(bonCommandeValue.getDateLivraison());
-
-			ProduitValue produitValue = produitService.rechercheProduitById(produitCommande.getProduitId());
+			
+			//ProduitValue produitValue = produitService.rechercheProduitById(produitCommande.getProduitId());
+			
+			ArticleValue articleValue=new ArticleValue();
+			articleValue.setId(produitCommande.getProduitId());
+			
+			ArticleValue produitValue=articleService.rechercheArticleParId(articleValue);
+			
+			
+			
 			produitCommande.setTaxeId(produitValue.getIdTaxe());
 			
 			Double totalProduitCommande = (produitCommande.getPrixUnitaire() * produitCommande.getQuantite());
 			if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
 
 				produitTaxeMap.put(produitValue.getIdTaxe(), totalProduitCommande);
+				
 
 			} else {
 				Double assietteValue = produitTaxeMap.get(produitValue.getIdTaxe()) + totalProduitCommande;
@@ -275,7 +302,13 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 				coutCommandeVenteTotal += (produitCommande.getPrixUnitaire() * produitCommande.getQuantite());
 			}
 
-			ProduitValue produitValue = produitService.rechercheProduitById(produitCommande.getProduitId());
+			//ProduitValue produitValue = produitService.rechercheProduitById(produitCommande.getProduitId());
+			
+			
+			ArticleValue articleValue =new ArticleValue();
+			articleValue.setId(produitCommande.getProduitId());
+			ArticleValue produitValue=articleService.rechercheArticleParId(articleValue);
+			
 			produitCommande.setTaxeId(produitValue.getIdTaxe());
 			Double totalProduitCommande = (produitCommande.getPrixUnitaire() * produitCommande.getQuantite());
 			if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
@@ -612,7 +645,7 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 			mapDetLivraison.get(map).add(detail);
 		}
 
-		ProduitValue produitValue = null;
+		ArticleValue produitValue = null;
 
 		Iterator it = mapDetLivraison.entrySet().iterator();
 		List<DetLivraisonVenteValue> listDetFactureVente = new ArrayList<DetLivraisonVenteValue>();
@@ -671,15 +704,22 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 				}
 			}
 
+			ArticleValue articleValue=new ArticleValue();
+			articleValue.setId(element.getProduitId());
+			
 			if (element.getProduitId() != null) {
-				produitValue = produitService.rechercheProduitById(element.getProduitId());
+				
+				//produitValue = produitService.rechercheProduitById(element.getProduitId());
+				
+				produitValue=articleService.rechercheArticleParId(articleValue);
+				
 				if (produitValue != null) {
 
 					element.setSerialisable(produitValue.isSerialisable());
 			
 
 					element.setProduitDesignation(produitValue.getDesignation());
-					element.setProduitReference(produitValue.getReference());
+					element.setProduitReference(produitValue.getRef());
 
 					/*** appel fonction rechercheMC prix special *****/
 
@@ -687,8 +727,8 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 					// TO O DO A changer
 					// Commented
 
-					if (element.getPrixUnitaireHT() == null && produitValue.getPrixUnitaire() != null)
-						element.setPrixUnitaireHT(produitValue.getPrixUnitaire());
+					if (element.getPrixUnitaireHT() == null && produitValue.getPu() != null)
+						element.setPrixUnitaireHT(produitValue.getPu());
 
 					if (element.getPrixUnitaireHT() != null && element.getQuantite() != null) {
 						element.setPrixTotalHT(element.getPrixUnitaireHT() * element.getQuantite());
@@ -723,6 +763,57 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 		listProduitElementValue.setListDetLivraisonVente(listDetFactureVente);
 
 		return listProduitElementValue;
+	}
+	
+	
+	
+	private String getReferenceBonCommandeAchatFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
+
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonCommandeReference();
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefix();
+
+		/** Année courante. */
+		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
+		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
+
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonLiv = new StringBuilder("");
+		vNumBonLiv.append(vNumGuichetPrefix);
+		//vNumBonLiv.append(vAnneeCourante);
+		//vNumBonLiv.append(String.format("%02d", moisActuel));
+		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+		/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+		vGuichetValeur.setId(new Long(idMensuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		
+		vGuichetValeur.setNumReferenceBonCommandeCourante(new Long(vNumGuichetBonLiv + 1L));  
+	
+
+		/** Modification de la valeur en base du numéro. */
+	
+
+		
+		if(increment)
+		this.guichetierMensuelDomaine.modifierGuichetBonCommandeMensuel(vGuichetValeur);
+		
+		
+
+		return vNumBonLiv.toString();
+
+	}
+
+	@Override
+	public String getCurrentReferenceMensuel(Calendar instance, boolean b) {
+		
+		return this.getReferenceBonCommandeAchatFromGuichetMensuel(instance, b);
 	}
 
 }

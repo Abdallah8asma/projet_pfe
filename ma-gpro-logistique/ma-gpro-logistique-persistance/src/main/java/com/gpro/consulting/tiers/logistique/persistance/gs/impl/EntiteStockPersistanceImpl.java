@@ -85,7 +85,8 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
         private String MAGASIN_ENTITI = "magasin";
         private String MAGASIN_ID = "id";
         private String refLot="referenceLot";
-        
+        private String dimension="dimension";
+        private String grammage="grammage";
     	private String numeroBonEntree="numeroBonEntree";
         
 	@Override
@@ -122,12 +123,20 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(id),
 		    		  pRechercheMulticritereEntiteStockValue.getArticle()));
 		    }
-		    
 	    
-//	    if (pRechercheMulticritereEntiteStockValue.getDate()!=null) {
-//		      vWhereClause.add(vBuilder.equal(vRootEntiteStock.get(date),
-//		    		  pRechercheMulticritereEntiteStockValue.getDate()));
-//		    }
+	    
+		if (pRechercheMulticritereEntiteStockValue.getDateDu() != null) {
+			Expression<Calendar> dateE = vRootEntiteStock.get(date);
+			
+			vWhereClause.add(vBuilder.greaterThanOrEqualTo(dateE, pRechercheMulticritereEntiteStockValue.getDateDu()));
+
+		}
+
+		if (pRechercheMulticritereEntiteStockValue.getDateA() != null) {
+			Expression<Calendar> dateStock = vRootEntiteStock.get(date);
+		
+			vWhereClause.add(vBuilder.lessThanOrEqualTo(dateStock, pRechercheMulticritereEntiteStockValue.getDateA()));
+		}
 		    
 		if (pRechercheMulticritereEntiteStockValue.getQuantite() != null) {
 			Expression<Double> qte = vRootEntiteStock.get(qteActuelle);
@@ -162,6 +171,7 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 			default:
 			}
 		}
+		
 		// TODO (calculer la quantite) afficher entiteStock suivant zoneDispo
 		// choisi (rouge,vert)
 
@@ -251,6 +261,8 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		      vWhereClause.add(vBuilder.equal(jointureMagSite.get(id),               
 		    		  pRechercheMulticritereEntiteStockValue.getSite()));
 		    }
+	    
+	  
 	 
 	 /**********************************Fin Jointure Referentiel ******************************************/
 	   
@@ -283,13 +295,43 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		    		
 	    }
 	    
+	    
+	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getGrammageArticle())) {
+	    	   Join<EntiteStockEntite, ArticleEntite> jointureEnstkArt = vRootEntiteStock.join(article);
+		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(grammage),
+		    		  pRechercheMulticritereEntiteStockValue.getGrammageArticle()));
+		    }
+	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getDimensionArticle())) {
+	    	   Join<EntiteStockEntite, ArticleEntite> jointureEnstkArt = vRootEntiteStock.join(article);
+		      vWhereClause.add(vBuilder.equal(jointureEnstkArt.get(dimension),
+		    		  pRechercheMulticritereEntiteStockValue.getDimensionArticle()));
+		    }
 	   
-	   
+	 /*  if(estNonVide(pRechercheMulticritereEntiteStockValue.getOrderBy())){
+		   
+		   if(pRechercheMulticritereEntiteStockValue.getOrderBy().equals("reference"))
+			   vCriteriaQuery.orderBy(vBuilder.desc(vRootEntiteStock.get("referenceArticle")));
+		   
+		   else if(pRechercheMulticritereEntiteStockValue.getOrderBy().equals("designation"))
+			   vCriteriaQuery.orderBy(vBuilder.desc(vRootEntiteStock.get("libelleArticle")));
+	   }*/
 	    /** execute query and do something with result **/
 
+	    
+	    
+	    
 	    vCriteriaQuery.select(vRootEntiteStock).where(vWhereClause.toArray(new Predicate[] {}));
+	    if(estNonVide(pRechercheMulticritereEntiteStockValue.getOrderBy())){
+	    if(pRechercheMulticritereEntiteStockValue.getOrderBy().equals("reference"))
+	    	 vCriteriaQuery.orderBy(vBuilder.desc(vRootEntiteStock.get("article").get("ref")));
+	    else
+	    	vCriteriaQuery.orderBy(vBuilder.desc(vRootEntiteStock.get("article").get("designation")));
+	    
+	    
+	    }
+	    
 	    List < EntiteStockEntite > resultatEntite = this.entityManager.createQuery(vCriteriaQuery).getResultList();
-
+	    
 	    /** Conversion de la liste en valeur */
 	    List < EntiteStockValue > vListeResultat = new ArrayList < EntiteStockValue >();
 

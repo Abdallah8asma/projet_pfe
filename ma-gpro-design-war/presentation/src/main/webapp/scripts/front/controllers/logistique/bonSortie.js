@@ -12,8 +12,9 @@
               				'$parse',
               				'downloadService',
               				'UrlCommun',
-              				'UrlAtelier',
-              				function($scope, $filter, $http, $log, $parse, downloadService, UrlCommun, UrlAtelier) {
+							  'UrlAtelier',
+							  '$window',
+              				function($scope, $filter, $http, $log, $parse, downloadService, UrlCommun, UrlAtelier,$window) {
               					$log.info("=========Bon Sortie========");
               					// Déclaration des variables globales utilisés
               					$scope.today = new Date();
@@ -280,7 +281,30 @@
 	                								});
                                     	}else{
                                     		//IDVIDE
-                                    		$log.debug("$scope.idBonSortie vide! ");
+											$log.debug("$scope.idBonSortie vide! ");
+											
+
+
+													
+											//Url With idBonSortie
+											$scope.urlValider = UrlAtelier + "/bonsortiefini/validateBonSortieFini";
+											//$log.debug("-- urlValider Sans idBonSortie : "+ $scope.urlValider );
+										
+											//Invocation du service Validate qui nous recupere la liste des RouleauxFini qui ne soont PAS affectés au BonSortie Auparavant.
+										  $http
+												 .post(
+														$scope.urlValider,$scope.listCode)
+										   .success(
+												   function(resultat) {
+													   //listeRouleauFini
+													   $scope.listeRouleauFini = resultat;
+													   //inc nbrColi
+													  $scope.nbrColis = resultat.length;
+									  
+  
+													   $log.debug("listeRouleauFini : "+ resultat.length);
+													   $log.debug("-- listeRouleauFini : "+JSON.stringify($scope.listeRouleauFini, null, "    ") );
+												   });
                                     	}
                                     }else{
                                 		//Url With idBonSortie
@@ -467,6 +491,9 @@
               							$scope.bonSortieCourant = {};
               							$scope.bonSortieCourant = bonSortie ? angular
               									.copy(bonSortie) : {};
+
+                                       $scope.bonSortieCourant.dateSortie = new Date();
+
               							
               						//mode edit activé
               							$scope.displayMode = "edit";
@@ -691,7 +718,39 @@
         												},
         												function(error) {
         													$log.debug('error : '+ error);
-        												});
+														});
+														
+
+														var a = document.createElement('a');
+														document.body.appendChild(a);
+														downloadService.download(url).then(function (result) {
+															var heasersFileName = result.headers(['content-disposition']).substring(17);
+														var fileName = heasersFileName.split('.');
+													var typeFile = result.headers(['content-type']);
+													var file = new Blob([result.data], {type: typeFile});
+													var fileURL = window.URL.createObjectURL(file);
+													if(typeFile == 'application/vnd.ms-excel'){
+							
+													 // a.href = fileURL;
+														 a.download = fileName[0];
+														$window.open(fileURL)
+														 a.click();
+									
+													}else{
+												
+														a.href = fileURL;
+														a.download = fileName[0];
+													 $window.open(fileURL)
+														a.click();
+									
+													}
+														
+													$scope.traitementEnCoursGenererLivraison="false";
+				
+													});
+
+
+
         							};
         							
         							//generer rapport de tous les bons de sortie. mode : List 
@@ -843,21 +902,29 @@
               								},
               								{
               									field : 'nbColis',
-              									displayName : 'Nbre.Rouleau',
+              									displayName : 'Nbre.Colis',
                                 width:'10%'
               								},
               								{
               									field : 'metrageTotal',
-              									displayName : 'Metrage Total',
+              									displayName : 'Qte Total',
                                 width:'10%'
               								},
               								{
               									field : '',
                                 width:'10%',
-              									cellTemplate : '<div class="buttons" ng-show="!rowform.$visible">'
-                                      +'<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerBonSortie()"> <i class="fa fa-fw fa-pencil"></i></button>'
-              												+'<button data-nodrag class="btn btn-default btn-xs" ng-click="showPopupDelete(4)"><i class="fa fa-fw fa-trash-o"></i></button>'
-              												+'<button class="btn btn-action2" ng-click="redirectToVenteBL(row.entity.reference, row.entity.dateSortie,1 )">BL</button></div>'} ];
+												  cellTemplate :
+												  `<div class="ms-CommandButton float-right"  ng-show="!rowform.$visible" >
+																<button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerBonSortie()">
+															<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+															</button>
+																<button class="ms-CommandButton-button"  ng-click="showPopupDelete(4)" permission="['Production_Expedition_Delete']">
+																<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+																</button>
+																</div>`,
+														
+														
+															} ];
               									});
               								$scope.filterOptions = {
               									filterText : "",

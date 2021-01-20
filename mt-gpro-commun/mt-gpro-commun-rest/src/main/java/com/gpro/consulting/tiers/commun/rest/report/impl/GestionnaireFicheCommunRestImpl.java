@@ -258,6 +258,9 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 		{
 			numLigneCritRech++;
 			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Famille :", ExcelUtils.boldRed3));
+			
+			
+			
 
 			FamilleArticleValue famille = familleArticleService
 					.rechercheFamilleArticleById(Long.parseLong(request.getFamilleEntite()));
@@ -662,9 +665,9 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 		recherchePrixClientValue.setFamillePartieInteressee(request.getFamillePiId());
 
 		if (isNotEmty(request.getReference())) {
+		
 
-			recherchePrixClientValue
-					.setIdProduit(produitService.rechercheProduitParReference(request.getReference()).getId());
+			recherchePrixClientValue.setIdProduit(produitService.rechercheProduitParReference(request.getReference()).getId());
 
 		}
 
@@ -694,6 +697,7 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 			for (PrixClientValue element : listPrixClient) {
 
 				if (element.getEbproduit() != null) {
+					
 					ProduitValue produit = produitService.rechercheProduitById(element.getEbproduit());
 
 					sheet3.addCell(new Label(2, i, produit.getReference() + "", ExcelUtils.boldRed));
@@ -806,6 +810,365 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 
 	}
 
+	
+	@RequestMapping(value = "/listPrixClientArticle", method = RequestMethod.POST)
+	public ResponseEntity<byte[]> generateListPrixClientReportArticle(
+
+			@RequestBody RecherecheMulticritereArticleValue request
+
+	) throws WriteException, IOException {
+		
+		BaseInfoValue baseInfo= baseInfoService.getClientActif();
+
+		Date d = new Date();
+
+		String dat = "" + dateFormat.format(d);
+		
+		excel_file_location = baseInfo.getExcelDirectory();	
+
+
+		// this.rapport=true;
+		File f;
+		if (request.getFamillePiId()== 1)
+			f = new File(excel_file_location+"Prix_Client" + "-" + dat + ".xls");
+		else
+			f = new File(excel_file_location+"Prix_Fournisseur" + "-" + dat + ".xls");
+
+		ByteArrayOutputStream fileOut = new ByteArrayOutputStream();
+		WritableWorkbook Equilibrageworkbook = Workbook.createWorkbook(fileOut);
+
+		// WritableWorkbook Equilibrageworkbook = Workbook.createWorkbook(f);
+		if (request.getFamillePiId() == 1)
+			Equilibrageworkbook.createSheet("Prix_Client", 0);
+		else
+			Equilibrageworkbook.createSheet("Prix_Fournisseur", 0);
+		WritableSheet sheet3 = Equilibrageworkbook.getSheet(0);
+
+		sheet3.setColumnView(0, 7);
+		sheet3.setColumnView(1, 7);
+		sheet3.setColumnView(2, 25);
+
+		sheet3.setColumnView(3, 12);
+		sheet3.setColumnView(4, 30);
+		sheet3.setColumnView(5, 10);
+
+		/**************************************************************************/
+		
+	
+		
+		if(baseInfo.getLogoPNG()!=null) {
+			WritableImage image = new WritableImage(2, 1, 1, 6, new File(baseInfo.getLogoPNG()));
+			sheet3.addImage(image);
+		}
+		
+
+		// Nom du rapport et la date
+
+		ExcelUtils.init();
+
+		// Nom du rapport et la date
+
+		if (request.getFamillePiId() == 1)
+			sheet3.addCell(new Label(2, 7, "    Liste des Prix Client", ExcelUtils.boldTitre));
+		else
+			sheet3.addCell(new Label(2, 7, "    Liste des Prix Fournisseurs", ExcelUtils.boldTitre));
+
+		sheet3.mergeCells(2, 7, 11, 8);
+
+		// Critaire de recherche
+		int numColCritRech = 2;
+		int numLigneCritRech = 14;
+
+		sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Critère de recherche", ExcelUtils.boldRed5));
+		sheet3.addCell(
+				new Label(numColCritRech + 1, numLigneCritRech, "" + dateTimeFormat2.format(d), ExcelUtils.boldRed3));
+		sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+		numLigneCritRech++;
+
+		if (isNotEmty(request.getRef()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Réf :", ExcelUtils.boldRed3));
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, request.getRef(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		if (isNotEmty(request.getDesignation()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Désignation :", ExcelUtils.boldRed3));
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, request.getDesignation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		if (isNotEmty(request.getFamilleEntite()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Famille :", ExcelUtils.boldRed3));
+			
+
+			FamilleArticleValue famille=familleArticleService.rechercheFamilleArticleById(Long.parseLong(request.getFamilleEntite()));
+			
+			//FamilleProduitValue famille = familleProduitService.rechercheFamilleProduitById(Long.parseLong(request.getFamille()));
+
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, famille.getDesignation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+		if (isNotEmty(request.getSousFamilleEntite()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Sous Famille :", ExcelUtils.boldRed3));
+
+			
+			SousFamilleArticleValue sousFamille=sousFamilleArticleService.rechercheSousFamilleArticleById(Long.parseLong(request.getSousFamilleEntite()));
+			
+			//SousFamilleProduitValue sousFamille = sousFamilleProduitService.rechercheSousFamilleProduitById(Long.parseLong(request.getSousfamille()));
+
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, sousFamille.getDesignation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		if (isNotEmty(request.getPrix_inf()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Prix Min :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, request.getPrix_inf().toString(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		if (isNotEmty(request.getPrix_sup()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Prix Max :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, request.getPrix_sup().toString(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		if (isNotEmty(request.getPartieInteressee()))
+
+		{
+			numLigneCritRech++;
+			if (request.getFamillePiId() == 1)
+				sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Client :", ExcelUtils.boldRed3));
+			else
+				sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Fournisseur :", ExcelUtils.boldRed3));
+
+			PartieInteresseValue partieInteresse = partieInteresseeService
+					.getById(Long.parseLong(request.getPartieInteressee()));
+
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, partieInteresse.getAbreviation(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		if (isNotEmty(request.getGetGroupeClientId()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Groupe :", ExcelUtils.boldRed3));
+
+			GroupeClientValue grp = new GroupeClientValue();
+			grp.setId(request.getGetGroupeClientId());
+			GroupeClientValue groupe = groupeClientService.rechercheGroupeClientParId(grp);
+
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, groupe.getDesignation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		/*
+		 * if (isNotEmty(request.getBoutiqueId()))
+		 * 
+		 * {
+		 * 
+		 * numLigneCritRech++; sheet3.addCell(new Label(numColCritRech,
+		 * numLigneCritRech, "Boutique :", ExcelUtils.boldRed3)); sheet3.addCell(new
+		 * Label(numColCritRech + 1, numLigneCritRech, request.getPrixMin() + "",
+		 * ExcelUtils.boldRed3));
+		 * 
+		 * 
+		 * }
+		 */
+
+		// request.setOptimized(this.checkForOptimization(request));
+
+		RecherchePrixClientValue recherchePrixClientValue = new RecherchePrixClientValue();
+		recherchePrixClientValue.setIdClient(Long.parseLong(request.getPartieInteressee()));
+		recherchePrixClientValue.setFamillePartieInteressee(request.getFamillePiId());
+
+		if (isNotEmty(request.getRef())) {
+		
+			
+			recherchePrixClientValue.setIdProduit(articleService.rechercheProduitParReference(request.getRef()).getId());
+
+			//recherchePrixClientValue.setIdProduit(produitService.rechercheProduitParReference(request.getReference()).getId());
+
+		}
+
+		List<PrixClientValue> listPrixClient = prixClientService
+				.rechchercheMultiCriterePrixClient(recherchePrixClientValue);
+
+		int i = numLigneCritRech + 4;
+
+		sheet3.addCell(new Label(2, i - 1, "Référence", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(3, i - 1, "Désignation", ExcelUtils.boldRed2));
+		sheet3.mergeCells(3, i - 1, 4, i - 1);
+		sheet3.addCell(new Label(5, i - 1, "Sous Famille", ExcelUtils.boldRed2));
+		sheet3.mergeCells(5, i - 1, 6, i - 1);
+		if (request.getFamillePiId() == 1)
+			sheet3.addCell(new Label(7, i - 1, "Client", ExcelUtils.boldRed2));
+
+		else
+			sheet3.addCell(new Label(7, i - 1, "Fournisseur", ExcelUtils.boldRed2));
+
+		sheet3.mergeCells(7, i - 1, 8, i - 1);
+		sheet3.addCell(new Label(9, i - 1, "Prix", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(10, i - 1, "Remise", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(11, i - 1, "Prix SP", ExcelUtils.boldRed2));
+
+		if (listPrixClient != null && listPrixClient.size() > 0) {
+
+			for (PrixClientValue element : listPrixClient) {
+
+				if (element.getEbproduit() != null) {
+					ArticleValue articleValue=new ArticleValue();
+					articleValue.setId(element.getEbproduit());
+					
+					ArticleValue produit=articleService.rechercheArticleParId(articleValue);
+					
+					//ProduitValue produit = produitService.rechercheProduitById(element.getEbproduit());
+
+					sheet3.addCell(new Label(2, i, produit.getRef() + "", ExcelUtils.boldRed));
+					sheet3.addCell(new Label(3, i, produit.getDesignation() + "", ExcelUtils.boldRed));
+					sheet3.mergeCells(3, i, 4, i);
+					sheet3.addCell(new Label(5, i, produit.getSousFamilleArtEntiteDesignation() + "", ExcelUtils.boldRed));
+					sheet3.mergeCells(5, i, 6, i);
+					if (request.getFamillePiId() == 1)
+						if (produit.getPuTTC()  != null)
+							sheet3.addCell(new Label(9, i, produit.getPuTTC() + "", ExcelUtils.boldRed));
+						else
+							sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+
+					else if (produit.getPuTTC()  != null)
+						sheet3.addCell(new Label(9, i, produit.getPu() + "", ExcelUtils.boldRed));
+					else
+						sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(2, i, "", ExcelUtils.boldRed));
+					sheet3.addCell(new Label(3, i, "", ExcelUtils.boldRed));
+					sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+					sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+
+				}
+
+				if (element.getIdpi() != null) {
+
+					PartieInteresseValue pi = partieInteresseeService.getById(element.getIdpi());
+
+					sheet3.addCell(new Label(7, i, pi.getAbreviation() + "", ExcelUtils.boldRed));
+					sheet3.mergeCells(7, i, 8, i);
+
+				} else {
+					sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+					sheet3.mergeCells(7, i, 8, i);
+
+				}
+
+				if (element.getRemise() != null) {
+
+					sheet3.addCell(new Label(10, i, element.getRemise() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+
+				}
+
+				if (element.getPrixvente() != null) {
+
+					sheet3.addCell(new Label(11, i, element.getPrixvente() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
+
+				}
+
+				i++;
+
+			}
+		}
+		i++;
+		i++;
+
+		/*
+		 * sheet3.addCell(new Label(7, i, "Totale", ExcelUtils.boldRed2));
+		 * sheet3.mergeCells(7, i, 9, i);
+		 * 
+		 * i++;
+		 */
+
+		/*******************************************
+		 * BAS DU PAGE
+		 ****************************************/
+
+		int numColBasDuPage = 2;
+		int numLigneBasDuPage = i + 2;
+
+		Equilibrageworkbook.write();
+		Equilibrageworkbook.close();
+
+		/******************************************************************************************/
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(new MediaType("application", "octet-stream"));
+
+		Date now = new Date();
+		String dateFormat1 = dateFormat.format(now);
+		String filename;
+		if (request.getFamillePiId() == 1)
+			filename = "Prix-Fournisseur" + dateFormat1 + ".xls";
+		else
+			filename = "Prix-Client" + dateFormat1 + ".xls";
+		// String filename = "sortie-stock_" + dateFormat1 ;
+		headers.setContentDispositionFormData(filename, filename);
+		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+		return new ResponseEntity<>(fileOut.toByteArray(), headers, HttpStatus.OK);
+		/******************************************************************************************/
+
+		/****************************
+		 * Ouvrir le nouveau fichier généré
+		 *******************************/
+
+		/*
+		 * // context.getExternalContext().getResponse();
+		 * response.setHeader("Content-disposition", "attachment; filename=" +
+		 * f.getName()); // System.out.println("nom du fichier" + f.getName());
+		 * response.setContentType("application/vnd.ms-excel"); int bufferSize = 64 *
+		 * 1024;
+		 */
+
+	}
+	
+	
 	@RequestMapping(value = "/listproduit", method = RequestMethod.GET)
 	public void generateListProduitListReport(
 
@@ -1183,6 +1546,7 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 			@RequestParam("groupeClientId") String groupeClientId,
 			@RequestParam("vTypePartieInteressee") String vTypePartieInteressee, @RequestParam("actif") String actif,
 			@RequestParam("vFamillePartieInteressee") Long vFamillePartieInteressee,
+			@RequestParam("nature") String nature,
 
 			HttpServletResponse response) throws WriteException, IOException {
 
@@ -1227,6 +1591,7 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 		sheet3.setColumnView(12, 15);
 
 		sheet3.setColumnView(13, 30);
+		sheet3.setColumnView(14, 15);
 
 		/**************************************************************************/
 
@@ -1286,7 +1651,7 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 			sheet3.addCell(new Label(2, 7, "   Liste des Fournisseurs", ExcelUtils.boldTitre));
 		}
 
-		sheet3.mergeCells(2, 7, 13, 8);
+		sheet3.mergeCells(2, 7, 14, 8);
 		/*
 		 * // sheet3.addCell(new Label(2, 6, "Le : " + dateFormat2.format(d),
 		 * boldRed3));
@@ -1338,6 +1703,20 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 		 * request.setPrix_sup(prixSup);
 		 * 
 		 */
+		
+		if (isNotEmty(nature))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Nature. :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, nature, ExcelUtils.boldRed3));
+
+			request.setNature(nature);
+
+		}
+		
+		
 		if (isNotEmty(vReference))
 
 		{
@@ -1468,7 +1847,8 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 		//sheet3.addCell(new Label(11, i - 1, "Registre.Comm", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(10, i - 1, "Code Postale", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(11, i - 1, "Adresse", ExcelUtils.boldRed2));
-
+		sheet3.addCell(new Label(12, i - 1, "Nature", ExcelUtils.boldRed2));
+		
 		Double quantiteTotale = 0d;
 
 		for (PartieInteresseValue element : res.getPartieInteresseValues()) {
@@ -1588,6 +1968,14 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 
 			} else {
 				sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
+
+			}
+
+			if (element.getNature() != null) {
+				sheet3.addCell(new Label(12, i, element.getNature() + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(12, i, "", ExcelUtils.boldRed));
 
 			}
 

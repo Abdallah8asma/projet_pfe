@@ -41,11 +41,20 @@ public class RechercheMulticriterePartieInteresseeValue {
 	
 	
 	
+	private String nature;
   
   
-  
-  
-  public String getTelephoneMobile() {
+
+
+public String getNature() {
+		return nature;
+	}
+
+	public void setNature(String nature) {
+		this.nature = nature;
+	}
+
+public String getTelephoneMobile() {
 		return telephoneMobile;
 	}
 

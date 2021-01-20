@@ -61,4 +61,6 @@ public interface IBonLivraisonDomaine {
 	public String getCurrentReference(Calendar instance, boolean b);
 
 	public ListProduitElementValue getProduitElementListForPassager(ValiderBLPassagerValue request);
+
+	public String getCurrentReferenceByType(String type, Calendar instance, boolean b);
 }

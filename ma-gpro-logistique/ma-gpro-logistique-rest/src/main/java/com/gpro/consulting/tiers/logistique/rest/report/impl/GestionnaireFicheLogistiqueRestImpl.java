@@ -213,16 +213,16 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 		ExcelUtils.init();
 
-		sheet3.addCell(new Label(2, 7, "Progress O.F Report", ExcelUtils.boldTitre));
-		sheet3.mergeCells(2, 7,11, 8);
+		sheet3.addCell(new Label(2, 7, "Rapport Suivie O.F", ExcelUtils.boldTitre));
+		sheet3.mergeCells(2, 7,12, 8);
 		// sheet3.addCell(new Label(2, 6, "Le : " + dateTimeFormat2.format(d),
 		// ExcelUtils.boldRed3));
 
 		// Critaire de recherche
 		int numColCritRech = 2;
 		int numLigneCritRech = 10;
-		sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Search Criteria", ExcelUtils.boldRed5));
-		sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, "On " + dateTimeFormat2.format(d),
+		sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Critère de recherche ", ExcelUtils.boldRed5));
+		sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, "Le " + dateTimeFormat2.format(d),
 				ExcelUtils.boldRed3));
 		numLigneCritRech++;
 
@@ -232,7 +232,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 		{
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "State :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Statut :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, state, ExcelUtils.boldRed3));
 
 			request.setStatut(state);
@@ -286,7 +286,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 				etatProduced = "+";
 
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Criteria Produced Qte ", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Critère Qte Prod. ", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, etatProduced, ExcelUtils.boldRed3));
 
 			request.setEtatProduced(etatProduced);
@@ -300,7 +300,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 				etatShipped = "+";
 
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Criteria Shipped Qte ", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Qte Expediée ", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, etatShipped, ExcelUtils.boldRed3));
 
 			request.setEtatShipped(etatShipped);
@@ -311,7 +311,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			// System.out.println("#################### DateLivraison de " + dateDe);
 
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Introd. Date From :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Intro. De :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
 					new SimpleDateFormat("dd-MM-yyyy").format(calendarStringToCalendarObject(dateIntroDe).getTime()),
 					ExcelUtils.boldRed3));
@@ -322,7 +322,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 		if (isNotEmty(dateIntroA)) {
 			// System.out.println("#################### DateLivraison A " + dateA);
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Introd. Date To :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Intro. A :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
 					new SimpleDateFormat("dd-MM-yyyy").format(calendarStringToCalendarObject(dateIntroA).getTime()),
 					ExcelUtils.boldRed3));
@@ -334,7 +334,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			// System.out.println("#################### DateLivraison de " + dateDe);
 
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Begin Prod. Date From :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Debut Prod. De :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, new SimpleDateFormat("dd-MM-yyyy")
 					.format(calendarStringToCalendarObject(dateDebutProdDe).getTime()), ExcelUtils.boldRed3));
 
@@ -345,7 +345,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			// System.out.println("#################### DateLivraison de " + dateDe);
 
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Begin Prod. Date To :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Debut Prod. A :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
 					new SimpleDateFormat("dd-MM-yyyy").format(calendarStringToCalendarObject(dateDebutProdA).getTime()),
 					ExcelUtils.boldRed3));
@@ -358,7 +358,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			// System.out.println("#################### DateLivraison de " + dateDe);
 
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "End Prod. Date From :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Fin Prod. De :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
 					new SimpleDateFormat("dd-MM-yyyy").format(calendarStringToCalendarObject(dateFinProdDe).getTime()),
 					ExcelUtils.boldRed3));
@@ -370,7 +370,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			// System.out.println("#################### DateLivraison de " + dateDe);
 
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "End Prod. Date To :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Fin Prod. A :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
 					new SimpleDateFormat("dd-MM-yyyy").format(calendarStringToCalendarObject(dateFinProdA).getTime()),
 					ExcelUtils.boldRed3));
@@ -388,17 +388,20 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 		sheet3.addCell(new Label(4, i - 1, "Reference", ExcelUtils.arial_bold_s10_white_AUTO));
 		sheet3.addCell(new Label(5, i - 1, "Designation", ExcelUtils.arial_bold_s10_white_AUTO));
 		sheet3.addCell(new Label(6, i - 1, "O.F", ExcelUtils.arial_bold_s10_white_AUTO));
-		sheet3.addCell(new Label(7, i - 1, "Intro. Date", ExcelUtils.arial_bold_s10_white_AUTO));
-		sheet3.addCell(new Label(8, i - 1, "Th. End Date ", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(7, i - 1, "Date Introd.", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(8, i - 1, "Date Fin Th.", ExcelUtils.arial_bold_s10_white_AUTO));
 
-		sheet3.addCell(new Label(9, i - 1, "Requested Qty", ExcelUtils.arial_bold_s10_white_AUTO));
-		sheet3.addCell(new Label(10, i - 1, "Produced Qty", ExcelUtils.arial_bold_s10_white_AUTO));
-		sheet3.addCell(new Label(11, i - 1, "Remaining Qty", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(9, i - 1, "Qte O.F", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(10, i - 1, "Qte Produite", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(11, i - 1, "Qte Restante", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(12, i - 1, "Qte Expédiée", ExcelUtils.arial_bold_s10_white_AUTO));
+		
 
 		Long sommeQuantite = 0l;
 		Long sommeQuantiteProduced = 0l;
 		Long sommeQuantiteRestante = 0l;
 
+		Long sommeQuantiteExpedier = 0l;
 		for (ElementRechecheMiseValue element : resultatRecherche.getListeElementRechecheMiseValeur()) {
 			
 			
@@ -471,7 +474,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			// quantite
 
 			if (element.getQuantite() != null) {
-				sheet3.addCell(new Label(9, i, element.getQuantite() + "", ExcelUtils.boldRed));
+				sheet3.addCell(new Label(9, i, element.getQuantite().longValue() + "", ExcelUtils.boldRed));
 
 				sommeQuantite += element.getQuantite().longValue();
 
@@ -500,6 +503,20 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			} else {
 				sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
 			}
+			
+			
+			
+
+			// quantite expedier
+
+			if (element.getQteExpedition() != null) {
+				sheet3.addCell(new Label(12, i, element.getQteExpedition().longValue() + "", ExcelUtils.boldRed));
+
+				sommeQuantiteExpedier += element.getQteExpedition().longValue();
+			} else {
+				sheet3.addCell(new Label(12, i, "", ExcelUtils.boldRed));
+			}
+			
 
 			i++;
 
@@ -512,6 +529,8 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 		sheet3.addCell(new Label(10, i, sommeQuantiteProduced + "", ExcelUtils.boldRed3));
 
 		sheet3.addCell(new Label(11, i, sommeQuantiteRestante + "", ExcelUtils.boldRed3));
+		
+		sheet3.addCell(new Label(12, i, sommeQuantiteExpedier + "", ExcelUtils.boldRed3));
 
 		/*******************************************
 		 * BAS DU PAGE
@@ -932,7 +951,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 		WritableImage image = new WritableImage(2, 1, // column, row
 				1, 6, // width, height in terms of number of cells
-				new File("C:/ERP/logos_clients/thermoplastics.png")); // Supports only 'png' images
+				new File("C:/ERP/logos_clients/logo_client.png")); // Supports only 'png' images
 
 		sheet3.addImage(image);
 

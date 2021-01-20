@@ -385,15 +385,35 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
           return node.id == taxeId;
         });
 
-        if (angular.isDefined(element[0]) && prixUnitaireHT != null) {
+
+        if (angular.isDefined(element[0]) && (prixUnitaireHT != null) ) {
+
+
+          if($('input[name="chek"]').is(':checked')){
           var valeurTaxe = element[0].valeur;
 
-          $scope.produitCourante.prixVenteTTC =
-            prixUnitaireHT * (1 + valeurTaxe / 100);
+          $scope.produitCourante.prixVenteTTC = ( prixUnitaireHT * (1 + valeurTaxe / 100)+ 0.01);
           
+        }
+
+          else {
+            var valeurTaxe = element[0].valeur;
+
+  
+            $scope.produitCourante.prixVenteTTC = ( prixUnitaireHT * (1 + valeurTaxe / 100) );
+
+          }
+        }
+        
+
+
           //$scope.produitCourante.prixVenteTTC.toFixed(3);
       	$scope.produitCourante.prixVenteTTC = Math.round($scope.produitCourante.prixVenteTTC*1000)/1000;
-        }
+        
+
+
+
+
       };
       
       
@@ -437,8 +457,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
       if (angular.isDefined(element[0]) && prixAchatHT != null) {
         var valeurTaxe = element[0].valeur;
 
-        $scope.produitCourante.prixAchatTTC =
-        	prixAchatHT * (1 + valeurTaxe / 100);
+        $scope.produitCourante.prixAchatTTC =prixAchatHT * (1 + valeurTaxe / 100);
         
        // $scope.produitCourante.prixAchatTTC.toFixed(3);
         $scope.produitCourante.prixAchatTTC = Math.round($scope.produitCourante.prixAchatTTC*1000)/1000;
@@ -738,6 +757,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
         "serialisable":false,
         "retour":false,
         "fodec":false,
+        "devise":"2",
         
         "articleProduits":[{
           'articleId':'',

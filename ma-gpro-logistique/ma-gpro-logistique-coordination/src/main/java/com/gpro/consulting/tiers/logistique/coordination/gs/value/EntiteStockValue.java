@@ -40,9 +40,26 @@ public class EntiteStockValue implements Comparable<Object>{
 	private Double qteEntree;
 	
 	
+	private String grammageArticle;
 	
+	private String dimensionArticle;
 	
-	
+	public String getGrammageArticle() {
+		return grammageArticle;
+	}
+
+	public void setGrammageArticle(String grammageArticle) {
+		this.grammageArticle = grammageArticle;
+	}
+
+	public String getDimensionArticle() {
+		return dimensionArticle;
+	}
+
+	public void setDimensionArticle(String dimensionArticle) {
+		this.dimensionArticle = dimensionArticle;
+	}
+
 	public Double getQteEntree() {
 		return qteEntree;
 	}

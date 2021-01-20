@@ -66,8 +66,18 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 	private String excelDirectory;
 	
 	
+	private boolean blackMode;
 	
 	
+	
+
+	public boolean isBlackMode() {
+		return blackMode;
+	}
+
+	public void setBlackMode(boolean blackMode) {
+		this.blackMode = blackMode;
+	}
 
 	public String getExcelDirectory() {
 		return excelDirectory;

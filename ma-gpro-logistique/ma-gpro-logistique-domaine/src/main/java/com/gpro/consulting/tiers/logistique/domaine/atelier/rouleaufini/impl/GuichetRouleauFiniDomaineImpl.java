@@ -38,4 +38,10 @@ public class GuichetRouleauFiniDomaineImpl  implements IGuichetRouleauFiniDomain
 	public Long modifierGuichetBonReception(GuichetRouleauFiniValue pGuichetValeur) {
 		return this.guichetRouleauFiniPersistance.modifierGuichetRouleauFini(pGuichetValeur);
 	}
+
+	@Override
+	public Integer getPrefixe() {
+		// TODO Auto-generated method stub
+		return this.guichetRouleauFiniPersistance.getPrefixe();
+	}
 }

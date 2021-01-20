@@ -123,5 +123,11 @@ public class BonLivraisonServiceImpl implements IBonLivraisonService{
 		// TODO Auto-generated method stub
 		return  bonLivraisonDomaine.getProduitElementListForPassager(request);
 	}
+
+	@Override
+	public String getCurrentReferenceByType(String type, Calendar instance, boolean b) {
+		// TODO Auto-generated method stub
+		return  bonLivraisonDomaine.getCurrentReferenceByType(type,instance,b);
+	}
 	
 }

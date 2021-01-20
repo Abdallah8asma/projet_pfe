@@ -70,6 +70,7 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	
 	
 	private int MAX_RESULTS = 52;
+	private String devise = "devise";
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -220,6 +221,11 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 			}
 	 	
 	 	
+			if (request.getDevise() != null) {
+				whereClause.add(criteriaBuilder.equal(root.get(devise), request.getDevise()));
+			}
+	 	
+			
 	 //	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	 	
 	 	
@@ -247,7 +253,9 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	 			root.get("raison").as(String.class),
 	 			root.get("dateIntroduction").as(Calendar.class),	
 	 			root.get("idDepot").as(Long.class),
-	 			root.get("reglementId").as(Long.class)
+	 			root.get("reglementId").as(Long.class),
+	 			root.get("devise").as(Long.class),
+	 			root.get("montantConverti").as(Double.class)
 				
 				)).where(whereClause.toArray(new Predicate[] {}));
 	 	
@@ -295,6 +303,8 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	    	
 	    	entity.setIdDepot((Long) element[20]);
 	    	entity.setReglementId((Long) element[21]);
+	    	entity.setDevise((Long) element[22]);
+	    	entity.setMontantConverti((Double) element[23]);
 	    	
 	    	FactureVenteValue dto = FacturePersistanceUtilities.toValue(entity);
 	    	list.add(dto);

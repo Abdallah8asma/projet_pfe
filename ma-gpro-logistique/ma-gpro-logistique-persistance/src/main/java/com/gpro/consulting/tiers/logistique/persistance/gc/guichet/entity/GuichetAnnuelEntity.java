@@ -204,9 +204,40 @@ public class GuichetAnnuelEntity {
 	  
 	  
 	  
+	  // BL Non Declare.
 	  
 	  
-	  public Long getNumBonMouvementEntre() {
+	  
+	  /** Numéro bon livraison courant. */
+	  @Column(name = "ref_bon_livraison_nd")
+	  private Long numReferenceBonLivraisonNDCourante;
+	  
+	  /** prefixe_bl  */
+	  @Column(name = "prefixe_bl_nd ")
+	  private String prefixeBLND ;
+	  
+	  
+	  
+	  
+	  
+	  
+	  public Long getNumReferenceBonLivraisonNDCourante() {
+		return numReferenceBonLivraisonNDCourante;
+	}
+
+	public void setNumReferenceBonLivraisonNDCourante(Long numReferenceBonLivraisonNDCourante) {
+		this.numReferenceBonLivraisonNDCourante = numReferenceBonLivraisonNDCourante;
+	}
+
+	public String getPrefixeBLND() {
+		return prefixeBLND;
+	}
+
+	public void setPrefixeBLND(String prefixeBLND) {
+		this.prefixeBLND = prefixeBLND;
+	}
+
+	public Long getNumBonMouvementEntre() {
 		return numBonMouvementEntre;
 	}
 

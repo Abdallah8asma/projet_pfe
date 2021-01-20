@@ -128,5 +128,11 @@ public class CommandeAchatRestImpl {
  		
  		return  bonCommandeService.getCurrentReferenceByType(type,Calendar.getInstance(),false);
  	}
+	
+	@RequestMapping(value = "/getCurrentReferenceMensuel", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuel() {
+ 		
+ 		return  bonCommandeService.getCurrentReferenceMensuel(Calendar.getInstance(),false);
+ 	}
 
 }

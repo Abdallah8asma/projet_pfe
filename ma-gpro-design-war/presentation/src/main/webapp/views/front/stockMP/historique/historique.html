@@ -70,8 +70,10 @@
 						<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
 							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
 									ng-click="download(historiqueCourant.historique,historiqueCourant.type)">Excel</a></li>
-							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
-									ng-click="downloadAllProduitsExcel(historiqueCourant)">PDF</a></li>
+
+						<!-- 	<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
+									ng-click="downloadAllProduitsExcel(historiqueCourant)">PDF</a></li> -->
+									
 						</ul>
 					</div>
 
@@ -299,8 +301,8 @@
 													Date Entre </span>
 											</div>
 											<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-												ng-init="receptionAchatCourante.dateIntroductionDu =''"
-												ng-model="receptionAchatCourante.dateIntroductionDu" is-open="opened"
+												ng-init="historiqueCourant.dateDu =''"
+												ng-model="historiqueCourant.dateDu" is-open="opened"
 												datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
 												close-text="Close" />
 	
@@ -332,8 +334,8 @@
 													Et</span>
 											</div>
 											<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-												ng-init="receptionAchatCourante.dateIntroductionDu =''"
-												ng-model="receptionAchatCourante.dateIntroductionDu" is-open="opened"
+												ng-init="historiqueCourant.dateA =''"
+												ng-model="historiqueCourant.dateA" is-open="opened"
 												datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
 												close-text="Close" />
 	

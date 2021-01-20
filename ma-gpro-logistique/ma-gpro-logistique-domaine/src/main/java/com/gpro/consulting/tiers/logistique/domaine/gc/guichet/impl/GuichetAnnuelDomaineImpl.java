@@ -217,4 +217,10 @@ public class GuichetAnnuelDomaineImpl implements IGuichetAnnuelDomaine{
 		return this.guichetAnnuelPersistance.modifierGuichetBonMouvementSortieAnnuel(pGuichetValeur);
 	}
 
+	@Override
+	public Long modifierGuichetBLNDAnnuel(GuichetAnnuelValue currentGuichetAnnuel) {
+		return guichetAnnuelPersistance.modifierGuichetBLNDAnnuel(currentGuichetAnnuel);
+		
+	}
+
 }

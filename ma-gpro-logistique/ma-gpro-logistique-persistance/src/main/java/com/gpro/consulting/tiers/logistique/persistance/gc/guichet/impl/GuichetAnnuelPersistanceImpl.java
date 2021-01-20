@@ -505,5 +505,23 @@ public class GuichetAnnuelPersistanceImpl extends AbstractPersistance implements
 	    this.entityManager.flush();
 	    return vGuichetEntite.getId();
 	}
+
+	@Override
+	public Long modifierGuichetBLNDAnnuel(GuichetAnnuelValue pGuichetValeur) {
+		// Convertir la valeur du guichet en une entité.
+		  GuichetAnnuelEntity vGuichetEntite = rechercherGuichetAnnuel(pGuichetValeur);
+		// Sauvegarde de l'instance dans la base
+	    vGuichetEntite.setNumReferenceBonLivraisonNDCourante(pGuichetValeur.getNumReferenceBonLivraisonNDCourante());
+	    
+	    
+	    
+	   // this.entityManager.merge(vGuichetEntite);
+	    //this.entityManager.flush();
+	  ///  return vGuichetEntite.getId();
+	    
+	    
+	    
+	    return Long.parseLong(modifierGuichetAnnuel(pGuichetValeur));
+	}
 	
 }

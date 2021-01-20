@@ -371,11 +371,39 @@ public class FactureDomaineImpl implements IFactureDomaine {
 
 		// TVA variable selon produit
 
-		for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
+	/*	for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
 			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
 				montantTaxeTVA = ZERO;
 				if (produitTaxeMap.containsKey(taxe))
 					montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
+
+				taxeFactureIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;
+
+			}
+
+		}
+	*/	
+		
+		
+		for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
+			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
+				montantTaxeTVA = ZERO;
+				if (produitTaxeMap.containsKey(taxe)) {
+					
+					if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
+						
+						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() /100 )* taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}else 
+						
+					{
+						
+						montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}
+				}
+					
 
 				taxeFactureIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
 				montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;
@@ -428,8 +456,16 @@ public class FactureDomaineImpl implements IFactureDomaine {
 
 		} else {
 			factureValue.setMontantTTC(montantTTCTotal);
+			
 		}
 
+		
+      if(factureValue.getTauxConversion()!=null)
+			factureValue.setMontantConverti(factureValue.getTauxConversion()*montantTTCTotal);
+      else
+    	  factureValue.setMontantConverti(ZERO);
+		
+		
 		String factureId =  facturePersistance.createFacture(factureValue);
 		
 		
@@ -666,7 +702,7 @@ public class FactureDomaineImpl implements IFactureDomaine {
 			}
 		}
 
-		for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
+	/*	for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
 			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
 				montantTaxeTVA = ZERO;
 				if (produitTaxeMap.containsKey(taxe))
@@ -678,6 +714,36 @@ public class FactureDomaineImpl implements IFactureDomaine {
 			}
 
 		}
+		*/
+		
+		
+		
+		for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
+			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
+				montantTaxeTVA = ZERO;
+				if (produitTaxeMap.containsKey(taxe)) {
+					
+					if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
+						
+						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() /100 )* taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}else 
+						
+					{
+						
+						montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}
+				}
+					
+
+				taxeFactureIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;
+
+			}
+
+		}
+		
 
 		// modifier par samer le 01.04.20 afin de ne pas calculer le taxe de timbre dans
 		// les factures Avoir
@@ -712,6 +778,11 @@ public class FactureDomaineImpl implements IFactureDomaine {
 		factureValue.setMontantTTC(montantTTC);
 		factureValue.setMetrageTotal(metrageTotal);
 
+		
+	
+		factureValue.setMontantConverti(factureValue.getTauxConversion()*montantTTC);
+		
+		
 		/***
 		 * Si Client .type exonoré Alors TVA=0 au niveau de Facture et Bon de livraison
 		 ***/

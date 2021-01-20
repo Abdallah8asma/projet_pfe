@@ -471,6 +471,10 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		List<DetLivraisonVenteValue> vListDetails = new ArrayList<DetLivraisonVenteValue>();
 		for (DetLivraisonVenteValue detLivraisonVente : bonLivraisonValue.getListDetLivraisonVente()) {
 			
+			if(detLivraisonVente.getPrixUnitaireHT() == null)
+				detLivraisonVente.setPrixUnitaireHT(ZERO);
+
+			
 			if(detLivraisonVente.getId() == null && detLivraisonVente.getFicheId() == null) {
 				maxOrdre ++;
 				detLivraisonVente.setFicheId(maxOrdre);
@@ -497,7 +501,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 					detLivraisonVente.setSerialisable(true);
 
 				/** Debut update stock si qte a ete modifie **/
-				if (detLivraisonVente.getId() != null && bonLivraisonValue.getStock() == true
+				if (detLivraisonVente.getId() != null && bonLivraisonValue.getStock()!= null  && bonLivraisonValue.getStock() == true
 						&& detLivraisonVente.getQuantite() != null && detLivraisonVente.getQuantiteAncien() != null
 						&& !detLivraisonVente.getQuantite().equals(detLivraisonVente.getQuantiteAncien())) {
 
@@ -529,7 +533,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 				/** Fin update stock si qte a ete modifie **/
 
 				/** Debut update stock si un produit a ete ajoute **/
-				if (detLivraisonVente.getId() == null && bonLivraisonValue.getStock() == true
+				if (detLivraisonVente.getId() == null && bonLivraisonValue.getStock() != null &&  bonLivraisonValue.getStock() == true
 						&& detLivraisonVente.getQuantite() != null) {
 
 					Double qte = (produitValue.getQuantite() - detLivraisonVente.getQuantite());
@@ -648,18 +652,6 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			
 			
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			/////////////////////////////////////
 
 			if (detLivraisonVente.getPrixTotalHT() != null) {
 				montantHTaxeTotal += detLivraisonVente.getPrixTotalHT();
@@ -729,7 +721,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 
 		// TVA variable selon produit
 
-		for (Long taxe : taxeLivraisonIdTaxeMap.keySet()) {
+	/*	for (Long taxe : taxeLivraisonIdTaxeMap.keySet()) {
 			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
 				montantTaxeTVA = ZERO;
 				if (produitTaxeMap.containsKey(taxe))
@@ -741,6 +733,34 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			}
 
 		}
+		*/
+		
+		for (Long taxe : taxeLivraisonIdTaxeMap.keySet()) {
+			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
+				montantTaxeTVA = ZERO;
+				if (produitTaxeMap.containsKey(taxe)) {
+					
+					if (taxeLivraisonIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
+						
+						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() /100 )* taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}else 
+						
+					{
+						
+   					montantTaxeTVA = produitTaxeMap.get(taxe) * taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}
+				}
+
+				taxeLivraisonIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;
+
+			}
+
+		}
+		
+		
 
 		if (taxeLivraisonIdTaxeMap.containsKey(TAXE_ID_TIMBRE)) {
 			if (taxeLivraisonIdTaxeMap.get(TAXE_ID_TIMBRE).getMontant() != null) {
@@ -791,6 +811,9 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		} else {
 			bonLivraisonValue.setMontantTTC(montantTTC);
 		}
+		
+		
+		bonLivraisonValue.setMontantConverti(bonLivraisonValue.getTauxConversion()*montantTTC);
 		
 		//Si une livraison correspant a une seule commande
 		if(estNonVide(bonLivraisonValue.getRefCommande()) && !bonLivraisonValue.getRefCommande().contains(SEPARATOR)) {
@@ -994,7 +1017,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 
 				ProduitValue produitValue = produitService.rechercheProduitById(detLivraisonVente.getProduitId());
 
-				if (produitValue != null && bonLivraisonValue.getStock() == true) {
+				if (produitValue != null && bonLivraisonValue.getStock()!=null && bonLivraisonValue.getStock() == true) {
 					Double qte = (produitValue.getQuantite() + detLivraisonVente.getQuantite());
 					produitValue.setQuantite(qte);
 					produitService.modifierProduit(produitValue);
@@ -1466,11 +1489,18 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		
 		
 		
-
+        String type = "";
+        
+        
+        if(bonLivraisonValue.getDeclare() != null && bonLivraisonValue.getDeclare() == true)
+        	type = "declarer";
+        else
+         	type = "non-declare";
+		
 
 		if (bonLivraisonValue.getReference() == null || bonLivraisonValue.getReference().equals("")) {
 
-			bonLivraisonValue.setReference(getCurrentReference(Calendar.getInstance(), true));
+			bonLivraisonValue.setReference(getCurrentReferenceByType(type,Calendar.getInstance(), true));
 
 			// bonLivraisonValue.setReference(getNumeroBonLivraisonFromGuichetAnnuel(Calendar.getInstance()));
 
@@ -1478,7 +1508,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			// bonLivraisonValue.getReference().concat(getNumeroBonLivraison(Calendar.getInstance()));
 		} else if (bonLivraisonValue.getRefAvantChangement() != null
 				&& bonLivraisonValue.getReference().equals(bonLivraisonValue.getRefAvantChangement())) {
-			this.getCurrentReference(bonLivraisonValue.getDate(), true);
+			this.getCurrentReferenceByType(type,bonLivraisonValue.getDate(), true);
 		}
 
 		// Forcer la date
@@ -1522,6 +1552,11 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		Long ordreDetailLivraison = new Long(0);
 
 		for (DetLivraisonVenteValue detLivraisonVente : bonLivraisonValue.getListDetLivraisonVente()) {
+			
+			if(detLivraisonVente.getPrixUnitaireHT() == null)
+				detLivraisonVente.setPrixUnitaireHT(ZERO);
+			
+			
 			// Sortir du Stock Negatif
 			// Vérifier si la quantité reçu < quantité disponible
 			// if(detLivraisonVente.isErrorQte()){
@@ -1585,7 +1620,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 
 					}
 
-					if (bonLivraisonValue.getStock() == true) {
+					if (bonLivraisonValue.getStock()!=null && bonLivraisonValue.getStock() == true) {
 						Double qte = (produitValue.getQuantite() - detLivraisonVente.getQuantite());
 						produitValue.setQuantite(qte);
 						produitService.modifierProduit(produitValue);
@@ -1759,6 +1794,9 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		}
 		// Ajout by Ghazi Atroussi 16/11/2016
 		montantHTaxeTotal = montantHTaxeTotal - montantRemiseTotal;
+	
+		
+		
 		if (taxeLivraisonIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
 			if (taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() != null) {
 				assietteFodec = montantHTaxeTotal;
@@ -1772,7 +1810,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		// modification
 		// TVA variable selon produit
 
-		for (Long taxe : taxeLivraisonIdTaxeMap.keySet()) {
+/*		for (Long taxe : taxeLivraisonIdTaxeMap.keySet()) {
 			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
 				montantTaxeTVA = ZERO;
 				if (produitTaxeMap.containsKey(taxe))
@@ -1784,6 +1822,38 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			}
 
 		}
+		
+		*/
+		
+		
+		for (Long taxe : taxeLivraisonIdTaxeMap.keySet()) {
+			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
+				montantTaxeTVA = ZERO;
+				if (produitTaxeMap.containsKey(taxe)) {
+					
+					if (taxeLivraisonIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
+						
+						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() /100 )* taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}else 
+						
+					{
+						
+						montantTaxeTVA = produitTaxeMap.get(taxe) * taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}
+				}
+					
+
+				taxeLivraisonIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;
+
+			}
+
+		}
+		
+		
+		
 
 		// if(produitTaxeMap.containsKey(TAXE_ID_TVA)){
 		// if(produitTaxeMap.get(TAXE_ID_TVA).valueOf(FIRST_INDEX) != null){
@@ -1848,9 +1918,15 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		} else {
 			bonLivraisonValue.setMontantTTC(montantTTCTotal);
 		}
+
 		
+	
 		
+		if(bonLivraisonValue.getTauxConversion()!=null)
+		bonLivraisonValue.setMontantConverti(bonLivraisonValue.getTauxConversion()*montantTTCTotal);
 		
+		else 
+			bonLivraisonValue.setMontantConverti(ZERO);
 		
 		//Si une livraison correspant a une seule commande
 		if(estNonVide(bonLivraisonValue.getRefCommande()) && !bonLivraisonValue.getRefCommande().contains(SEPARATOR)) {
@@ -2264,6 +2340,66 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		listProduitElementValue.setListDetFactureVente(listDetFactureVente);
 
 		return listProduitElementValue;
+	}
+
+	@Override
+	public String getCurrentReferenceByType(String type, Calendar instance, boolean b) {
+		
+		
+		if(type.equals("declarer"))
+			
+		{
+			
+			return getCurrentReference(instance,b);
+			
+		}else
+			
+			
+		{
+			
+			return getCurrentReferenceNonDeclare(instance,b);
+			
+		}
+		
+
+	}
+
+	private String getCurrentReferenceNonDeclare(Calendar instance, boolean increment) {
+		
+		GuichetAnnuelValue currentGuichetAnnuel = guichetAnnuelDomaine.getCurrentGuichetAnnuel();
+
+		Long numeroBL = currentGuichetAnnuel.getNumReferenceBonLivraisonNDCourante();
+
+		// Long vNumGuichetFacture =
+		// this.guichetAnnuelDomaine.getNextNumAvoirReference();
+		/** Année courante. */
+		// int vAnneeCourante = pDateBonFacture.get(Calendar.YEAR);
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBL = new StringBuilder("");
+
+		if (currentGuichetAnnuel.getPrefixeBLND() != null)
+			vNumBL.append(currentGuichetAnnuel.getPrefixeBLND());
+
+		if (numeroBL > 0 && numeroBL < 10) {
+			vNumBL.append("000");
+		} else if (numeroBL >= 10 && numeroBL < 100) {
+			vNumBL.append("00");
+		}
+
+		else if (numeroBL >= 100 && numeroBL < 1000) {
+			vNumBL.append("0");
+		}
+
+		vNumBL.append(numeroBL);
+
+		currentGuichetAnnuel.setNumReferenceBonLivraisonNDCourante(new Long(numeroBL + 1L));
+
+		/** Modification de la valeur en base du numéro. */
+
+		if (increment)
+			this.guichetAnnuelDomaine.modifierGuichetBLNDAnnuel(currentGuichetAnnuel);
+
+		return vNumBL.toString();
 	}
 
 }

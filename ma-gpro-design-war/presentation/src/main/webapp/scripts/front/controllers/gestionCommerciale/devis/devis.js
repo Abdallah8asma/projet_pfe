@@ -110,7 +110,7 @@ angular
 							$scope.listeSitePartieInteresseeCache = [];
 							$scope.ListTypeDocumentCache = [];
 							$scope.ListSousFamilleProduitCache = [];
-							
+							$scope.ListeDevise = [];
 							// Liste des PartieInteressee (avec FamilleId=1)
 							$scope.listeClientCache = function() {
 								$http
@@ -196,7 +196,17 @@ angular
 
 										});
 							}
-							
+									     // Liste des Devises
+										 $scope.ListeDevise = function () {
+											$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+											 $scope.ListeDevise = dataDevise;
+													 });
+												 };
+												 
+					 
+												 
+							$scope.ListeDevise();
+					 
 							$scope.listeClientCache();
 							$scope.listeTaxes();
 //							$scope.listeTypeCommandeenteCache();
@@ -233,7 +243,9 @@ angular
 								$scope.listTaxeLivraisonInitMethod();
 								$scope.initTaxeRemoved();
 
-								$scope.commandeVenteCourante={dateIntroduction : new Date()};
+								$scope.commandeVenteCourante={dateIntroduction : new Date(),
+									"devise":"2"
+								};
 								
 								
 								
@@ -389,6 +401,40 @@ angular
 								
 								
 							};
+
+							$scope.dowloadListCmdvente = function (commandeAchatCourante) {
+								$scope.traitementEnCoursAllProduit = "true";
+								 
+								 
+								$http({
+									url: UrlAtelier + "/fiches/listCommandesVente",
+									method: "POST",
+									data: commandeAchatCourante, // this is your json
+																	// data string
+									headers: {
+										'Content-type': 'application/json',
+									},
+									responseType: 'arraybuffer'
+								}).success(function (data, status, headers, config) {
+
+									 $scope.traitementEnCoursAllProduit = "false";
+									var blob = new Blob([data], { type: "application/vnd.ms-excel" });
+
+
+									var fileName = 'Vente-Liste_Commandes_' + formattedDate(new Date());
+									var link = document.createElement('a');
+									link.href = window.URL.createObjectURL(blob);
+									link.download = fileName;
+									link.click();
+									window.URL.revokeObjectURL(link.href);
+
+
+									// var objectUrl = URL.createObjectURL(blob);
+									// window.open(objectUrl);
+								}).error(function (data, status, headers, config) {
+									// upload failed
+								});
+							}
         						
         					//generer rapport de tous les bons de livraison. mode : List 
 							$scope.downloadAllCommandeVente = function(commandeVenteCourante) {

@@ -283,7 +283,7 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 	   
 	   HashMap<String, Object> params = new HashMap<String, Object>();
 	   /** Liste des paramètres : logo et critères de recherche*/
-	   params.put("p_PathLogo", "/report/logoSTIT.jpg");
+	   params.put("p_PathLogo", "C:\\ERP\\logos_clients\\logo_client.png");
 	   params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_Inventaire/inventaire_sub_report.jasper");
 	   
 	   inventaireReport.setParams(params);
@@ -336,7 +336,7 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 					}
 					
 					//chang. de .contains() par .equals()
-					if(critereRechercheRouleauStandard.getDesignationQuiContient() != null){
+					if(estNonVide(critereRechercheRouleauStandard.getDesignationQuiContient() )){
 						exist = (produitValue.getDesignation().toUpperCase().equals(
 								critereRechercheRouleauStandard.getDesignationQuiContient().toUpperCase()));
 					}
@@ -357,7 +357,7 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 	    	      			
 	    	    &&(exist)
 	      	){
-	      		 if(critereRechercheRouleauStandard.getReferenceProduit() != null){
+	      		 if(estNonVide(critereRechercheRouleauStandard.getReferenceProduit())){
 	       			if (critereRechercheRouleauStandard.getReferenceProduit().equals(element.getReferenceProduit())) {
 	       				
 	       				elementsListToSet.add(element);
@@ -406,6 +406,13 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 	   
 	   return inventaireReport;
 	}
+	
+	
+	
+	private boolean estNonVide(String val) {
+	    return val != null && !"".equals(val)  && !"undefined".equals(val);
+	}
+
 
 	@Override
 	public BonSortieFinieReportValue getBonsortieFinieReportValue(Long id, String avecMise) throws IOException {
@@ -418,7 +425,7 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 				.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonSortieFini/bonsortiefini_report.jrxml"));
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("p_PathLogo", "/report/logoSTIT.jpg");
+		params.put("p_PathLogo", "C:\\ERP\\logos_clients\\logo_client.png");
 
 		params.put("SUBREPORT_BONSORTIE_PATH", "C://ERP/Lib/STIT_BonSortieFini/bonsortiefini_sub_report.jasper");
 

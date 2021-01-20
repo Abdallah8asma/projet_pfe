@@ -294,7 +294,7 @@
 							<div class="row">
 
 
-								<div class="col-sm-3">
+								<div class="col-sm-3" ng-show="clientActif.blackMode==true">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
@@ -344,8 +344,26 @@
 											</select>
 										</div>
 									</div>
+								</div>
+								<div class="col-sm-3" ng-show="clientActif.blackMode">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Declare</span>
+											</div>
+											<select ui-select2 ng-model="receptionAchatCourante.declare"
+												ng-init="receptionAchatCourante.declare =''" data-placeholder="" class="form-control ">
+												<option value="">Tous</option>
+												<option value="oui">OUI</option>
+												<option value="non">NON</option>
+
+											</select>
+										</div>
+									</div>
 
 								</div>
+
+							
 
 							</div>
 
@@ -769,7 +787,7 @@
 
 
 								</div>
-								<div class="col-sm-4">
+								<div class="col-sm-3">
 									<div class="form-group  ">
 										<div class="input-group">
 
@@ -791,8 +809,34 @@
 
 
 								</div>
+					
+
+
 							</div>
+
+
+
 							<div class="row">
+								<div class="col-sm-3" ng-show="clientActif.blackMode==true">
+
+
+									<div class="form-group">
+									  <div class="input-group">
+										<div class="input-group-prepend">
+										  <label class="input-group-text ms-Label is-required">A facturer</label>
+										</div>
+										<div class="input-group-prepend">
+										  <div class="input-group-text">
+											<label class="checkbox checkbox-square checkbox-primary">
+											  <input type="checkbox" class="form-control" 
+												ng-model="receptionAchatCourante.facture" ng-change="getCurrentReferenceMensuelleByType(receptionAchatCourante.facture)" />
+					
+											  <span></span></label>
+										  </div>
+										</div>
+									  </div>
+									</div>
+								  </div>
 								<div class="col-sm-12">
 									<div class="form-group">
 										<div class="input-group">
@@ -914,7 +958,7 @@
 																	ng-change="clickProduit(produit.produitId, $index)" data-placeholder="..."
 																	class="form-control ">
 																	<option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">
-																		{{produit.reference}}
+																		{{produit.ref}}
 																	</option>
 																</select>
 															</td>
@@ -927,7 +971,7 @@
 																	</option>
 																</select></td>
 
-															<td><span e-form="rowform"> {{produit.sousFamille
+															<td><span e-form="rowform"> {{produit.sousFamilleArtEntite
 																		|| 'EMPTY' }} </span></td>
 															<td>
 
@@ -1128,14 +1172,14 @@
 																	ng-change="clickProduit(produit.produitId, $index)" data-placeholder="..."
 																	style="width: 100%" ng-disabled="produit.checked" class="form-control ">
 																	<option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">
-																		{{produit.reference}}
+																		{{produit.ref}}
 																	</option>
 																</select>
 															</td>
 															<td><span e-form="rowform">{{produit.designation
 																		|| 'EMPTY'}}</span>
 															</td>
-															<td><span e-form="rowform"> {{produit.sousFamille
+															<td><span e-form="rowform"> {{produit.sousFamilleArtEntite
 																		|| 'EMPTY' }} </span></td>
 															</td>
 															<td><input type="number" class="form-control" ng-model="produit.quantite" /></td>

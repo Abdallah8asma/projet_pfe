@@ -61,7 +61,10 @@ angular
           partieInteresseeCourante.vTypePartieInteressee +
           '&actif=' +
           partieInteresseeCourante.actif +
-          '&vFamillePartieInteressee=2';$
+          '&vFamillePartieInteressee=2'+
+          
+          '&nature=' ;
+          
 
         $log.debug('-- URL--- :' + url);
      

@@ -2,6 +2,7 @@ package com.gpro.consulting.tiers.commun.domaine.elementBase;
 
 import java.util.List;
 
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherchePrixClientValue;
@@ -69,6 +70,10 @@ public interface IPrixClientDomaine {
 	
 	public List<PrixClientValue> rechchercheMultiCriterePrixClient(
 				RecherchePrixClientValue pRecherchePrixClientMulitCritere);
+
+
+
+	public String creerPrixArticleClient(List<ArticleValue> pProduitValue);
 
 
 

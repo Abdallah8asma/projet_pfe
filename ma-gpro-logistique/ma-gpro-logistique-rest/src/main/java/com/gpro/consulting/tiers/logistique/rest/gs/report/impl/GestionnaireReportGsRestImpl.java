@@ -67,6 +67,16 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 	public void generateMouvementStockHistoryReport(
 			@RequestParam("historique") String historique,
 			@RequestParam("articleType") String articleType,
+			@RequestParam("ofId") Long ofId,
+			@RequestParam("dateDu") String dateDu,
+			@RequestParam("dateA") String dateA,
+			@RequestParam("sousFamille") String sousFamille,
+			@RequestParam("famille") String famille,
+			@RequestParam("refArticle") String refArticle,
+			@RequestParam("article") String article,
+			
+			
+			
 			@RequestParam("type") String type, HttpServletResponse response ) throws JRException, IOException {
 		
 		logger.info("Generate a {} Report MouvementStockHistory",type);
@@ -74,6 +84,16 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		RechercheMulticritereMouvementValue critere = new RechercheMulticritereMouvementValue();
 		critere.setHistorique(historique);
 		critere.setType(articleType);
+		critere.setOfId(ofId);
+		critere.setDateA(stringToCalendar(dateA));
+		critere.setDateDu(stringToCalendar(dateDu));
+		critere.setFamille(famille);
+		critere.setSousFamille(sousFamille);
+		critere.setRefArticle(refArticle);
+		critere.setArticle(article);
+		
+		
+		
 		
 		MouvementStockHistoryReportValue report = gestionnaireReportGsService.getHistoryReport(critere);
 		
@@ -127,6 +147,13 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("article") String article,
 			@RequestParam("magasin") String magasin,			
 			@RequestParam("emplacement") String emplacement,
+			@RequestParam("quantite") Double quantite,
+			@RequestParam("dimensionArticle") String dimension,
+			@RequestParam("grammageArticle") String grammage,
+			@RequestParam("operateurQuantite") String operateurQuantite,
+			@RequestParam("dateA") String dateA,
+			@RequestParam("dateDu") String dateDu,
+			@RequestParam("orderBy") String orderBy,
 			
 						
 			
@@ -147,7 +174,13 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		
 		critere.setEmplacement(emplacement);
 		
-		
+		critere.setQuantite(quantite);
+		critere.setDimensionArticle(dimension);
+		critere.setGrammageArticle(grammage);
+		critere.setDateA(stringToCalendar(dateA));
+		critere.setDateDu(stringToCalendar(dateDu));
+		critere.setOperateurQuantite(operateurQuantite);
+		critere.setOrderBy(orderBy);
 		
 		EtatStockReportValue report = gestionnaireReportGsService.getEtatReport(critere, typeRapport);
 		
@@ -213,7 +246,8 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 	@RequestMapping(value="/bonMouvementStockEntreeSortieById", method = RequestMethod.GET)
 	public void generateBonMouvementStockEntreeSortieByIdReport(
 			@RequestParam("id") Long id,
-			@RequestParam("type") String type, HttpServletResponse response ) throws JRException, IOException {
+			@RequestParam("type") String type, 
+			HttpServletResponse response ) throws JRException, IOException {
 		
 		logger.info("Generate a {} Report for BonMouvementStock",type);
 		
@@ -235,6 +269,14 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("article") String article,
 			@RequestParam("magasin") String magasin,			
 			@RequestParam("emplacement") String emplacement,
+			@RequestParam("quantite") Double quantite,
+			@RequestParam("dimensionArticle") String dimension,
+			@RequestParam("grammageArticle") String grammage,
+			@RequestParam("operateurQuantite") String operateurQuantite,
+			@RequestParam("dateA") String dateA,
+			@RequestParam("dateDu") String dateDu,
+			
+			
             @RequestParam("typeRapport") String typeRapport,
 			
 	
@@ -253,6 +295,13 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		critere.setMagasin(magasin);		
 		
 		critere.setEmplacement(emplacement);
+		critere.setQuantite(quantite);
+		critere.setDimensionArticle(dimension);
+		critere.setGrammageArticle(grammage);
+		critere.setDateA(stringToCalendar(dateA));
+		critere.setDateDu(stringToCalendar(dateDu));
+		critere.setOperateurQuantite(operateurQuantite);
+		
 		
 		EtatStockGlobalReportValue report = gestionnaireReportGsService.getEtatGlobalReport(critere, typeRapport);
 		
@@ -270,6 +319,13 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("article") String article,
 			@RequestParam("magasin") String magasin,			
 			@RequestParam("emplacement") String emplacement,
+			@RequestParam("quantite") Double quantite,
+			@RequestParam("dimensionArticle") String dimension,
+			@RequestParam("grammageArticle") String grammage,
+			@RequestParam("operateurQuantite") String operateurQuantite,
+			@RequestParam("dateA") String dateA,
+			@RequestParam("dateDu") String dateDu,
+			
             @RequestParam("typeRapport") String typeRapport,
             
             
@@ -287,6 +343,12 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		critere.setMagasin(magasin);		
 		
 		critere.setEmplacement(emplacement);
+		critere.setQuantite(quantite);
+		critere.setDimensionArticle(dimension);
+		critere.setGrammageArticle(grammage);
+		critere.setDateA(stringToCalendar(dateA));
+		critere.setDateDu(stringToCalendar(dateDu));
+		critere.setOperateurQuantite(operateurQuantite);
 		
 		EtatStockDetailleReportValue report = gestionnaireReportGsService.getEtatDetailleReport(critere, typeRapport);
 		
@@ -371,9 +433,16 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("magasin") String magasin,
 			
 			@RequestParam("numeroBonEntree") String numeroBonEntree,
+			@RequestParam("quantite") Double quantite,
+			@RequestParam("dimensionArticle") String dimension,
+			@RequestParam("grammageArticle") String grammage,
+			@RequestParam("dateA") String dateA,
+			@RequestParam("dateDu") String dateDu,
+			@RequestParam("operateurQuantite") String operateurQuantite,
 			
 			@RequestParam("type") String type,
 	
+			
 			
 			
 			HttpServletResponse response ) throws JRException, IOException {
@@ -387,6 +456,12 @@ public class GestionnaireReportGsRestImpl extends AbstractGestionnaireDownloadIm
 		request.setArticle(article);
 		request.setMagasin(magasin);
 		request.setNumeroBonEntree(numeroBonEntree);
+		request.setQuantite(quantite);
+		request.setDimensionArticle(dimension);
+		request.setGrammageArticle(grammage);
+		request.setDateA(stringToCalendar(dateA));
+		request.setDateDu(stringToCalendar(dateDu));
+		request.setOperateurQuantite(operateurQuantite);
 		
 		
     	FicheColisReportValue report = gestionnaireReportGsService.generateListEtatStockBarCodeReport(request);

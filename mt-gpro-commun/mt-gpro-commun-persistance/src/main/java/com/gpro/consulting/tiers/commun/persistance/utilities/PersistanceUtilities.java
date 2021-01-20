@@ -183,6 +183,7 @@ public class PersistanceUtilities {
         dto.setLogoPNG(entity.getLogoPNG());
         
         dto.setExcelDirectory(entity.getExcelDirectory());
+        dto.setBlackMode(entity.isBlackMode());
         
 		return dto;
 	}
@@ -234,7 +235,8 @@ public class PersistanceUtilities {
 		entity.setLogoPNG(dto.getLogoPNG());
 		
 		entity.setExcelDirectory(dto.getExcelDirectory());
-		
+		entity.setBlackMode(dto.isBlackMode());
+	
 		return entity;
 	}
 	
@@ -331,6 +333,11 @@ public class PersistanceUtilities {
 		vPartieInteresseEntite.setEmail2(pPartieInteresseValue.getEmail2());
 		
 		vPartieInteresseEntite.setCodeProduit(pPartieInteresseValue.getCodeProduit());
+		
+		
+		vPartieInteresseEntite.setNature(pPartieInteresseValue.getNature());
+		
+		
 		
 		// Liste Document
 		if (pPartieInteresseValue.getDocuments() != null) {
@@ -459,6 +466,8 @@ public class PersistanceUtilities {
 		vPartieInteresseValue.setEmail2(pPartieInteresseEntity.getEmail2());
 		
 		vPartieInteresseValue.setCodeProduit(pPartieInteresseEntity.getCodeProduit());
+		
+		vPartieInteresseValue.setNature(pPartieInteresseEntity.getNature());
 		
 		// Liste Document
 		if (pPartieInteresseEntity.getDocumentEntites() != null) {
@@ -1323,6 +1332,20 @@ public class PersistanceUtilities {
 	    vArticleEntity.setSousFamilleArtEntite(pSousFamilleEntite);
 	    /** Site */
 	    vArticleEntity.setSiteEntite(pArticleValue.getSiteEntite());
+	    
+	    
+	    
+	    vArticleEntity.setIdTaxe(pArticleValue.getIdTaxe());
+	    
+	    vArticleEntity.setTva(pArticleValue.getTva());
+	    vArticleEntity.setPuTTC(pArticleValue.getPuTTC());
+	    
+	    vArticleEntity.setDateIntroduction(pArticleValue.getDateIntroduction());
+	    
+	    
+	    
+	    
+	    
 	    /** Grosseur */
 	    if (pGrosseurEntite != null && pGrosseurEntite.getId() != null) {
 	      vArticleEntity.setGrosseurEntite(pGrosseurEntite);
@@ -1346,6 +1369,16 @@ public class PersistanceUtilities {
 	    
 	    vArticleEntity.setGrammage(pArticleValue.getGrammage());
 	    vArticleEntity.setDimension(pArticleValue.getDimension());
+	    
+	    
+	    
+	    
+	    vArticleEntity.setProduitId(pArticleValue.getProduitId());
+	    vArticleEntity.setNbrCouleur(pArticleValue.getNbrCouleur());
+	    vArticleEntity.setDimensionPapier(pArticleValue.getDimensionPapier());
+	    vArticleEntity.setPiEntite(pArticleValue.getPiEntite());
+	    vArticleEntity.setNbrPose(pArticleValue.getNbrPose());
+	    vArticleEntity.setFichier(pArticleValue.getFichier());
 	    
 	    // Liste Document
 	    if (pArticleValue.getDocumentEntites() != null) {
@@ -1421,6 +1454,27 @@ public class PersistanceUtilities {
 	    
 	    vArticleValue.setUnite2Entite(pArticleEntity.getUnite2Entite());
 	    
+	    
+	    
+	    vArticleValue.setTva(pArticleEntity.getTva());
+	    vArticleValue.setPuTTC(pArticleEntity.getPuTTC());
+	    vArticleValue.setIdTaxe(pArticleEntity.getIdTaxe());
+	    
+	    
+	    
+	    vArticleValue.setProduitId(pArticleEntity.getProduitId());
+	    vArticleValue.setNbrCouleur(pArticleEntity.getNbrCouleur());
+	    vArticleValue.setDimensionPapier(pArticleEntity.getDimensionPapier());
+	    vArticleValue.setPiEntite(pArticleEntity.getPiEntite());
+	    
+	
+	    
+	    vArticleValue.setDateIntroduction(pArticleEntity.getDateIntroduction());
+	    
+	    
+	    vArticleValue.setNbrPose(pArticleEntity.getNbrPose());
+	    
+	    vArticleValue.setFichier(pArticleEntity.getFichier());
 	    /** Sous Famille */
 	    if (pArticleEntity.getSousFamilleArtEntite() != null) {
 	      vArticleValue.setSousFamilleArtEntite(pArticleEntity.getSousFamilleArtEntite().getId());
@@ -1782,6 +1836,10 @@ public class PersistanceUtilities {
 	    
 	    produitValue.setFodec(pProduitEntity.isFodec());
 	    
+	    
+	    
+	    produitValue.setDevise(pProduitEntity.getDevise());
+	    
 	    if (pProduitEntity.getSousFamille() != null) {
 			produitValue.setSousFamilleId(pProduitEntity.getSousFamille()
 					.getId());
@@ -1872,6 +1930,8 @@ public class PersistanceUtilities {
 		produiEntity.setCompteComptableId(pProduitValue.getCompteComptableId());
 		produiEntity.setFodec(pProduitValue.isFodec());
 		
+		
+		produiEntity.setDevise(pProduitValue.getDevise());
 
 		/*** Liste Document produit */
 		if (pProduitValue.getDocumentProduits() != null) {

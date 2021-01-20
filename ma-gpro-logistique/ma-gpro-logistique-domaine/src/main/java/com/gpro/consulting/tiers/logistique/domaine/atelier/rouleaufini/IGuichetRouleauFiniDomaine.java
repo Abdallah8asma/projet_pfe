@@ -16,6 +16,8 @@ public interface IGuichetRouleauFiniDomaine {
 	   * @return le numéro du prochain bon de reception 
 	   */
 	  public Long getNextNumReference();
+	  
+	  public Integer getPrefixe();
 
 	  /**
 	   * Méthode de modification d'un numéro de référence dans le guichet du Rouleau Fini pour l'année
