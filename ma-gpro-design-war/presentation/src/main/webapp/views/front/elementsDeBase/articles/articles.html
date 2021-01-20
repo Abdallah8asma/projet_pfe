@@ -173,7 +173,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Famille</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.familleEntite"
+										<select ui-select2 class="form-control" ng-model="articleCourante.familleEntite"
 											ng-init="articleCourante.familleEntite=''">
 											<option value="">Tous</option>
 											<option
@@ -191,7 +191,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Sous Famille</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.sousFamilleEntite"
+										<select ui-select2 class="form-control" ng-model="articleCourante.sousFamilleEntite"
 											ng-init="articleCourante.sousFamilleEntite=''">
 											<option value="">Tous</option>
 											<option
@@ -385,7 +385,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Famille</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.familleEntite"
+										<select ui-select2 class="form-control" ng-model="articleCourante.familleEntite"
 											ng-init="articleCourante.familleEntite=''">
 											<option value=""></option>
 											<option
@@ -403,7 +403,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Sous Famille</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.sousFamilleArtEntite"
+										<select ui-select2 class="form-control" ng-model="articleCourante.sousFamilleArtEntite"
 											ng-init="articleCourante.sousFamilleArtEntite=''">
 											<option value=""></option>
 											<option
@@ -442,7 +442,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Unite 1</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.uniteEntite"
+										<select ui-select2 class="form-control" ng-model="articleCourante.uniteEntite"
 											ng-init="articleCourante.uniteEntite=''">
 											<OPTION value="">Toutes les UnitÃ©s</OPTION>
 											<option ng-repeat="unite in ListUniteArticleCache" value="{{unite.id}}">{{unite.designation}}
@@ -461,7 +461,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Unite 2</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.unite2Entite"
+										<select ui-select2 class="form-control" ng-model="articleCourante.unite2Entite"
 											ng-init="articleCourante.unite2Entite=''">
 											<OPTION value="">Toutes les UnitÃ©s</OPTION>
 											<option ng-repeat="unite in ListUniteArticleCache" value="{{unite.id}}">{{unite.designation}}

@@ -146,8 +146,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Sous Categorie</span>
 										</div>
-										<select class="form-control" ng-model="produitCourante.sousfamille"
-											ng-init="produitCourante.sousfamille=''">
+										<select ui-select2 class="form-control" ng-model="produitCourante.sousfamille"
+											ng-init="produitCourante.sousfamille=''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option
 												ng-repeat="sousFamille in ListSousFamilleProduitCache  | filter : {familleProduitId : produitCourante.famille}"

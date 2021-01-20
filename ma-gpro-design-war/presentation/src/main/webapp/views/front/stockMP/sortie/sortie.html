@@ -201,8 +201,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Raison de Sortie </span>
 										</div>
-										<select class="form-control" ng-model="mouvementStockCourante.raisonEntre"
-											ng-init="mouvementStockCourante.raisonEntre=''">
+										<select ui-select2 class="form-control" ng-model="mouvementStockCourante.raisonEntre"
+											ng-init="mouvementStockCourante.raisonEntre=''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="raison in ListeRaisonCache" value="{{raison.id}}">
 												{{raison.designation}}</option>
@@ -435,8 +435,8 @@
 											<label class="input-group-text ms-Label is-required">Raison 
 												</label>
 										</div>
-										<select class="form-control"
-											ng-model="bonMouvementStockCourante.raisonMouvementId">
+										<select ui-select2 class="form-control" ng-model="bonMouvementStockCourante.raisonMouvementId"
+										style="border: 1px solid #e5eaee !important;">
 											<option ng-repeat="raison in ListeRaisonCache" value="{{raison.id}}">
 												{{raison.designation}}</option>
 										</select>
@@ -464,7 +464,8 @@
 										<div class="input-group-prepend">
 											<label class="input-group-text ms-Label">OF</label>
 										</div>
-										<select  ui-select2="true" class="form-control" ng-model="bonMouvementStockCourante.ofId" style="border: 1px solid #e5eaee !important;" required>
+										<select  ui-select2="true" class="form-control" ng-model="bonMouvementStockCourante.ofId"
+										 style="border: 1px solid #e5eaee !important;" required>
 											<option ng-repeat="mise in ListeMises" value="{{mise.id}}">
 												{{mise.reference}}</option>
 										</select>
@@ -543,7 +544,7 @@
 														<div class="input-group-prepend">
 															<label class="input-group-text ms-Label">Magasin</label>
 														</div>
-														<select class="form-control" required ng-model="idMagasin">
+														<select ui-select2 class="form-control" required ng-model="idMagasin" style="border: 1px solid #e5eaee !important;">
 															<option ng-repeat="magasin in listeMagasinCache"
 																value="{{magasin.id}}">{{magasin.designation}}</option>
 														</select>
