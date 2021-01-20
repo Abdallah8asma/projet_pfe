@@ -146,8 +146,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Sous Categorie</span>
 										</div>
-										<select class="form-control" ng-model="produitCourante.sousfamille"
-											ng-init="produitCourante.sousfamille=''">
+										<select ui-select2 class="form-control" ng-model="produitCourante.sousfamille"
+											ng-init="produitCourante.sousfamille=''"  style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option
 												ng-repeat="sousFamille in ListSousFamilleProduitCache  | filter : {familleProduitId : produitCourante.famille}"
@@ -416,7 +416,7 @@
 											<span class="input-group-text">Categorie</span>
 										</div>
 										<select ui-select2 class="form-control" ng-model="produitCourante.famille"
-											ng-init="produitCourante.famille=''">
+											ng-init="produitCourante.famille=''"  style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option
 												ng-repeat="famille in ListFamilleProduitCache"
@@ -434,7 +434,7 @@
 											<span class="input-group-text">Sous Categorie</span>
 										</div>
 										<select ui-select2 class="form-control" ng-model="produitCourante.sousFamilleId"
-											ng-init="produitCourante.sousFamilleId=''">
+											ng-init="produitCourante.sousFamilleId=''"  style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option
 												ng-repeat="sousFamille in ListSousFamilleProduitCache  | filter : {familleProduitId : produitCourante.famille}"
@@ -530,8 +530,8 @@
 
 											<label class=" input-group-text ms-Label">Devise</label>
 										</div>
-										<select  class="form-control"
-											ng-model="produitCourante.devise"   ng-init="produitCourante.devise=''" >
+										<select  ui-select2 class="form-control"
+											ng-model="produitCourante.devise"   ng-init="produitCourante.devise=''"  style="border: 1px solid #e5eaee !important;" >
 											<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
 												{{dev.designation}}</option>
 										</select>
@@ -623,8 +623,8 @@
 
 											<label class=" input-group-text ms-Label">Compte Comptable</label>
 										</div>
-										<select  class="form-control"
-											ng-model="produitCourante.vCategoriePartieInteressee">
+										<select  ui-select2 class="form-control"
+											ng-model="produitCourante.vCategoriePartieInteressee" style="border: 1px solid #e5eaee !important;">
 											<option ng-repeat="cpt in listeCompteComptable" value="{{cpt.id}}">
 												{{cpt.designation}}</option>
 										</select>

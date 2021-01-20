@@ -266,8 +266,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Famille</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.familleEntite"
-											ng-init="articleCourante.familleEntite=''">
+										<select ui-select2 class="form-control" ng-model="articleCourante.familleEntite"
+											ng-init="articleCourante.familleEntite=''" style="border: 1px solid #e5eaee !important;">
 											<option value=""></option>
 											<option
 												ng-repeat="famille in ListFamilleArticleCache | filter : {idTypeArticle :3}"
@@ -284,8 +284,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Sous Famille</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.sousFamilleArtEntite"
-											ng-init="articleCourante.sousFamilleArtEntite=''">
+										<select ui-select2 class="form-control" ng-model="articleCourante.sousFamilleArtEntite"
+											ng-init="articleCourante.sousFamilleArtEntite=''" style="border: 1px solid #e5eaee !important;">
 											<option value=""></option>
 											<option
 												ng-repeat="sousFamille in ListSousFamilleArticleCache | filter : {idFamilleArticle : articleCourante.familleEntite}"
@@ -324,17 +324,17 @@
 								</div>
 							</div>
 
-
+						</div>
 		<div class="row">
 
-			<div class="col-sm-3">
+			<div class="col-sm-5">
 				<div class="form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">Client   </span>
 						</div>
-						<select class="form-control" ng-model="articleCourante.piEntite"
-							ng-init="articleCourante.piEntite=''">
+						<select ui-select2 class="form-control" ng-model="articleCourante.piEntite"
+							ng-init="articleCourante.piEntite=''" style="border: 1px solid #e5eaee !important;" >
 							<option value="">Tous</option>
 							<option
 								ng-repeat="client in ListClients"
@@ -345,14 +345,14 @@
 			</div>
 
 
-			<div class="col-sm-3">
+			<div class="col-sm-5">
 				<div class="form-group">
 					<div class="input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">Produit</span>
 						</div>
-						<select class="form-control" ng-model="articleCourante.produitId"
-							ng-init="articleCourante.produitId=''">
+						<select ui-select2 class="form-control" ng-model="articleCourante.produitId"
+							ng-init="articleCourante.produitId=''" style="border: 1px solid #e5eaee !important;" >
 							<option value="">Tous</option>
 							<option
 								ng-repeat="famille in ListProduits"
@@ -368,7 +368,7 @@
 
 
 
-						</div>
+					
 
 
 					</form>
@@ -606,7 +606,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Famille</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.familleEntite"
+										<select ui-select2 class="form-control" ng-model="articleCourante.familleEntite"
 											ng-init="articleCourante.familleEntite=''">
 											<option value=""></option>
 											<option
@@ -624,7 +624,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Sous Famille</span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.sousFamilleArtEntite"
+										<select ui-select2 class="form-control" ng-model="articleCourante.sousFamilleArtEntite"
 											ng-init="articleCourante.sousFamilleArtEntite=''">
 											<option value=""></option>
 											<option
@@ -654,7 +654,7 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Client   </span>
 										</div>
-										<select class="form-control" ng-model="articleCourante.piEntite"
+										<select ui-select2 class="form-control" ng-model="articleCourante.piEntite"
 											ng-init="articleCourante.piEntite=''">
 											<option value="">Tous</option>
 											<option
@@ -677,7 +677,7 @@
 											<div class="input-group-prepend">
 												<span class="input-group-text">Produit</span>
 											</div>
-											<select class="form-control" ng-model="articleCourante.produitId"
+											<select ui-select2 class="form-control" ng-model="articleCourante.produitId"
 												ng-init="articleCourante.produitId=''">
 												<option value="">Tous</option>
 												<option

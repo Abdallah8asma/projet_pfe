@@ -160,7 +160,7 @@
 												<span class="input-group-text">Devise </span>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="commandeVenteCourante.devise"
-												ng-init="commandeVenteCourante.devise=''">
+												ng-init="commandeVenteCourante.devise=''" style="border: 1px solid #e5eaee !important;">
 												<option value="">Tous</option>
 												<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
 												{{dev.designation}}</option>
@@ -728,7 +728,7 @@
 											<span class="input-group-text">Devise </span>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="commandeVenteCourante.devise"
-											ng-init="commandeVenteCourante.devise=''">
+											ng-init="commandeVenteCourante.devise=''" style="border: 1px solid #e5eaee !important;">
 											<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
 											{{dev.designation}}</option>
 										</select>
@@ -761,7 +761,8 @@
 													<label class=" input-group-text ms-Label">Site</label>
 	
 												</div>
-												<select class="form-control" ng-model="commandeVenteCourante.siteId">
+												<select ui-select2 class="form-control" ng-model="commandeVenteCourante.siteId" 
+												style="border: 1px solid #e5eaee !important;">
 													<option ng-repeat="site in listeSitePartieInteresseeCache" value="{{site.id}}">{{site.nom}}
 													</option>
 												</select>

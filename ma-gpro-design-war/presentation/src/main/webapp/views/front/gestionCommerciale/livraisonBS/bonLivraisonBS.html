@@ -346,7 +346,7 @@
 											<span class="input-group-text">Devise </span>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.devise"
-											ng-init="bonLivraisonVenteCourant.devise=''">
+											ng-init="bonLivraisonVenteCourant.devise=''" style="border: 1px solid #e5eaee !important;">
 
 											<option value="">Tous</option>
 											<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
@@ -551,7 +551,7 @@
 							<div class="input-group-prepend">
 							  <label class="input-group-text ms-Label is-required">Magasin</label>
 							</div>
-							<select uui-select2="true" required ng-model="bonLivraisonVenteCourant.idDepot"
+							<select ui-select2 required ng-model="bonLivraisonVenteCourant.idDepot"
 							  ng-init="bonLivraisonVenteCourant.idDepot =''" data-placeholder="" required class="form-control"
 							  style="border: 1px solid #e5eaee !important;">
 							  <option ng-repeat="magazin in listeMagazinCache" value="{{magazin.id}}">{{magazin.designation}}
@@ -644,7 +644,7 @@
 								<span class="input-group-text">Devise </span>
 							</div>
 							<select ui-select2="true" class="form-control" ng-model="bonLivraisonVenteCourant.devise"
-								ng-init="bonLivraisonVenteCourant.devise=''">
+								ng-init="bonLivraisonVenteCourant.devise=''" style="border: 1px solid #e5eaee !important;">
 								<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
 								{{dev.designation}}</option>
 							</select>
