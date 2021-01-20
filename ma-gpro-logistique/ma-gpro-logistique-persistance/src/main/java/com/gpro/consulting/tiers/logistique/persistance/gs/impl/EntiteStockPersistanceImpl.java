@@ -307,12 +307,31 @@ public class EntiteStockPersistanceImpl  extends AbstractPersistance  implements
 		    		  pRechercheMulticritereEntiteStockValue.getDimensionArticle()));
 		    }
 	   
-	   
+	 /*  if(estNonVide(pRechercheMulticritereEntiteStockValue.getOrderBy())){
+		   
+		   if(pRechercheMulticritereEntiteStockValue.getOrderBy().equals("reference"))
+			   vCriteriaQuery.orderBy(vBuilder.desc(vRootEntiteStock.get("referenceArticle")));
+		   
+		   else if(pRechercheMulticritereEntiteStockValue.getOrderBy().equals("designation"))
+			   vCriteriaQuery.orderBy(vBuilder.desc(vRootEntiteStock.get("libelleArticle")));
+	   }*/
 	    /** execute query and do something with result **/
 
+	    
+	    
+	    
 	    vCriteriaQuery.select(vRootEntiteStock).where(vWhereClause.toArray(new Predicate[] {}));
+	    if(estNonVide(pRechercheMulticritereEntiteStockValue.getOrderBy())){
+	    if(pRechercheMulticritereEntiteStockValue.getOrderBy().equals("reference"))
+	    	 vCriteriaQuery.orderBy(vBuilder.desc(vRootEntiteStock.get("article").get("ref")));
+	    else
+	    	vCriteriaQuery.orderBy(vBuilder.desc(vRootEntiteStock.get("article").get("designation")));
+	    
+	    
+	    }
+	    
 	    List < EntiteStockEntite > resultatEntite = this.entityManager.createQuery(vCriteriaQuery).getResultList();
-
+	    
 	    /** Conversion de la liste en valeur */
 	    List < EntiteStockValue > vListeResultat = new ArrayList < EntiteStockValue >();
 
