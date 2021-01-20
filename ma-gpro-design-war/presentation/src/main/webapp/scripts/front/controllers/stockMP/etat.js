@@ -161,7 +161,7 @@ angular.module('gpro.etatMP', [])
 					 + "&operateurQuantite="+  $scope.etatCourant.operateurQuantite
 					+ "&dateA="+ dateA
 					+"&dateDu="+ dateDu
-					
+					+"&orderBy="+ $scope.etatCourant.orderBy
 					+"&typeRapport="+ typeRapport ;
 				} 
 					
