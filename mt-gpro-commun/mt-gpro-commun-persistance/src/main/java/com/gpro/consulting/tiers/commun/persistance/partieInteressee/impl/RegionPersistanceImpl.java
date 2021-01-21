@@ -79,8 +79,14 @@ public class RegionPersistanceImpl extends AbstractPersistance implements
 	@Override
 	public RegionValue getById(Long pId) {
 		RegionEntite pRegionEntite=(RegionEntite) this.rechercherParId(pId, RegionEntite.class);
-		RegionValue pRegionValueResult=PersistanceUtilities.toValue(pRegionEntite);
-		return pRegionValueResult;
+		
+		if(pRegionEntite != null) {
+			RegionValue pRegionValueResult=PersistanceUtilities.toValue(pRegionEntite);
+			return pRegionValueResult;
+		}
+		else 
+			return null;
+	
 	}
 
 }
