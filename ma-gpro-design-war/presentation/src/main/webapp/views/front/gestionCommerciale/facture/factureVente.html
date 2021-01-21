@@ -1057,9 +1057,10 @@
 
 
 
-                              <th style="width: 20%">Ref.Article</th>
-                              <th style="width: 30%">Article</th>
-                              <th style="width: 15%">Description</th>
+                              <th style="width: 12%">Ref</th>
+                              <th style="width: 25%">Designation</th>
+                              <th style="width: 10%">Description</th>
+                              <th style="width: 15%">OFs</th>
                               <th style="width: 7%">Quantite</th>
                               <!-- 			<th style="width: 10%">Unité</th> -->
                               <th style="width: 8%">P.U.H.T</th>
@@ -1074,6 +1075,7 @@
                             <td>
                               <input type="text" class="form-control" ng-model="detFactureVente.description" />
                             </td>
+                             <td>{{ detFactureVente.numeroOF }}</td>
                             <td>{{ detFactureVente.quantite }}</td>
 
                             <td>{{ detFactureVente.prixUnitaireHT }}</td>

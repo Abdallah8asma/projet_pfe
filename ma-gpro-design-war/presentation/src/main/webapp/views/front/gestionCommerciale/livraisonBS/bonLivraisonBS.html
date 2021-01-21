@@ -11,7 +11,30 @@
 </script>
 <div class="container-fluid" ng-controller="bonlivraisonControllerBS" style="background-color: #fff;">
 
-	<div class="row" ng-show="displayMode != 'edit'">
+<div class="row" ng-show="traitementEnCoursGenererAll =='true'">
+    <div class="col-sm-5"></div>
+    <div class="col-sm-2">
+      <br>
+      <div ng-click="traitementEnCoursGenererAll ='false'">
+
+
+        <div class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+
+
+
+
+      </div>
+
+    </div>
+    <div class="col-sm-5"></div>
+
+  </div>																
+    <div class="row" ng-show="displayMode != 'edit'">
 		<div class="col-sm-12">
 			<br /> <span class="ms-ListItem-primaryText">Crit&eacute;re
 				de Recherche</span> <br />
@@ -396,9 +419,21 @@
 			<br /> <span class="ms-ListItem-primaryText">Donn&eacute;es
 				G&eacute;n&eacute;rales</span>
 			<br />
-
-
-			<div class="ms-CommandBar ms-CommandBar--navBar">
+	 <div class="lds-spinner" ng-show="traitementEnCours=='true'" ng-click="traitementEnCours ='false'" style="padding-left:50%">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>																																
+<div class="ms-CommandBar ms-CommandBar--navBar">
 				<div class="ms-CommandBar-sideCommands">
 
 
@@ -930,20 +965,22 @@
 								class="table table-bordered table-hover table-condensed table-head-color">
 								<thead>
 									<tr style="font-weight: bold">
-										<th style="width: 10%">ref Article </th>
-										<th style="width: 20%">Article</th>
-										<th style="width: 10%">Quantite</th>
+										<th style="width: 10%">Ref</th>
+										<th style="width: 20%">Designation</th>
+										<th style="width: 10%">OFs</th>
+										<th style="width: 7%">Quantite</th>
 								
-										<th style="width: 10%">Nbr.Colis</th>
-										<th style="width: 10%">P.U.H.T</th>
+										<th style="width: 7%">Nbr.Colis</th>
+										<th style="width: 7%">P.U.H.T</th>
 									
 								
-										<th style="width: 10%">P.T.H.Tx</th>
+										<th style="width: 7%">P.T.H.Tx</th>
 									</tr>
 								</thead>
 								<tr ng-repeat="detLivVente in listDetLivraisonVentePRBS">
 									<td>{{ detLivVente.produitReference || 'empty' }}</td>
 									<td>{{ detLivVente.produitDesignation || 'empty' }}</td>
+								    <td>{{ detLivVente.numeroOF || 'empty' }}</td>				   
 									<td>{{ detLivVente.quantite || 'empty' }}</td>
 								
 									<td>{{ detLivVente.nombreColis || 'empty' }}</td>

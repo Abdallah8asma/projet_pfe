@@ -445,7 +445,7 @@
 							</div>
 
 
-							<div class="col-sm-4">
+							<div class="col-sm-2">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -464,7 +464,22 @@
 								</div>
 							</div>
 
-
+					<div class="col-sm-2">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Unite</span>
+										</div>
+										<select class="form-control" ng-model="produitCourante.unite"
+											ng-init="produitCourante.unite=''">
+											<OPTION value=""></OPTION>
+											<option ng-repeat="unite in ListUniteArticleCache" value="{{unite.designation}}">{{unite.designation}}
+											</option>
+											
+										</select>
+									</div>
+								</div>
+							</div>
 
 
 					

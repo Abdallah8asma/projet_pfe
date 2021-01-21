@@ -602,19 +602,22 @@ angular
 				 $scope.rechercheBLVenteForm.$setPristine();
 				 //init de l'objet courant  
 //				 $scope.bonLivraisonVenteCourant={};
-//				 $scope.bonLivraisonVenteCourant = {
-//						 "referenceBl" : '',
-//						 "referenceBs" : '',
-//						 "partieIntId" : '',
-//						 "dateLivraisonMin" : '',
-//						 "dateLivraisonMax": '',
-//						 "metrageMin" : '',
-//						 "metrageMax" : '',
-//						 "prixMin" : '',
-//						 "prixMax" : '',
-//						 "natureLivraison" : "FINI",
-//						 "avecFacture": ''
-//					};
+			 $scope.bonLivraisonVenteCourant = {
+					 "referenceBl" : '',
+					 "referenceBs" : '',
+					 "partieIntId" : '',
+					 "dateLivraisonMin" : '',
+					 "dateLivraisonMax": '',
+					 "metrageMin" : '',
+					 "metrageMax" : '',
+					 "prixMin" : '',
+					 "prixMax" : '',
+					 "natureLivraison" : "FINI",
+					 "avecFacture": '',
+				     "devise": '',
+                     "declare": ''
+				
+				};
 				 
 				 
 				 $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
