@@ -544,6 +544,14 @@
 										<tbody ng-repeat="code in listCode track by $index ">
 											<tr>
 												<td>{{code}}</td>
+												<td style="white-space: nowrap;width: 10px;"
+												>
+												
+												<button  class="btn btn-sm glyphicon glyphicon-trash"
+												ng-mousedown="removeCode($index)">
+												</button>
+												
+												</td>
 											</tr>
 										</tbody>
 									</table>
