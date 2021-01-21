@@ -531,6 +531,8 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 
 							element.setLivraisonVenteId(detLivraisonVenteValue.getLivraisonVenteId());
 							element.setRemise(detLivraisonVenteValue.getRemise());
+							
+							element.setFicheId(detLivraisonVenteValue.getFicheId());
 						}
 					}
 
