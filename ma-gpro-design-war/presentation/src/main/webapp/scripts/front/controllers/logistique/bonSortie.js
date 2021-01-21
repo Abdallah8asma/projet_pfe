@@ -48,7 +48,10 @@
               			$scope.bonSortieCourantS.type = $scope.bonSortieCourantS.listeTypeBS[0];
               					console.log("-----$scope.bonSortieCourant.type-----"+$scope.bonSortieCourantS.type);
               					
-              					
+              			
+$scope.removeCode =function(index){
+$scope.listCode.splice(index,1);
+}	
               				// Lister les BonSortie
           						$scope.rechercherBonSortie = function(bonSortieCourant) {
           							$http.post(
