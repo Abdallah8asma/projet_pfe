@@ -1,6 +1,7 @@
 package com.gpro.consulting.tiers.logistique.domaine.gc.bonlivraison.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -812,8 +814,9 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			bonLivraisonValue.setMontantTTC(montantTTC);
 		}
 		
-		
+		if(bonLivraisonValue.getTauxConversion() != null && montantTTC !=null )
 		bonLivraisonValue.setMontantConverti(bonLivraisonValue.getTauxConversion()*montantTTC);
+		
 		
 		//Si une livraison correspant a une seule commande
 		if(estNonVide(bonLivraisonValue.getRefCommande()) && !bonLivraisonValue.getRefCommande().contains(SEPARATOR)) {
@@ -1123,6 +1126,8 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			Long sommeNombreColis = ZERO_LONG;
 
 			String numeroSeries = "";
+			
+			List<String> refMiseList = new ArrayList<String>();
 
 			for (DetLivraisonVenteValue detail : pair.getValue()) {
 				
@@ -1141,9 +1146,36 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 					numeroSeries += detail.getNumeroSeries();
 					numeroSeries += "&";
 				}
+				
+				
+				if(detail.getNumeroOF() != null)
+					
+					{
+					
+				
+					String[] arrayString =  StringUtils.split(detail.getNumeroOF(), ", ") ;
+					List<String> ofList =new ArrayList<String>(Arrays.asList(arrayString)) ;
+					
+					for(String ch : ofList) {
+						
+						if( !refMiseList.contains(ch)) 
+                         refMiseList.add(detail.getNumeroOF());
+
+					}
+			
+
+					}
+				
 
 				// TODO ENRICHIR WITH INFO PROD SERIALISABLE
 				// TODO REMPLIR LIST PRODSERIALISABLE
+
+			}
+			
+			if(refMiseList.size() > 0) {
+				
+				
+				  element.setNumeroOF(StringUtils.join(refMiseList, ", "));
 
 			}
 
@@ -1922,7 +1954,7 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		
 	
 		
-		if(bonLivraisonValue.getTauxConversion()!=null)
+		if(bonLivraisonValue.getTauxConversion() !=null && montantTTCTotal != null)
 		bonLivraisonValue.setMontantConverti(bonLivraisonValue.getTauxConversion()*montantTTCTotal);
 		
 		else 

@@ -123,6 +123,33 @@ public class BonLivraisonReportValue {
 	private Double montantRegler;
 
 	private Double montantNonRegler;
+	
+	
+	
+	private String codePostalClient;
+
+	private String villeClient;
+	
+	
+	
+	
+	
+	
+	public String getCodePostalClient() {
+		return codePostalClient;
+	}
+
+	public void setCodePostalClient(String codePostalClient) {
+		this.codePostalClient = codePostalClient;
+	}
+
+	public String getVilleClient() {
+		return villeClient;
+	}
+
+	public void setVilleClient(String villeClient) {
+		this.villeClient = villeClient;
+	}
 
 	public Double getMontantNonRegler() {
 		return montantNonRegler;

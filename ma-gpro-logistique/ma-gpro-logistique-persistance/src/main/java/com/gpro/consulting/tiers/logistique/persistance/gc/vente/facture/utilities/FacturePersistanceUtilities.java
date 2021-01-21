@@ -281,6 +281,8 @@ public class FacturePersistanceUtilities {
 		entity.setDescription(dto.getDescription());
 		
 		entity.setTaxeId(dto.getTaxeId());
+		
+		entity.setNumeroOF(dto.getNumeroOF());
 	
 		
 		return entity;
@@ -312,6 +314,8 @@ public class FacturePersistanceUtilities {
 		
 		dto.setTaxeId(entity.getTaxeId());
 	
+			
+		dto.setNumeroOF(entity.getNumeroOF());
 		
 		return dto;
 	}
