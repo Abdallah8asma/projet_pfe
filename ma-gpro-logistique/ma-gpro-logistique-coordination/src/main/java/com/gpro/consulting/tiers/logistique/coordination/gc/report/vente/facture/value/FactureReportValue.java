@@ -101,8 +101,34 @@ public class FactureReportValue {
 	
 	
 	private String groupeClientDesignation;
+	
+	
+	
+	private String codePostalClient;
+
+	private String villeClient;
+	
+	
+	
+	
 
 	
+	public String getCodePostalClient() {
+		return codePostalClient;
+	}
+
+	public void setCodePostalClient(String codePostalClient) {
+		this.codePostalClient = codePostalClient;
+	}
+
+	public String getVilleClient() {
+		return villeClient;
+	}
+
+	public void setVilleClient(String villeClient) {
+		this.villeClient = villeClient;
+	}
+
 	public String getGroupeClientDesignation() {
 		return groupeClientDesignation;
 	}

@@ -106,8 +106,24 @@ public class DetLivraisonVenteEntity implements Serializable{
 	private String description;
 	
 	
+	@Column(name="numero_of")
+	private String numeroOF;
 	
 	
+	
+	
+
+	public String getNumeroOF() {
+		return numeroOF;
+	}
+
+	public void setNumeroOF(String numeroOF) {
+		this.numeroOF = numeroOF;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Long getTaxeId() {
 		return taxeId;

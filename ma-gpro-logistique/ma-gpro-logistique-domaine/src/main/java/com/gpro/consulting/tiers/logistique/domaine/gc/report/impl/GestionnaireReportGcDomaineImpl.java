@@ -478,6 +478,20 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		
 
 	
+		
+		
+		if(pi.getRegionId() != null) {
+			
+			
+			RegionValue regionClient = regionPersistance.getById(pi.getRegionId()) ;
+			
+			if(regionClient != null)
+				bonLivraisonReportValue.setVilleClient(regionClient.getDesignation());
+			
+		}
+		
+		bonLivraisonReportValue.setCodePostalClient(pi.getCodeDouane());
+
 
 		bonLivraisonReportValue.setExistFodec(false);
 		bonLivraisonReportValue.setExistTVA(false);
@@ -506,6 +520,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				bonLivraisonReportProduct.setQuantite(detLivraisonVente.getQuantite());
 				bonLivraisonReportProduct.setRemise(detLivraisonVente.getRemise());
 				bonLivraisonReportProduct.setUnite(detLivraisonVente.getUnite());
+				bonLivraisonReportProduct.setMise(detLivraisonVente.getNumeroOF());
 
 				bonLivraisonReportProduct.setMontantTaxeTVA(detLivraisonVente.getMontantTaxeTVA());
 
@@ -670,6 +685,22 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		else
 			bonLivraisonReportValue.setClient(pi.getRaisonSociale());
 		
+		
+		
+		if(pi.getRegionId() != null) {
+			
+			
+			RegionValue regionClient = regionPersistance.getById(pi.getRegionId()) ;
+			
+			if(regionClient != null)
+				bonLivraisonReportValue.setVilleClient(regionClient.getDesignation());
+			
+		}
+		
+		bonLivraisonReportValue.setCodePostalClient(pi.getCodeDouane());
+
+		
+		
 
 		bonLivraisonReportValue.setExistFodec(false);
 		bonLivraisonReportValue.setExistTVA(false);
@@ -771,6 +802,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				bonLivraisonReportProduct.setQuantite(detLivraisonVente.getQuantite());
 				bonLivraisonReportProduct.setRemise(detLivraisonVente.getRemise());
 				bonLivraisonReportProduct.setUnite(detLivraisonVente.getUnite());
+				bonLivraisonReportProduct.setMise(detLivraisonVente.getNumeroOF());
 
 				Long produitId = detLivraisonVente.getProduitId();
 				
@@ -1445,23 +1477,54 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		Map<Long, PartieInteresseValue> clientIdMap = gestionnaireLogistiqueCacheDomaine.mapClientById();
 
 		Long clientId = null;
+		
+		
+		PartieInteresseValue pi = null;
 
 		if (factureVente.getPartieIntId() != null) {
 			clientId = factureVente.getPartieIntId();
 			reportValue.setClientId(clientId);
+			
+			pi = clientIdMap.get(clientId) ;
 		}
 
-		if (clientIdMap.containsKey(clientId)) {
-			reportValue.setClient(clientIdMap.get(clientId).getRaisonSociale());
-			reportValue.setMatriculeFiscal(clientIdMap.get(clientId).getMatriculeFiscal());
-			reportValue.setAdresse(clientIdMap.get(clientId).getAdresse());
-			reportValue.setTelephone(clientIdMap.get(clientId).getTelephone());
-			reportValue.setFax(clientIdMap.get(clientId).getFax());
+		if (pi != null ) {
 			
 			
-			reportValue.setGroupeClientDesignation(clientIdMap.get(clientId).getReference());
+			
+			reportValue.setClient(pi.getRaisonSociale());
+			reportValue.setMatriculeFiscal(pi.getMatriculeFiscal());
+			reportValue.setAdresse(pi.getAdresse());
+			reportValue.setTelephone(pi.getTelephone());
+			reportValue.setFax(pi.getFax());
+			
+			
+			reportValue.setGroupeClientDesignation(pi.getReference());
+			
+			
+			if(pi.getRegionId() != null) {
+				
+				
+				RegionValue regionClient = regionPersistance.getById(pi.getRegionId()) ;
+				
+				if(regionClient != null)
+					reportValue.setVilleClient(regionClient.getDesignation());
+				
+			}
+			
+			reportValue.setCodePostalClient(pi.getCodeDouane());
 			
 		}
+		
+		
+		
+		
+		
+
+
+		
+		
+		
 		reportValue.setType(factureVente.getType());
 		reportValue.setExistFodec(false);
 		reportValue.setExistTVA(false);
@@ -1541,6 +1604,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				factureReportProduct.setQuantite(detFactureVente.getQuantite());
 				factureReportProduct.setRemise(detFactureVente.getRemise());
 				factureReportProduct.setUnite(detFactureVente.getUnite());
+				factureReportProduct.setMise(detFactureVente.getNumeroOF());
 
 				// factureReportProduct.setMontantTaxeTVA(detFactureVente.getMontanTaxeTVA());
 				// System.out.println("MontanTaxeTVA():

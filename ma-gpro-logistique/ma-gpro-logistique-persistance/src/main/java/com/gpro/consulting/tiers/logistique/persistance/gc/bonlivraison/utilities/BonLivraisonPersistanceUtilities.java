@@ -319,6 +319,7 @@ public class BonLivraisonPersistanceUtilities {
 		entity.setDescription(dto.getDescription());
 		entity.setTaxeId(dto.getTaxeId());
 		
+		entity.setNumeroOF(dto.getNumeroOF());
 		
 		if(dto.getLivraisonVenteId() != null){
 			LivraisonVenteEntity livraisonVenteEntity = new LivraisonVenteEntity();
@@ -354,6 +355,8 @@ public class BonLivraisonPersistanceUtilities {
 		dto.setNumeroSeries(entity.getNumeroSeries());
 		dto.setDescription(entity.getDescription());
 		dto.setTaxeId(entity.getTaxeId());
+		
+		dto.setNumeroOF(entity.getNumeroOF());
 		
 		if (entity.getProduitId()!=null) {
 			ProduitValue produitValue = produitPersistance.rechercheProduitById(entity.getProduitId());

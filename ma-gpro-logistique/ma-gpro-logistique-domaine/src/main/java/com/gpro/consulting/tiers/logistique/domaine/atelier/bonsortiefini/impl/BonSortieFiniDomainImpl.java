@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -461,6 +462,12 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 
 			Double sommeMetrage = ZERO;
 			Double sommePoids = ZERO;
+			
+			List<String> refMiseList = new ArrayList<String>();
+			
+		//	String referenceMises = "";
+			
+			
 			for (RouleauFiniValue rouleau : pair.getValue()) {
 				// Somme des metrages
 				if (rouleau.getMetrage() != null) {
@@ -469,7 +476,23 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 				if (rouleau.getPoids() != null) {
 					sommePoids = rouleau.getPoids().doubleValue() + sommePoids;
 				}
+				
+			
+				
+				if(rouleau.getReferenceMise() != null &&  !refMiseList.contains(rouleau.getReferenceMise()))
+					refMiseList.add(rouleau.getReferenceMise());
+				
+					
 			}
+			
+		
+			if(refMiseList.size() > 0) {
+				
+				
+				  element.setNumeroOF(StringUtils.join(refMiseList, ", "));
+
+			}
+			    
 
 			// Qte livree = La somme des metrage des rouleaux de produit
 			element.setQuantite(sommeMetrage);
@@ -480,13 +503,16 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 				produitValue = produitPersistance.rechercheProduitById(element.getProduitId());
 				if (produitValue != null) {
 
-					SousFamilleProduitValue sousFamilleProduitValue = sousFamilleProduitPersistance
+				/*	SousFamilleProduitValue sousFamilleProduitValue = sousFamilleProduitPersistance
 							.rechercheSousFamilleProduitById(produitValue.getSousFamilleId());
 					if (sousFamilleProduitValue != null) {
 						String designation = (sousFamilleProduitValue.getDesignation() == null) ? EMPTY
 								: sousFamilleProduitValue.getDesignation().toLowerCase();
 						element.setUnite((designation.equalsIgnoreCase(MAILLE)) ? KG : M);
-					}
+					}*/
+					
+					
+					element.setUnite(produitValue.getUnite());
 
 					if (livraisonVenteId != null) {
 						DetLivraisonVenteValue detLivraisonVenteValue = detLivraisonVentePersistance

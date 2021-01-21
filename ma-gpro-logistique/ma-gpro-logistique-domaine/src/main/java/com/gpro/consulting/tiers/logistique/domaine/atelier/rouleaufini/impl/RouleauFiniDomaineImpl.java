@@ -94,23 +94,31 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 		
 		RouleauFiniValue rouleau = rouleauFiniPersitance.getRouleauFiniById(id);
 		
-		List<MiseValue> listMise= misePersitance.getMiseByReference(rouleau.getReferenceMise());
 		
-		if(listMise.size() > 0) {
+		if(rouleau.getBonSortie() == null) {
 			
-			MiseValue miseValue= listMise.get(0);
 			
-			miseValue.setQteProduite(miseValue.getQteProduite() - rouleau.getMetrageAncien().longValue());
+			List<MiseValue> listMise= misePersitance.getMiseByReference(rouleau.getReferenceMise());
 			
-			miseValue.setNbrColis(miseValue.getNbrColis()  -1 );
+			if(listMise.size() > 0) {
+				
+				MiseValue miseValue= listMise.get(0);
+				
+				miseValue.setQteProduite(miseValue.getQteProduite() - rouleau.getMetrageAncien().longValue());
+				
+				miseValue.setNbrColis(miseValue.getNbrColis()  -1 );
+				
+				misePersitance.modifierMise(miseValue);
+				
+			}
 			
-			misePersitance.modifierMise(miseValue);
+			
+			
+			rouleauFiniPersitance.deleteRouleauFini(id);
 			
 		}
 		
-		
-		
-		rouleauFiniPersitance.deleteRouleauFini(id);
+	
 	}
 
 	@Override
