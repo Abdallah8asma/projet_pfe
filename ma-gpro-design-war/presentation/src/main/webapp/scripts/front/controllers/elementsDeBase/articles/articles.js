@@ -783,12 +783,7 @@ $scope.articleCourante.puTTC = Math.round($scope.articleCourante.puTTC*1000)/100
 														  <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
 														 </button>
 															  </div> `,
-											
-														// '<div class="buttons" ng-show="!rowform.$visible">
-														//<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerProduit()"> <i class="fa fa-fw fa-pencil"></i></button>
-														// <button data-nodrag class="btn btn-default btn-xs" ng-click="showPopupDelete('$scope.typeAlert')"> <i class="fa fa-fw fa-trash-o"></i></button>'
-														// 	+ '</div>',
-														//width: 100
+													width:'20%'
 													  }];
 										});
 							};
@@ -875,7 +870,7 @@ $scope.articleCourante.puTTC = Math.round($scope.articleCourante.puTTC*1000)/100
 								columnDefs : 'colDefs',
 								enablePaging : true,
 								showFooter : true,
-								enableColumnResize: true,
+							//	enableColumnResize: true,
 								enableHighlighting : true,
 								totalServerItems : 'totalServerItems',
 								pagingOptions : $scope.pagingOptions,

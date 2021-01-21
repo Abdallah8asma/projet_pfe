@@ -498,11 +498,11 @@ angular.module('gpro.etatMP', [])
 					width :'8%'
 
 				},
-				{
+			/*	{
 					field : 'prixUnitaire',
 					displayName : 'Price / U',
 					width :'8%'
-				},
+				},*/
 			/* 	{
 					field : 'pmp',
 					displayName : 'PMP',
@@ -517,12 +517,18 @@ angular.module('gpro.etatMP', [])
 				{
 					field : 'grammageArticle',
 					displayName : 'grammage',
-					width :'5%'
+					width :'10%'
 				},
 				{
 					field : 'dimensionArticle',
 					displayName : 'dimension',
-					width :'5%'
+					width :'10%'
+				},
+				
+					{
+					field : 'producteurArticle',
+					displayName : 'Producteur',
+					width :'8%'
 				},
 				{
 					field : 'designationMagasin',

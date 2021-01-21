@@ -493,6 +493,55 @@
 
 						</div>
 
+
+
+<div class="row">
+
+<div class="col-sm-3" >
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Reference</label>
+										</div>
+										<select ui-select2="true"  class="form-control" ng-model="miseCourant.produitId"
+										 ng-init="miseCourant.produitId =''" 
+											style="border: 1px solid #e5eaee !important;"
+											>
+											 <option value="">Tous</option>
+											 
+
+											<!--  <--  55555 --> 
+											<option ng-repeat="produit in listeProduit"
+												value="{{produit.id}}">{{produit.reference}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+<div class="col-sm-9" >
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Designation</label>
+										</div>
+										<select ui-select2="true"  class="form-control" ng-model="miseCourant.produitId"
+										 ng-init="miseCourant.produitId =''" 
+											style="border: 1px solid #e5eaee !important;"
+											>
+											 <option value="">Tous</option>
+											 
+
+											<!--  <--  55555 --> 
+											<option ng-repeat="produit in listeProduit"
+												value="{{produit.id}}">{{produit.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+</div>
+							
+
+
 					    </form>
 
 
