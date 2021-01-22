@@ -2276,6 +2276,18 @@ angular
 					} else {
 						$log.debug("==dateFactureMax Undefined");
 					}
+					if(typeof $scope.factureVenteCourant.devise === 'undefined'  ||  $scope.factureVenteCourant.devise == null){
+						var newDevise = "";
+					}
+					else{
+						var newDevise=$scope.factureVenteCourant.devise;
+					}
+					if(typeof $scope.factureVenteCourant.groupeClientId === 'undefined'  ||  $scope.factureVenteCourant.groupeClientId == null){
+						var groupeClient = "";
+					}
+					else{
+						var groupeClient=$scope.factureVenteCourant.groupeClientId;
+					}
 
 					$log.debug("-- factureVenteCourant" + JSON.stringify(factureVenteCourant, null, "  "));
 
@@ -2295,8 +2307,8 @@ angular
 							+ "&prixMin=" + factureVenteCourant.prixMin
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
-							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
-							+ "&devise=" + factureVenteCourant.devise
+							+ "&groupeClientId=" +groupeClient
+							+ "&devise=" +newDevise
 							+ "&type=pdf";
 
 					} else {
@@ -2311,8 +2323,8 @@ angular
 							+ "&prixMin=" + factureVenteCourant.prixMin
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
-							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
-							+ "&devise=" + factureVenteCourant.devise
+							+ "&groupeClientId=" +groupeClient
+							+ "&devise=" +newDevise
 							+ "&type=pdf";
 					}
 					$log.debug("-- URL" + url);
@@ -2393,7 +2405,12 @@ angular
 					} else {
 						$log.debug("==dateFactureMax Undefined");
 					}
-
+					if(typeof $scope.factureVenteCourant.devise === 'undefined'  ||  $scope.factureVenteCourant.devise == null){
+						var newDevise = "";
+					}
+					else{
+						var newDevise=$scope.factureVenteCourant.devise;
+					}
 					$log.debug("-- factureVenteCourant" + JSON.stringify(factureVenteCourant, null, "  "));
 
 					var url;
@@ -2413,7 +2430,7 @@ angular
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
-							+ "&devise=" + factureVenteCourant.devise
+							+ "&devise=" + newDevise
 							+ "&type=pdf";
 
 					} else {
@@ -2429,7 +2446,7 @@ angular
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
-							+ "&devise=" + factureVenteCourant.devise
+							+ "&devise=" + newDevise
 							+ "&type=pdf";
 					}
 					$log.debug("-- URL" + url);
@@ -2475,6 +2492,108 @@ angular
 					// 			 $log.debug('error : ' + error);
 					// 		 });
 				};
+
+
+
+
+				$scope.downloadAllFacturesExcelDevise = function (factureVenteCourant) {
+					$scope.traitementEnCoursGenererAll = "true";
+
+					var newdateFacMinFormat = "";
+					if (angular.isDefined(factureVenteCourant.dateFactureMin)) {
+						$log.debug("==dateFactureMin " + factureVenteCourant.dateFactureMin);
+
+						if (factureVenteCourant.dateFactureMin != "") {
+							newdateFacMinFormat = formattedDate(factureVenteCourant.dateFactureMin);
+							$log.debug("===== newdateFacMinFormat " + newdateFacMinFormat);
+						} else {
+							$log.debug("===== newdateFacMinFormat is Null");
+							newdateLivMinFormat = "";
+						}
+					} else {
+						$log.error("==dateFactureMin Undefined");
+					}
+
+					var newdateFacMaxFormat = "";
+					if (angular.isDefined(factureVenteCourant.dateFactureMax)) {
+						$log.debug("==dateFactureMax " + factureVenteCourant.dateFactureMax);
+
+						if (factureVenteCourant.dateFactureMax != "") {
+							newdateFacMaxFormat = formattedDate(factureVenteCourant.dateFactureMax);
+							$log.debug("===== newdateFacMaxFormat " + newdateFacMaxFormat);
+						} else {
+							$log.debug("===== newdateFacMaxFormat is Null");
+							newdateFacMaxFormat = "";
+						}
+					} else {
+						$log.debug("==dateFactureMax Undefined");
+					}
+					if(typeof $scope.factureVenteCourant.devise === 'undefined'  ||  $scope.factureVenteCourant.devise == null){
+						var newDevise = "";
+					}
+					else{
+						var newDevise=$scope.factureVenteCourant.devise;
+					}
+					$log.debug("-- factureVenteCourant" + JSON.stringify(factureVenteCourant, null, "  "));
+
+					var url;
+					$log.debug("PI  " + factureVenteCourant.partieIntId);
+				
+						url = UrlAtelier + "/fiches/listfactureDevise?referenceFacture=" + factureVenteCourant.referenceFacture
+							+ "&typeFacture=Normal"
+							+ "&referenceBl=" + factureVenteCourant.referenceBl
+							+ "&partieIntId=" + factureVenteCourant.partieIntId
+							+ "&dateFactureMin=" + newdateFacMinFormat
+							+ "&dateFactureMax=" + newdateFacMaxFormat
+							+ "&metrageMin=" + factureVenteCourant.metrageMin
+							+ "&metrageMax=" + factureVenteCourant.metrageMax
+							+ "&prixMin=" + factureVenteCourant.prixMin
+							+ "&prixMax=" + factureVenteCourant.prixMax
+							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
+							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
+							+ "&devise=" + newDevise
+							+ "&type=pdf";
+
+		
+					$log.debug("-- URL" + url);
+
+					var fileName = 'Liste facture';
+					var a = document.createElement('a');
+					document.body.appendChild(a);
+					downloadService.download(url).then(function (result) {
+						var heasersFileName = result.headers(['content-disposition']).substring(17);
+						var fileName = heasersFileName.split('.');
+
+
+						fileName[0] = 'Liste des Factures_' + formattedDate(new Date());
+
+						var typeFile = result.headers(['content-type']);
+						var file = new Blob([result.data], { type: typeFile });
+						var fileURL = window.URL.createObjectURL(file);
+						if (typeFile == 'application/vnd.ms-excel') {
+							console.log('llll excel');
+							a.href = fileURL;
+							a.download = fileName[0];
+							//$window.open(fileURL)
+							a.click();
+
+						} else {
+							console.log('llll pdf');
+							a.href = fileURL;
+							a.download = fileName[0];
+							$window.open(fileURL)
+							a.click();
+
+						}
+						$scope.traitementEnCoursGenererAll = "false";
+
+
+					});
+
+
+				};
+
+
 
 				$scope.downloadRecapExcel = function (factureVenteCourant) {
 

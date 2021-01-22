@@ -76,9 +76,25 @@
 						</div>
 
 						<div class="ms-CommandButton">
-							<button class="ms-CommandButton-button" ng-click="dowloadListCmdvente(commandeVenteCourante)">
+							<button class="ms-CommandButton-button" >
 								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
 								<span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+								<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+									<li class="ms-ContextualMenu-item">
+									  <a class="ms-ContextualMenu-link" tabindex="1"
+										ng-click="dowloadListCmdvente(commandeVenteCourante)">EXCEL</a>
+					  
+									</li>
+									<li class="ms-ContextualMenu-item">
+									  <a class="ms-ContextualMenu-link" tabindex="1"
+										ng-click="dowloadListCmdventeDevise(commandeVenteCourante)">EXCEL avec devise</a>
+					  
+									</li>
+								</ul>
+
+
+
+
 							</button>
 						</div>
 						<div class="ms-CommandButton">
