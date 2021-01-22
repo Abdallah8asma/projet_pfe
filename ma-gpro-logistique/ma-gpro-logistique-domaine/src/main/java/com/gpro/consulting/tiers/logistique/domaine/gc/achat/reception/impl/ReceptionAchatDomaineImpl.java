@@ -310,7 +310,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 					}
 
 
-					if (bonReceptionValue.getIdDepot() != null) {
+					if (estNonVide(bonReceptionValue.getIdDepot() )) {
 
 						RechercheMulticritereProduitDepotValue request = new RechercheMulticritereProduitDepotValue();
 
@@ -461,7 +461,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 
 		bonReceptionValue.setQuantite(quantiteCommandeVenteTotal);
 		bonReceptionValue.setPrixTotal(coutCommandeVenteTotal);
-
+		
 		return receptionAchatPersistance.create(bonReceptionValue);
 	}
 
@@ -2178,5 +2178,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 
 		return bonLivraisonlist;
 	}
+	   private boolean estNonVide(Long val) {
+				return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
+			}
 
 }
