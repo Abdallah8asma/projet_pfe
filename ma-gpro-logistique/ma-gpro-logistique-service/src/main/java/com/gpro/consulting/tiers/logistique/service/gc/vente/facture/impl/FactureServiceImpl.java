@@ -97,6 +97,15 @@ public class FactureServiceImpl implements IFactureService{
 		// TODO Auto-generated method stub
 		return factureDomaine.getCurrentReference(type,instance,b);
 	}
+
+
+
+	@Override
+	public String getCurrentReferenceByTypeFactureAndDeclarer(String type, boolean declarer, Calendar instance,
+			boolean b) {
+		// TODO Auto-generated method stub
+		return factureDomaine.getCurrentReferenceByTypeFactureAndDeclarer(type,declarer,instance,b);
+	}
 	
 	
 	

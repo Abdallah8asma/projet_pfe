@@ -315,6 +315,12 @@ public class FactureRestImpl {
  	}
 	
 	
+	@RequestMapping(value = "/getCurrentReferenceByTypeFactureAndDeclarer:{type}:{declarer}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceByTypeFactureAndDeclarer(@PathVariable String type , @PathVariable boolean declarer) {
+ 		
+ 		return  factureService.getCurrentReferenceByTypeFactureAndDeclarer(type,declarer,Calendar.getInstance(),false);
+ 	}
+	
 	public boolean checkForOptimization(RechercheMulticritereFactureValue request) {
 
 		return

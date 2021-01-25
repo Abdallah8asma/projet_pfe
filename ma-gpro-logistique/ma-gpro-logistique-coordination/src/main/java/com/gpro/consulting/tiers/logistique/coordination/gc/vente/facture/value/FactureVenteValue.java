@@ -87,7 +87,17 @@ public class FactureVenteValue implements Comparable<FactureVenteValue> {
 	private Double tauxConversion;
 	private Double montantConverti;
 	
+	private boolean declarer;
 	
+	
+	public boolean isDeclarer() {
+		return declarer;
+	}
+
+	public void setDeclarer(boolean declarer) {
+		this.declarer = declarer;
+	}
+
 	public Long getDevise() {
 		return devise;
 	}

@@ -91,7 +91,8 @@ public class GuichetPersistanceUtilities {
 		
 		entity.setNumReferenceBonLivraisonNDCourante(dto.getNumReferenceBonLivraisonNDCourante());
 		entity.setPrefixeBLND(dto.getPrefixeBLND());
-		
+		entity.setNumReferenceFactureNDCourante(dto.getNumReferenceFactureNDCourante());
+		entity.setPrefixeFAND(dto.getPrefixeFAND());
 		return entity;
 	}
 
@@ -167,7 +168,8 @@ public class GuichetPersistanceUtilities {
 		dto.setNumReferenceBonLivraisonNDCourante(entity.getNumReferenceBonLivraisonNDCourante());
 		dto.setPrefixeBLND(entity.getPrefixeBLND());
 		
-		
+		dto.setNumReferenceFactureNDCourante(entity.getNumReferenceFactureNDCourante());
+		dto.setPrefixeFAND(entity.getPrefixeFAND());
 		return dto;
 	}
 	

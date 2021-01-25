@@ -51,5 +51,11 @@ public interface IFactureService {
 	public ListProduitElementValue getArticleAvoir(Long clientId);
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public String getCurrentReference(String type, Calendar instance, boolean b);
+	public String getCurrentReference(String type,Calendar instance, boolean b);
+	
+
+
+	@Transactional(readOnly = false, rollbackFor = Exception.class)
+	public String getCurrentReferenceByTypeFactureAndDeclarer(String type, boolean declarer, Calendar instance,
+			boolean b);
 }

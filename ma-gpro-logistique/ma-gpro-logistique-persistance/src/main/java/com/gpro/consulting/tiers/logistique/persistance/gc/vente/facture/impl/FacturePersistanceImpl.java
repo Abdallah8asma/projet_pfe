@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
 import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.FactureVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.FactureVenteVue;
@@ -72,6 +73,7 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	private int MAX_RESULTS = 52;
 	private String devise = "devise";
 	
+	private String PREDICATE_DECLARE = "declarer";
 	@PersistenceContext
 	private EntityManager entityManager;
 	
@@ -226,6 +228,23 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 			}
 	 	
 			
+			
+			if (estNonVide(request.getDeclarerecherche())) {
+				Expression<Boolean> expression = root.get(PREDICATE_DECLARE);
+				switch (request.getDeclarerecherche()) {
+					case IConstanteLogistique.YES:
+						whereClause.add(criteriaBuilder.isTrue(expression));
+						break;
+					case IConstanteLogistique.NO:
+						whereClause.add(criteriaBuilder.isFalse(expression));
+						break;
+					case IConstanteLogistique.ALL:
+						break;
+					default:
+						break;
+				}
+			}
+			
 	 //	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	 	
 	 	
@@ -255,7 +274,8 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	 			root.get("idDepot").as(Long.class),
 	 			root.get("reglementId").as(Long.class),
 	 			root.get("devise").as(Long.class),
-	 			root.get("montantConverti").as(Double.class)
+	 			root.get("montantConverti").as(Double.class),
+	 			root.get("declarer").as(boolean.class)
 				
 				)).where(whereClause.toArray(new Predicate[] {}));
 	 	
@@ -305,6 +325,7 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	    	entity.setReglementId((Long) element[21]);
 	    	entity.setDevise((Long) element[22]);
 	    	entity.setMontantConverti((Double) element[23]);
+	    entity.setDeclarer((boolean) element[24]);
 	    	
 	    	FactureVenteValue dto = FacturePersistanceUtilities.toValue(entity);
 	    	list.add(dto);
@@ -508,7 +529,7 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	
 	
 	private boolean estNonVide(String val) {
-		return val != null && !"".equals(val) && !"undefined".equals(val);
+		return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 	}
 	private boolean estNonVide(Long val) {
 		return val != null && !"".equals(val) && !"undefined".equals(val);
