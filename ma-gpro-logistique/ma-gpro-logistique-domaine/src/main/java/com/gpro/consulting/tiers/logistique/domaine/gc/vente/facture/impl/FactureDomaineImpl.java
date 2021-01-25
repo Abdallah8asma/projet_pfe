@@ -175,13 +175,14 @@ public class FactureDomaineImpl implements IFactureDomaine {
 		
 		factureValue.setDateIntroduction(Calendar.getInstance());
 
-		// logger.info("#### Facture " + factureValue.getDate());
+		
 		if (((factureValue.getReference() != null && factureValue.getReference().equals(""))
 				|| factureValue.getReference() == null)) {
 			if (factureValue.getType() != null) {
-
-				factureValue.setReference(getCurrentReference(factureValue.getType(), factureValue.getDate(), true));
-				/*
+         
+				factureValue.setReference(getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.isDeclarer(), factureValue.getDate(), true));
+       
+               /*
 				 * if (factureValue.getType().equalsIgnoreCase(FACTURE_TYPE_AVOIRE)) {
 				 * factureValue.setReference(this.getNumeroAvoir(factureValue.getDate())); }
 				 * else {
@@ -194,7 +195,7 @@ public class FactureDomaineImpl implements IFactureDomaine {
 		{
 			if (factureValue.getRefAvantChangement() != null
 					&& factureValue.getReference().equals(factureValue.getRefAvantChangement())) {
-				this.getCurrentReference(factureValue.getType(), factureValue.getDate(), true);
+				this.getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.isDeclarer(), factureValue.getDate(), true);
 			}
 
 		}
@@ -1120,6 +1121,82 @@ public class FactureDomaineImpl implements IFactureDomaine {
 			return getNumeroAvoir(instance, increment);
 
 		else
+			
 			return getNumeroFacture(instance, increment);
 	}
+	
+	
+	
+	
+	public String getCurrentReferenceNotDeclarer(String type, Calendar instance, boolean increment) {
+		if (type.equals(FACTURE_TYPE_AVOIRE))
+
+			return getNumeroAvoir(instance, increment);
+
+		else
+			return getNumeroFactureNotDeclarer(instance, increment);
+		
+		
+			
+	}
+	
+
+	private String getNumeroFactureNotDeclarer(Calendar instance, boolean increment) {
+
+
+		GuichetAnnuelValue currentGuichetAnnuel = guichetAnnuelDomaine.getCurrentGuichetAnnuel();
+
+		Long numeroFacture = currentGuichetAnnuel.getNumReferenceFactureNDCourante();
+
+		// Long vNumGuichetFacture =
+		// this.guichetAnnuelDomaine.getNextNumAvoirReference();
+		/** Année courante. */
+		// int vAnneeCourante = pDateBonFacture.get(Calendar.YEAR);
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumFacture = new StringBuilder("");
+
+		vNumFacture.append(currentGuichetAnnuel.getPrefixeFAND());
+
+		if (numeroFacture > 0 && numeroFacture < 10) {
+			vNumFacture.append("000");
+		} else if (numeroFacture >= 10 && numeroFacture < 100) {
+			vNumFacture.append("00");
+		}
+
+		else if (numeroFacture >= 100 && numeroFacture < 1000) {
+			vNumFacture.append("0");
+		}
+
+		vNumFacture.append(numeroFacture);
+
+		currentGuichetAnnuel.setNumReferenceFactureNDCourante(new Long(numeroFacture + 1L));
+
+		/** Modification de la valeur en base du numéro. */
+		if (increment)
+			this.guichetAnnuelDomaine.modifierGuichetFANDAnnuel(currentGuichetAnnuel);
+
+		return vNumFacture.toString();
+	}
+	
+	
+	@Override
+	public String getCurrentReferenceByTypeFactureAndDeclarer(String type, boolean declarer, Calendar instance,
+			boolean increment) {
+		
+		
+		
+		if (declarer)
+			return getCurrentReference(type, instance, increment) ;
+		
+		else
+			return getCurrentReferenceNotDeclarer(type, instance, increment) ;
+		
+	
+		
+	}
+	
+
+	
+	
+	
 }

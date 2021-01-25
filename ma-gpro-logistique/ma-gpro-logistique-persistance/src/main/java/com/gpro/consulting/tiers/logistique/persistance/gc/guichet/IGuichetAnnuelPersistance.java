@@ -95,4 +95,6 @@ public interface IGuichetAnnuelPersistance {
 
 	public Long modifierGuichetBLNDAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
 
+	public Long modifierGuichetFANDAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
 }

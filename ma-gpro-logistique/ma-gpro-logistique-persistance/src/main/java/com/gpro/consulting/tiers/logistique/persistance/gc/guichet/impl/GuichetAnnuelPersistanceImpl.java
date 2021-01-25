@@ -523,5 +523,16 @@ public class GuichetAnnuelPersistanceImpl extends AbstractPersistance implements
 	    
 	    return Long.parseLong(modifierGuichetAnnuel(pGuichetValeur));
 	}
+
+	@Override
+	public Long modifierGuichetFANDAnnuel(GuichetAnnuelValue currentGuichetAnnuel) {
+		
+		  GuichetAnnuelEntity vGuichetEntite = rechercherGuichetAnnuel(currentGuichetAnnuel);
+		
+		    vGuichetEntite.setNumReferenceFactureNDCourante(currentGuichetAnnuel.getNumReferenceFactureNDCourante());  
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+
+	}
 	
 }

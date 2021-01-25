@@ -220,8 +220,33 @@ public class GuichetAnnuelEntity {
 	  
 	  
 	  
+	  /** Numéro bon livraison courant. */
+	  @Column(name = "ref_facture_nd")
+	  private Long numReferenceFactureNDCourante;
 	  
-	  public Long getNumReferenceBonLivraisonNDCourante() {
+	  /** prefixe_bl  */
+	  @Column(name = "prefixe_facture_nd ")
+	  private String prefixeFAND ;
+	  
+	  
+	  
+	  public String getPrefixeFAND() {
+		return prefixeFAND;
+	}
+
+	public void setPrefixeFAND(String prefixeFAND) {
+		this.prefixeFAND = prefixeFAND;
+	}
+
+	public Long getNumReferenceFactureNDCourante() {
+		return numReferenceFactureNDCourante;
+	}
+
+	public void setNumReferenceFactureNDCourante(Long numReferenceFactureNDCourante) {
+		this.numReferenceFactureNDCourante = numReferenceFactureNDCourante;
+	}
+
+	public Long getNumReferenceBonLivraisonNDCourante() {
 		return numReferenceBonLivraisonNDCourante;
 	}
 

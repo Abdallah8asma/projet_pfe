@@ -110,5 +110,8 @@ public interface IGuichetAnnuelDomaine {
 
 	public Long modifierGuichetBLNDAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
 
+
+	Long modifierGuichetFANDAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
 		
 }

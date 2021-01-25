@@ -223,4 +223,9 @@ public class GuichetAnnuelDomaineImpl implements IGuichetAnnuelDomaine{
 		
 	}
 
+	@Override
+	public Long modifierGuichetFANDAnnuel(GuichetAnnuelValue currentGuichetAnnuel) {
+		return guichetAnnuelPersistance.modifierGuichetFANDAnnuel(currentGuichetAnnuel);
+		
+	}
 }

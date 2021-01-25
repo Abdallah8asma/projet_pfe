@@ -46,7 +46,21 @@ public class RechercheMulticritereFactureValue {
 	private Long devise;
 	
 	
+	private String declarerecherche;
 	
+	
+	
+	
+
+
+	public String getDeclarerecherche() {
+		return declarerecherche;
+	}
+
+	public void setDeclarerecherche(String declarerecherche) {
+		this.declarerecherche = declarerecherche;
+	}
+
 	public Long getDevise() {
 		return devise;
 	}
