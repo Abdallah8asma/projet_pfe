@@ -82,6 +82,7 @@ public class FactureDomaineImpl implements IFactureDomaine {
 
 	private static final String FACTURE_TYPE_AVOIRE = "Avoir";
 
+	private static final String TYPE_DECLARER = "declarer";
 	@Autowired
 	private IFacturePersistance facturePersistance;
 
@@ -182,6 +183,7 @@ public class FactureDomaineImpl implements IFactureDomaine {
          
 				factureValue.setReference(getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.isDeclarer(), factureValue.getDate(), true));
        
+               
                /*
 				 * if (factureValue.getType().equalsIgnoreCase(FACTURE_TYPE_AVOIRE)) {
 				 * factureValue.setReference(this.getNumeroAvoir(factureValue.getDate())); }
@@ -1177,7 +1179,6 @@ public class FactureDomaineImpl implements IFactureDomaine {
 
 		return vNumFacture.toString();
 	}
-	
 	
 	@Override
 	public String getCurrentReferenceByTypeFactureAndDeclarer(String type, boolean declarer, Calendar instance,
