@@ -486,7 +486,9 @@ angular
 							taxeId: 3,
 							pourcentage: '',
 							montant: 0.600,
-						}];
+						}
+					
+					];
 					
 		
 				}
@@ -1174,6 +1176,11 @@ angular
 
 				// Recherche des Bons de Vente
 				$scope.rechercherFactureVente = function (factureVenteCourant) {
+						
+				if($scope.clientActif.blackMode==false){
+					factureVenteCourant.declarer="oui";
+
+				 }
 
 					factureVenteCourant.type = "Normal";
 					$http
@@ -1269,25 +1276,99 @@ angular
 					$scope.listTaxeFactureInitMethod();
 					$scope.initTaxeRemoved();
 					$scope.factureVenteCourant = { date: new Date(), modepaiementId: 1 ,
-					"devise":"2"
+					"devise":"2",
+					"declarer":true,
 					
 					};
 					// $scope.factureVenteCourant = factureVente ? angular
 					// .copy(factureVente) : {};
 
-					$http.get(UrlAtelier + "/facture/getCurrentReferenceByTypeFacture:Normal")
+	
+					var type ="";
+					
+					if($scope.factureVenteCourant.declarer == true){
+
+						type = true;
+					}
+					else {
+					type=false;
+					}
+					$http.get(UrlAtelier + "/facture/getCurrentReferenceByTypeFactureAndDeclarer:Normal:"+type)
 						.success(
 							function (res) {
 
 								$scope.factureVenteCourant.reference = res;
 								$scope.factureVenteCourant.refAvantChangement = res;
 							});
+						
 
+						
 					// mode edit activé
 					$scope.displayMode = "edit";
 
 				}
 
+
+				$scope.getCurrentReferenceByType  = function (declarer) {
+					
+					var type ="";
+					
+					if($scope.factureVenteCourant.declarer == true){
+
+						type = true;
+						$scope.listTaxeFactureInitMethod();
+					}
+					else {
+				
+					type = false;
+					$scope.listTaxeFactureInit = [
+						{//FODEC 
+							taxeId: 1,
+							pourcentage: 1,
+							montant: '', 
+						   },
+	   
+							   {// TVA
+								   taxeId: 2,
+								   pourcentage: 10,
+								   montant: '',
+							   },
+							   {// TVA7
+								   taxeId: 4,
+								   pourcentage: 7,
+								   montant: '',
+							   },
+							   {// TVA13
+								   taxeId: 5,
+								   pourcentage: 13,
+								   montant: '',
+							   },
+							   {// TIMBRE
+								   taxeId: 3,
+								   pourcentage: '',
+								   montant: 0.600,
+							   }
+						   
+						   ];
+
+				   }
+	               
+				
+					
+							$http
+						.get(
+							UrlAtelier
+							+ "/facture/getCurrentReferenceByTypeFactureAndDeclarer:Normal:"+type
+						)
+						.success(
+							function (res) {
+								$scope.factureVenteCourant.reference = res;
+								$scope.factureVenteCourant.refAvantChangement = res;
+
+							}
+						);
+					
+					}	
 				// AffectationBLFaconVente BonLivVente
 				$scope.affectationBLFaconVente = function (factureVente) {
 					$scope.natureLivraison = "FACON";
