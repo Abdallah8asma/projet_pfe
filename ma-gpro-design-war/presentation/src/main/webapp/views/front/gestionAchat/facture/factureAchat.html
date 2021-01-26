@@ -355,6 +355,26 @@
 
 
               </div>
+
+              <div class="col-sm-3" ng-show="clientActif.blackMode==true">
+
+                <div class="form-group">
+                  <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">A facturer</label>
+                  </div>
+                  <select ui-select2 ng-model="factureAchatCourant.declarerecherche"
+                     data-placeholder="" class="form-control"
+                    style="border: 1px solid #e5eaee !important;">
+                    <option value="">Tous</option>
+                    <option value="oui">OUI</option>
+                    <option value="non">NON</option>
+                  </select>
+                  </div>
+                </div>
+                </div>
+
+
             </div>
           </form>
         </div>
@@ -630,7 +650,7 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-sm-8">
 
 
                 <div class="input-group">
@@ -639,6 +659,31 @@
                   </div>
                   <textarea class="form-control" rows="1" class="form-control"
                     ng-model="factureAchatCourant.observations"></textarea>
+                </div>
+              </div>
+
+              <div class="col-sm-3"  ng-show="clientActif.blackMode==true">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label is-required">A facturer</label>
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="checkbox checkbox-square checkbox-primary">
+                          <input type="checkbox" class="form-control" ng-init="factureAchatCourant.declarer=''"
+              ng-model="factureAchatCourant.declarer" ng-change="getCurrentReferenceByType(factureAchatCourant.declarer)" 
+              
+              
+              
+              />
+
+                          <span></span></label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
