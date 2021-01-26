@@ -1178,7 +1178,7 @@ angular
 				$scope.rechercherFactureVente = function (factureVenteCourant) {
 						
 				if($scope.clientActif.blackMode==false){
-					factureVenteCourant.declarer="oui";
+					factureVenteCourant.declarerecherche="oui";
 
 				 }
 
@@ -1282,17 +1282,9 @@ angular
 					};
 					// $scope.factureVenteCourant = factureVente ? angular
 					// .copy(factureVente) : {};
-
-	
-					var type ="";
+					$scope.factureVenteCourant.declarer=true;
+					var type =true;
 					
-					if($scope.factureVenteCourant.declarer == true){
-
-						type = true;
-					}
-					else {
-					type=false;
-					}
 					$http.get(UrlAtelier + "/facture/getCurrentReferenceByTypeFactureAndDeclarer:Normal:"+type)
 						.success(
 							function (res) {
@@ -1313,7 +1305,7 @@ angular
 					
 					var type ="";
 					
-					if($scope.factureVenteCourant.declarer == true){
+					if(declarer == true){
 
 						type = true;
 						$scope.listTaxeFactureInitMethod();
@@ -3011,6 +3003,11 @@ angular
 							var data;
 							var factureVenteCourant = $scope.factureVenteCourant;
 							factureVenteCourant.type = "Normal";
+								
+							if($scope.clientActif.blackMode==false){
+								factureVenteCourant.declarerecherche="oui";
+			
+							 }
 							if (searchText) {
 								var ft = searchText.toLowerCase();
 
