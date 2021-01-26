@@ -134,7 +134,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 				
 				
 				//factureValue.setReference(getCurrentReference(factureValue.getType(), factureValue.getDate(), true));
-				factureValue.setReference(getReferenceFactureFromGuichetMensuel(factureValue.getType(),Calendar.getInstance(),true)); 
+				factureValue.setReference(getCurrentReferenceMensuelDeclarer(factureValue.getType(),factureValue.isDeclarer(),Calendar.getInstance(),true)); 
 				
 				
 				
@@ -155,7 +155,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			
 			 if(factureValue.getRefAvantChangement() != null && factureValue.getReference().equals(factureValue.getRefAvantChangement())) {
 				 
-					this.getReferenceFactureFromGuichetMensuel(factureValue.getType(),factureValue.getDateIntroduction(), true); 
+					this.getCurrentReferenceMensuelDeclarer(factureValue.getType(),factureValue.isDeclarer(),factureValue.getDateIntroduction(), true); 
 				 
 				 //this.getCurrentReference(factureValue.getType(),factureValue.getDate(),true);
            }
@@ -1041,6 +1041,69 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		
 		
 
+		
+		
+	}
+
+	@Override
+	public String getCurrentReferenceMensuelDeclarer(String type, boolean declarer, Calendar instance, boolean increment) {
+	
+		
+		if (declarer)
+			return getReferenceFactureFromGuichetMensuel(type, instance, increment) ;
+		
+		else
+			return getCurrentReferenceNotDeclarer(type, instance, increment) ;
+		
+	
+		
+		
+	}
+
+	private String getCurrentReferenceNotDeclarer(String type, Calendar instance, boolean increment) {
+		if (type.equals(FACTURE_TYPE_AVOIRE))
+
+			return getReferenceFactureAvoirFromGuichetMensuel(instance, increment);
+
+		else
+			return getReferenceFactureAchatFromGuichetMensuelNotDeclarer(instance, increment);
+		
+		
+	}
+
+	private String getReferenceFactureAchatFromGuichetMensuelNotDeclarer(Calendar pDate, boolean increment) {
+
+		Long vNumGuichetFacAchat = this.guichetierMensuelDomaine.getNextNumfactureAchatReferenceNondeclarer(); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFactureAchatNondeclarer();
+		int vAnneeCourante = pDate.get(Calendar.YEAR);
+		int moisActuel = pDate.get(Calendar.MONTH) + 1;
+
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumFactNonDec = new StringBuilder("");
+	
+		vNumFactNonDec.append(vNumGuichetPrefix);
+		//vNumBonLiv.append(vAnneeCourante);
+		//vNumBonLiv.append(String.format("%02d", moisActuel));
+		vNumFactNonDec.append(String.format("%04d", vNumGuichetFacAchat));
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+		/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+		vGuichetValeur.setId(new Long(idMensuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumReferenceFactureAchatNonDeclarerCourante(new Long(vNumGuichetFacAchat + 1L));
+		/** Modification de la valeur en base du numéro. */
+		
+		if(increment)
+		this.guichetierMensuelDomaine.modifierGuichetFactureAchatNonDeclarerMensuel(vGuichetValeur);  
+		
+
+		return vNumFactNonDec.toString();
 		
 		
 	}

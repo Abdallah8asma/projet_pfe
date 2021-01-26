@@ -78,5 +78,17 @@ public interface IGuichetMensuelPersistance {
 
 
 	public String getPrefixBonReceptionNonDeclarer();
+
+
+	public Long getNextNumfactureAchatReferenceNondeclarer();
+
+
+	public String getPrefixFactureAchatNondeclarer();
+
+
+	public Long modifierGuichetFactureAchatNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur);
+
+
+	
 	
 }

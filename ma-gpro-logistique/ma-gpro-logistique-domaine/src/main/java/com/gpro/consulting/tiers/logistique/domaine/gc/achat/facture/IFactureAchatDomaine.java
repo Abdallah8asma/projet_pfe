@@ -101,4 +101,6 @@ public interface IFactureAchatDomaine {
 
 	public String getCurrentReferenceMensuel(String type, Calendar instance, boolean b);
 
+	public String getCurrentReferenceMensuelDeclarer(String type, boolean declarer, Calendar instance, boolean b);
+
 }

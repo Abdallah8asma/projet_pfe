@@ -51,4 +51,7 @@ public interface IFactureAchatService {
 	
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public String getCurrentReferenceMensuel(String type, Calendar instance, boolean b);
+
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public String getCurrentReferenceMensuelDeclarer(String type, boolean declarer, Calendar instance, boolean b);
 }
