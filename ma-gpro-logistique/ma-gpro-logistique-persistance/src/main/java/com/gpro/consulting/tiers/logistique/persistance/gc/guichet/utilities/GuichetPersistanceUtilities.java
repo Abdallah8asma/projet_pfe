@@ -187,7 +187,8 @@ public class GuichetPersistanceUtilities {
 		gmv.setNumReferenceFactureCourante(entity.getNumReferenceFactureCourante());
 	
 		gmv.setNumReferenceBonCommandeCourante(entity.getNumReferenceBonCommandeCourante());
-		
+		gmv.setNumReferenceFactureAchatNonDeclarerCourante(entity.getNumReferenceFactureAchatNDCourante());
+		gmv.setPrefixeFactureAchatNonDeclarer(entity.getPrefixeFactureAchatND());
 		
 		return gmv;
 		

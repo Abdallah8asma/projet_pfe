@@ -91,7 +91,13 @@ public class GuichetMensuelEntity {
 	  
 	  
 	  
-	  /********* Fin Achat   ****************/
+	  @Column(name = "ref_factureachat_nd")
+	  private Long numReferenceFactureAchatNDCourante;
+	  
+
+	  @Column(name = "prefixe_factureachat_nd ")
+	  private String prefixeFactureAchatND ;
+	  
 	  
 	  
 
@@ -99,6 +105,22 @@ public class GuichetMensuelEntity {
 	  
 	  
 	  
+	public Long getNumReferenceFactureAchatNDCourante() {
+		return numReferenceFactureAchatNDCourante;
+	}
+
+	public void setNumReferenceFactureAchatNDCourante(Long numReferenceFactureAchatNDCourante) {
+		this.numReferenceFactureAchatNDCourante = numReferenceFactureAchatNDCourante;
+	}
+
+	public String getPrefixeFactureAchatND() {
+		return prefixeFactureAchatND;
+	}
+
+	public void setPrefixeFactureAchatND(String prefixeFactureAchatND) {
+		this.prefixeFactureAchatND = prefixeFactureAchatND;
+	}
+
 	/**
 	 * @return the annee
 	 */

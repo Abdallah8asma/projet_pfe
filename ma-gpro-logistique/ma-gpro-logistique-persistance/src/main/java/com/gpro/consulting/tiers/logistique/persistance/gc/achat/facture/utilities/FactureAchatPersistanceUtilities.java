@@ -83,6 +83,8 @@ public class FactureAchatPersistanceUtilities {
 		
 		dto.setIdDepot(entity.getIdDepot());
 
+		dto.setDeclarer(entity.isDeclarer());
+		
 		if (entity.getListDetFactureAchat() != null) {
 			List<DetFactureAchatValue> list = new ArrayList<DetFactureAchatValue>();
 			for (DetFactureAchatEntity detFactureAchatEntity : entity.getListDetFactureAchat()) {
@@ -151,6 +153,8 @@ public class FactureAchatPersistanceUtilities {
 		entity.setBoutiqueId(dto.getBoutiqueId());
 		
 		entity.setIdDepot(dto.getIdDepot());
+		entity.setDeclarer(dto.isDeclarer());
+		
 		
 		if (dto.getListDetFactureAchat() != null) {
 			Set<DetFactureAchatEntity> list = new HashSet<DetFactureAchatEntity>();

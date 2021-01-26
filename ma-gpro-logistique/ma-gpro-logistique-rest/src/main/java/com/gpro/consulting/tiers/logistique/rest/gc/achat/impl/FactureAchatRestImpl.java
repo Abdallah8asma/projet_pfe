@@ -255,4 +255,12 @@ public class FactureAchatRestImpl {
  		
  		return  factureService.getCurrentReferenceMensuel(type,Calendar.getInstance(),false);
  	}
+	
+	@RequestMapping(value = "/getCurrentReferenceMensuelDeclarer:{type}:{declarer}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuelDeclarer(@PathVariable String type,@PathVariable boolean declarer) {
+ 		
+ 		return  factureService.getCurrentReferenceMensuelDeclarer(type,declarer,Calendar.getInstance(),false);
+ 	}
+	
+	
 }
