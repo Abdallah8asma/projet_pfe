@@ -163,7 +163,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			@RequestParam(value = "state", required = false) String state,
 			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "num", required = false) String num,
-			@RequestParam(value = "reference", required = false) String reference,
+	
 
 			@RequestParam(value = "dateLivDe", required = false) String dateLivDe,
 			@RequestParam(value = "dateLivA", required = false) String dateLivA,
@@ -181,6 +181,10 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			@RequestParam(value = "etatShipped", required = false) String etatShipped,
 			
 			@RequestParam(value = "machine", required = false) String machine,
+			
+			
+			@RequestParam(value = "client", required = false) String client,
+			@RequestParam(value = "produitId", required = false) String produitId,
 
 			HttpServletResponse response) throws WriteException, IOException {
 
@@ -265,7 +269,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			request.setType(type);
 		}
 
-		if (isNotEmty(reference))
+	/*	if (isNotEmty(reference))
 
 		{
 			numLigneCritRech++;
@@ -275,6 +279,45 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			request.setReferenceProduit(reference);
 
 		}
+		*/
+		
+		if (isNotEmty(produitId))
+
+			
+		{
+			
+			Long idProd = Long.parseLong(produitId);
+			ProduitValue p = produitService.rechercheProduitById(idProd);
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Reference :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, p.getReference(), ExcelUtils.boldRed3));
+
+			request.setProduitId(idProd);
+
+		}
+		
+		
+		
+
+		if (isNotEmty(client))
+
+	
+		{
+			
+			Long idClient = Long.parseLong(client);
+			
+			PartieInteresseValue pi = partieInteresseeService.getById(idClient);
+			
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Client :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, pi.getAbreviation(), ExcelUtils.boldRed3));
+
+			request.setClient(idClient);
+
+		}
+		
+		
 
 		if (isNotEmty(num))
 
@@ -906,7 +949,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			@RequestParam(value = "state", required = false) String state,
 			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "num", required = false) String num,
-			@RequestParam(value = "reference", required = false) String reference,
+		
 
 			@RequestParam(value = "dateLivDe", required = false) String dateLivDe,
 			@RequestParam(value = "dateLivA", required = false) String dateLivA,
@@ -923,6 +966,9 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			@RequestParam(value = "etatProduced", required = false) String etatProduced,
 			@RequestParam(value = "etatShipped", required = false) String etatShipped,
 			@RequestParam(value = "machine", required = false) String machine,
+			
+			@RequestParam(value = "client", required = false) String client,
+			@RequestParam(value = "produitId", required = false) String produitId,
 
 			HttpServletResponse response) throws WriteException, IOException {
 
@@ -1011,14 +1057,39 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			request.setType(type);
 		}
 
-		if (isNotEmty(reference))
+		if (isNotEmty(produitId))
 
+	
 		{
+			
+			Long idProd = Long.parseLong(produitId);
+			ProduitValue p = produitService.rechercheProduitById(idProd);
 			numLigneCritRech++;
 			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Reference :", ExcelUtils.boldRed3));
-			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, reference, ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, p.getReference(), ExcelUtils.boldRed3));
 
-			request.setReferenceProduit(reference);
+			request.setProduitId(idProd);
+
+		}
+		
+		
+		
+
+		if (isNotEmty(client))
+
+	
+		{
+			
+			Long idClient = Long.parseLong(client);
+			
+			PartieInteresseValue pi = partieInteresseeService.getById(idClient);
+			
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Client :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, pi.getAbreviation(), ExcelUtils.boldRed3));
+
+			request.setClient(idClient);
 
 		}
 

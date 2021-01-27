@@ -299,6 +299,24 @@ public class MisePersistanceImpl extends AbstractPersistance implements
 						vCriteriaBuilder.lt(vMiseRoot.<Long>get("qteProduite"), vMiseRoot.<Double>get("quantite")));
 
 				break;
+				
+				
+			case "5PERCENT":
+				//Expression<Long> path = vMiseRoot.get("qteProduite");
+				
+				//Expression<Long> upper = vCriteriaBuilder.g;
+				
+				
+				
+				vWhereClause.add(
+						vCriteriaBuilder.lt(vMiseRoot.<Long>get("qteProduite"), vMiseRoot.<Double>get("quantite")));
+				
+				
+				
+				
+
+				break;	
+				
 
 			case "=":
 				vWhereClause.add(
