@@ -491,6 +491,24 @@
 
  
               </li>
+              
+              
+              
+                   <li class="ms-ContextualMenu-item">
+
+
+                <div class="row">
+                  <div class="col-sm-8">
+                    <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                      ng-click="download(bonLivraisonVenteCourant.id,'oui',33)">PDF/OF </a>
+
+                  </div>
+
+    
+                </div>
+
+ 
+              </li>
 
 
 
@@ -629,7 +647,21 @@
 							<div class="input-group">
 								<div class="input-group-prepend">
 									<button type="button" class="btn btn-success" class="btn btn-action"
-										ng-click="validerBS()">Valider</button>
+										ng-click="validerBS()">Valider/Produit</button>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+					
+					
+						<div class="col-sm-2">
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<button type="button" class="btn btn-success" class="btn btn-action"
+										ng-click="validerBSByOF()">Valider/OF</button>
 
 								</div>
 
