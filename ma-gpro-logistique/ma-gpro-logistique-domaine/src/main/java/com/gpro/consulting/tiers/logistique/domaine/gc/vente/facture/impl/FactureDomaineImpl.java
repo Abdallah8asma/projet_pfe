@@ -783,6 +783,7 @@ public class FactureDomaineImpl implements IFactureDomaine {
 
 		
 	
+		if(factureValue.getTauxConversion() != null && montantTTC != null )
 		factureValue.setMontantConverti(factureValue.getTauxConversion()*montantTTC);
 		
 		

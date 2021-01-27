@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInte
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IRegionPersistance;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.boninventairefini.value.ListProduitElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommercialeReport;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reception.value.ProduitReceptionAchatValue;
@@ -111,6 +113,8 @@ import com.gpro.consulting.tiers.logistique.coordination.gl.suivi.value.EnginVal
 import com.gpro.consulting.tiers.logistique.coordination.gl.suivi.value.PersonnelValue;
 import com.gpro.consulting.tiers.logistique.coordination.gl.suivi.value.RemorqueValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.MagasinValue;
+import com.gpro.consulting.tiers.logistique.domaine.atelier.bonsortiefini.IBonSortieFiniDomain;
+import com.gpro.consulting.tiers.logistique.domaine.atelier.bonsortiefini.impl.BonSortieFiniDomainImpl;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.cache.IGestionnaireLogistiqueCacheDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.mise.IMiseDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.bonlivraison.IModePaiementDomaine;
@@ -266,6 +270,9 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 
 	@Autowired
 	private IGroupeClientPersistance groupeClientPersistance;
+	
+	@Autowired
+	private IBonSortieFiniDomain bonSortieFiniDomaine;
 
 	// Reception Achat
 
@@ -280,6 +287,34 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		BonLivraisonReportValue bonLivraisonReport = new BonLivraisonReportValue();
 		LivraisonVenteValue livraisonVente = bonLivraisonPersitance.getBonLivraisonById(id);
 		//Collections.sort(livraisonVente.getListDetLivraisonVente(), new DetLivraisonVenteComparator());
+		
+		
+		
+		if(typerapport == 33 && livraisonVente.getInfoSortie() != null && livraisonVente.getInfoSortie().length() > 0)
+		{
+			
+			//update detail Livraison par Produit to detailLivra
+			
+			
+			String[] arrayStringBS = livraisonVente.getInfoSortie().split("-");
+			
+			List<String> refBonSortieList =new ArrayList<String>(Arrays.asList(arrayStringBS)) ;
+			
+		
+			
+			com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListProduitElementValue prodElementList = bonSortieFiniDomaine.getProduitElementListByOF(refBonSortieList, livraisonVente.getId());
+			
+			if(prodElementList.getListDetLivraisonVente() != null && prodElementList.getListDetLivraisonVente().size() >0)
+				livraisonVente.setListDetLivraisonVente(prodElementList.getListDetLivraisonVente());
+				
+			
+		}
+		
+		
+		
+		
+		
+		
 
 		// enrechissement des param du report
 
@@ -305,7 +340,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		}
 
 		// rapport avec enTete
-		if (typerapport == 3) {
+		if (typerapport == 3 || typerapport == 33) {
 			bonLivraisonReport.setReportStream(
 					new FileInputStream("C://ERP/Lib/STIT_BonLivraison/avecEnTete/bon_livraison_report.jrxml"));
 

@@ -35,5 +35,8 @@ public interface IGestionnaireReportDomaine {
 	public BonInventaireReportValue getBonInventaireReportValue(Long id, String avecMise) throws IOException ;
 
 	public FicheColisReportValue genererListEtiquetteRouleauReport(RechercheMulticritereRouleauFiniValue request)throws IOException ;
+
+	public InventaireReportValue getInventaireByOFReportValue(
+			CritereRechercheRouleauStandardValue critereRechercheRouleauStandard) throws IOException;
 	
 }

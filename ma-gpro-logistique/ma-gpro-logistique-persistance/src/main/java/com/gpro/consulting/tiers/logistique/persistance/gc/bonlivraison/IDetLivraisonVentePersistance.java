@@ -55,6 +55,8 @@ public interface IDetLivraisonVentePersistance {
 	public List<ResultBestElementValue> rechercheChiffreAffaireByGroupe(RechercheMulticritereDetLivraisonValue request);
 
 	public List<ResultBestElementValue> rechercherTop10Groupe(RechercheMulticritereDetLivraisonValue request);
+
+	public DetLivraisonVenteValue getBylivraisonVenteAndOF(Long livraisonVenteId, String numeroOF, String choix);
 	
 	
 }
