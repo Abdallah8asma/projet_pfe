@@ -220,7 +220,13 @@ angular
 															 
 															 + "&etatProduced="+objectCourant.etatProduced
 															 + "&etatShipped="+objectCourant.etatShipped 
-															 + "&machine="+objectCourant.machine ;
+															 + "&machine="+objectCourant.machine 
+														     + "&client="+objectCourant.client 
+									                         + "&produitId="+objectCourant.produitId ;
+									
+									
+														
+														
 														
 									/*	
 					                   $log.debug("-- URL--- :" + url );

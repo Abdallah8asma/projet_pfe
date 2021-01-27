@@ -1298,61 +1298,152 @@ angular
 
 				//download service
 			  
-			 $scope.downloadAllBonLiv = function(bonLivraisonVenteCourant) {
+			$scope.downloadAllBonLiv = function(
+									bonLivraisonVenteCourant) {
+								$scope.traitementEnCoursGenererAll = "true";
 
-				 console.log("---Objet recherche : bonLivraisonVenteCourant----"+JSON.stringify(bonLivraisonVenteCourant,null," "));
-			 	var newdateLivMinFormat="";
-				if(angular.isDefined(bonLivraisonVenteCourant.dateLivraisonMin)){
-					$log.debug("==dateLivraisonMin "+bonLivraisonVenteCourant.dateLivraisonMin);
-					
-					if(bonLivraisonVenteCourant.dateLivraisonMin != ""){
-						newdateLivMinFormat = formattedDate(bonLivraisonVenteCourant.dateLivraisonMin);
-						$log.debug("===== newdateLivMinFormat "+newdateLivMinFormat);
-					}else{
-						$log.debug("===== newdateLivMinFormat is Null");
-						newdateLivMinFormat = "";
-					}
-				}else{
-					$log.debug("==dateLivraisonMin Undefined");
-				}
+								bonLivraisonVenteCourant.referenceBs='';
+								if($scope.checkboxModelRech.stock=="oui"){
+									bonLivraisonVenteCourant.stock=true;
+								}else
+									bonLivraisonVenteCourant.stock=false
+									
 
-				var newdateLivMaxFormat="";
-				if(angular.isDefined(bonLivraisonVenteCourant.dateLivraisonMax)){
-					$log.debug("==dateLivraisonMax "+bonLivraisonVenteCourant.dateLivraisonMax);
-					
-					if(bonLivraisonVenteCourant.dateLivraisonMax != ""){
-						newdateLivMaxFormat = formattedDate(bonLivraisonVenteCourant.dateLivraisonMax);
-						$log.debug("===== newdateLivMaxFormat "+newdateLivMaxFormat);
-					}else{
-						$log.debug("===== newdateLivMaxFormat is Null");
-						newdateLivMaxFormat = "";
-					}
-				}else{
-					$log.debug("==dateLivraisonMax Undefined");
-				}
+									console.log("etat stock generer: "+bonLivraisonVenteCourant.stock);
+								console
+										.log("---Objet recherche : bonLivraisonVenteCourant----"
+												+ JSON
+														.stringify(
+																bonLivraisonVenteCourant,
+																null, " "));
+								var newdateLivMinFormat = "";
+								if (angular
+										.isDefined(bonLivraisonVenteCourant.dateLivraisonMin)) {
+									$log
+											.debug("==dateLivraisonMin "
+													+ bonLivraisonVenteCourant.dateLivraisonMin);
 
-				 $log.debug("-- bonLivraisonVenteCourant" + JSON.stringify(bonLivraisonVenteCourant, null, "  ") );
-				 var url = UrlAtelier+ "/reportgc/listbonlivraison?referenceBl=" + bonLivraisonVenteCourant.referenceBl
-									 + "&referenceBs="+bonLivraisonVenteCourant.referenceBs
-									 + "&partieIntId="+bonLivraisonVenteCourant.partieIntId
-									 + "&dateLivraisonMin="+newdateLivMinFormat
-									 + "&dateLivraisonMax="+newdateLivMaxFormat
-									 + "&metrageMin="+bonLivraisonVenteCourant.metrageMin
-									 + "&metrageMax="+bonLivraisonVenteCourant.metrageMax
-									 + "&prixMin="+bonLivraisonVenteCourant.prixMin
-									 + "&prixMax="+bonLivraisonVenteCourant.prixMax
-									 + "&natureLivraison="+bonLivraisonVenteCourant.natureLivraison
-									 + "&avecFacture="+bonLivraisonVenteCourant.avecFacture
-									 + "&type=pdf";
+									if (bonLivraisonVenteCourant.dateLivraisonMin != "") {
+										newdateLivMinFormat = formattedDate(bonLivraisonVenteCourant.dateLivraisonMin);
+										$log.debug("===== newdateLivMinFormat "
+												+ newdateLivMinFormat);
+									} else {
+										$log
+												.debug("===== newdateLivMinFormat is Null");
+										newdateLivMinFormat = "";
+									}
+								} else {
+									$log.debug("==dateLivraisonMin Undefined");
+								}
 
-				 $log.debug("--downloadAllBonLiv URL" + url );
-				 downloadService.download(url).then(
-						 function(success) {
-							 $log.debug('success : ' + success);
-						 }, function(error) {
-							 $log.debug('error : ' + error);
-						 });
-			 };
+								var newdateLivMaxFormat = "";
+								if (angular
+										.isDefined(bonLivraisonVenteCourant.dateLivraisonMax)) {
+									$log
+											.debug("==dateLivraisonMax "
+													+ bonLivraisonVenteCourant.dateLivraisonMax);
+
+									if (bonLivraisonVenteCourant.dateLivraisonMax != "") {
+										newdateLivMaxFormat = formattedDate(bonLivraisonVenteCourant.dateLivraisonMax);
+										$log.debug("===== newdateLivMaxFormat "
+												+ newdateLivMaxFormat);
+									} else {
+										$log
+												.debug("===== newdateLivMaxFormat is Null");
+										newdateLivMaxFormat = "";
+									}
+								} else {
+									$log.debug("==dateLivraisonMax Undefined");
+								}
+
+								$log.debug("-- bonLivraisonVenteCourant"
+										+ JSON.stringify(
+												bonLivraisonVenteCourant, null,
+												"  "));
+								
+								var newIdDepot = '';
+								if(angular.isDefined(bonLivraisonVenteCourant.idDepot)){
+									newIdDepot = bonLivraisonVenteCourant.idDepot;
+									
+								}
+								
+								
+								var newPartieIntId = '';
+								if(angular.isDefined(bonLivraisonVenteCourant.partieIntId)){
+									newPartieIntId = bonLivraisonVenteCourant.partieIntId;
+									
+								}
+								
+								
+							// console.log("===============>download:
+							// idDepot:"+bonLivraisonVenteCourant.idDepot);
+								var url = UrlAtelier
+										+ "/reportgc/listbonlivraison?referenceBl="
+										+ bonLivraisonVenteCourant.referenceBl
+										+ "&referenceBs="
+										+ bonLivraisonVenteCourant.referenceBs
+										+ "&partieIntId="
+										+ newPartieIntId
+										+ "&dateLivraisonMin="
+										+ newdateLivMinFormat
+										+ "&dateLivraisonMax="
+										+ newdateLivMaxFormat
+										+ "&metrageMin="
+										+ bonLivraisonVenteCourant.metrageMin
+										+ "&metrageMax="
+										+ bonLivraisonVenteCourant.metrageMax
+										+ "&prixMin="
+										+ bonLivraisonVenteCourant.prixMin
+										+ "&prixMax="
+										+ bonLivraisonVenteCourant.prixMax
+										+ "&natureLivraison="
+										+ bonLivraisonVenteCourant.natureLivraison
+										+ "&avecFacture="
+										+ bonLivraisonVenteCourant.avecFacture
+										+ "&stock="+bonLivraisonVenteCourant.stock
+										+ "&idDepot="+newIdDepot
+									    + "&groupeClientId="+bonLivraisonVenteCourant.groupeClientId
+										+ "&type=pdf";
+
+								$log.debug("--downloadAllBonLiv URL" + url);
+
+
+							
+								var a = document.createElement('a');
+								document.body.appendChild(a);
+								downloadService.download(url).then(function (result) {
+									var heasersFileName = result.headers(['content-disposition']).substring(17);
+									var fileName = heasersFileName.split('.');
+								var typeFile = result.headers(['content-type']);
+								var file = new Blob([result.data], {type: typeFile});
+								var fileURL = window.URL.createObjectURL(file);
+								if(typeFile == 'application/vnd.ms-excel'){
+		
+								 // a.href = fileURL;
+									 a.download = fileName[0];
+									$window.open(fileURL)
+									 a.click();
+				
+								}else{
+							
+									a.href = fileURL;
+									a.download = fileName[0];
+								 $window.open(fileURL)
+									a.click();
+				
+								}
+								$scope.traitementEnCoursGenererAll = "false";
+
+								 
+								});
+
+								// downloadService.download(url).then(
+								// 		function(success) {
+								// 			$log.debug('success : ' + success);
+								// 		}, function(error) {
+								// 			$log.debug('error : ' + error);
+								// 		});
+							};
 
 
 
