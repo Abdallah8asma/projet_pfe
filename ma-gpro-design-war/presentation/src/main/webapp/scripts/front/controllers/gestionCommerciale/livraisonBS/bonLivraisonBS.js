@@ -411,6 +411,22 @@ angular
 					 $scope.validerNatureFacon();
 				}
 			 } 
+		
+		
+				 $scope.validerBSByOF = function(){
+
+				 $log.debug(" Recherche des Produits appartenants à ces Bons de Sortie ...");
+				 $log.debug("-- tagReferenceBSList : "+JSON.stringify($scope.tagReferenceBSList, null, "    ") );
+
+				 //idBonLivVente: si undefined -> urlValier SANS idBonLivVente, sinon -> idBonLivVente AVEC idBonLivVente
+				 $log.debug("Valider : idBonLivVente "+ $scope.idBonLivVente );
+
+				 //Type livraison fini
+				 if($scope.natureLivraison == 'FINI'){
+					 $scope.validerNatureFiniByOF();
+					 
+				 }
+			 } 
 
 			 $scope.validerNatureFini = function(){
 				 
@@ -418,6 +434,29 @@ angular
 					$scope.traitementEnCours = "true";
 				 
 				 BonLivraisonServices.validateFini($scope.tagReferenceBSList,$scope.idBonLivVente).then(function(resultat){
+					//bouton Valider en mode : Actif :afficher le tableau resultant de DetLivVene
+					 $scope.modeValider = "actif";
+					 //setDateInto = dateSortie du 1erBS
+					 $scope.bonLivraisonVenteCourant.date = resultat.dateSortie;
+					 //listDetLivraisonVentePRBS
+					 $scope.listDetLivraisonVentePRBS = resultat.listDetLivraisonVente;
+					 $log.debug("-- listDetLivraisonVentePRBS Size : "+ $scope.listDetLivraisonVentePRBS.length);
+
+					 $log.debug("-- listDetLivraisonVentePRBS : "+ JSON.stringify($scope.listDetLivraisonVentePRBS,null,'  '));
+						$scope.traitementEnCours = "false";
+				 }
+				 ,function(error){
+					 console.log(error.statusText);
+				 });
+			 }
+		
+		
+			 $scope.validerNatureFiniByOF = function(){
+				 
+				 $log.debug("Log1: idBonLiv = " + $scope.idBonLivVente);
+					$scope.traitementEnCours = "true";
+				 
+				 BonLivraisonServices.validateFiniByOF($scope.tagReferenceBSList,$scope.idBonLivVente).then(function(resultat){
 					//bouton Valider en mode : Actif :afficher le tableau resultant de DetLivVene
 					 $scope.modeValider = "actif";
 					 //setDateInto = dateSortie du 1erBS

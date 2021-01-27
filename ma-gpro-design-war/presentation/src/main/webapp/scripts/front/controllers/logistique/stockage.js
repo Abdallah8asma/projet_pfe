@@ -136,6 +136,116 @@ angular
 
 
 							};
+							
+							
+							
+							
+							
+							
+							
+							
+											/** ** PDF BY OF ** */
+							$scope.downloadPDFbyOF = function(inventaireCourant) {
+								
+								
+								if(inventaireCourant.metrageDu == null)
+							     	inventaireCourant.metrageDu ='';
+			
+				
+								if(inventaireCourant.metrageA == null)
+							     	inventaireCourant.metrageA ='';
+			
+			
+								
+								var newdateFormat=null;
+								if(angular.isDefined(inventaireCourant.dateEtat)){
+									//$log.debug("==dateEtat "+inventaireCourant.dateEtat);
+									//$log.debug("==dateEtat AFTER CONVERT "+formattedDate(inventaireCourant.dateEtat));
+									
+									if(inventaireCourant.dateEtat != null){
+									var newdateFormat = formattedDate(inventaireCourant.dateEtat);
+									$log.debug("===== newdateFormat "+newdateFormat);
+									}else{
+										$log.debug("===== newdateFormat is Null");
+									}
+								}else{
+									$log.debug("==dateEtat Undefined");
+								}
+							/*	var url = UrlAtelier+"/report/inventaireByOF?client="+inventaireCourant.client+
+															  "&nombreColieDu="+inventaireCourant.nombreColieDu+
+															  "&nombreColieA="+inventaireCourant.nombreColieA+
+															  "&entrepot="+inventaireCourant.entrepot+
+															  "&emplacement="+inventaireCourant.emplacement+
+															  "&metrageDu="+inventaireCourant.metrageDu+
+															  "&metrageA="+inventaireCourant.metrageA+
+															  "&dateEtat="+newdateFormat+
+															  "&designationQuiContient="+inventaireCourant.designationQuiContient+
+															  "&referenceProduit="+inventaireCourant.idProduitParRef+
+															  "&fini="+inventaireCourant.fini+
+															  "&orderBy="+inventaireCourant.orderBy+
+															  "&type=pdf";
+
+															  */
+
+
+															  var url = UrlAtelier+"/report/inventaireByOF?client="+inventaireCourant.client+
+															  "&nombreColieDu="+
+															  "&nombreColieA="+
+															 
+														
+															  "&metrageDu="+inventaireCourant.metrageDu+
+															  "&metrageA="+inventaireCourant.metrageA+
+															  "&dateEtat="+newdateFormat+
+															  "&designationQuiContient="+inventaireCourant.designationQuiContient+
+															  "&referenceProduit="+inventaireCourant.idProduitParRef+
+															  "&fini=" +
+															  "&orderBy="+inventaireCourant.orderBy+
+															  "&typeOf="+inventaireCourant.typeOf+
+															  "&type=pdf";
+								/*downloadService.download(url)
+										.then(
+												function(success) {
+													$log.debug('success : '
+															+ success);
+												},
+												function(error) {
+													$log.debug('error : '
+															+ error);
+												});*/
+
+
+
+
+												var a = document.createElement('a');
+												document.body.appendChild(a);
+												downloadService.download(url).then(function (result) {
+													var heasersFileName = result.headers(['content-disposition']).substring(17);
+												var fileName = heasersFileName.split('.');
+											var typeFile = result.headers(['content-type']);
+											var file = new Blob([result.data], {type: typeFile});
+											var fileURL = window.URL.createObjectURL(file);
+											if(typeFile == 'application/vnd.ms-excel'){
+					
+											 // a.href = fileURL;
+												 a.download = fileName[0];
+												$window.open(fileURL)
+												 a.click();
+							
+											}else{
+										
+												a.href = fileURL;
+												a.download = fileName[0];
+											 $window.open(fileURL)
+												a.click();
+							
+											}
+												
+											$scope.traitementEnCoursGenererLivraison="false";
+		
+											});
+
+
+							};
 
 							// Annulation de l'ajout
 							$scope.annulerAjout = function() {
