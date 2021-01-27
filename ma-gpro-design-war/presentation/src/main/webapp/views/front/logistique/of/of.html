@@ -133,16 +133,16 @@
 											ng-init="miseCourant.statut = ''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option value="Preparation">Preparation</option>
-											<option value="En cours">Doing</option>
-											<option value="Produit">Done</option>
-											<option value="Livre">Shipped</option>
+											<option value="En cours">En cours</option>
+											<option value="Produit">Produit</option>
+											<option value="Livre">Livre</option>
 											</select>
 										</div>
 									</div>
 								</div>
 
 
-								<div class="col-sm-3">
+								<!-- <div class="col-sm-3">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
@@ -158,7 +158,28 @@
 											</select>
 										</div>
 									</div>
-								</div>
+								</div> -->
+								
+								
+								
+								    <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <select ui-select2 ng-init="miseCourant.client =''"
+                      ng-model="miseCourant.client" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Clients</option>
+                      <option ng-repeat="client in listeClientCache | filter:{famillePartieInteressee:1}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
 								<div class="col-sm-3">
 									<div class="form-group">
@@ -172,7 +193,7 @@
 									</div>
 								</div>
 	
-								<div class="col-sm-3">
+							<!-- 	<div class="col-sm-3">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
@@ -182,7 +203,7 @@
 												ng-init="miseCourant.referenceProduit=''" style="border: 1px solid #e5eaee !important;" />
 										</div>
 									</div>
-								</div>
+								</div> -->
 								
 
 							</div>
@@ -644,7 +665,7 @@
 							</div>
 
 
-							<div class="col-sm-3">
+							<!-- <div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -654,14 +675,14 @@
 										    ng-init="miseCourant.typeOF =''" 
 											ng-change="onChangeOfType(miseCourant.typeOF)" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
-										<!-- 	<option value="Injection">Injection</option>
+										 	<option value="Injection">Injection</option>
 											<option value="Tempographie">Tempographie</option>
 											<option value="Assemblage">Assemblage</option>
-											<option value="Spread">Spread</option> -->
+											<option value="Spread">Spread</option> 
 										</select>
 									</div>
 								</div>
-							</div>
+							</div> -->
 
 
 
@@ -712,7 +733,28 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-3">
+							
+							
+							
+							<div class="col-sm-6">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Designation</label>
+										</div>
+										<select  ui-select2="true"  class="form-control" ng-model="miseCourant.produitId"
+											 ng-init="miseCourant.produitId =''" 
+											 ng-change="changeProduits(miseCourant.produitId)"
+											 style="border: 1px solid #e5eaee !important;"
+											>
+	                                         <option value="">Tous</option>
+											<option ng-repeat="produit in listeProduit"
+												value="{{produit.id}}">{{produit.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						<!-- 	<div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -723,7 +765,7 @@
 											/>
 									</div>
 								</div>
-							</div>
+							</div> -->
 			
 						</div>
 			
@@ -731,11 +773,28 @@
 
 						<div class="row">
 					
-						
+						 <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <select ui-select2 ng-init="miseCourant.partieintId =''"
+                      ng-model="miseCourant.partieintId" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value=""></option>
+                      <option ng-repeat="client in listeClientCache | filter:{famillePartieInteressee:1}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
 
 					
-							<div class="col-sm-12">
+							<div class="col-sm-6">
 							<div class="form-group">
 								<div class="input-group">
 								  <div class="input-group-prepend">
@@ -798,7 +857,7 @@
 
 
 
-					        <div class="col-sm-3">
+					        <!-- <div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -814,7 +873,7 @@
 										</select>
 									</div>
 								</div>
-							</div>
+							</div> -->
 
 							<div class="col-sm-2">
 								<div class="form-group">
@@ -825,7 +884,8 @@
 										<select ui-select2="true" class="form-control" ng-model="miseCourant.machine"
 										    ng-init="miseCourant.machine =''" style="border: 1px solid #e5eaee !important;">
 											 <option value="">TOUS</option>
-											 <option ng-repeat="produit in listeFilterMachines"
+											 
+											 <option ng-repeat="produit in listeMachines"
 											 value="{{produit.designation}}">{{produit.designation}}</option>
 										</select>
 									</div>
@@ -877,7 +937,7 @@
 							</div>
 
 
-							<div class="col-sm-3">
+							<!-- <div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -902,10 +962,10 @@
 										</select>
 									</div>
 								</div>
-							</div>
+							</div> -->
 
 
-							<div class="col-sm-3">
+							<!-- <div class="col-sm-3">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -919,7 +979,7 @@
 										</select>
 									</div>
 								</div>
-							</div>
+							</div> -->
 
 						</div>
 
