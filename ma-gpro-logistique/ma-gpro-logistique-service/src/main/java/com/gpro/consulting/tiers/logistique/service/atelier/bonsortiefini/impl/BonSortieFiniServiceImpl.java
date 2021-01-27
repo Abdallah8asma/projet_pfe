@@ -113,5 +113,11 @@ public class BonSortieFiniServiceImpl implements IBonSortieFiniService{
 		// TODO Auto-generated method stub
 		return bonSortieFiniDomain.getListByBonSortieList(refBonSortieList);
 	}
+
+	@Override
+	public ListProduitElementValue getProduitElementListByOF(List<String> refBonSortieList, Long livraisonVenteId) {
+		// TODO Auto-generated method stub
+		return bonSortieFiniDomain.getProduitElementListByOF(refBonSortieList, livraisonVenteId);
+	}
 	
 }

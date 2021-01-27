@@ -82,5 +82,12 @@ public class GestionnaireReportServiceImpl implements IGestionnaireReportService
 		// TODO Auto-generated method stub
 		return gestionnaireReportDomaine.genererListEtiquetteRouleauReport(request);
 	}
+
+	@Override
+	public InventaireReportValue getInventaireByOFReportValue(
+			CritereRechercheRouleauStandardValue critereRechercheRouleauStandard)  throws IOException{
+		// TODO Auto-generated method stub
+		return gestionnaireReportDomaine.getInventaireByOFReportValue(critereRechercheRouleauStandard);
+	}
 	
 }

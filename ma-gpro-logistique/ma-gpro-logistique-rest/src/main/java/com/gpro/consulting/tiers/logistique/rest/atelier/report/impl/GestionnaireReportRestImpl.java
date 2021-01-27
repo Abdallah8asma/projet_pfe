@@ -213,6 +213,61 @@ public class GestionnaireReportRestImpl extends AbstractGestionnaireDownloadImpl
 				vInventaireReport.getFileName(), vInventaireReport.getJRBeanCollectionDataSource(), response);
 	}
 	
+	
+	
+	
+	
+	@RequestMapping(value = "/inventaireByOF", method = RequestMethod.GET)
+	public void genererInventaireByOFReport(
+			// @RequestParam("critereRechercheRouleauStandard")
+			// CritereRechercheRouleauStandardValue
+			// critereRechercheRouleauStandard,
+			@RequestParam("client") Long client, 
+			
+			@RequestParam("nombreColieDu") Long nombreColieDu,
+			
+			@RequestParam("nombreColieA") Long nombreColieA, 
+			//@RequestParam("entrepot") Long entrepot,
+			//@RequestParam("emplacement") String emplacement, 
+			@RequestParam("metrageDu") Double metrageDu,
+			@RequestParam("metrageA") Double metrageA, @RequestParam("dateEtat") String dateEtat,
+			@RequestParam("designationQuiContient") String designationQuiContient,
+
+			// Hajer Amri 06/02/2017
+			@RequestParam("referenceProduit") String referenceProduit,
+
+			@RequestParam("fini") String fini, @RequestParam("orderBy") String orderBy,
+			@RequestParam("typeOf") String typeOf,
+			@RequestParam("type") String type, HttpServletResponse response) throws JRException, IOException {
+
+		logger.info("Generate a {} Report Inventaire", type);
+
+		CritereRechercheRouleauStandardValue critereRechercheRouleauStandard = new CritereRechercheRouleauStandardValue();
+		critereRechercheRouleauStandard.setClient(client);
+		critereRechercheRouleauStandard.setDateEtat(stringToCalendar(dateEtat));
+		critereRechercheRouleauStandard.setDesignationQuiContient(designationQuiContient);
+		////critereRechercheRouleauStandard.setEmplacement(emplacement);
+	////	critereRechercheRouleauStandard.setEntrepot(entrepot);
+		critereRechercheRouleauStandard.setMetrageA(metrageA);
+		critereRechercheRouleauStandard.setMetrageDu(metrageDu);
+		critereRechercheRouleauStandard.setNombreColieA(nombreColieA);
+		critereRechercheRouleauStandard.setNombreColieDu(nombreColieDu);
+		critereRechercheRouleauStandard.setOrderBy(orderBy);
+		//critereRechercheRouleauStandard.setFini(fini);
+		critereRechercheRouleauStandard.setReferenceProduit(referenceProduit);
+		
+		
+		
+		
+		//critereRechercheRouleauStandard.setTypeOf(typeOf);
+
+		InventaireReportValue vInventaireReport = gestionnaireReportService
+				.getInventaireByOFReportValue(critereRechercheRouleauStandard);
+
+		this.download(type, vInventaireReport.getReportStream(), vInventaireReport.getParams(),
+				vInventaireReport.getFileName(), vInventaireReport.getJRBeanCollectionDataSource(), response);
+	}
+	
 	@RequestMapping(value="/bonsortiefini", method = RequestMethod.GET)
 	public void genererBonsortieFinieReport(@RequestParam("id") Long id,
 			@RequestParam("type") String type,

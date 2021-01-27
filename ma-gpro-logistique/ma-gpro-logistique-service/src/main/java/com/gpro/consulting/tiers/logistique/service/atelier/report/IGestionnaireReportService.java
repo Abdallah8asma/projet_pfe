@@ -45,4 +45,7 @@ public interface IGestionnaireReportService {
 	
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public FicheColisReportValue genererListEtiquetteRouleauReport(RechercheMulticritereRouleauFiniValue request)throws IOException ;
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public InventaireReportValue getInventaireByOFReportValue(
+			CritereRechercheRouleauStandardValue critereRechercheRouleauStandard) throws IOException;
 }

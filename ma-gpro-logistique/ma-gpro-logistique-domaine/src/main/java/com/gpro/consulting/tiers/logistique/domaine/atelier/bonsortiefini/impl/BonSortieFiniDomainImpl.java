@@ -990,6 +990,208 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 		// TODO Auto-generated method stub
 		return bonSortieFiniPersistance.getListByBonSortieList(refBonSortieList);
 	}
+
+	@Override
+	public ListProduitElementValue getProduitElementListByOF(List<String> refBonSortieList, Long livraisonVenteId) {
+
+
+		List<BonSortieFiniValue> listeBonSortieFini = bonSortieFiniPersistance.getListByBonSortieList(refBonSortieList);
+
+		List<RouleauFiniValue> listeRouleauFini = new ArrayList<RouleauFiniValue>();
+
+		boolean searchDateSortie = true;
+		Calendar dateSortie = null;
+
+		for (BonSortieFiniValue bonSortie : listeBonSortieFini) {
+
+			if (bonSortie.getDateSortie() != null && searchDateSortie) {
+				dateSortie = bonSortie.getDateSortie();
+			}
+
+			for (RouleauFiniValue rouleau : bonSortie.getListeRouleauFini()) {
+
+				listeRouleauFini.add(rouleau);
+			}
+		}
+
+		Map<Map<String, Long>, List<RouleauFiniValue>> mapRouleau = new HashMap<Map<String, Long>, List<RouleauFiniValue>>();
+
+		for (RouleauFiniValue rouleau : listeRouleauFini) {
+			
+			//Long produitKey = rouleau.getProduitId();
+			
+			
+			String produitKey = rouleau.getReferenceMise() ;
+			
+			Long choixKey = rouleau.getChoix();
+
+			Map<String, Long> map = new HashMap<String, Long>();
+
+			map.put(produitKey, choixKey);
+
+			if (mapRouleau.get(map) == null) {
+
+				mapRouleau.put(map, new ArrayList<RouleauFiniValue>());
+			}
+
+			mapRouleau.get(map).add(rouleau);
+
+		}
+
+		ProduitValue produitValue = null;
+
+		Iterator it = mapRouleau.entrySet().iterator();
+		List<DetLivraisonVenteValue> listDetLivraisonVente = new ArrayList<DetLivraisonVenteValue>();
+		
+		
+		Long ordre = new Long(1);
+		
+		while (it.hasNext()) {
+
+			Map.Entry<Map<String, Long>, List<RouleauFiniValue>> pair = (Map.Entry<Map<String, Long>, List<RouleauFiniValue>>) it
+					.next();
+
+			DetLivraisonVenteValue element = new DetLivraisonVenteValue();
+
+			//Long produitId = null;
+			
+			String produitId = null;
+			
+			Long choixId = null;
+
+			Map<String, Long> produitIdchoixIdMap = pair.getKey();
+			Iterator produitIdchoixIdIt = produitIdchoixIdMap.entrySet().iterator();
+
+			Map.Entry<String, Long> produitIdchoixIdPair = (Map.Entry<String, Long>) produitIdchoixIdIt.next();
+			produitId = produitIdchoixIdPair.getKey();
+			choixId = produitIdchoixIdPair.getValue();
+
+		//	element.setProduitId(produitId);
+			
+			
+			element.setNumeroOF(produitId);
+
+			if (choixId != null) {
+				ChoixRouleauValue choixRouleau = choixRouleauPersistance.getChoixRouleauById(choixId);
+				if (choixRouleau != null)
+					element.setChoix(choixRouleau.getDesignation());
+			}
+
+			Double sommeMetrage = ZERO;
+			Double sommePoids = ZERO;
+			
+			List<String> refMiseList = new ArrayList<String>();
+			
+		//	String referenceMises = "";
+			
+			
+			for (RouleauFiniValue rouleau : pair.getValue()) {
+				// Somme des metrages
+				if (rouleau.getMetrage() != null) {
+					sommeMetrage = rouleau.getMetrage().doubleValue() + sommeMetrage;
+				}
+				if (rouleau.getPoids() != null) {
+					sommePoids = rouleau.getPoids().doubleValue() + sommePoids;
+				}
+				
+				
+				element.setProduitId(rouleau.getProduitId());
+				
+			
+				
+			//	if(rouleau.getReferenceMise() != null &&  !refMiseList.contains(rouleau.getReferenceMise()))
+				//	refMiseList.add(rouleau.getReferenceMise());
+				
+					
+			}
+			
+		
+		/*	if(refMiseList.size() > 0) {
+				
+				
+				  element.setNumeroOF(StringUtils.join(refMiseList, ", "));
+
+			}
+			*/
+			    
+
+			// Qte livree = La somme des metrage des rouleaux de produit
+			element.setQuantite(sommeMetrage);
+			if (sommePoids > ZERO)
+				element.setQuantite(sommePoids);
+
+			if (element.getProduitId() != null) {
+				produitValue = produitPersistance.rechercheProduitById(element.getProduitId());
+				if (produitValue != null) {
+
+				/*	SousFamilleProduitValue sousFamilleProduitValue = sousFamilleProduitPersistance
+							.rechercheSousFamilleProduitById(produitValue.getSousFamilleId());
+					if (sousFamilleProduitValue != null) {
+						String designation = (sousFamilleProduitValue.getDesignation() == null) ? EMPTY
+								: sousFamilleProduitValue.getDesignation().toLowerCase();
+						element.setUnite((designation.equalsIgnoreCase(MAILLE)) ? KG : M);
+					}*/
+					
+					
+					element.setUnite(produitValue.getUnite());
+
+					if (livraisonVenteId != null) {
+						DetLivraisonVenteValue detLivraisonVenteValue = detLivraisonVentePersistance
+								.getBylivraisonVenteAndOF(livraisonVenteId, element.getNumeroOF(), element.getChoix());
+						if (detLivraisonVenteValue != null) {
+
+							boolean detailIdNotExist = true;
+							for (DetLivraisonVenteValue detail : listDetLivraisonVente) {
+								if (detail.getId() == detLivraisonVenteValue.getId())
+									detailIdNotExist = false;
+							}
+
+							if (detailIdNotExist) {
+								element.setId(detLivraisonVenteValue.getId());
+							}
+
+							element.setLivraisonVenteId(detLivraisonVenteValue.getLivraisonVenteId());
+							element.setRemise(detLivraisonVenteValue.getRemise());
+							
+							element.setFicheId(detLivraisonVenteValue.getFicheId());
+						}
+					}
+
+					element.setProduitDesignation(produitValue.getDesignation());
+					element.setProduitReference(produitValue.getReference());
+					element.setPrixUnitaireHT(produitValue.getPrixUnitaire());
+					if (produitValue.getPrixUnitaire() != null)
+						element.setPrixTotalHT(produitValue.getPrixUnitaire() * element.getQuantite());
+				}
+			}
+
+			element.setNombreColis(Long.valueOf(pair.getValue().size()));
+			
+			
+			element.setFicheId(ordre);
+
+			listDetLivraisonVente.add(element);
+			
+			
+			ordre++;
+
+			it.remove();
+		}
+
+		if(listDetLivraisonVente.size()>0){
+			Collections.sort(listDetLivraisonVente, new DetLivraisonVenteValidateComparator());
+		}
+		
+
+		ListProduitElementValue result = new ListProduitElementValue();
+
+		result.setNombreResultaRechercher(listDetLivraisonVente.size());
+		result.setDateSortie(dateSortie);
+		result.setListDetLivraisonVente(listDetLivraisonVente);
+
+		return result;
+
+	}
 }
 	
 
