@@ -31,8 +31,12 @@ import com.erp.socle.j2ee.mt.socle.report.impl.AbstractGestionnaireDownloadImpl;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.MoldsValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersistance;
+import com.gpro.consulting.tiers.commun.persistance.partieInteressee.impl.PartieInteresseePersistanceImpl;
 import com.gpro.consulting.tiers.commun.service.elementBase.IMoldsService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
+import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.PrepMoule.value.ElementRechechePrepMouleValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.PrepMoule.value.RechercheMulticriterePrepMouleValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.PrepMoule.value.ResultatRecherchePrepMouleValue;
@@ -42,6 +46,9 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.Elem
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.MiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.RechercheMulticritereMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.ResultatRechercheMiseValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.report.inventaire.value.InventaireReportValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.CritereRechercheRouleauStandardValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ElementResultatRechecheRouleauStandardValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniStandardValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ResultatRechecheRouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RouleauFiniValue;
@@ -54,6 +61,7 @@ import com.gpro.consulting.tiers.logistique.service.atelier.bonsortiefini.IBonSo
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 import com.gpro.consulting.tiers.logistique.service.atelier.mise.IMiseService;
 import com.gpro.consulting.tiers.logistique.service.atelier.prepMoule.IPrepMouleService;
+import com.gpro.consulting.tiers.logistique.service.atelier.report.IGestionnaireReportService;
 import com.gpro.consulting.tiers.logistique.service.atelier.rouleaufini.IRouleauFiniService;
 import com.gpro.consulting.tiers.logistique.service.gc.report.IGestionnaireReportGcService;
 import com.gpro.consulting.tiers.logistique.service.gl.machine.IMachineService;
@@ -130,6 +138,15 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 	@Autowired
 	IMoldsService moldsService;
 
+	@Autowired
+	IGestionnaireReportService gestionnaireReportService;
+	
+
+	@Autowired
+	private IPartieInteresseeService partieInteresseeService;
+	
+	@Autowired
+	private IProduitPersistance produitPersistance;
 	/*
 	 * @Autowired IBaseInfoService baseInfoService;
 	 */
@@ -6555,6 +6572,355 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 		// System.out.println("#####################################" + dateDe);
 	}
 
+	
+	
+	
+	
+	
+	@SuppressWarnings("static-access")
+	@RequestMapping(value = "/inventaireByOF", method = RequestMethod.GET)
+	public void generateInventaireByOFReportExel(
+	
+	      @RequestParam(value ="client",required = false) Long client, 
+			
+			@RequestParam(value ="nombreColieDu",required = false) Long nombreColieDu,
+			
+			@RequestParam(value ="nombreColieA",required = false) Long nombreColieA, 
+			//@RequestParam("entrepot") Long entrepot,
+			//@RequestParam("emplacement") String emplacement, 
+			@RequestParam(value ="metrageDu",required = false) Double metrageDu,
+			@RequestParam(value ="metrageA",required = false) Double metrageA,
+			@RequestParam("dateEtat") String dateEtat,
+			@RequestParam(value ="designationQuiContient",required = false) String designationQuiContient,
+
+			// Hajer Amri 06/02/2017
+			@RequestParam(value ="referenceProduit",required = false) String referenceProduit,
+
+			@RequestParam(value ="fini",required = false) String fini, 
+			@RequestParam(value ="orderBy",required = false) String orderBy,
+			@RequestParam(value ="typeOf",required = false) String typeOf,
+			@RequestParam(value ="type",required = false) String type, HttpServletResponse response) throws WriteException, IOException {
+
+		Date d = new Date();
+
+		String dat = "" + dateFormat.format(d);
+
+		// this.rapport=true;
+		File f = new File("suivi-production" + "-" + dat + ".xls");
+
+		WritableWorkbook Equilibrageworkbook = Workbook.createWorkbook(f);
+		Equilibrageworkbook.createSheet("suivi-production", 0);
+		WritableSheet sheet3 = Equilibrageworkbook.getSheet(0);
+
+		sheet3.setColumnView(0, 7);
+		sheet3.setColumnView(1, 7);
+		
+		
+		sheet3.setColumnView(2, 22);
+		sheet3.setColumnView(3, 22);
+
+		sheet3.setColumnView(4, 15);
+
+		sheet3.setColumnView(5, 30); 
+
+		sheet3.setColumnView(6, 15);
+
+		sheet3.setColumnView(7, 20); 
+
+		sheet3.setColumnView(8, 20); 
+
+		sheet3.setColumnView(9, 15); 
+
+		sheet3.setColumnView(10, 15);
+
+		sheet3.setColumnView(11, 15); 
+
+		/**************************************************************************/
+
+		WritableImage image = new WritableImage(2, 1, // column, row
+				1, 6, // width, height in terms of number of cells
+				new File("C:/ERP/logos_clients/logo_client.png")); // Supports only 'png' images
+
+		sheet3.addImage(image);
+
+		// Nom du rapport et la date
+
+		ExcelUtils.init();
+
+		sheet3.addCell(new Label(2, 7, "inventaire", ExcelUtils.boldTitre));
+		sheet3.mergeCells(2, 7,12, 8);
+		// sheet3.addCell(new Label(2, 6, "Le : " + dateTimeFormat2.format(d),
+		// ExcelUtils.boldRed3));
+
+		// Critaire de recherche
+		int numColCritRech = 2;
+		int numLigneCritRech = 10;
+		sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Critère de recherche ", ExcelUtils.boldRed5));
+		sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, "Le " + dateTimeFormat2.format(d),
+				ExcelUtils.boldRed3));
+		numLigneCritRech++;
+
+	
+		CritereRechercheRouleauStandardValue critereRechercheRouleauStandard = new CritereRechercheRouleauStandardValue();
+		critereRechercheRouleauStandard.setClient(client);
+		critereRechercheRouleauStandard.setDateEtat(stringToCalendar(dateEtat));
+		critereRechercheRouleauStandard.setDesignationQuiContient(designationQuiContient);
+		////critereRechercheRouleauStandard.setEmplacement(emplacement);
+	////	critereRechercheRouleauStandard.setEntrepot(entrepot);
+		critereRechercheRouleauStandard.setMetrageA(metrageA);
+		critereRechercheRouleauStandard.setMetrageDu(metrageDu);
+		critereRechercheRouleauStandard.setNombreColieA(nombreColieA);
+		critereRechercheRouleauStandard.setNombreColieDu(nombreColieDu);
+		critereRechercheRouleauStandard.setOrderBy(orderBy);
+		//critereRechercheRouleauStandard.setFini(fini);
+		critereRechercheRouleauStandard.setReferenceProduit(referenceProduit);
+		
+
+		if (isNotEmty(client))
+
+		{
+			PartieInteresseValue partieInteresse= partieInteresseeService.getById(client);
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Client :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, partieInteresse.getAbreviation() +"", ExcelUtils.boldRed3));
+
+	
+		}
+
+		if (isNotEmty(type))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Type :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, type, ExcelUtils.boldRed3));
+
+		}
+
+		if (isNotEmty(designationQuiContient))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "designationQuiContient :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, designationQuiContient, ExcelUtils.boldRed3));
+
+		}
+
+		if (isNotEmty(metrageA))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "metrageA :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, metrageA+"", ExcelUtils.boldRed3));
+
+		
+		}
+		
+		if (isNotEmty(metrageDu))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "metrageDu :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, metrageDu+"", ExcelUtils.boldRed3));
+
+		}
+
+		if (isNotEmty(nombreColieA))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "nombreColieA. ", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, nombreColieA+"", ExcelUtils.boldRed3));
+
+		}
+
+		if (isNotEmty(nombreColieDu))
+
+		{
+		
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "nombreColieDu", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, nombreColieDu+"", ExcelUtils.boldRed3));
+
+
+		}
+
+		if (isNotEmty(dateEtat)) {
+			// System.out.println("#################### DateLivraison de " + dateDe);
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Intro. De :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
+					new SimpleDateFormat("dd-MM-yyyy").format(calendarStringToCalendarObject(dateEtat).getTime()),
+					ExcelUtils.boldRed3));
+
+		}
+
+
+	
+	
+		InventaireReportValue vInventaireReport = gestionnaireReportService
+				.getInventaireByOFReportValue(critereRechercheRouleauStandard);
+
+		int i = numLigneCritRech + 4;
+
+		sheet3.addCell(new Label(2, i - 1, "OF", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(3, i - 1, "Reference", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(4, i - 1, "Designation", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(5, i - 1, "Quantite", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(6, i - 1, "nombreColie", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(7, i - 1, "PUHT.", ExcelUtils.arial_bold_s10_white_AUTO));
+		sheet3.addCell(new Label(8, i - 1, "Prix Total.", ExcelUtils.arial_bold_s10_white_AUTO));
+		
+		Double mantantTtcTotale = 0d;
+		Long NbreColis = 0l;
+		Double quantiteTotale = 0d;
+		for (ElementResultatRechecheRouleauStandardValue element : vInventaireReport.getElementsList()  ) {
+			
+		
+			if (element.getReferenceMise() != null) {
+				sheet3.addCell(new Label(2, i, element.getReferenceMise() + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(2, i, "", ExcelUtils.boldRed));
+			}
+			
+
+			if (element.getReferenceProduit() != null) {
+				sheet3.addCell(new Label(3, i, element.getReferenceProduit()+ "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(3, i, "", ExcelUtils.boldRed));
+			}
+			
+			if (element.getDesignation() != null) {
+				sheet3.addCell(new Label(4, i, element.getDesignation()+ "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
+			}
+
+			if (element.getMetrage() != null) {
+				sheet3.addCell(new Label(5, i, element.getMetrage()+ "", ExcelUtils.boldRed));
+				
+				quantiteTotale+= element.getMetrage();
+			} else {
+				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+			}
+
+			if (element.getNombreColis() != null) {
+				sheet3.addCell(new Label(6, i, element.getNombreColis()+ "", ExcelUtils.boldRed));
+
+				
+				 NbreColis+=element.getNombreColis();
+			} else {
+				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
+			}
+
+			if (element.getPrixUnitaire() != null) {
+				sheet3.addCell(new Label(7, i, element.getPrixUnitaire()+ "", ExcelUtils.boldRed));
+			
+			} else {
+				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+			}
+	
+			
+			
+			if (element.getPrixTotal() != null) {
+				sheet3.addCell(new Label(8, i, element.getPrixTotal()+ "", ExcelUtils.boldRed));
+				mantantTtcTotale += element.getPrixTotal();
+			} else {
+				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
+			}
+		
+			
+			i++;
+
+		}
+
+		i++;
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Ligne", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, vInventaireReport.getElementsList().size() + "", ExcelUtils.boldRed2));
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Montant TTC Total", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, convertisseur(mantantTtcTotale, 4) + "", ExcelUtils.boldRed2));
+
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Nbr Colis", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i,NbreColis+"" , ExcelUtils.boldRed2));
+
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Quantite Totale", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, quantiteTotale + "", ExcelUtils.boldRed2));
+
+
+		/*******************************************
+		 * BAS DU PAGE
+		 ****************************************/
+
+		int numColBasDuPage = 2;
+		int numLigneBasDuPage = i + 2;
+
+		sheet3.mergeCells(numColBasDuPage, numLigneBasDuPage, numColBasDuPage + 1, numLigneBasDuPage);
+		sheet3.addCell(new Label(numColBasDuPage, numLigneBasDuPage,
+				"Number of lines : " + vInventaireReport.getElementsList().size(),
+				ExcelUtils.boldRed5));
+		/*
+		 * sheet3.addCell(new Label(numColBasDuPage + 2, numLigneBasDuPage,
+		 * resultatRecherche.getListeElementRechecheMiseValeur().size() + "",
+		 * ExcelUtils.boldRed3));
+		 */
+		numLigneBasDuPage++;
+
+		Equilibrageworkbook.write();
+		Equilibrageworkbook.close();
+
+		/******************************************************************************************/
+
+		/****************************
+		 * Ouvrir le nouveau fichier généré
+		 *******************************/
+
+		// HttpServletResponse response = (HttpServletResponse)
+		// context.getExternalContext().getResponse();
+		response.setHeader("Content-disposition", "attachment; filename=" + f.getName());
+		System.out.println("nom du fichier" + f.getName());
+		response.setContentType("application/vnd.ms-excel");
+		int bufferSize = 64 * 1024;
+		byte[] buf = new byte[bufferSize];
+
+		try {
+			BufferedInputStream fileInBuf = new BufferedInputStream(new FileInputStream(f), bufferSize * 2);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int length;
+			while ((length = fileInBuf.read(buf)) > 0) {
+				baos.write(buf, 0, length);
+			}
+			response.getOutputStream().write(baos.toByteArray());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+			// context.responseComplete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// this.rapport=false;
+		// System.out.println("#####################################" + dateDe);
+	}
+	
+	
+	
+	
+	
+	
+	
 	private Calendar stringToCalendar(String dateString) {
 
 		Calendar dateCalendar = null;
