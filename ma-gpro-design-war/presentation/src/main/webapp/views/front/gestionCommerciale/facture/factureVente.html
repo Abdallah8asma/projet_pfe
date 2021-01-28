@@ -588,7 +588,17 @@
               </li>
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                  ng-click="download(factureVenteCourant.id,5)">Sans En-t&ecirc;te $/€</a>
+
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
                   ng-click="download(factureVenteCourant.id,3)">Avec En-t&ecirc;te</a>
+
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                  ng-click="download(factureVenteCourant.id,4)">Avec En-t&ecirc;te $/€ </a>
 
               </li>
             </ul>
