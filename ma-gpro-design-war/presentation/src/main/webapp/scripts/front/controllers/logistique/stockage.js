@@ -250,7 +250,7 @@ angular
 
 									
 											/** ** Excel BY OF ** */
-											$scope.downloadAllProduitsExcel = function(inventaireCourant) {
+											$scope.downloadAllProduitsExcelByOF = function(inventaireCourant) {
 								
 								
 												if(inventaireCourant.metrageDu == null)
@@ -317,6 +317,74 @@ angular
 				
 				
 											};
+	/** ** Excel  ** */
+	$scope.downloadAllProduitsExcel = function(inventaireCourant) {
+								
+								
+		if(inventaireCourant.metrageDu == null)
+			 inventaireCourant.metrageDu ='';
+
+
+		if(inventaireCourant.metrageA == null)
+			 inventaireCourant.metrageA ='';
+
+
+		
+
+		if(typeof $scope.inventaireCourant.dateEtat === 'undefined'  ||  $scope.inventaireCourant.dateEtat == null){
+			var newDate = "";
+		}
+		else{
+			var newDate=$scope.inventaireCourant.dateEtat;
+		}
+
+									  var url = UrlAtelier+"/fichesLogistique/inventaire?client="+inventaireCourant.client+
+									  "&nombreColieDu="+""+
+									  "&nombreColieA="+""+
+									 
+								
+									  "&metrageDu="+inventaireCourant.metrageDu+
+									  "&metrageA="+inventaireCourant.metrageA+
+									  "&dateEtat="+newDate+
+									  "&designationQuiContient="+inventaireCourant.designationQuiContient+
+									  "&referenceProduit="+inventaireCourant.idProduitParRef+
+									  "&fini=" +
+									  "&orderBy="+inventaireCourant.orderBy+
+									  "&typeOf="+inventaireCourant.typeOf+
+									  "&type=Excel";
+
+
+
+						var a = document.createElement('a');
+						document.body.appendChild(a);
+						downloadService.download(url).then(function (result) {
+							var heasersFileName = result.headers(['content-disposition']).substring(17);
+						var fileName = heasersFileName.split('.');
+					var typeFile = result.headers(['content-type']);
+					var file = new Blob([result.data], {type: typeFile});
+					var fileURL = window.URL.createObjectURL(file);
+					if(typeFile == 'application/vnd.ms-excel'){
+
+					 // a.href = fileURL;
+						 a.download = fileName[0];
+						$window.open(fileURL)
+						 a.click();
+	
+					}else{
+				
+						a.href = fileURL;
+						a.download = fileName[0];
+					 $window.open(fileURL)
+						a.click();
+	
+					}
+						
+					$scope.traitementEnCoursGenererLivraison="false";
+
+					});
+
+
+	};
 
 
 
