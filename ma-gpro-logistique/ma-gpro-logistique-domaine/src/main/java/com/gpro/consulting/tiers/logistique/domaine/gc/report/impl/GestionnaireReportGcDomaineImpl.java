@@ -1285,7 +1285,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVente/facture_report.jrxml"));
 
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "/report/logo_commercial.png");
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png\"");
 
 			if (factureVente.getNatureLivraison().equals("FINI")) {
 				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVente/facture_sub_report.jasper");
@@ -1302,7 +1302,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVenteBas/facture_report.jrxml"));
 
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "/report/logo_commercial.png");
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 			if (factureVente.getNatureLivraison().equals("FINI")) {
 				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVenteBas/facture_sub_report.jasper");
@@ -1322,7 +1322,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_report.jrxml"));
 
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "/report/logo_commercial.png");
+			params.put("p_PathLogo","C:/ERP/logos_clients/logo_client.png");
 
 			if (factureVente.getNatureLivraison().equals("FINI")) {
 				params.put("SUBREPORT_INVENTAIRE_PATH",
@@ -1344,7 +1344,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTete/devise/facture_report_Euro_Dollar.jrxml"));
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("p_PathLogo", "/report/logo_commercial.png");
+		params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 		if (factureVente.getNatureLivraison().equals("FINI")) {
 			params.put("SUBREPORT_INVENTAIRE_PATH",
@@ -1363,7 +1363,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVente/SansEntete/facture_report_Euro_Dollar.jrxml"));
 
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "/report/logo_commercial.png");
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 			if (factureVente.getNatureLivraison().equals("FINI")) {
 				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVente/SansEntete/facture_sub_report_Euro_Dollar.jasper");
@@ -2296,7 +2296,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 								.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/bon_commande_report.jrxml"));
 					
 						HashMap<String, Object> params = new HashMap<String, Object>();
-						params.put("p_PathLogo", "/report/logo_commercial.png");
+						params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 					
 						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/bon_commande_sub_report.jasper");
 					
@@ -2309,7 +2309,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/SansEntete/bon_commande_report_Euro_Dollar.jrxml"));
 		
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "/report/logo_commercial.png");
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 		
 			params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/SansEntete/bon_commande_sub_report_Euro_Dollar.jasper");
 		
@@ -2329,7 +2329,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 								.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/bon_commande_report.jrxml"));
 				
 						HashMap<String, Object> params = new HashMap<String, Object>();
-						params.put("p_PathLogo", "/report/logo_commercial.png");
+						params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 				
 						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/bon_commande_sub_report.jasper");
 				
@@ -2342,7 +2342,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/bon_commande_report_Euro_Dollar.jrxml"));
 	
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "/report/logo_commercial.png");
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 	
 			params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/bon_commande_sub_report_Euro_Dollar.jasper");
 	
@@ -2365,7 +2365,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/devis_report.jrxml"));
 
 					HashMap<String, Object> params = new HashMap<String, Object>();
-					params.put("p_PathLogo", "/report/logo_commercial.png");
+					params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 					params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/devis_sub_report.jasper");
 
@@ -2377,7 +2377,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		    			bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/SansEntete/devis_report_Euro_Dollar.jrxml"));
 
 						HashMap<String, Object> params = new HashMap<String, Object>();
-						params.put("p_PathLogo", "/report/logo_commercial.png");
+						params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/SansEntete/devis_sub_report_Euro_Dollar.jasper");
 
@@ -2394,7 +2394,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/devis_report.jrxml"));
 
 					HashMap<String, Object> params = new HashMap<String, Object>();
-					params.put("p_PathLogo", "/report/logo_commercial.png");
+					params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 					params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/devis_sub_report.jasper");
 
@@ -2405,7 +2405,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		    			bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/devis_report_Euro_Dollar.jrxml"));
 
 						HashMap<String, Object> params = new HashMap<String, Object>();
-						params.put("p_PathLogo", "/report/logo_commercial.png");
+						params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/devis_sub_report_Euro_Dollar.jasper");
 
