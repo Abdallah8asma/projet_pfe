@@ -63,7 +63,7 @@ public interface IGestionnaireReportGcDomaine {
 
 	// Added on 18/11/2016, by Zeineb Medimagh
 
-	public BonCommandeReportValue getBonCommandeParIdReport(Long id,String typerapport, String avecPrix,String avecEntete) throws IOException;
+	public BonCommandeReportValue getBonCommandeParIdReport(Long id,String typerapport, Long numrapport,String avecEntete, String avecPrix) throws IOException;
 
 	// Added on 30/01/2017, by Hajer AMRI
 	public ReglementReportValue getReglementReport(RechercheMulticritereReglementValue request) throws IOException;
