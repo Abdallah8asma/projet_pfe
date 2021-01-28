@@ -72,7 +72,7 @@ public interface IGestionnaireReportGcService {
 
 	// Added on 18/11/2016, by Zeineb Medimagh
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public BonCommandeReportValue getBonCommandeParIdReport(Long id, String avecPrix, String typerapport , String avecEntete) throws IOException;
+	public BonCommandeReportValue getBonCommandeParIdReport(Long id,Long numrapport,String typerapport ,String avecPrix,String avecEntete) throws IOException;
 
 	// Added on 30/01/2017, by Hajer AMRI
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
@@ -92,6 +92,9 @@ public interface IGestionnaireReportGcService {
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public FactureReportElementRecapValue getFactureReportElementRecapValue(RechercheMulticritereFactureValue request);
+
+
+
 
 	
 }

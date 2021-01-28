@@ -360,11 +360,13 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 	public void genererBonCommandeReport(@RequestParam("id") Long id,@RequestParam("typerapport") String typerapport,
 			@RequestParam(value = "avecPrix", required = false, defaultValue = "oui") String avecPrix,
 			@RequestParam("avecEntete") String avecEntete,
-			@RequestParam("type") String type, HttpServletResponse response) throws JRException, IOException {
+			@RequestParam("type") String type,
+			@RequestParam("numrapport") Long numrapport,
+			HttpServletResponse response) throws JRException, IOException {
 
 		//logger.info("Generate a {} Report BonCommande", type);
 
-		BonCommandeReportValue bonCommandeReport = gestionnaireReportGcService.getBonCommandeParIdReport(id,typerapport, avecPrix,avecEntete);
+		BonCommandeReportValue bonCommandeReport = gestionnaireReportGcService.getBonCommandeParIdReport(id,numrapport,typerapport,avecPrix,avecEntete);
 		
 		
 		//

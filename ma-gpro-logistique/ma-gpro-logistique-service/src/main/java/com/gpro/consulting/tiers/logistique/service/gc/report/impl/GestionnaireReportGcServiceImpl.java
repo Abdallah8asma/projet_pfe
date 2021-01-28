@@ -92,9 +92,11 @@ public class GestionnaireReportGcServiceImpl implements IGestionnaireReportGcSer
 		
 		return gestionnaireReportGcDomaine.getSoldeClientReport(request);
 	}
+
+
 	@Override
-	public BonCommandeReportValue getBonCommandeParIdReport(Long id,String typerapport ,String avecPrix,String avecEntete) throws IOException {
-		return gestionnaireReportGcDomaine.getBonCommandeParIdReport(id,typerapport, avecPrix,avecEntete);
+	public BonCommandeReportValue getBonCommandeParIdReport(Long id,Long numrapport,String typerapport ,String avecPrix,String avecEntete) throws IOException {
+		return gestionnaireReportGcDomaine.getBonCommandeParIdReport(id,typerapport,numrapport, avecPrix,avecEntete);
 	}
 
 	/* (non-Javadoc)

@@ -1335,6 +1335,46 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			factureReport.setParams(params);
 
 		}
+		
+      else if (typerapport == 4) {
+
+		// rapport sur imp matricielle
+		factureReport.setFileName(REPORT_NAME_FACTURE);
+		factureReport.setReportStream(
+				new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTete/devise/facture_report_Euro_Dollar.jrxml"));
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("p_PathLogo", "/report/logo_commercial.png");
+
+		if (factureVente.getNatureLivraison().equals("FINI")) {
+			params.put("SUBREPORT_INVENTAIRE_PATH",
+					"C://ERP/Lib/STIT_FactureVente/avecEnTete/devise/facture_sub_report_Euro_Dollar.jasper");
+		} else if (factureVente.getNatureLivraison().equals("FACON")) {
+			params.put("SUBREPORT_INVENTAIRE_PATH",
+					"C://ERP/Lib/STIT_FactureVente/avecEnTete/devise/facture_facon_sub_report_Euro_Dollar.jasper");
+		}
+
+		factureReport.setParams(params);
+		}
+		
+		if (typerapport == 5) {
+			// rapport sur imp matricielle
+			factureReport.setFileName(REPORT_NAME_FACTURE);
+			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVente/SansEntete/facture_report_Euro_Dollar.jrxml"));
+
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("p_PathLogo", "/report/logo_commercial.png");
+
+			if (factureVente.getNatureLivraison().equals("FINI")) {
+				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVente/SansEntete/facture_sub_report_Euro_Dollar.jasper");
+			} else if (factureVente.getNatureLivraison().equals("FACON")) {
+				params.put("SUBREPORT_INVENTAIRE_PATH",
+						"C://ERP/Lib/STIT_FactureVente/SansEntete/facture_facon_sub_report_Euro_Dollar.jasper");
+			}
+
+			factureReport.setParams(params);
+
+	}
 		// enrichissement du report
 		enrichmentFactureReport(factureReport, factureVente);
 		enrichmentFactureReportWithBaseInformation(factureReport, factureVente);
@@ -2223,7 +2263,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 	// Added on 18/11/2016, by Zeineb Medimagh
 
 	@Override
-	public BonCommandeReportValue getBonCommandeParIdReport(Long id, String typerapport, String avecPrix,String avecEntete)
+	public BonCommandeReportValue getBonCommandeParIdReport(Long id, String typerapport,Long numrapport, String avecPrix,String avecEntete)
 			throws IOException {
 
 		BonCommandeReportValue bonCommandeReport = new BonCommandeReportValue();
@@ -2251,7 +2291,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			
 	       if(avecEntete.equals("non")) {
 				
-				
+				if(numrapport==1) {
 						   		bonCommandeReport
 								.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/bon_commande_report.jrxml"));
 					
@@ -2262,14 +2302,29 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					
 						bonCommandeReport.setParams(params);
 				
-				
+				}
+				else if(numrapport==2) {
+					
+			   		bonCommandeReport
+					.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/SansEntete/bon_commande_report_Euro_Dollar.jrxml"));
+		
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("p_PathLogo", "/report/logo_commercial.png");
+		
+			params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/SansEntete/bon_commande_sub_report_Euro_Dollar.jasper");
+		
+			bonCommandeReport.setParams(params);
+					
+					
+					
+				}
 				
 			}
 			
 			
 			if(avecEntete.equals("oui")) {
 				
-				
+				if(numrapport==3) {
 								bonCommandeReport
 								.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/bon_commande_report.jrxml"));
 				
@@ -2279,7 +2334,20 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/bon_commande_sub_report.jasper");
 				
 						bonCommandeReport.setParams(params);
-								
+				}
+				
+				
+				if(numrapport==4) {
+					bonCommandeReport
+					.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/bon_commande_report_Euro_Dollar.jrxml"));
+	
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("p_PathLogo", "/report/logo_commercial.png");
+	
+			params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/bon_commande_sub_report_Euro_Dollar.jasper");
+	
+			bonCommandeReport.setParams(params);
+	}
 				
 				
 			}
@@ -2291,6 +2359,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			
 			
 		       if(avecEntete.equals("non")) {
+		    	   if(numrapport==1) {
 		    		// enrechissement des param du report Devis
 					// System.out.println("inn Devis");
 					bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/devis_report.jrxml"));
@@ -2302,10 +2371,24 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 
 					bonCommandeReport.setParams(params);
 		    	   
-		    	   
+		    	   }
+		    	   else if(numrapport==2) {
+		    		   
+		    			bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/SansEntete/devis_report_Euro_Dollar.jrxml"));
+
+						HashMap<String, Object> params = new HashMap<String, Object>();
+						params.put("p_PathLogo", "/report/logo_commercial.png");
+
+						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/SansEntete/devis_sub_report_Euro_Dollar.jasper");
+
+						bonCommandeReport.setParams(params);
+		    		   
+		    	   }
 		       }
 		       
 		       if(avecEntete.equals("oui")) {
+		    	   
+		    	   if(numrapport==3) {
 		    		// enrechissement des param du report Devis
 					// System.out.println("inn Devis");
 					bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/devis_report.jrxml"));
@@ -2317,7 +2400,18 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 
 					bonCommandeReport.setParams(params);
 		    	   
-		    	   
+		    	   }
+		    	   else if(numrapport==4) {
+		    			bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/devis_report_Euro_Dollar.jrxml"));
+
+						HashMap<String, Object> params = new HashMap<String, Object>();
+						params.put("p_PathLogo", "/report/logo_commercial.png");
+
+						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/devis_sub_report_Euro_Dollar.jasper");
+
+						bonCommandeReport.setParams(params);   
+		    		   
+		    	   }
 		       }
 		
 		}
