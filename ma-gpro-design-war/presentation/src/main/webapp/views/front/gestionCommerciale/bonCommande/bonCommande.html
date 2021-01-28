@@ -595,12 +595,22 @@
             <ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
-                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'non')">Sans En-t&ecirc;te</a>
+                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'non',1)">Sans En-t&ecirc;te</a>
+
+			  </li>
+			  <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'non',2)">Sans En-t&ecirc;te $/€</a>
 
               </li>
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
-                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'oui')">Avec En-t&ecirc;te</a>
+                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'oui',3)">Avec En-t&ecirc;te</a>
+
+			  </li>
+			  <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'oui',4)">Avec En-t&ecirc;te $/€</a>
 
               </li>
             </ul>

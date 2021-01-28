@@ -670,7 +670,7 @@ angular
 							}
 
                       		//generer rapport apres creation d'un bon de sortie. mode : Modification/Consultation
-              				$scope.download = function(id,pRapportPrix,type,avecEntete) {
+              				$scope.download = function(id,pRapportPrix,type,avecEntete,numrapport) {
     							$scope.traitementEnCoursCommande = "true";
 
               					
@@ -689,7 +689,8 @@ angular
 															+ "&avecPrix="+pRapportPrix
 															+ "&typerapport="+type
 															+ "&avecEntete="+avecEntete
-															+"&type=pdf";
+															+"&type=pdf"
+															+ "&numrapport="+numrapport;
 
 
 														
