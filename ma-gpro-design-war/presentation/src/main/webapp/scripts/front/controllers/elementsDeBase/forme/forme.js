@@ -746,7 +746,7 @@ $scope.articleCourante.puTTC = Math.round($scope.articleCourante.puTTC*1000)/100
 													{
 														field : 'designation',
 														displayName : $translate.instant('article'),
-														width:'30%'
+														width:'20%'
 													},
 													{
 														field : 'typeArticleDesignation',

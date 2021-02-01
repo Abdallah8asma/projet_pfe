@@ -870,7 +870,7 @@ $scope.articleCourante.puTTC = Math.round($scope.articleCourante.puTTC*1000)/100
 								columnDefs : 'colDefs',
 								enablePaging : true,
 								showFooter : true,
-							//	enableColumnResize: true,
+								enableColumnResize: true,
 								enableHighlighting : true,
 								totalServerItems : 'totalServerItems',
 								pagingOptions : $scope.pagingOptions,
