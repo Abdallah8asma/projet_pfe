@@ -372,28 +372,30 @@ angular
 
 						}
 						// Ajout et Modification mouvementStock
-						$scope.modifierOuCreerBonMouvementStock = function() {
+						$scope.modifierOuCreerBonMouvementStock = function(id) {
 							// vider les Listes
 							$scope.listeArticles = [];
 							$rootScope.listArticlesFournitures = [];
 							$rootScope.listArticlesTissus = [];
 							$rootScope.listArticlesFACE = [];
 
-							var index = this.row.rowIndex;
+						//	var index = this.row.rowIndex;
 							// getmouvementStock
 							$http
 									.get(
 											UrlAtelier
 													+ "/bonMouvementStock/getId:"
-													+ $scope.myData[index].id)
+													//+ $scope.myData[index].id
+													+id)
 									.success(
 											function(data) {
+												$scope.bonMouvementStockCourante =data;
 												classifierListMouvement(data.mouvements);
 										
 											});
-							$scope.bonMouvementStockCourante = $scope.myData[index] ? angular
+					/* 		$scope.bonMouvementStockCourante = $scope.myData[index] ? angular
 									.copy($scope.myData[index])
-									: {};
+									: {}; */
 							
 							$scope.displayMode = "edit";
 							$scope.openOrClose('panel-articlesS',
@@ -757,6 +759,33 @@ angular
 						};
 
 
+						
+						                 /*** Excel ***/
+						$scope.downloadBonSortieExcel = function(id) {
+							
+							var url = UrlAtelier
+									+ "/fichesGS/sortiestock?id="
+									+ id + "&type=xls";
+
+									var a = document.createElement('a');
+										document.body.appendChild(a);
+										downloadService.download(url).then(function (result) {
+											var heasersFileName = result.headers(['content-disposition']).substring(17);
+										var fileName = heasersFileName.split('.');
+									var typeFile = result.headers(['content-type']);
+									var file = new Blob([result.data], {type: typeFile});
+									var fileURL = window.URL.createObjectURL(file);
+				
+				
+									a.download = fileName[0];
+									$window.open(fileURL)
+									 a.click();
+				
+										
+									
+										});
+						};
+
 
 						/*
 						 * ******* gestion gridStock*******
@@ -809,7 +838,7 @@ angular
 														cellTemplate :
 														
 														`<div class="ms-CommandButton float-right" ng-show="!rowform.$visible">
-														<button class="ms-CommandButton-button ms-CommandButton-Gpro  " ng-click="modifierOuCreerBonMouvementStock()">
+														<button class="ms-CommandButton-button ms-CommandButton-Gpro  " ng-click="modifierOuCreerBonMouvementStock(row.entity.id)">
 														<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
 														</button>
 														<button class="ms-CommandButton-button"  ng-click="showPopupDelete(15)" permission="['StockMP_Sortie_Delete']">
