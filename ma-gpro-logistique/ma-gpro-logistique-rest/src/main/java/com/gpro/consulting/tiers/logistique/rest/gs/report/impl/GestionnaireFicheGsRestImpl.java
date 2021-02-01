@@ -31,11 +31,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.erp.socle.j2ee.mt.socle.report.impl.AbstractGestionnaireDownloadImpl;
 import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.IBaseInfoPersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitEntity;
 import com.gpro.consulting.tiers.commun.service.baseinfo.IBaseInfoService;
+import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IGroupeClientService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
@@ -44,13 +46,19 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.M
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportProductValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.BonInventaireValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.value.BonMouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.BonStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.DetBonInventaireValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.MagasinValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.value.MouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereBonInventaireValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereBonMouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereBonStockValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereEntiteStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechecheBonInventaireValue;
+import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechecheBonMouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechecheBonStockValue;
+import com.gpro.consulting.tiers.logistique.domaine.gs.IBonMouvementDomaine;
 import com.gpro.consulting.tiers.logistique.rest.report.utilities.ExcelUtils;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 import com.gpro.consulting.tiers.logistique.service.gc.bonlivraison.IMarcheService;
@@ -58,12 +66,15 @@ import com.gpro.consulting.tiers.logistique.service.gc.bonlivraison.IModePaiemen
 import com.gpro.consulting.tiers.logistique.service.gc.reglement.IElementReglementService;
 import com.gpro.consulting.tiers.logistique.service.gc.report.IGestionnaireReportGcService;
 import com.gpro.consulting.tiers.logistique.service.gs.IBonInventaireService;
+import com.gpro.consulting.tiers.logistique.service.gs.IBonMouvementService;
 import com.gpro.consulting.tiers.logistique.service.gs.IBonStockService;
 import com.gpro.consulting.tiers.logistique.service.gs.IMagasinService;
+import com.gpro.consulting.tiers.logistique.service.gs.report.IGestionnaireReportGsService;
 import com.gpro.consulting.tiers.logistique.service.produitdepot.IProduitDepotService;
 
 import jxl.Workbook;
 import jxl.write.Label;
+import jxl.write.WritableImage;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -138,7 +149,9 @@ public class GestionnaireFicheGsRestImpl extends AbstractGestionnaireDownloadImp
 	
 	@Autowired
 	private IBaseInfoService baseInfoService;
-
+	@Autowired
+	private IBonMouvementService      bonMouvementService;
+	
 	@RequestMapping(value = "/listBonStock", method = RequestMethod.POST)
 	public ResponseEntity<byte[]> generateListBonStockReport(
 			
@@ -1347,6 +1360,7 @@ public class GestionnaireFicheGsRestImpl extends AbstractGestionnaireDownloadImp
 
 	}
 	
+	
 	public boolean checkForOptimization(RechercheMulticritereBonInventaireValue request) {
 
 		return
@@ -1357,9 +1371,426 @@ public class GestionnaireFicheGsRestImpl extends AbstractGestionnaireDownloadImp
 	}
 
 
-
 	public boolean isNullOrEmpty(Object criteria) {
 		return criteria == null || criteria.toString().length() == 0;
 	}
 
+	
+
+	@RequestMapping(value = "/sortiestock", method = RequestMethod.GET)
+	public void generateListSortieStockReport(
+			@RequestParam("id") Long id,
+			@RequestParam("type") String type,HttpServletResponse response
+							
+		) throws WriteException, IOException {
+
+
+		BonMouvementStockValue bonMouvementStockValue = bonMouvementService.rechercheBonMouvementParId(id);
+		
+		Date d = new Date();
+
+		String dat = "" + dateFormat.format(d);
+
+
+		   BaseInfoValue baseInfo= baseInfoService.getClientActif();
+
+		   
+			excel_file_location = baseInfo.getExcelDirectory();
+
+			// this.rapport=true;
+			File f = new File(excel_file_location+"Bon de sortie" + "-" + dat + ".xls");
+
+			WritableWorkbook Equilibrageworkbook = Workbook.createWorkbook(f);
+			Equilibrageworkbook.createSheet("Sortie-List", 0);
+			WritableSheet sheet3 = Equilibrageworkbook.getSheet(0);
+
+		sheet3.setColumnView(0, 7);
+		sheet3.setColumnView(1, 7);
+		sheet3.setColumnView(2, 25);
+
+		sheet3.setColumnView(3, 12);
+		sheet3.setColumnView(4, 30);
+		sheet3.setColumnView(5, 30);
+		sheet3.setColumnView(6, 10);
+		sheet3.setColumnView(7, 10);
+		sheet3.setColumnView(8, 10);
+		sheet3.setColumnView(9, 10);
+	
+
+		
+		if(baseInfo.getLogoPNG()!=null) {
+			WritableImage image = new WritableImage(2, 1, 1, 6, new File(baseInfo.getLogoPNG()));
+			sheet3.addImage(image);
+		}
+
+		// Nom du rapport et la date
+
+		ExcelUtils.init();
+
+	
+		// Nom du rapport et la date
+
+		sheet3.addCell(new Label(2, 7, " Bon de sortie ", ExcelUtils.boldTitre));
+		sheet3.mergeCells(2, 7, 9, 8);
+
+		int numColCritRech = 2;
+		int numLigneCritRech = 14;
+		
+		sheet3.addCell(
+				new Label(numColCritRech + 1, numLigneCritRech, "" + dateTimeFormat2.format(d), ExcelUtils.boldRed3));
+		sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+		numLigneCritRech++;
+
+		
+		
+		
+
+		int i = numLigneCritRech + 4;
+
+		sheet3.addCell(new Label(2, i - 1, "Date", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(3, i - 1, "Reference", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(4, i - 1, "Code Article", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(5, i - 1, "Article ", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(6, i - 1, "Quantite ", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i - 1, "OF ", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(8, i - 1, "PU ", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i - 1, "Montant ", ExcelUtils.boldRed2));
+		
+		
+		
+			
+
+
+			for (MouvementStockValue element : bonMouvementStockValue.getMouvements()) {
+				
+				if( bonMouvementStockValue.getDate()!=null) {
+					sheet3.addCell(new Label(2, i, dateFormat2.format( bonMouvementStockValue.getDate().getTime())+ "", ExcelUtils.boldRed));
+
+					} else {
+						sheet3.addCell(new Label(2, i, "", ExcelUtils.boldRed));
+
+					}
+						if( bonMouvementStockValue.getNumero()!=null) {
+							sheet3.addCell(new Label(3, i, bonMouvementStockValue.getNumero() + "", ExcelUtils.boldRed));
+
+							} else {
+								sheet3.addCell(new Label(3, i, "", ExcelUtils.boldRed));
+
+							}
+
+
+					
+
+
+				if (element.getReferenceArticle() != null) {
+					sheet3.addCell(
+							new Label(4, i,element.getReferenceArticle() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
+				}
+				
+				
+			
+				
+				
+				if (element.getDesignationArticle() != null) {
+				
+					sheet3.addCell(
+							new Label(5, i,element.getDesignationArticle() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+				}
+				
+				if (element.getQuantiteReelle() != null) {
+					
+					sheet3.addCell(
+							new Label(6, i,element.getQuantiteReelle() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
+				}
+				
+				if( bonMouvementStockValue.getOfId()!=null) {
+					
+					sheet3.addCell(new Label(7, i, bonMouvementStockValue.getOfId() + "", ExcelUtils.boldRed));
+
+					} else {
+						sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+
+					}
+
+		      if (element.getPrixUnitaire() != null) {
+					
+					sheet3.addCell(
+							new Label(8, i,element.getPrixUnitaire() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
+				}
+				
+		      if (element.getPrixTotal()!=null) {
+					
+						sheet3.addCell(
+								new Label(9, i,element.getPrixTotal()+ "", ExcelUtils.boldRed));
+
+					} else {
+						sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+					}
+					
+		
+
+		      
+		     
+				i++;
+
+		
+			
+		}
+		
+		
+
+	
+		i++;
+		i++;
+
+		int numColBasDuPage = 2;
+		int numLigneBasDuPage = i + 2;
+
+		Equilibrageworkbook.write();
+		Equilibrageworkbook.close();
+
+
+		response.setHeader("Content-disposition", "attachment; filename=" + f.getName());
+		// System.out.println("nom du fichier" + f.getName());
+		response.setContentType("application/vnd.ms-excel");
+		int bufferSize = 64 * 1024;
+		byte[] buf = new byte[bufferSize];
+
+		try {
+			BufferedInputStream fileInBuf = new BufferedInputStream(new FileInputStream(f), bufferSize * 2);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int length;
+			while ((length = fileInBuf.read(buf)) > 0) {
+				baos.write(buf, 0, length);
+			}
+			response.getOutputStream().write(baos.toByteArray());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+			// context.responseComplete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+
+	
+	
+
+	@RequestMapping(value = "/entreestock", method = RequestMethod.GET)
+	public void generateListEntreeStockReport(
+			@RequestParam("id") Long id,
+			@RequestParam("type") String type,HttpServletResponse response
+							
+		) throws WriteException, IOException {
+
+
+		BonMouvementStockValue bonMouvementStockValue = bonMouvementService.rechercheBonMouvementParId(id);
+		
+		Date d = new Date();
+
+		String dat = "" + dateFormat.format(d);
+
+
+		   BaseInfoValue baseInfo= baseInfoService.getClientActif();
+
+		   
+			excel_file_location = baseInfo.getExcelDirectory();
+
+			// this.rapport=true;
+			File f = new File(excel_file_location+"Bon D'entree" + "-" + dat + ".xls");
+
+			WritableWorkbook Equilibrageworkbook = Workbook.createWorkbook(f);
+			Equilibrageworkbook.createSheet("Entree-List", 0);
+			WritableSheet sheet3 = Equilibrageworkbook.getSheet(0);
+
+		sheet3.setColumnView(0, 7);
+		sheet3.setColumnView(1, 7);
+		sheet3.setColumnView(2, 25);
+
+		sheet3.setColumnView(3, 12);
+		sheet3.setColumnView(4, 30);
+		sheet3.setColumnView(5, 30);
+		sheet3.setColumnView(6, 10);
+		sheet3.setColumnView(7, 10);
+		sheet3.setColumnView(8, 10);
+		
+	
+
+		
+		if(baseInfo.getLogoPNG()!=null) {
+			WritableImage image = new WritableImage(2, 1, 1, 6, new File(baseInfo.getLogoPNG()));
+			sheet3.addImage(image);
+		}
+
+		// Nom du rapport et la date
+
+		ExcelUtils.init();
+
+	
+		// Nom du rapport et la date
+
+		sheet3.addCell(new Label(2, 7, " Bon d'entree ", ExcelUtils.boldTitre));
+		sheet3.mergeCells(2, 7, 9, 8);
+
+		int numColCritRech = 2;
+		int numLigneCritRech = 14;
+		
+		sheet3.addCell(
+				new Label(numColCritRech + 1, numLigneCritRech, "" + dateTimeFormat2.format(d), ExcelUtils.boldRed3));
+		sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+		numLigneCritRech++;
+
+		
+		
+		
+
+		int i = numLigneCritRech + 4;
+
+		sheet3.addCell(new Label(2, i - 1, "Date", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(3, i - 1, "Reference", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(4, i - 1, "Code Article", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(5, i - 1, "Article ", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(6, i - 1, "Quantite ", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i - 1, "PU ", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(8, i - 1, "Montant ", ExcelUtils.boldRed2));
+		
+		
+		
+			
+
+
+			for (MouvementStockValue element : bonMouvementStockValue.getMouvements()) {
+				
+				if( bonMouvementStockValue.getDate()!=null) {
+					sheet3.addCell(new Label(2, i, dateFormat2.format( bonMouvementStockValue.getDate().getTime())+ "", ExcelUtils.boldRed));
+
+					} else {
+						sheet3.addCell(new Label(2, i, "", ExcelUtils.boldRed));
+
+					}
+						if( bonMouvementStockValue.getNumero()!=null) {
+							sheet3.addCell(new Label(3, i, bonMouvementStockValue.getNumero() + "", ExcelUtils.boldRed));
+
+							} else {
+								sheet3.addCell(new Label(3, i, "", ExcelUtils.boldRed));
+
+							}
+
+
+					
+
+
+				if (element.getReferenceArticle() != null) {
+					sheet3.addCell(
+							new Label(4, i,element.getReferenceArticle() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
+				}
+				
+				
+			
+				
+				
+				if (element.getDesignationArticle() != null) {
+				
+					sheet3.addCell(
+							new Label(5, i,element.getDesignationArticle() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+				}
+				
+				if (element.getQuantiteReelle() != null) {
+					
+					sheet3.addCell(
+							new Label(6, i,element.getQuantiteReelle() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
+				}
+
+		      if (element.getPrixUnitaire() != null) {
+					
+					sheet3.addCell(
+							new Label(7, i,element.getPrixUnitaire() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+				}
+				
+		      if (element.getPrixTotal()!=null) {
+					
+						sheet3.addCell(
+								new Label(8, i,element.getPrixTotal()+ "", ExcelUtils.boldRed));
+
+					} else {
+						sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
+					}
+					
+		
+
+		      
+		     
+				i++;
+
+		
+			
+		}
+		
+		
+
+	
+		i++;
+		i++;
+
+		int numColBasDuPage = 2;
+		int numLigneBasDuPage = i + 2;
+
+		Equilibrageworkbook.write();
+		Equilibrageworkbook.close();
+
+
+		response.setHeader("Content-disposition", "attachment; filename=" + f.getName());
+		// System.out.println("nom du fichier" + f.getName());
+		response.setContentType("application/vnd.ms-excel");
+		int bufferSize = 64 * 1024;
+		byte[] buf = new byte[bufferSize];
+
+		try {
+			BufferedInputStream fileInBuf = new BufferedInputStream(new FileInputStream(f), bufferSize * 2);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int length;
+			while ((length = fileInBuf.read(buf)) > 0) {
+				baos.write(buf, 0, length);
+			}
+			response.getOutputStream().write(baos.toByteArray());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+			// context.responseComplete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	
+	
+	
+	
 }
