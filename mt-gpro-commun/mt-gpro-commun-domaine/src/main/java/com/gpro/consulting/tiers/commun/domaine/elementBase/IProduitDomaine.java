@@ -59,4 +59,6 @@ public interface IProduitDomaine {
 	public ProduitValue rechercheProduitParReference(String reference);
 
 	public Map<Long, ProduitValue> mapProduitById();
+
+	public List<ProduitValue> rechercheProduitFinance();
 }

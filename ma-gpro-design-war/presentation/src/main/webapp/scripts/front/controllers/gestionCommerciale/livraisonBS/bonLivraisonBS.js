@@ -35,11 +35,37 @@ angular
 					 "avecFacture": '',
 					 "devise":'2'
 				};
+
+
+
+				$scope.listeProduitFinancier = [];
+
 			
 			
 		$scope.traitementEnCours = "false";
 			
 			$scope.msg = "";
+
+
+
+
+			
+							// Liste des produits
+							$scope.listeProduitCacheFinance = function() {
+								$http
+										.get(
+											UrlCommun
+														+ "/produit/all/retour")
+										.success(
+												function(data) {
+													console
+													
+													$scope.listeProduitFinancier = data;
+
+												});
+							}
+
+							$scope.listeProduitCacheFinance();
 			
 				// REST SERVICE MAGAZINS
 				$scope.listeMagazinCache = function() {
@@ -208,6 +234,60 @@ angular
 							 $scope.ListeDevise = dataDevise;
 									 });
 								 };
+
+
+
+
+
+								 	// ajout d'un Produit
+							$scope.ajoutProduit = function(produitId) {
+
+								if(produitId){
+
+									var element = $scope.listeProduitFinancier.filter(e => e.id === produitId);
+						
+									if(element && element[0]){
+
+
+										$scope.produitInserree = {
+											produitId :produitId,
+											produitDesignation : element[0].designation,
+											produitReference : element[0].reference,
+											quantite : 1,
+											unite : '',
+											prixUnitaireHT : '',
+											prixTotalHT : '',
+											nouveau :true,
+											remise : ''
+										};
+		
+										$scope.listDetLivraisonVentePRBS
+												.push($scope.produitInserree);
+
+
+
+
+									}
+									
+									
+							  }
+
+
+							};
+
+
+									// Supprimer Produit
+									$scope.removeProduit = function(index) {
+								
+									
+									
+										
+										$scope.listDetLivraisonVentePRBS.splice(index, 1);
+										
+										console.log("Success Delete Produit ");
+										
+										
+									};
 								 
 	 
 								 

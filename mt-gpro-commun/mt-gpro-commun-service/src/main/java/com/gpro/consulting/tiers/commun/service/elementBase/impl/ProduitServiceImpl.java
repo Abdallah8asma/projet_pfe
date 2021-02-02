@@ -103,4 +103,9 @@ public class ProduitServiceImpl implements IProduitService{
 		return produitDomaine.mapProduitById()	;
 		}
 
+	@Override
+	public List<ProduitValue> rechercheProduitFinance() {
+		return produitDomaine.rechercheProduitFinance();
+	}
+
 }
