@@ -266,6 +266,20 @@
 							</div>
 
 
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">OF</label>
+										</div>
+										<select  ui-select2="true" class="form-control" ng-model="mouvementStockCourante.ofId"
+										 style="border: 1px solid #e5eaee !important;" required>
+											<option ng-repeat="mise in ListeMises" value="{{mise.id}}">
+												{{mise.reference}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
 
 
 

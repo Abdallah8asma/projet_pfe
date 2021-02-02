@@ -59,5 +59,5 @@ public interface IProduitPersistance {
 	 public String rechercheDesignationProduitById(Long pProduitId);
 	 
 	 public ProduitValue rechercheProduitParReference(String reference);
-	
+	 public List<ProduitValue> rechercheProduitFinance();
 }
