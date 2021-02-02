@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.MiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.BonMouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.MouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereBonMouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatListeBonMvtParTypeValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechecheBonMouvementStockValue;
+import com.gpro.consulting.tiers.logistique.service.atelier.mise.IMiseService;
 import com.gpro.consulting.tiers.logistique.service.gs.IBonMouvementService;
 import com.gpro.consulting.tiers.logistique.service.gs.IGestionnaireGSCacheService;
 
@@ -33,6 +35,9 @@ public class BonMouvementStockRestImpl {
 
 	@Autowired
 	private IGestionnaireGSCacheService gestionnaireGSCacheService;
+	@Autowired
+	private IMiseService miseService;
+
 
 	/*******************************
 	 * get bonMouvement Stock par type
@@ -66,6 +71,15 @@ public class BonMouvementStockRestImpl {
 
 			String client = gestionnaireGSCacheService.rechercherclientId(bon.getPartieintId());
 			bon.setClient(client);
+			
+			
+			
+		   MiseValue mise=miseService.rechercheMiseParId(bon.getOfId()) ;
+				
+				
+				bon.setNumOF(mise.getReference());
+				
+			
 		}
 
 		return vMvt;

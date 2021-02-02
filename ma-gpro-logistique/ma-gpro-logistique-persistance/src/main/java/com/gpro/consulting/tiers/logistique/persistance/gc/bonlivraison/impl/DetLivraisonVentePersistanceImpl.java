@@ -443,7 +443,13 @@ public class DetLivraisonVentePersistanceImpl extends AbstractPersistance implem
 						whereClause.add(criteriaBuilder.and(predicate));
 					}
 							
-							
+					//REcherche REF.EXTERNE
+					if (estNonVide(request.getNumOF())) {
+						Expression<String> path = root.get(PREDICATE_numeroOF);
+						Expression<String> upper =criteriaBuilder.upper(path);
+						Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getNumOF().toUpperCase() + PERCENT);
+						whereClause.add(criteriaBuilder.and(predicate));
+					}
 							
 							
 

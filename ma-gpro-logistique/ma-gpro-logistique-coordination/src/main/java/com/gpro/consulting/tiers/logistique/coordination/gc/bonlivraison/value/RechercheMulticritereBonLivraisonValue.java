@@ -55,7 +55,16 @@ public class RechercheMulticritereBonLivraisonValue {
 	private Long devise;
 	
 
+private String numOF;
 
+
+	public String getNumOF() {
+	return numOF;
+}
+
+public void setNumOF(String numOF) {
+	this.numOF = numOF;
+}
 
 	public Long getDevise() {
 		return devise;

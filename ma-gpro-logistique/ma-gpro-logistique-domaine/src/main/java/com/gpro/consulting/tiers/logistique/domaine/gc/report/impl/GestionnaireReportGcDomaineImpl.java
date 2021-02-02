@@ -1252,6 +1252,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		bonlivraisonReportList.setPrixMax(request.getPrixMax());
 		bonlivraisonReportList.setEtat(request.getEtat());
 		bonlivraisonReportList.setStock(request.getStock());
+		bonlivraisonReportList.setNumOF(request.getNumOF());
 
 		if (request.getAvecFacture() != null) {
 
