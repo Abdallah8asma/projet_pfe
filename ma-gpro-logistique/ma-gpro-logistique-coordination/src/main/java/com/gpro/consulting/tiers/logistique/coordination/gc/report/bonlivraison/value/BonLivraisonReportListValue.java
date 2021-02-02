@@ -41,6 +41,16 @@ public class BonLivraisonReportListValue {
 	
 	private Boolean stock;
 
+	private String numOF;
+	
+	public String getNumOF() {
+		return numOF;
+	}
+
+	public void setNumOF(String numOF) {
+		this.numOF = numOF;
+	}
+
 	public InputStream getReportStream() {
 		return reportStream;
 	}

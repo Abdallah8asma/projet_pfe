@@ -18,6 +18,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.Part
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.MouvementStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereMouvementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechecheMouvementValue;
+import com.gpro.consulting.tiers.logistique.service.atelier.mise.IMiseService;
 import com.gpro.consulting.tiers.logistique.service.gs.IGestionnaireGSCacheService;
 import com.gpro.consulting.tiers.logistique.service.gs.IMouvementService;
 
@@ -32,6 +33,9 @@ public class MouvementStockRestImpl {
 
 	@Autowired
 	private IGestionnaireGSCacheService gestionnaireGSCacheService;
+	
+	@Autowired
+	private IMiseService miseService;
 
 	/*******************************
 	 * mouvement Stock
@@ -54,19 +58,34 @@ public class MouvementStockRestImpl {
 		ResultatRechecheMouvementValue resultatRecherche = mouvementService
 				.rechercherMouvementMultiCritere(pMouvementStock);
 
-		// if(resultatRecherche != null){
-		// for(MouvementStockValue element :
-		// resultatRecherche.getMouvementStock()){
-		// if(element.getBonMouvement() != null){
-		// Long clientId = element.getBonMouvement().getPartieintId();
-		// if(clientId !=null){
-		// String clientAbreviation = (mapClients.containsKey(clientId)) ?
-		// mapClients.get(clientId).getAbreviation() : null;
-		// element.setClientAbreviation(clientAbreviation);
-		// }
-		// }
-		// }
-		// }
+		if (resultatRecherche != null) {
+			for (MouvementStockValue element : resultatRecherche.getMouvementStock()) {
+				
+				
+				
+//				if (element.getBonMouvement() != null) {
+//					Long clientId = element.getBonMouvement().getPartieintId();
+//					if (clientId != null) {
+//						String clientAbreviation = (mapClients.containsKey(clientId))
+//								? mapClients.get(clientId).getAbreviation()
+//								: null;
+//						element.setClientAbreviation(clientAbreviation);
+//					}
+//				}
+				
+				if(element.getBonMouvement().getOfId() != null) {
+					
+		
+					element.getBonMouvement().setNumOF(miseService.rechercheMiseParId(element.getBonMouvement().getOfId()).getReference() );
+					
+				}
+			
+				
+				
+				
+				
+			}
+		}
 
 		return resultatRecherche;
 	}

@@ -31,9 +31,21 @@ public class RechercheMulticritereDetLivraisonValue {
 
 	private Long boutiqueId;
 
+
 	private String numeroProduit;
 
 	private String referenceFournisseurProduit;
+	private String numOF;
+	
+	
+
+	public String getNumOF() {
+		return numOF;
+	}
+
+	public void setNumOF(String numOF) {
+		this.numOF = numOF;
+	}
 
 	public String getNumeroProduit() {
 		return numeroProduit;

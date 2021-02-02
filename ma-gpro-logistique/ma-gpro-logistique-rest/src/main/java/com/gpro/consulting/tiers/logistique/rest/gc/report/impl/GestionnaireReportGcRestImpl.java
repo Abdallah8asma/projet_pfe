@@ -207,6 +207,7 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("prixMax") Double prixMax, @RequestParam("natureLivraison") String natureLivraison,
 			@RequestParam("avecFacture") String avecFacture,@RequestParam("stock") Boolean stock,@RequestParam("idDepot") Long idDepot ,
 			@RequestParam("groupeClientId") Long groupeClientId,
+			@RequestParam("numof") String numof,
 			
 			
 			HttpServletResponse response)
@@ -231,7 +232,7 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		
 		request.setGroupeClientId(groupeClientId);
 		
-		
+		request.setNumOF(numof);
 		request.setOptimized(this.checkForOptimization(request));
 		
 		if (request.getDateLivraisonMin() == null) {

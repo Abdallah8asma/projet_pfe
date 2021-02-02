@@ -29,7 +29,19 @@ public class MouvementStockHistoryElementReportValue implements Comparable<Objec
 	
 	private String client;
 	
+	private String numeroOF;
 	
+	
+	
+	
+	public String getNumeroOF() {
+		return numeroOF;
+	}
+
+	public void setNumeroOF(String numeroOF) {
+		this.numeroOF = numeroOF;
+	}
+
 	@Override
 	public int compareTo(Object o) {
 		MouvementStockHistoryElementReportValue element= (MouvementStockHistoryElementReportValue)o;

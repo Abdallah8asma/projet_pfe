@@ -52,6 +52,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechec
 import com.gpro.consulting.tiers.logistique.domaine.gs.IBonMouvementDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gs.report.IGestionnaireReportGsDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gs.report.utilities.EtatMouvementElementReportComparator;
+import com.gpro.consulting.tiers.logistique.persistance.atelier.mise.IMisePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gs.IEntiteStockPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gs.IMagasinPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gs.IMouvementPersistance;
@@ -118,6 +119,10 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
 	
 	@Autowired
 	IRaisonMouvementPersistance raisonMouvementPersistance;
+	
+	
+	@Autowired
+    private IMisePersistance misePersistance;
 
 	@Override
 	public MouvementStockHistoryReportValue getHistoryReport(RechercheMulticritereMouvementValue critere) throws IOException {
@@ -193,6 +198,13 @@ public class GestionnaireReportGsDomaineImpl implements IGestionnaireReportGsDom
 				elementReport.setDate(mouvementStock.getBonMouvement().getDate());
 				elementReport.setResponsable(mouvementStock.getBonMouvement().getResponsable());
 				elementReport.setValeur(mouvementStock.getBonMouvement().getValeur());
+				
+				
+				if(mouvementStock.getBonMouvement().getOfId() != null)
+				elementReport.setNumeroOF(misePersistance.rechercheMiseParId(mouvementStock.getBonMouvement().getOfId()).getReference());
+				
+				
+				
 			}
 			
 			elementReport.setId(mouvementStock.getId());
