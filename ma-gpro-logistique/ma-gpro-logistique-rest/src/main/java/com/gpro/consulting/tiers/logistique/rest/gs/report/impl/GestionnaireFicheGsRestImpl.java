@@ -41,6 +41,7 @@ import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IGroupeClientService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.MiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.MarcheValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.ModePaiementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportProductValue;
@@ -61,6 +62,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechec
 import com.gpro.consulting.tiers.logistique.domaine.gs.IBonMouvementDomaine;
 import com.gpro.consulting.tiers.logistique.rest.report.utilities.ExcelUtils;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
+import com.gpro.consulting.tiers.logistique.service.atelier.mise.IMiseService;
 import com.gpro.consulting.tiers.logistique.service.gc.bonlivraison.IMarcheService;
 import com.gpro.consulting.tiers.logistique.service.gc.bonlivraison.IModePaiementService;
 import com.gpro.consulting.tiers.logistique.service.gc.reglement.IElementReglementService;
@@ -151,6 +153,9 @@ public class GestionnaireFicheGsRestImpl extends AbstractGestionnaireDownloadImp
 	private IBaseInfoService baseInfoService;
 	@Autowired
 	private IBonMouvementService      bonMouvementService;
+	
+	@Autowired
+	private IMiseService miseServise;
 	
 	@RequestMapping(value = "/listBonStock", method = RequestMethod.POST)
 	public ResponseEntity<byte[]> generateListBonStockReport(
@@ -1514,7 +1519,9 @@ public class GestionnaireFicheGsRestImpl extends AbstractGestionnaireDownloadImp
 				
 				if( bonMouvementStockValue.getOfId()!=null) {
 					
-					sheet3.addCell(new Label(7, i, bonMouvementStockValue.getOfId() + "", ExcelUtils.boldRed));
+					MiseValue mise=miseServise.rechercheMiseParId(bonMouvementStockValue.getOfId());
+					
+					sheet3.addCell(new Label(7, i, mise.getReference() + "", ExcelUtils.boldRed));
 
 					} else {
 						sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
