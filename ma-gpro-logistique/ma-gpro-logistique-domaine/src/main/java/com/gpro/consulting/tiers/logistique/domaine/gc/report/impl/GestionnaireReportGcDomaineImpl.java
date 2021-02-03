@@ -1342,17 +1342,17 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		// rapport sur imp matricielle
 		factureReport.setFileName(REPORT_NAME_FACTURE);
 		factureReport.setReportStream(
-				new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTete/devise/facture_report_Euro_Dollar.jrxml"));
+				new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTeteDevise/facture_report_Euro_Dollar.jrxml"));
 
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 		if (factureVente.getNatureLivraison().equals("FINI")) {
 			params.put("SUBREPORT_INVENTAIRE_PATH",
-					"C://ERP/Lib/STIT_FactureVente/avecEnTete/devise/facture_sub_report_Euro_Dollar.jasper");
+					"C://ERP/Lib/STIT_FactureVente/avecEnTeteDevise/facture_sub_report_Euro_Dollar.jasper");
 		} else if (factureVente.getNatureLivraison().equals("FACON")) {
 			params.put("SUBREPORT_INVENTAIRE_PATH",
-					"C://ERP/Lib/STIT_FactureVente/avecEnTete/devise/facture_facon_sub_report_Euro_Dollar.jasper");
+					"C://ERP/Lib/STIT_FactureVente/avecEnTeteDevise/facture_facon_sub_report_Euro_Dollar.jasper");
 		}
 
 		factureReport.setParams(params);
