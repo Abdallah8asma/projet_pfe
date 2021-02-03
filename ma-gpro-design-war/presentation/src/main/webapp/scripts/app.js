@@ -208,7 +208,8 @@ angular
    'atelier.logistique',
    'atelier.suivieOF',
    'gpro.film',
-   'gpro.forme'
+   'gpro.forme',
+   'gpro.service'
    
 
 	
@@ -686,6 +687,15 @@ angular
           templateUrl: function (param) {
             return (
               'views/front/elementsDeBase/forme/' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
+        .when('/front/elementsDeBase/service/:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/elementsDeBase/service/' +
               param.templateFile +
               '.html'
             );

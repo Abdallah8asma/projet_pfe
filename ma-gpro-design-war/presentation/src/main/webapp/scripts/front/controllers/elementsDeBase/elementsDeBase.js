@@ -34,6 +34,9 @@ angular
 							case 'forme':
 								$scope.ITEM = 'forme';
 								break;	
+								case 'service':
+									$scope.ITEM = 'service';
+									break;	
 			}
 
 
