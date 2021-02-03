@@ -32,9 +32,33 @@ public class RechercheMulticritereProduitValue {
 	private String stock;
 	
 	
+	private String pantone;
+	
+	private String format;
 	
 	
 	
+	
+	public String getPantone() {
+		return pantone;
+	}
+
+
+	public void setPantone(String pantone) {
+		this.pantone = pantone;
+	}
+
+
+	public String getFormat() {
+		return format;
+	}
+
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+
 	public String getNumero() {
 		return numero;
 	}

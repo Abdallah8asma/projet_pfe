@@ -135,10 +135,27 @@ public class ProduitValue implements Comparable<ProduitValue> {
 	
 	private Long devise;
 	
+	private String pantone;
+	
+	private String format;
 	
 	
-	
-	
+
+	public String getPantone() {
+		return pantone;
+	}
+
+	public void setPantone(String pantone) {
+		this.pantone = pantone;
+	}
+
+	public String getFormat() {
+		return format;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
 
 	public Long getDevise() {
 		return devise;
