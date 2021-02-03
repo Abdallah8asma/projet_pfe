@@ -711,9 +711,9 @@ angular
 				$scope.rechercherReceptionAchat = function (
 					receptionAchatCourante) {
 						if(clientActif.blackMode==false){
-							receptionAchatCourante.facture=true;
+							receptionAchatCourante.facture="oui";
 						}
-						receptionAchatCourante.facture=true;
+					
 					receptionAchatCourante.type = 'Achat';
 					$http
 						.post(
@@ -2035,15 +2035,14 @@ angular
 									field: '',
 									//	width : '5%',
 									cellTemplate:
-
-										'<div class="ms-CommandButton float-right"   >'
-										+ '<button class="ms-CommandButton-button ms-CommandButton-Gpro"  ng-click="modifierOuCreerReceptionAchat()">'
-										+ '<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>'
-										+ '</button>'
-										+ '<button class="ms-CommandButton-button"  ng-click="showPopupDelete(17)" permission="[Achat_Delete]">'
-										+ '<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>'
-										+ '</button>'
-										+ '	</div> ',
+									`<div class="ms-CommandButton float-right"   >
+										<button class="ms-CommandButton-button ms-CommandButton-Gpro"  ng-click="modifierOuCreerReceptionAchat()">
+										<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+										</button>
+										<button class="ms-CommandButton-button"  ng-click="showPopupDelete(17)" permission="['Achat_Delete']">
+										<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+										</button>
+										</div> `,
 
 
 									// '<div class="buttons">'
@@ -2080,7 +2079,7 @@ angular
 							var receptionAchatCourante = $scope.receptionAchatCourante;
 							receptionAchatCourante.type = 'Achat';
 							if($scope.clientActif.blackMode==false){
-								bonLivraisonVenteCourant.declare="oui";
+								receptionAchatCourante.declare="oui";
 			
 							 }
 							if (searchText) {
