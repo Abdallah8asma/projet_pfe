@@ -28,8 +28,8 @@ public class TaxeFactureAchatEntity implements Serializable {
 	private static final long serialVersionUID = -6594954595337101125L;
 
 	@Id
-	@SequenceGenerator(name = "TAXEFACTURE_ID_GENERATOR", sequenceName = IConstanteCommerciale.SEQUENCE_GC_CTFA_SEQ, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TAXEFACTURE_ID_GENERATOR")
+	@SequenceGenerator(name = "TAXEFACTURE_ACHAT_ID_GENERATOR", sequenceName = IConstanteCommerciale.SEQUENCE_GC_CTFA_SEQ, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TAXEFACTURE_ACHAT_ID_GENERATOR")
 	private Long id;
 
 	@Column(name = "POURCENTAGE")
