@@ -2030,7 +2030,7 @@ angular
 								{
 									field: 'reference',
 									splayName: 'Réf.B Réception',
-									//	width : '15%'
+										width : '30%'
 								},
 								{
 									field: 'partieIntersseAbbreviation',
@@ -2063,24 +2063,24 @@ angular
 									field: 'prixTotal',
 									displayName: 'Montant HT',
 									cellFilter: 'prixFiltre',
-										width:'10%'
+										width:'5%'
 								},
 								{
 									field: 'montantTaxe',
 									displayName: 'Mont. Taxe',
 									cellFilter: 'prixFiltre',
-										width:'10%'
+										width:'5%'
 								},
 								{
 									field: 'montantTTC',
 									displayName: 'Montant TTC',
 									cellFilter: 'prixFiltre',
-										width:'10%'
+										width:'5%'
 								},
 
 								{
 									field: '',
-									//	width : '5%',
+										width : '5%',
 									cellTemplate:
 									`<div class="ms-CommandButton float-right"   >
 										<button class="ms-CommandButton-button ms-CommandButton-Gpro"  ng-click="modifierOuCreerReceptionAchat()">
