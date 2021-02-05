@@ -714,22 +714,32 @@
                     </div>
                     <input ui-select2="select2TaggingOptions" ng-model="tagReferenceBLivList" class="form-control"
                       style="border: 1px solid #e5eaee !important;" />
-                    <div class="input-group-append">
+                  <!--   <div class="input-group-append">
                       <button class="btn" style="
                           color: rgb(54, 153, 255);
                           background-color: rgb(225, 240, 255);
                         " ng-click="validerBL()">
                         Valider
                       </button>
+                    </div> &nbsp;&nbsp; -->
+                    
+                      <div class="input-group-append">
+                      <button class="btn" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        " ng-click="validerBLByOF()">
+                        Valider
+                      </button>
                     </div> &nbsp;&nbsp;
-                    <div class="input-group-append">
+                    
+                   <!--  <div class="input-group-append">
                       <button class="btn" style="
                           color: rgb(54, 153, 255);
                           background-color: rgb(225, 240, 255);
                         " ng-click="validerBLPassager(factureVenteCourant.partieIntId,factureVenteCourant.date)">
                         Valider Passager
                       </button>
-                    </div>
+                    </div> -->
 
                   </div>
                 </div>
@@ -1088,7 +1098,9 @@
 
           <div class="row">
 
-            <div ng-if="natureLivraison == 'FINI'" class="col-sm-12">
+          <!--   <div ng-if="natureLivraison == 'FINI'" class="col-sm-12"> -->
+            
+              <div class="col-sm-12">
 
               <span class="ms-ListItem-primaryText">Articles</span>
 
@@ -1142,10 +1154,11 @@
                  
                     <div class="row">
 
-                      <table class="table table-bordered table-hover table-condensed table-head-color"
-                        ng-show="modeValider == 'actif'">
+                   <!--    <table class="table table-bordered table-hover table-condensed table-head-color"
+                        ng-show="modeValider == 'actif'"> -->
 
-
+   <table class="table table-bordered table-hover table-condensed table-head-color"
+                        >
                         
                         <thead>
                           <tr style="font-weight: bold;">
@@ -1171,9 +1184,20 @@
                             <input type="text" class="form-control" ng-model="detFactureVente.description" />
                           </td>
                           <td>{{ detFactureVente.numeroOF }}</td>
-                          <td>{{ detFactureVente.quantite }}</td>
+                          <!-- <td>{{ detFactureVente.quantite }}</td> -->
+                          
+                            <td>
+                            <input type="number" class="form-control" ng-model="detFactureVente.quantite" />
+                          </td>
+                        
 
-                          <td>{{ detFactureVente.prixUnitaireHT }}</td>
+                        <!--   <td>{{ detFactureVente.prixUnitaireHT }}</td> -->
+                        
+                        
+                           <td>
+                            <input type="number" class="form-control" ng-model="detFactureVente.prixUnitaireHT" />
+                          </td>
+                        
                           <td>
                             <input type="number" class="form-control" ng-change="remiseChanged($index)"
                               ng-model="detFactureVente.remise" placeholder="{{detFactureVente.remise}}" disabled />
