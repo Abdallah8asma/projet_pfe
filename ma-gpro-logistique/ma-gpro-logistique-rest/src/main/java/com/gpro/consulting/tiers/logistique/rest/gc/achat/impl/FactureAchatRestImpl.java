@@ -169,7 +169,7 @@ public class FactureAchatRestImpl {
 			}
 			
 			
-	            for(DetFactureAchatValue factureDet :factureAchatValue.getListDetFactureAchat()) {
+	      /*      for(DetFactureAchatValue factureDet :factureAchatValue.getListDetFactureAchat()) {
 				
 				if(factureDet.getProduitId() != null) {
 					
@@ -186,7 +186,7 @@ public class FactureAchatRestImpl {
 				}
 			
 				
-			}
+			}*/
 			
 			
 		}

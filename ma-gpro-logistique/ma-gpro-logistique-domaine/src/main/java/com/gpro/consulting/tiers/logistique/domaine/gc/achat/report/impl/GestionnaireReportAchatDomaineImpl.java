@@ -674,7 +674,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 			Long produitId = produitReception.getProduitId();
 
 			String referenceProduit = vArticle.getRef();
-			String designationProduit = vArticle.getDesignation();
+			String designationProduit = produitReception.getDesignation();
 
 			Long sousFamilleId = vArticle.getSousFamilleId();
 
@@ -1377,7 +1377,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 
 				// System.out.println("inn fact fini..");
 				FactureReportProductValue factureReportProduct = new FactureReportProductValue();
-
+				factureReportProduct.setProduitDesignation(detFactureVente.getProduitDesignation());
 				factureReportProduct.setDetLivraisonVenteId(detFactureVente.getId());
 				factureReportProduct.setChoix(detFactureVente.getChoix());
 				factureReportProduct.setNombreColis(detFactureVente.getNombreColis());
@@ -1385,7 +1385,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 				factureReportProduct.setQuantite(detFactureVente.getQuantite());
 				factureReportProduct.setRemise(detFactureVente.getRemise());
 				factureReportProduct.setUnite(detFactureVente.getUnite());
-
+		
 				// factureReportProduct.setMontantTaxeTVA(detFactureVente.getMontanTaxeTVA());
 				// System.out.println("MontanTaxeTVA():
 				// "+detFactureVente.getMontanTaxeTVA()+"
@@ -1417,7 +1417,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 					 * getDesignation()); }
 					 */
 
-					factureReportProduct.setProduitDesignation(vArticle.getDesignation());
+					
 
 					// enrichir designation produit avec description detaille
 					/*
@@ -1442,6 +1442,8 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 					 */
 
 					factureReportProduct.setProduitCode(vArticle.getRef());
+					
+
 
 					// ajouté 16/03/2018
 					factureReportProduct.setTauxTvaArt(detFactureVente.getTaxeId().intValue());

@@ -215,6 +215,9 @@ public class FactureAchatPersistanceUtilities {
 		entity.setSerialisable(dto.isSerialisable());
 		entity.setNumeroSeries(dto.getNumeroSeries());
 		entity.setTaxeId(dto.getTaxeId());
+		entity.setDesignation(dto.getProduitDesignation());
+		entity.setReferenceArticle(dto.getProduitReference());
+	
 		
 		if (dto.getFactureAchatId() != null) {
 			FactureAchatEntity FactureAchatEntity = new FactureAchatEntity();
@@ -245,6 +248,8 @@ public class FactureAchatPersistanceUtilities {
 		dto.setNumeroSeries(entity.getNumeroSeries());
 		dto.setTaxeId(entity.getTaxeId());
 		
+		dto.setProduitDesignation(entity.getDesignation());;
+		dto.setProduitReference(entity.getReferenceArticle());
 		
 		if (entity.getFactureAchat() != null) {
 			dto.setFactureAchatId(entity.getFactureAchat().getId());
