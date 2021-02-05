@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.FactureAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.FactureAchatVue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.RechercheMulticritereFactureAchatValue;
@@ -72,6 +73,7 @@ public class FactureAchatPersistanceImpl extends AbstractPersistance implements 
 	
 	private String PREDICATE_GROUPE_CLIENT = "groupeClientId";
 	private String PREDICATE_BOUTIQUEID = "boutiqueId";
+	private String PREDICATE_DECLARE = "declarer";
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -216,6 +218,23 @@ public class FactureAchatPersistanceImpl extends AbstractPersistance implements 
 			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_ID_DEPOT), request.getIdDepot()));
 		}
  	
+		
+		//recherche declarer 
+		if (estNonVide(request.getDeclarerecherche())) {
+			Expression<Boolean> expression = root.get(PREDICATE_DECLARE);
+			switch (request.getDeclarerecherche()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.isTrue(expression));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.isFalse(expression));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
 
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 		List<FactureAchatEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
@@ -281,9 +300,8 @@ public class FactureAchatPersistanceImpl extends AbstractPersistance implements 
 	}
 
 	private boolean estNonVide(String val) {
-		return val != null && !"".equals(val);
+		return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 	}
-
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
@@ -646,5 +664,6 @@ public class FactureAchatPersistanceImpl extends AbstractPersistance implements 
 	   private boolean estNonVide(Long val) {
 			return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 		}
+	   
 
 }

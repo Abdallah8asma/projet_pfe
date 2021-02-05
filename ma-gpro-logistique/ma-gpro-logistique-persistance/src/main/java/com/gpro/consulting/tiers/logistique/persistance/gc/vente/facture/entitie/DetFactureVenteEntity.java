@@ -87,7 +87,24 @@ public class DetFactureVenteEntity implements Serializable {
 	private Long taxeId;
 	
 
+	@Column(name="numero_of")
+	private String numeroOF;
+	
+	
+	
+	
 
+	public String getNumeroOF() {
+		return numeroOF;
+	}
+
+	public void setNumeroOF(String numeroOF) {
+		this.numeroOF = numeroOF;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Long getTaxeId() {
 		return taxeId;

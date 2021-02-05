@@ -338,7 +338,7 @@ angular
 									url = UrlAtelier + "/fichesLogistique/suivi-of?state=" + objectCourant.statut
 										 					 + "&type=" + objectCourant.type
 															 + "&num="+objectCourant.referenceOF
-															 + "&reference="+objectCourant.referenceProduit
+															
 															 
 															 + "&dateLivDe="+objectCourant.dateLivraisonDE
 															 + "&dateLivA="+objectCourant.dateLivraisonA
@@ -354,7 +354,10 @@ angular
 															 
 															 + "&etatProduced="+objectCourant.etatProduced
 															 + "&etatShipped="+objectCourant.etatShipped 
-															 + "&machine="+objectCourant.machine ;
+															 + "&machine="+objectCourant.machine 
+														
+															     + "&client="+objectCourant.client 
+									                         + "&produitId="+objectCourant.produitId ;
 														
 										
 					                   $log.debug("-- URL--- :" + url );
@@ -559,6 +562,11 @@ angular
 															width : '7%'
 														},
 														{
+															field : 'statut',
+															displayName : 'Statut',
+															width : '7%'
+														},
+														{
 															field : 'referenceProduit',
 															displayName : 'Reference',
 															width : '6%'
@@ -610,14 +618,20 @@ angular
 															field : 'nbrColisExpedition',
 															displayName : 'Nbr Col. Exp.',
 															width : '6%'
-														}/*,
-														{
-															field : '',
-															width : '5%',
-															cellTemplate : '<div class="buttons" ng-show="!rowform.$visible">'
-																	+ '<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerMise()"> <i class="fa fa-fw fa-pencil"></i></button>'
-																	+ '<button data-nodrag class="btn btn-default btn-xs" ng-click="supprimerMise()"><i class="fa fa-fw fa-trash-o"></i></button>'
-														}*/ ];
+														},	{
+															field: '',
+															//width: '5%',
+															cellTemplate:
+																`<div class="ms-CommandButton float-right"  ng-show="!rowform.$visible" >
+																<button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerMise()">
+															<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+															</button>
+																<button class="ms-CommandButton-button"  ng-click="supprimerMise()" permission="['Production_OF_Delete']">
+																<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+																</button>
+																</div>`,
+						
+						                                } ];
 											});
 
 							$scope.totalServerItems = 0;

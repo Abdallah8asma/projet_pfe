@@ -1838,7 +1838,11 @@ public class PersistanceUtilities {
 	    
 	    
 	    
+	    
 	    produitValue.setDevise(pProduitEntity.getDevise());
+	    produitValue.setPantone(pProduitEntity.getPantone());
+	    produitValue.setFormat(pProduitEntity.getFormat());
+	    
 	    
 	    if (pProduitEntity.getSousFamille() != null) {
 			produitValue.setSousFamilleId(pProduitEntity.getSousFamille()
@@ -1932,7 +1936,11 @@ public class PersistanceUtilities {
 		
 		
 		produiEntity.setDevise(pProduitValue.getDevise());
-
+		
+		produiEntity.setPantone(pProduitValue.getPantone());
+		produiEntity.setFormat(pProduitValue.getFormat());
+		
+		
 		/*** Liste Document produit */
 		if (pProduitValue.getDocumentProduits() != null) {
 			Set<DocumentProduitEntity> vListeDocuments = new HashSet<DocumentProduitEntity>();

@@ -27,11 +27,22 @@
 							ng-show="modePdf == 'actif'"
 							class="glyphicon glyphicon-barcode clickable"
 							style="margin-right: 5px;" ng-click="download(rouleauCourant.id)"></i>
-							<i class="fa fa-floppy-o clickable" style="margin-right: 5px;"
-							ng-click="sauvegarderAjout(rouleauCourant)"
-							ng-disabled="!creationRouleau.$valid;"></i> <i
+
+						
+
+								<button  ng-disabled="!creationRouleau.$valid;"
+								ng-click="sauvegarderAjout(rouleauCourant)" class="fa fa-floppy-o clickable" style="margin-right: 5px;">
+								
+						
+								
+								
+								</button>
+						 <i
 							class="fa fa-ban clickable" style="margin-right: 5px;"
 							ng-click="annulerAjout()"></i>
+							
+							
+							
 						</span>
 					</div>
 				</div>
@@ -146,7 +157,7 @@
 														<!-- modeCreationMise -->
 														<select ng-show="creation" ui-select2
 															data-placeholder="---" style="width: 100%" ng-model="id"
-															ng-change="remplirRouleauMise(id)">
+															ng-change="remplirRouleauMise(id)" required>
 															<option ng-repeat="mise in listeMise"
 																value="{{mise.idMise}}">{{mise.reference}}</option>
 														</select>
@@ -178,7 +189,18 @@
 													</div>
 												</div> -->
 											
-												<div class="col-sm-6">
+								
+												</div>
+										</div>
+										
+										
+										
+										
+											<div class="form-group">
+											<div class="row">
+											
+											
+															<div class="col-sm-12">
 													<div class="input-group input-group-sm">
 														<span class="input-group-addon label1" id="basic-addon1">Client
 														</span>
@@ -187,11 +209,18 @@
 															<!-- <input ng-show="remplir" class="form-control"
 															readonly="readonly" value="{{resultatRechercheMise.clientAbreviation}}"/> -->
 															<!-- **{{clientId.status}} ** {{resultatRechercheMise.partieintId}} -->
-															<select ng-show="remplir" class="form-control"
+															
+															
+															
+															<select ui-select2 ng-show="remplir" style="width: 100%"
 																ng-model="clientId.status">
 																<option ng-repeat="client in listeClient"
 																	value="{{client.id}}">{{client.abreviation}}</option>
 															</select>
+															
+														
+															
+															
 														</div>
 														<div ng-show="creation">
 															<input ng-hide="remplir" class="form-control"
@@ -205,8 +234,11 @@
 			
 													</div>
 												</div>
+											
+													</div>
 												</div>
-										</div>
+											
+											
 										<div class="form-group">
 											<div class="row">
 												<div class="col-sm-6">
@@ -233,7 +265,7 @@
 											
 												<div class="col-sm-6">
 													<div class="input-group input-group-sm">
-														<span class="input-group-addon label1" id="basic-addon1">Type
+														<span class="input-group-addon label1" id="basic-addon1">Sous Categ.
 															:</span>
 														<!-- modeCreationMise -->
 														<div ng-show="creation">
@@ -254,6 +286,38 @@
 												</div>
 												</div>
 										</div>
+										
+										<div class="form-group">
+											<div class="row">
+											
+													<div class="col-sm-12">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Designation
+															:</span>
+														<!-- modeCreationMise -->
+														<div ng-show="creation">
+															<input ng-show="remplir" class="form-control"
+																readonly="readonly"
+																value="{{resultatRechercheMise.designationProduit}}" />
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+
+														<!-- modeModificationMise -->
+														<input ng-hide="creation" class="form-control"
+															readonly="readonly"
+															value="{{resultatRechercheMise.designationProduit}}" />
+													</div>
+												</div>
+											
+											
+													</div>
+										</div>
+										
+										
+										
 								<!-- 		<div class="form-group">
 											<div class="row">
 												<div class="col-sm-6">
@@ -329,6 +393,7 @@
 													<div class="input-group input-group-sm">
 														<span class="input-group-addon label1" id="basic-addon1">Quantite
 															 :</span> <input class="form-control"
+															 required
 															ng-model="rouleauCourant.metrage" />
 													</div>
 												</div>

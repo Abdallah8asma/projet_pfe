@@ -94,23 +94,31 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 		
 		RouleauFiniValue rouleau = rouleauFiniPersitance.getRouleauFiniById(id);
 		
-		List<MiseValue> listMise= misePersitance.getMiseByReference(rouleau.getReferenceMise());
 		
-		if(listMise.size() > 0) {
+		if(rouleau.getBonSortie() == null) {
 			
-			MiseValue miseValue= listMise.get(0);
 			
-			miseValue.setQteProduite(miseValue.getQteProduite() - rouleau.getMetrageAncien().longValue());
+			List<MiseValue> listMise= misePersitance.getMiseByReference(rouleau.getReferenceMise());
 			
-			miseValue.setNbrColis(miseValue.getNbrColis()  -1 );
+			if(listMise.size() > 0) {
+				
+				MiseValue miseValue= listMise.get(0);
+				
+				miseValue.setQteProduite(miseValue.getQteProduite() - rouleau.getMetrageAncien().longValue());
+				
+				miseValue.setNbrColis(miseValue.getNbrColis()  -1 );
+				
+				misePersitance.modifierMise(miseValue);
+				
+			}
 			
-			misePersitance.modifierMise(miseValue);
+			
+			
+			rouleauFiniPersitance.deleteRouleauFini(id);
 			
 		}
 		
-		
-		
-		rouleauFiniPersitance.deleteRouleauFini(id);
+	
 	}
 
 	@Override
@@ -353,6 +361,103 @@ public class RouleauFiniDomaineImpl implements IRouleauFiniDomaine{
 	public Long getNbrColisExpedierByMiseRef(String refMise) {
 		// TODO Auto-generated method stub
 		return rouleauFiniPersitance.getNbrColisExpedierByMiseRef(refMise);
+	}
+
+	@Override
+	public ResultatRechecheRouleauStandardValue rechercherRouleauInventaireByOF(
+			CritereRechercheRouleauStandardValue pCritereRechecheRouleau) {
+
+		
+	    /** Récupéeration de la liste des rouleaux */
+	    List < RouleauFiniValue > listeRouleauFini=rouleauFiniPersitance.rechercherMultiCritereRouleauFiniStandard(pCritereRechecheRouleau);
+	    
+	    
+	    /** Grouper par produit id */
+	    Map<String, List<RouleauFiniValue>> mapRouleau = new HashMap<String, List<RouleauFiniValue>>();
+	    
+	  //  Map<Long, List<String>> mapRefMise = new HashMap<Long, List<String>>();
+	    
+	    for (RouleauFiniValue rouleau : listeRouleauFini){
+	    	//Long key = rouleau.getProduitId();
+	    	
+	    	String key = rouleau.getReferenceMise();
+	    	
+	    	if (mapRouleau.get(key) == null) {
+	    		mapRouleau.put(key, new ArrayList<RouleauFiniValue>());
+	    	//	mapRefMise.put(key, new ArrayList<String>());
+	    	}
+	    	mapRouleau.get(key).add(rouleau);
+	    
+	    	//mapRefMise.get(key).add(rouleau.getReferenceMise());
+	    }
+	    
+	    /** Construction et alimentation du résultat de recherche Par les critères de recheche 
+	     * Nombre Colie Entre et  Nombre Colis a
+	     * 
+	     * Metrage entre et Metrage a 
+	     * */
+	    Iterator it = mapRouleau.entrySet().iterator();
+	  
+	    
+	    
+	    //Iterator itRefMise = mapRefMise.entrySet().iterator();
+	    List < ElementResultatRechecheRouleauStandardValue > listRapport=new ArrayList<>();
+	   // while (it.hasNext() && itRefMise.hasNext()) {
+	    	
+		    while (it.hasNext() ) {
+	    	
+			// Création d'un nouveau Elément
+			ElementResultatRechecheRouleauStandardValue vElement = new ElementResultatRechecheRouleauStandardValue();
+
+			Map.Entry<String, List<RouleauFiniValue>> pair = (Map.Entry<String, List<RouleauFiniValue>>) it.next();
+
+		//	Map.Entry<Long, List<String>> pairRefMise = (Map.Entry<Long, List<String>>) itRefMise.next();
+
+			/** Enrichissement d'un element */
+			// Produit
+		//	vElement.setIdProduit(pair.getKey());
+			
+			
+			
+			vElement.setReferenceMise(pair.getKey());
+			
+			Double sommeMetrage = SOMME_ZERO;
+			Double sommePoid = SOMME_ZERO;
+			Long nombreMise = ZERO;
+			for(RouleauFiniValue rouleau: pair.getValue()){
+				//Metrage
+				if(rouleau.getMetrage()!=null){
+					sommeMetrage=rouleau.getMetrage().doubleValue()+sommeMetrage;
+				}
+				//Somme des poids
+				if(rouleau.getPoids()!=null){
+					sommePoid=rouleau.getPoids().doubleValue()+ sommePoid;
+				}
+				
+				vElement.setIdProduit(rouleau.getProduitId());
+	      }
+	      vElement.setMetrage(sommeMetrage);
+	      vElement.setPoids(sommePoid);
+	      //Nombre de colis
+	      vElement.setNombreColis(Long.valueOf(pair.getValue().size()));
+	      	   
+	      //Nombre des mises
+	 //     Set<String> refMiseSet = new HashSet<String>(pairRefMise.getValue());
+	 //     nombreMise = Long.valueOf(refMiseSet.size());
+	      vElement.setNombreMise(nombreMise);
+	      
+	      listRapport.add(vElement);
+	      it.remove(); 
+	//      itRefMise.remove(); 
+	  }
+
+	    /** Controle sur les critères de recherche */
+
+	    ResultatRechecheRouleauStandardValue vResultat=new ResultatRechecheRouleauStandardValue();
+	    
+	    vResultat.setListeElementResultatRechecheRouleauStandardValue(listRapport);
+	    
+	    return vResultat;
 	}
 	  
 }

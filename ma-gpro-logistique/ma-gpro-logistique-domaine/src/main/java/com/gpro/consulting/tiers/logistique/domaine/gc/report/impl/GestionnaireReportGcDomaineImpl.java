@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInte
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IRegionPersistance;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.boninventairefini.value.ListProduitElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommercialeReport;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reception.value.ProduitReceptionAchatValue;
@@ -111,6 +113,8 @@ import com.gpro.consulting.tiers.logistique.coordination.gl.suivi.value.EnginVal
 import com.gpro.consulting.tiers.logistique.coordination.gl.suivi.value.PersonnelValue;
 import com.gpro.consulting.tiers.logistique.coordination.gl.suivi.value.RemorqueValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.MagasinValue;
+import com.gpro.consulting.tiers.logistique.domaine.atelier.bonsortiefini.IBonSortieFiniDomain;
+import com.gpro.consulting.tiers.logistique.domaine.atelier.bonsortiefini.impl.BonSortieFiniDomainImpl;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.cache.IGestionnaireLogistiqueCacheDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.mise.IMiseDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.bonlivraison.IModePaiementDomaine;
@@ -266,6 +270,9 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 
 	@Autowired
 	private IGroupeClientPersistance groupeClientPersistance;
+	
+	@Autowired
+	private IBonSortieFiniDomain bonSortieFiniDomaine;
 
 	// Reception Achat
 
@@ -280,6 +287,34 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		BonLivraisonReportValue bonLivraisonReport = new BonLivraisonReportValue();
 		LivraisonVenteValue livraisonVente = bonLivraisonPersitance.getBonLivraisonById(id);
 		//Collections.sort(livraisonVente.getListDetLivraisonVente(), new DetLivraisonVenteComparator());
+		
+		
+		
+		if(typerapport == 33 && livraisonVente.getInfoSortie() != null && livraisonVente.getInfoSortie().length() > 0)
+		{
+			
+			//update detail Livraison par Produit to detailLivra
+			
+			
+			String[] arrayStringBS = livraisonVente.getInfoSortie().split("-");
+			
+			List<String> refBonSortieList =new ArrayList<String>(Arrays.asList(arrayStringBS)) ;
+			
+		
+			
+			com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListProduitElementValue prodElementList = bonSortieFiniDomaine.getProduitElementListByOF(refBonSortieList, livraisonVente.getId());
+			
+			if(prodElementList.getListDetLivraisonVente() != null && prodElementList.getListDetLivraisonVente().size() >0)
+				livraisonVente.setListDetLivraisonVente(prodElementList.getListDetLivraisonVente());
+				
+			
+		}
+		
+		
+		
+		
+		
+		
 
 		// enrechissement des param du report
 
@@ -305,7 +340,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		}
 
 		// rapport avec enTete
-		if (typerapport == 3) {
+		if (typerapport == 3 || typerapport == 33) {
 			bonLivraisonReport.setReportStream(
 					new FileInputStream("C://ERP/Lib/STIT_BonLivraison/avecEnTete/bon_livraison_report.jrxml"));
 
@@ -478,6 +513,20 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		
 
 	
+		
+		
+		if(pi.getRegionId() != null) {
+			
+			
+			RegionValue regionClient = regionPersistance.getById(pi.getRegionId()) ;
+			
+			if(regionClient != null)
+				bonLivraisonReportValue.setVilleClient(regionClient.getDesignation());
+			
+		}
+		
+		bonLivraisonReportValue.setCodePostalClient(pi.getCodeDouane());
+
 
 		bonLivraisonReportValue.setExistFodec(false);
 		bonLivraisonReportValue.setExistTVA(false);
@@ -506,6 +555,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				bonLivraisonReportProduct.setQuantite(detLivraisonVente.getQuantite());
 				bonLivraisonReportProduct.setRemise(detLivraisonVente.getRemise());
 				bonLivraisonReportProduct.setUnite(detLivraisonVente.getUnite());
+				bonLivraisonReportProduct.setMise(detLivraisonVente.getNumeroOF());
 
 				bonLivraisonReportProduct.setMontantTaxeTVA(detLivraisonVente.getMontantTaxeTVA());
 
@@ -670,6 +720,22 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		else
 			bonLivraisonReportValue.setClient(pi.getRaisonSociale());
 		
+		
+		
+		if(pi.getRegionId() != null) {
+			
+			
+			RegionValue regionClient = regionPersistance.getById(pi.getRegionId()) ;
+			
+			if(regionClient != null)
+				bonLivraisonReportValue.setVilleClient(regionClient.getDesignation());
+			
+		}
+		
+		bonLivraisonReportValue.setCodePostalClient(pi.getCodeDouane());
+
+		
+		
 
 		bonLivraisonReportValue.setExistFodec(false);
 		bonLivraisonReportValue.setExistTVA(false);
@@ -771,6 +837,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				bonLivraisonReportProduct.setQuantite(detLivraisonVente.getQuantite());
 				bonLivraisonReportProduct.setRemise(detLivraisonVente.getRemise());
 				bonLivraisonReportProduct.setUnite(detLivraisonVente.getUnite());
+				bonLivraisonReportProduct.setMise(detLivraisonVente.getNumeroOF());
 
 				Long produitId = detLivraisonVente.getProduitId();
 				
@@ -1185,6 +1252,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		bonlivraisonReportList.setPrixMax(request.getPrixMax());
 		bonlivraisonReportList.setEtat(request.getEtat());
 		bonlivraisonReportList.setStock(request.getStock());
+		bonlivraisonReportList.setNumOF(request.getNumOF());
 
 		if (request.getAvecFacture() != null) {
 
@@ -1218,7 +1286,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVente/facture_report.jrxml"));
 
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "/report/logo_commercial.png");
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png\"");
 
 			if (factureVente.getNatureLivraison().equals("FINI")) {
 				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVente/facture_sub_report.jasper");
@@ -1235,7 +1303,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVenteBas/facture_report.jrxml"));
 
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "/report/logo_commercial.png");
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 			if (factureVente.getNatureLivraison().equals("FINI")) {
 				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVenteBas/facture_sub_report.jasper");
@@ -1255,7 +1323,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_report.jrxml"));
 
 			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "/report/logo_commercial.png");
+			params.put("p_PathLogo","C:/ERP/logos_clients/logo_client.png");
 
 			if (factureVente.getNatureLivraison().equals("FINI")) {
 				params.put("SUBREPORT_INVENTAIRE_PATH",
@@ -1268,6 +1336,46 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			factureReport.setParams(params);
 
 		}
+		
+      else if (typerapport == 4) {
+
+		// rapport sur imp matricielle
+		factureReport.setFileName(REPORT_NAME_FACTURE);
+		factureReport.setReportStream(
+				new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTeteDevise/facture_report_Euro_Dollar.jrxml"));
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
+
+		if (factureVente.getNatureLivraison().equals("FINI")) {
+			params.put("SUBREPORT_INVENTAIRE_PATH",
+					"C://ERP/Lib/STIT_FactureVente/avecEnTeteDevise/facture_sub_report_Euro_Dollar.jasper");
+		} else if (factureVente.getNatureLivraison().equals("FACON")) {
+			params.put("SUBREPORT_INVENTAIRE_PATH",
+					"C://ERP/Lib/STIT_FactureVente/avecEnTeteDevise/facture_facon_sub_report_Euro_Dollar.jasper");
+		}
+
+		factureReport.setParams(params);
+		}
+		
+		if (typerapport == 5) {
+			// rapport sur imp matricielle
+			factureReport.setFileName(REPORT_NAME_FACTURE);
+			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVente/SansEntete/facture_report_Euro_Dollar.jrxml"));
+
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
+
+			if (factureVente.getNatureLivraison().equals("FINI")) {
+				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVente/SansEntete/facture_sub_report_Euro_Dollar.jasper");
+			} else if (factureVente.getNatureLivraison().equals("FACON")) {
+				params.put("SUBREPORT_INVENTAIRE_PATH",
+						"C://ERP/Lib/STIT_FactureVente/SansEntete/facture_facon_sub_report_Euro_Dollar.jasper");
+			}
+
+			factureReport.setParams(params);
+
+	}
 		// enrichissement du report
 		enrichmentFactureReport(factureReport, factureVente);
 		enrichmentFactureReportWithBaseInformation(factureReport, factureVente);
@@ -1445,23 +1553,54 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		Map<Long, PartieInteresseValue> clientIdMap = gestionnaireLogistiqueCacheDomaine.mapClientById();
 
 		Long clientId = null;
+		
+		
+		PartieInteresseValue pi = null;
 
 		if (factureVente.getPartieIntId() != null) {
 			clientId = factureVente.getPartieIntId();
 			reportValue.setClientId(clientId);
+			
+			pi = clientIdMap.get(clientId) ;
 		}
 
-		if (clientIdMap.containsKey(clientId)) {
-			reportValue.setClient(clientIdMap.get(clientId).getRaisonSociale());
-			reportValue.setMatriculeFiscal(clientIdMap.get(clientId).getMatriculeFiscal());
-			reportValue.setAdresse(clientIdMap.get(clientId).getAdresse());
-			reportValue.setTelephone(clientIdMap.get(clientId).getTelephone());
-			reportValue.setFax(clientIdMap.get(clientId).getFax());
+		if (pi != null ) {
 			
 			
-			reportValue.setGroupeClientDesignation(clientIdMap.get(clientId).getReference());
+			
+			reportValue.setClient(pi.getRaisonSociale());
+			reportValue.setMatriculeFiscal(pi.getMatriculeFiscal());
+			reportValue.setAdresse(pi.getAdresse());
+			reportValue.setTelephone(pi.getTelephone());
+			reportValue.setFax(pi.getFax());
+			
+			
+			reportValue.setGroupeClientDesignation(pi.getReference());
+			
+			
+			if(pi.getRegionId() != null) {
+				
+				
+				RegionValue regionClient = regionPersistance.getById(pi.getRegionId()) ;
+				
+				if(regionClient != null)
+					reportValue.setVilleClient(regionClient.getDesignation());
+				
+			}
+			
+			reportValue.setCodePostalClient(pi.getCodeDouane());
 			
 		}
+		
+		
+		
+		
+		
+
+
+		
+		
+		
 		reportValue.setType(factureVente.getType());
 		reportValue.setExistFodec(false);
 		reportValue.setExistTVA(false);
@@ -1541,6 +1680,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				factureReportProduct.setQuantite(detFactureVente.getQuantite());
 				factureReportProduct.setRemise(detFactureVente.getRemise());
 				factureReportProduct.setUnite(detFactureVente.getUnite());
+				factureReportProduct.setMise(detFactureVente.getNumeroOF());
 
 				// factureReportProduct.setMontantTaxeTVA(detFactureVente.getMontanTaxeTVA());
 				// System.out.println("MontanTaxeTVA():
@@ -2124,7 +2264,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 	// Added on 18/11/2016, by Zeineb Medimagh
 
 	@Override
-	public BonCommandeReportValue getBonCommandeParIdReport(Long id, String typerapport, String avecPrix,String avecEntete)
+	public BonCommandeReportValue getBonCommandeParIdReport(Long id, String typerapport,Long numrapport, String avecPrix,String avecEntete)
 			throws IOException {
 
 		BonCommandeReportValue bonCommandeReport = new BonCommandeReportValue();
@@ -2152,35 +2292,63 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			
 	       if(avecEntete.equals("non")) {
 				
-				
+				if(numrapport==1) {
 						   		bonCommandeReport
 								.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/bon_commande_report.jrxml"));
 					
 						HashMap<String, Object> params = new HashMap<String, Object>();
-						params.put("p_PathLogo", "/report/logo_commercial.png");
+						params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 					
 						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/bon_commande_sub_report.jasper");
 					
 						bonCommandeReport.setParams(params);
 				
-				
+				}
+				else if(numrapport==2) {
+					
+			   		bonCommandeReport
+					.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/SansEntete/bon_commande_report_Euro_Dollar.jrxml"));
+		
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
+		
+			params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/SansEntete/bon_commande_sub_report_Euro_Dollar.jasper");
+		
+			bonCommandeReport.setParams(params);
+					
+					
+					
+				}
 				
 			}
 			
 			
 			if(avecEntete.equals("oui")) {
 				
-				
+				if(numrapport==3) {
 								bonCommandeReport
 								.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/bon_commande_report.jrxml"));
 				
 						HashMap<String, Object> params = new HashMap<String, Object>();
-						params.put("p_PathLogo", "/report/logo_commercial.png");
+						params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 				
 						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/bon_commande_sub_report.jasper");
 				
 						bonCommandeReport.setParams(params);
-								
+				}
+				
+				
+				if(numrapport==4) {
+					bonCommandeReport
+					.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/bon_commande_report_Euro_Dollar.jrxml"));
+	
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
+	
+			params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/bon_commande_sub_report_Euro_Dollar.jasper");
+	
+			bonCommandeReport.setParams(params);
+	}
 				
 				
 			}
@@ -2192,33 +2360,59 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			
 			
 		       if(avecEntete.equals("non")) {
+		    	   if(numrapport==1) {
 		    		// enrechissement des param du report Devis
 					// System.out.println("inn Devis");
 					bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/devis_report.jrxml"));
 
 					HashMap<String, Object> params = new HashMap<String, Object>();
-					params.put("p_PathLogo", "/report/logo_commercial.png");
+					params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 					params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/devis_sub_report.jasper");
 
 					bonCommandeReport.setParams(params);
 		    	   
-		    	   
+		    	   }
+		    	   else if(numrapport==2) {
+		    		   
+		    			bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/SansEntete/devis_report_Euro_Dollar.jrxml"));
+
+						HashMap<String, Object> params = new HashMap<String, Object>();
+						params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
+
+						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/SansEntete/devis_sub_report_Euro_Dollar.jasper");
+
+						bonCommandeReport.setParams(params);
+		    		   
+		    	   }
 		       }
 		       
 		       if(avecEntete.equals("oui")) {
+		    	   
+		    	   if(numrapport==3) {
 		    		// enrechissement des param du report Devis
 					// System.out.println("inn Devis");
 					bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/devis_report.jrxml"));
 
 					HashMap<String, Object> params = new HashMap<String, Object>();
-					params.put("p_PathLogo", "/report/logo_commercial.png");
+					params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
 
 					params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/devis_sub_report.jasper");
 
 					bonCommandeReport.setParams(params);
 		    	   
-		    	   
+		    	   }
+		    	   else if(numrapport==4) {
+		    			bonCommandeReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/devis_report_Euro_Dollar.jrxml"));
+
+						HashMap<String, Object> params = new HashMap<String, Object>();
+						params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
+
+						params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_BonCommande/avecEnTete/devise/devis_sub_report_Euro_Dollar.jasper");
+
+						bonCommandeReport.setParams(params);   
+		    		   
+		    	   }
 		       }
 		
 		}

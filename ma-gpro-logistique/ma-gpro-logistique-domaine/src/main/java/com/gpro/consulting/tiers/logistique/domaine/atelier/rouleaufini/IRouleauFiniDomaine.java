@@ -41,4 +41,7 @@ public interface IRouleauFiniDomaine {
 	public Double getQteExpedierByMiseRef(String refMise);
 
 	public Long getNbrColisExpedierByMiseRef(String refMise);
+
+	public ResultatRechecheRouleauStandardValue rechercherRouleauInventaireByOF(
+			CritereRechercheRouleauStandardValue critereRechercheRouleauStandard);
 }

@@ -103,4 +103,6 @@ public interface IBonSortieFiniDomain {
 	
 	public List<BonSortieFiniValue> getListByBonSortieList(List<String> refBonSortieList);
 
+	public ListProduitElementValue getProduitElementListByOF(List<String> refBonSortieList, Long livraisonVenteId);
+
 }

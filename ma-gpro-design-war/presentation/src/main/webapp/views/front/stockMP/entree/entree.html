@@ -156,7 +156,7 @@
 										</div>
 										<select ui-select2 ng-model="bonMouvementStockCourante.fournisseur"
 											ng-init="bonMouvementStockCourante.fournisseur=''" data-placeholder="..."
-											class="form-control ">
+											class="form-control " style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="pi in listePartieInteressee" value="{{pi.id}}">{{pi.raisonSociale}}</option>
 										</select>
@@ -188,8 +188,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Raison d'entrée</span>
 										</div>
-										<select class="form-control" ng-model="bonMouvementStockCourante.raisonEntre"
-											ng-init="bonMouvementStockCourante.raisonEntre=''">
+										<select ui-select2 class="form-control" ng-model="bonMouvementStockCourante.raisonEntre"
+											ng-init="bonMouvementStockCourante.raisonEntre=''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="raison in ListeRaisonCache" value="{{raison.id}}">
 												{{raison.designation}}</option>
@@ -313,8 +313,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Magasin</span>
 										</div>
-										<select class="form-control" ng-model="bonMouvementStockCourante.magasin"
-											ng-init="bonMouvementStockCourante.magasin=''">
+										<select ui-select2 class="form-control" ng-model="bonMouvementStockCourante.magasin"
+											ng-init="bonMouvementStockCourante.magasin=''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="magasin in listeMagasinCache" value="{{magasin.id}}">
 												{{magasin.designation}}</option>
@@ -390,8 +390,8 @@
 										ng-click="downloadBonEntree(bonMouvementStockCourante.id)">PDF</a></li>
 
 
-								<!-- <li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
-										ng-click="downloadAllProduitsExcel(produitCourante)">Excel</a></li> -->
+								 <li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
+										ng-click="downloadBonEntreeExcel(bonMouvementStockCourante.id)">Excel</a></li> 
 							</ul>
 						</div>
 
@@ -470,7 +470,7 @@
 										</div>
 										<select ui-select2 ng-model="bonMouvementStockCourante.partieintId"
 											ng-init="bonMouvementStockCourante.partieintId=''" data-placeholder="..."
-											class="form-control ">
+											class="form-control " style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="pi in listePartieInteressee" value="{{pi.id}}">{{pi.raisonSociale}}</option>
 										</select>
@@ -539,9 +539,10 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Raison d'entree</span>
 										</div>
-										<select type="text" class="form-control"
+										<select ui-select2 type="text" class="form-control"
 											ng-model="bonMouvementStockCourante.raisonMouvementId"
-											ng-change="bonMouvementStockCourante.raisonMouvementId= bonMouvementStockCourante.raisonMouvementId.toUpperCase()">
+											ng-change="bonMouvementStockCourante.raisonMouvementId= bonMouvementStockCourante.raisonMouvementId.toUpperCase()"
+											style="border: 1px solid #e5eaee !important;">
 
 											<option ng-repeat="raison in ListeRaisonCache" value="{{raison.id}}">
 												{{raison.designation}}</option>
@@ -656,9 +657,9 @@
 														<div class="input-group-prepend">
 															<label class="input-group-text ms-Label">Magasin</label>
 														</div>
-														<select class="form-control" required ng-model="idMagasin"
+														<select ui-select2 class="form-control" required ng-model="idMagasin"
 														ng-init="idMagasin=''" ng-change="setMagasinId(idMagasin)"
-														>
+														style="border: 1px solid #e5eaee !important;">
 															<option ng-repeat="magasin in listeMagasinCache"
 																value="{{magasin.id}}">{{magasin.designation}}</option>
 														</select>
@@ -764,7 +765,7 @@
 		<div class="col-md-12">
 
 
-			<br /> <span class="ms-ListItem-primaryText">Liste</span> <br />
+			<br /> <span class="ms-ListItem-primaryText">Liste Des Bons d'Entree</span> <br />
 			<div class="title-ajout line"></div>
 
 

@@ -129,15 +129,15 @@
 											ng-init="miseCourant.statut = ''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option value="Preparation">Preparation</option>
-											<option value="En cours">Doing</option>
-											<option value="Produit">Done</option>
-											<option value="Livre">Shipped</option>
+											<option value="En cours">En cours</option>
+											<option value="Produit">Produite</option>
+											<option value="Livre">Livre</option>
 											</select>
 										</div>
 									</div>
 								</div>
 
-								<div class="col-sm-3">
+								<!-- <div class="col-sm-3">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
@@ -153,7 +153,29 @@
 											</select>
 										</div>
 									</div>
-								</div>
+								</div> -->
+								
+								
+								
+								
+								 <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <select ui-select2 ng-init="miseCourant.client =''"
+                      ng-model="miseCourant.client" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Clients</option>
+                      <option ng-repeat="client in listeClientCache | filter:{famillePartieInteressee:1}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
 								<div class="col-sm-3">
 									<div class="form-group">
@@ -167,17 +189,7 @@
 									</div>
 								</div>
 
-								<div class="col-sm-3">
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text">Référence</span>
-											</div>
-											<input class="form-control" ng-model="miseCourant.referenceProduit"
-												ng-init="miseCourant.referenceProduit=''" />
-										</div>
-									</div>
-								</div>
+								
 
 
 							</div>
@@ -411,6 +423,55 @@
 
 							</div>
 							
+							
+							
+							
+							
+							<div class="row">
+
+<div class="col-sm-3" >
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Reference</label>
+										</div>
+										<select ui-select2="true"  class="form-control" ng-model="miseCourant.produitId"
+										 ng-init="miseCourant.produitId =''" 
+											style="border: 1px solid #e5eaee !important;"
+											>
+											 <option value="">Tous</option>
+											 
+
+											<!--  <--  55555 --> 
+											<option ng-repeat="produit in listeProduit"
+												value="{{produit.id}}">{{produit.reference}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+<div class="col-sm-9" >
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Designation</label>
+										</div>
+										<select ui-select2="true"  class="form-control" ng-model="miseCourant.produitId"
+										 ng-init="miseCourant.produitId =''" 
+											style="border: 1px solid #e5eaee !important;"
+											>
+											 <option value="">Tous</option>
+											 
+
+											<!--  <--  55555 --> 
+											<option ng-repeat="produit in listeProduit"
+												value="{{produit.id}}">{{produit.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+</div>
+							
 							<div class="row">
 								<div class="col-sm-4">
 									<div class="form-group">
@@ -497,6 +558,525 @@
 
 
 	</div>
+	
+	
+	
+	
+	<div class="row" ng-show="displayMode == 'edit'">
+
+		<div class="col-md-12">
+
+			<span  class="ms-ListItem-primaryText" ng-show="modePdf == 'actif'">
+				Modification</span>
+			<span  class="ms-ListItem-primaryText" ng-show="modePdf != 'actif'">ADD</span>
+			<div class="panel panel-primary">
+
+			<!-- 	<br /> <span class="ms-ListItem-primaryText">Donn&eacute;es
+					G&eacute;n&eacute;rales</span> 
+				<br /> -->
+
+
+				<div class="ms-CommandBar ms-CommandBar--navBar">
+					<div class="ms-CommandBar-sideCommands">
+
+
+						<div class="ms-CommandButton ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+										class="ms-Icon ms-Icon--Info"></i></span> <span
+									class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+					</div>
+					<div class="ms-CommandBar-mainArea">
+						<div class="ms-CommandButton" >
+							<button class="ms-CommandButton-button" 
+							permission="['Production_OF_Edit']" ng-click="sauvegarderAjout(miseCourant)">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span> <span
+									class="ms-CommandButton-label">Enregistrer</span>
+							</button>
+						</div>
+
+						<div class="ms-CommandButton">
+							<button class="ms-CommandButton-button" ng-click="annulerAjout()">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span> <span
+									class="ms-CommandButton-label">Retour</span>
+							</button>
+						</div>
+						<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span> <span
+									class="ms-CommandButton-label"></span>
+							</button>
+							<ul class="ms-ContextualMenu is-opened">
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+										tabindex="1">Folder</a> <i class="ms-Icon ms-Icon--Folder"></i></li>
+								<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">Plain
+										Text
+										Document</a> <i class="ms-Icon ms-Icon--Document"></i></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">A
+										Coffee</a> <i class="ms-Icon ms-Icon--Coffee"></i></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+										tabindex="1">Picture</a> <i class="ms-Icon ms-Icon--Picture"></i></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+										tabindex="1">Money</a> <i class="ms-Icon ms-Icon--Money"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-body" ng-show="displayMode == 'edit'">
+
+					<form class="form-horizontal" id="creationMise" name="creationMise">
+						
+						<div class="row">
+
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">NUM</label>
+										</div>
+										<input type="text" class="form-control" ng-model="miseCourant.reference"
+										ng-init="miseCourant.reference =''" style="border: 1px solid #e5eaee !important;"
+											/>
+									</div>
+								</div>
+							</div>
+
+
+							<!-- <div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Type</label>
+										</div>
+										<select  ui-select2="true"  class="form-control" ng-model="miseCourant.typeOF"
+										    ng-init="miseCourant.typeOF =''" 
+											ng-change="onChangeOfType(miseCourant.typeOF)" style="border: 1px solid #e5eaee !important;">
+											<option value="">Tous</option>
+										 	<option value="Injection">Injection</option>
+											<option value="Tempographie">Tempographie</option>
+											<option value="Assemblage">Assemblage</option>
+											<option value="Spread">Spread</option> 
+										</select>
+									</div>
+								</div>
+							</div> -->
+
+
+
+
+
+
+
+
+
+
+							<div class="col-sm-3" ng-if="currentMode == 'ADD'">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Référence</label>
+										</div>
+										<select ui-select2="true"  class="form-control" ng-model="miseCourant.produitId"
+											ng-change="changeProduits(miseCourant.produitId)" ng-init="miseCourant.produitId =''" 
+											style="border: 1px solid #e5eaee !important;"
+											>
+											 <option value="">Tous</option>
+											 
+
+											<!--  <--  55555 --> 
+											<option ng-repeat="produit in listeProduit"
+												value="{{produit.id}}">{{produit.reference}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="col-sm-3" ng-if="currentMode == 'EDIT'">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Référence</label>
+										</div>
+										<select  class="form-control" ng-model="miseCourant.produitId"
+											 ng-init="miseCourant.produitId =''" 
+											 style="border: 1px solid #e5eaee !important;"
+											>
+	                                         <option value="">Tous</option>
+											<option ng-repeat="produit in listeProduit"
+												value="{{produit.id}}">{{produit.reference}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							
+							
+							
+							<div class="col-sm-6">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Designation</label>
+										</div>
+										<select  ui-select2="true"  class="form-control" ng-model="miseCourant.produitId"
+											 ng-init="miseCourant.produitId =''" 
+											 ng-change="changeProduits(miseCourant.produitId)"
+											 style="border: 1px solid #e5eaee !important;"
+											>
+	                                         <option value="">Tous</option>
+											<option ng-repeat="produit in listeProduit"
+												value="{{produit.id}}">{{produit.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						<!-- 	<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Description</label>
+										</div>
+										<input type="text" class="form-control" ng-model="miseCourant.destinationProduit"
+										      ng-init="miseCourant.destinationProduit=''"
+											/>
+									</div>
+								</div>
+							</div> -->
+			
+						</div>
+			
+					
+
+						<div class="row">
+					
+						 <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <select ui-select2 ng-init="miseCourant.partieintId =''"
+                      ng-model="miseCourant.partieintId" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value=""></option>
+                      <option ng-repeat="client in listeClientCache | filter:{famillePartieInteressee:1}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+					
+							<div class="col-sm-6">
+							<div class="form-group">
+								<div class="input-group">
+								  <div class="input-group-prepend">
+									<label class="input-group-text ms-Label">R&eacute;f BC</label>
+								  </div>
+  
+								  <input ui-select2="select2TaggingOptions" ng-model="tagReferenceBLivList" class="form-control"
+								  style="border: 1px solid #e5eaee !important;" 
+								  
+								  
+								  />
+  
+  
+								</div>
+							  </div>
+							</div>
+
+
+						
+
+					
+
+						
+
+
+
+						</div>
+
+						<div class="row">
+							
+						
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Début</label>
+										</div>
+										<input type="text" class="form-control" disabled
+											  ng-init="miseCourant.dateIntroduction =''" 
+											  value="{{miseCourant.dateIntroduction | date:'dd-MM-yyyy HH:mm:ss'}}"
+											/>
+									</div>
+								</div>
+							</div>
+							
+		                    <div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">FIN</label>
+										</div>
+										<input type="text" class="form-control" disabled
+											  ng-init="miseCourant.dateFin =''" 
+											  value="{{miseCourant.dateFin | date:'dd-MM-yyyy HH:mm:ss'}}"
+											/>
+									</div>
+								</div>
+							</div>
+
+
+
+					        <!-- <div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Destination</label>
+										</div>
+										<select ui-select2="true" class="form-control" ng-model="miseCourant.destination"
+										    ng-init="miseCourant.destination =''" style="border: 1px solid #e5eaee !important;" >
+											 <option value="">TOUS</option>
+											 <option value="Trie">Trie</option>
+											 <option value="Assemblage">Assemblage</option>
+											 <option value="Spray">Spray</option>
+											 <option value="Tampographie">Tampographie</option>
+										</select>
+									</div>
+								</div>
+							</div> -->
+
+							<div class="col-sm-2">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Machine</label>
+										</div>
+										<select ui-select2="true" class="form-control" ng-model="miseCourant.machine"
+										    ng-init="miseCourant.machine =''" style="border: 1px solid #e5eaee !important;">
+											 <option value="">TOUS</option>
+											 
+											 <option ng-repeat="produit in listeMachines"
+											 value="{{produit.designation}}">{{produit.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-1">
+
+								<a ng-click="downloadMachineOF()"> 
+								<i class="fa fa-download" aria-hidden="true"></i>
+									
+								</a>
+
+							</div>
+
+
+
+
+						</div>
+
+						<div class="row">
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Qantité</label>
+										</div>
+										<input type="number" step="any" class="form-control" ng-model="miseCourant.quantite"
+										      ng-init="miseCourant.quantite=''"
+											/>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Qantité par Colis</label>
+										</div>
+										<input type="number" step="any" class="form-control" ng-model="miseCourant.poidFini"
+										      ng-init="miseCourant.poidFini=''"
+											/>
+									</div>
+								</div>
+							</div>
+
+
+							<!-- <div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Emballage</label>
+										</div>
+										<select ui-select2="true" class="form-control" ng-model="miseCourant.packaging"
+										    ng-init="miseCourant.packaging =''" style="border: 1px solid #e5eaee !important;" >
+											 <option value="">TOUS</option>
+											 <option value="SACHET P">SACHET P</option>
+											 <option value="SACHET K">SACHET K</option>
+											 <option value="CARTON 10S">CARTON 10S</option>
+											 <option value="CARTON 10B">CARTON 10B</option>
+											 <option value="CARTON 5S">CARTON 5S</option>
+											 <option value="CARTON 5B">CARTON 5B</option>
+											 <option value="CARTON 15">CARTON 15</option>
+											 <option value="CARTON 20">CARTON 20</option>
+											 <option value="CARTON 25">CARTON 25</option>
+											 <option value="CARTON 2.5">CARTON 2.5</option>
+											 <option value="CARTON 2">CARTON 2</option>
+											 <option value="CARTON Z">CARTON Z</option>
+
+										</select>
+									</div>
+								</div>
+							</div> -->
+
+
+							<!-- <div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Type Label</label>
+										</div>
+										<select ui-select2="true" class="form-control" ng-model="miseCourant.typeEtiquette"
+										    ng-init="miseCourant.typeEtiquette =''" style="border: 1px solid #e5eaee !important;" >
+											 <option value="">TOUS</option>
+											 <option value="Kanbans">Kanbans</option>
+											 <option value="MTS">MTS</option>
+										</select>
+									</div>
+								</div>
+							</div> -->
+
+						</div>
+
+						<div class="row">
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label ">Etat</label>
+										</div>
+										<select ui-select2="true" class="form-control" ng-model="miseCourant.statut"
+										    ng-init="miseCourant.statut =''" style="border: 1px solid #e5eaee !important;" >
+											 <option value="">TOUS</option>
+											 <option value="Preparation">Preparation</option>
+											 <option value="En cours">En cours</option>
+											 <option value="Produit">Produit</option>
+											 <option value="Livre">Livre</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ">Début Production</label>
+										</div>
+										<input type="text" class="form-control" disabled
+											  ng-init="miseCourant.dateDebutProduction =''" 
+											  value="{{miseCourant.dateDebutProduction | date:'dd-MM-yyyy HH:mm:ss'}}"
+											/>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ">Fin Production</label>
+										</div>
+										<input type="text" class="form-control" disabled
+											  ng-init="miseCourant.dateFinProduction =''" 
+											  value="{{miseCourant.dateFinProduction | date:'dd-MM-yyyy HH:mm:ss'}}"
+											/>
+									</div>
+								</div>
+							</div>
+
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ">Observations</label>
+										</div>
+										<input type="text" class="form-control" ng-model="miseCourant.observations"
+										ng-init="miseCourant.observations =''"
+											/>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+							<div class="form-group"
+							ng-if="listMiseEncours.length > 0 && miseCourant.produitId != ''">
+
+							<div class="title-ajout">List Doing OF For Article
+								{{selectedReferenceProduit}}</div>
+
+
+							<div class="row">
+								<div class="col-sm-1" ng-repeat="ofRech in listMiseEncours">
+
+
+
+									<span class="badge badge-warning">&nbsp;{{ofRech.reference}}&nbsp;</span>
+
+
+								</div>
+
+
+							</div>
+						</div>
+
+
+					</form>
+
+
+
+
+				</div>
+
+
+
+
+
+
+			</div>
+
+
+	    </div>
+
+	</div>
+
+	
+	
+	
+	
 
 
 	<div class="row" ng-show="displayMode != 'edit'">

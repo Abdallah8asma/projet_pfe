@@ -154,8 +154,8 @@
 
 											<label class=" input-group-text ms-Label">Categorie</label>
 										</div>
-										<select name="" categoriePI"" id="categoriePI" class="form-control"
-											ng-model="partieInteresseeCourante.vCategoriePartieInteressee">
+										<select ui-select2 name="" categoriePI"" id="categoriePI" class="form-control"
+											ng-model="partieInteresseeCourante.vCategoriePartieInteressee" style="border: 1px solid #e5eaee !important;">
 											<option ng-repeat="categorie in ListCategoriePICache" value="{{categorie.id}}">
 												{{categorie.designation}}</option>
 										</select>
@@ -194,8 +194,8 @@
 											<label class=" input-group-text ms-Label">Type</label>
 
 										</div>
-										<select name="typePI" id="typePI" class="form-control"
-											ng-model="partieInteresseeCourante.vTypePartieInteressee">
+										<select ui-select2 name="typePI" id="typePI" class="form-control"
+											ng-model="partieInteresseeCourante.vTypePartieInteressee" style="border: 1px solid #e5eaee !important;">
 											<option ng-repeat="type in ListTypePICache" value="{{type.id}}">{{type.designation}}</option>
 										</select>
 									</div>

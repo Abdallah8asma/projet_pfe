@@ -83,7 +83,8 @@ angular
 				
 				$scope.numSerieAjout = "";
 				$scope.numSerieEdit = "";
-				
+				$scope.referenceArticle="";
+
 				/**************************************
 				 * Notification *
 				 **************************************/
@@ -710,10 +711,10 @@ angular
 
 				$scope.rechercherReceptionAchat = function (
 					receptionAchatCourante) {
-						if(clientActif.blackMode==false){
-							receptionAchatCourante.facture=true;
+						if($scope.clientActif.blackMode==false){
+							receptionAchatCourante.facture="oui";
 						}
-						receptionAchatCourante.facture=true;
+					
 					receptionAchatCourante.type = 'Achat';
 					$http
 						.post(
@@ -1244,14 +1245,20 @@ angular
 												.getProductFilter(produitReception.produitId);
 
 											if ($scope.productFilter.length > 0) {
-												produitReception.designation = $scope.productFilter[0].designation;
 
-												$scope
-													.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
 
-												if ($scope.sousFamilleFilter.length > 0) {
+												produitReception.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
+												
+
+												//produitReception.designation = $scope.productFilter[0].designation;
+												//produitReception.referenceArticle = $scope.productFilter[0].reference;
+
+												//$scope
+													//.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
+
+											/*	if ($scope.sousFamilleFilter.length > 0) {
 													produitReception.sousFamille = $scope.sousFamilleFilter[0].designation;
-												}
+												}*/
 											}
 										});
 
@@ -1434,15 +1441,20 @@ angular
 															.getProductFilter(produitReception.produitId);
 
 														if ($scope.productFilter.length > 0) {
-															produitReception.designation = $scope.productFilter[0].designation;
+
+															produitReception.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
+												
+															//produitReception.designation = $scope.productFilter[0].designation;
+
+															//produitReception.referenceArticle = $scope.productFilter[0].reference;
 															//produitReception.prixUnitaire = $scope.productFilter[0].prixUnitaire;
 
-															$scope
-																.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
+															//$scope
+															//	.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
 
-															if ($scope.sousFamilleFilter.length > 0) {
-																produitReception.sousFamille = $scope.sousFamilleFilter[0].designation;
-															}
+														//	if ($scope.sousFamilleFilter.length > 0) {
+														//		produitReception.sousFamille = $scope.sousFamilleFilter[0].designation;
+														//	}
 														}
 
 														$scope
@@ -1556,15 +1568,22 @@ angular
 															.getProductFilter(produitReception.produitId);
 
 														if ($scope.productFilter.length > 0) {
-															produitReception.designation = $scope.productFilter[0].designation;
+
+
+
+															produitReception.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
+												
+
+															//produitReception.designation = $scope.productFilter[0].designation;
+															//produitReception.referenceArticle = $scope.productFilter[0].reference;
 															//produitReception.prixUnitaire = $scope.productFilter[0].prixUnitaire;
 
-															$scope.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
+															//$scope.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
 
 
-															if ($scope.sousFamilleFilter.length > 0) {
+															/*if ($scope.sousFamilleFilter.length > 0) {
 																produitReception.sousFamille = $scope.sousFamilleFilter[0].designation;
-															}
+															}*/
 														}
 													});
 
@@ -1635,22 +1654,31 @@ angular
 				$scope.updateProduitCommandDetails = function (
 					produitId, produitReception) {
 
+						console.log("call updateProduitCommandDetails");
+
 					$scope.productFilter = [];
 					$scope.sousFamilleFilter = [];
 
 					$scope.getProductFilter(produitId);
 
 					if ($scope.productFilter.length > 0) {
+
+                        console.log("$scope.productFilter.length > 0");
+                        
+
 						produitReception.designation = $scope.productFilter[0].designation;
-
-						$scope
-							.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
-
+						produitReception.referenceArticle= $scope.productFilter[0].ref;
+					//	$scope.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
+							
+					produitReception.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
 						produitReception.prixUnitaire = $scope.productFilter[0].prixAchat;
 
-						if ($scope.sousFamilleFilter.length > 0) {
-							produitReception.sousFamille = $scope.sousFamilleFilter[0].designation;
-						}
+
+					
+
+					//	if ($scope.sousFamilleFilter.length > 0) {
+					//		produitReception.sousFamille = $scope.sousFamilleFilter[0].designation;
+					//	}
 						
 						
 						 /***Debut get Prix Speciale Fournisseur  ***/
@@ -1772,7 +1800,7 @@ angular
 				$scope.changePrix = function (event, item, index) {
 
 				}
-
+/* 
 				$scope.getProductFilter = function (idProduit) {
 
 					//console.log("idProduit" + idProduit);
@@ -1781,19 +1809,38 @@ angular
 						id: idProduit
 					});
 
-					/*console.log("productFilter"
+					console.log("productFilter"
 							+ JSON.stringify($scope.productFilter,
-									null, " "));*/
+									null, " "));
+
+				} */
+
+				
+				$scope.getProductFilter = function (idProduit) {
+
+				
+					$scope.productFilter =$scope.listeProduitCache.filter(e => e.id == idProduit);
+					
+				
 
 				}
 
+				$scope.getSousFamilleFilter = function (
+					sousFamilleId) {
+					$scope.sousFamilleFilter = $scope.ListSousFamilleProduitCache.filter(e => e.id == sousFamilleId);
+					
+			
+				}
+
+
+				/* 
 				$scope.getSousFamilleFilter = function (
 					sousFamilleId) {
 					$scope.sousFamilleFilter = $filter('filter')(
 						$scope.ListSousFamilleProduitCache, {
 						id: sousFamilleId
 					});
-				}
+				} */
 
 				$scope.clickProduit = function (idProduit, index) {
 
@@ -2035,15 +2082,14 @@ angular
 									field: '',
 									//	width : '5%',
 									cellTemplate:
-
-										'<div class="ms-CommandButton float-right"   >'
-										+ '<button class="ms-CommandButton-button ms-CommandButton-Gpro"  ng-click="modifierOuCreerReceptionAchat()">'
-										+ '<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>'
-										+ '</button>'
-										+ '<button class="ms-CommandButton-button"  ng-click="showPopupDelete(17)" permission="[Achat_Delete]">'
-										+ '<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>'
-										+ '</button>'
-										+ '	</div> ',
+									`<div class="ms-CommandButton float-right"   >
+										<button class="ms-CommandButton-button ms-CommandButton-Gpro"  ng-click="modifierOuCreerReceptionAchat()">
+										<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+										</button>
+										<button class="ms-CommandButton-button"  ng-click="showPopupDelete(17)" permission="['Achat_Delete']">
+										<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+										</button>
+										</div> `,
 
 
 									// '<div class="buttons">'
@@ -2080,7 +2126,7 @@ angular
 							var receptionAchatCourante = $scope.receptionAchatCourante;
 							receptionAchatCourante.type = 'Achat';
 							if($scope.clientActif.blackMode==false){
-								bonLivraisonVenteCourant.declare="oui";
+								receptionAchatCourante.declare="oui";
 			
 							 }
 							if (searchText) {
@@ -2173,7 +2219,7 @@ angular
 					data: 'myDataReceptionAchat',
 					columnDefs: 'colDefs',
 					enablePaging: true,
-					enableColumnResize: true,
+					//enableColumnResize: true,
 					showFooter: true,
 					enableHighlighting: true,
 					totalServerItems: 'totalServerItems',

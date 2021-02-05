@@ -101,6 +101,28 @@ public class GuichetAnnuelValue {
 	private Long numReferenceBonLivraisonNDCourante;
 	private String prefixeBLND;
 
+	
+	  private Long numReferenceFactureNDCourante;
+	  private String prefixeFAND ;
+	  
+	  
+	
+	public Long getNumReferenceFactureNDCourante() {
+		return numReferenceFactureNDCourante;
+	}
+
+	public void setNumReferenceFactureNDCourante(Long numReferenceFactureNDCourante) {
+		this.numReferenceFactureNDCourante = numReferenceFactureNDCourante;
+	}
+
+	public String getPrefixeFAND() {
+		return prefixeFAND;
+	}
+
+	public void setPrefixeFAND(String prefixeFAND) {
+		this.prefixeFAND = prefixeFAND;
+	}
+
 	public Long getNumReferenceBonLivraisonNDCourante() {
 		return numReferenceBonLivraisonNDCourante;
 	}

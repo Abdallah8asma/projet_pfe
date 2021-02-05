@@ -111,6 +111,8 @@ angular
 																$scope.resultatRechercheMise.reference = datagetProduit.reference;
 																$scope.resultatRechercheMise.sousFamille = datagetProduit.sousFamilleDesignation
 																$scope.resultatRechercheMise.composition = datagetProduit.composition;
+																
+																$scope.resultatRechercheMise.designationProduit = datagetProduit.designation;
 															});
 												}else{
 													$log.debug(" -- aucun Produit n'est affecté à ce Rouleau !");
@@ -394,6 +396,7 @@ angular
 																	$scope.resultatRechercheMise.reference = datagetProduit.reference;
 																	$scope.resultatRechercheMise.sousFamille = datagetProduit.sousFamilleDesignation;
 																	$scope.resultatRechercheMise.composition = datagetProduit.composition;
+																	$scope.resultatRechercheMise.designationProduit = datagetProduit.designation;
 																	
 																});
 													}else{

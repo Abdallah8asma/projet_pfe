@@ -335,11 +335,51 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 		    String vNextNumBonReception= (String) vResult;
 		 
 		    return vNextNumBonReception;
+		    
 	}
+
+
+	@Override
+	public Long getNextNumfactureAchatReferenceNondeclarer() {
+		   int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+		    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.numReferenceFactureAchatNDCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    Long vNextNumBonReception= (Long) vResult;
+		 
+		    return vNextNumBonReception;
+		
+	}
+
+
+	@Override
+	public String getPrefixFactureAchatNondeclarer() {
+		   int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
+		    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.prefixeFactureAchatND from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    String vNextNumBonReception= (String) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+
+
+
+	@Override
+	public Long modifierGuichetFactureAchatNonDeclarerMensuel(GuichetMensuelValue pGuichetValeur) {
 	
-	
-	
-	
-	
-	
+		  GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
+			
+		    vGuichetEntite.setNumReferenceFactureAchatNDCourante(pGuichetValeur.getNumReferenceFactureAchatNonDeclarerCourante());   
+		    this.entityManager.merge(vGuichetEntite);
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+	}
+
 }

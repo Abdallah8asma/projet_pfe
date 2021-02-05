@@ -66,6 +66,17 @@ public class RechercheMulticritereFactureAchatValue {
 	private Calendar dateIntroductionA;
 
 	private Long idDepot;
+	
+	private String declarerecherche;
+	
+
+	public String getDeclarerecherche() {
+		return declarerecherche;
+	}
+
+	public void setDeclarerecherche(String declarerecherche) {
+		this.declarerecherche = declarerecherche;
+	}
 
 	public Long getIdDepot() {
 		return idDepot;

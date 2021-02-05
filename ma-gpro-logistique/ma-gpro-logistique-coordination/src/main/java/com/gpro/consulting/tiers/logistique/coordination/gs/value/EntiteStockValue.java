@@ -44,6 +44,22 @@ public class EntiteStockValue implements Comparable<Object>{
 	
 	private String dimensionArticle;
 	
+	
+	private String producteurArticle;
+	
+	
+	
+	
+	
+	
+	public String getProducteurArticle() {
+		return producteurArticle;
+	}
+
+	public void setProducteurArticle(String producteurArticle) {
+		this.producteurArticle = producteurArticle;
+	}
+
 	public String getGrammageArticle() {
 		return grammageArticle;
 	}

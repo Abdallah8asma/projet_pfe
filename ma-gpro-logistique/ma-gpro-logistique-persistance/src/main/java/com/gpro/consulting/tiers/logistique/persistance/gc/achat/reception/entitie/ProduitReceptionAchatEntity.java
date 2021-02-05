@@ -79,8 +79,29 @@ public class ProduitReceptionAchatEntity {
 	private Long taxeId;
 	
 	
+	@Column(name="reference_article")
+	private String referenceArticle;
+	
+	@Column(name="designation")
+	private String designation;
+	
 	
 
+	public String getReferenceArticle() {
+		return referenceArticle;
+	}
+
+	public void setReferenceArticle(String referenceArticle) {
+		this.referenceArticle = referenceArticle;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
 
 	public Long getTaxeId() {
 		return taxeId;

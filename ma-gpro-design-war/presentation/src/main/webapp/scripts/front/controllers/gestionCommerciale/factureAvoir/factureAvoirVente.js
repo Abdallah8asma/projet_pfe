@@ -974,7 +974,18 @@ angular
 				}else{
 					$log.debug("==dateFactureMax Undefined");
 				}
-
+				if(typeof $scope.factureVenteCourant.devise === 'undefined'  ||  $scope.factureVenteCourant.devise == null){
+					var newDevise = "";
+				}
+				else{
+					var newDevise=$scope.factureVenteCourant.devise;
+				}
+				if(typeof $scope.factureVenteCourant.groupeClientId === 'undefined'  ||  $scope.factureVenteCourant.groupeClientId == null){
+					var groupeClient = "";
+				}
+				else{
+					var groupeClient=$scope.factureVenteCourant.groupeClientId;
+				}
 				 $log.debug("-- factureVenteCourant" + JSON.stringify(factureVenteCourant, null, "  ") );
 
 				var url;
@@ -993,8 +1004,8 @@ angular
 										 + "&prixMin="+factureVenteCourant.prixMin
 										 + "&prixMax="+factureVenteCourant.prixMax
 										 + "&natureLivraison="
-										 + "&groupeClientId="+factureVenteCourant.groupeClientId
-										 + "&devise=" + factureVenteCourant.devise		 
+										 + "&groupeClientId="+groupeClient
+										 + "&devise=" +newDevise		 
 										 + "&type=pdf";
 										 
                   }else{
@@ -1008,8 +1019,8 @@ angular
 										 + "&metrageMax="+factureVenteCourant.metrageMax
 										 + "&prixMin="+factureVenteCourant.prixMin
 										 + "&prixMax="+factureVenteCourant.prixMax
-										 + "&groupeClientId="+factureVenteCourant.groupeClientId	
-										 + "&devise=" + factureVenteCourant.devise
+										 + "&groupeClientId="+groupeClient	
+										 + "&devise=" +newDevise
 										 + "&type=pdf";
                    }
 									 $log.debug("-- URL" + url );

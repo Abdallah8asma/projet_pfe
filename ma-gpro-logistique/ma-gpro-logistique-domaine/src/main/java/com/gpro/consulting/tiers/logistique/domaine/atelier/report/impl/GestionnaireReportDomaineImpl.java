@@ -925,4 +925,139 @@ public class GestionnaireReportDomaineImpl implements IGestionnaireReportDomaine
 		return report;
 	}
 
+	@Override
+	public InventaireReportValue getInventaireByOFReportValue (
+			CritereRechercheRouleauStandardValue critereRechercheRouleauStandard)  throws IOException {/** Instantiation du report */
+		InventaireReportValue inventaireReport = new InventaireReportValue();
+		   
+		   // enrechissement des param du report
+		   inventaireReport.setFileName(REPORTNAME_INVENTAIRE);
+		   inventaireReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_InventaireByOF/inventaire_report.jrxml"));
+		   
+		   HashMap<String, Object> params = new HashMap<String, Object>();
+		   /** Liste des paramètres : logo et critères de recherche*/
+		   params.put("p_PathLogo", "C:\\ERP\\logos_clients\\logo_client.png");
+		   params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_InventaireByOF/inventaire_sub_report.jasper");
+		   
+		   inventaireReport.setParams(params);
+		   
+		   /** Rechercher les rouleaux selon les critères de recherche */
+		   ResultatRechecheRouleauStandardValue resultatRechecheRouleauStandard = rouleauFiniDomaine.rechercherRouleauInventaireByOF(critereRechercheRouleauStandard);
+		   //System.out.println("---- ** resultatRechecheRouleauStandard---"+resultatRechecheRouleauStandard);
+			// enrichissement du report VALUE
+		   if(critereRechercheRouleauStandard.getEntrepot() != null){
+			   EntrepotValue entrepot = entrepotDomaine.getEntrepotById(critereRechercheRouleauStandard.getEntrepot());
+			   if(entrepot != null){
+				   inventaireReport.setEntrepot(entrepot.getDesignation());
+			   }
+		   }
+		   
+		  
+		   
+		    if(critereRechercheRouleauStandard.getClient() != null){
+		    	PartieInteresseValue partieInteresseValue = new PartieInteresseValue();
+		    	partieInteresseValue.setId(critereRechercheRouleauStandard.getClient());
+		    	PartieInteresseValue partieInteresseValueTrouve = partieInteresseePersistance.recherchePartieInteresseeParId(partieInteresseValue);
+			    if(partieInteresseValueTrouve != null){
+			    	inventaireReport.setClient(partieInteresseValueTrouve.getAbreviation());
+				}
+		    }
+		   
+		    ProduitValue produitValue = null;
+		    
+		    List<ElementResultatRechecheRouleauStandardValue> elementsListToSet = new ArrayList<ElementResultatRechecheRouleauStandardValue>();
+			   //System.out.println("---- ** resultatRechecheRouleauStandard.getListeElementResultatRechecheRouleauStandardValue()---"+resultatRechecheRouleauStandard.getListeElementResultatRechecheRouleauStandardValue());
+
+		    List<ElementResultatRechecheRouleauStandardValue> elements = resultatRechecheRouleauStandard.getListeElementResultatRechecheRouleauStandardValue();
+		    
+		    
+		    // Alimentation de la liste sub report: avec application des criteres de recherche sur Produit
+		    for(ElementResultatRechecheRouleauStandardValue element : elements){
+		    	boolean exist = true;
+		      	if(element.getIdProduit() != null){
+		      		
+					produitValue = produitPersistance.rechercheProduitById(element.getIdProduit());
+
+					if(produitValue != null){
+						
+						element.setDesignation(produitValue.getDesignation());
+						element.setReferenceProduit(produitValue.getReference());
+						element.setPrixUnitaire(produitValue.getPrixUnitaire());
+						
+						if(produitValue.getPrixUnitaire() != null && element.getMetrage()!= null){
+							element.setPrixTotal(produitValue.getPrixUnitaire() * element.getMetrage());
+						}
+						
+						//chang. de .contains() par .equals()
+						if(estNonVide(critereRechercheRouleauStandard.getDesignationQuiContient() )){
+							exist = (produitValue.getDesignation().toUpperCase().equals(
+									critereRechercheRouleauStandard.getDesignationQuiContient().toUpperCase()));
+						}
+						
+					}
+		    	}
+		      	
+		      	// Application des criteres de recherche sur Produit
+		      	if( 
+		      		((critereRechercheRouleauStandard.getNombreColieA() != null && element.getNombreColis() <= critereRechercheRouleauStandard.getNombreColieA())
+		      					||(critereRechercheRouleauStandard.getNombreColieA() == null))
+		      		&&(((critereRechercheRouleauStandard.getNombreColieDu() != null && element.getNombreColis() >= critereRechercheRouleauStandard.getNombreColieDu())
+		    	      			||(critereRechercheRouleauStandard.getNombreColieDu() == null)))
+		      		&&(((critereRechercheRouleauStandard.getMetrageA() != null && element.getMetrage() <= critereRechercheRouleauStandard.getMetrageA())
+		    	      			||(critereRechercheRouleauStandard.getMetrageA() == null)))
+		      		&&(((critereRechercheRouleauStandard.getMetrageDu() != null && element.getMetrage() >= critereRechercheRouleauStandard.getMetrageDu())
+		    	      			||(critereRechercheRouleauStandard.getMetrageDu() == null)))
+		    	      			
+		    	    &&(exist)
+		      	){
+		      		 if(estNonVide(critereRechercheRouleauStandard.getReferenceProduit())){
+		       			if (critereRechercheRouleauStandard.getReferenceProduit().equals(element.getReferenceProduit())) {
+		       				
+		       				elementsListToSet.add(element);
+		       				
+		       			}
+		       			else if (critereRechercheRouleauStandard.getDesignationQuiContient().equals(element.getDesignation())) {
+		       				elementsListToSet.add(element);
+						}
+		      		 
+
+		      	}else{
+	   				elementsListToSet.add(element);
+	  		 }
+		      	
+		    }
+		    }
+		    if(critereRechercheRouleauStandard.getOrderBy() != null){
+		    	ElementResultatRechecheRouleauStandardComparator comparator = new ElementResultatRechecheRouleauStandardComparator();
+		    	comparator.setOrderBy(critereRechercheRouleauStandard.getOrderBy());
+		    	Collections.sort(elementsListToSet, comparator);
+		    }
+		    
+		    
+		   
+		    
+		    inventaireReport.setElementsList(elementsListToSet);
+		    
+		    inventaireReport.setEmplacement(critereRechercheRouleauStandard.getEmplacement());
+		    inventaireReport.setMetrageA((critereRechercheRouleauStandard.getMetrageA()!= null) ?critereRechercheRouleauStandard.getMetrageA().toString():"");
+		    inventaireReport.setMetrageDu((critereRechercheRouleauStandard.getMetrageDu() != null) ?critereRechercheRouleauStandard.getMetrageDu().toString():"");
+		    inventaireReport.setNombreColieA((critereRechercheRouleauStandard.getNombreColieA()!=null)?critereRechercheRouleauStandard.getNombreColieA().toString():"");
+		    inventaireReport.setNombreColieDu((critereRechercheRouleauStandard.getNombreColieDu() != null) ?critereRechercheRouleauStandard.getNombreColieDu().toString():"");
+			
+		    inventaireReport.setDateEtat(critereRechercheRouleauStandard.getDateEtat());
+		    inventaireReport.setOrderBy(critereRechercheRouleauStandard.getOrderBy());
+		    inventaireReport.setDesignationQuiContient(critereRechercheRouleauStandard.getDesignationQuiContient());
+		    inventaireReport.setReferenceProduit(critereRechercheRouleauStandard.getReferenceProduit());
+
+		   
+			ArrayList<InventaireReportValue> dataInventaireReportList = new ArrayList<InventaireReportValue>();
+			dataInventaireReportList.add(inventaireReport);
+	  
+			JRBeanCollectionDataSource jRBeanCollectionDataSource = new JRBeanCollectionDataSource(dataInventaireReportList);
+			
+			inventaireReport.setJRBeanCollectionDataSource(jRBeanCollectionDataSource);
+		   
+		   return inventaireReport;
+	}
+
 }

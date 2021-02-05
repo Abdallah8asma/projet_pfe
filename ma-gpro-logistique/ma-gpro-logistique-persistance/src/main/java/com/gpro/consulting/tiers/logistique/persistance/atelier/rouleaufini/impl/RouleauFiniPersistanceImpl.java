@@ -435,13 +435,17 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 	    			pCritereRechercheRouleauStandard.getDateEtat());
 	    	
 	    	Predicate predicate21 = criteriaBuilder.isNull(root.get(PREDICATE_DATE_SORTIE));
-	    	
+	    	Predicate predicate221 = criteriaBuilder.isNull(root.get(PREDICATE_BON_SORTIE));
 	    	Predicate predicate22 = criteriaBuilder.greaterThanOrEqualTo(
 	    			root.<Calendar>get(PREDICATE_DATE_SORTIE), 
 	    			pCritereRechercheRouleauStandard.getDateEtat());
+	    	
+	    	Predicate predicate210 =  criteriaBuilder.and(predicate21,predicate221);
 		      
+	    	
 	    	whereClause.add(predicate1);
-	    	whereClause.add(criteriaBuilder.or(predicate21, predicate22));
+
+	    	whereClause.add(criteriaBuilder.or(predicate210, predicate22));
 	    }
   
 		/** Set request.fini on whereClause if not empty or null.

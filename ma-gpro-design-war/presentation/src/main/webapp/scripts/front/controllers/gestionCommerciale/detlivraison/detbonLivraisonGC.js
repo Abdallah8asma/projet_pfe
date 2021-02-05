@@ -98,7 +98,7 @@ angular
 							$scope.modeValider = "notActif";
 							// init deleteValue pour cancelAddBLVente
 							$scope.deleteValue = "oui";
-
+							$scope.ListeMises = [];
 							/***************************************************
 							 * Gestion des DropListe & cache
 							 **************************************************/
@@ -221,6 +221,18 @@ angular
 															.log(error.statusText);
 												});
 							}
+								// Liste des mises
+						$scope.ListeMises = function() {
+							$http
+									.get(
+											UrlAtelier
+													+ "/mise/all")
+									.success(
+											function(dataMises) {
+												$scope.ListeMises = dataMises;
+
+											});
+						}
 
 							$scope.listePartieInteresseeCache();
 							$scope.listeMagazinCache();
@@ -228,7 +240,8 @@ angular
 							// $scope.listeMarche();
 							$scope.listeModePaiement();
 							$scope.getListeTraitementFacon();
-							
+
+							$scope.ListeMises();
 							// Liste des listGroupeClient
 							$scope.listGroupeClient = function() {
 								$http
@@ -776,6 +789,7 @@ angular
 										+ "&stock="+detbonLivraisonVenteCourant.stock
 										+ "&idDepot="+detbonLivraisonVenteCourant.idDepot
 										+ "&groupeClientId="+detbonLivraisonVenteCourant.groupeClientId
+										+ "&numof="+detbonLivraisonVenteCourant.numOF
 										+ "&type=pdf";
 
 								$log.debug("--downloadAllBonLiv URL" + url);

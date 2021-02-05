@@ -101,6 +101,20 @@ public class BonLivraisonRestImpl {
 
 		return list;
 	}
+	
+	
+	@RequestMapping(value = "/validateByOF", method = RequestMethod.POST)
+	public @ResponseBody ListProduitElementValue validateBonSortieFiniByOF(@RequestBody List<String> refBonSortieList,
+			@RequestParam(value = "livraisonVenteId", required = false) Long livraisonVenteId) {
+
+		ListProduitElementValue list = new ListProduitElementValue();
+
+		if (refBonSortieList != null && refBonSortieList.size() > 0) {
+			list = bonSortieFiniService.getProduitElementListByOF(refBonSortieList, livraisonVenteId);
+		}
+
+		return list;
+	}
 
 	@RequestMapping(value = "/rechercheMulticritere", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody ResultatRechecheBonLivraisonValue rechercherMultiCritere(

@@ -83,6 +83,8 @@ public class FactureAchatPersistanceUtilities {
 		
 		dto.setIdDepot(entity.getIdDepot());
 
+		dto.setDeclarer(entity.isDeclarer());
+		
 		if (entity.getListDetFactureAchat() != null) {
 			List<DetFactureAchatValue> list = new ArrayList<DetFactureAchatValue>();
 			for (DetFactureAchatEntity detFactureAchatEntity : entity.getListDetFactureAchat()) {
@@ -151,6 +153,8 @@ public class FactureAchatPersistanceUtilities {
 		entity.setBoutiqueId(dto.getBoutiqueId());
 		
 		entity.setIdDepot(dto.getIdDepot());
+		entity.setDeclarer(dto.isDeclarer());
+		
 		
 		if (dto.getListDetFactureAchat() != null) {
 			Set<DetFactureAchatEntity> list = new HashSet<DetFactureAchatEntity>();
@@ -211,6 +215,9 @@ public class FactureAchatPersistanceUtilities {
 		entity.setSerialisable(dto.isSerialisable());
 		entity.setNumeroSeries(dto.getNumeroSeries());
 		entity.setTaxeId(dto.getTaxeId());
+		entity.setDesignation(dto.getProduitDesignation());
+		entity.setReferenceArticle(dto.getProduitReference());
+	
 		
 		if (dto.getFactureAchatId() != null) {
 			FactureAchatEntity FactureAchatEntity = new FactureAchatEntity();
@@ -241,6 +248,8 @@ public class FactureAchatPersistanceUtilities {
 		dto.setNumeroSeries(entity.getNumeroSeries());
 		dto.setTaxeId(entity.getTaxeId());
 		
+		dto.setProduitDesignation(entity.getDesignation());;
+		dto.setProduitReference(entity.getReferenceArticle());
 		
 		if (entity.getFactureAchat() != null) {
 			dto.setFactureAchatId(entity.getFactureAchat().getId());

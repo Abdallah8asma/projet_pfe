@@ -59,6 +59,11 @@ public class DetLivraisonVentePersistanceImpl extends AbstractPersistance implem
 	
 	
 	private String PREDICATE_PRODUIT = "produitId";
+	private String PREDICATE_numeroOF = "numeroOF";
+	
+	
+	
+	
 	private String PREDICATE_LIVRAISON_VENTE = "livraisonVente";
 	private String PREDICATE_DATE = "date";
 	private String PREDICATE_CLIENT = "partieIntId";
@@ -438,7 +443,13 @@ public class DetLivraisonVentePersistanceImpl extends AbstractPersistance implem
 						whereClause.add(criteriaBuilder.and(predicate));
 					}
 							
-							
+					//REcherche REF.EXTERNE
+					if (estNonVide(request.getNumOF())) {
+						Expression<String> path = root.get(PREDICATE_numeroOF);
+						Expression<String> upper =criteriaBuilder.upper(path);
+						Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getNumOF().toUpperCase() + PERCENT);
+						whereClause.add(criteriaBuilder.and(predicate));
+					}
 							
 							
 
@@ -874,6 +885,42 @@ List<ResultBestElementValue> resultList=new ArrayList<ResultBestElementValue>();
 
 			    }
 		return resultList;
+	}
+
+	@Override
+	public DetLivraisonVenteValue getBylivraisonVenteAndOF(Long livraisonVenteId, String numeroOF, String choix) {
+
+		
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<DetLivraisonVenteEntity> criteriaQuery = criteriaBuilder.createQuery(DetLivraisonVenteEntity.class);
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		
+		Root<DetLivraisonVenteEntity> root = criteriaQuery.from(DetLivraisonVenteEntity.class);
+
+		// Set livraisonVenteId on whereClause if not empty or null
+		if (livraisonVenteId != null) {
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_LIVRAISON_VENTE), livraisonVenteId));
+		}
+		
+		// Set produitId on whereClause if not null
+		if (numeroOF != null) {
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_numeroOF), numeroOF));
+		}
+		
+		// Set produitId on whereClause if not null
+		if (choix != null) {
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_CHOIX), choix));
+		}
+
+		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+	    List <DetLivraisonVenteEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+
+	    if(resultatEntite.size() >0){
+	    	return bonLivraisonPersistanceUtilities.toValue(resultatEntite.get(0));
+	    }
+	    else return null;
+
 	}
 	
 	

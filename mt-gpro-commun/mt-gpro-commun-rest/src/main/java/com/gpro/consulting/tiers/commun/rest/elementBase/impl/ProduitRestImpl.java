@@ -162,5 +162,27 @@ public class ProduitRestImpl {
 		  return "OK";
 
 	  }
+	  
+	  
+	  @RequestMapping(value = "/all/retour", method = RequestMethod.GET, produces = "application/json")
+	  public @ResponseBody List < ProduitValue > viewAllProduitFinancier() {
+		  List < ProduitValue > vProduitValue = produitService.rechercheProduitFinance();
+          //Traitement : transformation de l'Id a sa propre Designation
+            for(ProduitValue produit : vProduitValue){
+      		 //SousFamille, Famille
+          	  Map<String, String> mapA = gestionnaireCacheService.rechercherProduitParId(produit.getSousFamilleId(),produit.getSiteId(), produit.getPartieIntersseId());
+      		  produit.setSousFamilleDesignation(mapA.get("sousFamille"));
+      		  produit.setFamilleDesignation(mapA.get("famille"));
+      		  //Site
+      		  produit.setSiteEntiteDesignation(mapA.get("site"));
+      		  //partieInteressee
+      		  produit.setPartieIntersseDesignation(mapA.get("partieInteressee"));
+      		  
+      		
+      	    }
+            return vProduitValue;
+	  }
+	  
+	  
   
 }

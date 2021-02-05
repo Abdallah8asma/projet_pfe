@@ -963,13 +963,9 @@
 																</select>
 															</td>
 
-															<td><select ui-select2 ng-model="produit.produitId"
-																	ng-change="clickProduit(produit.produitId, $index)" data-placeholder="..."
-																	class="form-control ">
-																	<option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">
-																		{{produit.designation}}
-																	</option>
-																</select></td>
+															<td><input type="text" class="form-control" ng-model="produit.designation"/></td>
+															
+														
 
 															<td><span e-form="rowform"> {{produit.sousFamilleArtEntite
 																		|| 'EMPTY' }} </span></td>
@@ -1107,7 +1103,12 @@
 
 
 															<td style="white-space: nowrap">
-																<form editable-form name="rowform" onbeforesave="saveProduit($data, produit.id)"
+
+																<button data-nodrag class="btn btn-sm glyphicon glyphicon-trash"
+																		ng-click="removeProduit($index)"></button>
+
+															
+								<!-- 								<form editable-form name="rowform" onbeforesave="saveProduit($data, produit.id)"
 																	ng-show="rowform.$visible" class="form-buttons form-inline"
 																	shown="produitInserree == produit">
 
@@ -1134,7 +1135,7 @@
 
 																	<button data-nodrag class="btn btn-sm glyphicon glyphicon-trash"
 																		ng-click="removeProduit($index)"></button>
-																</div>
+																</div> -->
 															</td>
 														</tr>
 													</tbody>
@@ -1176,9 +1177,11 @@
 																	</option>
 																</select>
 															</td>
-															<td><span e-form="rowform">{{produit.designation
+
+															<td><input type="text" ng-model="produit.designation"></td>
+														<!-- 	<td><span e-form="rowform">{{produit.designation
 																		|| 'EMPTY'}}</span>
-															</td>
+															</td> -->
 															<td><span e-form="rowform"> {{produit.sousFamilleArtEntite
 																		|| 'EMPTY' }} </span></td>
 															</td>
@@ -1301,7 +1304,12 @@
 
 															<td style="white-space: nowrap">
 
-																<form editable-form name="rowform" onbeforesave="saveProduit($data, produit.id)"
+																<button data-nodrag class="btn btn-sm glyphicon glyphicon-trash"
+																ng-show="!articleSerialisableHasBL(produit.produitsSerialisable)"
+																ng-click="removeProduit($index)"></button>
+
+
+																<!-- <form editable-form name="rowform" onbeforesave="saveProduit($data, produit.id)"
 																	ng-show="rowform.$visible" class="form-buttons form-inline"
 																	shown="produitInserree == produit">
 
@@ -1329,7 +1337,7 @@
 																	<button data-nodrag class="btn btn-sm glyphicon glyphicon-trash"
 																		ng-show="!articleSerialisableHasBL(produit.produitsSerialisable)"
 																		ng-click="removeProduit($index)"></button>
-																</div>
+																</div> -->
 															</td>
 														</tr>
 												</table>

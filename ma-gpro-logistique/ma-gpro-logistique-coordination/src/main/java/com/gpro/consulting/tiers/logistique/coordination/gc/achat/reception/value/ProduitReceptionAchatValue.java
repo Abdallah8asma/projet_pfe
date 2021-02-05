@@ -4,6 +4,8 @@ package com.gpro.consulting.tiers.logistique.coordination.gc.achat.reception.val
 import java.util.Calendar;
 import java.util.Set;
 
+
+
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 
@@ -56,6 +58,29 @@ public class ProduitReceptionAchatValue implements Comparable<ProduitReceptionAc
 	private Double prixTotalHT;
 	private Double remise;
 	private Long taxeId;
+	
+
+	private String referenceArticle;
+	
+
+	private String designation;
+	
+
+	public String getReferenceArticle() {
+		return referenceArticle;
+	}
+
+	public void setReferenceArticle(String referenceArticle) {
+		this.referenceArticle = referenceArticle;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
 
 	public Long getTaxeId() {
 		return taxeId;

@@ -294,7 +294,12 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 		 			root.get("groupeClientId").as(Long.class),
 		 			root.get("idDepot").as(Long.class),	
 		 			root.get("devise").as(Long.class),
-		 			root.get("montantConverti").as(Double.class)
+		 			root.get("montantConverti").as(Double.class),
+		 			root.get("stock").as(Boolean.class),
+		 			root.get("declare").as(Boolean.class),
+		 			root.get("infoSortie").as(String.class)
+		 			
+		 			
 		 			
 		 			
 					)).where(whereClause.toArray(new Predicate[] {}));
@@ -344,6 +349,11 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 	    	
 	    	entity.setDevise((Long) element[17]);
 	    	entity.setMontantConverti((Double) element[18]);
+	    	
+	    	entity.setStock((Boolean) element[19]);
+	    	entity.setDeclare((Boolean) element[20]);
+	    	
+	    	entity.setInfoSortie((String) element[21]);
 	    	////////////////////////////
 	    	LivraisonVenteValue dto = bonLivraisonPersistanceUtilities.toValue(entity);
 	    	list.add(dto);

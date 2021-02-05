@@ -760,6 +760,11 @@ angular
 				// Recherche des Bons de Achat
 				$scope.rechercherFactureAchat = function (
 					factureAchatCourant) {
+								
+						if($scope.clientActif.blackMode==false){
+							factureAchatCourant.declarerecherche="oui";
+		
+						 }
 					$http
 						.post(
 							UrlAtelier
@@ -840,17 +845,21 @@ angular
 				$scope.affectationBLAchat = function (factureAchat) {
 					$scope.listDocFactureAchat = [];
 					$scope.natureLivraison = "FINI";
+
 					$scope.listTaxeFactureInitMethod();
 					$scope.initTaxeRemoved();
 					$scope.factureAchatCourant = {};
 					$scope.factureAchatCourant = factureAchat ? angular
 						.copy(factureAchat)
 						: {};
-
+						$scope.factureAchatCourant.declarer=true;
+						var type =true;
+					
+					
 					$http
 						.get(
 							UrlAtelier
-							+ "/factureAchat/getCurrentReferenceMensuel:Normal"
+							+ "/factureAchat/getCurrentReferenceMensuelDeclarer:Normal:"+type
 						)
 						.success(
 							function (res) {
@@ -865,6 +874,37 @@ angular
 
 				}
 
+
+				$scope.getCurrentReferenceByType  = function (declarer) {
+					
+					var type ="";
+					
+					if(declarer == true){
+
+						type = true;
+	
+					}
+					else {
+				
+					type = false;
+				
+
+				   }
+	               
+							$http
+						.get(
+							UrlAtelier
+							+ "/factureAchat/getCurrentReferenceMensuelDeclarer:Normal:"+type
+						)
+						.success(
+							function (res) {
+								$scope.factureAchatCourant.reference = res;
+								$scope.factureAchatCourant.refAvantChangement = res;
+
+							}
+						);
+					
+					}	
 				// AffectationBLFaconAchat BonLivAchat
 				$scope.affectationBLFaconAchat = function (
 					factureAchat) {
@@ -1134,10 +1174,11 @@ angular
 								// tableau resultant de
 								// DetLivVene
 								$scope.modeValider = "actif";
+							
 								// listDetFactureAchat
 								$scope.listDetFactureAchatPRBL = resultat.listDetFactureAchat;
-
-
+							
+							
 								factureAchat.listDetFactureAchat = $scope.listDetFactureAchatPRBL;
 								factureAchat.listDocFactureAchat = $scope.listDocFactureAchat;
 
@@ -2080,14 +2121,14 @@ angular
 									field: '',
 									//	width:'5%',
 									cellTemplate:
-										'<div class="ms-CommandButton float-right"   ng-show="!rowform.$visible">'
-										+ '<button class="ms-CommandButton-button ms-CommandButton-Gpro"  ng-click="modifierOuCreerFacture()">'
-										+ '<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>'
-										+ '</button>'
-										+ '<button class="ms-CommandButton-button"  ng-click="showPopupDelete(22)" permission="[Achat_Delete]">'
-										+ '<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>'
-										+ '</button>'
-										+ '	</div> ',
+									`<div class="ms-CommandButton float-right"   ng-show="!rowform.$visible">
+										<button class="ms-CommandButton-button ms-CommandButton-Gpro"  ng-click="modifierOuCreerFacture()">
+										<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+										</button>
+										<button class="ms-CommandButton-button"  ng-click="showPopupDelete(22)"  permission="['Achat_Delete']">
+										<span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
+										</button>
+									</div> `,
 
 
 
@@ -2121,9 +2162,15 @@ angular
 						function () {
 							var data;
 							var factureAchatCourant = $scope.factureAchatCourant;
+								
+							if($scope.clientActif.blackMode==false){
+								$scope.factureAchatCourant.declarerecherche="oui";
+			
+							 }
 							if (searchText) {
 								var ft = searchText
 									.toLowerCase();
+								
 								$http
 									.post(
 										UrlAtelier

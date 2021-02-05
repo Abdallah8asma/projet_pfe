@@ -74,5 +74,7 @@ public ProduitValue rechercheProduitParReference(String reference);
 
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public Map<Long, ProduitValue> mapProduitById();
+@Transactional(readOnly = true, rollbackFor = Exception.class)
+public List<ProduitValue> rechercheProduitFinance();
 
 }

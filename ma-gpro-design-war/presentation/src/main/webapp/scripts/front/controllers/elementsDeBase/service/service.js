@@ -1,8 +1,8 @@
 'use strict'
 angular
-		.module('gpro.film', [ "ngResource" ])
+		.module('gpro.service', [ "ngResource" ])
 		.controller(
-				'filmController',
+				'serviceController',
 				[
 						'$scope',
 						'$rootScope',
@@ -264,7 +264,7 @@ angular
 							
 							// Rechercher Article
 							$scope.rechercherArticle = function(articleCourante) {
-								articleCourante.typeEntite = "2";
+								articleCourante.typeEntite = "4";
 								$http
 										.post(
 												UrlCommun
@@ -745,7 +745,7 @@ $scope.articleCourante.puTTC = Math.round($scope.articleCourante.puTTC*1000)/100
 													{
 														field : 'designation',
 														displayName : $translate.instant('article'),
-														width:'25%'
+														width:'30%'
 													},
 													{
 														field : 'typeArticleDesignation',
@@ -755,7 +755,7 @@ $scope.articleCourante.puTTC = Math.round($scope.articleCourante.puTTC*1000)/100
 													{
 														field : 'familleArticleDesignation',
 														displayName : $translate.instant('famille'),
-														width:'10%'
+														width:'15%'
 													},
 													{
 														field : 'sousFamilleArtEntiteDesignation',
@@ -767,11 +767,11 @@ $scope.articleCourante.puTTC = Math.round($scope.articleCourante.puTTC*1000)/100
 														displayName : $translate.instant('prix_unit'),
 														width:'5%'
 													},
-													{
+											/* 		{
 														field : 'pmp',
 														displayName : $translate.instant('pmp'),
 														width:'5%'
-													},
+													}, */
 												/* 	{
 														field : 'siteEntiteDesignation',
 														displayName : $translate.instant('site'),
@@ -784,11 +784,11 @@ $scope.articleCourante.puTTC = Math.round($scope.articleCourante.puTTC*1000)/100
 														width:'10%'
 													},
 												
-													{
+											/* 		{
 														field : 'grammage',
 														displayName : $translate.instant('grammage'),
 														width:'10%'
-													},
+													}, */
 												
 													{
 														field: '',

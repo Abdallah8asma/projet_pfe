@@ -139,8 +139,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Fournisseur </span>
 										</div>
-										<select class="form-control" ng-model="historiqueCourant.fournisseur"
-											ng-init="historiqueCourant.fournisseur=''">
+										<select ui-select2 class="form-control" ng-model="historiqueCourant.fournisseur"
+											ng-init="historiqueCourant.fournisseur=''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option
 											ng-repeat="fournisseur in listeFournisseurCache"
@@ -200,8 +200,8 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text">Famille </span>
 									</div>
-									<select class="form-control" ng-model="historiqueCourant.famille"
-										ng-init="historiqueCourant.famille=''">
+									<select ui-select2 class="form-control" ng-model="historiqueCourant.famille"
+										ng-init="historiqueCourant.famille=''" style="border: 1px solid #e5eaee !important;">
 										<option value="">Tous</option>
 										<option ng-repeat="famille in listeFamilleCache"
 										value="{{famille.id}}">{{famille.designation}}</option>
@@ -216,8 +216,8 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text">Sous Famille </span>
 									</div>
-									<select class="form-control" ng-model="historiqueCourant.Sousfamille"
-										ng-init="historiqueCourant.Sousfamille=''">
+									<select ui-select2 class="form-control" ng-model="historiqueCourant.Sousfamille"
+										ng-init="historiqueCourant.Sousfamille=''" style="border: 1px solid #e5eaee !important;">
 										<option value="">Tous</option>
 										<option ng-repeat="Sousfamille in listeSousFamilleArticleCache"
 											value="{{Sousfamille.id}}">{{Sousfamille.designation}}</option>
@@ -233,8 +233,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Référence</span>
 										</div>
-										<select class="form-control" ng-model="historiqueCourant.refArticle"
-											ng-init="historiqueCourant.refArticle=''">
+										<select ui-select2 class="form-control" ng-model="historiqueCourant.refArticle"
+											ng-init="historiqueCourant.refArticle=''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="article in listeArticle"
 												value="{{article.id}}">{{article.ref}}</option>
@@ -249,8 +249,8 @@
 											<div class="input-group-prepend">
 												<span class="input-group-text">Matiére </span>
 											</div>
-											<select class="form-control" ng-model="historiqueCourant.article"
-											ng-init="historiqueCourant.article=''">
+											<select ui-select2 class="form-control" ng-model="historiqueCourant.article"
+											ng-init="historiqueCourant.article=''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="article in listeArticle"
 											value="{{article.id}}">{{article.ref}}</option>
@@ -277,8 +277,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Magasin </span>
 										</div>
-										<select class="form-control" ng-model="historiqueCourant.magasin"
-										ng-init="historiqueCourant.magasin=''">
+										<select ui-select2 class="form-control" ng-model="historiqueCourant.magasin"
+										ng-init="historiqueCourant.magasin=''" style="border: 1px solid #e5eaee !important;">
 										<option value="">Tous</option>
 										<option ng-repeat="magasin in listeMagasinCache"
 										value="{{magasin.id}}">{{magasin.designation}}</option>
@@ -359,8 +359,8 @@
 											<div class="input-group-prepend">
 												<span class="input-group-text">Raison </span>
 											</div>
-											<select class="form-control" ng-model="historiqueCourant.raison"
-											ng-init="historiqueCourant.raison=''">
+											<select ui-select2 class="form-control" ng-model="historiqueCourant.raison"
+											ng-init="historiqueCourant.raison=''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="raison in ListeRaisonCache"
 												value="{{raison.id}}">{{raison.designation}}</option>
@@ -381,8 +381,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">OF </span>
 										</div>
-										<select class="form-control" ng-model="historiqueCourant.ofId"
-										ng-init="historiqueCourant.ofId=''">
+										<select ui-select2 class="form-control" ng-model="historiqueCourant.ofId"
+										ng-init="historiqueCourant.ofId=''" style="border: 1px solid #e5eaee !important;">
 										<option value="">Tous</option>
 														<option ng-repeat="mise in ListeMises"
 															value="{{mise.id}}">{{mise.reference}}</option>

@@ -57,6 +57,9 @@ public class ProduitPersistanceImpl extends AbstractPersistance implements IProd
 	private String numero="numero";
 	
 	private String referenceFournisseur="referenceFournisseur";
+	private String pantone="pantone";
+	private String format="format";
+	
 	
 	// creer  produit
 	@Override
@@ -323,6 +326,15 @@ public class ProduitPersistanceImpl extends AbstractPersistance implements IProd
 			      }
 		      
 		  
+		      
+			    if (estNonVide(pRechercheProduitMulitCritere.getPantone())) {
+				      vWhereClause.add(vBuilder.equal(vRootProduit.get(pantone),
+				    		  pRechercheProduitMulitCritere.getPantone()));
+				    }
+			    if (estNonVide(pRechercheProduitMulitCritere.getFormat())) {
+				      vWhereClause.add(vBuilder.equal(vRootProduit.get(format),
+				    		  pRechercheProduitMulitCritere.getFormat()));
+				    }
 		    /** execute query and do something with result **/
 
 		    vCriteriaQuery.select(vRootProduit).where(vWhereClause.toArray(new Predicate[] {}));
@@ -356,6 +368,37 @@ public class ProduitPersistanceImpl extends AbstractPersistance implements IProd
 	  }
 
 	
+	 
+		
+		@Override
+		public List<ProduitValue> rechercheProduitFinance() {
+			  CriteriaBuilder vBuilder = this.entityManager.getCriteriaBuilder();
+			    CriteriaQuery < ProduitEntity > vCriteriaQuery = vBuilder.createQuery(ProduitEntity.class);
+			    List < Predicate > vWhereClause = new ArrayList < Predicate >();
+
+			    Root < ProduitEntity > vRootProduit = vCriteriaQuery.from(ProduitEntity.class);
+
+			
+			      vWhereClause.add(vBuilder.equal(vRootProduit.get("retour"),
+			    		true));
+			 
+			    vCriteriaQuery.select(vRootProduit).where(vWhereClause.toArray(new Predicate[] {}));
+			    List < ProduitEntity > resultatEntite = this.entityManager.createQuery(vCriteriaQuery).getResultList();
+
+			    List < ProduitValue > vListeResultat = new ArrayList < ProduitValue >();
+
+			    for (ProduitEntity vProduitEntite : resultatEntite) {
+			    	ProduitValue vPv = PersistanceUtilities.toValue(vProduitEntite);
+			      vListeResultat.add(vPv);
+			    }
+
+			   
+
+				return vListeResultat;
+			  
+			
+
+		}
 
 
 	

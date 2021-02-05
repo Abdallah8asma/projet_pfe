@@ -240,6 +240,16 @@ public class PersistanceUtilitiesGs {
 				entiteStock.setDimensionArticle(pEntiteStockEntite.getArticle().getDimension());
 			
 		}
+			
+			
+	    if (pEntiteStockEntite.getArticle().getProducteur()!= null) {
+				
+				entiteStock.setProducteurArticle(pEntiteStockEntite.getArticle().getProducteur());
+			
+		}
+	
+	
+	
 
 		}
 		entiteStock.setConeReserve(pEntiteStockEntite.getConeReserve());

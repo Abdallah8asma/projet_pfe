@@ -213,4 +213,9 @@ public class ProduitDomaineImpl implements IProduitDomaine {
 		return map;
 	}
 
+	@Override
+	public List<ProduitValue> rechercheProduitFinance() {
+		return produitPersistance.rechercheProduitFinance();
+	}
+
 }

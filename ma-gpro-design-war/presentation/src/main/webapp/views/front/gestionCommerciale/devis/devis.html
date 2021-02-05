@@ -57,9 +57,24 @@
 
 
 						<div class="ms-CommandButton">
-							<button class="ms-CommandButton-button" ng-click="dowloadListCmdvente(commandeVenteCourante)">
+							<button class="ms-CommandButton-button" >
 								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
 								<span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+
+								<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+									<li class="ms-ContextualMenu-item">
+									  <a class="ms-ContextualMenu-link" tabindex="1"
+										ng-click="dowloadListCmdvente(commandeVenteCourante)">EXCEL</a>
+					  
+									</li>
+								<!-- 	<li class="ms-ContextualMenu-item">
+									  <a class="ms-ContextualMenu-link" tabindex="1"
+										ng-click="dowloadListCmdventeDevise(commandeVenteCourante)">EXCEL avec devise</a>
+					  
+									</li> -->
+								</ul>
+
+
 							</button>
 						</div>
 						<div class="ms-CommandButton">
@@ -160,7 +175,7 @@
 												<span class="input-group-text">Devise </span>
 											</div>
 											<select ui-select2="true" class="form-control" ng-model="commandeVenteCourante.devise"
-												ng-init="commandeVenteCourante.devise=''">
+												ng-init="commandeVenteCourante.devise=''" style="border: 1px solid #e5eaee !important;">
 												<option value="">Tous</option>
 												<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
 												{{dev.designation}}</option>
@@ -536,12 +551,22 @@
             <ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
-                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'non')">Sans En-t&ecirc;te</a>
+                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'non',1)">Sans En-t&ecirc;te</a>
+
+			  </li>
+			  <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'non',2)">Sans En-t&ecirc;te $/€</a>
 
               </li>
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
-                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'oui')">Avec En-t&ecirc;te</a>
+                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'oui',3)">Avec En-t&ecirc;te</a>
+
+			  </li>
+			  <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                 ng-click="download(commandeVenteCourante.id,checkboxModel.rapportPrix,commandeVenteCourante.type,'oui',4)">Avec En-t&ecirc;te $/€</a>
 
               </li>
             </ul>
@@ -728,7 +753,7 @@
 											<span class="input-group-text">Devise </span>
 										</div>
 										<select ui-select2="true" class="form-control" ng-model="commandeVenteCourante.devise"
-											ng-init="commandeVenteCourante.devise=''">
+											ng-init="commandeVenteCourante.devise=''" style="border: 1px solid #e5eaee !important;">
 											<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
 											{{dev.designation}}</option>
 										</select>
@@ -761,7 +786,8 @@
 													<label class=" input-group-text ms-Label">Site</label>
 	
 												</div>
-												<select class="form-control" ng-model="commandeVenteCourante.siteId">
+												<select ui-select2 class="form-control" ng-model="commandeVenteCourante.siteId" 
+												style="border: 1px solid #e5eaee !important;">
 													<option ng-repeat="site in listeSitePartieInteresseeCache" value="{{site.id}}">{{site.nom}}
 													</option>
 												</select>
@@ -1339,7 +1365,7 @@
 		<div class="col-sm-12">
 			<div class="panel-body">
 				<div class="col-md-12">
-					<div class="title-ajout line">Liste des Devis
+					<div class="ms-ListItem-primaryText">Liste des Devis
 					</div>
 
 					<div style="height: 500px;" ng-grid="gridOptions"></div>

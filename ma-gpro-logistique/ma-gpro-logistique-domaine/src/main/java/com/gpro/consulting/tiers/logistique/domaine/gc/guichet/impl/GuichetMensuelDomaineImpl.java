@@ -140,4 +140,19 @@ public String getPrefix() {
 		// TODO Auto-generated method stub
 		 return this.guichetMensuelPersistance.getPrefixBonReceptionNonDeclarer();
 	}
+
+	@Override
+	public Long getNextNumfactureAchatReferenceNondeclarer() {
+		 return this.guichetMensuelPersistance.getNextNumfactureAchatReferenceNondeclarer();
+	}
+
+	@Override
+	public String getPrefixFactureAchatNondeclarer() {
+		return this.guichetMensuelPersistance.getPrefixFactureAchatNondeclarer();
+	}
+
+	@Override
+	public Long modifierGuichetFactureAchatNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur) {
+		 return this.guichetMensuelPersistance.modifierGuichetFactureAchatNonDeclarerMensuel(vGuichetValeur);
+	}
 }

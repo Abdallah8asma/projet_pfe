@@ -208,9 +208,9 @@
 											<label class="input-group-text ms-Label">Famille</label>
 
 										</div>
-										<select class="form-control"
+										<select ui-select2 class="form-control"
 											ng-model="produitCourante.familleEntite"
-											ng-init="produitCourante.familleEntite=''">
+											ng-init="produitCourante.familleEntite=''" style="border: 1px solid #e5eaee !important;">
 											<option ng-repeat="famille in ListFamilleProduitCache"
 												value="{{famille.id}}">{{famille.designation}}</option>
 										</select>
@@ -226,9 +226,9 @@
 											<label class="input-group-text ms-Label">Sous Famille</label>
 
 										</div>
-										<select class="form-control"
+										<select ui-select2 class="form-control"
 											ng-model="produitCourante.sousFamilleEntite"
-											ng-init="produitCourante.sousFamilleEntite=''">
+											ng-init="produitCourante.sousFamilleEntite=''" style="border: 1px solid #e5eaee !important;">
 											<option
 												ng-repeat="sousFamille in ListSousFamilleProduitCache"
 												value="{{sousFamille.id}}">{{sousFamille.designation}}</option>

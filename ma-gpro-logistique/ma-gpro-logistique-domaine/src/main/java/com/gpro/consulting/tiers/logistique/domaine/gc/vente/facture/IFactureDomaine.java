@@ -41,5 +41,8 @@ public interface IFactureDomaine {
 	public ListProduitElementValue getArticleAvoir(Long clientId);
 
 	public String getCurrentReference(String type, Calendar instance, boolean b);
+
+	public String getCurrentReferenceByTypeFactureAndDeclarer(String type, boolean declarer, Calendar instance,
+			boolean b);
 	
 }

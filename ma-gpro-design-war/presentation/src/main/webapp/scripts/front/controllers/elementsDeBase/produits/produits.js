@@ -61,6 +61,7 @@ angular
       
 
       $scope.listeCompteComptable = [];
+	  $scope.ListUniteArticleCache = [];
 
 
       $scope.listePartieInteressee = [];
@@ -80,6 +81,23 @@ angular
       /***************************************************
        * Gestion de Cache des Referentiels *
        **************************************************/
+
+
+		// Liste des UniteCache
+							$scope.listeUnitesArticleCache = function() {
+								$http
+										.get(
+												UrlCommun
+														+ "/gestionnaireCache/listeUniteArticleCache")
+										.success(
+												function(dataUniteCache) {
+													$log.debug("*LISTEUniteCache :"
+																	+ dataUniteCache.length);
+													$scope.ListUniteArticleCache = dataUniteCache;
+
+												});
+							}
+							$scope.listeUnitesArticleCache();
 
 
         

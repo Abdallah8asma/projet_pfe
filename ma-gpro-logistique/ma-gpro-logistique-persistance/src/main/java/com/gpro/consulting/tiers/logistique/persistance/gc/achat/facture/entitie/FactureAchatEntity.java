@@ -138,10 +138,21 @@ public class FactureAchatEntity implements Serializable {
 	
 	
 	
+	@Column(name = "declarer")
+	private boolean declarer;
+	
 	
 	  
 	
 	
+	public boolean isDeclarer() {
+		return declarer;
+	}
+
+	public void setDeclarer(boolean declarer) {
+		this.declarer = declarer;
+	}
+
 	public Long getIdDepot() {
 		return idDepot;
 	}

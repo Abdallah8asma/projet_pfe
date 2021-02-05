@@ -10,7 +10,7 @@
 	}
 </script>
 
-<div class="container-fluid" ng-controller="produitFinancierController" style="background-color: #fff;">
+<div class="container-fluid" ng-controller="serviceController" style="background-color: #fff;">
 
 	<div class="row" ng-show="displayMode != 'edit'">
 
@@ -55,7 +55,7 @@
 				</div>
 				<div class="ms-CommandBar-mainArea">
 					<div class="ms-CommandButton">
-						<button class="ms-CommandButton-button" ng-click="AffectationProduit(produitCourante)">
+						<button class="ms-CommandButton-button" ng-click="AffectationArticle(articleCourante)">
 							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--CirclePlus"></i></span> <span
 								class="ms-CommandButton-label">Ajouter</span>
 						</button>
@@ -71,15 +71,18 @@
 									class="ms-Icon ms-Icon--ChevronDown"></i></span>
 						</button>
 						<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
-							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
-									ng-click="downloadAllProduits(produitCourante)">PDF</a></li>
+						<!-- 	<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
+									ng-click="downloadAllArticles(articleCourante)">PDF</a></li> -->
 							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
-									ng-click="downloadAllProduitsExcel(produitCourante)">Excel</a></li>
+									ng-click="downloadAllArticlesExcel(articleCourante)">Excel</a></li>
+
+									<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
+										ng-click="downloadAllArticleBarCode(articleCourante)">Code Ã  barre</a></li>
 						</ul>
 					</div>
 
 					<div class="ms-CommandButton">
-						<button class="ms-CommandButton-button" ng-click="rechercheProduit(produitCourante)">
+						<button class="ms-CommandButton-button" ng-click="rechercherArticle(articleCourante)">
 							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
 							<span class="ms-CommandButton-label">Rechercher</span>
 						</button>
@@ -115,16 +118,17 @@
 
 			<div class="panel panel-primary">
 				<div class="panel-body">
-					<form class="form-horizontal" name="rechercheProduitForm" id="rechercheProduitForm">
+					<form class="form-horizontal" name="rechercheArticleForm" id="rechercheArticleForm">
 						<div class="row">
+					
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Réf.</span>
+											<span class="input-group-text">RÃ©f.</span>
 										</div>
-										<input class="form-control" ng-model="produitCourante.reference"
-											ng-init="produitCourante.reference=''" />
+										<input class="form-control" ng-model="articleCourante.ref"
+											ng-init="articleCourante.ref=''" />
 									</div>
 								</div>
 							</div>
@@ -132,26 +136,103 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Désignation</span>
+											<span class="input-group-text">DÃ©signation</span>
 										</div>
-										<input class="form-control" ng-model="produitCourante.designation"
-											ng-init="produitCourante.designation=''" />
+										<input class="form-control" ng-model="articleCourante.designation"
+											ng-init="articleCourante.designation=''" />
 									</div>
 								</div>
 							</div>
+
+
+
+							<div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												Date </span>
+										</div>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											ng-init="articleCourante.date =''"
+											ng-model="articleCourante.date" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default" ng-click="open($event)"
+												style="
+														color: rgb(54, 153, 255);
+														background-color: rgb(225, 240, 255);
+													">
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+							
+
+						
+
+
+					
+						
+						</div>
+
+						<div class="row">
+
 
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Sous Categorie</span>
+											<span class="input-group-text">Dimension</span>
 										</div>
-										<select ui-select2 class="form-control" ng-model="produitCourante.sousfamille"
-											ng-init="produitCourante.sousfamille=''" style="border: 1px solid #e5eaee !important;">
-											<option value="">Tous</option>
+										<input class="form-control" ng-model="articleCourante.dimension"
+											ng-init="articleCourante.dimension=''" />
+									</div>
+								</div>
+							</div>
+				
+
+				
+
+				
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Montant</label>
+										</div>
+										<input type="number" step="0.001" class="form-control" min="0"
+											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
+											name="prixUnitaire" ng-model="articleCourante.pu"
+											 />
+									
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Famille</span>
+										</div>
+										<select ui-select2 class="form-control" ng-model="articleCourante.familleEntite"
+											ng-init="articleCourante.familleEntite=''" style="border: 1px solid #e5eaee !important;">
+											<option value=""></option>
 											<option
-												ng-repeat="sousFamille in ListSousFamilleProduitCache  | filter : {familleProduitId : produitCourante.famille}"
-												value="{{sousFamille.id}}">{{sousFamille.designation}}</option>
+												ng-repeat="famille in ListFamilleArticleCache | filter : {idTypeArticle :4} "
+												value="{{famille.id}}">{{famille.designation}}</option>
 										</select>
 									</div>
 								</div>
@@ -159,7 +240,58 @@
 						</div>
 
 
+						<div class="row">
+					
 
+			
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span ui-select2 class="input-group-text">Sous Famille</span>
+										</div>
+										<select ui-select2 class="form-control" ng-model="articleCourante.sousFamilleArtEntite"
+											ng-init="articleCourante.sousFamilleArtEntite=''" style="border: 1px solid #e5eaee !important;">
+											<option value=""></option>
+											<option
+												ng-repeat="sousFamille in ListSousFamilleArticleCache | filter : {idFamilleArticle : articleCourante.familleEntite}"
+												value="{{sousFamille.id}}">{{sousFamille.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						
+
+							<div class="col-sm-5">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label
+												class="input-group-text ms-Label">Observation</label>
+										</div>
+										<input type="text" class="form-control" style="text-transform: uppercase;"
+											ng-model="articleCourante.observation"
+										
+											 />
+									</div>
+								</div>
+							</div>
+				
+
+						</div>
+
+
+		
+
+				
+
+
+			
+							
+			
+					
 
 
 					</form>
@@ -191,8 +323,8 @@
 						</div>
 					</div>
 					<div class="ms-CommandBar-mainArea">
-						<div class="ms-CommandButton" permission="['Article_Edit']">
-							<button class="ms-CommandButton-button" ng-click="sauvegarderAjout(produitCourante)">
+						<div class="ms-CommandButton" permission="['Matiere_premiere_Edit']">
+							<button class="ms-CommandButton-button" ng-click="sauvegarderAjout(articleCourante)">
 								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span> <span
 									class="ms-CommandButton-label">Enregistrer</span>
 							</button>
@@ -246,168 +378,179 @@
 					</div>
 					<br />
 
-					<form class="form-horizontal" id="creationProduitForm" name="creationProduitForm">
+					<form class="form-horizontal" id="creationArticleForm" name="creationArticleForm">
 						<div class="row">
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">Réf.</label>
-										</div>
-										<input type="text" class="form-control" ng-model="produitCourante.reference"
-											ng-change="produitCourante.reference = produitCourante.reference.toUpperCase()"
-											required />
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-8">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<label
-												class="input-group-text ms-Label is-required">D&eacute;signation</label>
-										</div>
-										<input type="text" class="form-control" style="text-transform: uppercase;"
-											ng-model="produitCourante.designation"
-											ng-change="produitCourante.designation = produitCourante.designation.toUpperCase()"
-											required />
-									</div>
-								</div>
-							</div>
-
-
-
-						</div>
-
-						<!-- 	<div class="row">
-
+					
 
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">Modele Article</label>
+											<span class="input-group-text">RÃ©f.</span>
 										</div>
-										<input type="text" class="form-control" ng-model="produitCourante.numero"
-											ng-change="produitCourante.numero = produitCourante.numero.toUpperCase()"
-											required />
+										<input class="form-control" ng-model="articleCourante.ref"
+											ng-init="articleCourante.ref=''" />
 									</div>
 								</div>
 							</div>
-
-
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">Couleur</label>
+											<span class="input-group-text">DÃ©signation</span>
 										</div>
-										<input type="text" class="form-control" style="text-transform: uppercase;"
-											ng-model="produitCourante.couleur" required />
+										<input class="form-control" ng-model="articleCourante.designation"
+											ng-init="articleCourante.designation=''" />
 									</div>
 								</div>
 							</div>
+						
+							<div class="col-sm-4" ng-controller="DatepickerDemoController">
 
 
-							<div class="col-sm-4">
+
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label">R&eacute;f
-												Fournisseur</label>
-										</div>
-										<input type="text" class="form-control"
-											ng-model="produitCourante.referenceFournisseur"
-											ng-change="produitCourante.referenceFournisseur = produitCourante.referenceFournisseur.toUpperCase()" />
-									</div>
-								</div>
-							</div>
-
-
-
-
-
-						</div> -->
-
-
-						<div class="row">
-
-							
-							<div class="col-sm-4" ng-controller="DateIntroCtrl">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text"> Date In</span>
+											<span class="input-group-text">
+												Date </span>
 										</div>
 										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-											max-date="{{maxToDay}}" ng-model="produitCourante.dateIntroduction"
-											is-open="opened" datepicker-options="dateOptions"
-											date-="enabled(date, mode)" close-text="Close" />
+											ng-init="articleCourante.dateIntroduction =''"
+											ng-model="articleCourante.dateIntroduction" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
 
 										<div class="input-group-append">
 											<button type="button" class="btn1 btn-default" ng-click="open($event)"
-												style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
+												style="
+														color: rgb(54, 153, 255);
+														background-color: rgb(225, 240, 255);
+													">
 												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
 											</button>
 										</div>
 									</div>
 								</div>
+
 							</div>
+
+
+					
+						
+						</div>
+
+						<div class="row">
 
 
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label">Déscription</label>
+											<span class="input-group-text">Dimension</span>
 										</div>
-										<textarea class="form-control" rows="1"
-											ng-model="produitCourante.description"></textarea>
+										<input class="form-control" ng-model="articleCourante.dimension"
+											ng-init="articleCourante.dimension=''" />
 									</div>
 								</div>
 							</div>
+				
 
+				
 
 
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">Sous Categorie</label>
+											<label class="input-group-text ms-Label">Montant</label>
 										</div>
-										<select ui-select2 ng-change="sousFamilleChange(produitCourante.sousFamilleId)"
-											ng-model="produitCourante.sousFamilleId" data-placeholder="Pick a state"
-											class="form-control" style="border: 1px solid #e5eaee !important;">
-											<optgroup ng-repeat="famille in ListFamilleProduitCache"
-												label="famille : {{famille.designation}}">
-												<option value="">Tous</option>
-												<option ng-repeat="sousFamille in famille.sousFamille"
-													value="{{sousFamille.id}}">
-													{{sousFamille.designation}}</option>
-											</optgroup>
+										<input type="number" step="0.001" class="form-control" min="0"
+											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
+											name="prixUnitaire" ng-model="articleCourante.pu"
+											 />
+									
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Famille</span>
+										</div>
+										<select ui-select2 class="form-control" ng-model="articleCourante.familleEntite"
+											ng-init="articleCourante.familleEntite=''">
+											<option value=""></option>
+											<option
+												ng-repeat="famille in ListFamilleArticleCache | filter : {idTypeArticle :4} "
+												value="{{famille.id}}">{{famille.designation}}</option>
 										</select>
 									</div>
 								</div>
 							</div>
 
-
-
-
-
 						</div>
 
-		
+
+						<div class="row">
+					
 
 
 
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Sous Famille</span>
+										</div>
+										<select ui-select2="true" class="form-control" ng-model="articleCourante.sousFamilleArtEntite"
+											ng-init="articleCourante.sousFamilleArtEntite=''">
+											<option value=""></option>
+											<option
+												ng-repeat="sousFamille in ListSousFamilleArticleCache | filter : {idFamilleArticle : articleCourante.familleEntite}"
+												value="{{sousFamille.id}}">{{sousFamille.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-5">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label
+												class="input-group-text ms-Label">Observation</label>
+										</div>
+										<input type="text" class="form-control" style="text-transform: uppercase;"
+											ng-model="articleCourante.observation"
+										
+											 />
+									</div>
+								</div>
+							</div>
 
 				
 
 
 
 
+		
+
+						</div>
+						
+
+
+			
+			
+						
+
 					</form>
-				</div>
+
+
+
+			
 
 				<span class="ms-ListItem-primaryText">Documents</span>
 				<div class="panel-body" ng-show="displayMode == 'edit'">
@@ -420,7 +563,7 @@
 										<th>Type Document</th>
 										<th>Document</th>
 										<th><span class="ms-CommandButton-icon float-right"
-												ng-click="ajoutDocumentProduit()"> <a href="javascript:void(0)"> <i
+												ng-click="ajoutDocumentArticle()"> <a href="javascript:void(0)"> <i
 														class="ms-Icon ms-Icon--CirclePlus"
 														style="color: #fff !important;"> </i>
 												</a>
@@ -428,14 +571,14 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="documentProduit in listeDocumentProduit">
-										<td class="hidden"><span editable-text="documentProduit.id" e-name="id"
-												e-form="rowform" e-required> {{ documentProduit.id ||
+									<tr ng-repeat="documentArticle in listeDocumentArticle">
+										<td class="hidden"><span editable-text="documentArticle.id" e-name="id"
+												e-form="rowform" e-required> {{ documentArticle.id ||
 												'empty' }} </span></td>
-										<td><span editable-select="documentProduit.typeDocumentId"
+										<td><span editable-select="documentArticle.typeDocumentId"
 												e-ng-options="s.id as s.designation for s in listeTypeDocumentsCache"
 												e-name="idTypeDocPROD" e-form="rowform">
-												{{showStatus(documentProduit.typeDocumentId)}} </span></td>
+												{{showStatus(documentArticle.typeDocumentId)}} </span></td>
 										<td ng-controller="UploadCtrl">
 
 											<div class="form-group">
@@ -453,12 +596,12 @@
 																data-dismiss="fileinput"
 																ng-show="!isUploaded && rowform.$visible">x</span>
 														</span> <span class="fileinput-filename"
-															ng-model="documentProduit.path" e-name="path"
-															e-form="rowform" e-required>{{documentProduit.path}}</span>
+															ng-model="documentArticle.path" e-name="path"
+															e-form="rowform" e-required>{{documentArticle.path}}</span>
 													</div>
 													<a class="btn btn-sm pull-right"
 														style="margin-right: 10px; cursor: pointer;"
-														ng-click="downloadFile(documentProduit.uidDocument, 'ELEMENT_DE_BASE_PRODUIT')">
+														ng-click="downloadFile(documentArticle.uidDocument, 'ELEMENT_DE_BASE_PRODUIT')">
 														<span class="svg-icon svg-icon-primary svg-icon-2x">
 															<!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Download.svg-->
 															<svg xmlns="http://www.w3.org/2000/svg"
@@ -508,21 +651,21 @@
 															<!--end::Svg Icon--></span>
 													</a>
 												</div>
-											</div> <input class="hidden" ng-model="documentProduit.uidDocument"
-												e-name="uidDocument" e-form="rowform" e-required value="{{ documentProduit.uidDocument ||
+											</div> <input class="hidden" ng-model="documentArticle.uidDocument"
+												e-name="uidDocument" e-form="rowform" e-required value="{{ documentArticle.uidDocument ||
 															'empty' }} " />
 										</td>
 										<td style="white-space: nowrap;">
 
 											<form editable-form name="rowform"
-												onbeforesave="saveDocumentProduit($data, documentProduit.id)"
+												onbeforesave="saveDocumentArticle($data, documentArticle.id)"
 												ng-show="rowform.$visible" class="form-buttons form-inline float-right"
-												shown="DocumentProduitInserree == documentProduit">
+												shown="DocumentArticleInserree == documentArticle">
 												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm">
 													<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
 												</button>
 												<button type="button" ng-disabled="rowform.$waiting"
-													ng-click="cancelAddProduit(rowform, $index, documentProduit.id, documentProduit.typeDocumentId, listeDocumentProduit )"
+													ng-click="cancelAddArticle(rowform, $index, documentArticle.id, documentArticle.typeDocumentId, listeDocumentArticle )"
 													class="btn btn-sm">
 													<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
 												</button>
@@ -532,7 +675,7 @@
 													<i class="ms-Icon ms-Icon--Edit" aria-hidden="true"></i>
 												</button>
 												<button data-nodrag class="btn btn-sm"
-													ng-click="removeDocumentProduit($index)">
+													ng-click="removeDocumentArticle($index)">
 													<i class="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
 
 												</button>
@@ -544,17 +687,19 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
-		</div>
+			</div>
+		
+	     </div>
+
 	</div>
-
-
 	<div class="row" ng-show="displayMode != 'edit'">
 		<div class="col-md-12">
 
 
 			<br /> <span class="ms-ListItem-primaryText">Liste des
-				articles</span> <br />
+				Filmes</span> <br />
 			<div class="title-ajout line"></div>
 
 

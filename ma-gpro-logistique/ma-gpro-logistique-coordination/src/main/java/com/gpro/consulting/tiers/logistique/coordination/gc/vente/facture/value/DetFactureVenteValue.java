@@ -42,6 +42,20 @@ public class DetFactureVenteValue implements Comparable<DetFactureVenteValue> {
 	private String description;
 
 	private Long taxeId;
+	
+	
+	private String numeroOF;
+	
+	
+	
+
+	public String getNumeroOF() {
+		return numeroOF;
+	}
+
+	public void setNumeroOF(String numeroOF) {
+		this.numeroOF = numeroOF;
+	}
 
 	public Long getTaxeId() {
 		return taxeId;

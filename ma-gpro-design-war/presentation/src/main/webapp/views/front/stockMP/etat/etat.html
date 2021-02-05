@@ -154,8 +154,8 @@
 										<div class="input-group-prepend">
 											<span class="input-group-text">Famille </span>
 										</div>
-										<select class="form-control" ng-model="etatCourant.familleArticle"
-											ng-init="etatCourant.familleArticle=''">
+										<select ui-select2 class="form-control" ng-model="etatCourant.familleArticle"
+											ng-init="etatCourant.familleArticle=''" style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option
 												ng-repeat="famille in listeFamilleCache"
@@ -175,7 +175,7 @@
 										
 										<select ui-select2 ng-model="etatCourant.article"
 											ng-init="etatCourant.article=''" data-placeholder="..."
-											class="form-control ">
+											class="form-control " style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="article in listeArticle" value="{{article.id}}">{{article.ref}}</option>
 										</select>
@@ -207,7 +207,7 @@
 										
 										<select ui-select2 ng-model="etatCourant.article"
 											ng-init="etatCourant.article=''" data-placeholder="..."
-											class="form-control ">
+											class="form-control " style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous</option>
 											<option ng-repeat="article in listeArticle" value="{{article.id}}">{{article.designation}}</option>
 										</select>
@@ -321,8 +321,8 @@
 									<div class="input-group-prepend">
 										<span class="input-group-text">Magasin </span>
 									</div>
-									<select class="form-control" ng-model="etatCourant.magasin"
-										ng-init="etatCourant.magasin=''">
+									<select ui-select2 class="form-control" ng-model="etatCourant.magasin"
+										ng-init="etatCourant.magasin=''" style="border: 1px solid #e5eaee !important;">
 										<option value="">Tous</option>
 										<option
 										ng-repeat="magasin in listeMagasinCache"
@@ -432,7 +432,7 @@
 
 
 	<div ng-show="displayEtat == 'fourniture'" class="">
-		<div class="title-ajout line">Material State</div>
+		<div class="ms-ListItem-primaryText">Etat des Articles</div>
 
 
 		<div style="height: 500px;" class="spacer4" ng-grid="gridOptions"></div>

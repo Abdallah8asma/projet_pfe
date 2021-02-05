@@ -143,4 +143,9 @@ public class FactureAchatServiceImpl implements IFactureAchatService {
 		return factureDomaine.getCurrentReferenceMensuel(type,instance,b);
 	}
 
+	@Override
+	public String getCurrentReferenceMensuelDeclarer(String type, boolean declarer, Calendar instance, boolean b) {
+		return factureDomaine.getCurrentReferenceMensuelDeclarer(type,declarer,instance,b);
+	}
+
 }

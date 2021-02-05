@@ -310,7 +310,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 					}
 
 
-					if (bonReceptionValue.getIdDepot() != null) {
+					if (estNonVide(bonReceptionValue.getIdDepot() )) {
 
 						RechercheMulticritereProduitDepotValue request = new RechercheMulticritereProduitDepotValue();
 
@@ -461,7 +461,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 
 		bonReceptionValue.setQuantite(quantiteCommandeVenteTotal);
 		bonReceptionValue.setPrixTotal(coutCommandeVenteTotal);
-
+		
 		return receptionAchatPersistance.create(bonReceptionValue);
 	}
 
@@ -861,9 +861,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 						produitReception.setPrixTotalHT(convertisseur(prixTotal, 4));
 					}
 					
-					
-					
-					
+	
 					//calcul TVA 
 					
 					//TODO GASH -10092020
@@ -1810,6 +1808,10 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 				if (produitValue != null) {
 
 					element.setSerialisable(produitValue.isSerialisable());
+					
+					
+					element.setProduitDesignation(produitValue.getDesignation());
+					element.setProduitReference(produitValue.getRef());
 
 					if (factureAchatId != null) {
 
@@ -1818,6 +1820,11 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 										element.getChoix());
 
 						if (detFactureVenteValue != null) {
+							
+							
+							
+							element.setProduitDesignation(detFactureVenteValue.getProduitDesignation());
+							element.setProduitReference(detFactureVenteValue.getProduitReference());
 
 							boolean detailIdNotExist = true;
 							for (ProduitReceptionAchatValue detail : listDetLivraisonVente) {
@@ -1828,13 +1835,14 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 							if (detailIdNotExist) {
 								element.setId(detFactureVenteValue.getId());
 								element.setRemise(detFactureVenteValue.getRemise());
+								
+							
 							}
 
 						}
 					}
 
-					element.setProduitDesignation(produitValue.getDesignation());
-					element.setProduitReference(produitValue.getRef());
+					
 
 					/*** appel fonction rechercheMC prix special *****/
 
@@ -2178,5 +2186,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 
 		return bonLivraisonlist;
 	}
+	   private boolean estNonVide(Long val) {
+				return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
+			}
 
 }

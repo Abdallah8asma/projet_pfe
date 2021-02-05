@@ -17,25 +17,29 @@
 
 <div class="container-fluid" ng-controller="factureVenteController" style="background-color: #fff;">
 
-<div class="row" ng-show="traitementEnCoursGenererAll =='true'">
-		<div class="col-sm-5"></div>
-		<div class="col-sm-2">
-		<br>
-			<div  
-				ng-click="traitementEnCoursGenererAll ='false'">
-				 
-
-					<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-				 
-				 
+  <div class="row" ng-show="traitementEnCoursGenererAll =='true'">
+    <div class="col-sm-5"></div>
+    <div class="col-sm-2">
+      <br>
+      <div ng-click="traitementEnCoursGenererAll ='false'">
 
 
-			</div>
+        <div class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
 
-		</div>
-		<div class="col-sm-5"></div>
 
-	</div>
+
+
+      </div>
+
+    </div>
+    <div class="col-sm-5"></div>
+
+  </div>
 
   <div class="row" ng-show="traitementEnCours=='true'" ng-click="traitementEnCours ='false'">
     <div class="col-sm-5"></div>
@@ -80,7 +84,8 @@
           style="text-align: center !important; background-color: #1BC5BD !important">
           <span ng-bind-html="'Facture Vente enregistr&eacute;e avec succ&egrave;s.' | safe_html"></span>
           <a> <i class="fa fa-times close-notif" ng-click="closeNotif()" style="color: #fff !important;"></i>
-          </a> </alert>
+          </a>
+        </alert>
       </span>
     </div>
   </div>
@@ -128,6 +133,12 @@
                   ng-click="downloadAllFacturesExcel(factureVenteCourant,2)">EXCEL</a>
 
               </li>
+
+              <!-- 		<li class="ms-ContextualMenu-item">
+										<a class="ms-ContextualMenu-link" tabindex="1"
+										  ng-click="downloadAllFacturesExcelDevise(factureVenteCourant,2)">EXCEL avec devise</a>
+						
+									  </li> -->
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1"
                   ng-click="downloadRecapExcel(factureVenteCourant,2)">Recap</a>
@@ -436,25 +447,44 @@
               </div>
             </div>
 
-            
+
             <div class="row">
-							<div class="col-sm-3">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Devise </span>
-										</div>
-										<select ui-select2="true" class="form-control" ng-model="factureVenteCourant.devise"
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Devise </span>
+                    </div>
+                    <select ui-select2="true" class="form-control" ng-model="factureVenteCourant.devise"
                       ng-init="factureVenteCourant.devise=''">
                       <option value="">Tous</option>
-											<option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
-											{{dev.designation}}</option>
-										</select>
-									</div>
-								</div>
-								</div>
+                      <option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
+                        {{dev.designation}}</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-              
+
+              <div class="col-sm-3" ng-show="clientActif.blackMode==true">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Declaree</label>
+                    </div>
+                    <select ui-select2 ng-model="factureVenteCourant.declarerecherche" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                      <option value="non">NON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
 
 
           </form>
@@ -562,7 +592,17 @@
               </li>
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                  ng-click="download(factureVenteCourant.id,5)">Sans En-t&ecirc;te $/€</a>
+
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
                   ng-click="download(factureVenteCourant.id,3)">Avec En-t&ecirc;te</a>
+
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                  ng-click="download(factureVenteCourant.id,4)">Avec En-t&ecirc;te $/€ </a>
 
               </li>
             </ul>
@@ -749,8 +789,8 @@
                       <label class="input-group-text ms-Label">March&eacute</label>
                     </div>
                     <select ui-select2 ng-model="factureVenteCourant.idMarche"
-                      ng-init="factureVenteCourant.idMarche =''"  data-placeholder=""
-                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      ng-init="factureVenteCourant.idMarche =''" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
                       <option value="">Tous les March&eacute;s</option>
                       <option ng-repeat="marche in bllisteMarche" value="{{marche.id}}">{{marche.designation}}</option>
                     </select>
@@ -773,26 +813,45 @@
                     <select ui-select2="true" class="form-control" ng-model="factureVenteCourant.devise"
                       ng-init="factureVenteCourant.devise=''">
                       <option ng-repeat="dev in ListeDevise" value="{{dev.id}}">
-                      {{dev.designation}}</option>
+                        {{dev.designation}}</option>
                     </select>
                   </div>
                 </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label ">Taux Conversion </label>
+                    </div>
+                    <input class="form-control" type="number" step="any" ng-model="factureVenteCourant.tauxConversion "
+                      ng-init="factureVenteCourant.tauxConversion =''" />
+
+
+                  </div>
                 </div>
-                <div class="col-sm-4">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <label class="input-group-text ms-Label ">Taux Conversion  </label>
+              </div>
+              <div class="col-sm-3" ng-show="clientActif.blackMode==true">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label is-required">Declaree</label>
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="checkbox checkbox-square checkbox-primary">
+                          <input type="checkbox" class="form-control" ng-init="factureVenteCourant.declarer=''"
+                            ng-model="factureVenteCourant.declarer"
+                            ng-change="getCurrentReferenceByType(factureVenteCourant.declarer)" />
+
+                          <span></span></label>
                       </div>
-                      <input class="form-control" type="number" step="any"  ng-model="factureVenteCourant.tauxConversion " 
-                    
-                        ng-init="factureVenteCourant.tauxConversion =''" />
-                      
-                      
                     </div>
                   </div>
-                  </div>
-
+                </div>
+              </div>
 
             </div>
 
@@ -890,216 +949,254 @@
               </div>
             </div>
             <br>
-            
-                        
+
+
           </form>
-            
-            
-    
-            
-              
-            
-            	<!-- TAXE -->
-		<div class="col-sm-12">
-			<div class="title-ajout">Taxe</div>
-			<div class="panel panel-primary">
-				<div class="panel-body">
-					<div class="form-group">
-						
-							<!-- modeCreation -->
-							<div ng-show="modePdf != 'actif'" class="row">
-								<table
-									class="table table-bordered table-hover table-condensed table-head-color">
-									<thead>
-										<tr>
-											<th style="width: 30%">Type</th>
-											<th style="width: 30%">Taux (%)</th>
-											<th style="width: 30%">Montant Taxe</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tr ng-repeat="taxeFacture in listTaxeFactureInit">
-										<td>
-											<!-- TODO: ID => Designation & DropList Field --> <span
-											editable-select="taxeFacture.taxeId" e-name="taxeId"
-											e-form="rowform"
-											e-ng-options="s.id as s.designation for s in listeTaxes | filter:filterTaxes()">
-												{{ showTaxe(taxeFacture.taxeId) || 'empty' }} </span>
-										</td>
-										<td>
-											<!-- editable pourcentage (text with validation) --> <span
-											editable-text="taxeFacture.pourcentage" e-name="pourcentage"
-											e-form="rowform" e-required> {{ taxeFacture.pourcentage
-												|| '--' }} </span>
-										</td>
-										<td>
-											<!-- editable montant (text with validation) --> <span
-											editable-text="taxeFacture.montant" e-name="montant"
-											e-form="rowform" e-required> {{ taxeFacture.montant ||
-												'--' }} </span>
-										</td>
-
-										<td>
-										<!-- form -->
-											<form editable-form name="rowform"
-												onbeforesave="saveTaxeBLivInit($data)"
-												ng-show="rowform.$visible" class="form-buttons form-inline"
-												shown="inserted == taxeFacture">
-												<button type="submit" ng-disabled="rowform.$waiting"
-													class="btn btn-sm glyphicon glyphicon-save"
-													aria-hidden="true"></button>
-												<button type="button" ng-disabled="rowform.$waiting"
-													ng-click="cancelAddBLVente(rowform, $index, taxeFacture.taxeId, taxeFacture.montant, listTaxeLivraisonInit )"
-													class="btn btn-sm glyphicon glyphicon-remove"></button>
-											</form>
-											<div class="buttons" ng-show="!rowform.$visible">
-												<button ng-click="rowform.$show()" data-nodrag
-													class="btn btn-sm glyphicon glyphicon-pencil"></button>
-												<button ng-click="removeTaxeBLivInit($index, taxeFacture.taxeId)" data-nodrag
-													class="btn btn-sm glyphicon glyphicon-trash"></button>
-											</div>
-										</td>
-									</tr>
-								</table>
-
-								<button class="btn btn-default" ng-click="addTaxeBLivInit()">Ajouter</button>
-
-							</div>
-
-							<!-- modeModification -->
-							<div ng-show="modePdf == 'actif'" class="row">
-								<table
-									class="table table-bordered table-hover table-condensed table-head-color">
-									<thead>
-										<tr>
-											<th style="width: 30%">Type</th>
-											<th style="width: 30%">Taux (%)</th>
-											<th style="width: 30%">Montant Taxe</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tr ng-repeat="taxeFacture in listTaxeFacture">
-										<td>
-											<!-- TODO: ID => Designation & DropList Field --> <span
-											editable-select="taxeFacture.taxeId" e-name="taxeId"
-											e-form="rowform"
-											e-ng-options="s.id as s.designation for s in listeTaxes | filter:filterTaxes()">
-												{{ showTaxe(taxeFacture.taxeId) || 'empty' }} </span>
-										</td>
-										<td>
-											<!-- editable pourcentage (text with validation) --> <span
-											editable-text="taxeFacture.pourcentage" e-name="pourcentage"
-											e-form="rowform" e-required> {{ taxeFacture.pourcentage
-												|| '--' }} </span>
-										</td>
-										<td>
-											<!-- editable montant (text with validation) --> <span
-											editable-text="taxeFacture.montant" e-name="montant"
-											e-form="rowform" e-required> {{ taxeFacture.montant |
-												prixFiltre }} </span>
-										</td>
-
-										<td>
-											<!-- form -->
-											<form editable-form name="rowform"
-												onbeforesave="saveTaxeBLiv($data)"
-												ng-show="rowform.$visible" class="form-buttons form-inline"
-												shown="inserted == taxeFacture">
-												<button type="submit" ng-disabled="rowform.$waiting"
-													class="btn btn-sm glyphicon glyphicon-save"
-													aria-hidden="true"></button>
-												<button type="button" ng-disabled="rowform.$waiting"
-													ng-click="cancelAddBLVente(rowform, $index, taxeFacture.taxeId, taxeFacture.montant, listTaxeLivraison )"
-													class="btn btn-sm glyphicon glyphicon-remove"></button>
-											</form>
-											<div class="buttons" ng-show="!rowform.$visible">
-												<button ng-click="rowform.$show()" data-nodrag
-													class="btn btn-sm glyphicon glyphicon-pencil"></button>
-												<button ng-click="removeTaxeBLiv($index,taxeFacture.taxeId )" data-nodrag
-													class="btn btn-sm glyphicon glyphicon-trash"></button>
-											</div>
-										</td>
-									</tr>
-								</table>
-
-								<button class="btn btn-default" ng-click="addTaxeBLiv()">Ajouter</button>
-
-							</div>
-
-						
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- end TaxeDiv -->
-            
-            
-            
-            
-            
-
-         
-            <div class="row">
-
-              <div ng-if="natureLivraison == 'FINI'" class="col-sm-12">
-
-                <span class="ms-ListItem-primaryText">Articles</span>
-
-                <div class="panel panel-primary">
-                  <div class="panel-body">
-                    <div class="form-group">
-                      <div class="row">
-
-                        <table class="table table-bordered table-hover table-condensed table-head-color"
-                          ng-show="modeValider == 'actif'">
-                          <thead>
-                            <tr style="font-weight: bold;">
 
 
 
-                              <th style="width: 20%">Ref.Article</th>
-                              <th style="width: 30%">Article</th>
-                              <th style="width: 15%">Description</th>
-                              <th style="width: 7%">Quantite</th>
-                              <!-- 			<th style="width: 10%">Unité</th> -->
-                              <th style="width: 8%">P.U.H.T</th>
-                              <th style="width: 7%">Remise</th>
-                              <th style="width: 9%">P.T.H.T</th>
 
-                            </tr>
-                          </thead>
-                          <tr ng-repeat="detFactureVente in listDetFactureVentePRBL">
-                            <td>{{ detFactureVente.produitReference || 'empty' }}</td>
-                            <td>{{ detFactureVente.produitDesignation || 'empty' }}</td>
-                            <td>
-                              <input type="text" class="form-control" ng-model="detFactureVente.description" />
-                            </td>
-                            <td>{{ detFactureVente.quantite }}</td>
 
-                            <td>{{ detFactureVente.prixUnitaireHT }}</td>
-                            <td>
-                              <input type="number" class="form-control" ng-change="remiseChanged($index)"
-                                ng-model="detFactureVente.remise" placeholder="{{detFactureVente.remise}}"  disabled/>
-                            </td>
-                            <td>{{ detFactureVente.prixTotalHT | prixFiltre }}</td>
-                          </tr>
-                        </table>
+
+          <!-- TAXE -->
+          <div class="col-sm-12">
+            <div class="title-ajout">Taxe</div>
+            <div class="panel panel-primary">
+              <div class="panel-body">
+                <div class="form-group">
+
+                  <!-- modeCreation -->
+                  <div ng-show="modePdf != 'actif'" class="row">
+                    <table class="table table-bordered table-hover table-condensed table-head-color">
+                      <thead>
+                        <tr>
+                          <th style="width: 30%">Type</th>
+                          <th style="width: 30%">Taux (%)</th>
+                          <th style="width: 30%">Montant Taxe</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tr ng-repeat="taxeFacture in listTaxeFactureInit">
+                        <td>
+                          <!-- TODO: ID => Designation & DropList Field --> <span editable-select="taxeFacture.taxeId"
+                            e-name="taxeId" e-form="rowform"
+                            e-ng-options="s.id as s.designation for s in listeTaxes | filter:filterTaxes()">
+                            {{ showTaxe(taxeFacture.taxeId) || 'empty' }} </span>
+                        </td>
+                        <td>
+                          <!-- editable pourcentage (text with validation) --> <span
+                            editable-text="taxeFacture.pourcentage" e-name="pourcentage" e-form="rowform" e-required> {{
+                            taxeFacture.pourcentage
+                            || '--' }} </span>
+                        </td>
+                        <td>
+                          <!-- editable montant (text with validation) --> <span editable-text="taxeFacture.montant"
+                            e-name="montant" e-form="rowform" e-required> {{ taxeFacture.montant ||
+                            '--' }} </span>
+                        </td>
+
+                        <td>
+                          <!-- form -->
+                          <form editable-form name="rowform" onbeforesave="saveTaxeBLivInit($data)"
+                            ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == taxeFacture">
+                            <button type="submit" ng-disabled="rowform.$waiting"
+                              class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+                            <button type="button" ng-disabled="rowform.$waiting"
+                              ng-click="cancelAddBLVente(rowform, $index, taxeFacture.taxeId, taxeFacture.montant, listTaxeLivraisonInit )"
+                              class="btn btn-sm glyphicon glyphicon-remove"></button>
+                          </form>
+                          <div class="buttons" ng-show="!rowform.$visible">
+                            <button ng-click="rowform.$show()" data-nodrag
+                              class="btn btn-sm glyphicon glyphicon-pencil"></button>
+                            <button ng-click="removeTaxeBLivInit($index, taxeFacture.taxeId)" data-nodrag
+                              class="btn btn-sm glyphicon glyphicon-trash"></button>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <button class="btn btn-default" ng-click="addTaxeBLivInit()">Ajouter</button>
+
+                  </div>
+
+                  <!-- modeModification -->
+                  <div ng-show="modePdf == 'actif'" class="row">
+                    <table class="table table-bordered table-hover table-condensed table-head-color">
+                      <thead>
+                        <tr>
+                          <th style="width: 30%">Type</th>
+                          <th style="width: 30%">Taux (%)</th>
+                          <th style="width: 30%">Montant Taxe</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tr ng-repeat="taxeFacture in listTaxeFacture">
+                        <td>
+                          <!-- TODO: ID => Designation & DropList Field --> <span editable-select="taxeFacture.taxeId"
+                            e-name="taxeId" e-form="rowform"
+                            e-ng-options="s.id as s.designation for s in listeTaxes | filter:filterTaxes()">
+                            {{ showTaxe(taxeFacture.taxeId) || 'empty' }} </span>
+                        </td>
+                        <td>
+                          <!-- editable pourcentage (text with validation) --> <span
+                            editable-text="taxeFacture.pourcentage" e-name="pourcentage" e-form="rowform" e-required> {{
+                            taxeFacture.pourcentage
+                            || '--' }} </span>
+                        </td>
+                        <td>
+                          <!-- editable montant (text with validation) --> <span editable-text="taxeFacture.montant"
+                            e-name="montant" e-form="rowform" e-required> {{ taxeFacture.montant |
+                            prixFiltre }} </span>
+                        </td>
+
+                        <td>
+                          <!-- form -->
+                          <form editable-form name="rowform" onbeforesave="saveTaxeBLiv($data)"
+                            ng-show="rowform.$visible" class="form-buttons form-inline" shown="inserted == taxeFacture">
+                            <button type="submit" ng-disabled="rowform.$waiting"
+                              class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+                            <button type="button" ng-disabled="rowform.$waiting"
+                              ng-click="cancelAddBLVente(rowform, $index, taxeFacture.taxeId, taxeFacture.montant, listTaxeLivraison )"
+                              class="btn btn-sm glyphicon glyphicon-remove"></button>
+                          </form>
+                          <div class="buttons" ng-show="!rowform.$visible">
+                            <button ng-click="rowform.$show()" data-nodrag
+                              class="btn btn-sm glyphicon glyphicon-pencil"></button>
+                            <button ng-click="removeTaxeBLiv($index,taxeFacture.taxeId )" data-nodrag
+                              class="btn btn-sm glyphicon glyphicon-trash"></button>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <button class="btn btn-default" ng-click="addTaxeBLiv()">Ajouter</button>
+
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end TaxeDiv -->
+
+
+
+
+
+
+
+          <div class="row">
+
+            <div ng-if="natureLivraison == 'FINI'" class="col-sm-12">
+
+              <span class="ms-ListItem-primaryText">Articles</span>
+
+
+              <div class="panel panel-primary">
+                <div class="panel-body">
+                  <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-4">
+
+
+                      <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text ms-Label">Service</label>
+                          </div>
+                          <select ui-select2 ng-model="produitIdFinancier" data-placeholder="..." class="form-control"
+                            style="border: 1px solid #e5eaee !important;" e-name="produitIdFinancier" e-form="rowform">
+                            <option value=""></option>
+                            <option ng-repeat="produitFinancier in listeProduitFinancier" value="{{produitFinancier.id}}">
+                              {{produitFinancier.designation}}</option>
+                          </select>
+
+
+
+                        </div>
+
+
+
 
                       </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                      <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <button type="button" class="btn btn-primary" class="btn btn-action"
+                              ng-click="ajoutProduit(produitIdFinancier)">Ajouter</button>
+
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                 
+
+                 
+                    <div class="row">
+
+                      <table class="table table-bordered table-hover table-condensed table-head-color"
+                        ng-show="modeValider == 'actif'">
+
+
+                        
+                        <thead>
+                          <tr style="font-weight: bold;">
+
+
+
+                            <th style="width: 12%">Ref</th>
+                            <th style="width: 25%">Designation</th>
+                            <th style="width: 10%">Description</th>
+                            <th style="width: 15%">OFs</th>
+                            <th style="width: 7%">Quantite</th>
+                            <!-- 			<th style="width: 10%">Unité</th> -->
+                            <th style="width: 8%">P.U.H.T</th>
+                            <th style="width: 7%">Remise</th>
+                            <th style="width: 9%">P.T.H.T</th>
+
+                          </tr>
+                        </thead>
+                        <tr ng-repeat="detFactureVente in listDetFactureVentePRBL">
+                          <td>{{ detFactureVente.produitReference || 'empty' }}</td>
+                          <td>{{ detFactureVente.produitDesignation || 'empty' }}</td>
+                          <td>
+                            <input type="text" class="form-control" ng-model="detFactureVente.description" />
+                          </td>
+                          <td>{{ detFactureVente.numeroOF }}</td>
+                          <td>{{ detFactureVente.quantite }}</td>
+
+                          <td>{{ detFactureVente.prixUnitaireHT }}</td>
+                          <td>
+                            <input type="number" class="form-control" ng-change="remiseChanged($index)"
+                              ng-model="detFactureVente.remise" placeholder="{{detFactureVente.remise}}" disabled />
+                          </td>
+                          <td>{{ detFactureVente.prixTotalHT | prixFiltre }}</td>
+                        </tr>
+                      </table>
+
                     </div>
                   </div>
                 </div>
               </div>
-
             </div>
-            
-            
-            
-            
-            
-            
-            
-            
+
+          </div>
+
+
+
+
+
+
+
+
 
         </div>
 
@@ -1159,8 +1256,8 @@
                     <tbody ng-model="finalOperationsList">
                       <tr ng-repeat="item in finalOperationsList track by $index ">
                         <td>
-                          <select ui-select2 ng-model="item.typeReglementId" data-placeholder="..."
-                            class="form-control" style="border: 1px solid #e5eaee !important;">
+                          <select ui-select2 ng-model="item.typeReglementId" data-placeholder="..." class="form-control"
+                            style="border: 1px solid #e5eaee !important;">
                             <option value="">Tous</option>
                             <option ng-repeat="pi in listTypes" value="{{pi.id}}">{{pi.designation}}</option>
                           </select>
@@ -1285,7 +1382,7 @@
                     <td>
 
                       <input type="text" class="form-control" ng-change="remiseChanged($index)"
-                        ng-model="detFactureVente.remise" placeholder="{{detFactureVente.remise}}" disabled/>
+                        ng-model="detFactureVente.remise" placeholder="{{detFactureVente.remise}}" disabled />
                     </td>
                     <td>{{ detFactureVente.prixTotalHT | prixFiltre }}</td>
                   </tr>
@@ -1376,7 +1473,8 @@
                                     transform="translate(12.000004, 12.499999) rotate(-180.000000) translate(-12.000004, -12.499999) " />
                                 </g>
                               </svg>
-                              <!--end::Svg Icon--></span></a></a>
+                              <!--end::Svg Icon-->
+                            </span></a></a>
 
                         <a ng-click="uploadFile('VENTE_FACTURE')" ng-show="!isUploaded && rowform.$visible"
                           class="btn btn-sm fileinput-upload pull-right">
@@ -1395,7 +1493,8 @@
                                   fill="#000000" fill-rule="nonzero" />
                               </g>
                             </svg>
-                            <!--end::Svg Icon--></span>
+                            <!--end::Svg Icon-->
+                          </span>
                         </a>
                       </div>
                     </div>

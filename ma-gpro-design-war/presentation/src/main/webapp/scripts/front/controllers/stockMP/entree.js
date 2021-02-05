@@ -872,6 +872,33 @@ angular
 
 			   }
 
+                        /*** Excel ***/
+			   $scope.downloadBonEntreeExcel = function(id) {
+							
+				var url = UrlAtelier
+						+ "/fichesGS/entreestock?id="
+						+ id + "&type=xls";
+
+						var a = document.createElement('a');
+							document.body.appendChild(a);
+							downloadService.download(url).then(function (result) {
+								var heasersFileName = result.headers(['content-disposition']).substring(17);
+							var fileName = heasersFileName.split('.');
+						var typeFile = result.headers(['content-type']);
+						var file = new Blob([result.data], {type: typeFile});
+						var fileURL = window.URL.createObjectURL(file);
+	
+	
+						a.download = fileName[0];
+						$window.open(fileURL)
+						 a.click();
+	
+							
+						
+							});
+			};
+
+
 							// $scope.listeMouvement();
 							$scope.typeAlert = 3;
 
