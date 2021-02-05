@@ -1176,8 +1176,7 @@ angular
 								$scope.modeValider = "actif";
 							
 								// listDetFactureAchat
-								$scope.listDetFactureAchatPRBL = resultat.listDetFactureAchat;
-							
+							//	$scope.listDetFactureAchatPRBL = resultat.listDetFactureAchat;
 							
 								factureAchat.listDetFactureAchat = $scope.listDetFactureAchatPRBL;
 								factureAchat.listDocFactureAchat = $scope.listDocFactureAchat;
@@ -1209,6 +1208,8 @@ angular
 
 											$log
 												.debug("success Modification ");
+												
+												
 											/*for (var i = 0; i < $scope.myData.length; i++) {
 			
 												if ($scope.myData[i].id == factureAchatId) {
