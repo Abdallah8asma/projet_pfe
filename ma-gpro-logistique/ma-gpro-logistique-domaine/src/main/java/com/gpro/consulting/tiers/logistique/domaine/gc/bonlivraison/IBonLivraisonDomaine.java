@@ -63,4 +63,6 @@ public interface IBonLivraisonDomaine {
 	public ListProduitElementValue getProduitElementListForPassager(ValiderBLPassagerValue request);
 
 	public String getCurrentReferenceByType(String type, Calendar instance, boolean b);
+
+	public ListProduitElementValue getProduitElementListByOF(List<String> refBonLivraisonList, Long factureVenteId);
 }

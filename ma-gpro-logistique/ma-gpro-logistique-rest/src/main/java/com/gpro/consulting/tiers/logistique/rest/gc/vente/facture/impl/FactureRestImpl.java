@@ -86,6 +86,21 @@ public class FactureRestImpl {
 		return list;
 	}
 	
+	
+	@RequestMapping(value = "/validateByOF", method = RequestMethod.POST)
+	public @ResponseBody ListProduitElementValue validateByOF(@RequestBody List<String> refBonLivraisonList,
+			@RequestParam(value = "factureVenteId", required = false) Long factureVenteId) {
+
+		ListProduitElementValue list = new ListProduitElementValue();
+
+		if (refBonLivraisonList != null && refBonLivraisonList.size() > 0) {
+			list = bonLivraisonService.getProduitElementListByOF(refBonLivraisonList, factureVenteId);
+
+		}
+
+		return list;
+	}
+	
 	@RequestMapping(value = "/validatePassager", method = RequestMethod.POST)
 	public @ResponseBody ListProduitElementValue validatePassager(@RequestBody ValiderBLPassagerValue request) {
 
