@@ -700,11 +700,11 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 					if (detFactureAchatValue != null) {
 						
+				
+					
 						detFactureAchat.setProduitDesignation(detFactureAchatValue.getProduitDesignation());
-					detFactureAchat.setProduitReference(detFactureAchatValue.getProduitReference());
-////////////////////
-					
-					
+						detFactureAchat.setProduitReference(detFactureAchatValue.getProduitReference());
+
 						boolean detailIdNotExist = true;
 						for (DetFactureAchatValue detail : listDetFactureAchat) {
 							if (detail.getId() == detFactureAchatValue.getId())
