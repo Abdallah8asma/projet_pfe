@@ -666,6 +666,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		for (FactureAchatValue factureAchat : listFactureAchatValue) {
 
 			for (DetFactureAchatValue detFactureAchat : factureAchat.getListDetFactureAchat()) {
+				
 
 				if (detFactureAchat.getProduitId() != null) {
 					
@@ -674,6 +675,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 					
 					
 					if (produit != null) {
+						
+					
 						detFactureAchat.setProduitDesignation(produit.getDesignation());
 						detFactureAchat.setProduitReference(produit.getRef());
 						
@@ -696,7 +699,12 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 							factureAchatId, detFactureAchat.getProduitId(), detFactureAchat.getChoix());
 
 					if (detFactureAchatValue != null) {
-
+						
+						detFactureAchat.setProduitDesignation(detFactureAchatValue.getProduitDesignation());
+					detFactureAchat.setProduitReference(detFactureAchatValue.getProduitReference());
+////////////////////
+					
+					
 						boolean detailIdNotExist = true;
 						for (DetFactureAchatValue detail : listDetFactureAchat) {
 							if (detail.getId() == detFactureAchatValue.getId())
