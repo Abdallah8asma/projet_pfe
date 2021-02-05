@@ -23,7 +23,7 @@ angular
 				$scope.displayMode = "list";
 				// bouton pdf hide
 				$scope.modePdf = "notActive";
-				$scope.factureVenteCourant = { "type": "Normal"};
+				$scope.factureVenteCourant = { "type": "Normal" };
 				// mode list activé
 				$scope.displayMode = "list";
 				$scope.listeBonSortie = [];
@@ -36,11 +36,14 @@ angular
 				$scope.listTaxeFacture = [];
 				$scope.listBLDetaille = [];
 				// Tableau de Taxe Prédefini
-				$scope.ListeDevise=[];
+				$scope.ListeDevise = [];
 
-
+				$scope.listeProduitFinancier = [];
 
 				$scope.isCollapsed = true;
+
+				
+				$scope.produitIdFinancier ="";
 
 
 				$scope.hiddenNotifSucc = "false";
@@ -48,28 +51,28 @@ angular
 				$scope.closeNotifS = function () {
 					$scope.hiddenNotifSucc = "false";
 				}
-				
 
-				$scope.getStyleRow=function(montantOuvert,montantTTC){
-					
-			
-					
-					
-					if(montantOuvert != null &&  montantTTC != null && montantOuvert != 0 )
-					
-					return {
-						
-						"background-color" :"#f18973",
-						"text-align": "center",
-						"margin-top": "4%"
-						
-     
+
+				$scope.getStyleRow = function (montantOuvert, montantTTC) {
+
+
+
+
+					if (montantOuvert != null && montantTTC != null && montantOuvert != 0)
+
+						return {
+
+							"background-color": "#f18973",
+							"text-align": "center",
+							"margin-top": "4%"
+
+
 						};
-							
-							
-							
-							
-							
+
+
+
+
+
 				}
 
 				//valider BL Passager
@@ -145,17 +148,17 @@ angular
 							});
 				}
 				$scope.listTypes();
-				
-			 		     // Liste des Devises
-						  $scope.ListeDevise = function () {
-							$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
-							 $scope.ListeDevise = dataDevise;
-									 });
-								 };
-								 
-	 
-								 
-			$scope.ListeDevise();
+
+				// Liste des Devises
+				$scope.ListeDevise = function () {
+					$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+						$scope.ListeDevise = dataDevise;
+					});
+				};
+
+
+
+				$scope.ListeDevise();
 
 				// Mise à jour des Reglements
 				$scope.updateReglement = function (reglement) {
@@ -456,16 +459,16 @@ angular
 
 
 				$scope.listTaxeFactureInitMethod = function () {
-					
-					
-					
+
+
+
 					$scope.listTaxeFactureInit = [
-						
-					{//FODEC 
-					 taxeId: 1,
-					 pourcentage: 1,
-					 montant: '', 
-				    },
+
+						{//FODEC 
+							taxeId: 1,
+							pourcentage: 1,
+							montant: '',
+						},
 
 						{// TVA
 							taxeId: 2,
@@ -487,10 +490,10 @@ angular
 							pourcentage: '',
 							montant: 0.600,
 						}
-					
+
 					];
-					
-		
+
+
 				}
 
 				$scope.initTaxeRemoved = function () {
@@ -665,6 +668,23 @@ angular
 					});
 				}
 
+						// Liste des produits
+						$scope.listeProduitCacheFinance = function () {
+							$http
+								.get(
+									UrlCommun
+									+ "/produit/all/retour")
+								.success(
+									function (data) {
+										console
+		
+										$scope.listeProduitFinancier = data;
+		
+									});
+						}
+		
+						$scope.listeProduitCacheFinance();
+
 				$scope.listePartieInteresseeCache();
 				$scope.listeTaxes();
 				// $scope.listeMarche();
@@ -824,45 +844,43 @@ angular
 							$scope.factureVenteCourant.groupeClientId = element[0].groupeClientId;
 
 
-							if($scope.clientActif.blackMode == false){
+							if ($scope.clientActif.blackMode == false) {
 
 								$http
-								.get(
-									UrlAtelier
-									+ "/bonlivraison/getAvailableListBonLivraisonRefByClientAndDeclare:" + idClient)
-								.success(
-									function (resultat) {
-										$log.debug("----ResultatListBL " + resultat.length);
+									.get(
+										UrlAtelier
+										+ "/bonlivraison/getAvailableListBonLivraisonRefByClientAndDeclare:" + idClient)
+									.success(
+										function (resultat) {
+											$log.debug("----ResultatListBL " + resultat.length);
 
-										angular.forEach(resultat, function (element, key) {
-											$scope.listReferenceBL.push(element.referenceBL);
+											angular.forEach(resultat, function (element, key) {
+												$scope.listReferenceBL.push(element.referenceBL);
+											});
+
+											// $log.debug("listBL : "+resultat.list.length);
+											//$log.debug("--listReferenceBL : "+JSON.stringify($scope.listReferenceBL, null, "    "));
 										});
 
-										// $log.debug("listBL : "+resultat.list.length);
-										//$log.debug("--listReferenceBL : "+JSON.stringify($scope.listReferenceBL, null, "    "));
-									});
-
-							}else
-
-							{
+							} else {
 								$http
-								.get(
-									UrlAtelier
-									+ "/bonlivraison/getAvailableListBonLivraisonRefByClient:" + idClient)
-								.success(
-									function (resultat) {
-										$log.debug("----ResultatListBL " + resultat.length);
+									.get(
+										UrlAtelier
+										+ "/bonlivraison/getAvailableListBonLivraisonRefByClient:" + idClient)
+									.success(
+										function (resultat) {
+											$log.debug("----ResultatListBL " + resultat.length);
 
-										angular.forEach(resultat, function (element, key) {
-											$scope.listReferenceBL.push(element.referenceBL);
+											angular.forEach(resultat, function (element, key) {
+												$scope.listReferenceBL.push(element.referenceBL);
+											});
+
+											// $log.debug("listBL : "+resultat.list.length);
+											//$log.debug("--listReferenceBL : "+JSON.stringify($scope.listReferenceBL, null, "    "));
 										});
-
-										// $log.debug("listBL : "+resultat.list.length);
-										//$log.debug("--listReferenceBL : "+JSON.stringify($scope.listReferenceBL, null, "    "));
-									});
 
 							}
-						
+
 							// updated by samer le 11.03.20
 							/*
 							 * 
@@ -1176,11 +1194,11 @@ angular
 
 				// Recherche des Bons de Vente
 				$scope.rechercherFactureVente = function (factureVenteCourant) {
-						
-				if($scope.clientActif.blackMode==false){
-					factureVenteCourant.declarerecherche="oui";
 
-				 }
+					if ($scope.clientActif.blackMode == false) {
+						factureVenteCourant.declarerecherche = "oui";
+
+					}
 
 					factureVenteCourant.type = "Normal";
 					$http
@@ -1250,7 +1268,7 @@ angular
 						"metrageMin": "",
 						"metrageMax": "",
 						"type": "Normal"
-						
+
 					};
 					// init de la Grid
 					// $scope.rechercherFactureVente($scope.factureVenteCourant);
@@ -1275,82 +1293,83 @@ angular
 					$scope.natureLivraison = "FINI";
 					$scope.listTaxeFactureInitMethod();
 					$scope.initTaxeRemoved();
-					$scope.factureVenteCourant = { date: new Date(), modepaiementId: 1 ,
-					"devise":"2",
-					"declarer":true,
-					
+					$scope.factureVenteCourant = {
+						date: new Date(), modepaiementId: 1,
+						"devise": "2",
+						"declarer": true,
+
 					};
 					// $scope.factureVenteCourant = factureVente ? angular
 					// .copy(factureVente) : {};
-					$scope.factureVenteCourant.declarer=true;
-					var type =true;
-					
-					$http.get(UrlAtelier + "/facture/getCurrentReferenceByTypeFactureAndDeclarer:Normal:"+type)
+					$scope.factureVenteCourant.declarer = true;
+					var type = true;
+
+					$http.get(UrlAtelier + "/facture/getCurrentReferenceByTypeFactureAndDeclarer:Normal:" + type)
 						.success(
 							function (res) {
 
 								$scope.factureVenteCourant.reference = res;
 								$scope.factureVenteCourant.refAvantChangement = res;
 							});
-						
 
-						
+
+
 					// mode edit activé
 					$scope.displayMode = "edit";
 
 				}
 
 
-				$scope.getCurrentReferenceByType  = function (declarer) {
-					
-					var type ="";
-					
-					if(declarer == true){
+				$scope.getCurrentReferenceByType = function (declarer) {
+
+					var type = "";
+
+					if (declarer == true) {
 
 						type = true;
 						$scope.listTaxeFactureInitMethod();
 					}
 					else {
-				
-					type = false;
-					$scope.listTaxeFactureInit = [
-						{//FODEC 
-							taxeId: 1,
-							pourcentage: 1,
-							montant: '', 
-						   },
-	   
-							   {// TVA
-								   taxeId: 2,
-								   pourcentage: 10,
-								   montant: '',
-							   },
-							   {// TVA7
-								   taxeId: 4,
-								   pourcentage: 7,
-								   montant: '',
-							   },
-							   {// TVA13
-								   taxeId: 5,
-								   pourcentage: 13,
-								   montant: '',
-							   },
-							   {// TIMBRE
-								   taxeId: 3,
-								   pourcentage: '',
-								   montant: 0.600,
-							   }
-						   
-						   ];
 
-				   }
-	               
-				
-					
-							$http
+						type = false;
+						$scope.listTaxeFactureInit = [
+							{//FODEC 
+								taxeId: 1,
+								pourcentage: 1,
+								montant: '',
+							},
+
+							{// TVA
+								taxeId: 2,
+								pourcentage: 10,
+								montant: '',
+							},
+							{// TVA7
+								taxeId: 4,
+								pourcentage: 7,
+								montant: '',
+							},
+							{// TVA13
+								taxeId: 5,
+								pourcentage: 13,
+								montant: '',
+							},
+							{// TIMBRE
+								taxeId: 3,
+								pourcentage: '',
+								montant: 0.600,
+							}
+
+						];
+
+					}
+
+
+
+					$http
 						.get(
 							UrlAtelier
-							+ "/facture/getCurrentReferenceByTypeFactureAndDeclarer:Normal:"+type
+							+ "/facture/getCurrentReferenceByTypeFactureAndDeclarer:Normal:" + type
 						)
 						.success(
 							function (res) {
@@ -1359,8 +1378,8 @@ angular
 
 							}
 						);
-					
-					}	
+
+				}
 				// AffectationBLFaconVente BonLivVente
 				$scope.affectationBLFaconVente = function (factureVente) {
 					$scope.natureLivraison = "FACON";
@@ -2349,17 +2368,17 @@ angular
 					} else {
 						$log.debug("==dateFactureMax Undefined");
 					}
-					if(typeof $scope.factureVenteCourant.devise === 'undefined'  ||  $scope.factureVenteCourant.devise == null){
+					if (typeof $scope.factureVenteCourant.devise === 'undefined' || $scope.factureVenteCourant.devise == null) {
 						var newDevise = "";
 					}
-					else{
-						var newDevise=$scope.factureVenteCourant.devise;
+					else {
+						var newDevise = $scope.factureVenteCourant.devise;
 					}
-					if(typeof $scope.factureVenteCourant.groupeClientId === 'undefined'  ||  $scope.factureVenteCourant.groupeClientId == null){
+					if (typeof $scope.factureVenteCourant.groupeClientId === 'undefined' || $scope.factureVenteCourant.groupeClientId == null) {
 						var groupeClient = "";
 					}
-					else{
-						var groupeClient=$scope.factureVenteCourant.groupeClientId;
+					else {
+						var groupeClient = $scope.factureVenteCourant.groupeClientId;
 					}
 
 					$log.debug("-- factureVenteCourant" + JSON.stringify(factureVenteCourant, null, "  "));
@@ -2380,8 +2399,8 @@ angular
 							+ "&prixMin=" + factureVenteCourant.prixMin
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
-							+ "&groupeClientId=" +groupeClient
-							+ "&devise=" +newDevise
+							+ "&groupeClientId=" + groupeClient
+							+ "&devise=" + newDevise
 							+ "&type=pdf";
 
 					} else {
@@ -2396,8 +2415,8 @@ angular
 							+ "&prixMin=" + factureVenteCourant.prixMin
 							+ "&prixMax=" + factureVenteCourant.prixMax
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
-							+ "&groupeClientId=" +groupeClient
-							+ "&devise=" +newDevise
+							+ "&groupeClientId=" + groupeClient
+							+ "&devise=" + newDevise
 							+ "&type=pdf";
 					}
 					$log.debug("-- URL" + url);
@@ -2478,11 +2497,11 @@ angular
 					} else {
 						$log.debug("==dateFactureMax Undefined");
 					}
-					if(typeof $scope.factureVenteCourant.devise === 'undefined'  ||  $scope.factureVenteCourant.devise == null){
+					if (typeof $scope.factureVenteCourant.devise === 'undefined' || $scope.factureVenteCourant.devise == null) {
 						var newDevise = "";
 					}
-					else{
-						var newDevise=$scope.factureVenteCourant.devise;
+					else {
+						var newDevise = $scope.factureVenteCourant.devise;
 					}
 					$log.debug("-- factureVenteCourant" + JSON.stringify(factureVenteCourant, null, "  "));
 
@@ -2601,33 +2620,33 @@ angular
 					} else {
 						$log.debug("==dateFactureMax Undefined");
 					}
-					if(typeof $scope.factureVenteCourant.devise === 'undefined'  ||  $scope.factureVenteCourant.devise == null){
+					if (typeof $scope.factureVenteCourant.devise === 'undefined' || $scope.factureVenteCourant.devise == null) {
 						var newDevise = "";
 					}
-					else{
-						var newDevise=$scope.factureVenteCourant.devise;
+					else {
+						var newDevise = $scope.factureVenteCourant.devise;
 					}
 					$log.debug("-- factureVenteCourant" + JSON.stringify(factureVenteCourant, null, "  "));
 
 					var url;
 					$log.debug("PI  " + factureVenteCourant.partieIntId);
-				
-						url = UrlAtelier + "/fiches/listfactureDevise?referenceFacture=" + factureVenteCourant.referenceFacture
-							+ "&typeFacture=Normal"
-							+ "&referenceBl=" + factureVenteCourant.referenceBl
-							+ "&partieIntId=" + factureVenteCourant.partieIntId
-							+ "&dateFactureMin=" + newdateFacMinFormat
-							+ "&dateFactureMax=" + newdateFacMaxFormat
-							+ "&metrageMin=" + factureVenteCourant.metrageMin
-							+ "&metrageMax=" + factureVenteCourant.metrageMax
-							+ "&prixMin=" + factureVenteCourant.prixMin
-							+ "&prixMax=" + factureVenteCourant.prixMax
-							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
-							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
-							+ "&devise=" + newDevise
-							+ "&type=pdf";
 
-		
+					url = UrlAtelier + "/fiches/listfactureDevise?referenceFacture=" + factureVenteCourant.referenceFacture
+						+ "&typeFacture=Normal"
+						+ "&referenceBl=" + factureVenteCourant.referenceBl
+						+ "&partieIntId=" + factureVenteCourant.partieIntId
+						+ "&dateFactureMin=" + newdateFacMinFormat
+						+ "&dateFactureMax=" + newdateFacMaxFormat
+						+ "&metrageMin=" + factureVenteCourant.metrageMin
+						+ "&metrageMax=" + factureVenteCourant.metrageMax
+						+ "&prixMin=" + factureVenteCourant.prixMin
+						+ "&prixMax=" + factureVenteCourant.prixMax
+						+ "&natureLivraison=" + factureVenteCourant.natureLivraison
+						+ "&groupeClientId=" + factureVenteCourant.groupeClientId
+						+ "&devise=" + newDevise
+						+ "&type=pdf";
+
+
 					$log.debug("-- URL" + url);
 
 					var fileName = 'Liste facture';
@@ -2869,16 +2888,61 @@ angular
 
 
 
-				/**FIN ***************** DOCUMENTS FACTURE  *******************/
+				/**FIN *****************   *******************/
+
+
+		
+	 	// ajout d'un Produit
+									 $scope.ajoutProduit = function(produitId) {
+
+
+										console.log("call ajoutProduit");
+										console.log("produitId=",produitId);
+									
+
+										if(produitId!=null){
+		
+											var element = $scope.listeProduitFinancier.filter(e => e.id == produitId);
+								
+											if(element != null && element[0] != null){
+		
+		
+												$scope.produitInserree = {
+													//produitId :produitId,
+													produitDesignation : element[0].reference,
+													produitReference : element[0].designation,
+													quantite : 1,
+													unite : '',
+													prixUnitaireHT : element[0].prixUnitaire
+													//prixTotalHT : '',
+												//	nouveau :true,
+													//remise : ''
+												};
+											
+												$scope.listDetFactureVentePRBL
+											.push($scope.produitInserree);
+		
+											}
+										
+										
+		
+											
+									  }
+									
+									};
+
+				// Supprimer Produit
+				$scope.removeProduit = function (index) {
 
 
 
 
+					$scope.listDetLivraisonVentePRBS.splice(index, 1);
+
+					console.log("Success Delete Produit ");
 
 
-
-
-
+				};
 
 
 
@@ -2942,11 +3006,11 @@ angular
 								{
 									field: 'montantOuvert',
 									displayName: 'Montant Ouvert',
-									cellTemplate:`<div ng-style="getStyleRow(row.entity.montantOuvert,row.entity.montantTTC)" style ="margin-top: 4%;" >{{row.entity.montantOuvert | number:3}}</div>`,
+									cellTemplate: `<div ng-style="getStyleRow(row.entity.montantOuvert,row.entity.montantTTC)" style ="margin-top: 4%;" >{{row.entity.montantOuvert | number:3}}</div>`,
 									cellFilter: 'prixFiltre',
 									//	width: '8%'
 								},
-								
+
 
 								/* 
 								 {
@@ -3003,11 +3067,11 @@ angular
 							var data;
 							var factureVenteCourant = $scope.factureVenteCourant;
 							factureVenteCourant.type = "Normal";
-								
-							if($scope.clientActif.blackMode==false){
-								factureVenteCourant.declarerecherche="oui";
-			
-							 }
+
+							if ($scope.clientActif.blackMode == false) {
+								factureVenteCourant.declarerecherche = "oui";
+
+							}
 							if (searchText) {
 								var ft = searchText.toLowerCase();
 

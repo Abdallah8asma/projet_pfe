@@ -1174,10 +1174,11 @@ angular
 								// tableau resultant de
 								// DetLivVene
 								$scope.modeValider = "actif";
+							
 								// listDetFactureAchat
 								$scope.listDetFactureAchatPRBL = resultat.listDetFactureAchat;
-
-
+							
+							
 								factureAchat.listDetFactureAchat = $scope.listDetFactureAchatPRBL;
 								factureAchat.listDocFactureAchat = $scope.listDocFactureAchat;
 
