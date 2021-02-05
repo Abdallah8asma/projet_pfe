@@ -36,6 +36,8 @@ angular
 					 "devise":'2'
 				};
 
+				$scope.produitIdFinancier ="";
+
 
 
 				$scope.listeProduitFinancier = [];
@@ -239,55 +241,6 @@ angular
 
 
 
-								 	// ajout d'un Produit
-							$scope.ajoutProduit = function(produitId) {
-
-								if(produitId){
-
-									var element = $scope.listeProduitFinancier.filter(e => e.id === produitId);
-						
-									if(element && element[0]){
-
-
-										$scope.produitInserree = {
-											produitId :produitId,
-											produitDesignation : element[0].designation,
-											produitReference : element[0].reference,
-											quantite : 1,
-											unite : '',
-											prixUnitaireHT : '',
-											prixTotalHT : '',
-											nouveau :true,
-											remise : ''
-										};
-		
-										$scope.listDetLivraisonVentePRBS
-												.push($scope.produitInserree);
-
-
-
-
-									}
-									
-									
-							  }
-
-
-							};
-
-
-									// Supprimer Produit
-									$scope.removeProduit = function(index) {
-								
-									
-									
-										
-										$scope.listDetLivraisonVentePRBS.splice(index, 1);
-										
-										console.log("Success Delete Produit ");
-										
-										
-									};
 								 
 	 
 								 
@@ -443,6 +396,63 @@ angular
 					 return false;
 				 };
 			 };
+
+
+
+
+			 
+								 	// ajout d'un Produit
+									 $scope.ajoutProduit = function(produitId) {
+
+
+										console.log("call ajoutProduit");
+										console.log("produitId=",produitId);
+									
+
+										if(produitId!=null){
+		
+											var element = $scope.listeProduitFinancier.filter(e => e.id == produitId);
+								
+											if(element != null && element[0] != null){
+		
+		
+												$scope.produitInserree = {
+													//produitId :produitId,
+													produitDesignation : element[0].reference,
+													produitReference : element[0].designation,
+													quantite : 1,
+													unite : '',
+													prixUnitaireHT : element[0].prixUnitaire
+													//prixTotalHT : '',
+												//	nouveau :true,
+													//remise : ''
+												};
+											
+												$scope.listDetLivraisonVentePRBS
+											.push($scope.produitInserree);
+		
+											}
+										
+										
+		
+											
+									  }
+									
+									};
+		
+		
+											// Supprimer Produit
+											$scope.removeProduit = function(index) {
+										
+											
+											
+												
+												$scope.listDetLivraisonVentePRBS.splice(index, 1);
+												
+												console.log("Success Delete Produit ");
+												
+												
+											};
 			 /**************************************************
 			  *Gestion des ProduitBS & traitementsFacon
 			  **************************************************/

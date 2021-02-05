@@ -999,7 +999,7 @@
 				<div class="panel-body">
 
 
-					<div class="form-group">
+				
 
 						<div class="row">
 							<div class="col-sm-4">
@@ -1010,12 +1010,12 @@
 										<div class="input-group-prepend">
 											<label class="input-group-text ms-Label">Service</label>
 										</div>
-										<select ui-select2 ng-model="produitId" data-placeholder="..."
+										<select ui-select2 ng-model="produitIdFinancier" data-placeholder="..."
 											class="form-control" style="border: 1px solid #e5eaee !important;"
-											e-name="produitId" e-form="rowform">
+											e-name="produitIdFinancier" e-form="rowform">
 											<option value=""></option>
-											<option ng-repeat="produit in listeProduitFinancier" value="{{produit.id}}">
-												{{produit.designation}}</option>
+											<option ng-repeat="produitFinancier in listeProduitFinancier" value="{{produitFinancier.id}}">
+												{{produitFinancier.designation}}</option>
 										</select>
 
 
@@ -1028,35 +1028,22 @@
 								</div>
 							</div>
 
-
-							<div class="col-sm-4">
-
-
-
+							<div class="col-sm-2">
 								<div class="form-group">
-
-
-
-									<button class="ms-CommandButton-button" ng-click="ajoutProduit(produitId)">
-										<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--CirclePlus"></i></span> <span
-											class="ms-CommandButton-label">Ajouter</span>
-									</button>
-
-
-
-								
-
-
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<button type="button" class="btn btn-primary" class="btn btn-action"
+												ng-click="ajoutProduit(produitIdFinancier)">Ajouter</button>
+	
+										</div>
+	
+									</div>
 								</div>
-
 							</div>
 
 						</div>
 
-					</div>
-
-
-					<div class="form-group">
+				
 
 
 
@@ -1080,13 +1067,17 @@
 
 										<th style="width: 7%">P.T.H.Tx</th>
 										<th style="width: 3%"></th>
+
 									</tr>
 								</thead>
 								<tr ng-repeat="detLivVente in listDetLivraisonVentePRBS">
-									<td>{{ detLivVente.produitReference || 'empty' }}</td>
-									<td>{{ detLivVente.produitDesignation || 'empty' }}</td>
-									<td>{{ detLivVente.numeroOF || 'empty' }}</td>
-									<td>{{ detLivVente.quantite || 'empty' }}</td>
+									<td>{{ detLivVente.produitReference  || 'empty'}}</td>
+									<td>{{ detLivVente.produitDesignation  || 'empty' }}</td>
+									<td>{{ detLivVente.numeroOF  || 'empty' }}</td>
+
+									<td><input type="number" ng-model="detLivVente.quantite"></td>
+
+									
 
 									<td>{{ detLivVente.nombreColis || 'empty' }}</td>
 									<!-- 	<td>{{ detLivVente.prixUnitaireHT || 'empty' }}</td> -->
@@ -1112,10 +1103,10 @@
 
 
 						</div>
-					</div>
+					
 				</div>
 			</div>
-		</div>
+		
 
 
 
@@ -1179,7 +1170,7 @@
 
 
 
-
+	</div>
 
 	</div>
 
