@@ -19,15 +19,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheProduitSerialisableValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamilleArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamilleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.GroupeClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.RegionValue;
+import com.gpro.consulting.tiers.commun.domaine.elementBase.IImpressionProduitDomaine;
 import com.gpro.consulting.tiers.commun.domaine.elementBase.IProduitDomaine;
+import com.gpro.consulting.tiers.commun.domaine.elementBase.ISousFamilleArticleDomaine;
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.IBaseInfoPersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitSerialisablePersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.ISousFamilleProduitPersistance;
@@ -273,7 +278,16 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 	
 	@Autowired
 	private IBonSortieFiniDomain bonSortieFiniDomaine;
+	
+	
+	
+	@Autowired
+	private ISousFamilleArticleDomaine sousFamilleArticleDomaine;
 
+	@Autowired
+	private IImpressionProduitDomaine impressionProduitDomaine;
+	
+	
 	// Reception Achat
 
 	/**
@@ -932,6 +946,12 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					
 					if (detLivraisonVente.getRemise()==null)
 						detLivraisonVente.setRemise(0D);
+					
+					
+					
+					if(detLivraisonVente.getPrixTotalHT() == null)
+						detLivraisonVente.setPrixTotalHT(ZERO);
+					
 					Double totalApresRemise=detLivraisonVente.getPrixTotalHT()*(1-detLivraisonVente.getRemise()/100);
 					
 					
@@ -1711,7 +1731,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 						factureReportProduct.setProduitDesignation(produitIdMap.get(produitId).getDesignation() + "("
 								+ numeroSeriesProduitSerialisable + ")");
 					} else {
-						factureReportProduct.setProduitDesignation(produitIdMap.get(produitId).getDesignation());
+						factureReportProduct.setProduitDesignation(enrichirDesignationProductReportFromProduit(produitIdMap.get(produitId)));
 					}
 
 					//factureReportProduct.setProduitDesignation(produitIdMap.get(produitId).getDesignation());
@@ -1901,6 +1921,60 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			reportValue.setMontantTaxeTimbre(taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE).getMontant());
 		}
 
+	}
+
+	private String enrichirDesignationProductReportFromProduit(ProduitValue produitValue) {
+		
+		  //(Designation : Matière,info Matiere,grammage,Impression,dimension,options)
+		
+		
+		StringBuilder designationProductReport = new StringBuilder();
+		
+		
+		designationProductReport.append(produitValue.getDesignation());
+		designationProductReport.append(" : ");
+		
+		for(ArticleProduitValue matiere : produitValue.getArticleProduits()) {
+			
+			if(matiere.getSousFamilleArticleId() != null) {
+				
+				SousFamilleArticleValue sf = sousFamilleArticleDomaine.rechercheSousFamilleArticleById(matiere.getSousFamilleArticleId());
+			
+				if(estNonVide(sf.getDesignation()))
+				designationProductReport.append(sf.getDesignation() + ", ");
+						
+			}
+			
+			if(estNonVide(matiere.getInfoMatiere()))
+			designationProductReport.append(matiere.getInfoMatiere() + ", ");
+			
+			if(estNonVide(matiere.getGrammage()))
+			designationProductReport.append(matiere.getGrammage() + ", ");
+			
+			if(matiere.getImpressionProduitId() != null)
+				designationProductReport.append(impressionProduitDomaine.rechercheImpressionProduitById(matiere.getImpressionProduitId()).getDesignation() + ", ");
+			
+				
+			if(estNonVide(matiere.getDimension()))
+				designationProductReport.append(matiere.getDimension() + ", ");
+			
+			
+			for(OptionArticleProduitValue opt : matiere.getOptionArticleProduits()) {
+				
+				if(estNonVide(opt.getDesignation()))
+					designationProductReport.append(opt.getDesignation() + ", ");
+			}
+				
+		}
+		
+
+		
+		// TODO Auto-generated method stub
+		return designationProductReport.toString();
+	}
+	
+	private boolean estNonVide(String val) {
+		return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 	}
 
 	/*****************************

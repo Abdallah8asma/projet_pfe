@@ -31,6 +31,7 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.utiliti
 @Component
 public class DetFacturePersistanceImpl extends AbstractPersistance implements IDetFactureVentePersistance{
 	
+	private String PREDICATE_NUMERO_OF = "numeroOF";
 	private String PREDICATE_PRODUIT = "produitId";
 	private String PREDICATE_FACTURE_VENTE = "factureVente";
 	private String PREDICATE_CHOIX = "choix";
@@ -121,4 +122,43 @@ public class DetFacturePersistanceImpl extends AbstractPersistance implements ID
 	private boolean estNonVide(String val) {
 		return val != null && !"".equals(val);
 	}
+
+	@Override
+	public DetFactureVenteValue getByFactureVenteAndNumeroOF(Long factureVenteId, String numeroOF, String choix) {
+
+		
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<DetFactureVenteEntity> criteriaQuery = criteriaBuilder.createQuery(DetFactureVenteEntity.class);
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		
+		Root<DetFactureVenteEntity> root = criteriaQuery.from(DetFactureVenteEntity.class);
+
+		// Set FactureVenteId on whereClause if not empty or null
+		if (factureVenteId != null &&  estNonVide(numeroOF) &&  estNonVide(choix)) {
+			
+			
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_FACTURE_VENTE), factureVenteId));
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_NUMERO_OF), numeroOF));
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_CHOIX), choix));
+			
+			
+			
+			criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+		    List <DetFactureVenteEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+
+		    if(resultatEntite.size() >0){
+		    	return facturePersistanceUtilities.toValue(resultatEntite.get(0));
+		    }
+			
+			
+		}
+		
+	
+
+	
+	     return null;
+	}
+	
+	
 }
