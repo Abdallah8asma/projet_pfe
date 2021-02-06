@@ -424,12 +424,14 @@ angular
 		
 		
 												$scope.produitInserree = {
-													//produitId :produitId,
+													produitId :produitId,
 													produitDesignation : element[0].reference,
 													produitReference : element[0].designation,
 													quantite : 1,
 													unite : '',
-													prixUnitaireHT : element[0].prixUnitaire
+													prixUnitaireHT : element[0].prixUnitaire,
+													choix: "1",
+													ficheId : 1,
 													//prixTotalHT : '',
 												//	nouveau :true,
 													//remise : ''
