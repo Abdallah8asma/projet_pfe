@@ -899,29 +899,35 @@ List<ResultBestElementValue> resultList=new ArrayList<ResultBestElementValue>();
 		Root<DetLivraisonVenteEntity> root = criteriaQuery.from(DetLivraisonVenteEntity.class);
 
 		// Set livraisonVenteId on whereClause if not empty or null
-		if (livraisonVenteId != null) {
+		if (livraisonVenteId != null && estNonVide(numeroOF) && estNonVide(choix)) {
+			
 			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_LIVRAISON_VENTE), livraisonVenteId));
-		}
-		
-		// Set produitId on whereClause if not null
-		if (numeroOF != null) {
+			
 			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_numeroOF), numeroOF));
+			
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_CHOIX), choix));
+			
+			
+			
+			
+			
+
+			criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+		    List <DetLivraisonVenteEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+
+		    if(resultatEntite.size() >0){
+		    	return bonLivraisonPersistanceUtilities.toValue(resultatEntite.get(0));
+		    }
+			
 		}
 		
-		// Set produitId on whereClause if not null
-		if (choix != null) {
-			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_CHOIX), choix));
-		}
-
-		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
-	    List <DetLivraisonVenteEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
-
-	    if(resultatEntite.size() >0){
-	    	return bonLivraisonPersistanceUtilities.toValue(resultatEntite.get(0));
-	    }
-	    else return null;
+	
+	     return null;
 
 	}
+	
+	
+	
 	
 	
 	

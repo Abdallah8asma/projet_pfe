@@ -579,8 +579,12 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				Long produitId = detLivraisonVente.getProduitId();
 
 				if (produitIdMap.containsKey(produitId)) {
-
-					bonLivraisonReportProduct.setProduitDesignation(produitIdMap.get(produitId).getDesignation());
+					
+					
+					
+                     String designationEnrichie = enrichirDesignationProductReportFromProduit(produitIdMap.get(produitId));
+					bonLivraisonReportProduct.setProduitDesignation(designationEnrichie);
+					
 					bonLivraisonReportProduct.setProduitCode(produitIdMap.get(produitId).getReference());
 
 				}
@@ -903,15 +907,24 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					bonLivraisonReportProduct.setPrixUHT(prixUHT);
 
 					bonLivraisonReportProduct.setMontantHT(montantHT);
+					
+					
+					
+					String designationEnrichie = enrichirDesignationProductReportFromProduit(produitIdMap.get(produitId));
+					
+					
+					
+					
+					
 					if (detLivraisonVente.isSerialisable() && detLivraisonVente.getNumeroSeries()!= null) {
 						/*String numeroSeriesProduitSerialisable = getNumeroSerieProduitSeriaisableByReferenceBonAndProduitId(
 								livraisonVente.getReference(), produitId, IConstanteCommerciale.BON_LIVRAISON);*/
 						
 						String numeroSeriesProduitSerialisable = detLivraisonVente.getNumeroSeries();
-						bonLivraisonReportProduct.setProduitDesignation(produitIdMap.get(produitId).getDesignation()
+						bonLivraisonReportProduct.setProduitDesignation(designationEnrichie
 								+ "(" + numeroSeriesProduitSerialisable + ")");
 					} else {
-						bonLivraisonReportProduct.setProduitDesignation(produitIdMap.get(produitId).getDesignation());
+						bonLivraisonReportProduct.setProduitDesignation(designationEnrichie);
 					}
 
 					// enrichir designation produit avec description detaille
