@@ -73,11 +73,15 @@ public class BonMouvementStockRestImpl {
 			bon.setClient(client);
 			
 			
-			
-		   MiseValue mise=miseService.rechercheMiseParId(bon.getOfId()) ;
+			if(bon.getOfId() != null) {
 				
+				   MiseValue mise=miseService.rechercheMiseParId(bon.getOfId()) ;
+					
+					
+					bon.setNumOF(mise.getReference());
 				
-				bon.setNumOF(mise.getReference());
+			}
+		
 				
 			
 		}
