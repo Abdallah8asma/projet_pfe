@@ -1,23 +1,23 @@
-<div class="container-fluid" style="background-color: #fff;">
+<div class="panel-body" style="background-color: #fff;">
   <div class="row">
     <div class="col-sm-12">
-      <br />
+     
     </div>
 
     <div class="col-sm-12" ng-controller="GcReportingFNfournisseurClientCtrl">
-      <br />
+    
 
-      <span class="ms-ListItem-primaryText">Founisseur</span>
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Founisseur</span>
 
       <div class="ms-CommandBar ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+     <!--    <div class="ms-CommandBar-sideCommands">
           <div class="ms-CommandButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-disabled="!rechercheClientForm.$valid;"
@@ -40,7 +40,7 @@
               <span class="ms-CommandButton-label">Annuler</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+           <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
@@ -68,7 +68,7 @@
                 <i class="ms-Icon ms-Icon--Money"></i>
               </li>
             </ul>
-          </div>
+          </div> 
         </div>
       </div>
 
@@ -157,19 +157,19 @@
 
     <div class="col-sm-12" ng-controller="GcReportingFNfournisseurSituationCtrl">
 
-      <br />
 
-      <span class="ms-ListItem-primaryText">Situation</span>
+
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Situation</span>
 
       <div class="ms-CommandBar ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+       <!--  <div class="ms-CommandBar-sideCommands">
           <div class="ms-CommandButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-disabled="!rechercheSituationForm.$valid;"
@@ -186,13 +186,13 @@
             </button>
           </div>
 
-          <div class="ms-CommandButton">
+          <div ng-hide="true" class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="annulerChaineAjout()">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
               <span class="ms-CommandButton-label">Annuler</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+           <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
@@ -220,7 +220,7 @@
                 <i class="ms-Icon ms-Icon--Money"></i>
               </li>
             </ul>
-          </div>
+          </div> 
         </div>
       </div>
 
@@ -329,19 +329,19 @@
     <div class="col-sm-12" ng-controller="GcReportingFNfournisseurBRnonPayeCtrl">
 
 
-      <br />
+    
 
-      <span class="ms-ListItem-primaryText">BR Non pay&eacutees</span>
+      <span class="ms-ListItem-primaryText" style="font-size:130%">BR Non pay&eacutees</span>
 
       <div class="ms-CommandBar  ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+      <!--   <div class="ms-CommandBar-sideCommands">
           <div class="ms-CommandButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-disabled="!rechercheClientForm.$valid;"
@@ -357,7 +357,7 @@
               <span class="ms-CommandButton-label">Annuler</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+          <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
@@ -385,34 +385,16 @@
                 <i class="ms-Icon ms-Icon--Money"></i>
               </li>
             </ul>
-          </div>
+          </div> 
         </div>
       </div>
       <div class="panel panel-primary">
         <div class="panel-body">
           <form class="form-horizontal" id="rechercheClientForm" name="rechercheClientForm">
             <div class="row">
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <label class="ms-Label input-group-text">
-                        Fournisseur</label>
-                    </div>
-                    <select ui-select2 ng-init="bonLivraisonVenteCourant.partieIntId =''"
-                      ng-model="bonLivraisonVenteCourant.partieIntId" data-placeholder="" class="form-control"
-                      style="border: 1px solid #e5eaee !important;">
-                      <option value="">Tous</option>
-                      <option ng-repeat="client in listePartieInteresseeCache | filter:{famillePartieInteressee:2}"
-                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
-                    </select>
-                  </div>
-                </div>
+            
 
-
-              </div>
-
-              <div class="col-sm-3">
+              <div class="col-sm-4">
 
 
 
@@ -444,7 +426,7 @@
 
 
               </div>
-              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
 
 
 
@@ -473,6 +455,25 @@
                   </div>
                 </div>
 
+
+
+              </div>
+                <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Fournisseur</label>
+                    </div>
+                    <select ui-select2 ng-init="bonLivraisonVenteCourant.partieIntId =''"
+                      ng-model="bonLivraisonVenteCourant.partieIntId" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="client in listePartieInteresseeCache | filter:{famillePartieInteressee:2}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
 
 
               </div>
@@ -544,19 +545,19 @@
     <div class="col-sm-12" ng-controller="GcReportingFNfournisseurFactureNonPayeCtrl">
 
 
-      <br />
+  
 
-      <span class="ms-ListItem-primaryText">Facture Non pay&eacutees</span>
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Facture Non pay&eacutees</span>
 
       <div class="ms-CommandBar  ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+     <!--    <div class="ms-CommandBar-sideCommands">
           <div class="ms-CommandButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-disabled="!rechercheClientForm.$valid;"
@@ -572,7 +573,7 @@
               <span class="ms-CommandButton-label">Annuler</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+        <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
@@ -608,26 +609,9 @@
         <div class="panel-body">
           <form class="form-horizontal" id="rechercheClientForm" name="rechercheClientForm">
             <div class="row">
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <label class="ms-Label input-group-text">
-                        Fournisseur</label>
-                    </div>
-                    <select ui-select2 ng-model="factureVenteCourant.partieIntId" data-placeholder=""
-                      class="form-control" style="border: 1px solid #e5eaee !important;">
-                      <option value="">Tous</option>
-                      <option ng-repeat="client in listePartieInteresseeCache | filter:{famillePartieInteressee:2}"
-                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
-                    </select>
-                  </div>
-                </div>
+           
 
-
-              </div>
-
-              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
 
 
 
@@ -660,7 +644,7 @@
 
 
 
-              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
 
 
 
@@ -682,6 +666,24 @@
                         <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
                       </button>
                     </div>
+                  </div>
+                </div>
+
+
+              </div>
+                 <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Fournisseur</label>
+                    </div>
+                    <select ui-select2 ng-model="factureVenteCourant.partieIntId" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="client in listePartieInteresseeCache | filter:{famillePartieInteressee:2}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
                   </div>
                 </div>
 

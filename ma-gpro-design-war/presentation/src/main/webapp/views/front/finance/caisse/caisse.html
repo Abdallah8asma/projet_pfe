@@ -8,17 +8,17 @@
 
 </script> 
 
-<div ng-controller="caisseCtrl" style="background-color: #fff;">
+<div class="panel-body" ng-controller="caisseCtrl" style="background-color: #fff;">
 
   <div class="row" ng-show="displayMode != 'edit'">
-    <div class="panel-body">
-      <br />
+    <div class="col-sm-12">
+    
 
-      <span class="ms-ListItem-primaryText">Crit&egrave;res de recherche</span>
-      <br />
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Crit&egrave;res de recherche</span>
+    
 
       <div class="ms-CommandBar ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+      <!--   <div class="ms-CommandBar-sideCommands">
           <div class="ms-SearchBox ms-SearchBox--commandBar">
             <input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
             <label class="ms-SearchBox-label">
@@ -51,7 +51,7 @@
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="showAdd()">
@@ -80,10 +80,10 @@
             </button>
           </div>
           <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
-            <button class="ms-CommandButton-button">
-              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+          <!--   <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon "></i></span>
               <span class="ms-CommandButton-label"></span>
-            </button>
+            </button> -->
             <ul class="ms-ContextualMenu is-opened">
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
@@ -107,7 +107,7 @@
                 <i class="ms-Icon ms-Icon--Money"></i>
               </li>
             </ul>
-          </div>
+          </div> 
         </div>
       </div>
 
@@ -193,28 +193,29 @@
   </div>
 
   <div class="row" ng-show="displayMode != 'edit'">
-    <div class="panel-body">
+    
       <div class="col-md-12">
-        <span class="ms-ListItem-primaryText line">Liste des Caisse:</span>
+        <span class="ms-ListItem-primaryText line" style="font-size:130%">Liste des Caisse:</span>
+        <div panel-class="panel panel-primary">
         <div style="height: 500px;" ng-grid="gridOptions"></div>
       </div>
     </div>
   </div>
 
   <div class="row" ng-show="displayMode == 'edit'">
-    <div class="panel-body">
-      <div class="title-ajout">
-        <br />
+
+      <div class="col-md-12">
+  
         <span class="ms-ListItem-secondaryText float-right font-italic">
           <b>Caisse</b>
         </span>
-        <span class="ms-ListItem-primaryText" ng-show="mode != 'actif'">
+        <span class="ms-ListItem-primaryText" ng-show="mode != 'actif'" style="font-size:130%">
           Cr&eacute;ation Caisse</span>
-        <span class="ms-ListItem-primaryText" ng-show="mode == 'actif'">
+        <span class="ms-ListItem-primaryText" ng-show="mode == 'actif'" style="font-size:130%">
           Modification Caisse</span>
-        <br />
+        
         <div class="ms-CommandBar ms-CommandBar--navBar">
-          <div class="ms-CommandBar-sideCommands">
+       <!--    <div class="ms-CommandBar-sideCommands">
             <div class="ms-CommandButton ms-CommandButton--noLabel">
               <button class="ms-CommandButton-button">
                 <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
@@ -222,7 +223,7 @@
                 <span class="ms-CommandButton-label"></span>
               </button>
             </div>
-          </div>
+          </div> -->
           <div class="ms-CommandBar-mainArea">
             <div class="ms-CommandButton" permission="['Client_Caisse_Edit']">
               <button class="ms-CommandButton-button" ng-click="sauvegarderAjout(caisseCourant)"
@@ -253,11 +254,11 @@
                 <span class="ms-CommandButton-label">Retour</span>
               </button>
             </div>
-            <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
-              <button class="ms-CommandButton-button">
+           <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+               <button class="ms-CommandButton-button">
                 <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
                 <span class="ms-CommandButton-label"></span>
-              </button>
+              </button> 
               <ul class="ms-ContextualMenu is-opened">
                 <li class="ms-ContextualMenu-item">
                   <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
@@ -281,25 +282,16 @@
                   <i class="ms-Icon ms-Icon--Money"></i>
                 </li>
               </ul>
-            </div>
+            </div> 
           </div>
         </div>
 
         <div class="panel panel-primary">
           <div class="panel-body">
-            <form name="creationSSForm">
+            <form class="form-horizontal" name="creationSSForm">
               <div class="row">
-                <div class="col-sm-3">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <label class="input-group-text ms-Label">R&eacute;f&eacute;rence</label>
-                      </div>
-                      <input type="text" class="form-control" ng-model="caisseCourant.reference" disabled />
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-3" ng-controller="DatepickerDemoController">
+            
+                <div class="col-sm-4" ng-controller="DatepickerDemoController">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -320,7 +312,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-3" ng-controller="DatepickerDemoController">
+                <div class="col-sm-4" ng-controller="DatepickerDemoController">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -342,7 +334,20 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-3">
+                    <div class="col-sm-4">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label">R&eacute;f&eacute;rence</label>
+                      </div>
+                      <input type="text" class="form-control" ng-model="caisseCourant.reference" disabled />
+                    </div>
+                  </div>
+                </div>
+           
+              </div>
+              <div class="row">
+                   <div class="col-sm-4">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -358,9 +363,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -371,7 +374,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -436,6 +439,6 @@
         <pop-up type="delete-receptionVente"></pop-up>
       </div>
       <div id="fade" class="black_overlay"></div>
-    </div>
+    
   </div>
 </div>
