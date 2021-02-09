@@ -1,22 +1,21 @@
-<div class="container-fluid" ng-controller="soldeClientController" style="background-color: #fff;">
+<div class="panel-body" ng-controller="soldeClientController" style="background-color: #fff;">
 
   <div class="row" ng-show="displayMode != 'edit'">
     <div class="col-sm-12">
 
-      <br />
+     
 
-      <span class="ms-ListItem-primaryText">Crit&eacute;re de recherche</span>
-      <br />
-
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Crit&eacute;re de recherche</span>
+      
       <div class="ms-CommandBar ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+       <!--  <div class="ms-CommandBar-sideCommands">
           <div class="ms-CommandButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="recherchesoldeCl(soldeClCourante)">
@@ -31,8 +30,8 @@
               <span class="ms-CommandButton-label">Annuler</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
-            <button class="ms-CommandButton-button">
+        <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+          <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
             </button>
@@ -63,7 +62,7 @@
         </div>
       </div>
 
-      <div class="panel panel-primary">
+      <div class="panel panel-primary" style="margin-bottom:0%">
         <div class="panel-body">
           <form class="form-horizontal" name="recherchesoldeClForm" id="recherchesoldeClForm">
             <div class="row">
@@ -93,7 +92,7 @@
                     </div>
                     <div class="input-group-prepend">
                       <div class="input-group-text">
-                        <label class="checkbox checkbox-square checkbox-primary"
+                        <label class="checkbox-sm checkbox-square checkbox-primary"
                           ng-model="partieInteresseeCourante.actif">
                           <input type="checkbox" ng-model="soldeClCourante.bloque" ng-init="soldeClCourante.bloque =''"
                             ng-change="" />
@@ -146,7 +145,7 @@
                 <span class="ms-CommandButton-label">Annuler</span>
               </button>
             </div>
-            <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+            <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
               <button class="ms-CommandButton-button">
                 <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
                 <span class="ms-CommandButton-label"></span>

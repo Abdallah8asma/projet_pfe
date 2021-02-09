@@ -52,6 +52,9 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
     $scope.msgChargement = '';
 
 
+    $scope.currentFactureOrBl = { };
+
+
     // verification entre date emission et echéance
 
     $scope.VerifieRegle = function (item, index) {
@@ -70,6 +73,20 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       }
 
     }
+
+
+
+    $scope.getListeTaxes = function () {
+      $http
+        .get(UrlAtelier + "/taxe/getAll")
+        .success(
+          function (dataTaxe) {
+
+            $scope.listeTaxes = dataTaxe;
+          });
+    }
+
+    $scope.getListeTaxes();
 
     // REST SERVICE MAGAZINS
     $scope.listeMagazinCache = function () {
@@ -866,6 +883,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         {
           field: 'montantTotal',
           displayName: 'Montant',
+          cellFilter: 'number : 3'
           // width: '16%'
         },
         {
@@ -1239,6 +1257,103 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       }
     };
 
+
+    $scope.calculerPUTTC = function(prixUnitaireHT,taxeId){
+
+      var element = $scope.listeTaxes.filter(function (node) {
+        return node.id == taxeId;
+      });
+
+      if (angular.isDefined(element[0]) && prixUnitaireHT != null) {
+        var valeurTaxe = element[0].valeur;
+
+       var prixVenteTTC = prixUnitaireHT * (1 + valeurTaxe / 100);
+         
+        
+        //$scope.produitCourante.prixVenteTTC.toFixed(3);
+        return Math.round(prixVenteTTC*1000)/1000;
+      }
+
+    }
+
+      // used to delete an element from the list
+      $scope.showPanelDetailBlorFacture = function (item, indexLine) {
+
+        console.log("Appel showPanelDetailBlorFacture ");
+
+
+        if($scope.finalElementList[indexLine].checked){
+        
+          console.log("Facture ");
+           //Facture   //refFacture
+
+
+           $http
+           .get(
+             UrlAtelier
+             + "/facture/getFactureByReference:" + $scope.finalElementList[indexLine].refFacture)
+           .success(
+             function (datagetFactureVente) {
+
+
+
+              $scope.currentFactureOrBl = datagetFactureVente ;
+
+
+              $scope.currentFactureOrBl.type  = 'Facture';
+
+           
+
+              $scope.currentFactureOrBl.detail = datagetFactureVente.listDetFactureVente;
+
+             });
+
+
+
+        }else
+
+        {
+          console.log("BL ");
+          //BL  //refBL
+
+		// getBonLivVente
+    $http
+    .get(
+        UrlAtelier
+            + "/bonlivraison/getBonLivraisonByReference:"
+            + $scope.finalElementList[indexLine].refBL)
+    .success(
+        function(
+            dataGetBonLivVente) {
+
+              $scope.currentFactureOrBl = dataGetBonLivVente ;
+              $scope.currentFactureOrBl.type  = 'BL';
+
+              $scope.currentFactureOrBl.detail = dataGetBonLivVente.listDetLivraisonVente;
+
+          
+
+            })  ;
+
+          
+
+
+
+
+        }
+
+       
+
+
+
+          document.getElementById("btnPanelShowDetailBLorFacture").click();
+
+
+      /*  if ($scope.finalElementList.length > 1) {
+          // delete line from final list
+          $scope.finalElementList.splice(indexLine, 1);
+        }*/
+      };
     // used to delete an element from the list
     $scope.deleteElement = function (item, indexLine) {
       if ($scope.finalElementList.length > 1) {

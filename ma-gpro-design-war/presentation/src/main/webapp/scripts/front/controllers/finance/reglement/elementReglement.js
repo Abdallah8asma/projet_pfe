@@ -749,6 +749,7 @@ angular
                                 {
                                     field: 'montantTotal',
                                     displayName: 'Mont.Totale',
+                                    cellFilter: 'number : 3'
                                     //  width: '8%'
                                 },
                                 {
@@ -763,6 +764,7 @@ angular
                                 {
                                     field: 'montant',
                                     displayName: 'Montant',
+                                    cellFilter: 'number : 3'
                                     //  width: '8%'
                                 },
                                 {
@@ -822,6 +824,7 @@ angular
                                 {
                                     field: 'montantTotal',
                                     displayName: 'Mont.Totale',
+                                    cellFilter: 'number : 3',
                                     width: '8%'
                                 },
                                 {
@@ -836,6 +839,7 @@ angular
                                 {
                                     field: 'montant',
                                     displayName: 'Montant',
+                                    cellFilter: 'number : 3',
                                     width: '8%'
                                 },
                                 {
@@ -853,6 +857,7 @@ angular
                                 {
                                     field: 'montantDemande',
                                     displayName: 'Mont.Demande',
+                                    cellFilter: 'number : 3',
                                     width: '8%'
                                 },
 
