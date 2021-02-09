@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.domaine.gc.guichet.impl;
 
+import java.util.Calendar;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -66,8 +68,8 @@ public class GuichetMensuelDomaineImpl implements IGuichetMensuelDomaine{
 	}
 
 	@Override
-	public Long getNextNumBonReceptionReference() {
-		return this.guichetMensuelPersistance.getNextNumBonReceptionReference();
+	public Long getNextNumBonReceptionReference(Calendar c) {
+		return this.guichetMensuelPersistance.getNextNumBonReceptionReference(c);
 	}
 
 	@Override
@@ -76,8 +78,8 @@ public class GuichetMensuelDomaineImpl implements IGuichetMensuelDomaine{
 	}
 
 	@Override
-	public Long getNextNumfactureReference() {
-		return this.guichetMensuelPersistance.getNextNumfactureReference();
+	public Long getNextNumfactureReference(Calendar c) {
+		return this.guichetMensuelPersistance.getNextNumfactureReference(c);
 	}
 
 	@Override
@@ -86,8 +88,8 @@ public class GuichetMensuelDomaineImpl implements IGuichetMensuelDomaine{
 	}
 
 	@Override
-	public Long getNextNumfactureAvoirReference() {
-		return this.guichetMensuelPersistance.getNextNumfactureAvoirReference();
+	public Long getNextNumfactureAvoirReference(Calendar c) {
+		return this.guichetMensuelPersistance.getNextNumfactureAvoirReference(c);
 	}
 
 	@Override
@@ -109,18 +111,18 @@ public String getPrefix() {
 	
 
 	@Override
-	public String getPrefixFacture() {
-		return this.guichetMensuelPersistance.getPrefixFacture();
+	public String getPrefixFacture( Calendar c) {
+		return this.guichetMensuelPersistance.getPrefixFacture(c);
 	}
 
 	@Override
-	public String getPrefixFactureAvoir() {
-		return this.guichetMensuelPersistance.getPrefixFactureAvoir();
+	public String getPrefixFactureAvoir(Calendar c) {
+		return this.guichetMensuelPersistance.getPrefixFactureAvoir(c);
 	}
 
 	@Override
-	public String getPrefixBonReception() {
-		return this.guichetMensuelPersistance.getPrefixBonReception();
+	public String getPrefixBonReception(Calendar c) {
+		return this.guichetMensuelPersistance.getPrefixBonReception(c);
 	}
 
 	@Override
@@ -130,29 +132,33 @@ public String getPrefix() {
 	}
 
 	@Override
-	public Long getNextNumBonReceptionReferenceNonDeclarer() {
+	public Long getNextNumBonReceptionReferenceNonDeclarer(Calendar c) {
 		// TODO Auto-generated method stub
-		 return this.guichetMensuelPersistance.getNextNumBonReceptionReferenceNonDeclarer();
+		 return this.guichetMensuelPersistance.getNextNumBonReceptionReferenceNonDeclarer(c);
 	}
 
 	@Override
-	public String getPrefixBonReceptionNonDeclarer() {
+	public String getPrefixBonReceptionNonDeclarer(Calendar c ) {
 		// TODO Auto-generated method stub
-		 return this.guichetMensuelPersistance.getPrefixBonReceptionNonDeclarer();
+		 return this.guichetMensuelPersistance.getPrefixBonReceptionNonDeclarer(c);
 	}
 
 	@Override
-	public Long getNextNumfactureAchatReferenceNondeclarer() {
-		 return this.guichetMensuelPersistance.getNextNumfactureAchatReferenceNondeclarer();
+	public Long getNextNumfactureAchatReferenceNondeclarer(Calendar c) {
+		 return this.guichetMensuelPersistance.getNextNumfactureAchatReferenceNondeclarer(c);
 	}
 
 	@Override
-	public String getPrefixFactureAchatNondeclarer() {
-		return this.guichetMensuelPersistance.getPrefixFactureAchatNondeclarer();
+	public String getPrefixFactureAchatNondeclarer(Calendar c) {
+		return this.guichetMensuelPersistance.getPrefixFactureAchatNondeclarer(c);
 	}
 
 	@Override
 	public Long modifierGuichetFactureAchatNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur) {
 		 return this.guichetMensuelPersistance.modifierGuichetFactureAchatNonDeclarerMensuel(vGuichetValeur);
 	}
+
+	
+
+
 }

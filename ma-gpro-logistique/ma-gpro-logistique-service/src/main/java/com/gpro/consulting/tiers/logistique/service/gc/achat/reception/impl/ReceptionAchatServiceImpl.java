@@ -154,4 +154,10 @@ public class ReceptionAchatServiceImpl implements IReceptionAchatService {
 		return receptionDomaineGC.getListBonReceptionRefByFournisseurDeclarer(idFournisseur);
 	}
 
+	@Override
+	public ListProduitElementValue getProduitElementListWithoutRegroupement(List<String> refBonReceptionList,
+			Long factureAchatId) {
+		return receptionDomaineGC.getProduitElementListWithoutRegroupement(refBonReceptionList,factureAchatId);
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.domaine.gc.guichet;
 
+import java.util.Calendar;
+
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 
 public interface IGuichetMensuelDomaine {
@@ -42,14 +44,13 @@ public interface IGuichetMensuelDomaine {
 
 	public Long modifierGuichetBonCommandeMensuel(GuichetMensuelValue pGuichetValeur);
 	
-	public Long getNextNumBonReceptionReference();
+	public Long getNextNumBonReceptionReference(Calendar pDateBonLiv);
 
 	public Long modifierGuichetBonReceptionMensuel(GuichetMensuelValue pGuichetValeur);
 	
-	public Long getNextNumfactureReference();	
+	public Long getNextNumfactureReference(Calendar pDateBonLiv);	
 	public Long modifierGuichetFactureMensuel(GuichetMensuelValue pGuichetValeur);
 	
-	public Long getNextNumfactureAvoirReference();	
 	public Long modifierGuichetFactureAvoirMensuel(GuichetMensuelValue pGuichetValeur);
 
 
@@ -58,29 +59,35 @@ public interface IGuichetMensuelDomaine {
 
 	public String getPrefix();
 	
-	public String getPrefixFacture();
-	public String getPrefixFactureAvoir();
+	public String getPrefixFacture(Calendar pDateBonLiv);
+	
 
 
-	public String getPrefixBonReception();
+	public String getPrefixBonReception(Calendar pDateBonLiv);
 
 
 	public Long modifierGuichetBonReceptionNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur);
 
 
-	public Long getNextNumBonReceptionReferenceNonDeclarer();
+	public Long getNextNumBonReceptionReferenceNonDeclarer(Calendar pDateBonLiv);
 
 
-	public String getPrefixBonReceptionNonDeclarer();
+	public String getPrefixBonReceptionNonDeclarer(Calendar pDateBonLiv);
 
 
-	public Long getNextNumfactureAchatReferenceNondeclarer();
+	public Long getNextNumfactureAchatReferenceNondeclarer(Calendar pDate);
 
 
-	public String getPrefixFactureAchatNondeclarer();
+	public String getPrefixFactureAchatNondeclarer(Calendar pDate);
 
 
 	public Long modifierGuichetFactureAchatNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur);
+
+
+	public Long getNextNumfactureAvoirReference(Calendar pDateBonLiv);
+
+
+	public String getPrefixFactureAvoir(Calendar pDateBonLiv);
 
 
 
