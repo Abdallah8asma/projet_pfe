@@ -25,7 +25,9 @@ angular.module('atelier.factureAchatServices', [])
 	
 	that.validateFini =  function(listeBonLivraison,factureVenteId ){		
 		var deferred = $q.defer();
-		return $http.post(UrlAtelier+'/factureAchat/validate?factureAchatId='+factureVenteId, listeBonLivraison)
+		//Ancien valider permet la validation on regroupant par produit
+		//return $http.post(UrlAtelier+'/factureAchat/validate?factureAchatId='+factureVenteId, listeBonLivraison)
+		return $http.post(UrlAtelier+'/factureAchat/validateWithoutRegroupement?factureAchatId='+factureVenteId, listeBonLivraison)
 					.then(function (response) {
 			                deferred.resolve(response.data);
 			                return deferred.promise;

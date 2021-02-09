@@ -106,6 +106,16 @@ angular
 				$scope.listeSitePartieInteresseeCache = [];
 				$scope.ListTypeDocumentCache = [];
 				$scope.ListSousFamilleProduitCache = [];
+				
+				
+				   // Liste des Taxes
+  	 $scope.ListeTaxe = function () {
+        $http.get(UrlAtelier + '/taxe/getTVA').success(function (dataTaxe) {
+          $scope.ListeTaxe = dataTaxe;
+        });
+      };
+
+      $scope.ListeTaxe();  
 
 				
 				$scope.keyPress = function (keyCode, code) {
@@ -626,7 +636,7 @@ angular
 					// .copy(reception) : {};
 
 
-				$scope.getCurrentReferenceMensuelleByType($scope.receptionAchatCourante.facture);
+				$scope.getCurrentReferenceMensuelleByTypeAndDate($scope.receptionAchatCourante.facture,$scope.receptionAchatCourante.dateIntroduction);
 
 
 
@@ -636,7 +646,7 @@ angular
 				}
 				
 				
-				$scope.getCurrentReferenceMensuelleByType  = function (declarer) {
+				$scope.getCurrentReferenceMensuelleByTypeAndDate  = function (declarer,dateIntro) {
 					
 					var type ="";
 					
@@ -649,7 +659,7 @@ angular
 							$http
 						.get(
 							UrlAtelier
-							+ "/receptionAchat/getCurrentReferenceMensuelByType:"+type
+							+ "/receptionAchat/getCurrentReferenceMensuelByTypeAndDate:"+type + ":"+formattedDate(dateIntro)
 						)
 						.success(
 							function (data) {
@@ -1672,6 +1682,8 @@ angular
 							
 					produitReception.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
 						produitReception.prixUnitaire = $scope.productFilter[0].prixAchat;
+						
+						produitReception.taxeId = $scope.productFilter[0].idTaxe;
 
 
 					
