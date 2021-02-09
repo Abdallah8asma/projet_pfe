@@ -638,6 +638,7 @@
 											</div>
 											<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
 												ng-model="receptionAchatCourante.dateIntroduction" is-open="opened"
+												ng-change="getCurrentReferenceMensuelleByTypeAndDate(receptionAchatCourante.facture,receptionAchatCourante.dateIntroduction)"
 												datepicker-options="dateOptions" date-disabled="enabled(date, mode)" close-text="Close" />
 
 
@@ -826,7 +827,9 @@
 										  <div class="input-group-text">
 											<label class="checkbox checkbox-square checkbox-primary">
 											  <input type="checkbox" class="form-control" 
-												ng-model="receptionAchatCourante.facture" ng-change="getCurrentReferenceMensuelleByType(receptionAchatCourante.facture)" />
+												ng-model="receptionAchatCourante.facture"
+												
+														ng-change="getCurrentReferenceMensuelleByTypeAndDate(receptionAchatCourante.facture,receptionAchatCourante.dateIntroduction)" />
 					
 											  <span></span></label>
 										  </div>
@@ -934,9 +937,11 @@
 													ng-show="modePdf != 'actif'">
 													<thead>
 														<tr>
-															<th style="width: 30%">R&eacute;f.Article</th>
+															<th style="width: 23%">R&eacute;f.Article</th>
 															<th style="width: 25%">Article</th>
 															<th style="width: 13%">Sous Famille</th>
+															<th style="width: 7%">TVA</th>
+															
 															<th style="width: 8%">Quantit&eacute;</th>
 															<th style="width: 15%">Prix Unitaire</th>
 															<th style="width: 8%">Remise</th>
@@ -966,6 +971,20 @@
 
 															<td><span e-form="rowform"> {{produit.sousFamilleArtEntite
 																		|| 'EMPTY' }} </span></td>
+																		
+																		
+																		<td>
+
+																<select ui-select2 ng-model="produit.taxeId"
+																	 data-placeholder="..."
+																	style="width: 100%"  class="form-control ">
+																	<option ng-repeat="tax in ListeTaxe" value="{{tax.id}}">
+																		{{tax.designation}}
+																	</option>
+																</select>
+															</td>
+																		
+																		
 															<td>
 
 
@@ -1148,12 +1167,19 @@
 													ng-show="modePdf == 'actif'">
 													<thead>
 														<tr>
-															<th style="width: 20%">R&eacute;f.Article</th>
+															<th style="width: 15%">R&eacute;f.Article</th>
 															<th style="width: 28%">Article</th>
 															<th style="width: 18%">Sous Famille</th>
+															<th style="width: 8%">TVA</th>
 															<th style="width: 10%">Quantit&eacute;</th>
 															<th style="width: 15%">Prix Unitaire</th>
+															
+															
+															
 															<th style="width: 8%">Remise</th>
+															
+															
+															
 															<th style="width: 5%">N&ordm;S</th>
 															<th> <span class="ms-CommandButton-icon float-right" ng-click="ajoutProduit()">
 																	<a href="javascript:void(0)">
@@ -1175,15 +1201,34 @@
 																</select>
 															</td>
 
-															<td><input type="text" ng-model="produit.designation"></td>
+															<td><input type="text" class="form-control" ng-model="produit.designation"></td>
 														<!-- 	<td><span e-form="rowform">{{produit.designation
 																		|| 'EMPTY'}}</span>
 															</td> -->
 															<td><span e-form="rowform"> {{produit.sousFamilleArtEntite
 																		|| 'EMPTY' }} </span></td>
 															</td>
+															
+															
+																
+															<td>
+
+																<select ui-select2 ng-model="produit.taxeId"
+																	 data-placeholder="..."
+																	style="width: 100%"  class="form-control ">
+																	<option ng-repeat="tax in ListeTaxe" value="{{tax.id}}">
+																		{{tax.designation}}
+																	</option>
+																</select>
+															</td>
+															
+															
 															<td><input type="number" class="form-control" ng-model="produit.quantite" /></td>
 															<td><input type="text" class="form-control" ng-model="produit.prixUnitaire" /></td>
+														
+													
+															
+															
 															<td><input type="number" class="form-control" ng-model="produit.remise" /></td>
 
 
