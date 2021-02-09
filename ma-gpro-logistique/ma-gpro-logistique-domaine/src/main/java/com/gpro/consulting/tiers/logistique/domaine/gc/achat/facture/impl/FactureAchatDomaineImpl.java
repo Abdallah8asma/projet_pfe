@@ -125,7 +125,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		String FACTURE_TYPE_AVOIRE = "Avoir";
 		boolean modeRemiseEstTotal = false;
 		
-		factureValue.setDateIntroduction(Calendar.getInstance());
+		if(factureValue.getDate() == null)
+		factureValue.setDate(Calendar.getInstance());
 
 		//logger.info("####  Facture  " + factureValue.getDate());
 		if (((factureValue.getReference() != null && factureValue.getReference().equals(""))
@@ -134,7 +135,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 				
 				
 				//factureValue.setReference(getCurrentReference(factureValue.getType(), factureValue.getDate(), true));
-				factureValue.setReference(getCurrentReferenceMensuelDeclarer(factureValue.getType(),factureValue.isDeclarer(),Calendar.getInstance(),true)); 
+				factureValue.setReference(getCurrentReferenceMensuelDeclarer(factureValue.getType(),factureValue.isDeclarer(),factureValue.getDate(),true)); 
 				
 				
 				
@@ -155,7 +156,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 			
 			 if(factureValue.getRefAvantChangement() != null && factureValue.getReference().equals(factureValue.getRefAvantChangement())) {
 				 
-					this.getCurrentReferenceMensuelDeclarer(factureValue.getType(),factureValue.isDeclarer(),factureValue.getDateIntroduction(), true); 
+					this.getCurrentReferenceMensuelDeclarer(factureValue.getType(),factureValue.isDeclarer(),factureValue.getDate(), true); 
 				 
 				 //this.getCurrentReference(factureValue.getType(),factureValue.getDate(),true);
            }
@@ -197,7 +198,10 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
                      
 					//ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
 					
+                     if(detFactureAchat.getTaxeId() == null)
 					    detFactureAchat.setTaxeId(produitValue.getIdTaxe());
+                     
+                     
 						detFactureAchat.setSerialisable(produitValue.isSerialisable());
 						
 						
@@ -224,14 +228,14 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 						
 						
 						
-						if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
-							produitTaxeMap.put(produitValue.getIdTaxe(), totalApresRemise);
+						if (!produitTaxeMap.containsKey(detFactureAchat.getTaxeId())) {
+							produitTaxeMap.put(detFactureAchat.getTaxeId(), totalApresRemise);
 
 						} else {
 							// TODO ERREUR
-							Double assietteValue = produitTaxeMap.get(produitValue.getIdTaxe())
+							Double assietteValue = produitTaxeMap.get(detFactureAchat.getTaxeId())
 									+ totalApresRemise;
-							produitTaxeMap.put(produitValue.getIdTaxe(), assietteValue);
+							produitTaxeMap.put(detFactureAchat.getTaxeId(), assietteValue);
 
 						}
 						
@@ -962,8 +966,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 			
 
-		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureReference(); 
-		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFacture();
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureReference(pDateBonLiv); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFacture(pDateBonLiv);
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
 		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
 
@@ -999,8 +1003,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 	private String getReferenceFactureAvoirFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
 		
 
-		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureAvoirReference(); 
-		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFactureAvoir();
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumfactureAvoirReference(pDateBonLiv); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFactureAvoir(pDateBonLiv);
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
 		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
 
@@ -1081,8 +1085,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 	private String getReferenceFactureAchatFromGuichetMensuelNotDeclarer(Calendar pDate, boolean increment) {
 
-		Long vNumGuichetFacAchat = this.guichetierMensuelDomaine.getNextNumfactureAchatReferenceNondeclarer(); 
-		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFactureAchatNondeclarer();
+		Long vNumGuichetFacAchat = this.guichetierMensuelDomaine.getNextNumfactureAchatReferenceNondeclarer(pDate); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixFactureAchatNondeclarer(pDate);
 		int vAnneeCourante = pDate.get(Calendar.YEAR);
 		int moisActuel = pDate.get(Calendar.MONTH) + 1;
 

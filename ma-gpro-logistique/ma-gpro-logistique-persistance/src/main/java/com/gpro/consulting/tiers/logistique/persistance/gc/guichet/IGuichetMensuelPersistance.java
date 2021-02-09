@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.persistance.gc.guichet;
 
+import java.util.Calendar;
+
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.GuichetBonReceptionValue;
 
@@ -42,19 +44,19 @@ public interface IGuichetMensuelPersistance {
 	public Long modifierGuichetFactureAvoirMensuel(GuichetMensuelValue pGuichetValeur);
 
 
-	public Long getNextNumfactureAvoirReference();
+	public Long getNextNumfactureAvoirReference(Calendar pDateBonLiv);
 
 
 	public Long modifierGuichetFactureMensuel(GuichetMensuelValue pGuichetValeur);
 
 
-	public Long getNextNumfactureReference();
+	public Long getNextNumfactureReference(Calendar c);
 
 
 	public Long modifierGuichetBonReceptionMensuel(GuichetMensuelValue pGuichetValeur);
 
 
-	public Long getNextNumBonReceptionReference();
+	public Long getNextNumBonReceptionReference(Calendar c);
 
 
 
@@ -66,24 +68,24 @@ public interface IGuichetMensuelPersistance {
 	public String getPrefix();
 
 
-	public String getPrefixBonReception();
-	public String getPrefixFacture();
-	public String getPrefixFactureAvoir();
+	public String getPrefixBonReception(Calendar c);
+	public String getPrefixFacture(Calendar c);
+	public String getPrefixFactureAvoir(Calendar c);
 
 
 	public Long modifierGuichetBonReceptionNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur);
 
 
-	public Long getNextNumBonReceptionReferenceNonDeclarer();
+	public Long getNextNumBonReceptionReferenceNonDeclarer(Calendar c);
 
 
-	public String getPrefixBonReceptionNonDeclarer();
+	public String getPrefixBonReceptionNonDeclarer(Calendar c);
 
 
-	public Long getNextNumfactureAchatReferenceNondeclarer();
+	public Long getNextNumfactureAchatReferenceNondeclarer(Calendar c);
 
 
-	public String getPrefixFactureAchatNondeclarer();
+	public String getPrefixFactureAchatNondeclarer(Calendar c);
 
 
 	public Long modifierGuichetFactureAchatNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur);

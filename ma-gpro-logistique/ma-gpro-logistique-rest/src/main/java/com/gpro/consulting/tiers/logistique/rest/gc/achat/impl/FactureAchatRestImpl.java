@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.rest.gc.achat.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +51,8 @@ import com.gpro.consulting.tiers.logistique.service.gc.bonlivraison.IModePaiemen
 public class FactureAchatRestImpl {
 
 	private static final Logger logger = LoggerFactory.getLogger(FactureAchatRestImpl.class);
+	
+	private static final String DATE_FORMAT = "yyyy-MM-dd";
 
 	@Autowired
 	private IFactureAchatService factureService;
@@ -81,6 +85,21 @@ public class FactureAchatRestImpl {
 
 		if (refBonReceptionList != null && refBonReceptionList.size() > 0) {
 			list = receptionAchatService.getProduitElementList(refBonReceptionList, factureAchatId);
+
+		}
+
+		return list;
+	}
+	
+	
+	@RequestMapping(value = "/validateWithoutRegroupement", method = RequestMethod.POST)
+	public @ResponseBody ListProduitElementValue validateBonReceptionWithoutRegroupement(@RequestBody List<String> refBonReceptionList,
+			@RequestParam(value = "factureAchatId", required = false) Long factureAchatId) {
+
+		ListProduitElementValue list = new ListProduitElementValue();
+
+		if (refBonReceptionList != null && refBonReceptionList.size() > 0) {
+			list = receptionAchatService.getProduitElementListWithoutRegroupement(refBonReceptionList, factureAchatId);
 
 		}
 
@@ -256,11 +275,34 @@ public class FactureAchatRestImpl {
  		return  factureService.getCurrentReferenceMensuel(type,Calendar.getInstance(),false);
  	}
 	
-	@RequestMapping(value = "/getCurrentReferenceMensuelDeclarer:{type}:{declarer}", method = RequestMethod.GET, produces =  "application/json")
- 	public @ResponseBody String getCurrentReferenceMensuelDeclarer(@PathVariable String type,@PathVariable boolean declarer) {
+	@RequestMapping(value = "/getCurrentReferenceMensuelByTypeAndDeclareAndDate:{type}:{declarer}:{date}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuelDeclarer(@PathVariable String type,@PathVariable boolean declarer,@PathVariable String date) {
  		
- 		return  factureService.getCurrentReferenceMensuelDeclarer(type,declarer,Calendar.getInstance(),false);
+ 		return  factureService.getCurrentReferenceMensuelDeclarer(type,declarer,stringToCalendar(date),false);
  	}
 	
 	
+	private Calendar stringToCalendar(String dateString) {
+		
+		Calendar dateCalendar = null;
+		
+		if(isNotEmty(dateString)){
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+			dateCalendar = sdf.getCalendar();
+			try {
+				dateCalendar.setTime(sdf.parse(dateString));
+				
+			} catch (ParseException e) {
+				logger.error("parse date exception: "+e.getMessage());
+			}
+		}
+		
+		return dateCalendar;
+	}
+	
+
+	  private boolean isNotEmty(String value) {
+		    return value != null && !"".equals(value);
+
+		  }
 }

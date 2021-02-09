@@ -102,4 +102,7 @@ public interface IReceptionAchatService {
 	public String getCurrentReferenceMensuelByType(String type, Calendar instance, boolean b);
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<BonReceptionVue> getListBonReceptionRefByFournisseurDeclarer(Long idFournisseur);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public ListProduitElementValue getProduitElementListWithoutRegroupement(List<String> refBonReceptionList,
+			Long factureAchatId);
 }
