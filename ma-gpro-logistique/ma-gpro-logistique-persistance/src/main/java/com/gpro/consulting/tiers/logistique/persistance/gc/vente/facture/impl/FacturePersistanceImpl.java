@@ -74,6 +74,10 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	private String devise = "devise";
 	
 	private String PREDICATE_DECLARE = "declarer";
+	private String PREDICATE_ForcerCalculMontant = "forcerCalculMontant";
+	
+	
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
@@ -245,6 +249,21 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 				}
 			}
 			
+			if (estNonVide(request.getForcerCalculMontantRech())) {
+				Expression<Boolean> expression = root.get(PREDICATE_ForcerCalculMontant);
+				switch (request.getForcerCalculMontantRech()) {
+					case IConstanteLogistique.YES:
+						whereClause.add(criteriaBuilder.isTrue(expression));
+						break;
+					case IConstanteLogistique.NO:
+						whereClause.add(criteriaBuilder.isFalse(expression));
+						break;
+					case IConstanteLogistique.ALL:
+						break;
+					default:
+						break;
+				}
+			}
 	 //	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	 	
 	 	
@@ -275,7 +294,10 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	 			root.get("reglementId").as(Long.class),
 	 			root.get("devise").as(Long.class),
 	 			root.get("montantConverti").as(Double.class),
-	 			root.get("declarer").as(boolean.class)
+	 			root.get("declarer").as(boolean.class),
+	 			root.get("forcerCalculMontant").as(boolean.class)
+	 			
+	 			
 				
 				)).where(whereClause.toArray(new Predicate[] {}));
 	 	
@@ -326,6 +348,8 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	    	entity.setDevise((Long) element[22]);
 	    	entity.setMontantConverti((Double) element[23]);
 	    entity.setDeclarer((boolean) element[24]);
+	    
+	    entity.setForcerCalculMontant((boolean) element[25]);
 	    	
 	    	FactureVenteValue dto = FacturePersistanceUtilities.toValue(entity);
 	    	list.add(dto);

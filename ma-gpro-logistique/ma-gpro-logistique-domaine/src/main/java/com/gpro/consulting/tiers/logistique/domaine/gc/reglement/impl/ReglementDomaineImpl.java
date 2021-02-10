@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.tiers.commun.domaine.partieInteressee.IGroupeClientDomaine;
 import com.gpro.consulting.tiers.commun.domaine.partieInteressee.IPartieInteresseeDomaine;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
@@ -32,9 +33,12 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.Resu
 import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.FactureVenteValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetAnnuelDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.reglement.IReglementDomaine;
+import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.ITypeReglementAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.IBonCommandePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IBonLivraisonPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.IGuichetMensuelPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.IReglementPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.typeReglement.ITypeReglementPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.IFacturePersistance;
 
 /**
@@ -72,10 +76,20 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 	@Autowired
 	private IBonCommandePersistance bonCommandePersistance;
 	
+	
+	@Autowired
+	private IGuichetMensuelPersistance guichetierMensuelPersistance;
+	
+	@Autowired
+	private ITypeReglementPersistance typeReglementPersistance;
+	
 	@Override
 	public String create(ReglementValue reglement) {
 		
 		if(reglement != null){
+			
+			if(reglement.getDate() == null)
+				reglement.setDate(Calendar.getInstance());
 			
 			if(reglement.getListDetailsReglement() != null){
 				
@@ -84,6 +98,11 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				for(DetailsReglementValue details : reglement.getListDetailsReglement()){
 					
 					montantTotal = montantTotal + (details.getMontant() != null ? details.getMontant() : ZERO);
+					
+			        if(!estNonVide(details.getReference()) && details.getTypeReglementId() != null ) {
+						
+						details.setReference(getCurrentReferenceDetReglementMensuelByDate(reglement.getDate(), true,typeReglementPersistance.getById(details.getTypeReglementId()).getPrefixe()));
+					}
 				}
 				
 				reglement.setMontantTotal(montantTotal);
@@ -189,6 +208,11 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				for(DetailsReglementValue details : reglement.getListDetailsReglement()){
 					
 					montantTotal = montantTotal + (details.getMontant() != null ? details.getMontant() : ZERO);
+					
+					   if(!estNonVide(details.getReference()) && details.getTypeReglementId() != null ) {
+							
+							details.setReference(getCurrentReferenceDetReglementMensuelByDate(reglement.getDate(), true,typeReglementPersistance.getById(details.getTypeReglementId()).getPrefixe()));
+						}
 				}
 				
 				reglement.setMontantTotal(montantTotal);
@@ -1648,7 +1672,7 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 	@Override
 	public String getCurrentReference(Calendar instance, boolean increment) {
 		
-		GuichetAnnuelValue currentGuichetAnnuel = guichetAnnuelDomaine.getCurrentGuichetAnnuel();
+		GuichetAnnuelValue currentGuichetAnnuel = guichetAnnuelDomaine.getCurrentGuichetAnnuel(instance);
 
 		Long vNumGuichetFacture = currentGuichetAnnuel.getNumReferenceReglementCourante();
 
@@ -1674,4 +1698,56 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 			
 		return vNumFacture.toString();
 	}
+	
+	public String getCurrentReferenceDetReglementMensuelByDate(Calendar c, boolean increment, String prfixeTypeReglement) {
+		Long vNumGuichetBonLiv = this.guichetierMensuelPersistance.getNextNumDetReglement(c); 
+		String vNumGuichetPrefix=this.guichetierMensuelPersistance.getPrefixDetReglement(c);
+		
+		
+		
+		int vAnneeCourante = c.get(Calendar.YEAR);
+		int moisActuel = c.get(Calendar.MONTH) + 1;
+
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumBonLiv = new StringBuilder("");
+		
+		if(prfixeTypeReglement != null)
+			vNumBonLiv.append(prfixeTypeReglement);
+		
+		if(vNumGuichetPrefix != null)
+		vNumBonLiv.append(vNumGuichetPrefix);
+		
+		
+		
+		
+		//vNumBonLiv.append(vAnneeCourante);
+		//vNumBonLiv.append(String.format("%02d", moisActuel));
+		vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+		
+		
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+		/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+		vGuichetValeur.setId(new Long(idMensuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumReferenceDetReglementCourante(new Long(vNumGuichetBonLiv + 1L));
+		/** Modification de la valeur en base du numéro. */
+		
+		if(increment)
+		      this.guichetierMensuelPersistance.modifierGuichetDetReglementMensuel(vGuichetValeur); 
+		
+		
+
+		return vNumBonLiv.toString();
+	}
+	 
+	 private boolean estNonVide(String val) {
+			return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
+		}
 }

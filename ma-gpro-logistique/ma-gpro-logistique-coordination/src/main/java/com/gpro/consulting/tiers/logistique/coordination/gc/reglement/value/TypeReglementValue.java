@@ -10,6 +10,17 @@ public class TypeReglementValue {
 	private String designation;
 	private Boolean aTerme;
 	
+	private String prefixe;
+	
+	
+	
+	
+	public String getPrefixe() {
+		return prefixe;
+	}
+	public void setPrefixe(String prefixe) {
+		this.prefixe = prefixe;
+	}
 	public Long getId() {
 		return id;
 	}

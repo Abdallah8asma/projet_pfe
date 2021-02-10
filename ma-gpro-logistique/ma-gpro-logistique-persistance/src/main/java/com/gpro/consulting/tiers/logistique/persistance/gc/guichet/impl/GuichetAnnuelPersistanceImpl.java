@@ -534,5 +534,18 @@ public class GuichetAnnuelPersistanceImpl extends AbstractPersistance implements
 		    return vGuichetEntite.getId();
 
 	}
+
+	@Override
+	public GuichetAnnuelValue getCurrentGuichetAnnuel(Calendar c) {
+		
+		int idCurrentYear = c.get(Calendar.YEAR) - 2016+1;
+			
+		
+	    GuichetAnnuelEntity GuichetAnnuelEntity = this.rechercherParId(new Long(idCurrentYear), GuichetAnnuelEntity.class);
+
+		  //System.out.println("==>GuichetAnnuelEntity: "+GuichetPersistanceUtilities.toValue(GuichetAnnuelEntity).getAnnee());
+	    return GuichetPersistanceUtilities.toValue(GuichetAnnuelEntity);
+
+	}
 	
 }

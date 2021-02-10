@@ -864,6 +864,7 @@ angular
 						: {};
 						$scope.factureAchatCourant.declarer=true;
 						$scope.factureAchatCourant.date=new Date();
+						$scope.factureAchatCourant.forcerCalculMontant=false;
 						
 						
 						var type =true;

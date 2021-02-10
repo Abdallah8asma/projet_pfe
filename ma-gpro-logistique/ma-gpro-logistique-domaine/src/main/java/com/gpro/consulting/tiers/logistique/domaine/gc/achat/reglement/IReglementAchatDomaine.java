@@ -47,4 +47,6 @@ public interface IReglementAchatDomaine {
 	public BLReportElementRecapValue getReglementAchatbyMonth(RechercheMulticritereReglementValue request);
 
 	public String getCurrentReference(Calendar instance, boolean b);
+
+	public String getCurrentReferenceMensuelByDate(Calendar stringToCalendar, boolean b);
 }

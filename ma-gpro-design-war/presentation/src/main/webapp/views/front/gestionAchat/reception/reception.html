@@ -815,7 +815,7 @@
 
 
 							<div class="row">
-								<div class="col-sm-3" ng-show="clientActif.blackMode==true">
+								<div class="col-sm-4" ng-show="clientActif.blackMode==true">
 
 
 									<div class="form-group">
@@ -837,7 +837,44 @@
 									  </div>
 									</div>
 								  </div>
-								<div class="col-sm-12">
+								  
+								  
+								  
+								  
+								  
+								  <div class="col-sm-4">
+
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">BR A Dup.</span>
+											</div>
+											<input class="form-control" ng-model="receptionAchatCourante.refBRADupliquer" />
+										
+											<div class="input-group-append">
+												<button class="btn" style="
+										                          color: rgb(54, 153, 255);
+										                          background-color: rgb(225, 240, 255);
+										                        " ng-mousedown="dupliquerBR(receptionAchatCourante.refBRADupliquer)">
+													Dupliquer BR
+												</button>
+											</div>
+											
+										</div>
+									</div>
+
+
+								</div>
+								  
+								  
+								
+							</div>
+							
+							
+							<div class="row">
+							
+							
+							<div class="col-sm-12">
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
@@ -850,7 +887,11 @@
 
 
 								</div>
-							</div>
+							
+								</div>
+							
+							
+							
 							<div class="row alert alert-primary">
 								<div class="col-sm-4">
 									<div class="form-group">

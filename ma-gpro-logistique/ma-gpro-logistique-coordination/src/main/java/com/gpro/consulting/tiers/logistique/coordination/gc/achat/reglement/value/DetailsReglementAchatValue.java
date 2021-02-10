@@ -19,10 +19,26 @@ public class DetailsReglementAchatValue implements Comparable<DetailsReglementAc
 	private Long reglementId;
 	private Boolean regle;
 	private String observation;
+	
+	private String reference;
 
 	public int compareTo(DetailsReglementAchatValue element) {
 		return (element.getId().compareTo(id));
 	}
+	
+	
+
+	public String getReference() {
+		return reference;
+	}
+
+
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+
 
 	public Long getId() {
 		return id;

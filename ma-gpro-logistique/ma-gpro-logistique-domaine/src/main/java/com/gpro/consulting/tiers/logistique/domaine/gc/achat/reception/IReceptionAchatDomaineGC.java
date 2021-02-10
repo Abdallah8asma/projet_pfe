@@ -92,4 +92,6 @@ public interface IReceptionAchatDomaineGC {
 
 	public ListProduitElementValue getProduitElementListWithoutRegroupement(List<String> refBonReceptionList,
 			Long factureAchatId);
+
+	public ReceptionAchatValue getByReference(String reference);
 }

@@ -1331,6 +1331,7 @@ $scope.validerNatureFiniByOF();
 						date: new Date(), modepaiementId: 1,
 						"devise": "2",
 						"declarer": true,
+						"forcerCalculMontant": false
 
 					};
 					// $scope.factureVenteCourant = factureVente ? angular

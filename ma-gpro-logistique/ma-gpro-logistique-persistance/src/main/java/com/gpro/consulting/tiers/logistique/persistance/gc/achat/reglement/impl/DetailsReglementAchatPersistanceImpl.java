@@ -47,7 +47,7 @@ public class DetailsReglementAchatPersistanceImpl extends AbstractPersistance im
 
 	private static final Logger logger = LoggerFactory.getLogger(DetailsReglementAchatPersistanceImpl.class);
 	
-	
+	private String PREDICATE_reference_det_reg = "reference";
 	
 	private String PREDICATE_NUM_PIECE = "numPiece";
 	private String PREDICATE_BANQUE = "banque";
@@ -109,6 +109,15 @@ public class DetailsReglementAchatPersistanceImpl extends AbstractPersistance im
 		Root<DetailsReglementAchatEntity> root = criteriaQuery.from(DetailsReglementAchatEntity.class);
 		
 		
+		
+		
+		//reference detail reglement
+
+		if (estNonVide(request.getReferenceDetailReglement())) {
+			
+			
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_reference_det_reg), request.getReferenceDetailReglement()));
+		}
 		
 		
 		//numPiece

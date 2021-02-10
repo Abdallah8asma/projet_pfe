@@ -1199,6 +1199,58 @@ angular
 
 				$scope.isLoading = false;
 
+
+
+
+	$scope.dupliquerBR = function (refBR) {
+
+					$scope.isLoading = true;
+
+				
+					// getReceptionAchatByNumero
+					$http
+						.get(
+							UrlAtelier
+							+ "/receptionAchat/dupliquerByReference?reference="
+							+ refBR)
+						.success(
+							function (datagetReceptionAchat) {
+								
+								$scope.receptionAchatCourante.partieIntersseId = datagetReceptionAchat.partieIntersseId ; 
+								
+								$scope.receptionAchatCourante.idDepot = datagetReceptionAchat.idDepot ; 
+
+								$scope.listProduitReceptions = datagetReceptionAchat.listProduitReceptions;
+								
+									angular
+									.forEach(
+										$scope.listProduitReceptions,
+										function (
+											produitReception,
+											key) {
+												
+													$scope
+												.getProductFilter(produitReception.produitId);
+
+											if ($scope.productFilter.length > 0) {
+
+
+												produitReception.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
+												
+	                                           }
+																			
+								
+								});
+								
+								
+								$scope.isLoading = false;
+								
+								
+								});
+								
+								
+					}
+
 				// Ajout et Modification ReceptionAchat
 				$scope.modifierOuCreerReceptionAchat = function () {
 

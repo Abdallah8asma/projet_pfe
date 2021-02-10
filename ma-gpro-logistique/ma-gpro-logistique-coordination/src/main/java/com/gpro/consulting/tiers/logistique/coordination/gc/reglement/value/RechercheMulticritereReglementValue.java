@@ -38,6 +38,20 @@ public class RechercheMulticritereReglementValue {
 	private Long boutiqueId;
 
 	private Long reglementId;
+	
+	
+	private String referenceDetailReglement;
+	
+	
+	
+
+	public String getReferenceDetailReglement() {
+		return referenceDetailReglement;
+	}
+
+	public void setReferenceDetailReglement(String referenceDetailReglement) {
+		this.referenceDetailReglement = referenceDetailReglement;
+	}
 
 	public Long getReglementId() {
 		return reglementId;

@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.domaine.gc.guichet;
 
+import java.util.Calendar;
+
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.TypeReglementValue;
 
@@ -112,6 +114,9 @@ public interface IGuichetAnnuelDomaine {
 
 
 	Long modifierGuichetFANDAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
+
+	public GuichetAnnuelValue getCurrentGuichetAnnuel(Calendar instance);
 
 		
 }

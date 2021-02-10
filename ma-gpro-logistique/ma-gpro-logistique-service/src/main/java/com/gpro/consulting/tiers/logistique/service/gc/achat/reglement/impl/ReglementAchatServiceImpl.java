@@ -126,4 +126,10 @@ public class ReglementAchatServiceImpl implements IReglementAchatService{
 		// TODO Auto-generated method stub
 		return reglementDomaine.getCurrentReference(instance,b);
 	}
+
+	@Override
+	public String getCurrentReferenceMensuelByDate(Calendar stringToCalendar, boolean b) {
+		// TODO Auto-generated method stub
+		return reglementDomaine.getCurrentReferenceMensuelByDate(stringToCalendar,b);
+	}
 }

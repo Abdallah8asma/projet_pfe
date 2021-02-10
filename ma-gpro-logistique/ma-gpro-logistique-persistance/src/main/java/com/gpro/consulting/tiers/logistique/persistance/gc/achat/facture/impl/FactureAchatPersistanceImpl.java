@@ -74,6 +74,10 @@ public class FactureAchatPersistanceImpl extends AbstractPersistance implements 
 	private String PREDICATE_GROUPE_CLIENT = "groupeClientId";
 	private String PREDICATE_BOUTIQUEID = "boutiqueId";
 	private String PREDICATE_DECLARE = "declarer";
+	private String PREDICATE_ForcerCalculMontant = "forcerCalculMontant";
+	
+	
+	
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -223,6 +227,24 @@ public class FactureAchatPersistanceImpl extends AbstractPersistance implements 
 		if (estNonVide(request.getDeclarerecherche())) {
 			Expression<Boolean> expression = root.get(PREDICATE_DECLARE);
 			switch (request.getDeclarerecherche()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.isTrue(expression));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.isFalse(expression));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
+		
+		
+		//recherche forcer calcul montant 
+		if (estNonVide(request.getForcerCalculMontantRech())) {
+			Expression<Boolean> expression = root.get(PREDICATE_ForcerCalculMontant);
+			switch (request.getForcerCalculMontantRech()) {
 				case IConstanteLogistique.YES:
 					whereClause.add(criteriaBuilder.isTrue(expression));
 					break;

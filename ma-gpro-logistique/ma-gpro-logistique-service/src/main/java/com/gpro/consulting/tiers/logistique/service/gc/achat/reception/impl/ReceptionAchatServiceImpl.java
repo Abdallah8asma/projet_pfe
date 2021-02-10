@@ -160,4 +160,10 @@ public class ReceptionAchatServiceImpl implements IReceptionAchatService {
 		return receptionDomaineGC.getProduitElementListWithoutRegroupement(refBonReceptionList,factureAchatId);
 	}
 
+	@Override
+	public ReceptionAchatValue getByReference(String reference) {
+		// TODO Auto-generated method stub
+		return receptionDomaineGC.getByReference(reference);
+	}
+
 }

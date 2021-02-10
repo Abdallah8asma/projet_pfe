@@ -1,5 +1,6 @@
 package com.gpro.consulting.tiers.logistique.persistance.gc.guichet;
 
+import java.util.Calendar;
 import java.util.List;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
@@ -96,5 +97,7 @@ public interface IGuichetAnnuelPersistance {
 	public Long modifierGuichetBLNDAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
 
 	public Long modifierGuichetFANDAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
+	public GuichetAnnuelValue getCurrentGuichetAnnuel(Calendar c);
 
 }

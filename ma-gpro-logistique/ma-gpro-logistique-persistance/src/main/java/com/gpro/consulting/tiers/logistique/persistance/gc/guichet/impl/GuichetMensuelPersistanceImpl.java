@@ -382,4 +382,121 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 		    return vGuichetEntite.getId();
 	}
 
+
+	@Override
+	public Long getNextNumReglementAchat(Calendar c) {
+		  int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.numReferenceReglementAchatCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    Long vNextNumBonReception= (Long) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public String getPrefixReglementAchat(Calendar c) {
+		 int vAnneeCourante =c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.prefixeReglementAchat from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    String vNextNumBonReception= (String) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public Long modifierGuichetReglementAchatMensuel(GuichetMensuelValue pGuichetValeur) {
+		   GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
+			
+		    vGuichetEntite.setNumReferenceReglementAchatCourante(pGuichetValeur.getNumReferenceReglementAchatCourante()); 
+		    this.entityManager.merge(vGuichetEntite);
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+	}
+
+
+	@Override
+	public Long getNextNumDetReglementAchat(Calendar c) {
+		  int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.numReferenceDetReglementAchatCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    Long vNextNumBonReception= (Long) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public String getPrefixDetReglementAchat(Calendar c) {
+		 int vAnneeCourante =c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.prefixeDetReglementAchat from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    String vNextNumBonReception= (String) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public Long modifierGuichetDetReglementAchatMensuel(GuichetMensuelValue pGuichetValeur) {
+		   GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
+			
+		    vGuichetEntite.setNumReferenceDetReglementAchatCourante(pGuichetValeur.getNumReferenceDetReglementAchatCourante()); 
+		    this.entityManager.merge(vGuichetEntite);
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+	}
+
+
+	@Override
+	public Long getNextNumDetReglement(Calendar c) {
+		  int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.numReferenceDetReglementCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    Long vNextNumBonReception= (Long) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public String getPrefixDetReglement(Calendar c) {
+		 int vAnneeCourante =c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.prefixeDetReglement from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    String vNextNumBonReception= (String) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public Long modifierGuichetDetReglementMensuel(GuichetMensuelValue pGuichetValeur) {
+		   GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
+			
+		    vGuichetEntite.setNumReferenceDetReglementCourante(pGuichetValeur.getNumReferenceDetReglementCourante()); 
+		    this.entityManager.merge(vGuichetEntite);
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+	}
+
 }
