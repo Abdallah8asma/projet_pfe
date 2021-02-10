@@ -37,6 +37,20 @@ public class ResultatRechecheElementReglementElementValue
 	private Long typeReglementId;
 	private Boolean regle;
 	private String observation;
+	
+	private String referenceDetReglement;
+	
+	
+	
+	
+
+	public String getReferenceDetReglement() {
+		return referenceDetReglement;
+	}
+
+	public void setReferenceDetReglement(String referenceDetReglement) {
+		this.referenceDetReglement = referenceDetReglement;
+	}
 
 	public String getNumPiece() {
 		return numPiece;

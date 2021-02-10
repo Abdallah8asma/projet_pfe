@@ -89,7 +89,20 @@ public class FactureVenteValue implements Comparable<FactureVenteValue> {
 	
 	private boolean declarer;
 	
+	private boolean forcerCalculMontant;
 	
+	
+	
+	
+	
+	public boolean isForcerCalculMontant() {
+		return forcerCalculMontant;
+	}
+
+	public void setForcerCalculMontant(boolean forcerCalculMontant) {
+		this.forcerCalculMontant = forcerCalculMontant;
+	}
+
 	public boolean isDeclarer() {
 		return declarer;
 	}

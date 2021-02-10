@@ -102,9 +102,87 @@ public class GuichetMensuelEntity {
 	  
 
 	  
+	  /** Numéro reg courant. */
+	  @Column(name = "ref_reglement_achat")
+	  private Long numReferenceReglementAchatCourante;
+	  
+	  /** prefixe_fact  */
+	  @Column(name = "prefixe_reglement_achat ")
+	  private String prefixeReglementAchat ;
+	  
+
+	  
+	  
+	  /** ref_det_reglement_achat. */
+	  @Column(name = "ref_det_reglement_achat")
+	  private Long numReferenceDetReglementAchatCourante;
+	  
+	  /** prefixe_det_reglement_achat  */
+	  @Column(name = "prefixe_det_reglement_achat ")
+	  private String prefixeDetReglementAchat ;
 	  
 	  
 	  
+	  /** ref_det_reglement. */
+	  @Column(name = "ref_det_reglement")
+	  private Long numReferenceDetReglementCourante;
+	  
+	  /** prefixe_det_reglement_achat  */
+	  @Column(name = "prefixe_det_reglement ")
+	  private String prefixeDetReglement ;
+	  
+	  
+	  
+	  
+	  
+	public Long getNumReferenceDetReglementCourante() {
+		return numReferenceDetReglementCourante;
+	}
+
+	public void setNumReferenceDetReglementCourante(Long numReferenceDetReglementCourante) {
+		this.numReferenceDetReglementCourante = numReferenceDetReglementCourante;
+	}
+
+	public String getPrefixeDetReglement() {
+		return prefixeDetReglement;
+	}
+
+	public void setPrefixeDetReglement(String prefixeDetReglement) {
+		this.prefixeDetReglement = prefixeDetReglement;
+	}
+
+	public Long getNumReferenceReglementAchatCourante() {
+		return numReferenceReglementAchatCourante;
+	}
+
+	public void setNumReferenceReglementAchatCourante(Long numReferenceReglementAchatCourante) {
+		this.numReferenceReglementAchatCourante = numReferenceReglementAchatCourante;
+	}
+
+	public String getPrefixeReglementAchat() {
+		return prefixeReglementAchat;
+	}
+
+	public void setPrefixeReglementAchat(String prefixeReglementAchat) {
+		this.prefixeReglementAchat = prefixeReglementAchat;
+	}
+
+	public Long getNumReferenceDetReglementAchatCourante() {
+		return numReferenceDetReglementAchatCourante;
+	}
+
+	public void setNumReferenceDetReglementAchatCourante(Long numReferenceDetReglementAchatCourante) {
+		this.numReferenceDetReglementAchatCourante = numReferenceDetReglementAchatCourante;
+	}
+
+	public String getPrefixeDetReglementAchat() {
+		return prefixeDetReglementAchat;
+	}
+
+	public void setPrefixeDetReglementAchat(String prefixeDetReglementAchat) {
+		this.prefixeDetReglementAchat = prefixeDetReglementAchat;
+	}
+
 	public Long getNumReferenceFactureAchatNDCourante() {
 		return numReferenceFactureAchatNDCourante;
 	}

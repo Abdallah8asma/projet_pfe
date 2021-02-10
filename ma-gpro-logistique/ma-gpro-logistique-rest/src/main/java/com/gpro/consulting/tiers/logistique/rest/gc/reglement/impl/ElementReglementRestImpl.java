@@ -57,8 +57,9 @@ public class ElementReglementRestImpl {
 		
 		ResultatRechecheElementReglementValue result;
 		
+		if(estNonVide(request.getNumPiece()) || estNonVide(request.getReferenceDetailReglement()) )  {
+			
 		
-		if(estNonVide(request.getNumPiece()))  {
 			
 	         result = detailsReglementService.rechercherMultiCritere(request);
 			

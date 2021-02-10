@@ -440,27 +440,33 @@ public class FactureDomaineImpl implements IFactureDomaine {
 
 		Double montantTTCTotal = montantHTaxeTotal + montantTaxesTotal /*- montantRemiseTotal*/;
 
-		factureValue.setMontantHTaxe(montantHTaxeTotal);
-		factureValue.setMontantRemise(montantRemiseTotal);
-		factureValue.setMontantTaxe(montantTaxesTotal);
-		// factureValue.setMontantTTC(montantTTCTotal);
-		factureValue.setMetrageTotal(metrageTotal);
+		if(!factureValue.isForcerCalculMontant()) {
+			
+			
+			factureValue.setMontantHTaxe(montantHTaxeTotal);
+			factureValue.setMontantRemise(montantRemiseTotal);
+			factureValue.setMontantTaxe(montantTaxesTotal);
+			// factureValue.setMontantTTC(montantTTCTotal);
+			factureValue.setMetrageTotal(metrageTotal);
 
-		/***
-		 * Si Client .type exonoré Alors TVA=0 au niveau de Facture et Bon de livraison
-		 ***/
-		// PartieInteresseValue pi =
-		// partieInteresseePersistance.getPartieInteresseById(factureValue.getPartieIntId());
+			/***
+			 * Si Client .type exonoré Alors TVA=0 au niveau de Facture et Bon de livraison
+			 ***/
+			// PartieInteresseValue pi =
+			// partieInteresseePersistance.getPartieInteresseById(factureValue.getPartieIntId());
 
-		if (factureValue.getTypePartieInteressee() != null
-				&& factureValue.getTypePartieInteressee().equals(IConstante.PI_TYPE_EXONORE)) {
+			if (factureValue.getTypePartieInteressee() != null
+					&& factureValue.getTypePartieInteressee().equals(IConstante.PI_TYPE_EXONORE)) {
 
-			factureValue.setMontantTTC(montantHTaxeTotal);
+				factureValue.setMontantTTC(montantHTaxeTotal);
 
-		} else {
-			factureValue.setMontantTTC(montantTTCTotal);
+			} else {
+				factureValue.setMontantTTC(montantTTCTotal);
+				
+			}
 			
 		}
+	
 
 		
       if(factureValue.getTauxConversion()!=null)
@@ -778,12 +784,33 @@ public class FactureDomaineImpl implements IFactureDomaine {
 		factureValue.setListTaxeFacture(listTaxeFacture);
 
 		Double montantTTC = montantHTaxeTotal + montantTaxesTotal /*- montantRemiseTotal*/;
+		
+		if(!factureValue.isForcerCalculMontant()) {
+			
 
-		factureValue.setMontantHTaxe(montantHTaxeTotal);
-		factureValue.setMontantRemise(montantRemiseTotal);
-		factureValue.setMontantTaxe(montantTaxesTotal);
-		factureValue.setMontantTTC(montantTTC);
-		factureValue.setMetrageTotal(metrageTotal);
+			factureValue.setMontantHTaxe(montantHTaxeTotal);
+			factureValue.setMontantRemise(montantRemiseTotal);
+			factureValue.setMontantTaxe(montantTaxesTotal);
+			factureValue.setMontantTTC(montantTTC);
+			factureValue.setMetrageTotal(metrageTotal);
+			
+			/***
+			 * Si Client .type exonoré Alors TVA=0 au niveau de Facture et Bon de livraison
+			 ***/
+			// PartieInteresseValue pi =
+			// partieInteresseePersistance.getPartieInteresseById(factureValue.getPartieIntId());
+
+			if (factureValue.getTypePartieInteressee() != null
+					&& factureValue.getTypePartieInteressee().equals(IConstante.PI_TYPE_EXONORE)) {
+
+				factureValue.setMontantTTC(montantHTaxeTotal);
+
+			} else {
+				factureValue.setMontantTTC(montantTTC);
+			}
+
+			
+		}
 
 		
 	
@@ -791,20 +818,7 @@ public class FactureDomaineImpl implements IFactureDomaine {
 		factureValue.setMontantConverti(factureValue.getTauxConversion()*montantTTC);
 		
 		
-		/***
-		 * Si Client .type exonoré Alors TVA=0 au niveau de Facture et Bon de livraison
-		 ***/
-		// PartieInteresseValue pi =
-		// partieInteresseePersistance.getPartieInteresseById(factureValue.getPartieIntId());
-
-		if (factureValue.getTypePartieInteressee() != null
-				&& factureValue.getTypePartieInteressee().equals(IConstante.PI_TYPE_EXONORE)) {
-
-			factureValue.setMontantTTC(montantHTaxeTotal);
-
-		} else {
-			factureValue.setMontantTTC(montantTTC);
-		}
+	
 
 		return facturePersistance.updateFacture(factureValue);
 	}

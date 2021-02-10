@@ -16,33 +16,95 @@ public class GuichetMensuelValue {
 	private Long NumReferenceBonComptoirCourant;
 
 	private Long mois;
-	
-	
-	
+
 	private Long numReferenceBonCommandeCourante;
-	
+
 	private Long numReferenceBonReceptionCourante;
-	
+
 	private Long numReferenceFactureCourante;
-	
+
 	private Long numReferenceAvoirCourante;
-	
-	
-	
+
 	private String prefixeBcAchat;
 	private String prefixeBonReception;
-	
-	
-	
+
 	private Long numReferenceBonReceptionNonDeclarerCourante;
 	private String prefixeBonReceptionNonDeclarer;
-	
+
 	private Long numReferenceFactureAchatNonDeclarerCourante;
 	private String prefixeFactureAchatNonDeclarer;
+
+	private Long numReferenceReglementAchatCourante;
+
+	private String prefixeReglementAchat;
+
+	/** ref_det_reglement_achat. */
+
+	private Long numReferenceDetReglementAchatCourante;
+
+	/** prefixe_det_reglement_achat */
+
+	private String prefixeDetReglementAchat;
 	
 	
 	
+	private Long numReferenceDetReglementCourante;
+
+	/** prefixe_det_reglement_achat */
+
+	private String prefixeDetReglement;
 	
+	
+	
+
+	public Long getNumReferenceDetReglementCourante() {
+		return numReferenceDetReglementCourante;
+	}
+
+	public void setNumReferenceDetReglementCourante(Long numReferenceDetReglementCourante) {
+		this.numReferenceDetReglementCourante = numReferenceDetReglementCourante;
+	}
+
+	public String getPrefixeDetReglement() {
+		return prefixeDetReglement;
+	}
+
+	public void setPrefixeDetReglement(String prefixeDetReglement) {
+		this.prefixeDetReglement = prefixeDetReglement;
+	}
+
+	public Long getNumReferenceDetReglementAchatCourante() {
+		return numReferenceDetReglementAchatCourante;
+	}
+
+	public void setNumReferenceDetReglementAchatCourante(Long numReferenceDetReglementAchatCourante) {
+		this.numReferenceDetReglementAchatCourante = numReferenceDetReglementAchatCourante;
+	}
+
+	public String getPrefixeDetReglementAchat() {
+		return prefixeDetReglementAchat;
+	}
+
+	public void setPrefixeDetReglementAchat(String prefixeDetReglementAchat) {
+		this.prefixeDetReglementAchat = prefixeDetReglementAchat;
+	}
+
+	public Long getNumReferenceReglementAchatCourante() {
+		return numReferenceReglementAchatCourante;
+	}
+
+	public void setNumReferenceReglementAchatCourante(Long numReferenceReglementAchatCourante) {
+		this.numReferenceReglementAchatCourante = numReferenceReglementAchatCourante;
+	}
+
+	public String getPrefixeReglementAchat() {
+		return prefixeReglementAchat;
+	}
+
+	public void setPrefixeReglementAchat(String prefixeReglementAchat) {
+		this.prefixeReglementAchat = prefixeReglementAchat;
+	}
+
 	public Long getNumReferenceFactureAchatNonDeclarerCourante() {
 		return numReferenceFactureAchatNonDeclarerCourante;
 	}
@@ -143,13 +205,9 @@ public class GuichetMensuelValue {
 
 	private String prefixeAvoir;
 
-	
-	
-	
-	/***************** 
-
-	/**
-	 * Constructeur
+	/*****************
+	 * 
+	 * /** Constructeur
 	 */
 	public GuichetMensuelValue() {
 

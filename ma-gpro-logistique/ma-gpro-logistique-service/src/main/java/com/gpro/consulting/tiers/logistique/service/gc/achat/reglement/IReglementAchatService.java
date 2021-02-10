@@ -57,4 +57,7 @@ public interface IReglementAchatService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public String getCurrentReference(Calendar instance, boolean b);
 
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public String getCurrentReferenceMensuelByDate(Calendar stringToCalendar, boolean b);
+
 }

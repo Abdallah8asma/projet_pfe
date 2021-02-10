@@ -155,6 +155,44 @@ public class ReceptionAchatRestImpl {
 
 		return ReceptionAchatValue;
 	}
+	
+	
+	
+	@RequestMapping(value = "/dupliquerByReference", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody ReceptionAchatValue dupliquerByReference(@RequestParam(value = "reference", required = false) String reference) {
+
+		//logger.info("commandeVente - getById: Delegating request id {} to service layer.", id);
+
+		ReceptionAchatValue ReceptionAchatValue = receptionService.getByReference(reference);
+
+		if (ReceptionAchatValue != null) {
+			
+			
+			
+			ReceptionAchatValue.setId(null);
+			
+			if(ReceptionAchatValue.getListProduitReceptions() != null) {
+				
+				
+				for(ProduitReceptionAchatValue prodReception :ReceptionAchatValue.getListProduitReceptions()) {
+					
+					prodReception.setId(null);
+					prodReception.setCommandeAchatId(null);
+					
+				}
+				
+			}
+			
+			/*Map<Long, PartieInteresseValue> mapClientById = gestionnaireLogistiqueCacheService.mapClientById();
+
+			PartieInteresseValue client = mapClientById.get(ReceptionAchatValue.getPartieIntersseId());
+			if (client != null) {
+				ReceptionAchatValue.setPartieIntersseAbbreviation(client.getAbreviation());
+			}*/
+		}
+
+		return ReceptionAchatValue;
+	}
 
 	/**
 	 * Update.

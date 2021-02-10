@@ -98,6 +98,8 @@ public class FacturePersistanceUtilities {
 	    dto.setMontantConverti(entity.getMontantConverti());
 	    dto.setDeclarer(entity.isDeclarer());
 	    
+	    dto.setForcerCalculMontant(entity.isForcerCalculMontant());
+	    
 	    
 		if(entity.getListDetFactureVente() != null){
 	    	List<DetFactureVenteValue> list = new ArrayList <DetFactureVenteValue>();
@@ -183,6 +185,7 @@ public class FacturePersistanceUtilities {
 	    entity.setMontantConverti(dto.getMontantConverti());
 	    entity.setDeclarer(dto.isDeclarer());
 	    
+	    entity.setForcerCalculMontant(dto.isForcerCalculMontant());
 	    
 	    
 		if(dto.getListDetFactureVente() != null){

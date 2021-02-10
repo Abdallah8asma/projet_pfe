@@ -55,6 +55,9 @@ public class DetailsReglementAchatEntity implements Serializable{
 	@Column(name="REF_FACTURE")
 	private String refFacture;
 	
+	@Column(name="reference")
+	private String reference;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "TYPEREGLEMENT_ID")
 	private TypeReglementAchatEntity typeReglement;
@@ -68,6 +71,22 @@ public class DetailsReglementAchatEntity implements Serializable{
 	
 	@Column(name="OBSERVATION")
 	private String observation;
+	
+	
+	
+	
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Long getId() {
 		return id;

@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.domaine.gc.guichet.impl;
 
+import java.util.Calendar;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -227,5 +229,11 @@ public class GuichetAnnuelDomaineImpl implements IGuichetAnnuelDomaine{
 	public Long modifierGuichetFANDAnnuel(GuichetAnnuelValue currentGuichetAnnuel) {
 		return guichetAnnuelPersistance.modifierGuichetFANDAnnuel(currentGuichetAnnuel);
 		
+	}
+
+	@Override
+	public GuichetAnnuelValue getCurrentGuichetAnnuel(Calendar c) {
+		// TODO Auto-generated method stub
+		return guichetAnnuelPersistance.getCurrentGuichetAnnuel(c);
 	}
 }

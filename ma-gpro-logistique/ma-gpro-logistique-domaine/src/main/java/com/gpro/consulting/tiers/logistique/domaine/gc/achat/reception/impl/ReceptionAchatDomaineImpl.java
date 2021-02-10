@@ -2313,4 +2313,12 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		return listProduitElementValue;
 	}
 
+
+
+	@Override
+	public ReceptionAchatValue getByReference(String reference) {
+		// TODO Auto-generated method stub
+		return receptionAchatPersistance.getByReference(reference);
+	}
+
 }

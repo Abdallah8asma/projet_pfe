@@ -352,12 +352,19 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 		Double montantTTCTotal = montantHTaxeTotal + montantTaxesTotal /*- montantRemiseTotal*/;
 
-		factureValue.setMontantHTaxe(montantHTaxeTotal);
-		factureValue.setMontantRemise(montantRemiseTotal);
-		factureValue.setMontantTaxe(montantTaxesTotal);
-		factureValue.setMontantTTC(montantTTCTotal);
-		factureValue.setMetrageTotal(metrageTotal);
 
+	
+		
+		
+		if(!factureValue.isForcerCalculMontant())
+		{
+			factureValue.setMontantHTaxe(montantHTaxeTotal);
+			factureValue.setMontantRemise(montantRemiseTotal);
+			factureValue.setMontantTaxe(montantTaxesTotal);
+			factureValue.setMontantTTC(montantTTCTotal);
+			factureValue.setMetrageTotal(metrageTotal);
+			
+		}
 		
 		
 		
@@ -608,12 +615,20 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		factureValue.setListTaxeFacture(listTaxeFacture);
 
 		Double montantTTC = montantHTaxeTotal + montantTaxesTotal /*- montantRemiseTotal*/;
+		
+		
+		if(!factureValue.isForcerCalculMontant())
+		{
+			
+			factureValue.setMontantHTaxe(montantHTaxeTotal);
+			factureValue.setMontantRemise(montantRemiseTotal);
+			factureValue.setMontantTaxe(montantTaxesTotal);
+			factureValue.setMontantTTC(montantTTC);
+			factureValue.setMetrageTotal(metrageTotal);
+			
+		}
 
-		factureValue.setMontantHTaxe(montantHTaxeTotal);
-		factureValue.setMontantRemise(montantRemiseTotal);
-		factureValue.setMontantTaxe(montantTaxesTotal);
-		factureValue.setMontantTTC(montantTTC);
-		factureValue.setMetrageTotal(metrageTotal);
+		
 
 		return factureAchatPersistance.updateFacture(factureValue);
 	}

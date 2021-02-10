@@ -197,6 +197,8 @@ public class ReglementPersistanceUtilities {
 		entity.setRegle(dto.getRegle());
 		entity.setObservation(dto.getObservation());
 		
+		entity.setReference(dto.getReference());
+		
 		if(dto.getTypeReglementId() != null){
 			TypeReglementEntity typeReglement = new TypeReglementEntity();
 			typeReglement.setId(dto.getTypeReglementId());
@@ -241,6 +243,9 @@ public class ReglementPersistanceUtilities {
 		entity.setId(dto.getId());
 		entity.setDesignation(dto.getDesignation());
 		entity.setaTerme(dto.getaTerme());
+		
+		entity.setPrefixe(dto.getPrefixe());
+		
 		return entity;
 	}
 	
@@ -258,6 +263,9 @@ public class ReglementPersistanceUtilities {
 		dto.setRefFacture(entity.getRefFacture());
 		dto.setRegle(entity.getRegle());
 		dto.setObservation(entity.getObservation());
+		
+		dto.setReference(entity.getReference());
+		
 		if(entity.getReglement() != null){
 			dto.setReglementId(entity.getReglement().getId());
 		}
@@ -322,6 +330,8 @@ public class ReglementPersistanceUtilities {
 		dto.setId(entity.getId());
 		dto.setDesignation(entity.getDesignation());
 		dto.setaTerme(entity.getaTerme());
+		
+		dto.setPrefixe(entity.getPrefixe());
 		return dto;
 	}
 
@@ -402,6 +412,7 @@ public class ReglementPersistanceUtilities {
 		dto.setObservation(entity.getObservation());
 
 		
+		dto.setReferenceDetReglement(entity.getReference());
 	
 		
 		if(entity.getReglement() != null){
