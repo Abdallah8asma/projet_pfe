@@ -418,8 +418,9 @@
                     <span class="input-group-text">Date</span>
                     </div>
                     <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-                      ng-init="reglementCourante.date =''" ng-model="reglementCourante.date" is-open="opened"
-                      datepicker-options="dateOptions" date-="enabled(date, mode)" close-text="Close" />
+                      ng-init="reglementCourante.date =''" ng-model="reglementCourante.date"
+                      ng-change="getCurrentReferenceMensuelByDate(reglementCourante.date)" is-open="opened"
+                      datepicker-options="dateOptions" date-="enabled(date, mode)" close-text="Close"  required/>
 
 
 
@@ -554,6 +555,9 @@
             <table class="table table-bordered table-condensed table-head-color">
               <thead>
                 <tr>
+                     <th ng-show="modePdf == 'actif'">
+                      Ref.
+                    </th>
                   <th>Type</th>
                   <th>N&deg; pi&eacute;ce</th>
                   <th>Banque</th>
@@ -574,6 +578,15 @@
               </thead>
               <tbody ng-model="finalOperationsList">
                 <tr ng-repeat="item in finalOperationsList track by $index ">
+                
+                
+                   <td  ng-show="modePdf == 'actif'">
+                      <div class="form-group">
+                        <input class="form-control" ng-model="item.reference" />
+                      </div>
+                    </td>
+                  
+                
                   <td>
                     <div class="form-group">
                       <select ui-select2 ng-model="item.typeReglementId" data-placeholder="..." class="form-control"
