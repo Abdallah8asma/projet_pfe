@@ -481,6 +481,24 @@
                   </div>
                 </div>
               </div>
+              
+              
+                <div class="col-sm-3">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Forcer calcul montant</label>
+                    </div>
+                    <select ui-select2 ng-model="factureVenteCourant.forcerCalculMontantRech" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                      <option value="non">NON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
 
             </div>
@@ -828,7 +846,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -862,6 +880,28 @@
                   </div>
                 </div>
               </div>
+              
+                    <div class="col-sm-3" >
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label is-required">Forcer calcul montant</label>
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="checkbox checkbox-square checkbox-primary">
+                          <input type="checkbox" class="form-control"
+                            ng-model="factureVenteCourant.forcerCalculMontant"
+                            />
+
+                          <span></span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
             </div>
 
@@ -885,7 +925,82 @@
 
 
 
-            <div class="alert alert-primary" ng-show="modePdf == 'actif'">
+            <div class="alert alert-primary" ng-show="factureVenteCourant.forcerCalculMontant">
+              <div class="row">
+                <div class="col-sm-4">
+
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label is-required">Montant Taxe</label>
+                      </div>
+                      <input class="form-control" ng-model="factureVenteCourant.montantTaxe"
+                        value="{{factureVenteCourant.montantTaxe | prixFiltre}}" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label is-required">Montant HT</label>
+                      </div>
+                      <input class="form-control" ng-model="factureVenteCourant.montantHTaxe"
+                        value="{{factureVenteCourant.montantHTaxe | prixFiltre}}" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label ">Montant Remise</label>
+                      </div>
+                      <input class="form-control" ng-model="factureVenteCourant.montantRemise"
+                        value="{{factureVenteCourant.montantRemise | prixFiltre}}" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label is-required">Montant TTC</label>
+                      </div>
+                      <input class="form-control" ng-model="factureVenteCourant.montantTTC"
+                        value="{{factureVenteCourant.montantTTC | prixFiltre}}" />
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="col-sm-4">
+
+
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label is-required">Montant Converti </label>
+                      </div>
+                      <input class="form-control" readonly="readonly"
+                        value="{{factureVenteCourant.montantConverti | prixFiltre}}" />
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            
+            
+                <div class="alert alert-primary" ng-show="!factureVenteCourant.forcerCalculMontant">
               <div class="row">
                 <div class="col-sm-4">
 
@@ -958,6 +1073,8 @@
 
               </div>
             </div>
+            
+            
             <br>
 
 

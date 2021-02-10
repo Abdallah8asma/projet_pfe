@@ -174,20 +174,43 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         });
     };
 
+
+	// conversion date en String
+				function formattedDate(date) {
+					var d = new Date(date), month = ''
+						+ (d.getMonth() + 1), day = ''
+							+ d.getDate(), year = d.getFullYear();
+
+					if (month.length < 2)
+						month = '0' + month;
+					if (day.length < 2)
+						day = '0' + day;
+					return [year, month, day].join('-');
+				}
+
+          $scope.getCurrentReferenceMensuelByDate = function(dateIntro) {
+	
+	
+	
+	$http
+        	            		.get(
+        	            				UrlAtelier
+        	            						+ "/reglement/getCurrentReferenceByDate:"+formattedDate(dateIntro)
+        	            						)
+        	            		.success(
+        	            				function(res) {
+        	            					
+        	            					$scope.reglementCourante.reference = res;
+        	            					$scope.reglementCourante.refAvantChangement = res;
+        	            				});
+	
+	
+	  }
+
     $scope.AffectationReglement = function (reglementCourante) {
 
 
-      $http
-        .get(
-          UrlAtelier
-          + "/reglement/getCurrentReference"
-        )
-        .success(
-          function (res) {
-
-            $scope.reglementCourante.reference = res;
-            $scope.reglementCourante.refAvantChangement = res;
-          });
+ 
 
 
       $('.elementReglement').hide();
@@ -196,7 +219,11 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       $scope.disableClient = false;
       $scope.disableValider = false;
 
-      $scope.reglementCourante = {};
+      $scope.reglementCourante = {"date":new Date()};
+
+
+  
+             $scope.getCurrentReferenceMensuelByDate( $scope.reglementCourante.date);
       $scope.creationReglementForm.$setPristine();
 
       $scope.finalOperationsList = [];

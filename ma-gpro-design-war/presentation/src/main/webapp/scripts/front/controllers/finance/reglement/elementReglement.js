@@ -727,9 +727,22 @@ angular
                     'myData',
                     function () {
 
-                        if (angular.isDefined($scope.reglementCourante.numPiece) && $scope.reglementCourante.numPiece != '') {
+                   
+     if ((angular.isDefined($scope.reglementCourante.numPiece) && $scope.reglementCourante.numPiece != '') 
+                              ||
+
+(angular.isDefined($scope.reglementCourante.referenceDetailReglement) && $scope.reglementCourante.referenceDetailReglement != '')
+
+                    ) {
+
 
                             $scope.colDefs = [
+	
+	                             {
+                                    field: 'referenceDetReglement',
+                                    displayName: 'Ref.Det. Reg',
+                                    //width: '10%'
+                                },
 
                                 {
                                     field: 'reference',

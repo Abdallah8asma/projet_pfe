@@ -158,15 +158,28 @@
         	                        });
 
         	                }
-        	                
-        	                
-        	                $scope.AffectationReglement = function(reglementCourante) {
-														$scope.listDocReglement = [];
-        	                	
-        	                	$http
+
+	// conversion date en String
+				function formattedDate(date) {
+					var d = new Date(date), month = ''
+						+ (d.getMonth() + 1), day = ''
+							+ d.getDate(), year = d.getFullYear();
+
+					if (month.length < 2)
+						month = '0' + month;
+					if (day.length < 2)
+						day = '0' + day;
+					return [year, month, day].join('-');
+				}
+
+          $scope.getCurrentReferenceMensuelByDate = function(dateIntro) {
+	
+	
+	
+	$http
         	            		.get(
         	            				UrlAtelier
-        	            						+ "/reglementAchat/getCurrentReference"
+        	            						+ "/reglementAchat/getCurrentReferenceMensuelByDate:"+formattedDate(dateIntro)
         	            						)
         	            		.success(
         	            				function(res) {
@@ -174,6 +187,15 @@
         	            					$scope.reglementCourante.reference = res;
         	            					$scope.reglementCourante.refAvantChangement = res;
         	            				});
+	
+	
+	  }
+        	                
+        	                
+        	                $scope.AffectationReglement = function(reglementCourante) {
+														$scope.listDocReglement = [];
+        	                	
+        	                	
         	                	
         	                   
         	                    $('.elementReglement').hide();
@@ -182,7 +204,12 @@
         	                      $scope.disableClient =false;
         	                      $scope.disableValider = false;
         	                      
-        	                     $scope.reglementCourante = {};
+        	                     $scope.reglementCourante = {"date": new Date()};
+
+
+
+                              $scope.getCurrentReferenceMensuelByDate( $scope.reglementCourante.date);
+
         	                     $scope.creationReglementForm.$setPristine();
         	                     
         	                     $scope.finalOperationsList = []; 
