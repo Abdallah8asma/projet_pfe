@@ -512,6 +512,16 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 
 		// logger.info("----- bonReceptionValue.getReference() ----------" +
 		// bonReceptionValue.getReference());
+		
+		
+		
+		
+		
+		if(bonReceptionValue.getDateIntroduction() == null)
+			bonReceptionValue.setDateIntroduction(Calendar.getInstance());
+		
+		
+		
 
 		if ((bonReceptionValue.getReference() != null && bonReceptionValue.getReference().equals(""))
 				|| bonReceptionValue.getReference() == null) {
@@ -519,7 +529,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 			//bonReceptionValue.setReference(this.getCurrentReference(bonReceptionValue.getDateIntroduction(), true));
 			
 
-			bonReceptionValue.setReference(getReferenceReceptionFromGuichetMensuel(Calendar.getInstance(),true));  
+			bonReceptionValue.setReference(getReferenceReceptionFromGuichetMensuel(bonReceptionValue.getDateIntroduction(),true));  
 			
 			// logger.info("----- auto reference ----------" +
 			// bonReceptionValue.getReference());
@@ -570,7 +580,11 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 					
 					ArticleValue produitValue=articlePersistance.getArticleParId(produitReception.getProduitId());
 					
+					
+					if(produitReception.getTaxeId() == null)
 					produitReception.setTaxeId(produitValue.getIdTaxe());
+					
+					
 
 					if (produitReception.getPrixUnitaire() != null && produitReception.getQuantite() != null) {
 						coutCommandeVenteTotal += (produitReception.getPrixUnitaire() * produitReception.getQuantite());
@@ -596,14 +610,14 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 					
 					
 					
-					if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
-						produitTaxeMap.put(produitValue.getIdTaxe(), totalApresRemise);
+					if (!produitTaxeMap.containsKey(produitReception.getTaxeId())) {
+						produitTaxeMap.put(produitReception.getTaxeId(), totalApresRemise);
 
 					} else {
 						// TODO ERREUR
-						Double assietteValue = produitTaxeMap.get(produitValue.getIdTaxe())
+						Double assietteValue = produitTaxeMap.get(produitReception.getTaxeId())
 								+ totalApresRemise;
-						produitTaxeMap.put(produitValue.getIdTaxe(), assietteValue);
+						produitTaxeMap.put(produitReception.getTaxeId(), assietteValue);
 
 					}
 
@@ -854,6 +868,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 					//ProduitValue produitValue = produitPersistance.rechercheProduitById(produitReception.getProduitId());
 				ArticleValue produitValue=articlePersistance.getArticleParId(produitReception.getProduitId());
 					
+				if(produitReception.getTaxeId() == null)
 					produitReception.setTaxeId(produitValue.getIdTaxe());
 
 					if (produitReception.getPrixUnitaire() != null) {
@@ -876,14 +891,14 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 					
 					
 					
-					if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
-						produitTaxeMap.put(produitValue.getIdTaxe(), totalApresRemise);
+					if (!produitTaxeMap.containsKey(produitReception.getTaxeId())) {
+						produitTaxeMap.put(produitReception.getTaxeId(), totalApresRemise);
 
 					} else {
 						// TODO ERREUR
-						Double assietteValue = produitTaxeMap.get(produitValue.getIdTaxe())
+						Double assietteValue = produitTaxeMap.get(produitReception.getTaxeId())
 								+ totalApresRemise;
-						produitTaxeMap.put(produitValue.getIdTaxe(), assietteValue);
+						produitTaxeMap.put(produitReception.getTaxeId(), assietteValue);
 
 					}
 					//
@@ -2054,8 +2069,11 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 
 	private String getReferenceReceptionFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {
 
-		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonReceptionReference(); 
-		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixBonReception();
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonReceptionReference(pDateBonLiv); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixBonReception(pDateBonLiv);
+		
+		
+		
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
 		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
 
@@ -2094,8 +2112,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 	
 	private String getReferenceReceptionFromGuichetMensuelNonDeclarer(final Calendar pDateBonLiv , final boolean increment) {
 
-		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonReceptionReferenceNonDeclarer(); 
-		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixBonReceptionNonDeclarer();
+		Long vNumGuichetBonLiv = this.guichetierMensuelDomaine.getNextNumBonReceptionReferenceNonDeclarer(pDateBonLiv); 
+		String vNumGuichetPrefix=this.guichetierMensuelDomaine.getPrefixBonReceptionNonDeclarer(pDateBonLiv);
 		int vAnneeCourante = pDateBonLiv.get(Calendar.YEAR);
 		int moisActuel = pDateBonLiv.get(Calendar.MONTH) + 1;
 
@@ -2189,5 +2207,110 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 	   private boolean estNonVide(Long val) {
 				return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 			}
+
+
+
+	@Override
+	public ListProduitElementValue getProduitElementListWithoutRegroupement(List<String> refBonReceptionList,
+			Long factureAchatId) {
+
+
+		List<ReceptionAchatValue> listLivraisonVenteValue = receptionAchatPersistance
+				.getProduitElementList(refBonReceptionList);
+
+		List<ProduitReceptionAchatValue> listDetLivraisonVente = new ArrayList<ProduitReceptionAchatValue>();
+
+		ListProduitElementValue listProduitElementValue = new ListProduitElementValue();
+
+		if (listLivraisonVenteValue.size() > 0) {
+			listProduitElementValue.setPartieIntId(listLivraisonVenteValue.get(FIRST_INDEX).getPartieIntersseId());
+			listProduitElementValue.setDateLivrison(listLivraisonVenteValue.get(FIRST_INDEX).getDateLivraison());
+			listProduitElementValue.setIdDepot(listLivraisonVenteValue.get(FIRST_INDEX).getIdDepot());
+			// Added By Ghazi on 25/05/2018
+			// listProduitElementValue.setIdMarche(listLivraisonVenteValue.get(FIRST_INDEX).getMarcheId());
+
+		}
+
+		for (ReceptionAchatValue livraisonVente : listLivraisonVenteValue) {
+
+			for (ProduitReceptionAchatValue detLivraisonVente : livraisonVente.getListProduitReceptions()) {
+
+				listDetLivraisonVente.add(detLivraisonVente);
+			}
+		}
+
+		Map<Map<Long, String>, List<ProduitReceptionAchatValue>> mapDetLivraison = new HashMap<Map<Long, String>, List<ProduitReceptionAchatValue>>();
+
+		
+		Double sommeQuantite = ZERO;
+		
+		String choixKey = "CH1";
+		
+		List<DetFactureAchatValue> listDetFactureVente = new ArrayList<DetFactureAchatValue>();
+		
+		
+		
+		for (ProduitReceptionAchatValue detail : listDetLivraisonVente) {
+			
+			
+			DetFactureAchatValue element = new DetFactureAchatValue();
+			
+			
+			
+			 element.setChoix(choixKey);
+			//element.setFactureAchatId(factureAchatId);
+			
+					
+			element.setProduitId(detail.getProduitId());
+			
+			element.setProduitReference(detail.getReferenceArticle());
+			element.setProduitDesignation(detail.getDesignation());
+			
+			element.setRemise(detail.getRemise());
+					
+			element.setQuantite(detail.getQuantite());
+			
+			element.setPrixUnitaireHT(detail.getPrixUnitaire());
+			
+			element.setPrixTotalHT(detail.getPrixTotalHT());
+			
+
+			if (element.getPrixUnitaireHT() != null && element.getQuantite() != null) {
+				element.setPrixTotalHT(element.getPrixUnitaireHT() * element.getQuantite());
+			}
+			
+			
+			element.setTaxeId(detail.getTaxeId());
+			
+			
+		
+			
+			element.setNumeroSeries(detail.getNumeroSeries());
+			
+			if(detail.getNumeroSeries() != null )
+				element.setProduitsSerialisable(getListProduitSerialisableParNumerSeries(detail.getNumeroSeries(),element.getProduitId()));
+			
+	
+			if (detail.getQuantite() != null) {
+				sommeQuantite = detail.getQuantite() + sommeQuantite;
+			}
+			
+			
+			listDetFactureVente.add(element);
+			
+
+		}
+
+
+
+		if (listDetFactureVente.size() > 0) {
+			Collections.sort(listDetFactureVente, new DetFactureAchatValidateComparator());
+		}
+
+		listProduitElementValue.setNombreResultaRechercher(listDetFactureVente.size());
+		listProduitElementValue.setListDetFactureAchat(listDetFactureVente);
+
+		return listProduitElementValue;
+	}
 
 }

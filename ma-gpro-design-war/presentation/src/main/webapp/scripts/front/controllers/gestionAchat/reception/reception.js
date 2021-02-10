@@ -106,6 +106,16 @@ angular
 				$scope.listeSitePartieInteresseeCache = [];
 				$scope.ListTypeDocumentCache = [];
 				$scope.ListSousFamilleProduitCache = [];
+				
+				
+				   // Liste des Taxes
+  	 $scope.ListeTaxe = function () {
+        $http.get(UrlAtelier + '/taxe/getTVA').success(function (dataTaxe) {
+          $scope.ListeTaxe = dataTaxe;
+        });
+      };
+
+      $scope.ListeTaxe();  
 
 				
 				$scope.keyPress = function (keyCode, code) {
@@ -626,7 +636,7 @@ angular
 					// .copy(reception) : {};
 
 
-				$scope.getCurrentReferenceMensuelleByType($scope.receptionAchatCourante.facture);
+				$scope.getCurrentReferenceMensuelleByTypeAndDate($scope.receptionAchatCourante.facture,$scope.receptionAchatCourante.dateIntroduction);
 
 
 
@@ -636,7 +646,7 @@ angular
 				}
 				
 				
-				$scope.getCurrentReferenceMensuelleByType  = function (declarer) {
+				$scope.getCurrentReferenceMensuelleByTypeAndDate  = function (declarer,dateIntro) {
 					
 					var type ="";
 					
@@ -649,7 +659,7 @@ angular
 							$http
 						.get(
 							UrlAtelier
-							+ "/receptionAchat/getCurrentReferenceMensuelByType:"+type
+							+ "/receptionAchat/getCurrentReferenceMensuelByTypeAndDate:"+type + ":"+formattedDate(dateIntro)
 						)
 						.success(
 							function (data) {
@@ -1672,6 +1682,8 @@ angular
 							
 					produitReception.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
 						produitReception.prixUnitaire = $scope.productFilter[0].prixAchat;
+						
+						produitReception.taxeId = $scope.productFilter[0].idTaxe;
 
 
 					
@@ -2030,7 +2042,7 @@ angular
 								{
 									field: 'reference',
 									splayName: 'Réf.B Réception',
-									//	width : '15%'
+										width : '30%'
 								},
 								{
 									field: 'partieIntersseAbbreviation',
@@ -2063,24 +2075,24 @@ angular
 									field: 'prixTotal',
 									displayName: 'Montant HT',
 									cellFilter: 'prixFiltre',
-										width:'10%'
+										width:'5%'
 								},
 								{
 									field: 'montantTaxe',
 									displayName: 'Mont. Taxe',
 									cellFilter: 'prixFiltre',
-										width:'10%'
+										width:'5%'
 								},
 								{
 									field: 'montantTTC',
 									displayName: 'Montant TTC',
 									cellFilter: 'prixFiltre',
-										width:'10%'
+										width:'5%'
 								},
 
 								{
 									field: '',
-									//	width : '5%',
+										width : '5%',
 									cellTemplate:
 									`<div class="ms-CommandButton float-right"   >
 										<button class="ms-CommandButton-button ms-CommandButton-Gpro"  ng-click="modifierOuCreerReceptionAchat()">

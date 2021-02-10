@@ -23,4 +23,7 @@ public interface IDetFactureVentePersistance {
 	public DetFactureVenteValue getByFactureVenteAndProduit(
 			Long FactureVenteId, Long produitId, String choix);
 
+
+	public DetFactureVenteValue getByFactureVenteAndNumeroOF(Long factureVenteId, String numeroOF, String choix);
+
 }

@@ -9,15 +9,15 @@
 
 
 
-<div class="container-fluid" ng-controller="ElementReglementAchatController" style="background-color: #fff;">
+<div class="panel-body" ng-controller="ElementReglementAchatController" style="background-color: #fff;">
   <div class="row" ng-show="displayMode != 'edit'">
     <div class="col-sm-12">
-      <br />
-      <span class="ms-ListItem-primaryText">Crit&eacute;re de recherche</span>
-      <br />
+     
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Crit&eacute;re de recherche</span>
+   
 
       <div class="ms-CommandBar ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+<!--         <div class="ms-CommandBar-sideCommands">
           <div class="ms-SearchBox ms-SearchBox--commandBar">
             <input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
             <label class="ms-SearchBox-label">
@@ -50,7 +50,7 @@
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="downloadAllReglements(reglementCourante)">
@@ -71,7 +71,7 @@
               <span class="ms-CommandButton-label">Annuler</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+       <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
@@ -99,11 +99,11 @@
                 <i class="ms-Icon ms-Icon--Money"></i>
               </li>
             </ul>
-          </div>
+          </div> 
         </div>
       </div>
 
-      <div class="panel panel-primary">
+      <div class="panel panel-primary" style="margin-bottom:0%">
         <div class="panel-body">
           <form class="form-horizontal" name="rechercheReglementForm" id="rechercheReglementForm">
             <div class="row">
@@ -161,45 +161,7 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <label class="ms-Label input-group-text">
-                        Fournisseur</label>
-                    </div>
-                    <select ui-select2 ng-model="reglementCourante.partieIntId"
-                      ng-init="reglementCourante.partieIntId= ''" data-placeholder="" class="form-control "
-                      style="border: 1px solid #e5eaee !important;">
-                      <option value="">Tous</option>
-                      <option ng-repeat="pi in listePartieInteresseeCache | filter:{famillePartieInteressee:2}"
-                        value="{{pi.id}}">{{pi.reference}}-{{pi.abreviation}}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-
-
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <label class="ms-Label input-group-text"> Magasin</label>
-                    </div>
-                    <select ui-select2 ng-model="reglementCourante.idDepot" ng-init="reglementCourante.idDepot =''"
-                      data-placeholder="" class="form-control " style="border: 1px solid #e5eaee !important;">
-                      <option value="">Tous les Magasins</option>
-                      <option ng-repeat="magazin in listeMagazinCache" value="{{magazin.id}}">{{magazin.designation}}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-6" ng-controller="DatepickerDemoController">
+                     <div class="col-sm-4" ng-controller="DatepickerDemoController">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -220,7 +182,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-6" ng-controller="DatepickerDemoController">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -240,10 +202,48 @@
                   </div>
                 </div>
               </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Fournisseur</label>
+                    </div>
+                    <select ui-select2 ng-model="reglementCourante.partieIntId"
+                      ng-init="reglementCourante.partieIntId= ''" data-placeholder="" class="form-control "
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="pi in listePartieInteresseeCache | filter:{famillePartieInteressee:2}"
+                        value="{{pi.id}}">{{pi.reference}}-{{pi.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+
+            
             </div>
 
+            
+
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text"> Magasin</label>
+                    </div>
+                    <select ui-select2 ng-model="reglementCourante.idDepot" ng-init="reglementCourante.idDepot =''"
+                      data-placeholder="" class="form-control " style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Magasins</option>
+                      <option ng-repeat="magazin in listeMagazinCache" value="{{magazin.id}}">{{magazin.designation}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -257,7 +257,7 @@
 
 
               </div>
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -280,13 +280,13 @@
 
   <div class="row" ng-show="displayMode == 'edit'">
     <div class="col-md-12">
-      <br />
+    
 
-      <span class="ms-ListItem-primaryText">Det.R&eacute;glement</span>
-      <br />
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Det.R&eacute;glement</span>
+      
 
       <div class="ms-CommandBar ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+  <!--       <div class="ms-CommandBar-sideCommands">
           <div class="ms-SearchBox ms-SearchBox--commandBar">
             <input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
             <label class="ms-SearchBox-label">
@@ -319,7 +319,7 @@
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-disabled="!creationPartieInteressee.$valid;"
@@ -335,7 +335,7 @@
               <span class="ms-CommandButton-label">Retour</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+      <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
@@ -363,11 +363,11 @@
                 <i class="ms-Icon ms-Icon--Money"></i>
               </li>
             </ul>
-          </div>
+          </div> 
         </div>
       </div>
 
-      <div class="panel panel-primary">
+      <div class="panel panel-primary" style="margin-bottom:0%">
         <div class="panel-body">
           <form id="creationReglementForm" name="creationReglementForm">
             <div class="form-group">
@@ -612,7 +612,7 @@
       <div class="row">
         <div class="col-sm-6 BL_FACT_Reglement">
 
-          <span class="ms-ListItem-primaryText line"> Liste des BL</span>
+          <span class="ms-ListItem-primaryText line" style="font-size:130%"> Liste des BL</span>
 
 
 
@@ -669,7 +669,7 @@
 
         <div class="col-sm-6 BL_FACT_Reglement">
 
-          <span class="ms-ListItem-primaryText line">Liste des Factures</span>
+          <span class="ms-ListItem-primaryText line" style="font-size:130%">Liste des Factures</span>
 
 
           <div class="panel-body">
@@ -728,7 +728,7 @@
     <div class="col-md-12">
 
 
-      <span class="ms-ListItem-primaryText line">list Element R&eacute;glement</span>
+      <span class="ms-ListItem-primaryText line" style="font-size:130%">list Element R&eacute;glement</span>
       <div class="panel-body">
         <div class="form-group">
           <div class="row">
@@ -822,8 +822,8 @@
 
 
   <div class="row" ng-show="displayMode != 'edit'">
-    <div class="col-md-12">
-      <span class="ms-ListItem-primaryText line">Liste des details reglements</span>
+    <div class="col-md-12" style="margin-left:0.5%">
+      <span class="ms-ListItem-primaryText line" style="font-size:130%">Liste des details reglements</span>
       <div style="height: 500px;" ng-grid="gridOptions"></div>
     </div>
   </div>

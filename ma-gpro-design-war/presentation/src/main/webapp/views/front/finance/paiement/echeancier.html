@@ -1,22 +1,19 @@
-<div class="container-fluid" ng-controller="EcheancierController" style="background-color: #fff;">
+<div class="panel-body" ng-controller="EcheancierController" style="background-color: #fff;">
   <div class="row" ng-show="displayMode != 'edit'">
+    
     <div class="col-sm-12">
-      <br />
-    </div>
-    <div class="col-sm-12">
-      <br />
-
-      <span class="ms-ListItem-primaryText">Echeancier Client</span>
-      <br />
+    
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Echeancier Client</span>
+      
       <div class="ms-CommandBar ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+        <!-- <div class="ms-CommandBar-sideCommands">
           <div class="ms-CommandButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton" permission="['FC_Client_Paiement']">
             <button class="ms-CommandButton-button" ng-click="downloadAllecheanciers(echeancierCourant, 0)">
@@ -44,7 +41,7 @@
               <span class="ms-CommandButton-label">Annuler</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+          <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
@@ -76,7 +73,7 @@
         </div>
       </div>
 
-      <div class="panel panel-primary">
+      <div class="panel panel-primary" style="margin-bottom:0%">
         <div class="panel-body">
           <form class="form-horizontal" name="rechercheecheancierForm" id="rechercheecheancierForm">
             <div class="row">
@@ -119,25 +116,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-3">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text ms-Label">R&eacute;f. R&eacute;gl</label>
-                    </div>
-                    <select ui-select2 ng-model="echeancierCourant.reference" ng-init="echeancierCourant.reference =''"
-                      data-placeholder="..." class="form-control" style="border: 1px solid #e5eaee !important;">
-                      <option value="">Tous les Reglements</option>
-                      <option ng-repeat="refReg in listrefReglement" value="{{refReg.reference}}">{{refReg.reference}}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-3">
+                       <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -153,8 +132,10 @@
                   </div>
                 </div>
               </div>
+            </div>
 
-              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+            <div class="row">
+                  <div class="col-sm-4" ng-controller="DatepickerDemoController">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -176,7 +157,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -198,10 +179,28 @@
                   </div>
                 </div>
               </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">R&eacute;f. R&eacute;gl</label>
+                    </div>
+                    <select ui-select2 ng-model="echeancierCourant.reference" ng-init="echeancierCourant.reference =''"
+                      data-placeholder="..." class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Reglements</option>
+                      <option ng-repeat="refReg in listrefReglement" value="{{refReg.reference}}">{{refReg.reference}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+     
+
+        
             </div>
 
             <div class="row">
-              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -223,7 +222,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -245,7 +244,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3">
+              <div class="col-sm-4">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -260,7 +259,11 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3">
+           
+            </div>
+
+            <div class="row">
+               <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -271,9 +274,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div class="row">
               <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
@@ -311,7 +311,7 @@
                     </div>
                     <div class="input-group-prepend">
                       <div class="input-group-text">
-                        <label class="checkbox checkbox-square checkbox-primary"
+                        <label class="checkbox-sm checkbox-square checkbox-primary"
                           ng-model="partieInteresseeCourante.actif">
                           <input type="checkbox" ng-model="echeancierCourant.regle"
                             ng-init="echeancierCourant.regle=''" />
@@ -329,8 +329,8 @@
   </div>
 
   <div class="row" ng-show="displayMode != 'edit'">
-    <div class="col-md-12">
-      <div class="title-ajout line">Liste des Echeanciers</div>
+    <div class="col-md-12" style="margin-left:0.5%;">
+       <span class="ms-ListItem-primaryText line" style="font-size:130%">Liste des Echeanciers</span>
       <div style="height: 500px;" ng-grid="gridOptions"></div>
     </div>
   </div>

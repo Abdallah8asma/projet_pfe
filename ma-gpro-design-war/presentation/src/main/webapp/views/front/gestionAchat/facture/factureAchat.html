@@ -615,7 +615,9 @@
                       <span class="input-group-text"> Date Intro</span>
                     </div>
                     <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-                      ng-model="factureAchatCourant.date" is-open="opened" datepicker-options="dateOptions"
+                      ng-model="factureAchatCourant.date"
+                      ng-change="getCurrentReferenceByTypeAndDeclareAndDate('Normal',factureAchatCourant.declarer,factureAchatCourant.date)"
+                       is-open="opened" datepicker-options="dateOptions"
                       date-disabled="enabled(date, mode)" close-text="Close" />
 
                     <div class="input-group-append">
@@ -674,7 +676,10 @@
                       <div class="input-group-text">
                         <label class="checkbox checkbox-square checkbox-primary">
                           <input type="checkbox" class="form-control" ng-init="factureAchatCourant.declarer=''"
-              ng-model="factureAchatCourant.declarer" ng-change="getCurrentReferenceByType(factureAchatCourant.declarer)" 
+              ng-model="factureAchatCourant.declarer" 
+              
+               ng-change="getCurrentReferenceByTypeAndDeclareAndDate('Normal',factureAchatCourant.declarer,factureAchatCourant.date)"
+                      
               
               
               
@@ -763,8 +768,9 @@
 
 
 
-                    <th style="width: 20%">Ref.Article</th>
-                    <th style="width: 30%">Article</th>
+                    <th style="width: 15%">Ref.Article</th>
+                    <th style="width: 28%">Article</th>
+                     <th style="width: 7%">TVA</th>
                     <th style="width: 10%">Quantite</th>
                     <!-- <th style="width: 10%">Unité</th> -->
                     <th style="width: 10%">P.U.H.T</th>
@@ -775,12 +781,37 @@
                 </thead>
                 <tr ng-repeat="detFactureAchat in listDetFactureAchatPRBL">
                   <td>{{ detFactureAchat.produitReference || 'empty' }}</td>
-                 <td><input type="text" ng-model="detFactureAchat.produitDesignation"></td>
+                 <td><input type="text" class="form-control" ng-model="detFactureAchat.produitDesignation"></td>
              <!--     <td>{{ detFactureAchat.produitDesignation || 'empty' }}</td> -->
 
-                  <td>{{ detFactureAchat.quantite }}</td>
+               <!--    <td>{{ detFactureAchat.quantite }}</td>
 
-                  <td>{{ detFactureAchat.prixUnitaireHT }}</td>
+                  <td>{{ detFactureAchat.prixUnitaireHT }}</td> -->
+                  
+                  		<td>
+
+																<select ui-select2 ng-model="detFactureAchat.taxeId"
+																	 data-placeholder="..."
+																	style="width: 100%"  class="form-control ">
+																	<option ng-repeat="tax in ListeTaxe" value="{{tax.id}}">
+																		{{tax.designation}}
+																	</option>
+																</select>
+															</td>
+                  
+                  
+                  
+                    <td>
+                    <input type="number" class="form-control"
+                      ng-model="detFactureAchat.quantite"/>
+                  </td>
+                    <td>
+                    <input type="number" class="form-control"
+                      ng-model="detFactureAchat.prixUnitaireHT"/>
+                  </td>
+                  
+                  
+                  
                   <td>
                     <input type="text" class="form-control" ng-change="remiseChanged($index)"
                       ng-model="detFactureAchat.remise" placeholder="{{detFactureAchat.remise}}" />
@@ -794,50 +825,7 @@
       </div>
     </div>
 
-    <div ng-if="natureLivraison == 'FACON'" class="col-sm-12">
 
-      <span class="ms-ListItem-primaryText">Traitements Fa&ccedil;on</span>
-      <div class="panel panel-primary">
-        <div class="panel-body">
-          <div class="form-group">
-            <div class="row">
-
-              <div ng-show="modeValider == 'actif'" class="panel panel-primary">
-                <table class="table table-bordered table-hover table-condensed table-head-color">
-                  <thead>
-                    <tr style="font-weight: bold;">
-                      <th style="width: 20%">Ref.Article</th>
-                      <th style="width: 30%">Article</th>
-                      <th style="width: 10%">Quantite</th>
-                      <!-- <th style="width: 10%">Unité</th> -->
-                      <th style="width: 10%">P.U.H.T</th>
-                      <th style="width: 10%">Remise</th>
-                      <th style="width: 10%">P.T.H.T</th>
-                    </tr>
-                  </thead>
-                  <tr ng-repeat="detFactureAchat in listDetFactureAchatPRBL">
-                    <td>
-                      {{ detFactureAchat.designationTraitement || 'empty' }}
-                    </td>
-                    <td>{{ detFactureAchat.refMiseList || 'empty' }}</td>
-                    <td>{{ detFactureAchat.quantite || 'empty' }}</td>
-
-                    <td>{{ detFactureAchat.nombreColis || 'empty' }}</td>
-                    <td>{{ detFactureAchat.prixUnitaireHT || 'empty' }}</td>
-                    <td>
-
-                      <input type="text" class="form-control" ng-change="remiseChanged($index)"
-                        ng-model="detFactureAchat.remise" placeholder="{{detFactureAchat.remise}}" />
-                    </td>
-                    <td>{{ detFactureAchat.prixTotalHT | prixFiltre }}</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
    <div class="col-sm-12">
 

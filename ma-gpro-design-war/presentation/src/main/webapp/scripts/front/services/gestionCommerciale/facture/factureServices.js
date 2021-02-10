@@ -37,6 +37,23 @@ angular.module('atelier.factureServices', [])
 			            });
 	};
 	
+	
+	/***************** validate facture Fini By OF***************/
+	
+	that.validateFiniByOF =  function(listeBonLivraison,factureVenteId ){		
+		var deferred = $q.defer();
+		return $http.post(UrlAtelier+'/facture/validateByOF?factureVenteId='+factureVenteId, listeBonLivraison)
+					.then(function (response) {
+			                deferred.resolve(response.data);
+			                return deferred.promise;
+			            }, function (response) {
+			                // the following line rejects the promise
+			                deferred.reject(response);
+			                // promise is returned
+			                return deferred.promise;
+			            });
+	};
+	
 /****************** Supprimer livraison *************************/
 	
 	that.supprimerFacture =  function(id){		

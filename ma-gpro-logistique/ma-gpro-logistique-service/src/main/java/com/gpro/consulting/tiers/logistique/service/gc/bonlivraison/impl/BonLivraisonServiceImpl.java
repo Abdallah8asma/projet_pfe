@@ -129,5 +129,11 @@ public class BonLivraisonServiceImpl implements IBonLivraisonService{
 		// TODO Auto-generated method stub
 		return  bonLivraisonDomaine.getCurrentReferenceByType(type,instance,b);
 	}
+
+	@Override
+	public ListProduitElementValue getProduitElementListByOF(List<String> refBonLivraisonList, Long factureVenteId) {
+		
+		return bonLivraisonDomaine.getProduitElementListByOF(refBonLivraisonList, factureVenteId);
+	}
 	
 }

@@ -1,17 +1,17 @@
 
-<div ng-controller="MvtCaissseController" style="background-color: #fff;">
+<div class="panel-body" ng-controller="MvtCaissseController" style="background-color: #fff;">
   <div class="row" ng-show="displayMode != 'edit'">
     <div class="col-sm-12">
-      <div class="panel-body">
-        <br />
-
-        <span class="ms-ListItem-primaryText"
+      <div >
+      
+ 
+        <span class="ms-ListItem-primaryText" style="font-size:130%"
           >Crit&egrave;res de recherche</span
         >
-        <br />
+     
 
         <div class="ms-CommandBar ms-CommandBar--navBar">
-          <div class="ms-CommandBar-sideCommands">
+<!--           <div class="ms-CommandBar-sideCommands">
             <div class="ms-SearchBox ms-SearchBox--commandBar">
               <input
                 class="ms-SearchBox-field"
@@ -63,7 +63,7 @@
                 <span class="ms-CommandButton-label"></span>
               </button>
             </div>
-          </div>
+          </div> -->
           <div class="ms-CommandBar-mainArea">
             <div class="ms-CommandButton">
               <button
@@ -107,10 +107,10 @@
                 <span class="ms-CommandButton-label">Annuler</span>
               </button>
             </div>
-            <div
+             <div ng-hide="true"
               class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel"
             >
-              <button class="ms-CommandButton-button">
+             <button class="ms-CommandButton-button">
                 <span class="ms-CommandButton-icon"
                   ><i class="ms-Icon ms-Icon--More"></i
                 ></span>
@@ -143,12 +143,12 @@
                   <i class="ms-Icon ms-Icon--Money"></i>
                 </li>
               </ul>
-            </div>
+            </div> 
           </div>
         </div>
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" style="margin-bottom:0%">
           <div class="panel-body">
-            <form name="rechercheSSForm">
+            <form class="form-horizontal" name="rechercheSSForm">
               <div class="row">
                 <div class="col-sm-4">
                   <div class="form-group">
@@ -251,7 +251,7 @@
                 </div>
               </div>
 
-              <div class="row">&nbsp;</div>
+             <!--  <div class="row">&nbsp;</div> -->
               <div class="row">
                 <div class="col-sm-4">
                   <div class="form-group">
@@ -301,31 +301,31 @@
   </div>
 
   <div class="row" ng-show="displayMode != 'edit'">
-    <div class="panel-body">
-      <div class="col-md-12">
-        <span class="ms-ListItem-primaryText line">Liste des Caisse:</span>
-        <div style="height: 500px;" ng-grid="gridOptions"></div>
+ 
+      <div class="col-md-12" style="margin-left:0.5%">
+        <span class="ms-ListItem-primaryText line" style="font-size:130%">Liste des Caisse:</span>
+        <div panel-class="panel panel-primary"><div style="height: 500px;" ng-grid="gridOptions"></div>
       </div>
-    </div>
+   </div>
   </div>
 
   <div class="row" ng-show="displayMode == 'edit'">
-    <div class="col-sm-12">
-      <div class="panel-body">
-        <div class="title-ajout">
-          <br />
+    <div class="col-md-12">
+      
+       
+        
           <span class="ms-ListItem-secondaryText float-right font-italic">
             <b>Caisse</b>
           </span>
-          <span class="ms-ListItem-primaryText" ng-show="mode != 'actif'">
+          <span class="ms-ListItem-primaryText" ng-show="mode != 'actif'" style="font-size:130%">
             Cr&eacute;ation Caisse</span
           >
-          <span class="ms-ListItem-primaryText" ng-show="mode == 'actif'">
+          <span class="ms-ListItem-primaryText" ng-show="mode == 'actif'" style="font-size:130%">
             Modification Caisse</span
           >
-        </div>
+        
         <div class="ms-CommandBar ms-CommandBar--navBar">
-          <div class="ms-CommandBar-sideCommands">
+     <!--      <div class="ms-CommandBar-sideCommands">
             <div class="ms-CommandButton ms-CommandButton--noLabel">
               <button class="ms-CommandButton-button">
                 <span class="ms-CommandButton-icon ms-fontColor-themePrimary"
@@ -334,7 +334,7 @@
                 <span class="ms-CommandButton-label"></span>
               </button>
             </div>
-          </div>
+          </div> -->
           <div class="ms-CommandBar-mainArea">
             <div
               class="ms-CommandButton"
@@ -375,7 +375,7 @@
                 <span class="ms-CommandButton-label">Retour</span>
               </button>
             </div>
-            <div
+           <div ng-hide="true"
               class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel"
             >
               <button class="ms-CommandButton-button">
@@ -383,7 +383,7 @@
                   ><i class="ms-Icon ms-Icon--More"></i
                 ></span>
                 <span class="ms-CommandButton-label"></span>
-              </button>
+              </button> 
               <ul class="ms-ContextualMenu is-opened">
                 <li class="ms-ContextualMenu-item">
                   <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
@@ -416,7 +416,7 @@
         </div>
         <div class="panel panel-primary">
           <div class="panel-body">
-            <form name="creationSSForm">
+            <form class="form-horizontal" name="creationSSForm">
               <div class="row">
                 <div class="col-sm-4">
                   <div class="form-group">
@@ -531,7 +531,7 @@
             </form>
           </div>
         </div>
-      </div>
+     
     </div>
   </div>
   <div id="light" class="white_content">

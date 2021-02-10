@@ -17,6 +17,10 @@ angular
 		 function($scope, $filter, $http, $log, downloadService, UrlCommun, UrlAtelier, BonLivraisonServices,traitementFaconServices,$window,$rootScope) {
 			$log.info("=========Vente========");
 			
+				const CODE_ERROR_EDITION_BL_HAS_FACTURE = "CODE_ERROR_EDITION_BL_HAS_FACTURE";
+				const CODE_ERROR_EDITION_BL_HAS_BON_RETOUR = "CODE_ERROR_EDITION_BL_HAS_BON_RETOUR";
+							
+							
 			$scope.tagReferenceBSList = [];
 			
 			$scope.natureLivraison = "FINI";
@@ -35,6 +39,9 @@ angular
 					 "avecFacture": '',
 					 "devise":'2'
 				};
+				
+				 $scope.erreurUpdateBL = "false"; 
+							 $scope.msgErreurUpdateBL = ""; 
 
 				$scope.produitIdFinancier ="";
 
@@ -417,12 +424,14 @@ angular
 		
 		
 												$scope.produitInserree = {
-													//produitId :produitId,
+													produitId :produitId,
 													produitDesignation : element[0].reference,
 													produitReference : element[0].designation,
 													quantite : 1,
 													unite : '',
-													prixUnitaireHT : element[0].prixUnitaire
+													prixUnitaireHT : element[0].prixUnitaire,
+													choix: "1",
+													ficheId : 1,
 													//prixTotalHT : '',
 												//	nouveau :true,
 													//remise : ''
@@ -519,7 +528,11 @@ angular
 			 } 
 
 			 $scope.validerNatureFini = function(){
+				
+				
+				 $scope.validerNatureFiniByOF();
 				 
+				/*
 				 $log.debug("Log1: idBonLiv = " + $scope.idBonLivVente);
 					$scope.traitementEnCours = "true";
 				 
@@ -537,7 +550,7 @@ angular
 				 }
 				 ,function(error){
 					 console.log(error.statusText);
-				 });
+				 });*/
 			 }
 		
 		
@@ -1038,6 +1051,28 @@ angular
 				 $http.post(UrlAtelier+ "/bonlivraison/updateBonLivraison",bonLVente)
 				 .success(
 						 function(bonLVenteId) {
+							
+							
+							
+								/** Debut contraintes modification **/
+													if(bonLVenteId == CODE_ERROR_EDITION_BL_HAS_FACTURE){
+														$scope.msgErreurUpdateBL = "Une facture existe avec cette BL"; 
+														 $scope.erreurUpdateBL = "true"; 
+														 $scope.traitementEnCours = "false";
+														 
+														return;
+													}
+														
+												    if(bonLVenteId == CODE_ERROR_EDITION_BL_HAS_BON_RETOUR){
+												    	$scope.msgErreurUpdateBL = "Un Bon de retour exist avec cette BL"; 
+												    	 $scope.erreurUpdateBL = "true"; 
+												    	 $scope.traitementEnCours = "false";
+												    	return;
+													}
+							
+							
+							
+							
 
 							 for (var i = 0; i < $scope.myData.length; i++) {
 

@@ -166,9 +166,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 
 
 	@Override
-	public Long getNextNumfactureAvoirReference() {
-	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public Long getNextNumfactureAvoirReference(Calendar c) {
+	    int vAnneeCourante = c.get(Calendar.YEAR);
+	    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 	       Query vQuery = this.entityManager.createQuery(
 	      "select g.numReferenceAvoirCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 
@@ -192,9 +192,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 
 
 	@Override
-	public Long getNextNumfactureReference() {
-	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public Long getNextNumfactureReference(Calendar c) {
+	    int vAnneeCourante = c.get(Calendar.YEAR);
+	    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 	       Query vQuery = this.entityManager.createQuery(
 	      "select g.numReferenceFactureCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 
@@ -217,9 +217,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 
 
 	@Override
-	public Long getNextNumBonReceptionReference() {
-	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public Long getNextNumBonReceptionReference(Calendar c) {
+	    int vAnneeCourante = c.get(Calendar.YEAR);
+	    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 	       Query vQuery = this.entityManager.createQuery(
 	      "select g.numReferenceBonReceptionCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 
@@ -258,9 +258,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 	
 	
 	@Override
-	public String getPrefixBonReception() {
-	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public String getPrefixBonReception(Calendar c) {
+	    int vAnneeCourante = c.get(Calendar.YEAR);
+	    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 	       Query vQuery = this.entityManager.createQuery(
 	      "select g.prefixeBonReception from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 
@@ -272,9 +272,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 
 
 	@Override
-	public String getPrefixFacture() {
-	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public String getPrefixFacture(Calendar c) {
+	    int vAnneeCourante = c.get(Calendar.YEAR);
+	    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 	       Query vQuery = this.entityManager.createQuery(
 	      "select g.prefixeFacture from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 
@@ -286,9 +286,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 	
 
 	@Override
-	public String getPrefixFactureAvoir() {
-	    int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-	    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public String getPrefixFactureAvoir(Calendar c) {
+	    int vAnneeCourante = c.get(Calendar.YEAR);
+	    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 	       Query vQuery = this.entityManager.createQuery(
 	      "select g.prefixeAvoir from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 
@@ -311,9 +311,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 
 
 	@Override
-	public Long getNextNumBonReceptionReferenceNonDeclarer() {
-		   int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-		    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public Long getNextNumBonReceptionReferenceNonDeclarer(Calendar c) {
+		   int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 		       Query vQuery = this.entityManager.createQuery(
 		      "select g.numReferenceBonReceptionNonDeclarerCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 
@@ -325,9 +325,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 
 
 	@Override
-	public String getPrefixBonReceptionNonDeclarer() {
-		   int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-		    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public String getPrefixBonReceptionNonDeclarer(Calendar c) {
+		   int vAnneeCourante =c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 		       Query vQuery = this.entityManager.createQuery(
 		      "select g.prefixeBonReceptionNonDeclarer from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 
@@ -340,9 +340,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 
 
 	@Override
-	public Long getNextNumfactureAchatReferenceNondeclarer() {
-		   int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-		    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public Long getNextNumfactureAchatReferenceNondeclarer(Calendar c) {
+		   int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 		       Query vQuery = this.entityManager.createQuery(
 		      "select g.numReferenceFactureAchatNDCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 
@@ -355,9 +355,9 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 
 
 	@Override
-	public String getPrefixFactureAchatNondeclarer() {
-		   int vAnneeCourante = Calendar.getInstance().get(Calendar.YEAR);
-		    int vMoisCourant=(Calendar.getInstance().get(Calendar.MONTH)+1);
+	public String getPrefixFactureAchatNondeclarer(Calendar c) {
+		   int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
 		       Query vQuery = this.entityManager.createQuery(
 		      "select g.prefixeFactureAchatND from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
 

@@ -657,6 +657,10 @@ public class FactureDomaineImpl implements IFactureDomaine {
 			
 			if (detFactureVente.getRemise()==null)
 			detFactureVente.setRemise(0D);
+			
+			if(detFactureVente.getPrixTotalHT() == null)
+				detFactureVente.setPrixTotalHT(ZERO);
+			
 			Double totalApresRemise=detFactureVente.getPrixTotalHT()*(1-detFactureVente.getRemise()/100);
 			
 			

@@ -2434,4 +2434,247 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		return vNumBL.toString();
 	}
 
+	@Override
+	public ListProduitElementValue getProduitElementListByOF(List<String> refBonLivraisonList, Long factureVenteId) {
+
+
+		List<LivraisonVenteValue> listLivraisonVenteValue = bonLivraisonPersistance
+				.getProduitElementList(refBonLivraisonList);
+
+		List<DetLivraisonVenteValue> listDetLivraisonVente = new ArrayList<DetLivraisonVenteValue>();
+
+		ListProduitElementValue listProduitElementValue = new ListProduitElementValue();
+
+		if (listLivraisonVenteValue.size() > 0) {
+			listProduitElementValue.setPartieIntId(listLivraisonVenteValue.get(FIRST_INDEX).getPartieIntId());
+			listProduitElementValue.setDateLivrison(listLivraisonVenteValue.get(FIRST_INDEX).getDate());
+			// Added By Ghazi on 25/05/2018
+			listProduitElementValue.setIdMarche(listLivraisonVenteValue.get(FIRST_INDEX).getMarcheId());
+			listProduitElementValue.setIdDepot(listLivraisonVenteValue.get(FIRST_INDEX).getIdDepot());
+
+		}
+
+		for (LivraisonVenteValue livraisonVente : listLivraisonVenteValue) {
+
+			for (DetLivraisonVenteValue detLivraisonVente : livraisonVente.getListDetLivraisonVente()) {
+
+				listDetLivraisonVente.add(detLivraisonVente);
+			}
+		}
+
+		Map<Map<String, String>, List<DetLivraisonVenteValue>> mapDetLivraison = new HashMap<Map<String, String>, List<DetLivraisonVenteValue>>();
+
+		for (DetLivraisonVenteValue detail : listDetLivraisonVente) {
+			//Long produitKey = detail.getProduitId();
+			
+			String produitKey = detail.getNumeroOF();
+			String choixKey = detail.getChoix();
+
+			Map<String, String> map = new HashMap<String, String>();
+
+			map.put(produitKey, choixKey);
+
+			if (mapDetLivraison.get(map) == null) {
+
+				mapDetLivraison.put(map, new ArrayList<DetLivraisonVenteValue>());
+			}
+
+			mapDetLivraison.get(map).add(detail);
+		}
+
+		ProduitValue produitValue = null;
+
+		Iterator it = mapDetLivraison.entrySet().iterator();
+		List<DetFactureVenteValue> listDetFactureVente = new ArrayList<DetFactureVenteValue>();
+		while (it.hasNext()) {
+
+			Map.Entry<Map<String, String>, List<DetLivraisonVenteValue>> pair = (Map.Entry<Map<String, String>, List<DetLivraisonVenteValue>>) it
+					.next();
+
+			DetFactureVenteValue element = new DetFactureVenteValue();
+
+			//Long produitId = null;
+			String produitId = null;
+			String choix = null;
+
+			Map<String, String> produitIdchoixIdMap = pair.getKey();
+			Iterator produitIdchoixIt = produitIdchoixIdMap.entrySet().iterator();
+
+			Map.Entry<String, String> produitIdchoixPair = (Map.Entry<String, String>) produitIdchoixIt.next();
+			produitId = produitIdchoixPair.getKey();
+			choix = produitIdchoixPair.getValue();
+
+			//element.setProduitId(produitId);
+			
+			element.setNumeroOF(produitId);
+			element.setChoix(choix);
+			element.setFactureVenteId(factureVenteId);
+			// el
+			Double sommeQuantite = ZERO;
+			Long sommeNombreColis = ZERO_LONG;
+
+			String numeroSeries = "";
+			
+			List<String> refMiseList = new ArrayList<String>();
+
+			for (DetLivraisonVenteValue detail : pair.getValue()) {
+				
+				//ajuter par samer le 09.06.20 afin d'utiliser le meme ordre de saisie BL
+				element.setFicheId(detail.getFicheId());
+
+				if (detail.getQuantite() != null) {
+					sommeQuantite = detail.getQuantite() + sommeQuantite;
+				}
+
+				if (detail.getNombreColis() != null) {
+					sommeNombreColis = detail.getNombreColis() + sommeNombreColis;
+				}
+
+				if (detail.isSerialisable()) {
+					numeroSeries += detail.getNumeroSeries();
+					numeroSeries += "&";
+				}
+				
+				
+			/*	if(detail.getNumeroOF() != null)
+					
+					{
+					
+				
+					String[] arrayString =  StringUtils.split(detail.getNumeroOF(), ", ") ;
+					List<String> ofList =new ArrayList<String>(Arrays.asList(arrayString)) ;
+					
+					for(String ch : ofList) {
+						
+						if( !refMiseList.contains(ch)) 
+                         refMiseList.add(detail.getNumeroOF());
+
+					}
+			
+
+					}
+			*/
+				
+
+				// TODO ENRICHIR WITH INFO PROD SERIALISABLE
+				// TODO REMPLIR LIST PRODSERIALISABLE
+
+			}
+			
+		/*	if(refMiseList.size() > 0) {
+				
+				
+				  element.setNumeroOF(StringUtils.join(refMiseList, ", "));
+
+			}
+			*/
+
+			if (numeroSeries.length() > 0 && numeroSeries.charAt(numeroSeries.length() - 1) == '&') {
+				numeroSeries = numeroSeries.substring(0, numeroSeries.length() - 1);
+				element.setNumeroSeries(numeroSeries);
+				element.setProduitsSerialisable(getListProduitSerialisableParNumerSeries(numeroSeries,element.getProduitId()));
+			}
+
+			// TODO ENRICHIR WITH INFO PROD SERIALISABLE
+
+			element.setQuantite(sommeQuantite);
+			element.setNombreColis(sommeNombreColis);
+
+			if (pair.getValue().size() > 0) {
+
+				DetLivraisonVenteValue detail = pair.getValue().get(0);
+				if (detail != null) {
+					element.setUnite(detail.getUnite());
+					element.setRemise(detail.getRemise());
+					// TODO changed
+					element.setPrixUnitaireHT(detail.getPrixUnitaireHT());
+					
+					
+					element.setProduitId(detail.getProduitId());
+				}
+			}
+
+			if (element.getProduitId() != null) {
+				produitValue = produitService.rechercheProduitById(element.getProduitId());
+				if (produitValue != null) {
+
+					element.setSerialisable(produitValue.isSerialisable());
+					if (factureVenteId != null) {
+
+					/*	DetFactureVenteValue detFactureVenteValue = detFactureVentePersistance
+								.getByFactureVenteAndProduit(factureVenteId, element.getProduitId(),
+										element.getChoix());
+						*/
+						
+						DetFactureVenteValue detFactureVenteValue = detFactureVentePersistance
+								.getByFactureVenteAndNumeroOF(factureVenteId, element.getNumeroOF(),
+										element.getChoix());
+						
+						
+						
+						
+						
+
+						if (detFactureVenteValue != null) {
+							
+							//element.setFactureVenteId(detFactureVenteValue.getId());
+
+							element.setDescription(detFactureVenteValue.getDescription());
+
+							boolean detailIdNotExist = true;
+						/*	for (DetLivraisonVenteValue detail : listDetLivraisonVente) {
+								if (detail.getId() == detFactureVenteValue.getId())
+									detailIdNotExist = false;
+							}
+							*/
+
+							if (detailIdNotExist) {
+								element.setId(detFactureVenteValue.getId());
+								element.setRemise(detFactureVenteValue.getRemise());
+							}
+
+						}
+					}
+
+					element.setProduitDesignation(produitValue.getDesignation());
+					element.setProduitReference(produitValue.getReference());
+
+					/*** appel fonction rechercheMC prix special *****/
+
+					/******/
+					// TO O DO A changer
+					// Commented
+
+					if (element.getPrixUnitaireHT() == null && produitValue.getPrixUnitaire() != null)
+						element.setPrixUnitaireHT(produitValue.getPrixUnitaire());
+
+					if (element.getPrixUnitaireHT() != null && element.getQuantite() != null) {
+						element.setPrixTotalHT(element.getPrixUnitaireHT() * element.getQuantite());
+					}
+
+				}
+			}
+
+			element.setNombreColis(Long.valueOf(pair.getValue().size()));
+
+			listDetFactureVente.add(element);
+
+			it.remove();
+
+		}
+
+		if (listDetFactureVente.size() > 0) {
+		
+			//Collections.sort(listDetFactureVente, new DetFactureVenteValidateComparator());
+			//ajuter par samer le 09.06.20 afin d'utiliser le meme ordre de saisie BL
+			Collections.sort(listDetFactureVente, new DetFactureVenteValidateComparatorByOrdre());
+			
+		}
+
+		listProduitElementValue.setNombreResultaRechercher(listDetFactureVente.size());
+		listProduitElementValue.setListDetFactureVente(listDetFactureVente);
+
+		return listProduitElementValue;
+	}
+
 }

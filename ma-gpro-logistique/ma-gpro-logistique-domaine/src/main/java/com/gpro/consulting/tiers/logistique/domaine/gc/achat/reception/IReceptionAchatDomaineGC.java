@@ -89,4 +89,7 @@ public interface IReceptionAchatDomaineGC {
 	public String getCurrentReferenceMensuelByType(String type, Calendar instance, boolean b);
 
 	public List<BonReceptionVue> getListBonReceptionRefByFournisseurDeclarer(Long idFournisseur);
+
+	public ListProduitElementValue getProduitElementListWithoutRegroupement(List<String> refBonReceptionList,
+			Long factureAchatId);
 }

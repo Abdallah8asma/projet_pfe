@@ -432,12 +432,37 @@
 
 
 	<div class="row" ng-show="displayMode == 'edit'">
+	
+	  <div class="pull-right">
+			   <div  class="col-sm-12"  ng-show="erreurUpdateBL">
+            <div class="ms-MessageBar ms-MessageBar--error mx-auto float-left" style="width: 300px !important;">
+              <div class="ms-MessageBar-content">
+                <div class="ms-MessageBar-icon" ng-click="erreurUpdateBL = 'false'">
+                  <i class="ms-Icon ms-Icon--ErrorBadge"></i>
+                </div>
+                <div class="ms-MessageBar-text">
+                  <b>{{msgErreurUpdateBL}}</b>
+                  <br />
+                </div>
+              </div>
+            </div>
+          </div>
+			  </div>
+	
+	
 		<div class="col-md-12">
 
 
 			<br /> <span class="ms-ListItem-primaryText">Donn&eacute;es
 				G&eacute;n&eacute;rales</span>
 			<br />
+			
+			
+			
+			  
+			
+			
+			
 			<div class="lds-spinner" ng-show="traitementEnCours=='true'" ng-click="traitementEnCours ='false'"
 				style="padding-left:50%">
 				<div></div>
@@ -453,6 +478,17 @@
 				<div></div>
 				<div></div>
 			</div>
+			
+			
+			
+			
+			  
+			
+			
+			
+			
+			
+			
 			<div class="ms-CommandBar ms-CommandBar--navBar">
 				<div class="ms-CommandBar-sideCommands">
 
@@ -506,7 +542,7 @@
 
 
 
-							<li class="ms-ContextualMenu-item">
+						<!-- 	<li class="ms-ContextualMenu-item">
 
 
 								<div class="row">
@@ -520,7 +556,7 @@
 								</div>
 
 
-							</li>
+							</li> -->
 
 
 
@@ -658,7 +694,7 @@
 							</div>
 						</div>
 
-						<div class="col-sm-2">
+					<!-- 	<div class="col-sm-2">
 							<div class="form-group">
 								<div class="input-group">
 									<div class="input-group-prepend">
@@ -669,7 +705,7 @@
 
 								</div>
 							</div>
-						</div>
+						</div> -->
 
 
 						<div class="col-sm-2">

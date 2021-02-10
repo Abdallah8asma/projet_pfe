@@ -88,6 +88,16 @@ angular
 				
 					
 				}
+				
+				
+								   // Liste des Taxes
+  	 $scope.ListeTaxe = function () {
+        $http.get(UrlAtelier + '/taxe/getTVA').success(function (dataTaxe) {
+          $scope.ListeTaxe = dataTaxe;
+        });
+      };
+
+      $scope.ListeTaxe();
 
 				$scope.initTaxeRemoved = function () {
 					if ($scope.natureLivraison == "FINI") {
@@ -853,20 +863,16 @@ angular
 						.copy(factureAchat)
 						: {};
 						$scope.factureAchatCourant.declarer=true;
+						$scope.factureAchatCourant.date=new Date();
+						
+						
 						var type =true;
+						
+						
+						$scope.getCurrentReferenceByTypeAndDeclareAndDate('Normal',$scope.factureAchatCourant.declarer,$scope.factureAchatCourant.date);
 					
 					
-					$http
-						.get(
-							UrlAtelier
-							+ "/factureAchat/getCurrentReferenceMensuelDeclarer:Normal:"+type
-						)
-						.success(
-							function (res) {
-								$scope.factureAchatCourant.reference = res;
-								$scope.factureAchatCourant.refAvantChangement = res;
-
-							});
+				
 
 
 					// mode edit activé
@@ -875,7 +881,7 @@ angular
 				}
 
 
-				$scope.getCurrentReferenceByType  = function (declarer) {
+				$scope.getCurrentReferenceByTypeAndDeclareAndDate  = function (typeFacture,declarer,date) {
 					
 					var type ="";
 					
@@ -894,7 +900,7 @@ angular
 							$http
 						.get(
 							UrlAtelier
-							+ "/factureAchat/getCurrentReferenceMensuelDeclarer:Normal:"+type
+							+ "/factureAchat/getCurrentReferenceMensuelByTypeAndDeclareAndDate:"+typeFacture +":"+type+":"+formattedDate(date)
 						)
 						.success(
 							function (res) {
@@ -979,6 +985,10 @@ angular
 								// correspendants à ce bon
 								// de Achat
 								$scope.listDetFactureAchatPRBL = [];
+								
+								
+								if(datagetFactureAchat.listDetFactureAchat != null)
+								     $scope.listDetFactureAchatPRBL = datagetFactureAchat.listDetFactureAchat ;
 
 								// bouton Valider en mode :
 								// Actif :afficher le
@@ -986,88 +996,9 @@ angular
 								// DetLivVene
 								$scope.modeValider = "actif";
 
-								if ($scope.natureLivraison == "FINI") {
+							
 
-									var urlValider = UrlAtelier
-										+ "/factureAchat/validate?factureAchatId="
-										+ $scope.idFactureAchat;
-									$log
-										.error("-**- URL : "
-											+ urlValider
-											+ " RefBLiv "
-											+ $scope.tagReferenceBLivList);
-									// Invocation du service
-									// Validate qui nous
-									// recupere la liste des
-									// ProduitBL.
-									$http
-										.post(
-											urlValider,
-											$scope.tagReferenceBLivList)
-										.success(
-											function (
-												resultat) {
-
-												$log
-													.debug("-%%%- resultat.listDetFactureAchat : "
-														+ JSON
-															.stringify(
-																resultat.listDetFactureAchat,
-																null,
-																"    "));
-												// listDetFactureAchat
-												$scope.listDetFactureAchatPRBL = resultat.listDetFactureAchat;
-												$log
-													.debug("-%%%- listDetFactureAchatPRBL : "
-														+ JSON
-															.stringify(
-																$scope.listDetFactureAchatPRBL,
-																null,
-																"    "));
-												$scope.myData[index].listDetFactureAchat = $scope.listDetFactureAchatPRBL;
-											});
-
-								} else {
-									angular
-										.forEach(
-											datagetFactureAchat.listDetFactureAchat,
-											function (
-												elementDetFacture,
-												value) {
-
-												var ligneTraitement = [];
-												// Filter
-												// retourne
-												// un
-												// résultat
-												// de
-												// type
-												// []
-												ligneTraitement = $filter(
-													'filter')
-													(
-														$scope.listeTraitementFacon,
-														{
-															id: elementDetFacture.traitementFaconId
-														});
-												elementDetFacture.designationTraitement = ligneTraitement[0].designation;
-												$scope.listDetFactureAchatPRBL
-													.push(elementDetFacture);
-											})
-
-									$log
-										.debug("-%%%- listDetFactureAchatPRBL : "
-											+ JSON
-												.stringify(
-													$scope.listDetFactureAchatPRBL,
-													null,
-													"    "));
-
-								}
-
-								$log
-									.debug("---nature livraison ----"
-										+ $scope.natureLivraison);
+							
 								$scope.listTaxeFacture = datagetFactureAchat.listTaxeFacture;
 								$scope.listDocFactureAchat = datagetFactureAchat.listDocFactureAchat;
 
@@ -1164,11 +1095,9 @@ angular
 						+ "/factureAchat/validate?factureAchatId="
 						+ factureAchat.id;
 					$log.debug("--------URL Update " + urlValider);
-					$http
-						.post(urlValider,
-							$scope.tagReferenceBLivList)
-						.success(
-							function (resultat) {
+					
+					
+					
 								// bouton Valider en mode :
 								// Actif :afficher le
 								// tableau resultant de
@@ -1176,8 +1105,7 @@ angular
 								$scope.modeValider = "actif";
 							
 								// listDetFactureAchat
-								$scope.listDetFactureAchatPRBL = resultat.listDetFactureAchat;
-							
+							//	$scope.listDetFactureAchatPRBL = resultat.listDetFactureAchat;
 							
 								factureAchat.listDetFactureAchat = $scope.listDetFactureAchatPRBL;
 								factureAchat.listDocFactureAchat = $scope.listDocFactureAchat;
@@ -1209,6 +1137,8 @@ angular
 
 											$log
 												.debug("success Modification ");
+												
+												
 											/*for (var i = 0; i < $scope.myData.length; i++) {
 			
 												if ($scope.myData[i].id == factureAchatId) {
@@ -1249,35 +1179,6 @@ angular
 															: {};
 
 
-														if ($scope.natureLivraison == "FACON") {
-															$scope.listDetFactureAchatPRBL = [];
-															angular
-																.forEach(
-																	$scope.factureAchatCourant.listDetFactureAchat,
-																	function (
-																		elementDetFacture,
-																		value) {
-
-																		var ligneTraitement = [];
-																		// Filter
-																		// retourne
-																		// un
-																		// résultat
-																		// de
-																		// type
-																		// []
-																		ligneTraitement = $filter(
-																			'filter')
-																			(
-																				$scope.listeTraitementFacon,
-																				{
-																					id: elementDetFacture.traitementFaconId
-																				});
-																		elementDetFacture.designationTraitement = ligneTraitement[0].designation;
-																		$scope.listDetFactureAchatPRBL
-																			.push(elementDetFacture);
-																	})
-														}
 														// Initialiser
 														// le
 														// filtre
@@ -1312,52 +1213,19 @@ angular
 
 
 
-
-
-
-							});
-
-
-
 				}
 
 				// Création FactureAchat
 				$scope.creerFactureAchat = function (factureAchat) {
 
-
 					$scope.traitementEnCours = "true";
-
-					// $log.debug("-----natureLivraison --------" +
-					// $scope.natureLivraison );
-
-					// affectation des listes à l'objet
-					// 'factureAchat' pour le creer
-					// $log.debug("-------- listDetFactureAchatPRBL
-					// :" );
-					// $log.debug(JSON.stringify($scope.listDetFactureAchatPRBL,
-					// null, " ") );
-
-					// $log.debug("======== AVANT :" );
-					// $log.debug("factureAchat.listDetFactureAchat
-					// :
-					// "+JSON.stringify(factureAchat.listDetFactureAchat,
-					// null, " ") );
-
+				
 					factureAchat.listDetFactureAchat = $scope.listDetFactureAchatPRBL;
 					factureAchat.listDocFactureAchat = $scope.listDocFactureAchat;
-
-					// $log.debug("======== APRES :" );
-					// $log.debug("listDetFactureAchatPRBL :
-					// "+JSON.stringify(factureAchat.listDetFactureAchat,
-					// null, " ") );
+				
 
 					factureAchat.listTaxeFacture = $scope.listTaxeFactureInit;
-					// tagReferenceBLivList va contenir les
-					// referencesBS selectionnées, puis cette liste
-					// va etre affectée au champ : infoLivraison
-					// sous la forme de ref1-ref2-..
-					// $log.debug("Join
-					// "+$scope.tagReferenceBLivList.join('-'));
+				
 					factureAchat.infoLivraison = $scope.tagReferenceBLivList
 						.join('-');
 					factureAchat.infoLivraisonExterne = $scope.tagReferenceBLivListExterne
@@ -1413,6 +1281,8 @@ angular
 											// getTableaux
 											$scope.listTaxeFacture = dataGetFactureAchat.listTaxeFacture;
 											$scope.listDocFactureAchat = dataGetFactureAchat.listDocFactureAchat;
+											$scope.listDetFactureAchatPRBL = dataGetFactureAchat.listDetFactureAchat;
+											
 
 											// Attributs
 											// de
@@ -1420,131 +1290,22 @@ angular
 											$scope.factureAchatCourant = dataGetFactureAchat ? angular
 												.copy(dataGetFactureAchat)
 												: {};
-											$log
-												.debug("get factureAchat : "
-													+ JSON
-														.stringify(
-															$scope.factureAchatCourant,
-															null,
-															"  "));
+										
 											$scope.listDetFactureAchatPRBL = [];
-
-											if ($scope.natureLivraison == "FACON") {
-
-												angular
-													.forEach(
-														$scope.factureAchatCourant.listDetFactureAchat,
-														function (
-															elementDetFacture,
-															value) {
-
-															var ligneTraitement = [];
-															// Filter
-															// retourne
-															// un
-															// résultat
-															// de
-															// type
-															// []
-															ligneTraitement = $filter(
-																'filter')
-																(
-																	$scope.listeTraitementFacon,
-																	{
-																		id: elementDetFacture.traitementFaconId
-																	});
-															elementDetFacture.designationTraitement = ligneTraitement[0].designation;
-															$scope.listDetFactureAchatPRBL
-																.push(elementDetFacture);
-														})
-											} else {
-												// init
-												// du
-												// champ
-												// tagReferenceBLivList,
-												$log
-													.debug("-- infoLivraison "
-														+ factureAchat.infoLivraison);
-												// recuperation
-												// des
-												// refBS
-												// sous
-												// le
-												// format
-												// X-Y-Z
+											$scope.listDetFactureAchatPRBL = dataGetFactureAchat.listDetFactureAchat;
+											
+											
+												
 												var refBS = factureAchat.infoLivraison
 													.split("-");
 												var refBSExterne = factureAchat.infoLivraisonExterne
 													.split("-");
-												// affectation
-												// des
-												// references
-												// à la
-												// liste
-												// sous
-												// le
-												// format
-												// X,Y,Z
+											
 												$scope.tagReferenceBLivList = refBS;
 												$scope.tagReferenceBLivListExterne = refBSExterne;
-												// Liste
-												// des
-												// TaxeLivraisonAchat
-												// (pour
-												// la
-												// table
-												// Taxe)
-												// &
-												// detailsLivraisonAchat
-												// (
-												// pour
-												// la
-												// table
-												// Produit
-												// )
-												// correspendants
-												// à ce
-												// bon
-												// de
-												// Achat
-												var urlValider = UrlAtelier
-													+ "/factureAchat/validate?factureAchatId="
-													+ factureAchatId;
-												$log
-													.debug("--------URL Create "
-														+ urlValider);
-												$http
-													.post(
-														urlValider,
-														$scope.tagReferenceBLivList)
-													.success(
-														function (
-															resultat) {
-															// bouton
-															// Valider
-															// en
-															// mode
-															// :
-															// Actif
-															// :afficher
-															// le
-															// tableau
-															// resultant
-															// de
-															// DetLivVene
-															$scope.modeValider = "actif";
-															// listDetFactureAchat
-															$scope.listDetFactureAchatPRBL = resultat.listDetFactureAchat;
-														});
-												$log
-													.debug("OLD------ listDetFactureAchatPRBL :");
-												$log
-													.debug(JSON
-														.stringify(
-															$scope.listDetFactureAchatPRBL,
-															null,
-															"    "));
-											}
+												
+												
+
 
 											// Initialiser
 											// le

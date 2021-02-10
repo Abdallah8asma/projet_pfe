@@ -510,10 +510,37 @@ angular
 					// $log.debug("Log1: idBonLiv = " + $scope.idFactureVente);
 
 
+$scope.validerNatureFiniByOF();
+
+					// if($scope.idFactureVente!=null)
+				/*	FactureServices.validateFini($scope.tagReferenceBLivList, $scope.idFactureVente).then(function (resultat) {
+						// bouton Valider en mode : Actif :afficher le tableau
+						// resultant de DetLivVene
+						$scope.modeValider = "actif";
+						// setDateInto = dateSortie du 1erBS
+						// $scope.factureVenteCourant.date = resultat.dateLivrison;
+						$scope.factureVenteCourant.idMarche = resultat.idMarche;
+						$scope.factureVenteCourant.idDepot = resultat.idDepot;
+
+						// listDetFactureVente
+						$scope.listDetFactureVentePRBL = resultat.listDetFactureVente;
+						$log.debug("-- listDetFactureVentePRBL : " + JSON.stringify($scope.listDetFactureVentePRBL, null, "    "));
+
+					}
+						, function (error) {
+							console.log(error.statusText);
+						});*/
+				}
+				
+					$scope.validerNatureFiniByOF = function () {
+
+					// $log.debug("Log1: idBonLiv = " + $scope.idFactureVente);
+
+
 
 
 					// if($scope.idFactureVente!=null)
-					FactureServices.validateFini($scope.tagReferenceBLivList, $scope.idFactureVente).then(function (resultat) {
+					FactureServices.validateFiniByOF($scope.tagReferenceBLivList, $scope.idFactureVente).then(function (resultat) {
 						// bouton Valider en mode : Actif :afficher le tableau
 						// resultant de DetLivVene
 						$scope.modeValider = "actif";
@@ -1029,7 +1056,14 @@ angular
 
 				}
 
+	        $scope.validerBLByOF = function () {
 
+
+					$scope.validerNatureFiniByOF();
+
+					
+
+				}
 
 
 
@@ -1439,7 +1473,7 @@ angular
 								// table Taxe) & detailsLivraisonVente (
 								// pour la table Produit )
 								// correspendants à ce bon de vente
-								$scope.listDetFactureVentePRBL = [];
+								$scope.listDetFactureVentePRBL = datagetFactureVente.listDetFactureVente;
 
 								// bouton Valider en mode : Actif :afficher
 								// le tableau resultant de DetLivVene
@@ -1447,7 +1481,9 @@ angular
 
 
 
-								if ($scope.natureLivraison == "FINI") {
+
+
+							/*	if ($scope.natureLivraison == "FINI") {
 
 
 									var urlValider = UrlAtelier + "/facture/validate?factureVenteId=" + $scope.idFactureVente;
@@ -1479,7 +1515,7 @@ angular
 
 									$log.debug("-%%%- listDetFactureVentePRBL : " + JSON.stringify($scope.listDetFactureVentePRBL, null, "    "));
 
-								}
+								}*/
 
 								$log.debug("---nature livraison ----" + $scope.natureLivraison);
 								$scope.listTaxeFacture = datagetFactureVente.listTaxeFacture;
@@ -1626,14 +1662,15 @@ angular
 					// Liste des TaxeLivraisonVente (pour la table Taxe) &
 					// detailsLivraisonVente ( pour la table Produit )
 					// correspendants à ce bon de vente
-					$log.debug("-- tagReferenceBLivList " + JSON.stringify($scope.tagReferenceBLivList));
+				
+				/*	$log.debug("-- tagReferenceBLivList " + JSON.stringify($scope.tagReferenceBLivList));
 
 					var urlValider = UrlAtelier + "/facture/validate?factureVenteId=" + factureVente.id;
 					$log.debug("--------URL Update " + urlValider);
 					$http
 						.post(urlValider, $scope.tagReferenceBLivList)
 						.success(
-							function (resultat) {
+							function (resultat) { */
 
 								$scope.traitementEnCours = "false";
 
@@ -1642,10 +1679,10 @@ angular
 								// tableau resultant de DetLivVene
 								$scope.modeValider = "actif";
 								// listDetFactureVente
-								$scope.listDetFactureVentePRBL = resultat.listDetFactureVente;
+								//$scope.listDetFactureVentePRBL = resultat.listDetFactureVente;
 
 
-
+                                $scope.listDetFactureVentePRBL = $scope.listDetFactureVentePRBL;
 
 
 								//DEBUT UPDATE FACTURE
@@ -1777,7 +1814,7 @@ angular
 
 
 
-							});
+							//});
 
 
 
@@ -2896,8 +2933,8 @@ angular
 									 $scope.ajoutProduit = function(produitId) {
 
 
-										console.log("call ajoutProduit");
-										console.log("produitId=",produitId);
+										//console.log("call ajoutProduit");
+										//console.log("produitId=",produitId);
 									
 
 										if(produitId!=null){
@@ -2908,11 +2945,13 @@ angular
 		
 		
 												$scope.produitInserree = {
-													//produitId :produitId,
+													produitId :produitId,
 													produitDesignation : element[0].reference,
 													produitReference : element[0].designation,
 													quantite : 1,
 													unite : '',
+													choix: "1",
+													ficheId : 1,
 													prixUnitaireHT : element[0].prixUnitaire
 													//prixTotalHT : '',
 												//	nouveau :true,

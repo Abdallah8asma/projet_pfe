@@ -5,6 +5,20 @@
     new fabric['SearchBox'](SearchBoxElements[i]);
   }
 
+
+
+  
+  var PanelExamples = document.getElementsByClassName("ms-PanelExample");
+  for (var i = 0; i < PanelExamples.length; i++) {
+    (function() {
+      var PanelExampleButton = PanelExamples[i].querySelector(".ms-Button");
+      var PanelExamplePanel = PanelExamples[i].querySelector(".ms-Panel");
+      PanelExampleButton.addEventListener("click", function(i) {
+        new fabric['Panel'](PanelExamplePanel);
+      });
+    }());
+  }
+
 </script>
 
 <style>
@@ -15,18 +29,18 @@
   }
 </style>
 
-<div class="container-fluid" ng-controller="ReglementController" style="background-color: #fff;">
+<div ng-controller="ReglementController" style="background-color: #fff;">
 
-  <div class="row" ng-show="displayMode != 'edit'">
+  <div class="row panel-body" ng-show="displayMode != 'edit'">
 
     <div class="col-sm-12">
-
-      <br />
-      <span class="ms-ListItem-primaryText">Crit&eacute;re de Recherche</span>
-      <br />
+    
+     
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Crit&eacute;re de Recherche</span>
+      
 
       <div class="ms-CommandBar ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+<!--         <div class="ms-CommandBar-sideCommands">
           <div class="ms-SearchBox ms-SearchBox--commandBar">
             <input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
             <label class="ms-SearchBox-label">
@@ -59,7 +73,7 @@
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="AffectationReglement(reglementCourante)">
@@ -87,8 +101,8 @@
               <span class="ms-CommandButton-label">Annuler</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
-            <button class="ms-CommandButton-button">
+        <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+       <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
             </button>
@@ -115,11 +129,11 @@
                 <i class="ms-Icon ms-Icon--Money"></i>
               </li>
             </ul>
-          </div>
+          </div> 
         </div>
       </div>
 
-      <div class="panel panel-primary">
+      <div class="panel panel-primary" style="margin-bottom:0%">
         <div class="panel-body">
           <form class="form-horizontal" name="rechercheReglementForm" id="rechercheReglementForm">
             <div class="row">
@@ -250,16 +264,15 @@
     </div>
   </div>
 
-  <div class="row" ng-show="displayMode == 'edit'">
+  <div class="row panel-body" ng-show="displayMode == 'edit'">
 
     <div class="col-md-12">
 
-      <br />
-      <span class="ms-ListItem-primaryText">R&eacute;glement</span>
-      <br />
-
+  
+      <span class="ms-ListItem-primaryText" style="font-size:130%">R&eacute;glement</span>
+      
       <div class="ms-CommandBar ms-CommandBar--navBar">
-        <div class="ms-CommandBar-sideCommands">
+<!--         <div class="ms-CommandBar-sideCommands">
           <div class="ms-SearchBox ms-SearchBox--commandBar">
             <input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
             <label class="ms-SearchBox-label">
@@ -292,10 +305,10 @@
               <span class="ms-CommandButton-label"></span>
             </button>
           </div>
-        </div>
+        </div> -->
         <div class="ms-CommandBar-mainArea">
           <div class="ms-CommandButton" permission="['FC_Reglement_Edit']">
-            <button class="ms-CommandButton-button" ng-click="sauvegarderAjout(reglementCourante)">
+            <button class="ms-CommandButton-button" ng-click="sauvegarderAjout(reglementCourante)" ng-disabled="!creationReglementForm.$valid">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span>
               <span class="ms-CommandButton-label">Enregistrer</span>
             </button>
@@ -314,11 +327,11 @@
               <span class="ms-CommandButton-label">Retour</span>
             </button>
           </div>
-          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+           <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
             <button class="ms-CommandButton-button">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
               <span class="ms-CommandButton-label"></span>
-            </button>
+            </button> 
             <ul class="ms-ContextualMenu is-opened">
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
@@ -374,7 +387,7 @@
                     </div>
                     <select ui-select2 ng-model="reglementCourante.partieIntId"
                       ng-init="reglementCourante.partieIntId =''" data-placeholder="..." class="form-control"
-                      style="border: 1px solid #e5eaee !important;">
+                      style="border: 1px solid #e5eaee !important;" required>
                       <option value="">Tous</option>
                       <option ng-repeat="pi in listePartieInteresseeCache | filter:{famillePartieInteressee:1}"
                         value="{{pi.id}}">{{pi.reference}}-{{pi.abreviation}}</option>
@@ -384,7 +397,7 @@
                           color: rgb(54, 153, 255);
                           background-color: rgb(225, 240, 255);
                         " ng-click="Valider(reglementCourante.partieIntId)"
-                        ng-disabled="disableValider || isEnCoursValider" type="button">
+                        ng-disabled="disableValider || isEnCoursValider || !creationReglementForm.$valid" type="button">
                         Valider
                       </button>
                     </div>
@@ -402,7 +415,7 @@
                   <div class="input-group">
 
                     <div class="input-group-prepend">
-
+                    <span class="input-group-text">Date</span>
                     </div>
                     <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
                       ng-init="reglementCourante.date =''" ng-model="reglementCourante.date" is-open="opened"
@@ -451,11 +464,11 @@
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <span class="input-group-text">Client</span>
+                      <span class="input-group-text">Groupe</span>
                     </div>
                     <select ui-select2 ng-model="reglementCourante.groupeClientId"
                       ng-init="reglementCourante.groupeClientId =''" data-placeholder="..." class="form-control"
-                      style="border: 1px solid #e5eaee !important;">
+                      style="border: 1px solid #e5eaee !important;" required>
                       <option value="">Tous les Groupes</option>
                       <option ng-repeat="pi in listGroupeClient" value="{{pi.id}}">{{pi.designation}}</option>
                     </select>
@@ -464,7 +477,7 @@
                           color: rgb(54, 153, 255);
                           background-color: rgb(225, 240, 255);
                         " ng-click="ValiderGroupeClient(reglementCourante.groupeClientId)"
-                        ng-disabled="disableValider || isEnCoursValider" type="button">
+                        ng-disabled="disableValider || isEnCoursValider || !creationReglementForm.$valid" type="button">
                         Valider
                       </button>
                     </div>
@@ -534,9 +547,9 @@
 
 
         <br />
-        <span class="ms-ListItem-primaryText">D&eacute;tails R&eacute;glement</span>
+        <span class="ms-ListItem-primaryText line" style="font-size:130%">D&eacute;tails R&eacute;glement</span>
 
-        <div class="panel-body" ng-show="!isEnCoursValider">
+        <div class="col-md-12" ng-show="!isEnCoursValider">
           <div class="row">
             <table class="table table-bordered table-condensed table-head-color">
               <thead>
@@ -664,7 +677,7 @@
 
             <div class="title-ajout row">
               <div class="col-sm-7">
-                <span class="ms-ListItem-primaryText ms-Item-Gpro">
+                <span class="ms-ListItem-primaryText ms-Item-Gpro" style="font-size:130%">
                   Liste des BL</span>
               </div>
               <div class="col-sm-4 pull-right" style="top: 25px !important;">
@@ -730,7 +743,7 @@
 
             <div class="title-ajout row">
               <div class="col-sm-7">
-                <span class="ms-ListItem-primaryText ms-Item-Gpro">Liste des Factures</span>
+                <span class="ms-ListItem-primaryText ms-Item-Gpro" style="font-size:130%">Liste des Factures</span>
               </div>
               <div class="col-sm-4 pull-right" style="top: 25px !important;">
                 <div class="ms-SearchBox">
@@ -894,6 +907,15 @@
                           <i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro">
                           </i>
                         </button>
+
+
+                        <button data-nodrag class="btn " ng-click="showPanelDetailBlorFacture(item,$index)">
+                          <i class="ms-Icon ms-Icon--AlignCenter ms-Icon-Gpro">
+                          </i>
+                        </button>
+
+
+
                       </td>
                     </tr>
                   </tbody>
@@ -907,17 +929,97 @@
       </div>
     </div>
 
+
+    <div class="ms-PanelExample" >
+      <button class="ms-Button"  id="btnPanelShowDetailBLorFacture" ng-hide="true">
+        <span class="ms-Button-label"></span> 
+      </button>
+      <div class="ms-Panel ms-Panel--xxl" style="margin-top:150px;">
+        <button class="ms-Panel-closeButton ms-PanelAction-close">
+          <i class="ms-Panel-closeIcon ms-Icon ms-Icon--Cancel"></i>
+        </button>
+        <div class="ms-Panel-contentInner">
+          <p class="ms-Panel-headerText">{{currentFactureOrBl.reference}}</p>
+
+     <!--      <div class="ms-CommandButton" permission="['Article_Edit']">
+            <button class="ms-CommandButton-button"
+              ng-click="sauvegarderAjoutProduit(produitCourante,false)">
+              <span class="ms-CommandButton-icon"><i
+                class="ms-Icon ms-Icon--Save"></i></span> <span
+                class="ms-CommandButton-label">Enregistrer</span>
+            </button>
+          </div> -->
+
+          <br />
+          <br />
+
+
+          <div class="ms-Panel-content">
+         <!--    <span class="ms-font-m">Content goes here</span> --> 
+
+         <table class="table table-bordered table-hover table-condensed table-head-color"
+        >
+         <thead>
+           <tr style="font-weight: bold;">
+
+
+
+             <th style="width: 20%">Ref.Article</th>
+             <th style="width: 30%">Article</th>
+          
+             <th style="width: 7%">Quantite</th>
+             <!-- 			<th style="width: 10%">Unité</th> -->
+             <th style="width: 8%">P.U.H.T</th>
+             <th style="width: 7%">Remise</th>
+             <th style="width: 9%">P.T.H.T</th>
+
+             <th style="width: 9%">P.T.T.T.C</th>
+
+
+           </tr>
+         </thead>
+         <tr ng-repeat="detFactureVente in currentFactureOrBl.detail">
+           <td>{{ detFactureVente.produitReference || 'empty' }}</td>
+           <td>{{ detFactureVente.produitDesignation || 'empty' }}</td>
+           
+           <td>{{ detFactureVente.quantite }}</td>
+
+           <td>{{ detFactureVente.prixUnitaireHT }}</td>
+           <td>
+             <input type="number" class="form-control" ng-change="remiseChanged($index)"
+               ng-model="detFactureVente.remise" placeholder="{{detFactureVente.remise}}"  disabled/>
+           </td>
+           <td>{{ detFactureVente.prixTotalHT | prixFiltre }}</td>
+
+           <td ng-show="currentFactureOrBl.type == 'BL'">{{ detFactureVente.quantite * detFactureVente.prixTTC   | prixFiltre }}</td>
+
+           <td ng-show="currentFactureOrBl.type == 'Facture'">{{ detFactureVente.quantite * calculerPUTTC(detFactureVente.prixUnitaireHT,detFactureVente.taxeId) | prixFiltre}}</td>
+
+         </tr>
+       </table>
+     
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
     <div class="col-md-12">
 
       <!-- Documents -->
       <!-- <div class="title-ajout">Documents</div> -->
 
       <br />
-      <span class="ms-ListItem-primaryText ligne">Documents</span>
-      <br />
-      <div class="panel-body" ng-show="displayMode == 'edit'">
-        <div class="form-group">
-          <div class="row">
+      <span class="ms-ListItem-primaryText line" style="font-size:130%">Documents</span>
+      
+      <div  ng-show="displayMode == 'edit'">
+        
+          <div class="row" style="margin-left:0%;width:100%">
 
             <table class="table table-bordered table-condensed table-head-color">
               <thead>
@@ -1073,7 +1175,7 @@
 
 
           </div>
-        </div>
+        
       </div>
     </div>
 
@@ -1081,11 +1183,13 @@
 
 
   <div class="row" ng-show="displayMode != 'edit'">
-    <div class="col-md-12">
+  <div class="col-sm-12">
+    <div class="col-md-12" style="margin-left:1%; width:98%">
 
-      <span class="ms-ListItem-primaryText line">Liste des reglements</span>
+      <span class="ms-ListItem-primaryText line" style="font-size:130%">Liste des reglements</span>
 
       <div style="height: 500px;" ng-grid="gridOptions"></div>
+    </div>
     </div>
   </div>
 

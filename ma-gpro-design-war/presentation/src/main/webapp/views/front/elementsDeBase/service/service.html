@@ -125,7 +125,7 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">RÃ©f.</span>
+											<span class="input-group-text">Ref.</span>
 										</div>
 										<input class="form-control" ng-model="articleCourante.ref"
 											ng-init="articleCourante.ref=''" />
@@ -136,7 +136,7 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">DÃ©signation</span>
+											<span class="input-group-text">Designation</span>
 										</div>
 										<input class="form-control" ng-model="articleCourante.designation"
 											ng-init="articleCourante.designation=''" />
@@ -189,39 +189,9 @@
 						<div class="row">
 
 
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Dimension</span>
-										</div>
-										<input class="form-control" ng-model="articleCourante.dimension"
-											ng-init="articleCourante.dimension=''" />
-									</div>
-								</div>
-							</div>
+					
 				
-
-				
-
-				
-
-
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label">Montant</label>
-										</div>
-										<input type="number" step="0.001" class="form-control" min="0"
-											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
-											name="prixUnitaire" ng-model="articleCourante.pu"
-											 />
-									
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-4">
+	<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -237,15 +207,9 @@
 									</div>
 								</div>
 							</div>
-						</div>
+				
 
-
-						<div class="row">
-					
-
-			
-
-
+				
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
@@ -262,6 +226,32 @@
 									</div>
 								</div>
 							</div>
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">PU</label>
+										</div>
+										<input type="number" step="0.001" class="form-control" min="0"
+											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
+											name="prixUnitaire" ng-model="articleCourante.pu"
+											 />
+									
+									</div>
+								</div>
+							</div>
+						
+						</div>
+
+
+						<div class="row">
+					
+
+			
+
+
 						
 
 							<div class="col-sm-5">
@@ -386,10 +376,11 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">RÃ©f.</span>
+											<span class="input-group-text">Ref.</span>
 										</div>
 										<input class="form-control" ng-model="articleCourante.ref"
-											ng-init="articleCourante.ref=''" />
+											ng-init="articleCourante.ref=''" 
+											ng-change="articleCourante.ref = articleCourante.ref.toUpperCase()"/>
 									</div>
 								</div>
 							</div>
@@ -397,10 +388,11 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">DÃ©signation</span>
+											<span class="input-group-text">Designation</span>
 										</div>
 										<input class="form-control" ng-model="articleCourante.designation"
-											ng-init="articleCourante.designation=''" />
+											ng-init="articleCourante.designation=''"
+											ng-change="articleCourante.designation = articleCourante.designation.toUpperCase()" />
 									</div>
 								</div>
 							</div>
@@ -441,39 +433,7 @@
 						</div>
 
 						<div class="row">
-
-
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<span class="input-group-text">Dimension</span>
-										</div>
-										<input class="form-control" ng-model="articleCourante.dimension"
-											ng-init="articleCourante.dimension=''" />
-									</div>
-								</div>
-							</div>
-				
-
-				
-
-
-							<div class="col-sm-4">
-								<div class="form-group">
-									<div class="input-group">
-										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label">Montant</label>
-										</div>
-										<input type="number" step="0.001" class="form-control" min="0"
-											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
-											name="prixUnitaire" ng-model="articleCourante.pu"
-											 />
-									
-									</div>
-								</div>
-							</div>
-							
+						
 							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
@@ -491,15 +451,9 @@
 								</div>
 							</div>
 
-						</div>
 
-
-						<div class="row">
-					
-
-
-
-							<div class="col-sm-4">
+						
+					<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -515,8 +469,72 @@
 									</div>
 								</div>
 							</div>
+							
+								<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">TVA</label>
+										</div>
+										<select ui-select2 ng-model="articleCourante.idTaxe" required
+											ng-init="articleCourante.idTaxe=''" ng-required="true"
+											data-placeholder="Choisir TVA"
+											ng-change="calculerPrixAchatTTC(articleCourante.pu,articleCourante.idTaxe)"
+											class="form-control" style="border: 1px solid #e5eaee !important;">
+											<option value=""></option>
+											<option ng-repeat=" lt in ListeTaxe" value="{{lt.id}}">{{lt.designation}}
+											</option>
+										</select>
+									</div>
+								</div>
+							</div>
 
-							<div class="col-sm-5">
+				
+
+
+						
+							
+						
+
+						</div>
+
+
+						<div class="row">
+					
+
+
+	<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">PU</label>
+										</div>
+										<input type="number" step="0.001" class="form-control" min="0"
+											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
+											name="prixUnitaire" ng-model="articleCourante.pu"
+											 />
+									
+									</div>
+								</div>
+							</div>
+							
+								<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">PUTTC</label>
+										</div>
+										<input type="number" step="0.001" class="form-control" min="0"
+											pattern="^\d*(\.\d{0,3})?$" placeholder="0.000" value="0"
+											name="prixUnitaire" ng-model="articleCourante.puTTC"
+											 />
+									
+									</div>
+								</div>
+							</div>
+						
+
+							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">

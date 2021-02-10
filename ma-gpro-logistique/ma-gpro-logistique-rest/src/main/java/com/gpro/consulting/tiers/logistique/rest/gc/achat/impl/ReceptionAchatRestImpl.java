@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.rest.gc.achat.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +52,8 @@ public class ReceptionAchatRestImpl {
 	
 	@Autowired
 	private IBonCommandeAchatService bonCommandeAchatService;
+	
+	private static final String DATE_FORMAT = "yyyy-MM-dd";
 	
 	
 	@RequestMapping(value = "/validateCommandes", method = RequestMethod.POST)
@@ -246,11 +250,36 @@ public class ReceptionAchatRestImpl {
  	}
 	
 	
-	@RequestMapping(value = "/getCurrentReferenceMensuelByType:{type}", method = RequestMethod.GET, produces =  "application/json")
- 	public @ResponseBody String getCurrentReferenceMensuelByType(@PathVariable String type) {
+	@RequestMapping(value = "/getCurrentReferenceMensuelByTypeAndDate:{type}:{date}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuelByType(@PathVariable String type,@PathVariable String date) {
  		
- 		return  receptionService.getCurrentReferenceMensuelByType(type,Calendar.getInstance(),false);
+ 		return  receptionService.getCurrentReferenceMensuelByType(type,stringToCalendar(date),false);
  	}
+	
+	
+	private Calendar stringToCalendar(String dateString) {
+		
+		Calendar dateCalendar = null;
+		
+		if(isNotEmty(dateString)){
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+			dateCalendar = sdf.getCalendar();
+			try {
+				dateCalendar.setTime(sdf.parse(dateString));
+				
+			} catch (ParseException e) {
+				logger.error("parse date exception: "+e.getMessage());
+			}
+		}
+		
+		return dateCalendar;
+	}
+	
+
+	  private boolean isNotEmty(String value) {
+		    return value != null && !"".equals(value);
+
+		  }
 	
 
 }
