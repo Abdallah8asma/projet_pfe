@@ -49,9 +49,17 @@ public class RechercheMulticritereFactureValue {
 	private String declarerecherche;
 	
 	
-	
+	private String forcerCalculMontantRech;
 	
 
+
+	public String getForcerCalculMontantRech() {
+		return forcerCalculMontantRech;
+	}
+
+	public void setForcerCalculMontantRech(String forcerCalculMontantRech) {
+		this.forcerCalculMontantRech = forcerCalculMontantRech;
+	}
 
 	public String getDeclarerecherche() {
 		return declarerecherche;

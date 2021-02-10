@@ -105,4 +105,6 @@ public interface IReceptionAchatService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public ListProduitElementValue getProduitElementListWithoutRegroupement(List<String> refBonReceptionList,
 			Long factureAchatId);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public ReceptionAchatValue getByReference(String reference);
 }

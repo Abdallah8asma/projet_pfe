@@ -63,6 +63,25 @@ public class DetailsReglementEntity implements Serializable{
 	
 	@Column(name="OBSERVATION")
 	private String observation;
+	
+	@Column(name="reference")
+	private String reference;
+	
+	
+	
+	
+
+	public String getReference() {
+		return reference;
+	}
+
+	public void setReference(String reference) {
+		this.reference = reference;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Long getId() {
 		return id;

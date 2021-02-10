@@ -58,7 +58,7 @@ public class ElementReglementAchatRestImpl {
 		ResultatRechecheElementReglementAchatValue result;
 		
 		
-		if(estNonVide(request.getNumPiece()))  {
+		if(estNonVide(request.getNumPiece()) || estNonVide(request.getReferenceDetailReglement()) )  {
 			
 	         result = detailsReglementAchatService.rechercherMultiCritere(request);
 			

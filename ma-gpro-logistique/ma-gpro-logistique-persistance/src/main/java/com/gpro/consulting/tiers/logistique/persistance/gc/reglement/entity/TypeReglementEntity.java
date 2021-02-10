@@ -30,10 +30,30 @@ public class TypeReglementEntity implements Serializable{
 	
 	@Column(name="DESIGNATION")
 	private String designation;
+	
+	
+	@Column(name="prefixe")
+	private String prefixe;
 
 	@Column(name="aterme")
 	private Boolean aTerme;
 	
+	
+	
+	
+	
+	public String getPrefixe() {
+		return prefixe;
+	}
+
+	public void setPrefixe(String prefixe) {
+		this.prefixe = prefixe;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public Long getId() {
 		return id;
 	}

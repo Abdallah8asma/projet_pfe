@@ -91,6 +91,35 @@ public interface IGuichetMensuelPersistance {
 	public Long modifierGuichetFactureAchatNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur);
 
 
+	public Long getNextNumReglementAchat(Calendar c);
+
+
+	public String getPrefixReglementAchat(Calendar c);
+
+
+	public Long modifierGuichetReglementAchatMensuel(GuichetMensuelValue vGuichetValeur);
+	
+	
+	
+	
+	public Long getNextNumDetReglementAchat(Calendar c);
+
+
+	public String getPrefixDetReglementAchat(Calendar c);
+
+
+	public Long modifierGuichetDetReglementAchatMensuel(GuichetMensuelValue vGuichetValeur);
+
+
+	public Long getNextNumDetReglement(Calendar c);
+
+
+	public String getPrefixDetReglement(Calendar c);
+
+
+	public Long modifierGuichetDetReglementMensuel(GuichetMensuelValue vGuichetValeur);
+
+
 	
 	
 }

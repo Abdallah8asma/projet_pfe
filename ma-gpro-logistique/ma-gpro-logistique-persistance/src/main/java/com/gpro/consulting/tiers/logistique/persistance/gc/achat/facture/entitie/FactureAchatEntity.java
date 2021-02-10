@@ -142,9 +142,26 @@ public class FactureAchatEntity implements Serializable {
 	private boolean declarer;
 	
 	
+	@Column(name = "force_calcul_montant")
+	private boolean forcerCalculMontant;
+	
+	
+	
 	  
 	
 	
+	public boolean isForcerCalculMontant() {
+		return forcerCalculMontant;
+	}
+
+	public void setForcerCalculMontant(boolean forcerCalculMontant) {
+		this.forcerCalculMontant = forcerCalculMontant;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public boolean isDeclarer() {
 		return declarer;
 	}

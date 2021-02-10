@@ -36,6 +36,24 @@ public class RechercheMulticritereReglementAchatValue {
 	private Calendar dateEcheance;
 
 	private Long boutiqueId;
+	
+	
+	
+	
+	private String referenceDetailReglement;
+	
+	
+	
+	
+	
+
+	public String getReferenceDetailReglement() {
+		return referenceDetailReglement;
+	}
+
+	public void setReferenceDetailReglement(String referenceDetailReglement) {
+		this.referenceDetailReglement = referenceDetailReglement;
+	}
 
 	public Long getBoutiqueId() {
 		return boutiqueId;

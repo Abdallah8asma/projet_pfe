@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.rest.gc.reglement.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +44,9 @@ import com.gpro.consulting.tiers.logistique.service.gc.reglement.IReglementServi
 public class ReglementRestImpl {
 
 	private static final Logger logger = LoggerFactory.getLogger(ReglementRestImpl.class);
+	
+	
+	private static final String DATE_FORMAT = "yyyy-MM-dd";
 	
 	@Autowired
 	private IReglementService reglementService;
@@ -234,10 +239,35 @@ public class ReglementRestImpl {
 		return  reglementService.getRefBLNonRegleByGroupeId(groupeId);
 	}
 	
-	@RequestMapping(value = "/getCurrentReference", method = RequestMethod.GET, produces =  "application/json")
- 	public @ResponseBody String getCurrentReference() {
+	@RequestMapping(value = "/getCurrentReferenceByDate:{date}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReference(@PathVariable String date) {
  		
- 		return  reglementService.getCurrentReference(Calendar.getInstance(),false);
+ 		return  reglementService.getCurrentReference(stringToCalendar(date),false);
  	}
+	
+	
+	private Calendar stringToCalendar(String dateString) {
+		
+		Calendar dateCalendar = null;
+		
+		if(isNotEmty(dateString)){
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+			dateCalendar = sdf.getCalendar();
+			try {
+				dateCalendar.setTime(sdf.parse(dateString));
+				
+			} catch (ParseException e) {
+				logger.error("parse date exception: "+e.getMessage());
+			}
+		}
+		
+		return dateCalendar;
+	}
+	
+
+	  private boolean isNotEmty(String value) {
+		    return value != null && !"".equals(value);
+
+		  }
 	
 }
