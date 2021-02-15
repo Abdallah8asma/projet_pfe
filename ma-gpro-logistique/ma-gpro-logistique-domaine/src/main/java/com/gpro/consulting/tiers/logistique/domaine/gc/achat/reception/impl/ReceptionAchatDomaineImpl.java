@@ -516,11 +516,16 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		
 		
 		
+		String type = "";
 		
 		if(bonReceptionValue.getDateIntroduction() == null)
 			bonReceptionValue.setDateIntroduction(Calendar.getInstance());
 		
 		
+		if(bonReceptionValue.getFacture() != null &&  bonReceptionValue.getFacture() == true)
+			type = "declarer";
+		else
+			type = "non-declarer";
 		
 
 		if ((bonReceptionValue.getReference() != null && bonReceptionValue.getReference().equals(""))
@@ -529,7 +534,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 			//bonReceptionValue.setReference(this.getCurrentReference(bonReceptionValue.getDateIntroduction(), true));
 			
 
-			bonReceptionValue.setReference(getReferenceReceptionFromGuichetMensuel(bonReceptionValue.getDateIntroduction(),true));  
+			bonReceptionValue.setReference(getCurrentReferenceMensuelByType(type,bonReceptionValue.getDateIntroduction(),true));  
 			
 			// logger.info("----- auto reference ----------" +
 			// bonReceptionValue.getReference());
@@ -540,7 +545,7 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 			if (bonReceptionValue.getRefAvantChangement() != null
 					&& bonReceptionValue.getReference().equals(bonReceptionValue.getRefAvantChangement())) {
 				//this.getCurrentReference(bonReceptionValue.getDateIntroduction(), true);
-				this.getReferenceReceptionFromGuichetMensuel(bonReceptionValue.getDateIntroduction(), true);  
+				this.getCurrentReferenceMensuelByType(type,bonReceptionValue.getDateIntroduction(), true);  
 			}
 
 		}
@@ -2090,8 +2095,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
 		/** idMensuel = (annuelcourante - 2016) + moisCourant */
 
-		Calendar cal = Calendar.getInstance();
-		int anneActuelle = cal.get(Calendar.YEAR);
+	//	Calendar cal = Calendar.getInstance();
+		int anneActuelle = pDateBonLiv.get(Calendar.YEAR);
 
 		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
 
@@ -2131,8 +2136,8 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
 		/** idMensuel = (annuelcourante - 2016) + moisCourant */
 
-		Calendar cal = Calendar.getInstance();
-		int anneActuelle = cal.get(Calendar.YEAR);
+		//Calendar cal = Calendar.getInstance();
+		int anneActuelle = pDateBonLiv.get(Calendar.YEAR);
 
 		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
 

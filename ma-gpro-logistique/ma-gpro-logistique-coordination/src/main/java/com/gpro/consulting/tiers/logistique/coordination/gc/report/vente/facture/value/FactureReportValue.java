@@ -75,6 +75,20 @@ public class FactureReportValue {
 	private String taxeTimbre;
 	private Double montantTaxeTimbre;
 	private Double assietteTimbre;
+	
+	
+	// TIMBRE 2 params
+	private Boolean existTimbre2;
+	private String taxeTimbre2;
+	private Double montantTaxeTimbre2;
+	private Double assietteTimbre2;
+	
+	
+	// TIMBRE 3 params
+	private Boolean existTimbre3;
+	private String taxeTimbre3;
+	private Double montantTaxeTimbre3;
+	private Double assietteTimbre3;
 
 	// total des daxes
 	private Double montantTaxes;
@@ -113,6 +127,70 @@ public class FactureReportValue {
 	
 
 	
+	public Boolean getExistTimbre2() {
+		return existTimbre2;
+	}
+
+	public void setExistTimbre2(Boolean existTimbre2) {
+		this.existTimbre2 = existTimbre2;
+	}
+
+	public String getTaxeTimbre2() {
+		return taxeTimbre2;
+	}
+
+	public void setTaxeTimbre2(String taxeTimbre2) {
+		this.taxeTimbre2 = taxeTimbre2;
+	}
+
+	public Double getMontantTaxeTimbre2() {
+		return montantTaxeTimbre2;
+	}
+
+	public void setMontantTaxeTimbre2(Double montantTaxeTimbre2) {
+		this.montantTaxeTimbre2 = montantTaxeTimbre2;
+	}
+
+	public Double getAssietteTimbre2() {
+		return assietteTimbre2;
+	}
+
+	public void setAssietteTimbre2(Double assietteTimbre2) {
+		this.assietteTimbre2 = assietteTimbre2;
+	}
+
+	public Boolean getExistTimbre3() {
+		return existTimbre3;
+	}
+
+	public void setExistTimbre3(Boolean existTimbre3) {
+		this.existTimbre3 = existTimbre3;
+	}
+
+	public String getTaxeTimbre3() {
+		return taxeTimbre3;
+	}
+
+	public void setTaxeTimbre3(String taxeTimbre3) {
+		this.taxeTimbre3 = taxeTimbre3;
+	}
+
+	public Double getMontantTaxeTimbre3() {
+		return montantTaxeTimbre3;
+	}
+
+	public void setMontantTaxeTimbre3(Double montantTaxeTimbre3) {
+		this.montantTaxeTimbre3 = montantTaxeTimbre3;
+	}
+
+	public Double getAssietteTimbre3() {
+		return assietteTimbre3;
+	}
+
+	public void setAssietteTimbre3(Double assietteTimbre3) {
+		this.assietteTimbre3 = assietteTimbre3;
+	}
+
 	public String getCodePostalClient() {
 		return codePostalClient;
 	}
