@@ -64,6 +64,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 	private static final Long TAXE_ID_FODEC = 1L;
 	private static final Long TAXE_ID_TIMBRE = 3L;
+	private static final Long TAXE_ID_TIMBRE_2 = 7L;
+	private static final Long TAXE_ID_TIMBRE_3 = 8L;
 	
 	private static final String FACTURE_TYPE_AVOIRE = "Avoir";
 
@@ -113,6 +115,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		Double montantTaxeFodec = ZERO;
 		Double montantTaxeTVA = ZERO;
 		Double montantTaxeTimbre = ZERO;
+		Double montantTaxeTimbre2 = ZERO;
+		Double montantTaxeTimbre3 = ZERO;
 
 		Double assietteFodec = ZERO;
 
@@ -316,7 +320,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		// TVA variable selon produit
 
 		for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
-			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
+			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_TIMBRE_2 && taxe != TAXE_ID_TIMBRE_3 && taxe != TAXE_ID_FODEC) {
 				montantTaxeTVA = ZERO;
 				if (produitTaxeMap.containsKey(taxe))
 					montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
@@ -334,6 +338,24 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 				taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE).setMontant(montantTaxeTimbre);
 				montantTaxesTotal = montantTaxesTotal + montantTaxeTimbre;
+			}
+		}
+		
+		if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_TIMBRE_2)) {
+			if (taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_2).getMontant() != null) {
+				montantTaxeTimbre2 = taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_2).getMontant();
+
+				taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_2).setMontant(montantTaxeTimbre2);
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTimbre2;
+			}
+		}
+		
+		if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_TIMBRE_3)) {
+			if (taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_3).getMontant() != null) {
+				montantTaxeTimbre3 = taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_3).getMontant();
+
+				taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_3).setMontant(montantTaxeTimbre3);
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTimbre3;
 			}
 		}
 
@@ -433,6 +455,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		Double montantTaxeFodec = ZERO;
 		Double montantTaxeTVA = ZERO;
 		Double montantTaxeTimbre = ZERO;
+		Double montantTaxeTimbre2 = ZERO;
+		Double montantTaxeTimbre3 = ZERO;
 
 		Double assietteFodec = ZERO;
 
@@ -580,7 +604,7 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		}
 
 		for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
-			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_FODEC) {
+			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_TIMBRE_2 && taxe != TAXE_ID_TIMBRE_3 &&  taxe != TAXE_ID_FODEC) {
 				montantTaxeTVA = ZERO;
 				if (produitTaxeMap.containsKey(taxe))
 					montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
@@ -597,6 +621,24 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 
 				taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE).setMontant(montantTaxeTimbre);
 				montantTaxesTotal = montantTaxesTotal + montantTaxeTimbre;
+			}
+		}
+		
+		if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_TIMBRE_2)) {
+			if (taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_2).getMontant() != null) {
+				montantTaxeTimbre2 = taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_2).getMontant();
+
+				taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_2).setMontant(montantTaxeTimbre2);
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTimbre2;
+			}
+		}
+		
+		if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_TIMBRE_3)) {
+			if (taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_3).getMontant() != null) {
+				montantTaxeTimbre3 = taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_3).getMontant();
+
+				taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_3).setMontant(montantTaxeTimbre3);
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTimbre3;
 			}
 		}
 
@@ -997,8 +1039,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
 		/** idMensuel = (annuelcourante - 2016) + moisCourant */
 
-		Calendar cal = Calendar.getInstance();
-		int anneActuelle = cal.get(Calendar.YEAR);
+		//Calendar cal = Calendar.getInstance();
+		int anneActuelle = pDateBonLiv.get(Calendar.YEAR);
 
 		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
 
@@ -1033,8 +1075,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
 		/** idMensuel = (annuelcourante - 2016) + moisCourant */
 
-		Calendar cal = Calendar.getInstance();
-		int anneActuelle = cal.get(Calendar.YEAR);
+	//	Calendar cal = Calendar.getInstance();
+		int anneActuelle = pDateBonLiv.get(Calendar.YEAR);
 
 		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
 
@@ -1116,8 +1158,8 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
 		/** idMensuel = (annuelcourante - 2016) + moisCourant */
 
-		Calendar cal = Calendar.getInstance();
-		int anneActuelle = cal.get(Calendar.YEAR);
+		//Calendar cal = Calendar.getInstance();
+		int anneActuelle = pDate.get(Calendar.YEAR);
 
 		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
 

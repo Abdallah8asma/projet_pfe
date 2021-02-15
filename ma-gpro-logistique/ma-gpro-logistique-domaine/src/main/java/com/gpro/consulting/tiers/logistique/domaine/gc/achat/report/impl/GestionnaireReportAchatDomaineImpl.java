@@ -150,6 +150,8 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 	private static final Long TAXE_ID_FODEC = 1L;
 	private static final Long TAXE_ID_TVA = 2L;
 	private static final Long TAXE_ID_TIMBRE = 3L;
+	private static final Long TAXE_ID_TIMBRE_2 = 7L;
+	private static final Long TAXE_ID_TIMBRE_3 = 8L;
 
 	private static final String TAXE_TVA = "tva 19";
 	private static final String TAXE_TVA7 = "tva 7";
@@ -160,6 +162,8 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 
 	private static final String TAXE_FODEC = "fodec";
 	private static final String TAXE_TIMBRE = "timbre";
+	private static final String TAXE_TIMBRE_2 = "timbre 2";
+	private static final String TAXE_TIMBRE_3 = "timbre 3";
 
 	private static final String DINARS = " dinars ";
 	private static final String MILLIMES = " millimes";
@@ -1594,12 +1598,34 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 		}
 		// //// FIN PARTIE DE TAXE ENTREPRISE COMMERCIALE ////////
 
+		//TIMBRE 1
 		if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_TIMBRE)) {
 			reportValue.setExistTimbre(true);
 
 			// TIMBRE params
 			reportValue.setTaxeTimbre(TAXE_TIMBRE);
 			reportValue.setMontantTaxeTimbre(taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE).getMontant());
+		}
+		
+		
+		//TIMBRE 2
+		
+		if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_TIMBRE_2)) {
+			reportValue.setExistTimbre2(true);
+
+			// TIMBRE params
+			reportValue.setTaxeTimbre2(TAXE_TIMBRE_2);
+			reportValue.setMontantTaxeTimbre2(taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_2).getMontant());
+		}
+		
+		//TIMBRE 3
+		
+		if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_TIMBRE_3)) {
+			reportValue.setExistTimbre3(true);
+
+			// TIMBRE params
+			reportValue.setTaxeTimbre3(TAXE_TIMBRE_3);
+			reportValue.setMontantTaxeTimbre3(taxeFactureIdTaxeMap.get(TAXE_ID_TIMBRE_3).getMontant());
 		}
 
 	}
