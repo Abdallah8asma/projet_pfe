@@ -904,12 +904,25 @@
                         </tr>
                       </thead>
                       <tr ng-repeat="taxeFacture in listTaxeFactureInit">
-                        <td>
-                          <!-- TODO: ID => Designation & DropList Field --> <span editable-select="taxeFacture.taxeId"
+                      
+                      
+                       <!--  <td>
+                        <span editable-select="taxeFacture.taxeId"
                             e-name="taxeId" e-form="rowform"
                             e-ng-options="s.id as s.designation for s in listeTaxes | filter:filterTaxes()">
                             {{ showTaxe(taxeFacture.taxeId) || 'empty' }} </span>
+                        </td> -->
+                      
+                      
+                        <td>
+                          <!-- TODO: ID => Designation & DropList Field --> <span editable-select="taxeFacture.taxeId"
+                            e-name="taxeId" e-form="rowform"
+                            e-ng-options="s.id as s.designation for s in listeTaxes">
+                            {{ showTaxe(taxeFacture.taxeId) || 'empty' }} </span>
                         </td>
+                        
+                        
+                         
                         <td>
                           <!-- editable pourcentage (text with validation) --> <span
                             editable-text="taxeFacture.pourcentage" e-name="pourcentage" e-form="rowform" e-required> {{
