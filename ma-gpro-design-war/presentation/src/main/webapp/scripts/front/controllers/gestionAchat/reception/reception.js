@@ -84,6 +84,23 @@ angular
 				$scope.numSerieAjout = "";
 				$scope.numSerieEdit = "";
 				$scope.referenceArticle="";
+				
+				
+						// Liste des unités :uniteArticle
+							$scope.listeUniteArticle = function() {
+								$http
+										.get(UrlCommun + "/uniteArticle/all")
+										.success(
+												function(data) {
+													console
+															.log("listeProduitCache "
+																	+ data.length+" "+data);
+													$scope.listeUniteArticle = data;
+
+												});
+							}
+
+							$scope.listeUniteArticle();
 
 				/**************************************
 				 * Notification *

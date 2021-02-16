@@ -978,12 +978,15 @@
 													ng-show="modePdf != 'actif'">
 													<thead>
 														<tr>
-															<th style="width: 23%">R&eacute;f.Article</th>
-															<th style="width: 25%">Article</th>
-															<th style="width: 13%">Sous Famille</th>
+															<th style="width: 20%">R&eacute;f.Article</th>
+															<th style="width: 23%">Article</th>
+															<th style="width: 10%">Sous Famille</th>
 															<th style="width: 7%">TVA</th>
 															
 															<th style="width: 8%">Quantit&eacute;</th>
+															
+															<th style="width: 7%">UNITE</th>
+															
 															<th style="width: 15%">Prix Unitaire</th>
 															<th style="width: 8%">Remise</th>
 															<th style="width: 5%">N&ordm;S</th>
@@ -1038,6 +1041,19 @@
 																		La valeur doit être supérieure ou égale à 0 !
 																	</div>
 																</div>
+															
+																</td>
+																								<td>
+
+																<select ui-select2 ng-model="produit.unite"
+																	 data-placeholder="..."
+																	style="width: 100%"  class="form-control ">
+																	<option ng-repeat="unite in listeUniteArticle" value="{{unite.designation}}">
+																		{{unite.designation}}
+																	</option>
+																</select>
+															</td>
+															
 															<td><input type="text" class="form-control" ng-model="produit.prixUnitaire" min="0"
 																	pattern="^\d*(\.\d{0,3})?$" placeholder="0.00" value="0" name="prixUnitaire" />
 
