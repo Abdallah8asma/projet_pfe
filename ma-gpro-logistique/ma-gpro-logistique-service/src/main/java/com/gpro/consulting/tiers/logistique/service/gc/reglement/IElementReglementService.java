@@ -28,5 +28,10 @@ public interface IElementReglementService {
 	
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public Boolean existElementReglementByReferenceFacture(String reference);
+	
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<ElementReglementValue> getByRefFactureExact(String refernceFacture);
+
+	public Double getSumMontantPayerByReferenceFacture(String reference);
 
 }

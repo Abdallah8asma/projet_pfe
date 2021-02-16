@@ -78,4 +78,10 @@ public class ElementReglementDomaineImpl implements IElementReglementDomaine{
 		elementReglementPersistance.deleteElementReglementById(id);
 		
 	}
+
+	@Override
+	public Double getSumMontantPayerByReferenceFacture(String reference) {
+		// TODO Auto-generated method stub
+		return elementReglementPersistance.getSumMontantPayerByReferenceFacture(reference);
+	}
 }

@@ -40,6 +40,9 @@ public interface IElementReglementDomaine {
 	
 	
 	public void deleteElementReglementById(Long id);
+
+
+	public Double getSumMontantPayerByReferenceFacture(String reference);
 	
 
 }

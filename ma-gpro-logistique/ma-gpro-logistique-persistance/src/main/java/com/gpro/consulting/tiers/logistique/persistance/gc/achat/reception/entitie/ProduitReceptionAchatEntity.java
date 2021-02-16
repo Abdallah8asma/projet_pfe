@@ -85,7 +85,21 @@ public class ProduitReceptionAchatEntity {
 	@Column(name="designation")
 	private String designation;
 	
+	@Column(name="UNITE")
+	private String unite;
 	
+	
+	
+	
+	
+
+	public String getUnite() {
+		return unite;
+	}
+
+	public void setUnite(String unite) {
+		this.unite = unite;
+	}
 
 	public String getReferenceArticle() {
 		return referenceArticle;
