@@ -89,6 +89,21 @@ angular
 					
 				}
 				
+				// Liste des unités :uniteArticle
+							$scope.listeUniteArticle = function() {
+								$http
+										.get(UrlCommun + "/uniteArticle/all")
+										.success(
+												function(data) {
+													console
+															.log("listeProduitCache "
+																	+ data.length+" "+data);
+													$scope.listeUniteArticle = data;
+
+												});
+							}
+
+							$scope.listeUniteArticle();
 				
 								   // Liste des Taxes
   	 $scope.ListeTaxe = function () {
@@ -366,7 +381,7 @@ angular
 									});
 							// Ajoute By Ghazi on 07/05/2018 //
 							// affichage de Liste de BL detaillée
-							$http
+							/*$http
 								.get(
 									UrlAtelier
 									+ "/receptionAchat/getAllListBonReceptionRefByFournisseur:"
@@ -386,7 +401,7 @@ angular
 												});
 
 
-									});
+									});*/
 
 						}
 

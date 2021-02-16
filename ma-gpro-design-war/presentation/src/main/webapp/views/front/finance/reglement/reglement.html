@@ -397,7 +397,7 @@
                           color: rgb(54, 153, 255);
                           background-color: rgb(225, 240, 255);
                         " ng-click="Valider(reglementCourante.partieIntId)"
-                        ng-disabled="disableValider || isEnCoursValider || !creationReglementForm.$valid" type="button">
+                        ng-disabled="!reglementCourante.partieIntId" type="button">
                         Valider
                       </button>
                     </div>
@@ -478,7 +478,7 @@
                           color: rgb(54, 153, 255);
                           background-color: rgb(225, 240, 255);
                         " ng-click="ValiderGroupeClient(reglementCourante.groupeClientId)"
-                        ng-disabled="disableValider || isEnCoursValider || !creationReglementForm.$valid" type="button">
+                        ng-disabled="!reglementCourante.groupeClientId" type="button">
                         Valider
                       </button>
                     </div>

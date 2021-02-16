@@ -1038,10 +1038,10 @@
 
 
                     <th style="width: 15%">Ref.Article</th>
-                    <th style="width: 28%">Article</th>
+                    <th style="width: 23%">Article</th>
                      <th style="width: 7%">TVA</th>
-                    <th style="width: 10%">Quantite</th>
-                    <!-- <th style="width: 10%">Unité</th> -->
+                    <th style="width: 9%">Quantite</th>
+                   <th style="width: 7%">Unité</th>
                     <th style="width: 10%">P.U.H.T</th>
                     <th style="width: 10%">Remise</th>
                     <th style="width: 10%">P.T.H.T</th>
@@ -1074,6 +1074,18 @@
                     <input type="number" class="form-control"
                       ng-model="detFactureAchat.quantite"/>
                   </td>
+                  
+                  					<td>
+
+																<select ui-select2 ng-model="detFactureAchat.unite"
+																	 data-placeholder="..."
+																	style="width: 100%"  class="form-control ">
+																	<option ng-repeat="unite in listeUniteArticle" value="{{unite.designation}}">
+																		{{unite.designation}}
+																	</option>
+																</select>
+															</td>
+															
                     <td>
                     <input type="number" class="form-control"
                       ng-model="detFactureAchat.prixUnitaireHT"/>
