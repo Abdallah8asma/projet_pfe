@@ -70,6 +70,9 @@ public class FactureRestImpl {
 	@Autowired
 	private IDetailsReglementService detailsReglementService;
 	
+	@Autowired
+	private IElementReglementService elementReglementService;
+	
 
 	/** Facture **/
 	@RequestMapping(value = "/validate", method = RequestMethod.POST)
@@ -153,7 +156,7 @@ public class FactureRestImpl {
 		
 		request.setOptimized(this.checkForOptimization(request));
 		
-		if (request.getDateFactureMin() == null) {
+		/*if (request.getDateFactureMin() == null) {
 
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.YEAR, 2020);
@@ -165,7 +168,7 @@ public class FactureRestImpl {
 			date.set(Calendar.MILLISECOND, 0);
 
 			request.setDateFactureMin(date);
-		}
+		}*/
 
 		//logger.info("rechercheMulticritere: Delegating request {} to service layer.", request);
 
@@ -202,7 +205,7 @@ public class FactureRestImpl {
 					}
 					
 					
-					if(factureVenteValue.getReglementId() != null) {
+				/*if(factureVenteValue.getReglementId() != null) {
 						
 						RechercheMulticritereDetailReglementValue reqDetailReglement = new RechercheMulticritereDetailReglementValue();
 						reqDetailReglement.setReglementId(factureVenteValue.getReglementId() );
@@ -215,8 +218,18 @@ public class FactureRestImpl {
 					{
 						
 						  factureVenteValue.setMontantOuvert(factureVenteValue.getMontantTTC());
-					}
+					}*/
 					
+					
+					//TODO chercher les element reglement de cette facture
+					
+				
+				      Double montantPaye = elementReglementService.getSumMontantPayerByReferenceFacture(factureVenteValue.getReference());
+					
+				      factureVenteValue.setMontantOuvert(factureVenteValue.getMontantTTC() - montantPaye);
+				      
+				      if(factureVenteValue.getMontantOuvert() < 0 )
+				    	  factureVenteValue.setMontantOuvert(0d);
 					
 					
 				}
@@ -335,6 +348,42 @@ public class FactureRestImpl {
  		
  		return  factureService.getCurrentReferenceByTypeFactureAndDeclarer(type,declarer,Calendar.getInstance(),false);
  	}
+	
+	@RequestMapping(value = "/getFactureByReference:{reference}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody FactureVenteValue getFactureByReference(@PathVariable String reference) {
+
+		//logger.info("getFactureById: Delegating request id {} to service layer.", id);
+
+		FactureVenteValue factureVenteValue = factureService.getFactureByReference(reference);
+
+		if (factureVenteValue != null) {
+
+			Map<Long, PartieInteresseValue> mapClientById = gestionnaireLogistiqueCacheService.mapClientById();
+			PartieInteresseValue client = mapClientById.get(factureVenteValue.getPartieIntId());
+			if (client != null) {
+				factureVenteValue.setPartieIntAbreviation(client.getAbreviation());
+			}
+			
+			
+			for(DetFactureVenteValue factureDet :factureVenteValue.getListDetFactureVente()) {
+				
+				if(factureDet.getProduitId() != null) {
+					ProduitValue prod = produitService.rechercheProduitById(factureDet.getProduitId());
+					
+					factureDet.setProduitReference(prod.getReference());
+					factureDet.setProduitDesignation(prod.getDesignation());
+				
+				}
+			
+				
+			}
+				
+				
+			
+		}
+
+		return factureVenteValue;
+	}
 	
 	public boolean checkForOptimization(RechercheMulticritereFactureValue request) {
 

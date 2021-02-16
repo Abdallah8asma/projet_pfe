@@ -58,4 +58,6 @@ public interface IFactureService {
 	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public String getCurrentReferenceByTypeFactureAndDeclarer(String type, boolean declarer, Calendar instance,
 			boolean b);
+	@Transactional(readOnly = false, rollbackFor = Exception.class)
+	public FactureVenteValue getFactureByReference(String reference);
 }

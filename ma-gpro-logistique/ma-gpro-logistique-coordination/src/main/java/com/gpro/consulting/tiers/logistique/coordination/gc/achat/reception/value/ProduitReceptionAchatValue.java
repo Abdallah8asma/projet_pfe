@@ -65,6 +65,19 @@ public class ProduitReceptionAchatValue implements Comparable<ProduitReceptionAc
 
 	private String designation;
 	
+	private String unite;
+	
+	
+	
+	
+
+	public String getUnite() {
+		return unite;
+	}
+
+	public void setUnite(String unite) {
+		this.unite = unite;
+	}
 
 	public String getReferenceArticle() {
 		return referenceArticle;

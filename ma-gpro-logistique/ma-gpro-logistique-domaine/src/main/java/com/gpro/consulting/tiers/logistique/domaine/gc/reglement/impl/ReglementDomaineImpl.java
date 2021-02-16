@@ -1729,8 +1729,8 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 		GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
 		/** idMensuel = (annuelcourante - 2016) + moisCourant */
 
-		Calendar cal = Calendar.getInstance();
-		int anneActuelle = cal.get(Calendar.YEAR);
+	//	Calendar cal = Calendar.getInstance();
+		int anneActuelle = c.get(Calendar.YEAR);
 
 		int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
 

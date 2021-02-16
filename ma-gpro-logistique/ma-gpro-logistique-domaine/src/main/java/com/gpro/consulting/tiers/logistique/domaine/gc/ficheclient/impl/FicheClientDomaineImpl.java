@@ -183,53 +183,75 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 
 			for (ReglementValue reglement : resultReglement.getList()) {
 
-				FicheClientElementValue element = new FicheClientElementValue();
-
-				element.setCredit(reglement.getMontantTotal());
-				element.setDebit(debit);
-				element.setDate(reglement.getDate());
-				element.setReferenceComparator("R" + reglement.getReference());
-
-				libelle = "Payement N° " + reglement.getReference();
+				
 
 				if (reglement.getListDetailsReglement() != null) {
 
 					if (reglement.getListDetailsReglement().size() > 0) {
+						
+						
+						for(DetailsReglementValue detail : reglement.getListDetailsReglement()) {
+							
+							
+							
+							FicheClientElementValue element = new FicheClientElementValue();
 
-						DetailsReglementValue detail = reglement.getListDetailsReglement().iterator().next();
+							//element.setCredit(reglement.getMontantTotal());
+							element.setCredit(detail.getMontant());
+							
+							element.setDebit(debit);
+							element.setDate(reglement.getDate());
+							element.setReferenceComparator("R" + reglement.getReference()  + " TR N° "+detail.getReference());
 
-						String type = SPACE;
+							//libelle = "Payement N° " + reglement.getReference();
+							
+							libelle = "Payement N° " + reglement.getReference() + " TR N° "+detail.getReference() + " ";
+							
+							
+							
+							
+							//	DetailsReglementValue detail = reglement.getListDetailsReglement().iterator().next();
 
-						if (detail.getTypeReglementId() != null) {
+							String type = SPACE;
 
-							TypeReglementValue typeReglement = reglementPersistance
-									.getTypeReglementById(detail.getTypeReglementId());
+							if (detail.getTypeReglementId() != null) {
 
-							if (typeReglement != null) {
+								TypeReglementValue typeReglement = reglementPersistance
+										.getTypeReglementById(detail.getTypeReglementId());
 
-								type = typeReglement.getDesignation();
+								if (typeReglement != null) {
+
+									type = typeReglement.getDesignation();
+								}
 							}
+	                        String refFacture ="";
+	                        if(detail.getRefFacture()!=null)
+	                        	refFacture=detail.getRefFacture();
+							libelle = libelle + detail.getBanque() + SPACE + type + SPACE + detail.getNumPiece() + SPACE
+									+ refFacture;
+							
+							
+							element.setLibelle(libelle);
+
+							if (element.getCredit() != null) {
+
+								creditTotal = creditTotal + element.getCredit();
+							}
+
+							if (reglement.getDate() == null) {
+								element.setDate(dateIfNotExist);
+							}
+
+							listElements.add(element);
+							
+							
 						}
-                        String refFacture ="";
-                        if(detail.getRefFacture()!=null)
-                        	refFacture=detail.getRefFacture();
-						libelle = libelle + detail.getBanque() + SPACE + type + SPACE + detail.getNumPiece() + SPACE
-								+ refFacture;
+
+				
 					}
 				}
 
-				element.setLibelle(libelle);
-
-				if (element.getCredit() != null) {
-
-					creditTotal = creditTotal + element.getCredit();
-				}
-
-				if (reglement.getDate() == null) {
-					element.setDate(dateIfNotExist);
-				}
-
-				listElements.add(element);
+		
 			}
 
 			soldeClient = debitTotal - creditTotal + soldeInitial;

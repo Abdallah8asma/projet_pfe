@@ -106,6 +106,12 @@ public class FactureServiceImpl implements IFactureService{
 		// TODO Auto-generated method stub
 		return factureDomaine.getCurrentReferenceByTypeFactureAndDeclarer(type,declarer,instance,b);
 	}
+
+	@Override
+	public FactureVenteValue getFactureByReference(String reference) {
+		// TODO Auto-generated method stub
+		return factureDomaine.getFactureByReference(reference);
+	}
 	
 	
 	

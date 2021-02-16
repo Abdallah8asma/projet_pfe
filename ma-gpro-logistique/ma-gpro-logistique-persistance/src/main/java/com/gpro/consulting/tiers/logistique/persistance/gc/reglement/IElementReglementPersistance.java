@@ -44,4 +44,8 @@ public interface IElementReglementPersistance {
 
 	public List<ElementReglementValue> getByRefFactureExact(String refernceFacture);
 
+
+
+	public Double getSumMontantPayerByReferenceFacture(String reference);
+
 }
