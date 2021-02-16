@@ -55,6 +55,18 @@ public class ElementReglementServiceImpl implements IElementReglementService{
 		// TODO Auto-generated method stub
 		return elementReglementDomaine.existElementReglementByReferenceFacture(reference);
 	}
+
+	@Override
+	public List<ElementReglementValue> getByRefFactureExact(String refernceFacture) {
+		// TODO Auto-generated method stub
+		return elementReglementDomaine.getByRefFactureExact(refernceFacture);
+	}
+
+	@Override
+	public Double getSumMontantPayerByReferenceFacture(String reference) {
+		// TODO Auto-generated method stub
+		return elementReglementDomaine.getSumMontantPayerByReferenceFacture(reference);
+	}
 	
 
 }

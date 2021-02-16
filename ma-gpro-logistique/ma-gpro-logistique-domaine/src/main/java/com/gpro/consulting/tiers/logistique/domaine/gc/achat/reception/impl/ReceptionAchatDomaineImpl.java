@@ -1639,10 +1639,20 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		}
 
 		List<BonReceptionVue> bonLivraisonlist = receptionAchatPersistance.getReferenceBRByFournisseurId(idFournisseur);
+		
+		
+		List<BonReceptionVue> bonLivraisonlistFinal = new ArrayList<BonReceptionVue>();
+		
+		for(BonReceptionVue br : bonLivraisonlist) {
+			
+			if(!listBonLivraisonToRemove.contains(br.getReferenceBR()))
+				bonLivraisonlistFinal.add(br) ;
+				
+		}
 
-		bonLivraisonlist.removeAll(listBonLivraisonToRemove);
+	//	bonLivraisonlist.removeAll(listBonLivraisonToRemove);
 
-		return bonLivraisonlist;
+		return bonLivraisonlistFinal;
 	}
 
 	@Override
@@ -2278,6 +2288,9 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 			element.setPrixUnitaireHT(detail.getPrixUnitaire());
 			
 			element.setPrixTotalHT(detail.getPrixTotalHT());
+			
+			
+			element.setUnite(detail.getUnite());
 			
 
 			if (element.getPrixUnitaireHT() != null && element.getQuantite() != null) {

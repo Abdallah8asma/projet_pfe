@@ -234,6 +234,8 @@ public class ReceptionAchatPersistanceUtilities {
 		entity.setTaxeId(value.getTaxeId());
 		entity.setReferenceArticle(value.getReferenceArticle());
 		entity.setDesignation(value.getDesignation());
+		
+		entity.setUnite(value.getUnite());
 
 		return entity;
 	}
@@ -264,6 +266,9 @@ public class ReceptionAchatPersistanceUtilities {
 		
 		value.setReferenceArticle(entity.getReferenceArticle());
 		value.setDesignation(entity.getDesignation());
+		
+		value.setUnite(entity.getUnite());
+		
 		/*
 		if (entity.getProduit()!=null) {
 			ProduitValue produitValue = produitPersistance.rechercheProduitById(entity.getProduit());
@@ -295,6 +300,8 @@ public class ReceptionAchatPersistanceUtilities {
 		value.setSerialisable(entity.isSerialisable());
 		
 		value.setNumeroSeries(entity.getNumeroSeries());
+		
+		value.setUnite(entity.getUnite());
 		
 		if(entity.getReceptionAchat() != null) {
 			
