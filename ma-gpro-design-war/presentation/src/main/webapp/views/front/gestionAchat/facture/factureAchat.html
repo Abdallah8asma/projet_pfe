@@ -624,7 +624,7 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-6" ng-controller="DatepickerDemoController">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
 
 
                 <div class="form-group">
@@ -634,7 +634,7 @@
                     </div>
                     <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
                       ng-model="factureAchatCourant.date"
-                      ng-change="getCurrentReferenceByTypeAndDeclareAndDate('Normal',factureAchatCourant.declarer,factureAchatCourant.date)"
+                      ng-change="modePdf != 'actif' && getCurrentReferenceByTypeAndDeclareAndDate('Normal',factureAchatCourant.declarer,factureAchatCourant.date)"
                        is-open="opened" datepicker-options="dateOptions"
                       date-disabled="enabled(date, mode)" close-text="Close" />
 
@@ -649,8 +649,22 @@
                   </div>
                 </div>
               </div>
+              
+              	<div class="col-sm-4">
 
-              <div class="col-sm-6">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Ref.Facture Fourn.</span>
+											</div>
+											<input type="text" class="form-control" ng-init="factureAchatCourant.refexterne =''"
+												ng-model="factureAchatCourant.refexterne">
+										</div>
+									</div>
+
+								</div>
+
+              <div class="col-sm-4">
 
 
                 <div class="input-group">
@@ -693,7 +707,7 @@
                     <div class="input-group-prepend">
                       <div class="input-group-text">
                         <label class="checkbox checkbox-square checkbox-primary">
-                          <input type="checkbox" class="form-control" ng-init="factureAchatCourant.declarer=''"
+                          <input type="checkbox" class="form-control"
               ng-model="factureAchatCourant.declarer" 
               
                ng-change="getCurrentReferenceByTypeAndDeclareAndDate('Normal',factureAchatCourant.declarer,factureAchatCourant.date)"

@@ -89,6 +89,38 @@ angular
 					
 				}
 				
+				// getCurrentReferenceByTypeAndDeclareAndDate
+				$scope.getCurrentReferenceByTypeAndDeclareAndDate  = function (typeFacture,declarer,date) {
+					
+					var type ="";
+					
+					if(declarer == true){
+
+						type = true;
+	
+					}
+					else {
+				
+					type = false;
+				
+
+				   }
+	               
+							$http
+						.get(
+							UrlAtelier
+							+ "/factureAchat/getCurrentReferenceMensuelByTypeAndDeclareAndDate:"+typeFacture +":"+type+":"+formattedDate(date)
+						)
+						.success(
+							function (res) {
+								$scope.factureAchatCourant.reference = res;
+								$scope.factureAchatCourant.refAvantChangement = res;
+
+							}
+						);
+					
+					}
+				
 				// Liste des unités :uniteArticle
 							$scope.listeUniteArticle = function() {
 								$http
@@ -490,6 +522,7 @@ angular
 								$scope.factureAchatCourant.date = resultat.dateLivrison;
 								$scope.factureAchatCourant.idMarche = resultat.idMarche;
 								$scope.factureAchatCourant.idDepot = resultat.idDepot;
+								$scope.factureAchatCourant.refexterne = resultat.refexterne;
 
 								// listDetFactureAchat
 								$scope.listDetFactureAchatPRBL = resultat.listDetFactureAchat;
@@ -507,10 +540,30 @@ angular
 									.log(error.statusText);
 							});
 				}
+				
+				
+					$scope.modifierFormatDate = function (dateUp) {
+					const dateTimeFormat = new Intl.DateTimeFormat("en", {
+						year: "numeric",
+						month: "numeric",
+						day: "2-digit",
+					});
+					var [
+						{ value: month },
+						,
+						{ value: day },
+						,
+						{ value: year }
+					] = dateTimeFormat.formatToParts(dateUp);
+					return $scope.dateParEdition = `${year}-${month}-${day}`;
+
+				}
 
 				if ($scope.navMode == "redirection") {
 					console.log("FROM FACTURE Achat redirection");
 					console.log("Sended PI ", $scope.sendedBR.partieIntersseId);
+						console.log("Sended PI ", $scope.sendedBR.partieIntersseId);
+
 
 
 
@@ -520,10 +573,12 @@ angular
 						$scope.affectedgroupeClientId = $scope.sendedBR.groupeClientId.toString();
 
 					$scope.factureAchatCourant = {
-						"date": $scope.sendedBR.date,
+						"date": $scope.sendedBR.dateLivraison,
 						"partieIntId": $scope.sendedBR.partieIntersseId.toString(),
 						"groupeClientId": $scope.affectedgroupeClientId,
-						"idDepot": $scope.sendedBR.idDepot
+						"idDepot": $scope.sendedBR.idDepot,
+						"declarer":$scope.sendedBR.facture,
+						"refexterne":$scope.sendedBR.refexterne
 					};
 
 
@@ -540,14 +595,23 @@ angular
 
 
 					console.log("Apres  validerNatureFini");
+					
+					
+					$scope.getCurrentReferenceByTypeAndDeclareAndDate('Normal',$scope.factureAchatCourant.declarer,$scope.factureAchatCourant.date); 
 
-					$http.get(UrlAtelier + "/factureAchat/getCurrentReferenceMensuel:Normal")
+								/*	if ($scope.factureAchatCourant.date != null) {
+							  	$scope.factureAchatCourant.date = $scope.modifierFormatDate($scope.factureAchatCourant.date);
+							     }*/
+
+
+
+					/*$http.get(UrlAtelier + "/factureAchat/getCurrentReferenceMensuel:Normal")
 						.success(
 							function (res) {
 
 								$scope.factureAchatCourant.reference = res;
 								$scope.factureAchatCourant.refAvantChangement = res;
-							});
+							});*/
 
 
 					$scope.displayMode = "edit";
@@ -896,37 +960,7 @@ angular
 
 				}
 
-
-				$scope.getCurrentReferenceByTypeAndDeclareAndDate  = function (typeFacture,declarer,date) {
-					
-					var type ="";
-					
-					if(declarer == true){
-
-						type = true;
 	
-					}
-					else {
-				
-					type = false;
-				
-
-				   }
-	               
-							$http
-						.get(
-							UrlAtelier
-							+ "/factureAchat/getCurrentReferenceMensuelByTypeAndDeclareAndDate:"+typeFacture +":"+type+":"+formattedDate(date)
-						)
-						.success(
-							function (res) {
-								$scope.factureAchatCourant.reference = res;
-								$scope.factureAchatCourant.refAvantChangement = res;
-
-							}
-						);
-					
-					}	
 				// AffectationBLFaconAchat BonLivAchat
 				$scope.affectationBLFaconAchat = function (
 					factureAchat) {
@@ -1061,22 +1095,7 @@ angular
 				}
 
 
-				$scope.modifierFormatDate = function (dateUp) {
-					const dateTimeFormat = new Intl.DateTimeFormat("en", {
-						year: "numeric",
-						month: "numeric",
-						day: "2-digit",
-					});
-					var [
-						{ value: month },
-						,
-						{ value: day },
-						,
-						{ value: year }
-					] = dateTimeFormat.formatToParts(dateUp);
-					return $scope.dateParEdition = `${year}-${month}-${day}`;
-
-				}
+			
 
 
 				// Sauvegarder bon de Achat
@@ -1190,6 +1209,12 @@ angular
 														// Attributs
 														// de
 														// Recherche
+														
+																								if (dataGetFactureAchat.date !== null) {
+					dataGetFactureAchat.date = $scope.modifierFormatDate(dataGetFactureAchat.date);
+					} 
+
+
 														$scope.factureAchatCourant = dataGetFactureAchat ? angular
 															.copy(dataGetFactureAchat)
 															: {};
@@ -1299,6 +1324,12 @@ angular
 											$scope.listDocFactureAchat = dataGetFactureAchat.listDocFactureAchat;
 											$scope.listDetFactureAchatPRBL = dataGetFactureAchat.listDetFactureAchat;
 											
+											
+											
+														if (dataGetFactureAchat.date !== null) {
+					dataGetFactureAchat.date = $scope.modifierFormatDate(dataGetFactureAchat.date);
+					} 
+
 
 											// Attributs
 											// de
