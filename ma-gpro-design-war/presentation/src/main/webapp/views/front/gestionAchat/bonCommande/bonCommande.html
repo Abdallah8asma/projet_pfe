@@ -816,10 +816,12 @@
 											<table ng-show="modePdf != 'actif'" class="table table-bordered table-condensed table-head-color">
 												<thead>
 													<tr>
-														<th style="width: 30%">R&eacute;f.Article</th>
+														<th style="width: 15%">R&eacute;f.Article</th>
 														<th style="width: 25%">Article</th>
 														<th style="width: 15%">Sous Famille</th>
+															<th style="width: 7%">TVA</th>
 														<th style="width: 10%">Quantit&eacute;</th>
+														<th style="width: 7%">UNITE</th>
 														<th style="width: 15%" class="is-required">Prix Unitaire</th>
 														<th><span class="ms-CommandButton-icon float-right" ng-click="ajoutProduit()"> <a
 																	href="javascript:void(0)"> <i class="ms-Icon ms-Icon--CirclePlus"
@@ -848,6 +850,21 @@
 															</select></td>
 														<td><span e-form="rowform">
 																{{produit.sousFamilleArtEntite || 'EMPTY' }} </span></td>
+																
+																
+																
+																								<td>
+
+																<select ui-select2 ng-model="produit.taxeId"
+																	 data-placeholder="..."
+																	style="width: 100%"  class="form-control ">
+																	<option ng-repeat="tax in ListeTaxe" value="{{tax.id}}">
+																		{{tax.designation}}
+																	</option>
+																</select>
+															</td>
+																
+																
 														<td><input type="number" min="1" class="form-control" ng-model="produit.quantite" required="required"
 																name="quantite" />
 
@@ -857,6 +874,18 @@
 																	valeur doit être supérieure ou égale à 0 !</div>
 															</div>
 														</td>
+														
+														
+															<td>
+
+																<select ui-select2 ng-model="produit.unite"
+																	 data-placeholder="..."
+																	style="width: 100%"  class="form-control ">
+																	<option ng-repeat="unite in listeUniteArticle" value="{{unite.designation}}">
+																		{{unite.designation}}
+																	</option>
+																</select>
+															</td>
 
 														<td><input type="number" class="form-control" ng-model="produit.prixUnitaire" min="0" required="required"
 																pattern="^\d*(\.\d{0,2})?$" placeholder="0.00" value="0" name="prixUnitaire" />
@@ -871,7 +900,7 @@
 
 														<td style="white-space: nowrap">
 
-															<form editable-form name="rowform" onbeforesave="saveProduit($data, produit.id)"
+														<!-- 	<form editable-form name="rowform" onbeforesave="saveProduit($data, produit.id)"
 																ng-show="rowform.$visible" class="form-buttons form-inline float-right"
 																shown="produitInserree == produit">
 																<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm"
@@ -883,7 +912,7 @@
 																	class="btn btn-sm ">
 																	<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
 																</button>
-															</form>
+															</form> -->
 															<div class="buttons float-right" ng-show="!rowform.$visible">
 
 																<button data-nodrag class="btn btn-sm"
@@ -911,10 +940,12 @@
 											<table ng-show="modePdf == 'actif'" class="table table-bordered table-condensed table-head-color">
 												<thead>
 													<tr>
-														<th style="width: 30%">R&eacute;f.Article</th>
+														<th style="width: 15%">R&eacute;f.Article</th>
 														<th style="width: 25%">Article</th>
 														<th style="width: 15%">Sous Famille</th>
+															<th style="width: 7%">TVA</th>
 														<th style="width: 10%">Quantit&eacute;</th>
+															<th style="width: 7%">UNITE</th>
 														<th style="width: 15%" >Prix Unitaire</th>
 														<th><span class="ms-CommandButton-icon float-right" ng-click="ajoutProduit()"> <a
 																	href="javascript:void(0)"> <i class="ms-Icon ms-Icon--CirclePlus"
@@ -937,6 +968,22 @@
 																|| 'EMPTY'}}</span></td>
 														<td><span e-form="rowform">
 																{{produit.sousFamilleArtEntite || 'EMPTY' }} </span></td>
+																
+																
+																													<td>
+
+																<select ui-select2 ng-model="produit.taxeId"
+																	 data-placeholder="..."
+																	style="width: 100%"  class="form-control ">
+																	<option ng-repeat="tax in ListeTaxe" value="{{tax.id}}">
+																		{{tax.designation}}
+																	</option>
+																</select>
+															</td>		
+																
+																
+																
+																
 														</td>
 														<td><input type="number" class="form-control" ng-model="produit.quantite" min="0" required="required"
 																pattern="^\d*(\.\d{0,2})?$" placeholder="0" value="0" name="quantite" />
@@ -946,6 +993,19 @@
 																	valeur doit être supérieure ou égale à 0 !</div>
 															</div>
 														</td>
+														
+														
+														
+																								<td>
+
+																<select ui-select2 ng-model="produit.unite"
+																	 data-placeholder="..."
+																	style="width: 100%"  class="form-control ">
+																	<option ng-repeat="unite in listeUniteArticle" value="{{unite.designation}}">
+																		{{unite.designation}}
+																	</option>
+																</select>
+															</td>
 
 														<td><input type="number" class="form-control" ng-model="produit.prixUnitaire" min="0" required="required"
 																pattern="^\d*(\.\d{0,2})?$" placeholder="0.00" value="0" name="prixUnitaire" />
@@ -960,7 +1020,7 @@
 
 														<td style="white-space: nowrap">
 
-															<form editable-form name="rowform" onbeforesave="saveProduit($data, produit.id)"
+													<!-- 		<form editable-form name="rowform" onbeforesave="saveProduit($data, produit.id)"
 																ng-show="rowform.$visible" class="form-buttons form-inline"
 																shown="produitInserree == produit">
 																<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm float-right"
@@ -974,7 +1034,7 @@
 
 																	<i class="ms-Icon ms-Icon--Cancel ms-Icon-Gpro" aria-hidden="true"></i>
 																</button>
-															</form>
+															</form> -->
 															<div class="buttons" ng-show="!rowform.$visible">
 
 																<button data-nodrag class="btn btn-sm " ng-click="removeProduit($index)">

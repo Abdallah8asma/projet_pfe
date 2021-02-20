@@ -212,7 +212,34 @@ angular
 								 
 									angular.forEach(resultat.listDetLivraisonVente, function (element, key) {
 										
+										
+											$scope
+												.getProductFilter(element.produitId);
+												
+										
+										element.referenceArticle= $scope.productFilter[0].ref;
+										
+										
+										
+										
+										element.designation = element.produitDesignation;
+										
 										 element.prixUnitaire = element.prixUnitaireHT ;
+									
+									
+									
+									      	
+
+											if ($scope.productFilter.length > 0) {
+
+
+												element.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
+												
+	                                           }
+									
+									
+									
+									
 										 $scope.listProduitReceptions.push(element);
 
 
@@ -618,6 +645,9 @@ angular
 				}
 				// ** Ajout Bon de Reception de Achat
 				$scope.AffectationAchatBC = function () {
+					
+					$scope.tagReferenceBLivList = [];
+					
 					$scope.receptionAchatCourante = {
 						"dateIntroduction": new Date(),
 						"dateLivraison": new Date(),
@@ -1549,6 +1579,14 @@ angular
 											// $scope.listeDocumentReceptionAchat
 											// =
 											// datagetReceptionAchat.documentReceptionAchats;
+											
+																if (datagetReceptionAchat.dateIntroduction !== null) {
+							  	datagetReceptionAchat.dateIntroduction = $scope.modifierFormatDate(datagetReceptionAchat.dateIntroduction);
+							     }
+		
+							if (datagetReceptionAchat.dateLivraison !== null) {
+							  	datagetReceptionAchat.dateLivraison = $scope.modifierFormatDate(datagetReceptionAchat.dateLivraison);
+							     }
 
 											$scope.receptionAchatCourante = datagetReceptionAchat ? angular
 												.copy(datagetReceptionAchat)
@@ -1625,6 +1663,17 @@ angular
 											$scope.listeDocumentReceptionAchat = datagetReceptionAchat.listDocReceptionAchat ;
 
 											$scope.listSuppDetReceptionAchat = [];
+											
+											
+												if (datagetReceptionAchat.dateIntroduction !== null) {
+							  	datagetReceptionAchat.dateIntroduction = $scope.modifierFormatDate(datagetReceptionAchat.dateIntroduction);
+							     }
+		
+							if (datagetReceptionAchat.dateLivraison !== null) {
+							  	datagetReceptionAchat.dateLivraison = $scope.modifierFormatDate(datagetReceptionAchat.dateLivraison);
+							     }
+											
+											
 
 											// disable
 											// update
@@ -1750,7 +1799,7 @@ angular
 					//	$scope.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
 							
 					produitReception.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
-						produitReception.prixUnitaire = $scope.productFilter[0].prixAchat;
+						produitReception.prixUnitaire = $scope.productFilter[0].pu;
 						
 						produitReception.taxeId = $scope.productFilter[0].idTaxe;
 
@@ -1938,7 +1987,7 @@ angular
 
 					$scope.produitInserree = {
 						produitId: '',
-						quantite: '',
+						quantite: 1,
 						prix: '',
 						receptionAchatId: '',
 						'checked': false
