@@ -55,7 +55,19 @@ public class ProduitCommandeAchatEntity {
 	private Long taxeId;
 	
 	
+	@Column(name="UNITE")
+	private String unite;
 	
+	
+	
+
+	public String getUnite() {
+		return unite;
+	}
+
+	public void setUnite(String unite) {
+		this.unite = unite;
+	}
 
 	public Long getTaxeId() {
 		return taxeId;

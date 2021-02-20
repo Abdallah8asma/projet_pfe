@@ -510,7 +510,12 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
                      ArticleValue produitValue=articlePersistance.getArticleParId(detFactureAchat.getProduitId());
 				//ProduitValue produitValue = produitPersistance.rechercheProduitById(detFactureAchat.getProduitId());
 				
+                     
+                     if(detFactureAchat.getTaxeId() == null)
 				    detFactureAchat.setTaxeId(produitValue.getIdTaxe());
+                     
+                     
+                     
 					detFactureAchat.setSerialisable(produitValue.isSerialisable());
 					
 					
@@ -525,14 +530,14 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 					
 					
 					
-					if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
-						produitTaxeMap.put(produitValue.getIdTaxe(), totalApresRemise);
+					if (!produitTaxeMap.containsKey(detFactureAchat.getTaxeId())) {
+						produitTaxeMap.put(detFactureAchat.getTaxeId(), totalApresRemise);
 
 					} else {
 						// TODO ERREUR
-						Double assietteValue = produitTaxeMap.get(produitValue.getIdTaxe())
+						Double assietteValue = produitTaxeMap.get(detFactureAchat.getTaxeId())
 								+ totalApresRemise;
-						produitTaxeMap.put(produitValue.getIdTaxe(), assietteValue);
+						produitTaxeMap.put(detFactureAchat.getTaxeId(), assietteValue);
 
 					}
 					

@@ -22,6 +22,20 @@ public class ProduitCommandeAchatValue implements Comparable<ProduitCommandeAcha
 	private String PartieIntersseAbbreviation;
 
 	private Long taxeId;
+	
+	
+	private String unite;
+	
+	
+
+
+	public String getUnite() {
+		return unite;
+	}
+
+	public void setUnite(String unite) {
+		this.unite = unite;
+	}
 
 	public Long getTaxeId() {
 		return taxeId;
