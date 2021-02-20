@@ -18,10 +18,25 @@ public class ListProduitElementValue {
 	private Long idMarche;
 
 	private Long idDepot;
+	
+	private String refexterne;
+	
+	
 
 	private List<DetFactureVenteValue> listDetFactureVente;
 
 	private List<DetFactureAchatValue> listDetFactureAchat;
+	
+	
+	
+
+	public String getRefexterne() {
+		return refexterne;
+	}
+
+	public void setRefexterne(String refexterne) {
+		this.refexterne = refexterne;
+	}
 
 	public Long getIdDepot() {
 		return idDepot;

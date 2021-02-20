@@ -172,6 +172,8 @@ public class BonCommandeAchatPersistanceUtilities {
 		entity.setDateLivraison(value.getDateLivraison());
 		entity.setProduit(value.getProduitId());
 		entity.setTaxeId(value.getTaxeId());
+		
+		entity.setUnite(value.getUnite());
 
 		return entity;
 	}
@@ -193,6 +195,8 @@ public class BonCommandeAchatPersistanceUtilities {
 		value.setCommandeAchatId(entity.getCommandeAchat().getId());
 		value.setProduitId(entity.getProduit());
 		value.setTaxeId(entity.getTaxeId());
+		
+		value.setUnite(entity.getUnite());
 
 		return value;
 	}

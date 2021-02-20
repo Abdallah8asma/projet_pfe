@@ -147,9 +147,24 @@ public class FactureAchatEntity implements Serializable {
 	
 	
 	
-	  
+	/** The reference. */
+	@Column(name = "REFEXTERNE")
+	private String refexterne;
 	
 	
+	
+	
+	
+	
+	
+	public String getRefexterne() {
+		return refexterne;
+	}
+
+	public void setRefexterne(String refexterne) {
+		this.refexterne = refexterne;
+	}
+
 	public boolean isForcerCalculMontant() {
 		return forcerCalculMontant;
 	}

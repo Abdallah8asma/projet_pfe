@@ -2241,6 +2241,9 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 			listProduitElementValue.setPartieIntId(listLivraisonVenteValue.get(FIRST_INDEX).getPartieIntersseId());
 			listProduitElementValue.setDateLivrison(listLivraisonVenteValue.get(FIRST_INDEX).getDateLivraison());
 			listProduitElementValue.setIdDepot(listLivraisonVenteValue.get(FIRST_INDEX).getIdDepot());
+			
+			listProduitElementValue.setRefexterne(listLivraisonVenteValue.get(FIRST_INDEX).getRefexterne());
+			
 			// Added By Ghazi on 25/05/2018
 			// listProduitElementValue.setIdMarche(listLivraisonVenteValue.get(FIRST_INDEX).getMarcheId());
 

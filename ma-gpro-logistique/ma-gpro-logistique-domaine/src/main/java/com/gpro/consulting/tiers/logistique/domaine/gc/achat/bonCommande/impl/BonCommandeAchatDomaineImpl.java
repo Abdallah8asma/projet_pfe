@@ -17,6 +17,7 @@ import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnue
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.domaine.elementBase.IUniteArticleDomaine;
 import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ListProduitElementValue;
@@ -91,6 +92,12 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 	
 	@Autowired
 	private IGuichetMensuelDomaine guichetierMensuelDomaine;
+	
+	@Autowired
+	private IUniteArticleDomaine uniteArticleDomaine;
+	
+	
+	
 
 	/**
 	 * Creates the.
@@ -162,11 +169,14 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 			ArticleValue articleValue=new ArticleValue();
 			articleValue.setId(produitCommande.getProduitId());
 			
+			
 			ArticleValue produitValue=articleService.rechercheArticleParId(articleValue);
 			
 			
-			
+			if(produitCommande.getTaxeId() == null)
 			produitCommande.setTaxeId(produitValue.getIdTaxe());
+			
+			
 			
 			Double totalProduitCommande = (produitCommande.getPrixUnitaire() * produitCommande.getQuantite());
 			if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
@@ -309,7 +319,13 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 			articleValue.setId(produitCommande.getProduitId());
 			ArticleValue produitValue=articleService.rechercheArticleParId(articleValue);
 			
+			
+	
+	
+			if(produitCommande.getTaxeId() == null)
 			produitCommande.setTaxeId(produitValue.getIdTaxe());
+			
+		
 			Double totalProduitCommande = (produitCommande.getPrixUnitaire() * produitCommande.getQuantite());
 			if (!produitTaxeMap.containsKey(produitValue.getIdTaxe())) {
 
@@ -463,10 +479,20 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 		}
 
 		List<CommandeAchatValue> bonCommandelist = bonCommandePersistance.getReferenceBCByClientId(idClient);
+		
+		List<CommandeAchatValue> listeFinal = new ArrayList<CommandeAchatValue>();
+		
+		for(CommandeAchatValue vC : bonCommandelist) {
+			
+			if(!listBonCommandeToRemove.contains(vC.getReference()))
+				listeFinal.add(vC) ;
+			
+		}
+		
 
-		bonCommandelist.removeAll(listBonCommandeToRemove);
+		//bonCommandelist.removeAll(listBonCommandeToRemove);
 
-		return bonCommandelist;
+		return listeFinal;
 	}
 
 	/**
@@ -596,6 +622,7 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 		return vNumBonCommandeAchat.toString();
 	}
 
+	/*
 	@Override
 	public ListProduitElementValue getProduitElementList(List<String> refBonCommandesList, Long receptionAchatId) {
 
@@ -720,10 +747,10 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 
 					element.setProduitDesignation(produitValue.getDesignation());
 					element.setProduitReference(produitValue.getRef());
-
-					/*** appel fonction rechercheMC prix special *****/
-
-					/******/
+					element.setTaxeId(produitValue.getIdTaxe());
+					
+				
+				
 					// TO O DO A changer
 					// Commented
 
@@ -764,7 +791,106 @@ public class BonCommandeAchatDomaineImpl implements IBonCommandeAchatDomaine {
 
 		return listProduitElementValue;
 	}
+	*/
 	
+	
+	
+	
+	
+	@Override
+	public ListProduitElementValue getProduitElementList(List<String> refBonCommandesList, Long receptionAchatId) {
+
+		
+		
+		List<CommandeAchatValue> listCommandeVenteValue = bonCommandePersistance
+				.getProduitElementList(refBonCommandesList);
+
+		List<ProduitCommandeAchatValue> listDetCommandeValue = new ArrayList<ProduitCommandeAchatValue>();
+
+		ListProduitElementValue listProduitElementValue = new ListProduitElementValue();
+
+		if (listCommandeVenteValue.size() > 0) {
+	
+			listProduitElementValue.setPartieIntId(listCommandeVenteValue.get(FIRST_INDEX).getPartieIntersseId());
+			listProduitElementValue.setDateLivraison(listCommandeVenteValue.get(FIRST_INDEX).getDateLivraison());
+		
+			
+
+		}
+		
+		String choixKey = "CH1";
+		
+		Long ordre = new Long(0);	
+		
+		List<DetLivraisonVenteValue> listDetFactureVente = new ArrayList<DetLivraisonVenteValue>();
+
+
+		for (CommandeAchatValue commandeVente : listCommandeVenteValue) {
+
+			for (ProduitCommandeAchatValue element : commandeVente.getListProduitCommandes()) {
+
+				//listDetCommandeValue.add(detCommandeVente);
+				
+			
+				
+				if (element.getProduitId() != null) {
+					
+					
+					
+					DetLivraisonVenteValue det = new DetLivraisonVenteValue();
+					
+					det.setFicheId(ordre);
+					
+					det.setChoix(choixKey);
+
+					det.setProduitId(element.getProduitId());
+					det.setTaxeId(element.getTaxeId());
+					det.setUnite(element.getUnite());
+					
+					det.setPrixUnitaireHT(element.getPrixUnitaire());
+					det.setQuantite(element.getQuantite());
+					
+					
+					if (element.getPrixUnitaire() != null && element.getQuantite() != null)
+						det.setPrixTotalHT(element.getPrixUnitaire() * element.getQuantite() );
+
+				
+					
+					ArticleValue articleValue=new ArticleValue();
+					articleValue.setId(element.getProduitId());
+					
+					//produitValue = produitService.rechercheProduitById(element.getProduitId());
+					
+					ArticleValue produitValue=articleService.rechercheArticleParId(articleValue);
+					
+					if (produitValue != null) {
+
+
+
+						det.setProduitDesignation(produitValue.getDesignation());
+						det.setProduitReference(produitValue.getRef());
+					
+					}
+					
+					ordre++;
+				
+				
+				listDetFactureVente.add(det);
+								
+				}
+					
+		
+				
+			}
+		}
+		
+	
+
+		listProduitElementValue.setNombreResultaRechercher(listDetFactureVente.size());
+		listProduitElementValue.setListDetLivraisonVente(listDetFactureVente);
+
+		return listProduitElementValue;
+	}
 	
 	
 	private String getReferenceBonCommandeAchatFromGuichetMensuel(final Calendar pDateBonLiv , final boolean increment) {

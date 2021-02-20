@@ -87,6 +87,8 @@ public class FactureAchatPersistanceUtilities {
 		
 		dto.setForcerCalculMontant(entity.isForcerCalculMontant());
 		
+		dto.setRefexterne(entity.getRefexterne());
+		
 		if (entity.getListDetFactureAchat() != null) {
 			List<DetFactureAchatValue> list = new ArrayList<DetFactureAchatValue>();
 			for (DetFactureAchatEntity detFactureAchatEntity : entity.getListDetFactureAchat()) {
@@ -159,6 +161,7 @@ public class FactureAchatPersistanceUtilities {
 		
 		entity.setForcerCalculMontant(dto.isForcerCalculMontant());
 		
+		entity.setRefexterne(dto.getRefexterne());
 		
 		if (dto.getListDetFactureAchat() != null) {
 			Set<DetFactureAchatEntity> list = new HashSet<DetFactureAchatEntity>();
