@@ -3835,7 +3835,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
                    			if(tx.getDesignation().contains("TVA"))
                    				tva += tf.getMontant() ;
                    			
-                   			if(tx.getDesignation().contains("FAODEC"))
+                   			if(tx.getDesignation().contains("FODEC"))
                    				fodec += tf.getMontant() ;
                    			
                    			if(tx.getDesignation().contains("TIMBRE"))
