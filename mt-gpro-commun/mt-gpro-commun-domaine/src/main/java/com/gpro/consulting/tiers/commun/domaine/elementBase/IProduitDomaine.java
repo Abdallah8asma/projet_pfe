@@ -61,4 +61,6 @@ public interface IProduitDomaine {
 	public Map<Long, ProduitValue> mapProduitById();
 
 	public List<ProduitValue> rechercheProduitFinance();
+
+	public List<ProduitValue> rechercheProduitNonFinance();
 }

@@ -1214,6 +1214,12 @@ public class FactureDomaineImpl implements IFactureDomaine {
 	
 		
 	}
+
+	@Override
+	public ResultatRechecheFactureValue rechercherMultiCritereAvecDetail(RechercheMulticritereFactureValue request) {
+		// TODO Auto-generated method stub
+		return facturePersistance.rechercherMultiCritereAvecDetail(request);
+	}
 	
 
 	

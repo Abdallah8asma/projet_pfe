@@ -44,5 +44,7 @@ public interface IFactureDomaine {
 
 	public String getCurrentReferenceByTypeFactureAndDeclarer(String type, boolean declarer, Calendar instance,
 			boolean b);
+
+	public ResultatRechecheFactureValue rechercherMultiCritereAvecDetail(RechercheMulticritereFactureValue request);
 	
 }

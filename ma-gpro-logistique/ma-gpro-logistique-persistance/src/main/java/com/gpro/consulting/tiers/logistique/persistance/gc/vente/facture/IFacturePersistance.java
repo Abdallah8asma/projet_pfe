@@ -55,5 +55,8 @@ public interface IFacturePersistance {
 	public boolean existeBLexacte(String infoLivraison);
 
 	public List<FactureVenteValue> getByIdReglement(Long id);
+	
+	public ResultatRechecheFactureValue rechercherMultiCritereAvecDetail(
+			RechercheMulticritereFactureValue request);
 
 }
