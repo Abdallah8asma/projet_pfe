@@ -1263,6 +1263,55 @@
                         </div>
                       </div>
                     </div>
+                    
+                    
+                    
+                    
+								<div class="col-sm-4">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Produit</label>
+										</div>
+										<select ui-select2 ng-model="produitIdNonFinancier" data-placeholder="..."
+											class="form-control" style="border: 1px solid #e5eaee !important;"
+											e-name="produitIdNonFinancier" e-form="rowform">
+											<option value=""></option>
+											<option ng-repeat="produitNonFinancier in listeProduitNonFinancier" value="{{produitNonFinancier.id}}">
+												{{produitNonFinancier.designation}}</option>
+										</select>
+
+
+
+									</div>
+
+
+
+
+								</div>
+							</div>
+
+							<div class="col-sm-2">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<button type="button" class="btn btn-primary" class="btn btn-action"
+												ng-click="ajoutProduitNonFinancier(produitIdNonFinancier)">Ajouter</button>
+	
+										</div>
+	
+									</div>
+								</div>
+							</div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
 
                   </div>
 
@@ -1291,6 +1340,7 @@
                             <th style="width: 8%">P.U.H.T</th>
                             <th style="width: 7%">Remise</th>
                             <th style="width: 9%">P.T.H.T</th>
+                            	<th style="width: 3%"></th>
 
                           </tr>
                         </thead>
@@ -1300,7 +1350,11 @@
                           <td>
                             <input type="text" class="form-control" ng-model="detFactureVente.description" />
                           </td>
-                          <td>{{ detFactureVente.numeroOF }}</td>
+                      <!--     <td>{{ detFactureVente.numeroOF }}</td> -->
+                           <td>
+                            <input type="text" class="form-control" ng-model="detFactureVente.numeroOF" />
+                          </td>
+                          
                           <!-- <td>{{ detFactureVente.quantite }}</td> -->
                           
                             <td>
@@ -1320,6 +1374,12 @@
                               ng-model="detFactureVente.remise" placeholder="{{detFactureVente.remise}}" disabled />
                           </td>
                           <td>{{ detFactureVente.prixTotalHT | prixFiltre }}</td>
+                          
+                          
+									<td><button data-nodrag class="btn btn-sm glyphicon glyphicon-trash"
+											ng-click="removeProduit($index)"></button></td>
+											
+											
                         </tr>
                       </table>
 

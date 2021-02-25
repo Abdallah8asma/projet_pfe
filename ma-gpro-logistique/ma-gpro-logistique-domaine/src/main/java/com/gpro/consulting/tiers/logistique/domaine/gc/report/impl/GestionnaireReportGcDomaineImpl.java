@@ -1489,7 +1489,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 
 		factureReportList.setParams(params);
 
-		ResultatRechecheFactureValue result = facturePersistance.rechercherMultiCritere(request);
+		ResultatRechecheFactureValue result = facturePersistance.rechercherMultiCritereAvecDetail(request);
 
 		List<FactureVenteValue> factureVenteList = new ArrayList<FactureVenteValue>(result.getList());
 

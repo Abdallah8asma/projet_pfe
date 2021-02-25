@@ -60,4 +60,6 @@ public interface IProduitPersistance {
 	 
 	 public ProduitValue rechercheProduitParReference(String reference);
 	 public List<ProduitValue> rechercheProduitFinance();
+
+	public List<ProduitValue> rechercheProduitNonFinance();
 }

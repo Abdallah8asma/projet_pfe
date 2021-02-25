@@ -44,10 +44,12 @@ angular
 							 $scope.msgErreurUpdateBL = ""; 
 
 				$scope.produitIdFinancier ="";
-
+               $scope.produitIdNonFinancier ="";
 
 
 				$scope.listeProduitFinancier = [];
+				
+			    $scope.listeProduitNonFinancier = [];
 
 			
 			
@@ -75,6 +77,24 @@ angular
 							}
 
 							$scope.listeProduitCacheFinance();
+							
+							
+									// Liste des produits
+							$scope.listeProduitCacheNonFinance = function() {
+								$http
+										.get(
+											UrlCommun
+														+ "/produit/all/non-retour")
+										.success(
+												function(data) {
+													console
+													
+													$scope.listeProduitNonFinancier = data;
+
+												});
+							}
+
+							$scope.listeProduitCacheNonFinance();
 			
 				// REST SERVICE MAGAZINS
 				$scope.listeMagazinCache = function() {
@@ -425,8 +445,52 @@ angular
 		
 												$scope.produitInserree = {
 													produitId :produitId,
-													produitDesignation : element[0].reference,
-													produitReference : element[0].designation,
+													produitReference : element[0].reference,
+													produitDesignation : element[0].designation,
+													numeroOF : element[0].reference,
+													
+													quantite : 1,
+													unite : '',
+													prixUnitaireHT : element[0].prixUnitaire,
+													choix: "1",
+													ficheId : 1,
+													//prixTotalHT : '',
+												//	nouveau :true,
+													//remise : ''
+												};
+											
+												$scope.listDetLivraisonVentePRBS
+											.push($scope.produitInserree);
+		
+											}
+										
+										
+		
+											
+									  }
+									
+									};
+									
+										 	// ajout d'un Produit
+									 $scope.ajoutProduitNonFinancier = function(produitId) {
+
+
+										console.log("call ajoutProduitNonFinancier");
+										console.log("produitId=",produitId);
+									
+
+										if(produitId!=null){
+		
+											var element = $scope.listeProduitNonFinancier.filter(e => e.id == produitId);
+								
+											if(element != null && element[0] != null){
+		
+		
+												$scope.produitInserree = {
+													produitId :produitId,
+												produitReference : element[0].reference,
+													produitDesignation : element[0].designation,
+														numeroOF : element[0].reference,
 													quantite : 1,
 													unite : '',
 													prixUnitaireHT : element[0].prixUnitaire,
@@ -708,6 +772,9 @@ angular
 			 // Annuler Recherche
 			 $scope.annulerAjout = function(){
 				 
+			
+				$scope.produitIdFinancier ="";
+				$scope.produitIdNonFinancier ="";
 				 
 				 $scope.traitementEnCours = "false";
 				 
@@ -770,6 +837,10 @@ angular
 
 			 // AffectationBLVente BonLivVente
 			 $scope.affectationBLVente = function(bonLVente) {
+				
+					$scope.produitIdFinancier ="";
+				    $scope.produitIdNonFinancier ="";
+				
 				 $scope.natureLivraison ="FINI";
 				 $scope.listTaxeLivraisonInitMethod();
 				 $scope.initTaxeRemoved();
@@ -1221,6 +1292,9 @@ angular
 											 $log.debug("OLD------ listDetLivraisonVentePRBS :" );
 											 $log.debug(JSON.stringify($scope.listDetLivraisonVentePRBS, null, "    ") );
 										}
+										
+										
+										 $scope.listDetLivraisonVentePRBS = dataGetBonLivVente.listDetLivraisonVente;
 										
 										//Initialiser le filtre des taxe à éliminer
 										 $scope.taxeIdRemove= [];

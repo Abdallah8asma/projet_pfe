@@ -192,7 +192,7 @@
 											ng-init="bonLivraisonVenteCourant.partieIntId=''"
 											style="border: 1px solid #e5eaee !important;">
 											<option value="">Tous Clients</option>
-											<option ng-repeat="client in listePartieInteresseeCache"
+											<option ng-repeat="client in listePartieInteresseeCache | filter:{famillePartieInteressee:1}"
 												value="{{client.id}}">{{client.abreviation}}</option>
 										</select>
 									</div>
@@ -1076,6 +1076,56 @@
 									</div>
 								</div>
 							</div>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+								<div class="col-sm-4">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Produit</label>
+										</div>
+										<select ui-select2 ng-model="produitIdNonFinancier" data-placeholder="..."
+											class="form-control" style="border: 1px solid #e5eaee !important;"
+											e-name="produitIdNonFinancier" e-form="rowform">
+											<option value=""></option>
+											<option ng-repeat="produitNonFinancier in listeProduitNonFinancier" value="{{produitNonFinancier.id}}">
+												{{produitNonFinancier.designation}}</option>
+										</select>
+
+
+
+									</div>
+
+
+
+
+								</div>
+							</div>
+
+							<div class="col-sm-2">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<button type="button" class="btn btn-primary" class="btn btn-action"
+												ng-click="ajoutProduitNonFinancier(produitIdNonFinancier)">Ajouter</button>
+	
+										</div>
+	
+									</div>
+								</div>
+							</div>
+							
+							
+							
 
 						</div>
 
@@ -1094,7 +1144,7 @@
 									<tr style="font-weight: bold">
 										<th style="width: 10%">Ref</th>
 										<th style="width: 20%">Designation</th>
-										<th style="width: 10%">OFs</th>
+										<th style="width: 10%">OF</th>
 										<th style="width: 7%">Quantite</th>
 
 										<th style="width: 7%">Nbr.Colis</th>
@@ -1109,9 +1159,12 @@
 								<tr ng-repeat="detLivVente in listDetLivraisonVentePRBS">
 									<td>{{ detLivVente.produitReference  || 'empty'}}</td>
 									<td>{{ detLivVente.produitDesignation  || 'empty' }}</td>
-									<td>{{ detLivVente.numeroOF  || 'empty' }}</td>
+								<!-- 	<td>{{ detLivVente.numeroOF  || 'empty' }}</td>
+ -->
 
-									<td><input type="number" ng-model="detLivVente.quantite"></td>
+									<td><input class="form-control"  type="text" ng-model="detLivVente.numeroOF"></td>
+									
+									<td><input class="form-control" type="number" ng-model="detLivVente.quantite"></td>
 
 									
 
@@ -1119,7 +1172,7 @@
 									<!-- 	<td>{{ detLivVente.prixUnitaireHT || 'empty' }}</td> -->
 
 
-									<td><input type="text" ng-model="detLivVente.prixUnitaireHT"></td>
+									<td><input class="form-control"  type="text" ng-model="detLivVente.prixUnitaireHT"></td>
 
 
 									<td>{{ detLivVente.prixTotalHT | prixFiltre }}</td>

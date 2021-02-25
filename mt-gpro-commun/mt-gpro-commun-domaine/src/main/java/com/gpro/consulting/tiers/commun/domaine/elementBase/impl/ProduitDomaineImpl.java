@@ -218,4 +218,10 @@ public class ProduitDomaineImpl implements IProduitDomaine {
 		return produitPersistance.rechercheProduitFinance();
 	}
 
+	@Override
+	public List<ProduitValue> rechercheProduitNonFinance() {
+		// TODO Auto-generated method stub
+		return produitPersistance.rechercheProduitNonFinance();
+	}
+
 }

@@ -60,4 +60,6 @@ public interface IFactureService {
 			boolean b);
 	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public FactureVenteValue getFactureByReference(String reference);
+
+	public ResultatRechecheFactureValue rechercherMultiCritereAvecDetail(RechercheMulticritereFactureValue request);
 }
