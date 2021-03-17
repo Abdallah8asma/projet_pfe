@@ -41,6 +41,15 @@ public class SoldeClientPersistanceUtilities {
 			dto.setChiffreAffaireTmp(entity.getChiffreAffaireTmp());
 			dto.setDateDemarrage(entity.getDateDemarrage());
 			dto.setReglementTmp(entity.getReglementTmp());
+			
+			
+			dto.setTotalReglement(entity.getTotalReglement());
+			dto.setTotalFacture(entity.getTotalFacture());
+			dto.setRegelementPayes(entity.getRegelementPayes());
+			dto.setRegelementEnCirculation(entity.getRegelementEnCirculation());
+			dto.setTotalFactureNonPaye(entity.getTotalFactureNonPaye());
+			dto.setSoldeAnterieur(entity.getSoldeAnterieur());
+			dto.setDateSoldeAnterieur(entity.getDateSoldeAnterieur());
 		}
 		
 		return dto;
@@ -60,6 +69,16 @@ public class SoldeClientPersistanceUtilities {
 		entity.setChiffreAffaireTmp(dto.getChiffreAffaireTmp());
 		entity.setDateDemarrage(dto.getDateDemarrage());
 		entity.setReglementTmp(dto.getReglementTmp());
+		
+		
+		entity.setTotalReglement(dto.getTotalReglement());
+		entity.setTotalFacture(dto.getTotalFacture());
+		entity.setRegelementPayes(dto.getRegelementPayes());
+		entity.setRegelementEnCirculation(dto.getRegelementEnCirculation());
+		entity.setTotalFactureNonPaye(dto.getTotalFactureNonPaye());
+		entity.setSoldeAnterieur(dto.getSoldeAnterieur());
+		entity.setDateSoldeAnterieur(dto.getDateSoldeAnterieur());
+		
 		return entity;
 	}
 	
