@@ -31,6 +31,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.v
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ChoixRouleauValue;
 import com.gpro.consulting.tiers.logistique.coordination.fn.report.reporting.RechercheMulticritereFnReportingtValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reception.value.BonReceptionVue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.CommandeVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ProduitCommandeValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.DetLivraisonVenteValue;
@@ -1348,9 +1349,20 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 
 		List<LivraisonVenteVue> bonLivraisonlist = bonLivraisonPersistance.getReferenceBLByClientId(idClient);
 
-		bonLivraisonlist.removeAll(listBonLivraisonToRemove);
+List<LivraisonVenteVue> bonLivraisonlistFinal = new ArrayList<>();
+		
+		for(LivraisonVenteVue liv :bonLivraisonlist ) {
+			
+			if(!listBonLivraisonToRemove.contains(liv.getReferenceBL()))
+				bonLivraisonlistFinal.add(liv);
+		}
 
-		return bonLivraisonlist;
+		
+		return bonLivraisonlistFinal;
+		
+		//bonLivraisonlist.removeAll(listBonLivraisonToRemove);
+
+		//return bonLivraisonlist;
 	}
 
 	@Override

@@ -108,4 +108,10 @@ public class ProduitServiceImpl implements IProduitService{
 		return produitDomaine.rechercheProduitFinance();
 	}
 
+	@Override
+	public List<ProduitValue> rechercheProduitNonFinance() {
+		// TODO Auto-generated method stub
+		return produitDomaine.rechercheProduitNonFinance();
+	}
+
 }

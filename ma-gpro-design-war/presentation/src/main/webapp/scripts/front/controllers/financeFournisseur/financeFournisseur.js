@@ -68,8 +68,8 @@ angular
 				case 'elementReglementAchat':
 					$scope.ITEM = 'elementReglementAchat';
 					break;
-				case 'soldeClient':
-					$scope.ITEM = 'soldeClient';
+				case 'soldeFournisseur':
+					$scope.ITEM = 'soldeFournisseur';
 					break;
 				case 'echeancier':
 					$scope.ITEM = 'echeancier';

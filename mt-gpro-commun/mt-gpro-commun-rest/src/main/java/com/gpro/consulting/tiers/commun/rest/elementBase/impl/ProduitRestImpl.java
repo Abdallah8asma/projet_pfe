@@ -183,6 +183,25 @@ public class ProduitRestImpl {
             return vProduitValue;
 	  }
 	  
+	  @RequestMapping(value = "/all/non-retour", method = RequestMethod.GET, produces = "application/json")
+	  public @ResponseBody List < ProduitValue > viewAllProduitNonFinancier() {
+		  List < ProduitValue > vProduitValue = produitService.rechercheProduitNonFinance();
+          //Traitement : transformation de l'Id a sa propre Designation
+            for(ProduitValue produit : vProduitValue){
+      		 //SousFamille, Famille
+          	  Map<String, String> mapA = gestionnaireCacheService.rechercherProduitParId(produit.getSousFamilleId(),produit.getSiteId(), produit.getPartieIntersseId());
+      		  produit.setSousFamilleDesignation(mapA.get("sousFamille"));
+      		  produit.setFamilleDesignation(mapA.get("famille"));
+      		  //Site
+      		  produit.setSiteEntiteDesignation(mapA.get("site"));
+      		  //partieInteressee
+      		  produit.setPartieIntersseDesignation(mapA.get("partieInteressee"));
+      		  
+      		
+      	    }
+            return vProduitValue;
+	  }
+	  
 	  
   
 }

@@ -364,9 +364,9 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	}
 	
 	
-	/*
+	
 	@Override
-	public ResultatRechecheFactureValue rechercherMultiCritere(
+	public ResultatRechecheFactureValue rechercherMultiCritereAvecDetail(
 			RechercheMulticritereFactureValue request) {
 		
 		//logger.info("rechercherMultiCritere");
@@ -377,6 +377,21 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 		List<Predicate> whereClause = new ArrayList<Predicate>();
 		
 		Root<FactureVenteEntity> root = criteriaQuery.from(FactureVenteEntity.class);
+		
+		if(estNonVide(request.getBoutiqueId())) {
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_BOUTIQUEID), request.getBoutiqueId()));
+		}
+		
+		
+		if (request.getDateIntroductionDe() != null) {
+			whereClause.add(criteriaBuilder.greaterThanOrEqualTo(root.<Calendar> get(PREDICATE_DATE_INTRO),
+					request.getDateIntroductionDe()));
+		}
+
+		if (request.getDateIntroductionA() != null) {
+			whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Calendar> get(PREDICATE_DATE_INTRO),
+					request.getDateIntroductionA()));
+		}
 		
 		// Set request.referenceFacture on whereClause if not empty or null
 		if (estNonVide(request.getReferenceFacture())) {
@@ -463,6 +478,70 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 			   whereClause.add(criteriaBuilder.equal(root.get("groupeClientId"),
 					   request.getGroupeClientId()));
 		      }
+		   
+		   // Set request.Raison on whereClause if not null
+		    if (estNonVide(request.getRaison() )) {
+				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_RAISON), request.getRaison()));
+			}
+		    
+		    //observations
+		    
+			if (estNonVide(request.getObservations())) {
+				Expression<String> path = root.get(PREDICATE_OBSERVATIONS);
+				Expression<String> upper =criteriaBuilder.upper(path);
+				Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getObservations().toUpperCase() + PERCENT);
+				whereClause.add(criteriaBuilder.and(predicate));
+			}
+			
+			  // Set nature
+		    if (estNonVide(request.getNature() )) {
+				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_NATURE), request.getNature()));
+			}
+		    
+		    
+			// Set request.PREDICATE_ID_DEPOT
+			if (request.getIdDepot() != null) {
+				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_ID_DEPOT), request.getIdDepot()));
+			}
+	 	
+	 	
+			if (request.getDevise() != null) {
+				whereClause.add(criteriaBuilder.equal(root.get(devise), request.getDevise()));
+			}
+	 	
+			
+			
+			if (estNonVide(request.getDeclarerecherche())) {
+				Expression<Boolean> expression = root.get(PREDICATE_DECLARE);
+				switch (request.getDeclarerecherche()) {
+					case IConstanteLogistique.YES:
+						whereClause.add(criteriaBuilder.isTrue(expression));
+						break;
+					case IConstanteLogistique.NO:
+						whereClause.add(criteriaBuilder.isFalse(expression));
+						break;
+					case IConstanteLogistique.ALL:
+						break;
+					default:
+						break;
+				}
+			}
+			
+			if (estNonVide(request.getForcerCalculMontantRech())) {
+				Expression<Boolean> expression = root.get(PREDICATE_ForcerCalculMontant);
+				switch (request.getForcerCalculMontantRech()) {
+					case IConstanteLogistique.YES:
+						whereClause.add(criteriaBuilder.isTrue(expression));
+						break;
+					case IConstanteLogistique.NO:
+						whereClause.add(criteriaBuilder.isFalse(expression));
+						break;
+					case IConstanteLogistique.ALL:
+						break;
+					default:
+						break;
+				}
+			}
 	 	
 	 	
 	 	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
@@ -498,7 +577,7 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	}
 	
 	
-	*/
+	
 
 	@Override
 	public String createFacture(FactureVenteValue FactureValue) {
@@ -1022,10 +1101,6 @@ public List<FactureVenteValue> getByIdReglement(Long reglementId) {
 	}
 	
 
-
- 	
- 	
- 
 
     return list;
 }

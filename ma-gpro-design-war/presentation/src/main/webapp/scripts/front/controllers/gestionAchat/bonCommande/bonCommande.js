@@ -173,12 +173,24 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
 
     // TODO: Liste des Taxes A remplacer par une liste
     // extraite de la cache
+
+
     $scope.listeTaxes = function () {
       $http.get(UrlAtelier + '/taxe/getAll').success(function (dataTaxe) {
         $scope.listeTaxes = dataTaxe;
         console.log('===> get taxe');
+
       });
     };
+
+
+  	 $scope.ListeTaxe = function () {
+        $http.get(UrlAtelier + '/taxe/getTVA').success(function (dataTaxe) {
+          $scope.ListeTaxe = dataTaxe;
+        });
+      };
+
+      $scope.ListeTaxe();  
 
 
 
@@ -192,6 +204,22 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
           $scope.listeProduitCache = data;
         });
     };
+
+				// Liste des unités :uniteArticle
+							$scope.listeUniteArticle = function() {
+								$http
+										.get(UrlCommun + "/uniteArticle/all")
+										.success(
+												function(data) {
+													console
+															.log("listeProduitCache "
+																	+ data.length+" "+data);
+													$scope.listeUniteArticle = data;
+
+												});
+							}
+
+	$scope.listeUniteArticle();
 
     $scope.listeClientCache();
     $scope.listeTaxes();
@@ -732,14 +760,22 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
               produitCommande.designation = $scope.productFilter[0].designation;
               //produitCommande.prixUnitaire = $scope.productFilter[0].prixUnitaire;
 
-              $scope.getSousFamilleFilter(
+             produitCommande.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
+
+
+
+             /*   $scope.getSousFamilleFilter(
                 $scope.productFilter[0].sousFamilleId
               );
 
-              if ($scope.sousFamilleFilter.length > 0) {
+            if ($scope.sousFamilleFilter.length > 0) {
                 produitCommande.sousFamille =
                   $scope.sousFamilleFilter[0].designation;
               }
+
+            */
+
+
             }
           });
 
@@ -915,9 +951,15 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
                 if ($scope.productFilter.length > 0) {
                   produitCommande.designation =
                     $scope.productFilter[0].designation;
+
+
+     produitCommande.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
+
+
+
                   //produitCommande.prixUnitaire = $scope.productFilter[0].prixUnitaire;
 
-                  $scope.getSousFamilleFilter(
+             /*    $scope.getSousFamilleFilter(
                     $scope.productFilter[0].sousFamilleId
                   );
 
@@ -925,6 +967,8 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
                     produitCommande.sousFamille =
                       $scope.sousFamilleFilter[0].designation;
                   }
+
+*/
                 }
 
                 $scope.showNotif();
@@ -1024,17 +1068,26 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
                 if ($scope.productFilter.length > 0) {
                   produitCommande.designation =
                     $scope.productFilter[0].designation;
-                  produitCommande.prixUnitaire =
-                    $scope.productFilter[0].prixUnitaire;
+                
 
-                  $scope.getSousFamilleFilter(
+
+             // produitCommande.prixUnitaire =  $scope.productFilter[0].prixUnitaire;
+                   
+
+               /*   $scope.getSousFamilleFilter(
                     $scope.productFilter[0].sousFamilleId
                   );
 
                   if ($scope.sousFamilleFilter.length > 0) {
                     produitCommande.sousFamille =
                       $scope.sousFamilleFilter[0].designation;
-                  }
+                  }*/
+
+     produitCommande.sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
+
+
+
+
                 }
               });
 
@@ -1183,18 +1236,34 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
     $scope.changePrix = function (event, item, index) { };
 
     $scope.getProductFilter = function (idProduit) {
-      $scope.productFilter = $filter('filter')($scope.listeProduitCache, {
+	
+	
+		 $scope.productFilter = $scope.listeProduitCache.filter(function(node) {
+					        return node.id==idProduit;
+					    });
+	
+	
+     /* $scope.productFilter = $filter('filter')($scope.listeProduitCache, {
         id: idProduit,
-      });
+      });*/
+
+
+
     };
 
     $scope.getSousFamilleFilter = function (sousFamilleId) {
-      $scope.sousFamilleFilter = $filter('filter')(
+    /*  $scope.sousFamilleFilter = $filter('filter')(
         $scope.ListSousFamilleProduitCache,
         {
           id: sousFamilleId,
         }
       );
+       */
+
+$scope.sousFamilleFilter =  $scope.ListSousFamilleProduitCache.filter(function(node) {
+					        return node.id==sousFamilleId;
+					    });
+
     };
 
     $scope.clickProduit = function (idProduit, index) {
@@ -1211,14 +1280,36 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
         $scope.listProduitCommandes[index].designation =
           $scope.productFilter[0].designation;
         $scope.listProduitCommandes[index].prixUnitaire =
-          $scope.productFilter[0].prixAchat;
+          $scope.productFilter[0].pu;
 
-        $scope.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
+       // $scope.getSousFamilleFilter($scope.productFilter[0].sousFamilleId);
 
-        if ($scope.sousFamilleFilter.length > 0) {
+
+        $scope.listProduitCommandes[index].designation =
+          $scope.productFilter[0].designation;
+
+	  $scope.listProduitCommandes[index].sousFamilleArtEntite = $scope.productFilter[0].sousFamilleArtEntiteDesignation;
+	$scope.listProduitCommandes[index].taxeId = $scope.productFilter[0].idTaxe;
+						
+
+$scope.listProduitCommandes[index].unite = $scope.productFilter[0].idTaxe;
+if($scope.productFilter[0].uniteEntite != null){
+		 var prodUnite = $scope.listeUniteArticle.filter(function(node) {
+					        return node.id==$scope.productFilter[0].uniteEntite;
+					    });
+	if(prodUnite.length >0)
+	
+	$scope.listProduitCommandes[index].unite = prodUnite[0].designation;
+}
+
+	
+
+
+    /*    if ($scope.sousFamilleFilter.length > 0) {
           $scope.listProduitCommandes[index].sousFamille =
             $scope.sousFamilleFilter[0].designation;
         }
+*/
 
 
 
@@ -1272,7 +1363,7 @@ angular.module('gpro.gcAchatBC', []).controller('AchatBCCtrl', [
 
       $scope.produitInserree = {
         produitId: '',
-        quantite: '',
+        quantite: 1,
         prix: '',
         commandeAchatId: '',
         checked: false,

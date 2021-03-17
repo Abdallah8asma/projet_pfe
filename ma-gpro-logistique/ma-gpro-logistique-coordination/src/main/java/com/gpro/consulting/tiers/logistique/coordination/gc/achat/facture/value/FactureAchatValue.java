@@ -128,9 +128,20 @@ public class FactureAchatValue implements Comparable<FactureAchatValue> {
 	private boolean forcerCalculMontant;
 	
 	
+	private String refexterne;
 	
 	
 	
+	
+	
+	public String getRefexterne() {
+		return refexterne;
+	}
+
+	public void setRefexterne(String refexterne) {
+		this.refexterne = refexterne;
+	}
+
 	public boolean isForcerCalculMontant() {
 		return forcerCalculMontant;
 	}

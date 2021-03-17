@@ -112,6 +112,12 @@ public class FactureServiceImpl implements IFactureService{
 		// TODO Auto-generated method stub
 		return factureDomaine.getFactureByReference(reference);
 	}
+
+	@Override
+	public ResultatRechecheFactureValue rechercherMultiCritereAvecDetail(RechercheMulticritereFactureValue request) {
+		// TODO Auto-generated method stub
+		return factureDomaine.rechercherMultiCritereAvecDetail(request);
+	}
 	
 	
 	

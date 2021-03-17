@@ -67,6 +67,98 @@ public class SoldeClientEntity  implements Serializable {
 	
 	@Column(name="DATE_DEMARRAGE")
 	private Calendar dateDemarrage;
+	
+	
+
+	
+	@Column(name="total_reglement")
+	private Long totalReglement;
+	
+	@Column(name="total_facture")
+	private Long totalFacture;
+	
+	
+	@Column(name="regelement_payes")
+	private Double regelementPayes;
+	
+	@Column(name="regelement_en_circulation")
+	private Double regelementEnCirculation;
+	
+	@Column(name="total_facture_non_paye")
+	private Double totalFactureNonPaye;
+	
+	@Column(name="solde_anterieur")
+	private Double soldeAnterieur;
+	
+	
+	@Column(name="date_solde_anterieur")
+	private Calendar dateSoldeAnterieur;
+	
+	
+	
+	
+	
+	
+
+	public Long getTotalReglement() {
+		return totalReglement;
+	}
+
+	public void setTotalReglement(Long totalReglement) {
+		this.totalReglement = totalReglement;
+	}
+
+	public Long getTotalFacture() {
+		return totalFacture;
+	}
+
+	public void setTotalFacture(Long totalFacture) {
+		this.totalFacture = totalFacture;
+	}
+
+	public Double getRegelementPayes() {
+		return regelementPayes;
+	}
+
+	public void setRegelementPayes(Double regelementPayes) {
+		this.regelementPayes = regelementPayes;
+	}
+
+	public Double getRegelementEnCirculation() {
+		return regelementEnCirculation;
+	}
+
+	public void setRegelementEnCirculation(Double regelementEnCirculation) {
+		this.regelementEnCirculation = regelementEnCirculation;
+	}
+
+	public Double getTotalFactureNonPaye() {
+		return totalFactureNonPaye;
+	}
+
+	public void setTotalFactureNonPaye(Double totalFactureNonPaye) {
+		this.totalFactureNonPaye = totalFactureNonPaye;
+	}
+
+	public Double getSoldeAnterieur() {
+		return soldeAnterieur;
+	}
+
+	public void setSoldeAnterieur(Double soldeAnterieur) {
+		this.soldeAnterieur = soldeAnterieur;
+	}
+
+	public Calendar getDateSoldeAnterieur() {
+		return dateSoldeAnterieur;
+	}
+
+	public void setDateSoldeAnterieur(Calendar dateSoldeAnterieur) {
+		this.dateSoldeAnterieur = dateSoldeAnterieur;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Long getId() {
 		return id;

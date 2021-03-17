@@ -6,7 +6,7 @@ import java.util.Calendar;
  * @author Ameni Berrich
  *
  */
-public class SoldeClientValue implements Comparable<SoldeClientValue>{
+public class SoldeClientValue implements Comparable<SoldeClientValue> {
 
 	private Long id;
 	private Long partIntId;
@@ -15,32 +15,105 @@ public class SoldeClientValue implements Comparable<SoldeClientValue>{
 	private Long seuil;
 	private Boolean bloque;
 	private String observation;
-	
+
 	// Added on 22/08/2016 By Ameni
 	private Double chiffreAffaireTmp;
 	private Double reglementTmp;
 	private Calendar dateDemarrage;
-	
+
 	private String partieIntAbreviation;
 	private String partieIntReference;
-	
+
+	private Long totalReglement;
+
+	private Long totalFacture;
+
+	private Double regelementPayes;
+
+	private Double regelementEnCirculation;
+
+	private Double totalFactureNonPaye;
+
+	private Double soldeAnterieur;
+
+	private Calendar dateSoldeAnterieur;
+
+	public Long getTotalReglement() {
+		return totalReglement;
+	}
+
+	public void setTotalReglement(Long totalReglement) {
+		this.totalReglement = totalReglement;
+	}
+
+	public Long getTotalFacture() {
+		return totalFacture;
+	}
+
+	public void setTotalFacture(Long totalFacture) {
+		this.totalFacture = totalFacture;
+	}
+
+	public Double getRegelementPayes() {
+		return regelementPayes;
+	}
+
+	public void setRegelementPayes(Double regelementPayes) {
+		this.regelementPayes = regelementPayes;
+	}
+
+	public Double getRegelementEnCirculation() {
+		return regelementEnCirculation;
+	}
+
+	public void setRegelementEnCirculation(Double regelementEnCirculation) {
+		this.regelementEnCirculation = regelementEnCirculation;
+	}
+
+	public Double getTotalFactureNonPaye() {
+		return totalFactureNonPaye;
+	}
+
+	public void setTotalFactureNonPaye(Double totalFactureNonPaye) {
+		this.totalFactureNonPaye = totalFactureNonPaye;
+	}
+
+	public Double getSoldeAnterieur() {
+		return soldeAnterieur;
+	}
+
+	public void setSoldeAnterieur(Double soldeAnterieur) {
+		this.soldeAnterieur = soldeAnterieur;
+	}
+
+	public Calendar getDateSoldeAnterieur() {
+		return dateSoldeAnterieur;
+	}
+
+	public void setDateSoldeAnterieur(Calendar dateSoldeAnterieur) {
+		this.dateSoldeAnterieur = dateSoldeAnterieur;
+	}
+
 	public int compareTo(SoldeClientValue element) {
 		return (element.getId().compareTo(id));
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Long getPartIntId() {
 		return partIntId;
 	}
+
 	public void setPartIntId(Long partIntId) {
 		this.partIntId = partIntId;
 	}
-	
+
 	public Double getSoldeInitial() {
 		return soldeInitial;
 	}
@@ -52,36 +125,47 @@ public class SoldeClientValue implements Comparable<SoldeClientValue>{
 	public Calendar getDateIntroduction() {
 		return dateIntroduction;
 	}
+
 	public void setDateIntroduction(Calendar dateIntroduction) {
 		this.dateIntroduction = dateIntroduction;
 	}
+
 	public Long getSeuil() {
 		return seuil;
 	}
+
 	public void setSeuil(Long seuil) {
 		this.seuil = seuil;
 	}
+
 	public Boolean getBloque() {
 		return bloque;
 	}
+
 	public void setBloque(Boolean bloque) {
 		this.bloque = bloque;
 	}
+
 	public String getObservation() {
 		return observation;
 	}
+
 	public void setObservation(String observation) {
 		this.observation = observation;
 	}
+
 	public String getPartieIntAbreviation() {
 		return partieIntAbreviation;
 	}
+
 	public void setPartieIntAbreviation(String partieIntAbreviation) {
 		this.partieIntAbreviation = partieIntAbreviation;
 	}
+
 	public String getPartieIntReference() {
 		return partieIntReference;
 	}
+
 	public void setPartieIntReference(String partieIntReference) {
 		this.partieIntReference = partieIntReference;
 	}

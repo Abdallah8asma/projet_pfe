@@ -39,11 +39,13 @@ angular
 				$scope.ListeDevise = [];
 
 				$scope.listeProduitFinancier = [];
+				$scope.listeProduitNonFinancier = [];
 
 				$scope.isCollapsed = true;
 
 				
 				$scope.produitIdFinancier ="";
+				$scope.produitIdNonFinancier ="";
 
 
 				$scope.hiddenNotifSucc = "false";
@@ -475,7 +477,7 @@ angular
 							pourcentage: 19,
 							montant: '',
 						},
-						{// TVA7
+					/*	{// TVA7
 							taxeId: 4,
 							pourcentage: 7,
 							montant: '',
@@ -484,7 +486,7 @@ angular
 							taxeId: 5,
 							pourcentage: 13,
 							montant: '',
-						},
+						},*/
 						{// TIMBRE
 							taxeId: 3,
 							pourcentage: '',
@@ -711,6 +713,23 @@ $scope.validerNatureFiniByOF();
 						}
 		
 						$scope.listeProduitCacheFinance();
+						
+										// Liste des produits
+							$scope.listeProduitCacheNonFinance = function() {
+								$http
+										.get(
+											UrlCommun
+														+ "/produit/all/non-retour")
+										.success(
+												function(data) {
+													console
+													
+													$scope.listeProduitNonFinancier = data;
+
+												});
+							}
+
+							$scope.listeProduitCacheNonFinance();
 
 				$scope.listePartieInteresseeCache();
 				$scope.listeTaxes();
@@ -1258,6 +1277,9 @@ $scope.validerNatureFiniByOF();
 
 				// Annuler Recherche
 				$scope.annulerAjout = function () {
+					
+						$scope.produitIdFinancier ="";
+				    $scope.produitIdNonFinancier ="";
 
 					$scope.traitementEnCoursGenererAll = "false";
 
@@ -1317,7 +1339,8 @@ $scope.validerNatureFiniByOF();
 				// AffectationBLVente BonLivVente
 				$scope.affectationBLVente = function (factureVente) {
 
-
+                   	$scope.produitIdFinancier ="";
+				    $scope.produitIdNonFinancier ="";
 
 					$scope.refBLIsInvalid = "false";
 
@@ -1379,7 +1402,7 @@ $scope.validerNatureFiniByOF();
 								pourcentage: 10,
 								montant: '',
 							},
-							{// TVA7
+					/*		{// TVA7
 								taxeId: 4,
 								pourcentage: 7,
 								montant: '',
@@ -1388,7 +1411,7 @@ $scope.validerNatureFiniByOF();
 								taxeId: 5,
 								pourcentage: 13,
 								montant: '',
-							},
+							},*/
 							{// TIMBRE
 								taxeId: 3,
 								pourcentage: '',
@@ -2547,7 +2570,12 @@ $scope.validerNatureFiniByOF();
 					$log.debug("PI  " + factureVenteCourant.partieIntId);
 					if (factureVenteCourant.partieIntId == null) {
 						factureVenteCourant.partieIntId = "";
-						$log.debug("=>PI  " + factureVenteCourant.partieIntId);
+				
+					} 
+						if (factureVenteCourant.groupeClientId == null) {
+						factureVenteCourant.groupeClientId = "";
+				
+					} 
 						url = UrlAtelier + "/fiches/listfacture?referenceFacture=" + factureVenteCourant.referenceFacture
 							+ "&typeFacture=Normal"
 							+ "&referenceBl=" + factureVenteCourant.referenceBl
@@ -2562,23 +2590,6 @@ $scope.validerNatureFiniByOF();
 							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
 							+ "&devise=" + newDevise
 							+ "&type=pdf";
-
-					} else {
-						url = UrlAtelier + "/fiches/listfacture?referenceFacture=" + factureVenteCourant.referenceFacture
-							+ "&typeFacture=Normal"
-							+ "&referenceBl=" + factureVenteCourant.referenceBl
-							+ "&partieIntId=" + factureVenteCourant.partieIntId
-							+ "&dateFactureMin=" + newdateFacMinFormat
-							+ "&dateFactureMax=" + newdateFacMaxFormat
-							+ "&metrageMin=" + factureVenteCourant.metrageMin
-							+ "&metrageMax=" + factureVenteCourant.metrageMax
-							+ "&prixMin=" + factureVenteCourant.prixMin
-							+ "&prixMax=" + factureVenteCourant.prixMax
-							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
-							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
-							+ "&devise=" + newDevise
-							+ "&type=pdf";
-					}
 					$log.debug("-- URL" + url);
 
 					var fileName = 'Liste facture';
@@ -2947,8 +2958,51 @@ $scope.validerNatureFiniByOF();
 		
 												$scope.produitInserree = {
 													produitId :produitId,
-													produitDesignation : element[0].reference,
-													produitReference : element[0].designation,
+													produitReference : element[0].reference,
+													produitDesignation : element[0].designation,
+												
+													quantite : 1,
+													unite : '',
+													choix: "1",
+													ficheId : 1,
+													prixUnitaireHT : element[0].prixUnitaire
+													//prixTotalHT : '',
+												//	nouveau :true,
+													//remise : ''
+												};
+											
+												$scope.listDetFactureVentePRBL
+											.push($scope.produitInserree);
+		
+											}
+										
+										
+		
+											
+									  }
+									
+									};
+									
+									
+											 $scope.ajoutProduitNonFinancier = function(produitId) {
+
+
+										//console.log("call ajoutProduit");
+										//console.log("produitId=",produitId);
+									
+
+										if(produitId!=null){
+		
+											var element = $scope.listeProduitNonFinancier.filter(e => e.id == produitId);
+								
+											if(element != null && element[0] != null){
+		
+		
+												$scope.produitInserree = {
+													produitId :produitId,
+													produitReference : element[0].reference,
+													produitDesignation : element[0].designation,
+										
 													quantite : 1,
 													unite : '',
 													choix: "1",
@@ -2977,7 +3031,7 @@ $scope.validerNatureFiniByOF();
 
 
 
-					$scope.listDetLivraisonVentePRBS.splice(index, 1);
+					$scope.listDetFactureVentePRBL.splice(index, 1);
 
 					console.log("Success Delete Produit ");
 
