@@ -74,6 +74,7 @@ angular
     'gpro.gestionnaireDocument',
     'gpro.menuFinance',
     'gpro.soldeClient',
+    'gpro.soldeFournisseur',
     'gpro.echeancier',
     'gpro.echeancierFournisseur',
     'gpro.FinanceReporting',
@@ -1316,10 +1317,10 @@ angular
           },
         })
 
-        .when('/front/financeFournisseur/soldeClient:templateFile', {
+        .when('/front/financeFournisseur/soldeFournisseur:templateFile', {
           templateUrl: function (param) {
             return (
-              'views/front/financeFournisseur/soldeClient' +
+              'views/front/financeFournisseur/soldeFournisseur' +
               param.templateFile +
               '.html'
             );
