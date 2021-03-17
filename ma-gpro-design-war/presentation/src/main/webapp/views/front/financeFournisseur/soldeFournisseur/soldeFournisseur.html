@@ -21,7 +21,7 @@
 
 </script>
 
-<div class="panel-body" ng-controller="soldeClientController" style="background-color: #fff;">
+<div class="panel-body" ng-controller="soldeFournisseurController" style="background-color: #fff;">
 
   <div class="row" ng-show="displayMode != 'edit'">
     <div class="col-sm-12">
@@ -93,12 +93,12 @@
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <label class="input-group-text ms-Label">Client</label>
+                      <label class="input-group-text ms-Label">Fournisseur</label>
                     </div>
                     <select ui-select2 ng-model="soldeClCourante.partieIntId" ng-init="soldeClCourante.partieIntId =''"
                       data-placeholder="..." class="form-control" style="border: 1px solid #e5eaee !important;">
-                      <option value="">Tous les Clients</option>
-                      <option ng-repeat="pi in listClients | filter:{famillePartieInteressee:1}" value="{{pi.id}}">
+                      <option value="">Tous</option>
+                      <option ng-repeat="pi in listClients | filter:{famillePartieInteressee:2}" value="{{pi.id}}">
                         {{pi.reference}}-{{pi.abreviation}}</option>
                     </select>
                   </div>
@@ -140,7 +140,7 @@
     <div class="col-md-12">
       <div class="panel panel-primary">
         <br />
-        <span class="ms-ListItem-primaryText">Modification Solde Client</span>
+        <span class="ms-ListItem-primaryText">Modification Solde Fournisseur</span>
         <br />
 
 
@@ -206,7 +206,7 @@
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
-                      <label class="input-group-text ms-Label">Client</label>
+                      <label class="input-group-text ms-Label">Fournisseur</label>
                     </div>
                     <input class="form-control" ng-model="soldeClCourante.partieIntAbreviation" readonly="readonly"
                       value="soldeClCourante.partieIntAbreviation" />
@@ -424,7 +424,7 @@
 
   <div class="row" ng-show="displayMode != 'edit'">
     <div class="col-md-12">
-      <span class="ms-ListItem-primaryText line">Liste des soldes Client</span>
+      <span class="ms-ListItem-primaryText line">Liste des soldes Fournisseur</span>
 
       <div style="height: 500px;" ng-grid="gridOptions"></div>
     </div>

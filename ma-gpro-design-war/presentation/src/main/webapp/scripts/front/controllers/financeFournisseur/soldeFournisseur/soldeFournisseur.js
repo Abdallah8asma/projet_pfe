@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('gpro.soldeClient', []).controller('soldeClientController', [
+angular.module('gpro.soldeFournisseur', []).controller('soldeFournisseurController', [
   '$scope',
   '$http',
   '$log',
@@ -34,6 +34,9 @@ angular.module('gpro.soldeClient', []).controller('soldeClientController', [
 
     // Rechercher soldeCls
     $scope.recherchesoldeCl = function (soldeClCourante) {
+	soldeClCourante.partieIntFamilleId = 2;
+	
+	
       $http
         .post(
           UrlAtelier + '/soldeClient/rechercheMulticritere',
@@ -159,13 +162,16 @@ angular.module('gpro.soldeClient', []).controller('soldeClientController', [
           displayName: 'Observations',
           width: '15%',
         },
-        {
-          field: '',
-          width: '5%',
-          cellTemplate:
-            '<div class="buttons TableHeaderalignment" ng-show="!rowform.$visible" >' +
-            '<button style="margin: 8px;" data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreersoldeCl()"><i class="fa fa-fw fa-pencil"></i></button></div>',
-        },
+       {
+                                field: '',
+                               
+                                cellTemplate:`<div class="ms-CommandButton float-right" ng-show="!rowform.$visible">
+                                    <button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreersoldeCl()">
+                                    <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true" ></i></span>
+                                    </button></div>`
+
+                                     
+              }
       ];
     });
 
@@ -189,6 +195,7 @@ angular.module('gpro.soldeClient', []).controller('soldeClientController', [
       setTimeout(function () {
         var data;
         var soldeClCourante = $scope.soldeClCourante;
+            soldeClCourante.partieIntFamilleId = 2;
         if (searchText) {
           var ft = searchText.toLowerCase();
           $http
