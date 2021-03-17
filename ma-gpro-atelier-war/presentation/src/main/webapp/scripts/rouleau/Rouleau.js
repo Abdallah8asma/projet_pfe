@@ -847,9 +847,9 @@ angular
 														},
 														{
 															field : '',
-															cellTemplate : '<div class="buttons" ng-show="!rowform.$visible">'
-																	+ '<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerRouleau()">	<i class="fa fa-fw fa-pencil"></i></button>'
-																	+ '<button data-nodrag class="btn btn-default btn-xs"	ng-click="showPopupDelete(2)">	<i class="fa fa-fw fa-trash-o"></i></button></div>'
+															cellTemplate : `<div class="buttons" ng-show="!rowform.$visible">
+																	<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerRouleau()">	<i class="fa fa-fw fa-pencil"></i></button>
+																	<button data-nodrag class="btn btn-default btn-xs"	ng-click="showPopupDelete(2)" permission="['Production_Production_Delete']">	<i class="fa fa-fw fa-trash-o"></i></button></div>`
 														} ];
 											});
 							$scope.filterOptions = {
