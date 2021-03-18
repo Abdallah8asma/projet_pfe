@@ -72,10 +72,10 @@ public class SoldeClientEntity  implements Serializable {
 
 	
 	@Column(name="total_reglement")
-	private Long totalReglement;
+	private Double totalReglement;
 	
 	@Column(name="total_facture")
-	private Long totalFacture;
+	private Double totalFacture;
 	
 	
 	@Column(name="regelement_payes")
@@ -97,22 +97,20 @@ public class SoldeClientEntity  implements Serializable {
 	
 	
 	
-	
-	
 
-	public Long getTotalReglement() {
+	public Double getTotalReglement() {
 		return totalReglement;
 	}
 
-	public void setTotalReglement(Long totalReglement) {
+	public void setTotalReglement(Double totalReglement) {
 		this.totalReglement = totalReglement;
 	}
 
-	public Long getTotalFacture() {
+	public Double getTotalFacture() {
 		return totalFacture;
 	}
 
-	public void setTotalFacture(Long totalFacture) {
+	public void setTotalFacture(Double totalFacture) {
 		this.totalFacture = totalFacture;
 	}
 
