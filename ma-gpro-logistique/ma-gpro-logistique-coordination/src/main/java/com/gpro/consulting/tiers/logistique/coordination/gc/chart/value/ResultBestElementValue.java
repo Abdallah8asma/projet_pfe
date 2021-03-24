@@ -33,10 +33,64 @@ public class ResultBestElementValue
 	
 	
 	
+	private Double quantiteActuelle;
+	
+	private Double quantiteEntree;
+	
+	
+	private Double quantiteSortie;
 	
 	
 	
 	
+
+	public Double getQuantiteActuelle() {
+		return quantiteActuelle;
+	}
+
+
+
+
+
+	public void setQuantiteActuelle(Double quantiteActuelle) {
+		this.quantiteActuelle = quantiteActuelle;
+	}
+
+
+
+
+
+	public Double getQuantiteEntree() {
+		return quantiteEntree;
+	}
+
+
+
+
+
+	public void setQuantiteEntree(Double quantiteEntree) {
+		this.quantiteEntree = quantiteEntree;
+	}
+
+
+
+
+
+	public Double getQuantiteSortie() {
+		return quantiteSortie;
+	}
+
+
+
+
+
+	public void setQuantiteSortie(Double quantiteSortie) {
+		this.quantiteSortie = quantiteSortie;
+	}
+
+
+
+
 
 	public Long getNbTotal() {
 		return nbTotal;
