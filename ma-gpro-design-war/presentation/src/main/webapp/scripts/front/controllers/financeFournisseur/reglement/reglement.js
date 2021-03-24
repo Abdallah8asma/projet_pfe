@@ -127,6 +127,15 @@
         	                });
         	                
         	                }
+							
+							     $scope.getListeBanquePI = function () {
+              $http.get(UrlCommun+"/banquePI/all").success(function (data) {
+                $log.debug("listeCathegorie : "+data.length);
+                $scope.listeBanque = data;
+              });
+            }
+
+            $scope.getListeBanquePI();
         	                
         	                // Rechercher Reglements
         	                $scope.rechercheReglement = function(reglementCourante) {

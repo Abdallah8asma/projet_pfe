@@ -53,6 +53,16 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
 
     $scope.currentFactureOrBl = { };
+	
+	
+	     $scope.getListeBanquePI = function () {
+              $http.get(UrlCommun+"/banquePI/all").success(function (data) {
+                $log.debug("listeCathegorie : "+data.length);
+                $scope.listeBanque = data;
+              });
+            }
+
+            $scope.getListeBanquePI();
 
 
     // verification entre date emission et echéance

@@ -560,11 +560,24 @@
                         <input class="form-control" ng-model="item.numPiece" />
                       </div>
                     </td>
-                    <td>
+                 <!--    <td>
                       <div class="form-group">
                         <input class="form-control" ng-model="item.banque" />
                       </div>
-                    </td>
+                    </td> -->
+					
+					    <td>
+                    <div class="form-group">
+                      <select ui-select2 ng-model="item.banque" data-placeholder="..." class="form-control"
+                        style="border: 1px solid #e5eaee !important;">
+                        <option value=""></option>
+                       		  <option ng-repeat="categorie in listeBanque" value="{{categorie.abreviation}}">{{categorie.code}} / {{categorie.abreviation}}</option>
+												
+                      </select>
+                    </div>
+                  </td>
+				  
+				  
                     <td>
                       <div class="form-group">
                         <input type="number" class="form-control" ng-model="item.montant" />

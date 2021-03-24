@@ -158,7 +158,7 @@ angular
 					 $http
                    .post(
                 		   UrlAtelier +
-                       "/chartGc/getTop10Article")
+                       "/chartGc/getTop10Article",request)
                    .success(
                        function(	
                            resultat) {

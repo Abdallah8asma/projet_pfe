@@ -469,7 +469,7 @@
                     </div>
                     <select ui-select2 ng-model="reglementCourante.groupeClientId"
                       ng-init="reglementCourante.groupeClientId =''" data-placeholder="..." class="form-control"
-                      style="border: 1px solid #e5eaee !important;" required>
+                      style="border: 1px solid #e5eaee !important;" >
                       <option value="">Tous les Groupes</option>
                       <option ng-repeat="pi in listGroupeClient" value="{{pi.id}}">{{pi.designation}}</option>
                     </select>
@@ -601,11 +601,27 @@
                       <input class="form-control" ng-model="item.numPiece" />
                     </div>
                   </td>
-                  <td>
+              <!--     <td>
                     <div class="form-group">
                       <input class="form-control" ng-model="item.banque" />
                     </div>
+                  </td> -->
+				  
+				  
+		
+				  
+                  <td>
+                    <div class="form-group">
+                      <select ui-select2 ng-model="item.banque" data-placeholder="..." class="form-control"
+                        style="border: 1px solid #e5eaee !important;">
+                        <option value=""></option>
+                       		  <option ng-repeat="categorie in listeBanque" value="{{categorie.abreviation}}">{{categorie.code}} / {{categorie.abreviation}}</option>
+								
+                      </select>
+                    </div>
                   </td>
+				  
+				  
                   <td>
                     <div class="form-group">
                       <input type="number" class="form-control" ng-model="item.montant" />
