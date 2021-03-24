@@ -13,6 +13,53 @@ public class RechercheMulticritereMouvementChartValue {
 	private Calendar dateFrom;
 	private Calendar dateTo;
 	
+	private Calendar dateDe;
+
+	private Calendar dateA;
+	
+	
+	private Long typeArticle;
+	
+	
+	private Long familleArticle;
+	
+	
+	private Long sousFamilleArticle;
+	
+	
+	
+	
+	
+	public Long getSousFamilleArticle() {
+		return sousFamilleArticle;
+	}
+	public void setSousFamilleArticle(Long sousFamilleArticle) {
+		this.sousFamilleArticle = sousFamilleArticle;
+	}
+	public Long getTypeArticle() {
+		return typeArticle;
+	}
+	public void setTypeArticle(Long typeArticle) {
+		this.typeArticle = typeArticle;
+	}
+	public Long getFamilleArticle() {
+		return familleArticle;
+	}
+	public void setFamilleArticle(Long familleArticle) {
+		this.familleArticle = familleArticle;
+	}
+	public Calendar getDateDe() {
+		return dateDe;
+	}
+	public void setDateDe(Calendar dateDe) {
+		this.dateDe = dateDe;
+	}
+	public Calendar getDateA() {
+		return dateA;
+	}
+	public void setDateA(Calendar dateA) {
+		this.dateA = dateA;
+	}
 	public String getType() {
 		return type;
 	}
