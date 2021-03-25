@@ -28,6 +28,19 @@ public class ResultatRechecheDetailReglementElementValue implements Comparable<R
 	private String clientRegion;
 	private String modePaiement;
 	
+	private String referenceDetReglement;
+	
+	
+	
+	
+	public String getReferenceDetReglement() {
+		return referenceDetReglement;
+	}
+
+	public void setReferenceDetReglement(String referenceDetReglement) {
+		this.referenceDetReglement = referenceDetReglement;
+	}
+
 	public int compareTo(ResultatRechecheDetailReglementElementValue element) {
 		return (element.getId().compareTo(id));
 	}

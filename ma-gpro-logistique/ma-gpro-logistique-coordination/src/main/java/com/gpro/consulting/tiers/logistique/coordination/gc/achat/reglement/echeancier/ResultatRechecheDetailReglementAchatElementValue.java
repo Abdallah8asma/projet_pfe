@@ -28,6 +28,19 @@ public class ResultatRechecheDetailReglementAchatElementValue implements Compara
 	private String clientRegion;
 	private String modePaiement;
 	
+	private String referenceDetReglement;
+	
+	
+	
+	
+	public String getReferenceDetReglement() {
+		return referenceDetReglement;
+	}
+
+	public void setReferenceDetReglement(String referenceDetReglement) {
+		this.referenceDetReglement = referenceDetReglement;
+	}
+
 	public int compareTo(ResultatRechecheDetailReglementAchatElementValue element) {
 		return (element.getId().compareTo(id));
 	}

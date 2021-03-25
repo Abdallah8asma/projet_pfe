@@ -2078,6 +2078,9 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			reportElement.setRegle(echeancier.getRegle());
 			reportElement.setReglementId(echeancier.getReglementId());
 			reportElement.setTypeReglementId(echeancier.getTypeReglementId());
+			
+			reportElement.setReferenceDetReglement(echeancier.getReferenceDetReglement());
+			reportElement.setObservation(echeancier.getObservation());
 
 			if (echeancier.getTypeReglementId() != null) {
 				TypeReglementValue typeReglement = typeReglementPersistance.getById(echeancier.getTypeReglementId());
