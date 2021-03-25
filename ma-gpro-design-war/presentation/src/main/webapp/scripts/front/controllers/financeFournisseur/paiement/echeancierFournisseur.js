@@ -268,6 +268,7 @@ angular
 
 				//$log.info("------- echeancierCourant " + JSON.stringify(echeancierCourant, null, "  ") );
 				url = UrlAtelier + "/reportAchat/listEcheance?reference=" + echeancierCourant.reference
+				    + "&referenceDetReglement=" +echeancierCourant.referenceDetReglement
 					+ "&partieIntId=" + echeancierCourant.partieIntId
 					+ "&dateReglementDu=" + newdateSaisieMinFormat
 					+ "&dateReglementAu=" + newdateSaisieMaxFormat
@@ -326,7 +327,134 @@ angular
 				// 	});
 			};
 
+	//generer rapport de tous les Ordre de Fabrication. mode : List
+			$scope.downloadAllecheanciersExcel = function (echeancierCourant, typeRapport) {
+				var avecTerme;
+				var nomRapport;
+				var url;
+				var newdateSaisieMinFormat = "";
+				if (angular.isDefined(echeancierCourant.dateReglementDu)) {
+					$log.debug("==dateIntroductionMin " + echeancierCourant.dateReglementDu);
 
+					if (echeancierCourant.dateReglementDu != "") {
+						newdateSaisieMinFormat = formattedDate(echeancierCourant.dateReglementDu);
+					} else {
+						newdateSaisieMinFormat = "";
+					}
+				} else {
+					$log.debug("==dateIntroductionMin Undefined");
+				}
+
+				var newdateSaisieMaxFormat = "";
+				if (angular.isDefined(echeancierCourant.dateReglementAu)) {
+					$log.debug("==dateIntroductionMin " + echeancierCourant.dateReglementAu);
+
+					if (echeancierCourant.dateReglementAu != "") {
+						newdateSaisieMaxFormat = formattedDate(echeancierCourant.dateReglementAu);
+					} else {
+						newdateSaisieMaxFormat = "";
+					}
+				} else {
+					$log.debug("==dateIntroductionMin Undefined");
+				}
+
+				//
+				var newdateEchecMinFormat = "";
+				if (angular.isDefined(echeancierCourant.dateEcheanceDu)) {
+					$log.debug("==dateIntroductionMin " + echeancierCourant.dateEcheanceDu);
+
+					if (echeancierCourant.dateEcheanceDu != "") {
+						newdateEchecMinFormat = formattedDate(echeancierCourant.dateEcheanceDu);
+					} else {
+						newdateEchecMinFormat = "";
+					}
+				} else {
+					$log.debug("==dateIntroductionMin Undefined");
+				}
+
+				var newdateEchecMaxFormat = "";
+				if (angular.isDefined(echeancierCourant.dateEcheanceAu)) {
+					$log.debug("==dateIntroductionMin " + echeancierCourant.dateEcheanceAu);
+
+					if (echeancierCourant.dateEcheanceAu != "") {
+						newdateEchecMaxFormat = formattedDate(echeancierCourant.dateEcheanceAu);
+					} else {
+						newdateEchecMaxFormat = "";
+					}
+				} else {
+					$log.debug("==dateIntroductionMin Undefined");
+				}
+				if (typeRapport == 0)//Paiement
+				{
+					avecTerme = echeancierCourant.avecTerme;
+					nomRapport = "Paiement Fournisseur";
+				}
+				else if (typeRapport == 1)//Echeancier
+				{
+					avecTerme = true;
+					nomRapport = "Echeancier Fournisseur"
+				}
+
+				//$log.info("------- echeancierCourant " + JSON.stringify(echeancierCourant, null, "  ") );
+				url = UrlAtelier + "/fichesAchat/listEcheance?reference=" + echeancierCourant.reference
+				    + "&referenceDetReglement=" +echeancierCourant.referenceDetReglement
+					+ "&partieIntId=" + echeancierCourant.partieIntId
+					+ "&dateReglementDu=" + newdateSaisieMinFormat
+					+ "&dateReglementAu=" + newdateSaisieMaxFormat
+					+ "&dateEcheanceDu=" + newdateEchecMinFormat
+					+ "&dateEcheanceAu=" + newdateEchecMaxFormat
+					+ "&numPiece=" + echeancierCourant.numPiece
+					+ "&regle=" + echeancierCourant.regle
+					+ "&typeReglementId=" + echeancierCourant.typeReglementId
+					+ "&avecTerme=" + avecTerme
+					+ "&nomRapport=" + nomRapport
+					+ "&type=pdf";
+
+				$log.info("------- URL " + url);
+
+		
+				var a = document.createElement('a');
+				document.body.appendChild(a);
+				downloadService.download(url).then(function (result) {
+					var heasersFileName = result.headers(['content-disposition']).substring(17);
+          var fileName = heasersFileName.split('.');
+        var typeFile = result.headers(['content-type']);
+        var file = new Blob([result.data], {type: typeFile});
+        var fileURL = window.URL.createObjectURL(file);
+
+        fileName[0] =  nomRapport+'_' + formattedDate(new Date());
+        
+        if(typeFile == 'application/vnd.ms-excel'){
+          console.log('llll excel');
+         // a.href = fileURL;
+           a.download = fileName[0];
+          $window.open(fileURL)
+           a.click();
+
+        }else{
+          console.log('llll pdf');
+          a.href = fileURL;
+          a.download = fileName[0];
+         $window.open(fileURL)
+          a.click();
+
+        }
+          
+         
+        });
+
+
+
+				// downloadService.download(url).then(
+				// 	function (success) {
+				// 		$log.debug('success : '
+				// 			+ success);
+				// 	},
+				// 	function (error) {
+				// 		$log.debug('error : '
+				// 			+ error);
+				// 	});
+			};
 
 			$scope.pagingOptions = {
 				pageSizes: [5, 10, 20],
@@ -340,6 +468,11 @@ angular
 					function () {
 						$scope.colDefs = [
 
+                              {
+                                      field: 'referenceDetReglement',
+                                      displayName: 'Ref. Transact.',
+                                      width: '10%'
+                                  }, 
 							{
 								field: 'dateReglement',
 								displayName: 'Date',

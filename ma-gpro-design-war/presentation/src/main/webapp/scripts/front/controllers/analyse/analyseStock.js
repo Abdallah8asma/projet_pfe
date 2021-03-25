@@ -333,7 +333,7 @@ angular
                  .success(
                      function(	
                          resultat) {
-                         $scope.createAmChartSerialMultipleData(chartSousFamilleActuelleEntreeSortie, "chartSousFamilleActuelleEntreeSortie","Qte Act/Ent./Sort. Par Sous Famille", "abreviation", "quantieActuelle","quantieEntree","quantiteSortie",resultat);
+                         $scope.createAmChartSerialMultipleData(chartSousFamilleActuelleEntreeSortie, "chartSousFamilleActuelleEntreeSortie","Qte Act/Ent./Sort. Par Sous Famille", "abreviation", "quantiteActuelle","quantiteEntree","quantiteSortie",resultat);
 
 
     	            	$scope.displayChartSousFamilleActuelleEntreeSortie=true;                          
@@ -348,10 +348,10 @@ angular
 					var request= {
 
          "dateDe":$scope.CritRecherche.dateMin,
-	                          "dateA":$scope.CritRecherche.dateMax,
-                               "typeArticle":$scope.CritRecherche.typeArticle , 
+	                            "dateA":$scope.CritRecherche.dateMax,
+                                "typeArticle":$scope.CritRecherche.typeArticle , 
                                 "familleArticle":$scope.CritRecherche.familleArticle,
-                                  "sousFamilleArticle" :$scope.CritRecherche.sousFamilleArticle 
+                                "sousFamilleArticle" :$scope.CritRecherche.sousFamilleArticle 
 	                          };
 					
 					
@@ -363,7 +363,7 @@ angular
                  .success(
                      function(	
                          resultat) {
-                         $scope.createAmChartSerialMultipleData(chartArticleActuelleEntreeSortie, "chartArticleActuelleEntreeSortie","Qte Act/Ent./Sort. Par Article", "abreviation", "quantieActuelle","quantieEntree","quantiteSortie",resultat);
+                         $scope.createAmChartSerialMultipleData(chartArticleActuelleEntreeSortie, "chartArticleActuelleEntreeSortie","Qte Act/Ent./Sort. Par Article", "abreviation", "quantiteActuelle","quantiteEntree","quantiteSortie",resultat);
 
 
     	            	$scope.displayChartArticleActuelleEntreeSortie=true;                          
@@ -534,12 +534,13 @@ angular
 	                //valueAxis.title =  parametre1;
 	                valueAxis.axisAlpha = 0;
 	                chart.addValueAxis(valueAxis);
+					
 	                
 
 	                // GRAPH
 	                var graph = new AmCharts.AmGraph();
 	                graph.valueField = parametre2;
-	                graph.colorField = "#0000FF";
+	                //graph.colorField = "#0000FF";
 	                graph.precision= 3;
 	                graph.balloonText = "<b>[[category]]: [[value]]</b>";
 	                graph.type = "column";
@@ -550,7 +551,7 @@ angular
                   // GRAPH2
 	                var graph2 = new AmCharts.AmGraph();
 	                graph2.valueField = parametre3;
-	                graph.colorField = "#FF0000";
+	                //graph.colorField = "#FF0000";
 	                graph2.precision= 3;
 	                graph2.balloonText = "<b>[[category]]: [[value]]</b>";
 	                graph2.type = "column";
@@ -673,6 +674,7 @@ angular
            $scope.displayChartSousFamilleActuelleEntreeSortie=false;
 
 	            	 $scope.CritRecherche = {
+						       "typeArticle":"1",
 	                          "boutiqueId":"",
 	                          "dateMin":"",
 	                          "dateMax":""

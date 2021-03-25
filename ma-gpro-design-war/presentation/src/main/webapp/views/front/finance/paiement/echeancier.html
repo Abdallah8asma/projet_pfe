@@ -28,6 +28,23 @@
               <span class="ms-CommandButton-label"> Ech&eacute;ancier</span>
             </button>
           </div>
+          
+           <div class="ms-CommandButton" permission="['FC_Client_Paiement']">
+            <button class="ms-CommandButton-button" ng-click="downloadAllecheanciersExcel(echeancierCourant, 0)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--PaymentCard"></i></span>
+              <span class="ms-CommandButton-label">Paiement Excel</span>
+            </button>
+          </div>
+          
+          
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="downloadAllecheanciersExcel(echeancierCourant, 1)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Timeline"></i></span>
+              <span class="ms-CommandButton-label"> Ech&eacute;ancier Excel</span>
+            </button>
+          </div>
+          
+          
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="rechercheecheancier(echeancierCourant)">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
@@ -92,8 +109,21 @@
                   </div>
                 </div>
               </div>
+              
+              
+               <div class="col-sm-2">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Transact.</label>
+                    </div>
+                    <input class="form-control" ng-model="echeancierCourant.referenceDetReglement"
+                      ng-init="echeancierCourant.referenceDetReglement=''" />
+                  </div>
+                </div>
+              </div>
 
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -105,7 +135,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-3">
+              <div class="col-sm-2">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
