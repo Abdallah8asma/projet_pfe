@@ -128,11 +128,6 @@
 						</button>
 					</div>
 
-
-
-
-
-
 					<div class="ms-CommandButton">
 						<button class="ms-CommandButton-button"
 							ng-click="createChartMvtEntreeByArticle()"
@@ -142,7 +137,6 @@
 								class="ms-CommandButton-label">Entree / Article</span>
 						</button>
 					</div>
-
 
 
 					<div class="ms-CommandButton">
@@ -167,28 +161,28 @@
 					</div>
 					
 					
-					
-					
-					
-						<div class="ms-CommandButton">
+					<div class="ms-CommandButton">
 						<button class="ms-CommandButton-button"
 							ng-click="createChartActuelleEntreeSortieBySousFamille()"
+							ng-disabled="CritRecherche.dateMin =='' || CritRecherche.dateMax ==''"
 							>
 							<span class="ms-CommandButton-icon"><i
 								class="ms-Icon ms-Icon--BarChart4"></i></span> <span
-								class="ms-CommandButton-label">Act./Sort./Entr./Sous Famille</span>
+								class="ms-CommandButton-label">Act./Entr./Sort./Sous Famille
+							</span>
 						</button>
 					</div>
 					
-					
-					
-							<div class="ms-CommandButton">
+										
+					<div class="ms-CommandButton">
 						<button class="ms-CommandButton-button"
 							ng-click="createChartActuelleEntreeSortieByArticle()"
+							ng-disabled="CritRecherche.dateMin =='' || CritRecherche.dateMax =='' || CritRecherche.sousFamilleArticle =='' "
 							>
 							<span class="ms-CommandButton-icon"><i
 								class="ms-Icon ms-Icon--BarChart4"></i></span> <span
-								class="ms-CommandButton-label">Act./Sort/Entr./Article</span>
+								class="ms-CommandButton-label">Act./Entr./Sort./Article
+							</span>
 						</button>
 					</div>
 					
@@ -209,6 +203,67 @@
 				<div class="panel-body">
 					<form class="form-horizontal" name="rechercheecheancierForm"
 						id="rechercheecheancierForm">
+						<div class="row">
+
+							<div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> Date De :</span>
+										</div>
+										<input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="CritRecherche.dateMin =''"
+											ng-model="CritRecherche.dateMin" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close"/>
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default"
+												ng-click="open($event)"
+												style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
+												<i class="glyphicon glyphicon-calendar"
+													style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							
+
+							<div class="col-sm-5" ng-controller="DatepickerDemoController">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> Date A:</span>
+										</div>
+										<input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="CritRecherche.dateMax =''"
+											ng-model="CritRecherche.dateMax" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default"
+												ng-click="open($event)"
+												style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
+												<i class="glyphicon glyphicon-calendar"
+													style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+
+
+							</div>
+
+						</div>
 						<div class="row">
 							<div class="col-sm-3">
 								<div class="form-group">
@@ -277,67 +332,7 @@
 
                         </div>
                         
-                        	<div class="row">
-
-								<div class="col-sm-3" ng-controller="DatepickerDemoController">
-
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text"> Date De :</span>
-											</div>
-											<input type="text" class="form-control datepicker"
-												datepicker-popup="{{format}}"
-												ng-init="CritRecherche.dateMin =''"
-												ng-model="CritRecherche.dateMin" is-open="opened"
-												datepicker-options="dateOptions" date-="enabled(date, mode)"
-												ng-required="true" close-text="Close" />
-
-											<div class="input-group-append">
-												<button type="button" class="btn1 btn-default"
-													ng-click="open($event)"
-													style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
-													<i class="glyphicon glyphicon-calendar"
-														style="color: #3699ff;"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-
-								</div>
-
-								<div class="col-sm-3" ng-controller="DatepickerDemoController">
-
-
-									<div class="form-group">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text"> Date A:</span>
-											</div>
-											<input type="text" class="form-control datepicker"
-												datepicker-popup="{{format}}"
-												ng-init="CritRecherche.dateMax =''"
-												ng-model="CritRecherche.dateMax" is-open="opened"
-												datepicker-options="dateOptions" date-="enabled(date, mode)"
-												ng-required="true" close-text="Close" />
-
-											<div class="input-group-append">
-												<button type="button" class="btn1 btn-default"
-													ng-click="open($event)"
-													style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
-													<i class="glyphicon glyphicon-calendar"
-														style="color: #3699ff;"></i>
-												</button>
-											</div>
-										</div>
-									</div>
-
-
-
-								</div>
-
-							</div>
-						
+                     
 					</form>
 				</div>
 			</div>
@@ -434,7 +429,7 @@
 		
 		
 		<div class="col-md-12" ng-show="displayChartSousFamilleActuelleEntreeSortie">
-			<br /> <span class="ms-ListItem-primaryText line">Act./Sort./Entr./
+			<br /> <span class="ms-ListItem-primaryText line">Act./Entr./Sort./
 				sous Famille</span> <br />
 			<div class="row">
 				<div id="chartSousFamilleActuelleEntreeSortie" style="height: 400px;"
@@ -446,7 +441,7 @@
 
 
 		<div class="col-md-12" ng-show="displayChartArticleActuelleEntreeSortie">
-			<br /> <span class="ms-ListItem-primaryText line">Act./Sort./Entr./
+			<br /> <span class="ms-ListItem-primaryText line">Act./Entr./Sort./
 				Article</span> <br />
 			<div class="row">
 				<div id="chartArticleActuelleEntreeSortie" style="height: 400px;"
