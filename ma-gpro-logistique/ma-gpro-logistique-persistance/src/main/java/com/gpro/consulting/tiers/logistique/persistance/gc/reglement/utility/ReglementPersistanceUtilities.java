@@ -199,6 +199,12 @@ public class ReglementPersistanceUtilities {
 		
 		entity.setReference(dto.getReference());
 		
+		entity.setDateDepotBanque(dto.getDateDepotBanque());
+		entity.setChargeBanque(dto.getChargeBanque());
+		entity.setTvaBanque(dto.getTvaBanque());
+		
+		entity.setBanqueSociete(dto.getBanqueSociete());
+		
 		if(dto.getTypeReglementId() != null){
 			TypeReglementEntity typeReglement = new TypeReglementEntity();
 			typeReglement.setId(dto.getTypeReglementId());
@@ -246,6 +252,8 @@ public class ReglementPersistanceUtilities {
 		
 		entity.setPrefixe(dto.getPrefixe());
 		
+		entity.setRegle(dto.getRegle());
+		
 		return entity;
 	}
 	
@@ -265,6 +273,14 @@ public class ReglementPersistanceUtilities {
 		dto.setObservation(entity.getObservation());
 		
 		dto.setReference(entity.getReference());
+		
+		
+		dto.setDateDepotBanque(entity.getDateDepotBanque());
+		dto.setChargeBanque(entity.getChargeBanque());
+		dto.setTvaBanque(entity.getTvaBanque());
+		
+		dto.setBanqueSociete(entity.getBanqueSociete());
+		
 		
 		if(entity.getReglement() != null){
 			dto.setReglementId(entity.getReglement().getId());
@@ -334,6 +350,8 @@ public class ReglementPersistanceUtilities {
 		dto.setaTerme(entity.getaTerme());
 		
 		dto.setPrefixe(entity.getPrefixe());
+		
+		dto.setRegle(entity.getRegle());
 		return dto;
 	}
 
@@ -416,6 +434,11 @@ public class ReglementPersistanceUtilities {
 		
 		dto.setReferenceDetReglement(entity.getReference());
 	
+		
+		dto.setDateDepotBanque(entity.getDateDepotBanque());
+		dto.setChargeBanque(entity.getChargeBanque());
+		dto.setTvaBanque(entity.getTvaBanque());
+		dto.setBanqueSociete(entity.getBanqueSociete());
 		
 		if(entity.getReglement() != null){
 			

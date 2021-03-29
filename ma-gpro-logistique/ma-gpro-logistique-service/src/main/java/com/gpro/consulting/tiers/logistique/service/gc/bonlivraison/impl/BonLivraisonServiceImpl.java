@@ -135,5 +135,11 @@ public class BonLivraisonServiceImpl implements IBonLivraisonService{
 		
 		return bonLivraisonDomaine.getProduitElementListByOF(refBonLivraisonList, factureVenteId);
 	}
+
+	@Override
+	public LivraisonVenteValue getByReference(String reference) {
+		// TODO Auto-generated method stub
+		return  bonLivraisonDomaine.getByReference(reference);
+	}
 	
 }
