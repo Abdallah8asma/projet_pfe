@@ -250,16 +250,16 @@ public class ReglementAchatDomaineImpl implements IReglementAchatDomaine{
 							
 							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
 							
 						}else{
 							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontant());
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
 						}
 					}
 					
@@ -269,16 +269,16 @@ public class ReglementAchatDomaineImpl implements IReglementAchatDomaine{
 							
 							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
 							
 						}else{
 							
-							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontant());
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
 						}
 						
 						refBLFromReglement.add(element.getRefBL());
@@ -321,7 +321,7 @@ public class ReglementAchatDomaineImpl implements IReglementAchatDomaine{
 								
 								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 								
-								factureNonRegle.setMontantRegle(montantFactureRegle);
+								factureNonRegle.setMontantRegle(montantResteARegle);
 								
 								listFactureNonRegleVentre.add(factureNonRegle);
 								
@@ -386,7 +386,7 @@ public class ReglementAchatDomaineImpl implements IReglementAchatDomaine{
 								
 								LivraisonNonRegleValue livraisonNonRegle = bRToBRNonRegle(livraisonVente);
 								
-								livraisonNonRegle.setMontantRegle(montantBLRegle);
+								livraisonNonRegle.setMontantRegle(montantResteARegle);
 								
 								listLivraisonNonRegle.add(livraisonNonRegle);
 								
