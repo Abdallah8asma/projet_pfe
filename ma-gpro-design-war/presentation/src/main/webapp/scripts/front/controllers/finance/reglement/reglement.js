@@ -86,6 +86,32 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
 
 
+
+    $scope.onChangeTypeReglement = function (item, index) {
+	
+	//Au niveau de DetailsReglement : Si le type de Reglement est Espece ou RS alors reglé =True
+
+      if (item.typeReglementId != null &&  item.typeReglementId != "") {
+	
+	    var elementsTypeReglement = $scope.listTypes.filter((e) => e.id == item.typeReglementId) ; 
+
+          if(elementsTypeReglement != null && elementsTypeReglement.length >0){
+	
+	                      if(elementsTypeReglement[0].regle != null && elementsTypeReglement[0].regle == true){
+		
+		                              $scope.finalOperationsList[index].regle = true;
+                                 	}else
+                                    {
+	                                  $scope.finalOperationsList[index].regle = false;
+                                    }
+               }
+	
+  }
+    
+
+    }
+
+
     $scope.getListeTaxes = function () {
       $http
         .get(UrlAtelier + "/taxe/getAll")
@@ -1357,7 +1383,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
     $http
     .get(
         UrlAtelier
-            + "/bonlivraison/getBonLivraisonByReference:"
+            + "/bonlivraison/getBonLivraisonByReference?reference="
             + $scope.finalElementList[indexLine].refBL)
     .success(
         function(

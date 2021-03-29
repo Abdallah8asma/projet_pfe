@@ -549,7 +549,7 @@
                     <td>
                       <div class="form-group">
                         <select ui-select2 ng-model="item.typeReglementId" data-placeholder="..." class="form-control"
-                          style="border: 1px solid #e5eaee !important;">
+                          style="border: 1px solid #e5eaee !important;" ng-change="onChangeTypeReglement(item,$index)">
                           <option value="">Tous</option>
                           <option ng-repeat="pi in listTypes" value="{{pi.id}}">{{pi.designation}}</option>
                         </select>

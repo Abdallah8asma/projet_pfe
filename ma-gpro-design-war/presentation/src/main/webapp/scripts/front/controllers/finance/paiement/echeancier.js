@@ -465,7 +465,34 @@ angular
                                 	  field: 'banque',
                                       displayName: 'Banque',
                                       width: '10%'
-                                  },{
+                                  },
+
+                                  {
+                                	  field: 'banqueSociete',
+                                      displayName: 'Banque Soc.',
+                                      width: '10%'
+                                  },
+
+                                  {
+                                      field: 'dateDepotBanque',
+                                      displayName: 'D.Depot Banque',
+                                      cellFilter: 'date:\'dd-MM-yyyy\'',
+                                      width: '10%'
+                                  }
+                                  ,
+
+                                  {
+                                      field: 'chargeBanque',
+                                      displayName: 'Charge Banque',
+                                      width: '10%'
+                                  },
+                                  {
+                                      field: 'tvaBanque',
+                                      displayName: 'TVA Banque',
+                                      width: '10%'
+                                  }
+                                  ,
+                                  {
                                       field: 'montant',
                                       displayName: 'Montant ',
                                       width: '10%'
