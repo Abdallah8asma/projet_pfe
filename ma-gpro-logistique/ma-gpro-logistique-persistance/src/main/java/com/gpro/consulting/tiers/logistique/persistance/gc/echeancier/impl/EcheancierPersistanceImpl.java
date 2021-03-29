@@ -163,6 +163,13 @@ public class EcheancierPersistanceImpl extends AbstractPersistance implements IE
 
 			whereClause.add(criteriaBuilder.equal(jointureDtTyp.get("aTerme"), request.getAvecTerme()));
 		}
+		
+		// Set request.reference on whereClause if not null
+		if (estNonVide(request.getReferenceDetReglement())) {
+		
+			whereClause
+					.add(criteriaBuilder.equal(root.get(COLUMN_REFERENCE_REGLEMENT), request.getReferenceDetReglement()));
+		}
 
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 		List<DetailsReglementEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();

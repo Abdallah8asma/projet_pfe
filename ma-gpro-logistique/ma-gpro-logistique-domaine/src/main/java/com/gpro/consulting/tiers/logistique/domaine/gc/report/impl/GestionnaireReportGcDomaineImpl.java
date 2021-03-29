@@ -2078,6 +2078,16 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			reportElement.setRegle(echeancier.getRegle());
 			reportElement.setReglementId(echeancier.getReglementId());
 			reportElement.setTypeReglementId(echeancier.getTypeReglementId());
+			
+			reportElement.setReferenceDetReglement(echeancier.getReferenceDetReglement());
+			reportElement.setObservation(echeancier.getObservation());
+			
+			
+			reportElement.setBanqueSociete(echeancier.getBanqueSociete());
+			reportElement.setDateDepotBanque(echeancier.getDateDepotBanque());
+			reportElement.setChargeBanque(echeancier.getChargeBanque());
+			reportElement.setTvaBanque(echeancier.getTvaBanque());
+		
 
 			if (echeancier.getTypeReglementId() != null) {
 				TypeReglementValue typeReglement = typeReglementPersistance.getById(echeancier.getTypeReglementId());

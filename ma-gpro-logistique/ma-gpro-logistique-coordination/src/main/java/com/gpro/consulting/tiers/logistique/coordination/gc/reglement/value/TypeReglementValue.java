@@ -12,9 +12,18 @@ public class TypeReglementValue {
 	
 	private String prefixe;
 	
+
+	private Boolean regle;
 	
 	
 	
+	
+	public Boolean getRegle() {
+		return regle;
+	}
+	public void setRegle(Boolean regle) {
+		this.regle = regle;
+	}
 	public String getPrefixe() {
 		return prefixe;
 	}

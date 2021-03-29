@@ -86,7 +86,31 @@
         	                		
         	                }
 
-        	                
+        	          
+
+    $scope.onChangeTypeReglement = function (item, index) {
+	
+	//Au niveau de DetailsReglement : Si le type de Reglement est Espece ou RS alors reglé =True
+
+      if (item.typeReglementId != null &&  item.typeReglementId != "") {
+	
+	    var elementsTypeReglement = $scope.listTypes.filter((e) => e.id == item.typeReglementId) ; 
+
+          if(elementsTypeReglement != null && elementsTypeReglement.length >0){
+	
+	                      if(elementsTypeReglement[0].regle != null && elementsTypeReglement[0].regle == true){
+		
+		                              $scope.finalOperationsList[index].regle = true;
+                                 	}else
+                                    {
+	                                  $scope.finalOperationsList[index].regle = false;
+                                    }
+               }
+	
+  }
+    
+
+    }      
         	        		// Liste des CategorieCache
         					$scope.listGroupeClient = function() {
         						$http
@@ -127,6 +151,15 @@
         	                });
         	                
         	                }
+							
+							     $scope.getListeBanquePI = function () {
+              $http.get(UrlCommun+"/banquePI/all").success(function (data) {
+                $log.debug("listeCathegorie : "+data.length);
+                $scope.listeBanque = data;
+              });
+            }
+
+            $scope.getListeBanquePI();
         	                
         	                // Rechercher Reglements
         	                $scope.rechercheReglement = function(reglementCourante) {

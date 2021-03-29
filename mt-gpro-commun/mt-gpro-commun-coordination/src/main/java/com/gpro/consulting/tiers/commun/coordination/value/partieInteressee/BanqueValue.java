@@ -1,6 +1,5 @@
 package com.gpro.consulting.tiers.commun.coordination.value.partieInteressee;
 
-
 /**
  * The Class CategorieValue
  * 
@@ -8,71 +7,76 @@ package com.gpro.consulting.tiers.commun.coordination.value.partieInteressee;
  */
 public class BanqueValue {
 
-  /** The id. */
-  private Long id;
-  
-  private String code;
-  
-  private String abreviation;
+	/** The id. */
+	private Long id;
 
-  /** The designation. */
-  private String designation;
-  
-  
-  
+	private String code;
 
-  public String getCode() {
-	return code;
-}
+	private String abreviation;
 
-public void setCode(String code) {
-	this.code = code;
-}
+	/** The designation. */
+	private String designation;
 
-public String getAbreviation() {
-	return abreviation;
-}
+	private Boolean societe;
 
-public void setAbreviation(String abreviation) {
-	this.abreviation = abreviation;
-}
+	public Boolean getSociete() {
+		return societe;
+	}
 
-/**
-   * Gets the id.
-   *
-   * @return the id
-   */
-  public Long getId() {
-    return id;
-  }
+	public void setSociete(Boolean societe) {
+		this.societe = societe;
+	}
 
-  /**
-   * Sets the id.
-   *
-   * @param id
-   *          the new id
-   */
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public String getCode() {
+		return code;
+	}
 
-  /**
-   * Gets the designation.
-   *
-   * @return the designation
-   */
-  public String getDesignation() {
-    return designation;
-  }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-  /**
-   * Sets the designation.
-   *
-   * @param designation
-   *          the new designation
-   */
-  public void setDesignation(String designation) {
-    this.designation = designation;
-  }
+	public String getAbreviation() {
+		return abreviation;
+	}
+
+	public void setAbreviation(String abreviation) {
+		this.abreviation = abreviation;
+	}
+
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	/**
+	 * Gets the designation.
+	 *
+	 * @return the designation
+	 */
+	public String getDesignation() {
+		return designation;
+	}
+
+	/**
+	 * Sets the designation.
+	 *
+	 * @param designation the new designation
+	 */
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
 
 }

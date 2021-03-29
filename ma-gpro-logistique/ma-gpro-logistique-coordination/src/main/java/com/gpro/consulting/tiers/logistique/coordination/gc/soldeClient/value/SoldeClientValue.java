@@ -24,9 +24,9 @@ public class SoldeClientValue implements Comparable<SoldeClientValue> {
 	private String partieIntAbreviation;
 	private String partieIntReference;
 
-	private Long totalReglement;
+	private Double totalReglement;
 
-	private Long totalFacture;
+	private Double totalFacture;
 
 	private Double regelementPayes;
 
@@ -38,19 +38,24 @@ public class SoldeClientValue implements Comparable<SoldeClientValue> {
 
 	private Calendar dateSoldeAnterieur;
 
-	public Long getTotalReglement() {
+	
+	
+	
+	
+
+	public Double getTotalReglement() {
 		return totalReglement;
 	}
 
-	public void setTotalReglement(Long totalReglement) {
+	public void setTotalReglement(Double totalReglement) {
 		this.totalReglement = totalReglement;
 	}
 
-	public Long getTotalFacture() {
+	public Double getTotalFacture() {
 		return totalFacture;
 	}
 
-	public void setTotalFacture(Long totalFacture) {
+	public void setTotalFacture(Double totalFacture) {
 		this.totalFacture = totalFacture;
 	}
 

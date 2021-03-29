@@ -890,6 +890,8 @@ public class PersistanceUtilities {
 		categorieEntite.setAbreviation(categorieValue.getAbreviation());
 		categorieEntite.setDesignation(categorieValue.getDesignation());
 		
+		categorieEntite.setSociete(categorieValue.getSociete());
+		
 	
 
 		return categorieEntite;
@@ -904,6 +906,8 @@ public class PersistanceUtilities {
 		categorieValue.setCode(categorieEntite.getCode());
 		categorieValue.setAbreviation(categorieEntite.getAbreviation());
 		categorieValue.setDesignation(categorieEntite.getDesignation());
+		
+		categorieValue.setSociete(categorieEntite.getSociete());
 
 		return categorieValue;
 	}

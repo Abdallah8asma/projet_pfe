@@ -260,7 +260,9 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 	public void generateListDetailReglementReport(@RequestParam("type") String type,
 			// @RequestParam("request") RechercheMulticritereFactureValue
 			// request,
-			@RequestParam("reference") String reference, @RequestParam("partieIntId") Long partieIntId,
+			@RequestParam("reference") String reference,
+			@RequestParam("referenceDetReglement") String referenceDetReglement,
+			@RequestParam("partieIntId") Long partieIntId,
 			@RequestParam("dateReglementAu") String dateReglementAu,
 			@RequestParam("dateReglementDu") String dateReglementDu,
 			@RequestParam("dateEcheanceDu") String dateEcheanceDu,
@@ -272,6 +274,7 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		//logger.info("Generate a {} Report FactureVente List", type);
 
 		RechercheMulticritereDetailReglementValue request = new RechercheMulticritereDetailReglementValue();
+		
 		request.setDateReglementAu(stringToCalendar(dateReglementAu));
 		request.setDateReglementDu(stringToCalendar(dateReglementDu));
 		request.setDateEcheanceDu(stringToCalendar(dateEcheanceDu));
@@ -283,6 +286,7 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		request.setTypeReglementId(typeReglementId);
 		request.setAvecTerme(avecTerme);
 		request.setNomRapport(nomRapport);
+		request.setReferenceDetReglement(referenceDetReglement);
 
 		EcheancierReportListValue report = gestionnaireReportGcService.getListEcheanceReport(request);
 

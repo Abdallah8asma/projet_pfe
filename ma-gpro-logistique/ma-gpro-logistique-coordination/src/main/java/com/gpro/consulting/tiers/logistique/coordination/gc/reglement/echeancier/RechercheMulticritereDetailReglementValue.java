@@ -34,6 +34,20 @@ public class RechercheMulticritereDetailReglementValue {
 	private List<Long> reglementsId;
 
 	private Long reglementId;
+	
+	
+	private String referenceDetReglement;
+	
+	
+	
+
+	public String getReferenceDetReglement() {
+		return referenceDetReglement;
+	}
+
+	public void setReferenceDetReglement(String referenceDetReglement) {
+		this.referenceDetReglement = referenceDetReglement;
+	}
 
 	public Long getReglementId() {
 		return reglementId;

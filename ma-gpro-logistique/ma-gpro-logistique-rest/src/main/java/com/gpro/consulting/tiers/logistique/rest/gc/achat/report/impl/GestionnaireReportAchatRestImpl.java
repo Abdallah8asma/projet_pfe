@@ -152,7 +152,9 @@ public class GestionnaireReportAchatRestImpl extends AbstractGestionnaireDownloa
 	public void generateListDetailReglementAchatReport(@RequestParam("type") String type,
 			// @RequestParam("request") RechercheMulticritereFactureValue
 			// request,
-			@RequestParam("reference") String reference, @RequestParam("partieIntId") Long partieIntId,
+			@RequestParam("reference") String reference,
+			@RequestParam("referenceDetReglement") String referenceDetReglement,
+			@RequestParam("partieIntId") Long partieIntId,
 			@RequestParam("dateReglementAu") String dateReglementAu,
 			@RequestParam("dateReglementDu") String dateReglementDu,
 			@RequestParam("dateEcheanceDu") String dateEcheanceDu,
@@ -175,6 +177,7 @@ public class GestionnaireReportAchatRestImpl extends AbstractGestionnaireDownloa
 		request.setTypeReglementId(typeReglementId);
 		request.setAvecTerme(avecTerme);
 		request.setNomRapport(nomRapport);
+		request.setReferenceDetReglement(referenceDetReglement);
 
 		EcheancierReportListValue report = gestionnaireReportAchatService.getListEcheanceReport(request);
 

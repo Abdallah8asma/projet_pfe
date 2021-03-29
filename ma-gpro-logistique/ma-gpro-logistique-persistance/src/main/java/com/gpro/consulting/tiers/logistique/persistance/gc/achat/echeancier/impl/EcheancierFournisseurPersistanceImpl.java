@@ -166,6 +166,12 @@ public class EcheancierFournisseurPersistanceImpl extends AbstractPersistance im
 
 			whereClause.add(criteriaBuilder.equal(jointureDtTyp.get("aTerme"), request.getAvecTerme()));
 		}
+		
+		if (estNonVide(request.getReferenceDetReglement())) {
+			
+			whereClause
+					.add(criteriaBuilder.equal(root.get(COLUMN_REFERENCE_REGLEMENT), request.getReferenceDetReglement()));
+		}
 
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 		List<DetailsReglementAchatEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();

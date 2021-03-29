@@ -187,6 +187,7 @@ angular
     /************* analyse *******************/
 	'gpro.analyseVente',
 	'gpro.analyseAchat',
+	'gpro.analyseStock',
 	'gpro.dashbord',
 	
 	/************* Transfert *******************/
@@ -1460,6 +1461,10 @@ angular
         
          .when('/analyse/achat', {
           templateUrl: 'views/front/analyse/analyseAchat.html',
+        })
+
+        .when('/analyse/stock', {
+          templateUrl: 'views/front/analyse/analyseStock.html',
         })
 	
 

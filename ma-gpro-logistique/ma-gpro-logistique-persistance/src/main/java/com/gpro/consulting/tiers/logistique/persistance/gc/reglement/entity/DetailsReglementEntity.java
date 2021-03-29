@@ -68,8 +68,55 @@ public class DetailsReglementEntity implements Serializable{
 	private String reference;
 	
 	
+	@Column(name="date_depot_banque")
+	private Calendar dateDepotBanque;
 	
 	
+	@Column(name="charge_banque")
+	private Double chargeBanque;
+	
+	@Column(name="tva_banque")
+	private Double tvaBanque;
+	
+
+	
+	@Column(name="BANQUE_SOCIETE")
+	private String banqueSociete;
+	
+	
+	
+	
+	public String getBanqueSociete() {
+		return banqueSociete;
+	}
+
+	public void setBanqueSociete(String banqueSociete) {
+		this.banqueSociete = banqueSociete;
+	}
+
+	public Calendar getDateDepotBanque() {
+		return dateDepotBanque;
+	}
+
+	public void setDateDepotBanque(Calendar dateDepotBanque) {
+		this.dateDepotBanque = dateDepotBanque;
+	}
+
+	public Double getChargeBanque() {
+		return chargeBanque;
+	}
+
+	public void setChargeBanque(Double chargeBanque) {
+		this.chargeBanque = chargeBanque;
+	}
+
+	public Double getTvaBanque() {
+		return tvaBanque;
+	}
+
+	public void setTvaBanque(Double tvaBanque) {
+		this.tvaBanque = tvaBanque;
+	}
 
 	public String getReference() {
 		return reference;

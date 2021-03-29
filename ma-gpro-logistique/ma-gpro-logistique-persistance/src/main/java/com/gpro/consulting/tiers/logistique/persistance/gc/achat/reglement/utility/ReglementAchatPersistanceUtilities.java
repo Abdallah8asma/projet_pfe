@@ -211,6 +211,10 @@ public class ReglementAchatPersistanceUtilities {
 		entity.setDesignation(dto.getDesignation());
 		entity.setaTerme(dto.getaTerme());
 		entity.setPrefixe(dto.getPrefixe());
+		
+		entity.setRegle(dto.getRegle());
+		
+		
 		return entity;
 	}
 	
@@ -257,6 +261,8 @@ public class ReglementAchatPersistanceUtilities {
 		dto.setRegle(entity.getRegle());
 		dto.setObservation(entity.getObservation());
 		
+		dto.setReferenceDetReglement(entity.getReference());
+		
 		if(entity.getTypeReglement() != null){
 			if(entity.getTypeReglement().getId() != null){
 				dto.setTypeReglementId(entity.getTypeReglement().getId());
@@ -297,6 +303,8 @@ public class ReglementAchatPersistanceUtilities {
 		dto.setaTerme(entity.getaTerme());
 		
 		dto.setPrefixe(entity.getPrefixe());
+		
+		dto.setRegle(entity.getRegle());
 		
 		return dto;
 	}
