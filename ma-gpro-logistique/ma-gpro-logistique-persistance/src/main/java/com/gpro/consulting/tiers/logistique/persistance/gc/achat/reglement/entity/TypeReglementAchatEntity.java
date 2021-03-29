@@ -39,8 +39,20 @@ public class TypeReglementAchatEntity implements Serializable{
 	private Boolean aTerme;
 	
 	
+	@Column(name="regle")
+	private Boolean regle;
 	
 	
+	
+	
+	public Boolean getRegle() {
+		return regle;
+	}
+
+	public void setRegle(Boolean regle) {
+		this.regle = regle;
+	}
+
 	public String getPrefixe() {
 		return prefixe;
 	}

@@ -6834,10 +6834,18 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.setColumnView(7, 10);
 		sheet3.setColumnView(8, 20);
 		sheet3.setColumnView(9, 10);
+		
 		sheet3.setColumnView(10, 15);
 		sheet3.setColumnView(11, 15);
-		sheet3.setColumnView(12, 17);
+		sheet3.setColumnView(12, 15);
 		sheet3.setColumnView(13, 15);
+		
+		
+		
+		sheet3.setColumnView(14, 15);
+		sheet3.setColumnView(15, 15);
+		sheet3.setColumnView(16, 17);
+		sheet3.setColumnView(17, 15);
 		/**************************************************************************/
 
 		/*
@@ -6881,7 +6889,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		// Nom du rapport et la date
 
 		sheet3.addCell(new Label(2, 7, "   "+nomRapport, ExcelUtils.boldTitre));
-		sheet3.mergeCells(2, 7, 13, 8);
+		sheet3.mergeCells(2, 7, 17, 8);
 		/*
 		 * // sheet3.addCell(new Label(2, 6, "Le : " + dateFormat2.format(d),
 		 * boldRed3));
@@ -7075,14 +7083,23 @@ request.setNomRapport(nomRapport);
 		sheet3.addCell(new Label(8, i - 1, "N° Piece", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(9, i - 1, "Banque", ExcelUtils.boldRed2));
 		
-		sheet3.addCell(new Label(10, i - 1, "Montant", ExcelUtils.boldRed2));
-		
-		sheet3.addCell(new Label(11, i - 1, "Echéance", ExcelUtils.boldRed2));
-		
-		sheet3.addCell(new Label(12, i - 1, "Réglé", ExcelUtils.boldRed2));
 		
 		
-		sheet3.addCell(new Label(13, i - 1, "Observation", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(10, i - 1, "Banque Soc.", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(11, i - 1, "D.Depot Banque", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(12, i - 1, "Charge Banque", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(13, i - 1, "TVA Banque", ExcelUtils.boldRed2));
+		
+		
+		
+		sheet3.addCell(new Label(14, i - 1, "Montant", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(15, i - 1, "Echéance", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(16, i - 1, "Réglé", ExcelUtils.boldRed2));
+		
+		
+		sheet3.addCell(new Label(17, i - 1, "Observation", ExcelUtils.boldRed2));
 		
 		
 		Double mantantTtcTotale = 0d;
@@ -7176,17 +7193,61 @@ request.setNomRapport(nomRapport);
 							sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
 
 						}			
+						
+						
+						//  banque	 soc			
+						if (element.getBanqueSociete()!= null) {
+							sheet3.addCell(new Label(10, i, element.getBanqueSociete() + "", ExcelUtils.boldRed));
+
+						} else {
+							sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+
+						}	
 			
+						// date depot banque
+
+						if (element.getDateDepotBanque() != null) {
+							sheet3.addCell(
+									new Label(11, i, dateFormat2.format(element.getDateDepotBanque().getTime()) + "", ExcelUtils.boldRed));
+
+						} else {
+							sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
+						}
+						
+		
+						
+						// Charge Banque
+
+						if (element.getChargeBanque() != null) {
+							
+						
+							sheet3.addCell(new Label(12, i, convertisseur(element.getChargeBanque(), 4) + "", ExcelUtils.boldRed));
+
+						} else {
+							sheet3.addCell(new Label(12, i, "", ExcelUtils.boldRed));
+						}
+						
+						
+						// "TVA Banque"
+						
+						if (element.getTvaBanque() != null) {
+							
+							
+							sheet3.addCell(new Label(13, i, convertisseur(element.getTvaBanque(), 4) + "", ExcelUtils.boldRed));
+
+						} else {
+							sheet3.addCell(new Label(13, i, "", ExcelUtils.boldRed));
+						}
 						
 						// Mantant
 
 						if (element.getMontant() != null) {
 							
 							mantantTtcTotale += element.getMontant();
-							sheet3.addCell(new Label(10, i, convertisseur(element.getMontant(), 4) + "", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(14, i, convertisseur(element.getMontant(), 4) + "", ExcelUtils.boldRed));
 
 						} else {
-							sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(14, i, "", ExcelUtils.boldRed));
 						}		
 						
 						
@@ -7195,29 +7256,29 @@ request.setNomRapport(nomRapport);
 
 						if (element.getDateEcheance() != null) {
 							sheet3.addCell(
-									new Label(11, i, dateFormat2.format(element.getDateEcheance().getTime()) + "", ExcelUtils.boldRed));
+									new Label(15, i, dateFormat2.format(element.getDateEcheance().getTime()) + "", ExcelUtils.boldRed));
 
 						} else {
-							sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(15, i, "", ExcelUtils.boldRed));
 						}
 						
 						//reglee
 										
 						if (element.getRegle()!= null && element.getRegle() == true ) {
-							sheet3.addCell(new Label(12, i, element.getNumPiece() + "OUI", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(16, i, element.getNumPiece() + "OUI", ExcelUtils.boldRed));
 
 						} else {
-							sheet3.addCell(new Label(12, i, "NON", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(16, i, "NON", ExcelUtils.boldRed));
 
 						}	
 						
 						
 						//  Observation				
 						if (element.getObservation()!= null) {
-							sheet3.addCell(new Label(13, i, element.getObservation() + "", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(17, i, element.getObservation() + "", ExcelUtils.boldRed));
 
 						} else {
-							sheet3.addCell(new Label(13, i, "", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(17, i, "", ExcelUtils.boldRed));
 
 						}	
 						

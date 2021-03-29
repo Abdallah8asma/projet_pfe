@@ -324,6 +324,25 @@ public class BonLivraisonRestImpl {
  		return  bonLivraisonService.getCurrentReferenceByType(type,Calendar.getInstance(),false);
  	}
 	
+
+	@RequestMapping(value = "/getBonLivraisonByReference", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody LivraisonVenteValue getBonLivraisonByReference(	@RequestParam(value = "reference", required = false) String reference) {
+
+		// logger.info("getBonLivraisonById: Delegating request id {} to service
+		// layer.", id);
+
+		LivraisonVenteValue livraisonVenteValue = bonLivraisonService.getByReference(reference);
+
+		if (livraisonVenteValue != null) {
+			Map<Long, PartieInteresseValue> mapClientById = gestionnaireLogistiqueCacheService.mapClientById();
+			PartieInteresseValue client = mapClientById.get(livraisonVenteValue.getPartieIntId());
+			if (client != null) {
+				livraisonVenteValue.setPartieIntAbreviation(client.getAbreviation());
+			}
+		}
+
+		return livraisonVenteValue;
+	}
 	
 
 	public boolean checkForOptimization(RechercheMulticritereBonLivraisonValue request) {
