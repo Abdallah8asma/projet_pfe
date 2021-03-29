@@ -65,8 +65,21 @@ public class BanqueEntite implements Serializable {
 	
 	
 	
+	@Column(name = "societe")
+	private Boolean societe;
 	
 	
+	
+	
+	
+
+	public Boolean getSociete() {
+		return societe;
+	}
+
+	public void setSociete(Boolean societe) {
+		this.societe = societe;
+	}
 
 	public String getCode() {
 		return code;
