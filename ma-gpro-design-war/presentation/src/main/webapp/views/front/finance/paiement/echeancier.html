@@ -339,15 +339,15 @@
                     <div class="input-group-prepend">
                       <label class="input-group-text ms-Label">Regl&eacute;e</label>
                     </div>
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <label class="checkbox-sm checkbox-square checkbox-primary"
-                          ng-model="partieInteresseeCourante.actif">
-                          <input type="checkbox" ng-model="echeancierCourant.regle"
-                            ng-init="echeancierCourant.regle=''" />
-                          <span></span></label>
-                      </div>
-                    </div>
+                  
+                                   <select ui-select2 ng-model="echeancierCourant.regle" ng-init="echeancierCourant.regle =''"
+                      data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="true">OUI</option>
+                         <option value="false">NON</option>
+                  <!--     <option ng-repeat="item in listATerme" value="{{item.valeur}}">{{item.designation}}</option> -->
+                    </select>
+                    
                   </div>
                 </div>
               </div>
