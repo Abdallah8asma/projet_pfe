@@ -43,6 +43,9 @@ public interface IElementReglementDomaine {
 
 
 	public Double getSumMontantPayerByReferenceFacture(String reference);
+
+
+	public Double getSumMontantPayerByReferenceBL(String reference);
 	
 
 }

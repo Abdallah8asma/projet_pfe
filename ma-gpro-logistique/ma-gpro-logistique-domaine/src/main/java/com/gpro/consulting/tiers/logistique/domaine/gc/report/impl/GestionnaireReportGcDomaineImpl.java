@@ -1561,6 +1561,10 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			factureReportElement.setModepaiement(factureVente.getModepaiement());
 			factureReportElement.setMarche(factureVente.getMarche());
 			factureReportElement.setNatureLivraison(factureVente.getNatureLivraison());
+			
+			factureReportElement.setDevise(factureVente.getDevise());
+			
+			factureReportElement.setMontantConverti(factureVente.getMontantConverti());
 
 			productList.add(factureReportElement);
 		}

@@ -67,6 +67,12 @@ public class ElementReglementServiceImpl implements IElementReglementService{
 		// TODO Auto-generated method stub
 		return elementReglementDomaine.getSumMontantPayerByReferenceFacture(reference);
 	}
+
+	@Override
+	public Double getSumMontantPayerByReferenceBL(String reference) {
+		// TODO Auto-generated method stub
+		return elementReglementDomaine.getSumMontantPayerByReferenceBL(reference);
+	}
 	
 
 }

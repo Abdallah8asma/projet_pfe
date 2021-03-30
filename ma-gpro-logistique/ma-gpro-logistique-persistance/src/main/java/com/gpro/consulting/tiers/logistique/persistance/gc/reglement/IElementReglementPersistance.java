@@ -48,4 +48,8 @@ public interface IElementReglementPersistance {
 
 	public Double getSumMontantPayerByReferenceFacture(String reference);
 
+
+
+	public Double getSumMontantPayerByReferenceBL(String reference);
+
 }
