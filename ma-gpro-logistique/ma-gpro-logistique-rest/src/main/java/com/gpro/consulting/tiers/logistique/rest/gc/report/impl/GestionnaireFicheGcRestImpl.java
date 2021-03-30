@@ -38,6 +38,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSe
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheProduitSerialisableValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.DeviseValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.GroupeClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.IBaseInfoPersistance;
@@ -45,6 +46,7 @@ import com.gpro.consulting.tiers.commun.service.baseinfo.IBaseInfoService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IBoutiqueService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitSerialisableService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
+import com.gpro.consulting.tiers.commun.service.partieInteressee.IDeviseService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IGroupeClientService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
 import com.gpro.consulting.tiers.commun.service.utils.IUtilsService;
@@ -192,6 +194,11 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 	
 	@Autowired
 	private ITypeReglementService typeReglementService;
+	
+	
+
+	@Autowired
+	private IDeviseService deviseService;
 	
 	
 	@RequestMapping(value = "/listCommandesVente", method = RequestMethod.POST)
@@ -5184,7 +5191,14 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		List<BonLivraisonReportElementValue> listBlNonPaye = new ArrayList<>();
 		for (BonLivraisonReportElementValue element : report.getProductList()) {
 
-			if (!elementReglementService.existElementReglementByReferenceBL(element.getReference()))
+			//if (!elementReglementService.existElementReglementByReferenceBL(element.getReference()))
+			//	listBlNonPaye.add(element);
+			
+			
+			Double montantPayee = elementReglementService.getSumMontantPayerByReferenceBL(element.getReference()) ;
+			
+			
+			if(montantPayee < element.getMontantTTC() )
 				listBlNonPaye.add(element);
 		}
 
@@ -5624,25 +5638,90 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(3, i - 1, "Référence", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(4, i - 1, "Date", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(5, i - 1, "Montant HT", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(6, i - 1, "Montant TTC", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(6, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i - 1, "Montant TTC", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(8, i - 1, "Montant Réglé", ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(7, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(8, i - 1, "Montant Remise", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(9, i - 1, "Devise", ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(9, i - 1, "Quantite Totale", ExcelUtils.boldRed2));
+//		sheet3.addCell(new Label(9, i - 1, "Quantite Totale", ExcelUtils.boldRed2));
 
 		Double mantantTtcTotale = 0d;
 		Double remiseTotale = 0d;
 		Double quantiteTotale = 0d;
 
+		Double montantPayeeTotale = 0d;
 		List<FactureReportElementValue> listFactureNonPaye = new ArrayList<FactureReportElementValue>();
 		for (FactureReportElementValue element : report.getProductList()) {
 
-			if (!elementReglementService.existElementReglementByReferenceFacture(element.getReference()))
+			/*if (!elementReglementService.existElementReglementByReferenceFacture(element.getReference()))
+				listFactureNonPaye.add(element);
+				*/
+			
+			
+			Double montantPayee = elementReglementService.getSumMontantPayerByReferenceFacture(element.getReference()) ;
+			
+			
+			
+			element.setMetrageTotal(montantPayee);
+			
+			
+			if(montantPayee < element.getMontantTTC() )
 				listFactureNonPaye.add(element);
 		}
+		
+		
+		
+		Map<Long,Double> mapsMontantTTCdevise = new HashMap<Long, Double>();
 
 		for (FactureReportElementValue element : listFactureNonPaye) {
+			
+			
+		
+			
+			if(element.getDevise() != null) {
+				
+				if(mapsMontantTTCdevise.containsKey(element.getDevise())) {
+					
+					Double montant = mapsMontantTTCdevise.get(element.getDevise()) ;
+					
+					
+					if(element.getDevise().equals(DeviseValue.DINAR) && element.getMontantTTC() != null) {
+						
+						montant += element.getMontantTTC()  ;
+						
+					}else
+					{
+						if(element.getMontantConverti() != null)
+					      	montant += element.getMontantConverti()  ;
+					}
+					
+					mapsMontantTTCdevise.put(element.getDevise(), montant);
+					
+					
+				}else
+					
+				{
+					
+					if(element.getDevise().equals(DeviseValue.DINAR) && element.getMontantTTC() != null) {
+				
+						
+						mapsMontantTTCdevise.put(element.getDevise(),  element.getMontantTTC());
+						
+					}else
+					{
+						mapsMontantTTCdevise.put(element.getDevise(),  element.getMontantConverti());
+					}
+					
+				}
+				
+				
+				
+				
+				
+			}
+			
 
 			if (element.getPartieIntAbreviation() != null) {
 				sheet3.addCell(new Label(2, i, element.getPartieIntAbreviation() + "", ExcelUtils.boldRed));
@@ -5672,32 +5751,88 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			// Mantant HT
 
 			if (element.getMontantHTaxe() != null) {
-				sheet3.addCell(new Label(5, i, convertisseur(element.getMontantHTaxe(), 3) + "", ExcelUtils.boldRed));
+				sheet3.addCell( new jxl.write.Number(5, i, convertisseur(element.getMontantHTaxe(), 3), ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
 			}
 
-			// Mantant TTC
-
-			if (element.getMontantTTC() != null) {
-				sheet3.addCell(new Label(6, i, convertisseur(element.getMontantTTC(), 3) + "", ExcelUtils.boldRed));
-
-				mantantTtcTotale += element.getMontantTTC();
-			} else {
-				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
-			}
-
 			// Mantant Taxe
 
 			if (element.getMontantTaxe() != null) {
-				sheet3.addCell(new Label(7, i, convertisseur(element.getMontantTaxe(), 3) + "", ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(6, i, convertisseur(element.getMontantTaxe(), 3), ExcelUtils.boldRed));
 
 			} else {
-				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
+			}
+			
+			
+			
+			// Mantant TTC
+			if(element.getDevise() != null) {
+				
+				if(element.getDevise().equals(DeviseValue.DINAR)){
+					
+					if (element.getMontantTTC() != null) {
+						sheet3.addCell(new jxl.write.Number(7, i, convertisseur(element.getMontantTTC(), 3), ExcelUtils.boldRed));
+
+						mantantTtcTotale += element.getMontantTTC();
+					} else {
+						sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+					}
+
+					
+				}else
+					
+				{
+					if (element.getMontantConverti() != null) {
+						sheet3.addCell(new jxl.write.Number(7, i, convertisseur(element.getMontantConverti(), 3), ExcelUtils.boldRed));
+
+						mantantTtcTotale += element.getMontantTTC();
+					} else {
+						sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+					}
+
+					
+				}
+				
+		
 			}
 
-			// Mantat Remise
+	
+		
+			// montant reglee
+			
+			if (element.getMetrageTotal() != null) {
+				sheet3.addCell(new jxl.write.Number(8, i, convertisseur(element.getMetrageTotal(), 3) , ExcelUtils.boldRed));
+
+				montantPayeeTotale+=element.getMetrageTotal();
+		
+			} else {
+				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
+			}
+			
+			String devis = "" ;
+			
+			if(element.getDevise() != null) {
+				
+				DeviseValue pDeviseRech = new DeviseValue(); pDeviseRech.setId(element.getDevise());
+				
+				DeviseValue deviseValue = deviseService.rechercheDeviseParId(pDeviseRech) ;
+				
+				if(deviseValue != null) devis = deviseValue.getDesignation();
+			}
+			
+			
+			if (devis != null) {
+				sheet3.addCell(new Label(9, i, devis + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+
+			}
+
+	/*		// Mantat Remise
 
 			if (element.getMontantRemise() != null) {
 				sheet3.addCell(new Label(8, i, convertisseur(element.getMontantRemise(), 3) + "", ExcelUtils.boldRed));
@@ -5716,6 +5851,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			} else {
 				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
 			}
+			
+			*/
 
 			i++;
 
@@ -5724,32 +5861,45 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		i++;
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Totale", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 9, i);
+		sheet3.addCell(new Label(4, i, "Total", ExcelUtils.boldRed2));
+		sheet3.mergeCells(3, i, 7, i);
 
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Ligne", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, listFactureNonPaye.size() + "", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(4, i, "Ligne", ExcelUtils.boldRed2));
+		sheet3.mergeCells(4, i, 6, i);
+		sheet3.addCell(new Label(7, i, listFactureNonPaye.size() + "", ExcelUtils.boldRed2));
 
 		i++;
-
-		sheet3.addCell(new Label(7, i, "Montant TTC Total", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, convertisseur(mantantTtcTotale, 3) + "", ExcelUtils.boldRed2));
-
-		i++;
-
-		sheet3.addCell(new Label(7, i, "Montant Remise Total", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, remiseTotale + "", ExcelUtils.boldRed2));
+		
+		
+       	sheet3.addCell(new Label(4, i, "Montant Réglé Total", ExcelUtils.boldRed2));
+		sheet3.mergeCells(4, i, 6, i);
+		sheet3.addCell(new jxl.write.Number(7, i, convertisseur(montantPayeeTotale, 4), ExcelUtils.boldRed2));
 
 		i++;
+		
+	      for (Map.Entry<Long, Double> mapentry : mapsMontantTTCdevise.entrySet()) {
+	         /*  System.out.println("clé: "+mapentry.getKey() 
+	                              + " | valeur: " + mapentry.getValue());*/
+	    
+	           
+	           DeviseValue devRech = new DeviseValue(); devRech.setId((Long)mapentry.getKey());
+	           
+	       	sheet3.addCell(new Label(4, i, "Montant TTC Total en "+deviseService.rechercheDeviseParId(devRech).getDesignation(), ExcelUtils.boldRed2));
+			sheet3.mergeCells(4, i, 6, i);
+			sheet3.addCell(new jxl.write.Number(7, i, convertisseur((Double)mapentry.getValue(), 4), ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(7, i, "Quantite Totale", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, quantiteTotale + "", ExcelUtils.boldRed2));
+			i++;
+	           
+	           
+	           
+	        }
+		
+
+	
+
+		
 
 		/*******************************************
 		 * BAS DU PAGE

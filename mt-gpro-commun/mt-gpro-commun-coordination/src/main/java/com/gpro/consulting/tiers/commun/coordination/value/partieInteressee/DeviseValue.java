@@ -1,6 +1,8 @@
 package com.gpro.consulting.tiers.commun.coordination.value.partieInteressee;
 
 public class DeviseValue {
+	
+	public static Long DINAR  = 2l;
 
 	
 	private Long id;
