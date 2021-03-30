@@ -112,7 +112,29 @@
         <div class="panel-body">
           <form class="form-horizontal" name="rechercheReglementForm" id="rechercheReglementForm">
             <div class="row">
-              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+			
+			
+			 <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">
+                        R&eacute;f.</label>
+                    </div>
+                    <input class="form-control" ng-model="reglementCourante.reference"
+                      ng-init="reglementCourante.reference=''" />
+                  </div>
+                </div>
+
+
+              </div>
+			  
+			
+			
+			
+			
+			
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -134,7 +156,7 @@
                 </div>
 
               </div>
-              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
 
                 <div class="form-group">
                   <div class="input-group">
@@ -158,7 +180,7 @@
 
 
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
