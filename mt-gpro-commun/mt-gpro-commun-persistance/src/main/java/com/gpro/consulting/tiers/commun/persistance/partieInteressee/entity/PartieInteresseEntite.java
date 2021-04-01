@@ -201,8 +201,20 @@ public class PartieInteresseEntite implements Serializable {
 	
 	
 	
+	@Column(name = "devise_id")
+	private Long deviseId;
+
+	
+	
 
 
+	public Long getDeviseId() {
+		return deviseId;
+	}
+
+	public void setDeviseId(Long deviseId) {
+		this.deviseId = deviseId;
+	}
 
 	public String getNature() {
 		return nature;

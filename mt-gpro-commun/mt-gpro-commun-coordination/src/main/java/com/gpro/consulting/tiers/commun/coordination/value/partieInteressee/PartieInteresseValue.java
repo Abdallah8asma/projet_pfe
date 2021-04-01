@@ -139,8 +139,19 @@ public class PartieInteresseValue {
 	private String nature;
 	
 	
+	private Long deviseId;
+
+	
 	
 
+
+	public Long getDeviseId() {
+		return deviseId;
+	}
+
+	public void setDeviseId(Long deviseId) {
+		this.deviseId = deviseId;
+	}
 
 	public String getNature() {
 		return nature;

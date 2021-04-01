@@ -47,6 +47,7 @@ public class PartieInteresseePersistanceImpl extends AbstractPersistance impleme
   private String actifValue = "oui";
   
   private String boutiqueId="boutiqueId";
+  private String deviseId="deviseId";
 
   /**
    * methode de creation Partie Interessée
@@ -220,6 +221,14 @@ public class PartieInteresseePersistanceImpl extends AbstractPersistance impleme
         vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("nature"),
           pRecherchePartieInteresseMulitCritere.getNature()));
       }
+    
+    
+    
+    if (pRecherchePartieInteresseMulitCritere.getDeviseId() != null ) {
+	      vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get(deviseId),
+	    		  pRecherchePartieInteresseMulitCritere.getDeviseId()));
+	    }
+    
     /** execute query and do something with result **/
 
     vCriteriaQuery.select(vRootParitieInteresse).where(vWhereClause.toArray(new Predicate[] {}));
