@@ -45,7 +45,7 @@ angular
         $scope.resultatRecherche = $scope.listePartieInteressee;
 
 
-
+     	$scope.ListeDevise = [];
 
 
 
@@ -53,6 +53,17 @@ angular
         /***************************************************
          * Gestion de la Menu PI
          **************************************************/
+
+
+		$scope.ListeDevise = function () {
+					$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+						$scope.ListeDevise = dataDevise;
+					});
+				};
+
+
+
+				$scope.ListeDevise();
 
          
         $scope.changeTaPartieInteresse = function () {
@@ -649,8 +660,8 @@ angular
 
             {
               field: '',
-              //	width: '10%',
-              fontfamily: 'Poppins, Helvetica, sans-serif',
+             	width: '10%',
+              //fontfamily: 'Poppins, Helvetica, sans-serif',
               cellTemplate:
                 `<div class="ms-CommandButton float-right">
                <button class="ms-CommandButton-button ms-CommandButton-Gpro " ng-click="modifierOuCreerPartieInteressee()">
@@ -660,10 +671,6 @@ angular
                 <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
                 </button>
                 	</div> `,
-
-              // <div class="buttons" ng-show="!rowform.$visible">'
-              // + '<button data-nodrag class="btn btn-default btn-xs" ng-click="modifierOuCreerPartieInteressee()">	<i class="fa fa-fw fa-pencil"></i></button>'
-              // + '<button data-nodrag class="btn btn-default btn-xs"	ng-click="showPopupDelete(1)">	<i class="fa fa-fw fa-trash-o"></i></button></div>'
             },
           ];
         });

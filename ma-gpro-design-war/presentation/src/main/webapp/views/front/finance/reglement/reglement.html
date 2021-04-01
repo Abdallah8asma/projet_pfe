@@ -439,7 +439,7 @@
                       </div>
                       <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
                         ng-init="reglementCourante.date =''" ng-model="reglementCourante.date"
-                        ng-change="getCurrentReferenceMensuelByDate(reglementCourante.date)" is-open="opened"
+                        ng-change="modePdf != 'actif' && getCurrentReferenceMensuelByDate(reglementCourante.date)" is-open="opened"
                         datepicker-options="dateOptions" date-="enabled(date, mode)" close-text="Close"  required/>
   
   

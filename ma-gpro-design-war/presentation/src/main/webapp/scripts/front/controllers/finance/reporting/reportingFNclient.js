@@ -16,6 +16,9 @@ angular
 						UrlCommun,UrlAtelier,$window) {
 							
 							$log.info("=========Gc Reporting Client========");
+							
+							
+							$scope.isEnCoursChargement = false ;
 						
 						$scope.ListClientCache =  [];
 
@@ -33,6 +36,9 @@ angular
                         
                         // annuler Recherche
                         $scope.annulerChaineAjout = function() {
+	
+	
+	$scope.isEnCoursChargement = false ;
                             
                             $scope.modePdf = "notActive";
                             
@@ -59,6 +65,9 @@ angular
 					        }
 					    
 				            $scope.downloadClientReporting = function(feuilleCourante, action) {
+					
+					$scope.isEnCoursChargement = true ;
+					
 				                   var newdateSaisieMinFormat="";
 				                  if(angular.isDefined(feuilleCourante.dateMin)){
 				                    $log.debug("==dateIntroductionMin "+feuilleCourante.dateMin);
@@ -125,6 +134,8 @@ angular
 															 a.download = fileName[0];
 															$window.open(fileURL)
 															 a.click();
+														
+														$scope.isEnCoursChargement = false ;
 														});
 
 
@@ -160,6 +171,9 @@ angular
 						function($scope, $http, $filter, $log,downloadService,
 						UrlCommun,UrlAtelier,$window) {
 							
+							
+							$scope.isEnCoursChargement = false ;
+							
 							$log.info("=========Gc Reporting Client========");
 						
 						$scope.ListClientCache =  [];
@@ -192,6 +206,8 @@ angular
                         
                         // annuler Recherche
                         $scope.annulerChaineAjout = function() {
+	
+	$scope.isEnCoursChargement = false ;
                             
                             $scope.modePdf = "notActive";
                             
@@ -218,6 +234,9 @@ angular
 					        }
 					    
 				            $scope.downloadClientReporting = function(feuilleCourante, action) {
+					
+					
+					$scope.isEnCoursChargement = true ;
 				                   var newdateSaisieMinFormat="";
 				                  if(angular.isDefined(feuilleCourante.dateMin)){
 				                    $log.debug("==dateIntroductionMin "+feuilleCourante.dateMin);
@@ -282,6 +301,7 @@ angular
 															 a.download = fileName[0];
 															$window.open(fileURL)
 															 a.click();
+														$scope.isEnCoursChargement = false ;
 														});
 
 
@@ -313,9 +333,23 @@ angular
 						
 						function($scope, $http, $filter, $log,downloadService,
 						UrlCommun,UrlAtelier,$window) {
+							
+							$scope.isEnCoursChargement = false ;
 						
 						$scope.ListRegion = [];
 						$scope.ListClientCache = [];
+						$scope.ListeDevise = [];
+						
+						
+		$scope.ListeDevise = function () {
+					$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+						$scope.ListeDevise = dataDevise;
+					});
+				};
+
+
+
+				$scope.ListeDevise();
 
 						// Liste des ClientCommandeVenteCache
 						$scope.listeRegionCache = function() {
@@ -343,6 +377,8 @@ angular
 
 							// annuler Recherche
                         $scope.annulerOFAjout = function() {
+	
+	$scope.isEnCoursChargement = false ;
                             
                             $scope.modePdf = "notActive";
                             
@@ -351,6 +387,7 @@ angular
 															  "soldeMin": "",
 															  "soldeMax": "",
 															  "partieIntId": "",
+													           "deviseId": "",
 															};
                            
                             $scope.rechercheSituationForm.$setPristine();
@@ -370,6 +407,9 @@ angular
 					        }
 					    
 				            $scope.downloadAllOrdreFabrication = function(feuilleCourante, action) {
+					
+					
+					$scope.isEnCoursChargement = true ;
 				                  var newdateSaisieMinFormat="";
 				                  if(angular.isDefined(feuilleCourante.dateMin)){
 				                    $log.debug("==dateIntroductionMin "+feuilleCourante.dateMin);
@@ -405,6 +445,7 @@ angular
 				                                                          + "&dateMin="+newdateSaisieMinFormat
 				                                                          + "&dateMax="+newdateSaisieMaxFormat
 				                                                          + "&regiontId="+feuilleCourante.regionId
+                                                                          + "&deviseId="+feuilleCourante.deviseId
 				                                                          + "&soldeMin=&soldeMax="
 				                                                          + "&solde="+action
 				                                                          + "&type=pdf";
@@ -416,6 +457,7 @@ angular
 				                                                          + "&dateMin="+newdateSaisieMinFormat
 				                                                          + "&dateMax="+newdateSaisieMaxFormat
 				                                                          + "&regiontId="+feuilleCourante.regionId
+                                                                          + "&deviseId="+feuilleCourante.deviseId
 				                                                          + "&soldeMin=&soldeMax="
 				                                                          + "&solde="+action
 				                                                          + "&type=pdf";
@@ -437,6 +479,94 @@ angular
 															 a.download = fileName[0];
 														$window.open(fileURL)
 															 a.click();
+														
+														$scope.isEnCoursChargement = false ;
+														});
+
+
+				                    //Generate
+				                    // downloadService.download(url).then(
+				                    //     function(success) {
+				                    //          $log.debug('success : ' + success);
+				                    //     }, function(error) {
+				                    //          $log.debug('error : ' + error);
+				                    //     });
+				                    }
+				                }
+
+        $scope.downloadAllOrdreFabricationExcel = function(feuilleCourante, action) {
+	
+	$scope.isEnCoursChargement = true ;
+				                  var newdateSaisieMinFormat="";
+				                  if(angular.isDefined(feuilleCourante.dateMin)){
+				                    $log.debug("==dateIntroductionMin "+feuilleCourante.dateMin);
+				                    
+				                    if(feuilleCourante.dateMin != ""){
+				                      newdateSaisieMinFormat = formattedDate(feuilleCourante.dateMin);
+				                    }else{
+				                      newdateSaisieMinFormat = "";
+				                    }
+				                  }else{
+				                    $log.debug("==dateIntroductionMin Undefined");
+				                  }
+
+				                  var newdateSaisieMaxFormat="";
+				                  if(angular.isDefined(feuilleCourante.dateMax)){
+				                    $log.debug("==dateIntroductionMin "+feuilleCourante.dateMax);
+				                    
+				                    if(feuilleCourante.dateMin != ""){
+				                      newdateSaisieMaxFormat = formattedDate(feuilleCourante.dateMax);
+				                    }else{
+				                      newdateSaisieMaxFormat = "";
+				                    }
+				                  }else{
+				                    $log.debug("==dateIntroductionMin Undefined");
+				                  }
+
+				                   $log.info("feuilleCouranteOF "+JSON.stringify(feuilleCourante, null, "  "));
+				                if(action != null){
+				                    var url;
+				                    if(action == 1){
+				                       //Situation 
+				                        url = UrlAtelier + "/fiches/situation?partieIntId=" + feuilleCourante.partieIntId
+				                                                          + "&dateMin="+newdateSaisieMinFormat
+				                                                          + "&dateMax="+newdateSaisieMaxFormat
+				                                                          + "&regiontId="+feuilleCourante.regionId
+                                                                          + "&deviseId="+feuilleCourante.deviseId
+				                                                          + "&soldeMin=&soldeMax="
+				                                                          + "&solde="+action
+				                                                          + "&type=pdf";
+				                    }
+				                    if(action == 2){
+				                    	
+				                    	 //Situation  solde non null
+				                        url = UrlAtelier + "/fiches/situation?partieIntId=" + feuilleCourante.partieIntId
+				                                                          + "&dateMin="+newdateSaisieMinFormat
+				                                                          + "&dateMax="+newdateSaisieMaxFormat
+				                                                          + "&regiontId="+feuilleCourante.regionId
+                                                                          + "&deviseId="+feuilleCourante.deviseId
+				                                                          + "&soldeMin=&soldeMax="
+				                                                          + "&solde="+action
+				                                                          + "&type=pdf";
+				                    	
+				                    	
+														}
+														
+
+													//	var fileName = '  Liste Bon Sortie	'		;					
+														var a = document.createElement('a');
+														document.body.appendChild(a);
+														downloadService.download(url).then(function (result) {
+															var heasersFileName = result.headers(['content-disposition']).substring(21);
+															var fileName = heasersFileName.split('.');
+														var typeFile = result.headers(['content-type']);
+															var file = new Blob([result.data], {type: typeFile});
+															 var fileURL = window.URL.createObjectURL(file);
+															 a.href = fileURL;
+															 a.download = fileName[0];
+														$window.open(fileURL)
+															 a.click();
+														$scope.isEnCoursChargement = false ;
 														});
 
 
@@ -472,9 +602,13 @@ angular
 						function($scope, $http, $filter, $log,downloadService,
 						UrlCommun,UrlAtelier,$window) {
 							
+							$scope.isEnCoursChargement = false ;
+							
 							$log.info("=========Gc Reporting Client========");
 						
 						$scope.ListClientCache =  [];
+						
+							$scope.ListeDevise =  [];
 
 						// Liste des ClientCommandeVenteCache
 					/*	$scope.listeClientCache = function() {
@@ -488,6 +622,16 @@ angular
 						}
 						$scope.listeClientCache();
 					*/
+					
+							$scope.ListeDevise = function () {
+					$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+						$scope.ListeDevise = dataDevise;
+					});
+				};
+
+
+
+				$scope.ListeDevise();
 						
 						// Liste des listGroupeClient
 						$scope.listGroupeClient = function() {
@@ -523,6 +667,8 @@ angular
                         
                         // annuler Recherche
                         $scope.annulerAjout = function() {
+	
+	$scope.isEnCoursChargement = false ;
                             
                             $scope.modePdf = "notActive";
                             
@@ -550,6 +696,8 @@ angular
 				            
 				            $scope.downloadBLNonPaye = function(
 									bonLivraisonVenteCourant) {
+										
+										$scope.isEnCoursChargement = true ;
 							
 						
 								var newdateLivMinFormat = "";
@@ -610,6 +758,12 @@ angular
 									
 								}
 								
+								var deviseId = '';
+								if(angular.isDefined(bonLivraisonVenteCourant.deviseId)){
+									deviseId = bonLivraisonVenteCourant.deviseId;
+									
+								}
+								
 							//	console.log("===============>download: idDepot:"+bonLivraisonVenteCourant.idDepot);
 								var url = UrlAtelier
 										+ "/fiches/bl-non-paye?referenceBl="
@@ -636,6 +790,7 @@ angular
 										+ bonLivraisonVenteCourant.avecFacture
 										+ "&groupeClientId="+bonLivraisonVenteCourant.groupeClientId
 										+ "&idDepot="+newIdDepot
+										+ "&deviseId="+deviseId
 										+ "&type=pdf";
 
 								$log.debug("--downloadAllBonLiv URL" + url);
@@ -656,6 +811,8 @@ angular
 									 a.download = fileName[0];
 									//$window.open(fileURL)
 									 a.click();
+								
+								$scope.isEnCoursChargement = false ;
 								});
 
 
@@ -687,11 +844,23 @@ angular
 						function($scope, $http, $filter, $log,downloadService,
 						UrlCommun,UrlAtelier,$window) {
 							
+							$scope.isEnCoursChargement = false ;
+							
 							
 							$log.info("=========Gc Reporting Client========");
 							
 							$scope.ListClientCache =  [];
+							
+										$scope.ListeDevise =  [];
 
+					
+					
+							$scope.ListeDevise = function () {
+					$http.get(UrlCommun + '/devise/all').success(function (dataDevise) {
+						$scope.ListeDevise = dataDevise;
+					});
+				};
+$scope.ListeDevise();
 							// Liste des ClientCommandeVenteCache
 						/*	$scope.listeClientCache = function() {
 								$http
@@ -739,6 +908,8 @@ angular
 	                        
 	                        // annuler Recherche
 	                        $scope.annulerAjout = function() {
+		
+		$scope.isEnCoursChargement = false ;
 	                            
 	                            $scope.modePdf = "notActive";
 	                            
@@ -764,6 +935,9 @@ angular
 					 
 					            
 								 $scope.downloadFactureNonPaye = function(factureVenteCourant) {
+									
+									
+									$scope.isEnCoursChargement = true ;
 									 	var newdateFacMinFormat="";
 										if(angular.isDefined(factureVenteCourant.dateFactureMin)){
 											$log.debug("==dateFactureMin "+factureVenteCourant.dateFactureMin);
@@ -813,6 +987,7 @@ angular
 																 + "&prixMax="+factureVenteCourant.prixMax
 																 + "&natureLivraison="+factureVenteCourant.natureLivraison
 																	+ "&groupeClientId="+factureVenteCourant.groupeClientId
+																		+ "&deviseId="+factureVenteCourant.deviseId
 																 + "&type=pdf";
 																 
 						                  }else{
@@ -828,6 +1003,7 @@ angular
 																 + "&prixMax="+factureVenteCourant.prixMax
 																 + "&natureLivraison="+factureVenteCourant.natureLivraison
 																	+ "&groupeClientId="+factureVenteCourant.groupeClientId
+																	+ "&deviseId="+factureVenteCourant.deviseId
 																 + "&type=pdf";
 						                   }
 															 $log.debug("-- URL" + url );
@@ -848,6 +1024,8 @@ angular
 															 a.download = fileName[0];
 															//$window.open(fileURL)
 															 a.click();
+														
+														$scope.isEnCoursChargement = false ;
 															 });
 
 

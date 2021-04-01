@@ -77,6 +77,9 @@ angular
 				case 'reporting':
 					$scope.ITEM = 'reporting';
 					break;
+				case 'rapprochement':
+					$scope.ITEM = 'rapprochement';
+				break;
 			}
 
 			$scope.goCoutsVente = function () {

@@ -84,7 +84,9 @@ angular.module('gpro.menuFinance', []).controller(
 			case 'mvtCaisse':
 				$scope.ITEM = 'mvtCaisse';
 				break;
-
+           case 'rapprochement':
+				$scope.ITEM = 'rapprochement';
+				break;
 
 
 		}
