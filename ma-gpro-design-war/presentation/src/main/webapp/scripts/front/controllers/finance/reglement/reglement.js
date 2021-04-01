@@ -1419,10 +1419,10 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       };
     // used to delete an element from the list
     $scope.deleteElement = function (item, indexLine) {
-      if ($scope.finalElementList.length > 1) {
+      //if ($scope.finalElementList.length > 1) {
         // delete line from final list
         $scope.finalElementList.splice(indexLine, 1);
-      }
+     // }
     };
 
     // liste des BL

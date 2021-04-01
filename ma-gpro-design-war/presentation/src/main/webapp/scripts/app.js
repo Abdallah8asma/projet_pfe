@@ -77,6 +77,8 @@ angular
     'gpro.soldeFournisseur',
     'gpro.echeancier',
     'gpro.echeancierFournisseur',
+    'gpro.rapprochement',
+    'gpro.rapprochementFournisseur',
     'gpro.FinanceReporting',
     'gpro.gcReportingFNclient',
     'gpro.gcReportingFNfournisseur',
@@ -1273,6 +1275,14 @@ angular
           },
         })
 
+      .when('/front/finance/rapprochement:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/finance/rapprochement' + param.templateFile + '.html'
+            );
+          },
+        })
+
         .when('/front/finance/reporting:templateFile', {
           templateUrl: function (param) {
             return (
@@ -1332,6 +1342,16 @@ angular
           templateUrl: function (param) {
             return (
               'views/front/financeFournisseur/paiement' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
+
+   .when('/front/financeFournisseur/rapprochement:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/financeFournisseur/rapprochement' +
               param.templateFile +
               '.html'
             );

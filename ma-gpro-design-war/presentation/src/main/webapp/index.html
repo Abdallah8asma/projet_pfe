@@ -1789,7 +1789,7 @@
                             <span class="menu-text">Solde Client</span>
                           </a>
                         </li>
-                        <li class="menu-item" aria-haspopup="true">
+                        <li class="menu-item" aria-haspopup="true" permission="['FC_Client_Paiement']">
                           <a
                             href="#/finance/echeancier"
                             ng-click="upSelectedMenu('Finance Client ',' Paiement')"
@@ -1799,6 +1799,18 @@
                               <span></span>
                             </i>
                             <span class="menu-text">Paiement</span>
+                          </a>
+                        </li>
+                           <li class="menu-item" aria-haspopup="true" permission="['FC_Rapprochement_Consult']">
+                          <a
+                            href="#/finance/rapprochement"
+                            ng-click="upSelectedMenu('Finance Client ',' Rapprochement')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Rapprochement</span>
                           </a>
                         </li>
                         <li class="menu-item" aria-haspopup="true" permission="['FC_Client_Reporting_Consult']">
@@ -1925,7 +1937,7 @@
                           </a>
                         </li>
 
-                        <li class="menu-item" aria-haspopup="true" permission="['FC_Paiement_Consult']">
+                        <li class="menu-item" aria-haspopup="true" permission="['FF_Paiement_Consult']">
                           <a
                             href="#/financeFournisseur/echeancier"
                             ng-click="upSelectedMenu('Finance Fournisseur ',' Paiement')"
@@ -1937,7 +1949,20 @@
                             <span class="menu-text">Paiement</span>
                           </a>
                         </li>
-                        <li class="menu-item" aria-haspopup="true" permission="['FC_Reporting_Consult']">
+                        
+                           <li class="menu-item" aria-haspopup="true" permission="['FF_Rapprochement_Consult']">
+                          <a
+                            href="#/financeFournisseur/rapprochement"
+                            ng-click="upSelectedMenu('Finance Fournisseur ',' Rapprochement')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Rapprochement</span>
+                          </a>
+                        </li>
+                        <li class="menu-item" aria-haspopup="true" permission="['FF_Reporting_Consult']">
                           <a
                             href="#/financeFournisseur/reporting"
                             ng-click="upSelectedMenu('Finance Fournisseur ',' Reporting')"
@@ -5403,6 +5428,7 @@
     <script src="scripts/front/controllers/finance/couts/couts.js"></script>
     <script src="scripts/front/controllers/finance/caisse/caisse.js"></script>
     <script src="scripts/front/controllers/finance/caisse/mouvementCaisse.js"></script>
+    <script src="scripts/front/controllers/finance/rapprochement/rapprochement.js"></script>
 
     <!---------Controllers FinanceFournisseur---------->
 
@@ -5413,7 +5439,8 @@
     <script src="scripts/front/controllers/financeFournisseur/reglement/elementReglement.js"></script>
     <script src="scripts/front/controllers/financeFournisseur/soldeFournisseur/soldeFournisseur.js"></script>
     <script src="scripts/front/controllers/financeFournisseur/reporting/reportingFNfournisseur.js"></script>
-
+    <script src="scripts/front/controllers/financeFournisseur/rapprochement/rapprochementFournisseur.js"></script>
+   
     <!----------------- Gestion Achat -new -------------------->
 
     <script src="scripts/front/controllers/gestionAchat/bonCommande/bonCommande.js"></script>

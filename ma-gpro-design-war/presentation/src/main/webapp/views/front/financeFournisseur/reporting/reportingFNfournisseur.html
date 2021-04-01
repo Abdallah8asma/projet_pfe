@@ -1,3 +1,11 @@
+  <style>
+    .center {
+      margin: auto;
+      width: 35%;
+      padding-left: 30px;
+    }
+  </style>
+
 <div class="panel-body" style="background-color: #fff;">
   <div class="row">
     <div class="col-sm-12">
@@ -149,6 +157,32 @@
 
               </div>
             </div>
+        
+        
+              <div class="row" ng-show="isEnCoursChargement">
+          
+          <div class="center"  ng-click="isEnCoursChargement =false">
+            <div class="center">
+              <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+  
+        <!--     <div class="center">{{msgChargement}}</div> -->
+          </div>
+         </div>
+        
           </form>
         </div>
       </div>
@@ -178,11 +212,29 @@
               <span class="ms-CommandButton-label">Tous</span>
             </button>
           </div>
+              <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheSituationForm.$valid;"
+              ng-click="downloadAllOrdreFabricationExcel(ordreFabricationCourant, 1)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">Tous/Excel</span>
+            </button>
+          </div>
+          
+          
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-disabled="!rechercheSituationForm.$valid;"
               ng-click="downloadAllOrdreFabrication(ordreFabricationCourant, 2)">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
               <span class="ms-CommandButton-label">Génerer</span>
+            </button>
+          </div>
+          
+          
+            <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheSituationForm.$valid;"
+              ng-click="downloadAllOrdreFabricationExcel(ordreFabricationCourant, 2)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">Génerer/Excel</span>
             </button>
           </div>
 
@@ -320,6 +372,32 @@
 
               </div>
             </div>
+         
+         
+               <div class="row" ng-show="isEnCoursChargement">
+          
+          <div class="center"  ng-click="isEnCoursChargement =false">
+            <div class="center">
+              <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+  
+        <!--     <div class="center">{{msgChargement}}</div> -->
+          </div>
+         </div>
+         
           </form>
         </div>
       </div>
@@ -536,6 +614,31 @@
 
               </div>
             </div>
+         
+               <div class="row" ng-show="isEnCoursChargement">
+          
+          <div class="center"  ng-click="isEnCoursChargement =false">
+            <div class="center">
+              <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+  
+        <!--     <div class="center">{{msgChargement}}</div> -->
+          </div>
+         </div>
+         
           </form>
         </div>
       </div>
@@ -747,6 +850,32 @@
 
               </div>
             </div>
+         
+         
+               <div class="row" ng-show="isEnCoursChargement">
+          
+          <div class="center"  ng-click="isEnCoursChargement =false">
+            <div class="center">
+              <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+  
+        <!--     <div class="center">{{msgChargement}}</div> -->
+          </div>
+         </div>
+         
           </form>
         </div>
       </div>
