@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.chart.value.ResultBestElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.echeancier.RechercheMulticritereDetailReglementValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.DetailsReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RechercheMulticritereReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheElementReglementValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.reglement.IDetailsReglementDomaine;
@@ -70,6 +71,24 @@ public class DetailsReglementDomaineImpl implements IDetailsReglementDomaine{
 	@Override
 	public Double getMontantPayer(RechercheMulticritereDetailReglementValue reqDetailReglement) {
 		return detailsReglementPersistance.getMontantPayer(reqDetailReglement);
+	}
+
+
+
+
+	@Override
+	public DetailsReglementValue getById(Long detailReglementId) {
+		// TODO Auto-generated method stub
+		return detailsReglementPersistance.getById(detailReglementId);
+	}
+
+
+
+
+	@Override
+	public String update(DetailsReglementValue detailsReglementValue) {
+		// TODO Auto-generated method stub
+		return detailsReglementPersistance.update(detailsReglementValue);
 	}
 			    
 			    

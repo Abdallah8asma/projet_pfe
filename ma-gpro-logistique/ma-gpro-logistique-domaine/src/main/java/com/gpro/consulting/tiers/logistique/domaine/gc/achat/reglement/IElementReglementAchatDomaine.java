@@ -37,4 +37,9 @@ public interface IElementReglementAchatDomaine {
 	
 	public void deleteElementReglementById(Long id);
 
+
+	public Double getSumMontantPayerByReferenceFacture(String reference);
+	
+	public Double getSumMontantPayerByReferenceBL(String reference);
+
 }

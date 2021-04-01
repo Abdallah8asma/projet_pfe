@@ -14,6 +14,20 @@ public class RechercheMulticritereSoldeClientValue {
 	private Calendar dateMax;
 
 	private Long partieIntFamilleId;
+	
+	
+	private Long deviseId;
+	
+	
+	
+
+	public Long getDeviseId() {
+		return deviseId;
+	}
+
+	public void setDeviseId(Long deviseId) {
+		this.deviseId = deviseId;
+	}
 
 	public Long getPartieIntFamilleId() {
 		return partieIntFamilleId;

@@ -119,16 +119,20 @@ public class GestionnaireReportGcReportingDomaineImpl implements IGestionnaireRe
 				if (elt.getSoldeActuel()> 0.0) {
 					
 					listSituation.add(elt);
-					Collections.sort(listSituation, new SituationReportingValueComparator());
+					//Collections.sort(listSituation, new SituationReportingValueComparator());
 
 				}
 
 			}
 			}
+			
+			Collections.sort(listSituation, new SituationReportingValueComparator());
 
 			report.getListSituation().addAll(listSituation);
 
 		}else{
+			
+			Collections.sort(result.getListSituationReporting(), new SituationReportingValueComparator());
 
 		report.getListSituation().addAll(result.getListSituationReporting());
 		}

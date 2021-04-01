@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.echeancier.RechercheMulticritereDetailReglementValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.DetailsReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RechercheMulticritereReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheElementReglementValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.reglement.IDetailsReglementDomaine;
@@ -44,6 +45,23 @@ public class DeatilsReglementServiceImpl implements IDetailsReglementService{
 	public Double getMontantPayer(RechercheMulticritereDetailReglementValue reqDetailReglement) {
 		// TODO Auto-generated method stub
 		return detailsReglementDomaine.getMontantPayer(reqDetailReglement);
+	}
+
+
+
+	@Override
+	public DetailsReglementValue getById(Long detailReglementId) {
+		// TODO Auto-generated method stub
+		return detailsReglementDomaine.getById(detailReglementId);
+	}
+
+
+
+	@Override
+	public String update(DetailsReglementValue detailsReglementValue) {
+		
+		return detailsReglementDomaine.update(detailsReglementValue);
+		
 	}
 	
 

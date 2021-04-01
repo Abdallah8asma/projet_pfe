@@ -42,4 +42,11 @@ public interface IElementReglementAchatPersistance {
 	
 	public void deleteElementReglementById(Long id);
 
+
+
+	public Double getSumMontantPayerByReferenceFacture(String reference);
+	
+	public Double getSumMontantPayerByReferenceBL(String reference);
+
+
 }

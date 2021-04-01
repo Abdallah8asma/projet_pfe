@@ -25,6 +25,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.Grou
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IGroupeClientPersistance;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInteresseePersistance;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.DetailsReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.RechercheMulticritereReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ResultatRechecheElementReglementAchatElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ResultatRechecheElementReglementAchatValue;
@@ -33,6 +34,8 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entit
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.ReglementAchatEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.utility.ReglementAchatPersistanceUtilities;
 import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.IElementReglementPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.DetailsReglementEntity;
+import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.utility.ReglementPersistanceUtilities;
 
 /**
  * Implementation of {@link IElementReglementPersistance} interface.
@@ -258,5 +261,12 @@ public class DetailsReglementAchatPersistanceImpl extends AbstractPersistance im
 	    resultat.setList(new TreeSet<>(list));
 
 	    return resultat;
+	}
+
+	@Override
+	public String update(DetailsReglementAchatValue detailsReglementValue) {
+		DetailsReglementAchatEntity entity = (DetailsReglementAchatEntity) this.modifier(ReglementAchatPersistanceUtilities.toEntity(detailsReglementValue));
+
+	    return entity.getId().toString();
 	}
 }

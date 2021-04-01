@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.DetailsReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.RechercheMulticritereReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ResultatRechecheElementReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.reglement.IDetailsReglementAchatDomaine;
@@ -37,5 +38,14 @@ public class DetailsReglementAchatDomaineImpl implements IDetailsReglementAchatD
 	public ResultatRechecheElementReglementAchatValue rechercherMultiCritere(RechercheMulticritereReglementAchatValue request) {
 		// TODO Auto-generated method stub
 		return detailsReglementAchatPersistance.rechercherMultiCritere(request);
+	}
+
+
+
+
+	@Override
+	public String update(DetailsReglementAchatValue detailsReglementValue) {
+		// TODO Auto-generated method stub
+		return detailsReglementAchatPersistance.update(detailsReglementValue);
 	}
 }

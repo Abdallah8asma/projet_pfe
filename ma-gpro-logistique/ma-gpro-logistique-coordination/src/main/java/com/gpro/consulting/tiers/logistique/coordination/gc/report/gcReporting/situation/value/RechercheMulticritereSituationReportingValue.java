@@ -15,6 +15,18 @@ public class RechercheMulticritereSituationReportingValue {
 	private Double soldeMin;
 	private Double soldeMax;
 
+	
+	private Long deviseId;
+	
+	
+	public Long getDeviseId() {
+		return deviseId;
+	}
+
+	public void setDeviseId(Long deviseId) {
+		this.deviseId = deviseId;
+	}
+
 	public Long getRegionId() {
 		return regionId;
 	}

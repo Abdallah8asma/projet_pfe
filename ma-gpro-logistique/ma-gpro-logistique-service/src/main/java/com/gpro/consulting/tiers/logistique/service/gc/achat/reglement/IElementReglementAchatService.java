@@ -29,4 +29,9 @@ public interface IElementReglementAchatService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public Boolean existElementReglementByReferenceFacture(String reference);
 
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public Double getSumMontantPayerByReferenceFacture(String reference);
+
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public Double getSumMontantPayerByReferenceBL(String reference);
 }
