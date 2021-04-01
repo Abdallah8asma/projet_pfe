@@ -31,6 +31,7 @@ import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInte
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.PartieInteresseEntite;
 import com.gpro.consulting.tiers.logistique.coordination.gc.chart.value.ResultBestElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.echeancier.RechercheMulticritereDetailReglementValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.DetailsReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RechercheMulticritereReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheElementReglementElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheElementReglementValue;
@@ -433,5 +434,22 @@ public class DetailsReglementPersistanceImpl extends AbstractPersistance impleme
 						return sommeMont;
 					}
 					return 0D;
+				}
+
+				@Override
+				public DetailsReglementValue getById(Long detailReglementId) {
+					DetailsReglementEntity entity = this.rechercherParId(detailReglementId, DetailsReglementEntity.class);
+					
+					
+					if(entity == null) return null;
+
+				    return ReglementPersistanceUtilities.toValue(entity);
+				}
+
+				@Override
+				public String update(DetailsReglementValue detailsReglementValue) {
+					DetailsReglementEntity entity = (DetailsReglementEntity) this.modifier(ReglementPersistanceUtilities.toEntity(detailsReglementValue));
+
+				    return entity.getId().toString();
 				}
 }

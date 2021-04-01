@@ -310,6 +310,12 @@ public class ReglementPersistanceUtilities {
 		
 		dto.setReferenceDetReglement(entity.getReference());
 		
+		dto.setDateDepotBanque(entity.getDateDepotBanque());
+		dto.setChargeBanque(entity.getChargeBanque());
+		dto.setTvaBanque(entity.getTvaBanque());
+		
+		dto.setBanqueSociete(entity.getBanqueSociete());
+		
 		if(entity.getTypeReglement() != null){
 			if(entity.getTypeReglement().getId() != null){
 				dto.setTypeReglementId(entity.getTypeReglement().getId());

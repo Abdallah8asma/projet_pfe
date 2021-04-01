@@ -55,6 +55,18 @@ public class ElementReglementAchatServiceImpl implements IElementReglementAchatS
 		// TODO Auto-generated method stub
 		return elementReglementDomaine.existElementReglementByReferenceFacture(reference);
 	}
+
+	@Override
+	public Double getSumMontantPayerByReferenceFacture(String reference) {
+		// TODO Auto-generated method stub
+		return elementReglementDomaine.getSumMontantPayerByReferenceFacture(reference);
+	}
+
+	@Override
+	public Double getSumMontantPayerByReferenceBL(String reference) {
+		// TODO Auto-generated method stub
+		return elementReglementDomaine.getSumMontantPayerByReferenceBL(reference);
+	}
 	
 
 }

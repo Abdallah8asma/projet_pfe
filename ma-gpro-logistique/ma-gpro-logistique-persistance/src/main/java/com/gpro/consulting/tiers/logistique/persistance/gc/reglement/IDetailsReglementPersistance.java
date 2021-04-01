@@ -28,4 +28,8 @@ public interface IDetailsReglementPersistance {
 
 	public Double getMontantPayer(RechercheMulticritereDetailReglementValue reqDetailReglement);
 
+	public DetailsReglementValue getById(Long detailReglementId);
+
+	public String update(DetailsReglementValue detailsReglementValue);
+
 }

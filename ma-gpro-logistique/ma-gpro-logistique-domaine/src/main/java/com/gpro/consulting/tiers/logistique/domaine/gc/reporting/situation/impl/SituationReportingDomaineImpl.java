@@ -87,6 +87,7 @@ public class SituationReportingDomaineImpl implements ISituationReportingDomaine
 			
 			requestSoldeClient.setPartieIntId(request.getPartieIntId());
 			requestSoldeClient.setPartieIntFamilleId(IConstante.PI_FAMILLE_CLIENT);
+			requestSoldeClient.setDeviseId(request.getDeviseId());
 			ResultatRechecheSoldeClientValue resultatSoldeclient = soldeClientPersistance.rechercherMultiCritere(requestSoldeClient);
 			
 			
@@ -205,12 +206,12 @@ public class SituationReportingDomaineImpl implements ISituationReportingDomaine
 				//System.out.println("-----------soldeActuel :caTotalBL-------"+caTotalBL);
 
 				
-				if (soldeActuel != 0.0) {
+				//if (soldeActuel != 0.0) {
 					
 				
 				situationReportingElement.setSoldeActuel(soldeActuel);
 				
-				}
+			//	}
 				
 				
 				
@@ -376,12 +377,12 @@ public class SituationReportingDomaineImpl implements ISituationReportingDomaine
 				//System.out.println("-----------soldeActuel :caTotalBL-------"+caTotalBL);
 
 				
-				if (soldeActuel != 0.0) {
+			//	if (soldeActuel != 0.0) {
 					
 				
 				situationReportingElement.setSoldeActuel(soldeActuel);
 				
-				}
+			//	}
 				
 				
 				//payement en cours == (non regler et date echeance >= today)

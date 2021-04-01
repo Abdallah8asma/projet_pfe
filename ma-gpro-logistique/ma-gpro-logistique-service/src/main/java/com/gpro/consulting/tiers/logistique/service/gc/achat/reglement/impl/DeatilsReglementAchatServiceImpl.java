@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.DetailsReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.RechercheMulticritereReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ResultatRechecheElementReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.reglement.IDetailsReglementAchatDomaine;
@@ -35,6 +36,14 @@ public class DeatilsReglementAchatServiceImpl implements IDetailsReglementAchatS
 	public ResultatRechecheElementReglementAchatValue rechercherMultiCritere(RechercheMulticritereReglementAchatValue request) {
 		// TODO Auto-generated method stub
 		return detailsReglementDomaine.rechercherMultiCritere(request);
+	}
+
+
+
+	@Override
+	public String update(DetailsReglementAchatValue detailsReglementValue) {
+		// TODO Auto-generated method stub
+		return detailsReglementDomaine.update(detailsReglementValue);
 	}
 	
 
