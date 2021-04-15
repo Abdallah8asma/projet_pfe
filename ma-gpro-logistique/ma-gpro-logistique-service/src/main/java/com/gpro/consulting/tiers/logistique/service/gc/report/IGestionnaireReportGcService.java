@@ -45,7 +45,7 @@ public interface IGestionnaireReportGcService {
 	public BonLivraisonReportValue getBonLivraisonReportValue(Long id, String avecPrix,Long typerapport) throws IOException;
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
-	public FactureReportValue getFactureReportValue(Long id,Long typerapport) throws IOException;
+	public FactureReportValue getFactureReportValue(Long id,Long typerapport , boolean avecObservation) throws IOException;
 
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public FactureReportListValue getListFactureReport(RechercheMulticritereFactureValue request) throws IOException;

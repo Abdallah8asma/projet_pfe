@@ -3013,7 +3013,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		// logger.info("Generate a {} Report BonLivraison", type);
 
-		FactureReportValue factureReport = gestionnaireReportGcService.getFactureReportValue(id, typerapport);
+		FactureReportValue factureReport = gestionnaireReportGcService.getFactureReportValue(id, typerapport,true);
 
 		Date d = new Date();
 

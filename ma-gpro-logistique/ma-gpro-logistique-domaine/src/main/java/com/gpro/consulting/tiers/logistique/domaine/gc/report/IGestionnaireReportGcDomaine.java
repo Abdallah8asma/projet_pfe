@@ -45,7 +45,7 @@ public interface IGestionnaireReportGcDomaine {
 
 	public BonLivraisonReportValue getBonLivraisonParId(Long id, String avecPrix, Long typerapport) throws IOException;
 
-	public FactureReportValue getFactureReportValue(Long id,Long typerapport) throws IOException;
+	public FactureReportValue getFactureReportValue(Long id,Long typerapport, boolean avecObservation) throws IOException;
 
 	public FactureReportListValue getListFactureReport(RechercheMulticritereFactureValue request) throws IOException;
 
