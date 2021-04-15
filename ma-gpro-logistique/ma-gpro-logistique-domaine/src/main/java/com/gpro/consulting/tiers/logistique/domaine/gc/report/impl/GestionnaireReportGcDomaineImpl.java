@@ -18,6 +18,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.tiers.commun.coordination.IConstante;
 import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleProduitValue;
@@ -27,6 +28,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.Recherche
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamilleArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.SousFamilleProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.DeviseValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.GroupeClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.RegionValue;
@@ -191,6 +193,13 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 	private static final String DINARS = " dinars ";
 	private static final String MILLIMES = " millimes";
 	private static final String ET = " et ";
+	
+	
+	private static final String EURO = " euros ";
+	private static final String CENTIMES = " centimes";
+	
+	private static final String DOLLAR = " dollars ";
+
 
 	@Autowired
 	private IBonLivraisonPersistance bonLivraisonPersitance;
@@ -1306,7 +1315,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 	 *********************************************/
 
 	@Override
-	public FactureReportValue getFactureReportValue(Long id, Long typerapport) throws IOException {
+	public FactureReportValue getFactureReportValue(Long id, Long typerapport,boolean avecObservation) throws IOException {
 
 		// System.out.println("====> id: " + id + "---typerapport " + typerapport);
 		FactureReportValue factureReport = new FactureReportValue();
@@ -1316,16 +1325,16 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		if (typerapport == 2) {
 			// rapport sur imp matricielle
 			factureReport.setFileName(REPORT_NAME_FACTURE);
-			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVente/facture_report.jrxml"));
+			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVente/sansEnTete/facture_report.jrxml"));
 
 			HashMap<String, Object> params = new HashMap<String, Object>();
 			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png\"");
 
 			if (factureVente.getNatureLivraison().equals("FINI")) {
-				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVente/facture_sub_report.jasper");
+				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVente/sansEnTete/facture_sub_report.jasper");
 			} else if (factureVente.getNatureLivraison().equals("FACON")) {
 				params.put("SUBREPORT_INVENTAIRE_PATH",
-						"C://ERP/Lib/STIT_FactureVente/facture_facon_sub_report.jasper");
+						"C://ERP/Lib/STIT_FactureVente/sansEnTete/facture_facon_sub_report.jasper");
 			}
 
 			factureReport.setParams(params);
@@ -1348,82 +1357,120 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			factureReport.setParams(params);
 
 			// rapport avec enTete
-		} else if (typerapport == 3) {
+		} else if (typerapport == 3 || typerapport == 4) {
+			
+			if(factureVente.getDevise() != null){
+				
+				
+				if(factureVente.getDevise().equals(DeviseValue.DINAR)) {
+					
+					// rapport sur imp matricielle
+					factureReport.setFileName(REPORT_NAME_FACTURE);
+					factureReport.setReportStream(
+							new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_report.jrxml"));
 
-			// rapport sur imp matricielle
-			factureReport.setFileName(REPORT_NAME_FACTURE);
-			factureReport.setReportStream(
-					new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_report.jrxml"));
+					HashMap<String, Object> params = new HashMap<String, Object>();
+					params.put("p_PathLogo","C:/ERP/logos_clients/logo_client.png");
 
-			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo","C:/ERP/logos_clients/logo_client.png");
+					if (factureVente.getNatureLivraison().equals("FINI")) {
+						params.put("SUBREPORT_INVENTAIRE_PATH",
+								"C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_sub_report.jasper");
+					} else if (factureVente.getNatureLivraison().equals("FACON")) {
+						params.put("SUBREPORT_INVENTAIRE_PATH",
+								"C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_facon_sub_report.jasper");
+					}
 
-			if (factureVente.getNatureLivraison().equals("FINI")) {
-				params.put("SUBREPORT_INVENTAIRE_PATH",
-						"C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_sub_report.jasper");
-			} else if (factureVente.getNatureLivraison().equals("FACON")) {
-				params.put("SUBREPORT_INVENTAIRE_PATH",
-						"C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_facon_sub_report.jasper");
+					factureReport.setParams(params);
+				}else
+					if(factureVente.getDevise().equals(DeviseValue.EURO)) {
+						
+						// rapport sur imp matricielle
+						factureReport.setFileName(REPORT_NAME_FACTURE);
+						factureReport.setReportStream(
+								new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTeteDeviseEuro/facture_report_Euro_Dollar.jrxml"));
+
+						HashMap<String, Object> params = new HashMap<String, Object>();
+						params.put("p_PathLogo","C:/ERP/logos_clients/logo_client.png");
+
+						if (factureVente.getNatureLivraison().equals("FINI")) {
+							params.put("SUBREPORT_INVENTAIRE_PATH",
+									"C://ERP/Lib/STIT_FactureVente/avecEnTeteDeviseEuro/facture_sub_report_Euro_Dollar.jasper");
+						} else if (factureVente.getNatureLivraison().equals("FACON")) {
+							params.put("SUBREPORT_INVENTAIRE_PATH",
+									"C://ERP/Lib/STIT_FactureVente/avecEnTeteDeviseEuro/facture_facon_sub_report_Euro_Dollar.jasper");
+						}
+
+						factureReport.setParams(params);
+					}
+					else
+						if(factureVente.getDevise().equals(DeviseValue.DOLLAR)) {
+							
+							// rapport sur imp matricielle
+							factureReport.setFileName(REPORT_NAME_FACTURE);
+							factureReport.setReportStream(
+									new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTeteDeviseDollar/facture_report_Euro_Dollar.jrxml"));
+
+							HashMap<String, Object> params = new HashMap<String, Object>();
+							params.put("p_PathLogo","C:/ERP/logos_clients/logo_client.png");
+
+							if (factureVente.getNatureLivraison().equals("FINI")) {
+								params.put("SUBREPORT_INVENTAIRE_PATH",
+										"C://ERP/Lib/STIT_FactureVente/avecEnTeteDeviseDollar/facture_sub_report_Euro_Dollar.jasper");
+							} else if (factureVente.getNatureLivraison().equals("FACON")) {
+								params.put("SUBREPORT_INVENTAIRE_PATH",
+										"C://ERP/Lib/STIT_FactureVente/avecEnTeteDeviseDollar/facture_facon_sub_report_Euro_Dollar.jasper");
+							}
+
+							factureReport.setParams(params);
+						}
+				
+				
+				
+			}else
+			{
+				// rapport sur imp matricielle
+				factureReport.setFileName(REPORT_NAME_FACTURE);
+				factureReport.setReportStream(
+						new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_report.jrxml"));
+
+				HashMap<String, Object> params = new HashMap<String, Object>();
+				params.put("p_PathLogo","C:/ERP/logos_clients/logo_client.png");
+
+				if (factureVente.getNatureLivraison().equals("FINI")) {
+					params.put("SUBREPORT_INVENTAIRE_PATH",
+							"C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_sub_report.jasper");
+				} else if (factureVente.getNatureLivraison().equals("FACON")) {
+					params.put("SUBREPORT_INVENTAIRE_PATH",
+							"C://ERP/Lib/STIT_FactureVente/avecEnTete/facture_facon_sub_report.jasper");
+				}
+
+				factureReport.setParams(params);
 			}
 
-			factureReport.setParams(params);
+
 
 		}
 		
-      else if (typerapport == 4) {
-
-		// rapport sur imp matricielle
-		factureReport.setFileName(REPORT_NAME_FACTURE);
-		factureReport.setReportStream(
-				new FileInputStream("C://ERP/Lib/STIT_FactureVente/avecEnTeteDevise/facture_report_Euro_Dollar.jrxml"));
-
-		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
-
-		if (factureVente.getNatureLivraison().equals("FINI")) {
-			params.put("SUBREPORT_INVENTAIRE_PATH",
-					"C://ERP/Lib/STIT_FactureVente/avecEnTeteDevise/facture_sub_report_Euro_Dollar.jasper");
-		} else if (factureVente.getNatureLivraison().equals("FACON")) {
-			params.put("SUBREPORT_INVENTAIRE_PATH",
-					"C://ERP/Lib/STIT_FactureVente/avecEnTeteDevise/facture_facon_sub_report_Euro_Dollar.jasper");
-		}
-
-		factureReport.setParams(params);
-		}
+   
 		
-		if (typerapport == 5) {
-			// rapport sur imp matricielle
-			factureReport.setFileName(REPORT_NAME_FACTURE);
-			factureReport.setReportStream(new FileInputStream("C://ERP/Lib/STIT_FactureVente/SansEntete/facture_report_Euro_Dollar.jrxml"));
-
-			HashMap<String, Object> params = new HashMap<String, Object>();
-			params.put("p_PathLogo", "C:/ERP/logos_clients/logo_client.png");
-
-			if (factureVente.getNatureLivraison().equals("FINI")) {
-				params.put("SUBREPORT_INVENTAIRE_PATH", "C://ERP/Lib/STIT_FactureVente/SansEntete/facture_sub_report_Euro_Dollar.jasper");
-			} else if (factureVente.getNatureLivraison().equals("FACON")) {
-				params.put("SUBREPORT_INVENTAIRE_PATH",
-						"C://ERP/Lib/STIT_FactureVente/SansEntete/facture_facon_sub_report_Euro_Dollar.jasper");
-			}
-
-			factureReport.setParams(params);
-
-	}
+		
 		// enrichissement du report
-		enrichmentFactureReport(factureReport, factureVente);
+		enrichmentFactureReport(factureReport, factureVente,avecObservation);
 		enrichmentFactureReportWithBaseInformation(factureReport, factureVente);
 
-		BigDecimal bigDecimal = new BigDecimal(factureVente.getMontantTTC());
-		BigDecimal bigDecimalScalled = bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP);
-		BigDecimal fraction = bigDecimalScalled.remainder(BigDecimal.ONE).multiply(new BigDecimal(1000));
-
-		int dinars = bigDecimal.intValue();
-		int millimes = fraction.intValue();
-
-		String montantTTCToWords = FrenchNumberToWords.convert(dinars) + DINARS + ET
-				+ FrenchNumberToWords.convert(millimes) + MILLIMES;
-
+	
+		
+		String montantTTCToWords = "";
+		
+		
+		montantTTCToWords = getMontantTTCToWordsByMantantAndDevise(factureVente.getMontantTTC(),factureVente.getDevise() ) ;
+		
+	
+	
 		factureReport.setMontantTTCToWords(montantTTCToWords);
+		
+		
+			
 
 		ArrayList<FactureReportValue> dataList = new ArrayList<FactureReportValue>();
 		dataList.add(factureReport);
@@ -1433,6 +1480,63 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		factureReport.setJRBeanCollectionDataSourceProduct(jRBeanCollectionDataSource);
 
 		return factureReport;
+	}
+
+	private String getMontantTTCToWordsByMantantAndDevise(Double montantTTC, Long devise) {
+
+		String montantTTCToWords = "";
+		if (devise != null) {
+
+			if (devise.equals(DeviseValue.DINAR)) {
+
+				BigDecimal bigDecimal = new BigDecimal(montantTTC);
+				BigDecimal bigDecimalScalled = bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP);
+				BigDecimal fraction = bigDecimalScalled.remainder(BigDecimal.ONE).multiply(new BigDecimal(1000));
+
+				int dinars = bigDecimal.intValue();
+				int millimes = fraction.intValue();
+
+				montantTTCToWords = FrenchNumberToWords.convert(dinars) + DINARS + ET
+						+ FrenchNumberToWords.convert(millimes) + MILLIMES;
+			} else if (devise.equals(DeviseValue.EURO)) {
+
+				BigDecimal bigDecimal = new BigDecimal(montantTTC);
+				BigDecimal bigDecimalScalled = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP);
+				BigDecimal fraction = bigDecimalScalled.remainder(BigDecimal.ONE).multiply(new BigDecimal(100));
+
+				int euro = bigDecimal.intValue();
+				int centimes = fraction.intValue();
+				montantTTCToWords = FrenchNumberToWords.convert(euro) + EURO + ET
+						+ FrenchNumberToWords.convert(centimes) + CENTIMES;
+
+			} else if (devise.equals(DeviseValue.DOLLAR)) {
+
+				BigDecimal bigDecimal = new BigDecimal(montantTTC);
+				BigDecimal bigDecimalScalled = bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP);
+				BigDecimal fraction = bigDecimalScalled.remainder(BigDecimal.ONE).multiply(new BigDecimal(100));
+
+				int dollar = bigDecimal.intValue();
+				int centimes = fraction.intValue();
+				
+				montantTTCToWords = FrenchNumberToWords.convert(dollar) + dollar + ET
+						+ FrenchNumberToWords.convert(centimes) + CENTIMES;
+
+			}
+
+		} else {
+			BigDecimal bigDecimal = new BigDecimal(montantTTC);
+			BigDecimal bigDecimalScalled = bigDecimal.setScale(3, BigDecimal.ROUND_HALF_UP);
+			BigDecimal fraction = bigDecimalScalled.remainder(BigDecimal.ONE).multiply(new BigDecimal(1000));
+
+			int dinars = bigDecimal.intValue();
+			int millimes = fraction.intValue();
+
+			montantTTCToWords = FrenchNumberToWords.convert(dinars) + DINARS + ET
+					+ FrenchNumberToWords.convert(millimes) + MILLIMES;
+
+		}
+
+		return montantTTCToWords;
 	}
 
 	private void enrichmentFactureReportWithBaseInformation(FactureReportValue factureReport,
@@ -1585,7 +1689,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 
 	/*************** Enrichissement rapport facture **************/
 
-	private void enrichmentFactureReport(FactureReportValue reportValue, FactureVenteValue factureVente) {
+	private void enrichmentFactureReport(FactureReportValue reportValue, FactureVenteValue factureVente , boolean avecObservation) {
 
 		Map<Long, PartieInteresseValue> clientIdMap = gestionnaireLogistiqueCacheDomaine.mapClientById();
 
@@ -1663,31 +1767,38 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				 
 					LivraisonVenteValue livraisonVente = bonLivraisonPersitance.getByReference(factureVente.getInfoLivraison());
 
-					String observation = factureVente.getInfoLivraison();
+					String infoLivraison = factureVente.getInfoLivraison();
 
 					if (livraisonVente != null) {
 						if (livraisonVente.getDate() != null) {
 							String date = "" + dateFormat.format(livraisonVente.getDate().getTime());
-							observation += "  DU  " + date;
+							infoLivraison += "  DU  " + date;
 
 						}
 
 					}
 
-					reportValue.setObservations(observation);
+					reportValue.setInfoLivraison(infoLivraison);
 			 } else {
 				 
 				 //Si plusieurs BLs sont affecté a cette facture
 				 
-				 reportValue.setObservations(factureVente.getInfoLivraison());
+				 reportValue.setInfoLivraison(factureVente.getInfoLivraison());
 				 
 			 }
 			
 		
 
 		}
+		
+		
+		if(avecObservation)
+			reportValue.setObservations(factureVente.getObservations());
+		//if(factureVente.getTypePartieInteressee() != null && factureVente.getTypePartieInteressee().equals(IConstante.PI_TYPE_EXONORE)) {
+			
+		//}
 
-		// reportValue.setObservations(factureVente.getObservations());
+		
 
 		// Montants params
 		reportValue.setMontantTTC(factureVente.getMontantTTC());
@@ -1897,7 +2008,14 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			// System.out.println("##### produitTaxeMap.get(TAXE_ID_TVA) :" +
 			// taxeFactureIdTaxeMap.get(TAXE_ID_TVA).getMontant());
 
-			reportValue.setAssietteTVA(produitTaxeMap.get(TAXE_ID_TVA));
+			
+			if(reportValue.getMontantTaxeFodec() != null) {
+				reportValue.setAssietteTVA(produitTaxeMap.get(TAXE_ID_TVA)+reportValue.getMontantTaxeFodec());
+			}else
+			{
+				reportValue.setAssietteTVA(produitTaxeMap.get(TAXE_ID_TVA));
+			}
+			
 
 		}
 		if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_TVA7)) {

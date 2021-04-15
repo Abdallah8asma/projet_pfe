@@ -54,9 +54,9 @@ public class GestionnaireReportGcServiceImpl implements IGestionnaireReportGcSer
 	}
 
 	@Override
-	public FactureReportValue getFactureReportValue(Long id,Long typerapport) throws IOException {
+	public FactureReportValue getFactureReportValue(Long id,Long typerapport,boolean avecObservation) throws IOException {
 		
-		return gestionnaireReportGcDomaine.getFactureReportValue(id,typerapport);
+		return gestionnaireReportGcDomaine.getFactureReportValue(id,typerapport,avecObservation);
 	}
 
 	@Override

@@ -126,12 +126,15 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 	}
 
 	@RequestMapping(value = "/facture", method = RequestMethod.GET)
-	public void generateFactureVenteReport(@RequestParam("id") Long id,@RequestParam("typerapport") Long typerapport, @RequestParam("type") String type,
+	public void generateFactureVenteReport(@RequestParam("id") Long id,@RequestParam("typerapport") Long typerapport, 
+			@RequestParam("avecObservation") boolean avecObservation ,
+			@RequestParam("type") String type,
+			 
 			HttpServletResponse response) throws JRException, IOException {
 
 		//logger.info("Generate a {} Report FactureVente", type);
 
-		FactureReportValue factureReport = gestionnaireReportGcService.getFactureReportValue(id,typerapport);
+		FactureReportValue factureReport = gestionnaireReportGcService.getFactureReportValue(id,typerapport,avecObservation);
 		
 		
 		this.download(type, factureReport.getReportStream(), factureReport.getParams(), factureReport.getFileName(),

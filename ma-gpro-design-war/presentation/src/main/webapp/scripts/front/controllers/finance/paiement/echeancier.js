@@ -509,7 +509,7 @@ angular
                                   },{
                                       field: 'regle',
                                       displayName: 'Reglé',
-                                      cellTemplate: '<input type="checkbox" ng-model="row.entity.regle" ng-change="updateDetailReglementReglee(row.entity.id,row.entity.regle)" style="margin: 8px;"/>',
+                                      cellTemplate: '<input type="checkbox" ng-model="row.entity.regle" ng-change="ffff" ng-disabled = "true" style="margin: 8px;"/>',
                                       width: '10%'
                                   },{
                                       field: 'observation',
