@@ -39,6 +39,11 @@ angular
 							$scope.rouleauCourantRecherche = {};
 							$scope.resultatRecherche = $scope.listeRouleau;
 							
+							
+							$scope.checkList = false;
+							
+							$scope.enCoursDelete = false;
+							
 							/***************************************************
 							 * Gestion de la Menu PI
 							 **************************************************/
@@ -59,6 +64,9 @@ angular
 
 									status : ''
 								};
+							
+							
+						
 							
 							$scope.remplirRouleauMise = function(idMise) {
 								$scope.remplir = true;
@@ -232,8 +240,8 @@ angular
 							 **************************************************/
 							
 							$scope.pagingOptions = {
-									pageSizes : [ 5, 10, 13 ],
-									pageSize : 5,
+									pageSizes : [ 5, 10, 13 ,26,39,130,195,260,520,1040 ],
+									pageSize : 1040,
 									currentPage : 1
 								};
 							
@@ -313,8 +321,67 @@ angular
 												});*/
 
 							}
+							
+							
+								$scope.checkAllItemList = function(checkList) {
+									
+										 angular.forEach($scope.myData, function(element, key){
+				
+				                                      element.checked = checkList;
+					
+			                              });
+								
+								
+							     }
+		
+	                    	   $scope.deleteMultipleColis = function() {
+		
+		    /* var codeSuppressionColis = prompt("Entrer code de suppression", "");
+
+               if (codeSuppressionColis != null && codeSuppressionColis != '123900') {
+                    return ;
+                }*/
+
+	$scope.closePopupDelete();
+		
+		
+		                       $scope.enCoursDelete = true;
+	     
+		
+		                        var deletedColisList = [];
+									
+										 angular.forEach($scope.myData, function(element, key){
+				
+				                                      if(element.checked)
+                                                              deletedColisList.push(element.id) ; 
+				                                       
+					
+			                              });
+
+
+                                   $http
+									.post(
+												UrlAtelier
+														+ "/rouleaufini/deleteRouleauFiniMultiple",
+												deletedColisList)
+										.success(
+												function(resp) {
+													
+													$scope.enCoursDelete = false;
+													
+												    $scope.rechercherRouleau({});
+													
+													alert("Liste des colis supprimer avec succès") ;
+													
+													});
+                                       
+								
+								
+							     }
 							// annuler Ajout
 							$scope.annulerAjout = function() {
+								$scope.enCoursDelete = false;
+								$scope.checkList = false;
 								$scope.creation = true;
 								$scope.remplir = false;
 								$scope.modePdf = "notActive";
@@ -824,6 +891,13 @@ angular
 											'myData',
 											function() {
 												$scope.colDefs = [
+													
+													{
+								                     field: 'checked',
+								                     displayName: '',
+								                     cellTemplate: '<input type="checkbox" ng-model="row.entity.checked"  style="margin: 8px;"/>',
+								                     width: '5%'
+							                         },
 														{
 															field : 'reference',
 															displayName : 'Ref',

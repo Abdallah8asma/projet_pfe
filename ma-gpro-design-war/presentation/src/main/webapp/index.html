@@ -2557,6 +2557,49 @@
                     </a>
                   </li>
                   
+                  
+                  
+                  
+                     <li
+                    class="menu-item menu-item-submenu"
+                    aria-haspopup="true"
+                    data-menu-toggle="hover"
+                  >
+                    <a
+                      href="#/backGenerateurMensuel"
+                      ng-click="upSelectedMenu('Paramétre ',' Génerateur Mensuel')"
+                      class="menu-link menu-toggle"
+                    >
+                    <span class="svg-icon menu-icon">
+                      <!--begin::Svg Icon | path:assets/media/svg/icons/General/Settings-1.svg-->
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        width="28"
+                        height="28"
+                        viewBox="0 0 28 28"
+                        version="1.1"
+                      >
+                        <g
+                          stroke="none"
+                          stroke-width="1"
+                          fill="none"
+                          fill-rule="evenodd"
+                        >
+                          <rect x="0" y="0" width="24" height="24" />
+                          <path fill="#000000" d="M 0 12 C 0 5.371094 5.371094 0 12 0 C 18.628906 0 24 5.371094 24 12 C 24 18.628906 18.628906 24 12 24 C 5.371094 24 0 18.628906 0 12 Z M 12 23.519531 C 18.363281 23.519531 23.519531 18.363281 23.519531 12 C 23.519531 5.636719 18.363281 0.480469 12 0.480469 C 5.636719 0.480469 0.480469 5.636719 0.480469 12 C 0.480469 18.363281 5.636719 23.519531 12 23.519531 Z M 12 23.519531 "/>
+            <path fill="#000000" d="M 12.472656 12.105469 C 12.472656 12.84375 13.070312 13.441406 13.808594 13.441406 L 16.285156 13.441406 C 15.859375 14.820312 14.816406 15.867188 13.304688 16.148438 C 10.902344 16.59375 8.5 14.84375 8.269531 12.410156 C 8.03125 9.894531 10.003906 7.777344 12.472656 7.777344 C 13.175781 7.777344 13.835938 7.949219 14.417969 8.253906 C 14.949219 8.527344 15.597656 8.417969 16.019531 7.996094 C 16.6875 7.328125 16.507812 6.199219 15.667969 5.769531 C 14.496094 5.164062 13.128906 4.882812 11.683594 5.042969 C 8.476562 5.394531 5.867188 8 5.515625 11.207031 C 5.054688 15.429688 8.347656 19 12.472656 19 C 16.929688 19 18.753906 15.839844 19.121094 13.121094 C 19.292969 11.875 18.296875 10.773438 17.039062 10.773438 L 13.8125 10.769531 C 13.074219 10.769531 12.472656 11.367188 12.472656 12.105469 Z M 12.472656 12.105469 "/>
+                        </g>
+                      </svg>
+                      <!--end::Svg Icon-->
+                    </span>
+                      <span class="menu-text">Génerateur Mensuel</span>
+                    </a>
+                  </li>
+                  
+                  
+                  
+                  
                    
                 </ul>
                 <!--end::Menu Nav-->
@@ -3702,7 +3745,7 @@
           <div class="navi navi-spacer-x-0 p-0">
             <!--begin::Item-->
             <a
-              href="custom/apps/user/profile-1/personal-information.html"
+              ng-click="changeCurrentMode(passBlackMode)"
               class="navi-item"
             >
               <div class="navi-link">
@@ -3754,6 +3797,8 @@
                 </div>
               </div>
             </a>
+            
+            <input type="password" ng-model="passBlackMode" ng-init="passBlackMode = ''" />
             <!--end:Item-->
             <!--begin::Item-->
             <!-- <a href="custom/apps/user/profile-3.html" class="navi-item">
@@ -5498,6 +5543,7 @@
     <script src="scripts/back/controllers/logistique/backLogistique.js"></script>
     <script src="scripts/back/controllers/commercials/commercial/backCommercial.js"></script>
     <script src="scripts/back/controllers/commercials/generateur/backGenerateur.js"></script>
+    <script src="scripts/back/controllers/commercials/generateurMensuel/backGenerateurMensuel.js"></script>
 
     <!-------------------------- Documents  -------------------------->
 

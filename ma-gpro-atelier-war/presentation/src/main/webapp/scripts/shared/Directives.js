@@ -469,7 +469,8 @@ angular
 							$scope.messages = [
 									"Suppression d'un Bon de Reception",
 									"Suppression d'une Mise",
-									"Suppression d'un Rouleau",
+									"Suppression d'une colis",
+									"Suppression plusieurs colis",
 									"..", "" ];
 
 							
@@ -490,6 +491,12 @@ angular
 									// suppression d'un Rouleau
 									$scope.index = this.row.rowIndex;
 									$scope.message = 2;
+									break;
+									
+								case 3:
+									// suppression d'un Rouleau
+									//$scope.index = this.row.rowIndex;
+									$scope.message = 3;
 									break;
 								
 								}
