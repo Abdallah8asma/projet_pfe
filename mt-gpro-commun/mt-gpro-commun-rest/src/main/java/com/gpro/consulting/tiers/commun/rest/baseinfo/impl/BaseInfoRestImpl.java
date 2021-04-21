@@ -24,5 +24,18 @@ public class BaseInfoRestImpl {
 	public @ResponseBody BaseInfoValue getClientActif() {
 		return  baseInfoService.getClientActif();
 	}
+	
+	
+	@RequestMapping(value = "/updateCurrentMode", method = RequestMethod.GET)
+	public @ResponseBody boolean updateCurrentMode() {
+		BaseInfoValue baseInfo =   baseInfoService.getClientActif();
+		baseInfo.setBlackMode(!baseInfo.isBlackMode());
+		
+		baseInfoService.update(baseInfo) ;
+		
+		
+		return baseInfo.isBlackMode() ;
+		
+	}
 
 }
