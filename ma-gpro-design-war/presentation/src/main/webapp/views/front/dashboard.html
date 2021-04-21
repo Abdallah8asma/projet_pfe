@@ -95,7 +95,7 @@
 
 		<!--begin::Row-->
     <div class="row">
-      <div class="col-lg-8 col-xxl-8">
+      <div class="col-lg-7 col-xxl-7">
         <!--begin::Mixed Widget 1-->
         <div class="card card-custom bg-gray-100 card-stretch gutter-b">
           <!--begin::Header-->
@@ -279,16 +279,16 @@
       </div>
 
 
-   <div class="col-lg-4 col-xxl-4">
-        <!--begin::Stats Widget 11-->
-        <div class="card card-custom card-stretch card-stretch-half gutter-b" permission="['Dashboard_Vente_Consult'] ">
+       <div class="col-lg-5 col-xxl-5">
+   
+        <div class="card card-custom  gutter-b" permission="['Dashboard_Vente_Consult'] " style="height:180px">
           <!--begin::Body-->
           <div class="card-body p-0">
-            <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
+            <div >
               <span class="symbol symbol-50 symbol-light-success mr-2">
-                <span class="symbol-label">
+               <!--  <span class="symbol-label">
                   <span class="svg-icon svg-icon-xl svg-icon-success">
-                    <!--begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg-->
+                    begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                       width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -299,30 +299,64 @@
                           fill="#000000" opacity="0.3" />
                       </g>
                     </svg>
-                    <!--end::Svg Icon-->
+                    end::Svg Icon
                   </span>
-                </span>
+                </span> -->
               </span>
-              <div class="d-flex flex-column text-right">
-                <span class="text-dark-75 font-weight-bolder font-size-h3">CA Par Mois</span>
-                <span class="text-muted font-weight-bold mt-2">{{year}}</span>
-              </div>
+           
+                <span class="text-dark-75 font-weight-bolder font-size-h3">Difference</span>
+               <!--  <span class="text-muted font-weight-bold mt-2">{{year}}</span> -->
+           
             </div>
-            <div id="chartCaFacture" style="height: 150px;" class="col-md-12"></div>
+            <div id="chartDifferenceCaFactureDepense" style="height: 160px;" class="col-md-12"></div>
+            
+          </div>
+          <!--end::Body-->
+        </div>
+   
+        <!--begin::Stats Widget 11-->
+        <div class="card card-custom card-stretch card-stretch-half gutter-b" permission="['Dashboard_Vente_Consult'] " style="height : 180px">
+          <!--begin::Body-->
+          <div class="card-body p-0">
+            <div>
+              <span class="symbol symbol-50 symbol-light-success mr-2">
+              <!--   <span class="symbol-label">
+                  <span class="svg-icon svg-icon-xl svg-icon-success">
+                    begin::Svg Icon | path:assets/media/svg/icons/Layout/Layout-4-blocks.svg
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                      width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <rect x="0" y="0" width="24" height="24" />
+                        <rect fill="#000000" x="4" y="4" width="7" height="7" rx="1.5" />
+                        <path
+                          d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z"
+                          fill="#000000" opacity="0.3" />
+                      </g>
+                    </svg>
+                    end::Svg Icon
+                  </span>
+                </span> -->
+              </span>
+             
+                <span class="text-dark-75 font-weight-bolder font-size-h3">CA Par Mois</span>
+                <!-- <span class="text-muted font-weight-bold mt-2">{{year}}</span> -->
+            
+            </div>
+            <div id="chartCaFacture" style="height: 160px;" class="col-md-12"></div>
             
           </div>
           <!--end::Body-->
         </div>
         <!--end::Stats Widget 11-->
         <!--begin::Stats Widget 12-->
-        <div class="card card-custom card-stretch card-stretch-half gutter-b" permission="['Dashboard_Achat_Consult'] ">
+        <div class="card card-custom card-stretch card-stretch-half gutter-b" permission="['Dashboard_Achat_Consult'] " style="height : 180px">
           <!--begin::Body-->
           <div class="card-body p-0">
-            <div class="d-flex align-items-center justify-content-between card-spacer flex-grow-1">
+            <div >
               <span class="symbol symbol-50 symbol-light-primary mr-2">
-                <span class="symbol-label">
+              <!--   <span class="symbol-label">
                   <span class="svg-icon svg-icon-xl svg-icon-primary">
-                    <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg-->
+                    begin::Svg Icon | path:assets/media/svg/icons/Communication/Group.svg
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                       width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -333,17 +367,17 @@
                         <rect fill="#000000" x="3" y="13" width="3" height="7" rx="1.5" />
                       </g>
                     </svg>
-                    <!--end::Svg Icon-->
+                    end::Svg Icon
                   </span>
-                </span>
+                </span> -->
               </span>
-              <div class="d-flex flex-column text-right">
+              
                 <span class="text-dark-75 font-weight-bolder font-size-h3">D&eacute;penses Par Mois</span>
-                <span class="text-muted font-weight-bold mt-2">{{year}}</span>
-              </div>
+               
+             
             </div>
             
-              <div id="chartDepenseFacture" style="height: 150px;" class="col-md-12"></div>
+              <div id="chartDepenseFacture" style="height: 160px;" class="col-md-12"></div>
           </div>
           <!--end::Body-->
         </div>

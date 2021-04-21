@@ -520,9 +520,11 @@
 			<div class="row">
 				<div class="row" ng-show="displayMode != 'edit'">
 					<div class="col-md-12">
-						<div class="title-ajout line">Liste des Colis</div>
+						<div class="title-ajout line">Liste des Colis <input type="checkbox" ng-model="checkList" ng-change="checkAllItemList(checkList)"  style="margin: 8px;"/>   <button  class="btn btn-default btn-xs"	ng-click="showPopupDelete(3)" permission="['Production_Production_Delete']">	<i class="fa fa-fw fa-trash-o"></i></button> <div ng-if="enCoursDelete" class="alert alert-info">
+Suppression   <strong>Colis!</strong> en cours
+</div></div>
 						<div panel-class="panel panel-primary">
-							<div style="height: 255px;" ng-grid="gridOptions"></div>
+							<div style="height: 500px;" ng-grid="gridOptions"></div>
 						</div>
 					</div>
 				</div>

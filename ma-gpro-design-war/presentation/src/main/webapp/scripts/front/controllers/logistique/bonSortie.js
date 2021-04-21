@@ -886,16 +886,16 @@ $scope.listCode.splice(index,1);
               									displayName : 'Réf.BS',
                                 width:'10%'
               								},
-              								{
+              				/*				{
               									field : 'type',
               									displayName : 'Type',
                                 width:'10%'
               									
-              								},
+              								},*/
               								{
               									field : 'partieIntDesignation',
               									displayName : 'Client',
-                                width:'40%'
+                                width:'50%'
               								},
               								{
               									field : 'dateSortie',

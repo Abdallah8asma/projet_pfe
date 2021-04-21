@@ -1961,10 +1961,16 @@ angular
 						                	   displayName : 'Reference',
 						                	   width:'10%'
 						                   },
+
+                                           {
+						                	   field : 'referenceBlManuel',
+						                	   displayName : 'Ref. BL Manuel',
+						                	   width:'10%'
+						                   },
 						                   {
 						                	   field : 'partieIntAbreviation',
 						                	   displayName : 'Client',
-						                	   width:'35%'
+						                	   width:'30%'
 						                   },
 						                   {
 						                	   field : 'infoSortie',
@@ -2001,7 +2007,7 @@ angular
 											   <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
 											   </button>
 											   </div>`,
-											 
+											 width:'7%',
 											 
 											 
 						                   } ];

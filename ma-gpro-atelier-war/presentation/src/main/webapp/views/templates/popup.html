@@ -1,6 +1,6 @@
 
 <div class="row" id="deletePopupX">
-	<span class="pull-right clickable" ng-click="closePopupDelete()">X</span>
+	<span class="pull-right clickable" ng-click="closePopupDelete(); codeSuppression =''">X</span>
 </div>
 
 <!--POPUP BonReception -->
@@ -34,7 +34,16 @@
 </div>
 
 
-
+<!-- POPUP Rouleau Multiple -->
+<div ng-show="message == 3" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+	<input type="password" ng-model="codeSuppression" />
+		</div>
+</div>
+<div ng-show="message == 3" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-show="codeSuppression == '123900'"  ng-click="deleteMultipleColis(); codeSuppression =''">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete(); codeSuppression =''">Non</button>
+</div>
 
 
 
