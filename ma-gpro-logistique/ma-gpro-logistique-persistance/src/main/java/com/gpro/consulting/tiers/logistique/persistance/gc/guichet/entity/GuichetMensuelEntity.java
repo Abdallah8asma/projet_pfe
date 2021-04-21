@@ -133,8 +133,22 @@ public class GuichetMensuelEntity {
 	  
 	  
 	  
+	  /** cible_ca */
+	  @Column(name = "cible_ca")
+	  private Double cibleCA;
 	  
 	  
+	  
+	  
+	  
+	public Double getCibleCA() {
+		return cibleCA;
+	}
+
+	public void setCibleCA(Double cibleCA) {
+		this.cibleCA = cibleCA;
+	}
+
 	public Long getNumReferenceDetReglementCourante() {
 		return numReferenceDetReglementCourante;
 	}

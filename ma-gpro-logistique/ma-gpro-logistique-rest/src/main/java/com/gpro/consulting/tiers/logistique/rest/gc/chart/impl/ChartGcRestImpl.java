@@ -259,6 +259,13 @@ public class ChartGcRestImpl {
 	
 
 	
+	@RequestMapping(value = "/getDifferenceChiffreAffaireVenteAchatByMonth", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody List<FactureReportElementRecapValue> getDifferenceChiffreAffaireVenteAchatByMonth(
+			@RequestBody RechercheMulticritereFactureValue request) {
+		
+		
+		return chartGcService.getDifferenceChiffreAffaireVenteAchatByMonth(request);
+	}
 	
 
 	public boolean checkForOptimization(RechercheMulticritereBonLivraisonValue request) {

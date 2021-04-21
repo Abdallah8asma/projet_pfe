@@ -753,6 +753,16 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		bonReceptionValue.setListTaxeReceptionAchat(listTaxeReceptionAchat);
 		// Modifie by Ghazi Atroussi 16/11/2016
 		Double montantTTCTotal = montantHTaxeTotal + montantTaxesTotal /*- montantRemiseTotal*/;
+		
+		
+		
+		montantHTaxeTotal = 	(double)Math.round(montantHTaxeTotal * 1000) / 1000 ;
+		montantRemiseTotal = 	(double)Math.round(montantRemiseTotal * 1000) / 1000 ;
+		montantTaxesTotal = 	(double)Math.round(montantTaxesTotal * 1000) / 1000 ;
+		metrageTotal = 	(double)Math.round(metrageTotal * 1000) / 1000 ;
+		coutCommandeVenteTotal = 	(double)Math.round(coutCommandeVenteTotal * 1000) / 1000 ;
+		montantTTCTotal = 	(double)Math.round(montantTTCTotal * 1000) / 1000 ;
+		
 
 		bonReceptionValue.setMontantHTaxe(montantHTaxeTotal);
 		bonReceptionValue.setMontantRemise(montantRemiseTotal);
@@ -1033,6 +1043,14 @@ public class ReceptionAchatDomaineImpl implements IReceptionAchatDomaineGC {
 		bonReceptionValue.setListTaxeReceptionAchat(listTaxeReceptionAchat);
 		// Modifie by Ghazi Atroussi 16/11/2016
 		Double montantTTCTotal = montantHTaxeTotal + montantTaxesTotal /*- montantRemiseTotal*/;
+		
+		
+		montantHTaxeTotal = 	(double)Math.round(montantHTaxeTotal * 1000) / 1000 ;
+		montantRemiseTotal = 	(double)Math.round(montantRemiseTotal * 1000) / 1000 ;
+		montantTaxesTotal = 	(double)Math.round(montantTaxesTotal * 1000) / 1000 ;
+		metrageTotal = 	        (double)Math.round(metrageTotal * 1000) / 1000 ;
+		coutCommandeVenteTotal = 	(double)Math.round(coutCommandeVenteTotal * 1000) / 1000 ;
+		montantTTCTotal = 	(double)Math.round(montantTTCTotal * 1000) / 1000 ;
 
 		bonReceptionValue.setMontantHTaxe(montantHTaxeTotal);
 		bonReceptionValue.setMontantRemise(montantRemiseTotal);

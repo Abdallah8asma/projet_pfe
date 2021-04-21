@@ -1,12 +1,14 @@
 package com.gpro.consulting.tiers.logistique.domaine.gc.guichet.impl;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.RechercheMulticritereGuichetMensuelValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetMensuelDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.IGuichetMensuelPersistance;
 @Component
@@ -156,6 +158,43 @@ public String getPrefix() {
 	@Override
 	public Long modifierGuichetFactureAchatNonDeclarerMensuel(GuichetMensuelValue vGuichetValeur) {
 		 return this.guichetMensuelPersistance.modifierGuichetFactureAchatNonDeclarerMensuel(vGuichetValeur);
+	}
+
+	@Override
+	public GuichetMensuelValue getByAnneeAndMois(Long year, Long month) {
+		// TODO Auto-generated method stub
+		return guichetMensuelPersistance.getByAnneeAndMois(year,month);
+	}
+
+	@Override
+	public GuichetMensuelValue getById(Long id) {
+		// TODO Auto-generated method stub
+		return guichetMensuelPersistance.getById(id);
+	}
+
+	@Override
+	public String update(GuichetMensuelValue guichetMensuelValue) {
+		// TODO Auto-generated method stub
+		return guichetMensuelPersistance.update(guichetMensuelValue);
+	}
+
+	@Override
+	public String create(GuichetMensuelValue guichetMensuelValue) {
+		// TODO Auto-generated method stub
+		return guichetMensuelPersistance.create(guichetMensuelValue);
+	}
+
+	@Override
+	public void deleteById(Long id) {
+		
+		guichetMensuelPersistance.deleteById(id);
+		
+	}
+
+	@Override
+	public List<GuichetMensuelValue> rechercheMultiCritere(RechercheMulticritereGuichetMensuelValue request) {
+		// TODO Auto-generated method stub
+		return guichetMensuelPersistance.rechercheMultiCritere(request);
 	}
 
 	

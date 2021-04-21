@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.tiers.commun.coordination.utils.value.DateUtilsValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.RechercheMulticriterePartieInteresseeValue;
@@ -37,6 +38,9 @@ import com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture.IFactureAch
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.reglement.IReglementAchatDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.report.IGestionnaireReportAchatDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.chart.IChartGcDomaine;
+import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetAnnuelDomaine;
+import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetMensuelDomaine;
+import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.impl.GuichetAnnuelDomaineImpl;
 import com.gpro.consulting.tiers.logistique.domaine.gc.reglement.IDetailsReglementDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.report.IGestionnaireReportGcDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.DetailsReglementAchatEntity;
@@ -80,6 +84,9 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 
 	@Autowired
 	IDetailsReglementDomaine detailsReglementDomaine;
+	
+	@Autowired
+	IGuichetMensuelDomaine guichetMensuelDomaine;
 
 	@Override
 	public List<BLReportElementRecapValue> getChiffreAffaireBLbyMonth(RechercheMulticritereBonLivraisonValue request) {
@@ -120,6 +127,13 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 
 			FactureReportElementRecapValue element = gestionnaireReportGcDomaine
 					.getFactureReportElementRecapValue(request);
+			
+			
+			GuichetMensuelValue guichet =  guichetMensuelDomaine.getByAnneeAndMois(element.getYear(),element.getMonth());
+			
+			if(guichet != null)
+				element.setCibleCA(guichet.getCibleCA());
+			
 
 			list.add(element);
 		}
@@ -494,6 +508,33 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 
 
 		return gestionnaireReportGcDomaine.getTop10Groupe(request);
+	}
+
+	@Override
+	public List<FactureReportElementRecapValue> getDifferenceChiffreAffaireVenteAchatByMonth(
+			RechercheMulticritereFactureValue request) {
+		
+		RechercheMulticritereFactureAchatValue rechFactAchat = new RechercheMulticritereFactureAchatValue();
+		rechFactAchat.setDateFactureMin((Calendar)request.getDateFactureMin().clone());
+		rechFactAchat.setDateFactureMax((Calendar)request.getDateFactureMax().clone());
+		rechFactAchat.setType(request.getType());
+		
+		
+		List<FactureReportElementRecapValue> listChiffreAffaireFactureByMonth =  this.getChiffreAffaireFactureByMonth(request) ;
+		
+		List<BLReportElementRecapValue> listDepense = this.getDepenseFacturebyMonth(rechFactAchat) ;
+		
+		for(int i=0 ; i<listChiffreAffaireFactureByMonth.size() ; i++) {
+			
+			Double difMontantTTC  = 	listChiffreAffaireFactureByMonth.get(i).getMontantTTC() - listDepense.get(i).getMontantTTC();
+			
+			Double difMontantHT  = 	listChiffreAffaireFactureByMonth.get(i).getMontantHTaxe() - listDepense.get(i).getMontantHTaxe();
+			
+			listChiffreAffaireFactureByMonth.get(i).setMontantTTC(difMontantTTC);
+			listChiffreAffaireFactureByMonth.get(i).setMontantHTaxe(difMontantHT);
+		}
+		
+		return listChiffreAffaireFactureByMonth;
 	}
 
 }

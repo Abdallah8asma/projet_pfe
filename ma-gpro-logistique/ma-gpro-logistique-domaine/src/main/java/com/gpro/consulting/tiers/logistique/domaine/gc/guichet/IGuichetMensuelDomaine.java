@@ -1,8 +1,10 @@
 package com.gpro.consulting.tiers.logistique.domaine.gc.guichet;
 
 import java.util.Calendar;
+import java.util.List;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.RechercheMulticritereGuichetMensuelValue;
 
 public interface IGuichetMensuelDomaine {
    
@@ -88,6 +90,24 @@ public interface IGuichetMensuelDomaine {
 
 
 	public String getPrefixFactureAvoir(Calendar pDateBonLiv);
+
+
+	public GuichetMensuelValue getByAnneeAndMois(Long year, Long month);
+
+
+	public GuichetMensuelValue getById(Long id);
+
+
+	public String update(GuichetMensuelValue guichetMensuelValue);
+
+
+	public String create(GuichetMensuelValue guichetMensuelValue);
+
+
+	public void deleteById(Long id);
+
+
+	public List<GuichetMensuelValue> rechercheMultiCritere(RechercheMulticritereGuichetMensuelValue request);
 
 
 

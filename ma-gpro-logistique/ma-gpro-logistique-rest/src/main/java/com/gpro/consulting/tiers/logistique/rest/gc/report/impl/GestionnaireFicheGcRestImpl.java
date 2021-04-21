@@ -3504,11 +3504,12 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		sheet3.setColumnView(7, 10);
 		sheet3.setColumnView(8, 10);
-		sheet3.setColumnView(9, 10);
+		sheet3.setColumnView(9, 15);
 		sheet3.setColumnView(10, 15);
 		sheet3.setColumnView(11, 15);
 		sheet3.setColumnView(12, 17);
 		sheet3.setColumnView(13, 15);
+		sheet3.setColumnView(14, 15);
 		/**************************************************************************/
 
 		/*
@@ -3552,7 +3553,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		// Nom du rapport et la date
 
 		sheet3.addCell(new Label(2, 7, "    Liste des Factures", ExcelUtils.boldTitre));
-		sheet3.mergeCells(2, 7, 13, 8);
+		sheet3.mergeCells(2, 7, 14, 8);
 		/*
 		 * // sheet3.addCell(new Label(2, 6, "Le : " + dateFormat2.format(d),
 		 * boldRed3));
@@ -3782,11 +3783,12 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(11, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(12, i - 1, "Montant Remise", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(13, i - 1, "Quantite Totale", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(14, i - 1, "Montant Ouvert", ExcelUtils.boldRed2));
 		
 		Double mantantTtcTotale = 0d;
 		Double remiseTotale = 0d;
 		Double quantiteTotale = 0d;
-
+		Double mantantOuvertTotale = 0d;
 		
 		List<TaxeValue> listeTaxes = taxeService.getAll();
 		for (FactureVenteValue element : report.getList()) {
@@ -3928,6 +3930,29 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			} else {
 				sheet3.addCell(new Label(13, i, "", ExcelUtils.boldRed));
 			}
+			
+			
+		
+
+		      Double montantPaye = elementReglementService.getSumMontantPayerByReferenceFacture(element.getReference());
+			
+			  Double montantOuvert   = element.getMontantTTC() - montantPaye;
+		      
+		      if(montantOuvert < 0 ) {
+		    	  
+		    	  montantOuvert = 0d;
+		      }
+		      
+		      
+		    	 
+			
+			
+		  	if (montantOuvert != null) {
+		  		
+	         	sheet3.addCell(new Label(14, i, convertisseur(mantantOuvertTotale, 4) + "", ExcelUtils.boldRed));
+
+				mantantOuvertTotale += montantOuvert;
+			} 
 		
 
 			i++;
@@ -3937,7 +3962,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		i++;
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Totale", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i, "Total", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 9, i);
 
 		i++;
@@ -3951,12 +3976,20 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(7, i, "Montant TTC Total", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
 		sheet3.addCell(new Label(9, i, convertisseur(mantantTtcTotale, 4) + "", ExcelUtils.boldRed2));
+		
+		
 
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Montant Remise Total", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i, "Montant Ouvert", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, convertisseur(remiseTotale, 4) + "", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i, convertisseur(mantantOuvertTotale, 4) + "", ExcelUtils.boldRed2));
+
+//		i++;
+//
+//		sheet3.addCell(new Label(7, i, "Montant Remise Total", ExcelUtils.boldRed2));
+//		sheet3.mergeCells(7, i, 8, i);
+//		sheet3.addCell(new Label(9, i, convertisseur(remiseTotale, 4) + "", ExcelUtils.boldRed2));
 
 		i++;
 

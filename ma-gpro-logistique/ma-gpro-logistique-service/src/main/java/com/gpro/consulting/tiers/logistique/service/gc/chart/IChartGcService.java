@@ -67,4 +67,7 @@ public interface IChartGcService {
 
 	List<ResultBestElementValue> getTop10Groupe(RechercheMulticritereDetLivraisonValue request);
 
+	List<FactureReportElementRecapValue> getDifferenceChiffreAffaireVenteAchatByMonth(
+			RechercheMulticritereFactureValue request);
+
 }

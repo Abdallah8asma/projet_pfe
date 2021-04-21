@@ -3387,11 +3387,50 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		
 		for(FactureVenteValue facture : resRech.getList()) {
 			
-			if(facture.getMontantTTC() != null)
-			montantTTC += facture.getMontantTTC();
+			if(facture.getMontantTTC() != null && facture.getDevise() != null) {
+				
+				if(!facture.getDevise().equals(DeviseValue.DINAR)) {
+					
+					
+					if(facture.getMontantConverti() != null)
+						 montantTTC += facture.getMontantConverti();
+					      
+					
+				}else
+					
+				{
+					
+					montantTTC += facture.getMontantTTC();
+				}
+				
+				
+				
+			}
 			
-			if(facture.getMontantHTaxe() != null)
-			montantHtaxe +=  facture.getMontantHTaxe();
+			
+			if(facture.getMontantHTaxe() != null && facture.getDevise() != null) {
+				
+	
+				
+	     	if(!facture.getDevise().equals(DeviseValue.DINAR)) {
+					
+					
+			  if(facture.getTauxConversion()  != null)
+					
+						montantHtaxe += facture.getMontantHTaxe() * facture.getTauxConversion() ;
+					
+				}else
+					
+				{
+					montantHtaxe += facture.getMontantHTaxe()  ;
+				}
+				
+				
+				
+				
+			
+			}
+			
 			
 			
 			
@@ -3405,6 +3444,16 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		recapFacture.setFin(request.getDateFactureMax());
 		recapFacture.setType(request.getType());
 		recapFacture.setMois(request.getDateFactureMin().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.FRANCE));
+		
+		int month = request.getDateFactureMin().get(Calendar.MONTH)+ 1;
+		
+		int year = request.getDateFactureMin().get(Calendar.YEAR) ;
+		
+		recapFacture.setMonth(Long.valueOf(month));
+		recapFacture.setYear(Long.valueOf(year));
+		
+		
+		
 		return recapFacture;
 	}
 

@@ -62,7 +62,18 @@ public class LivraisonVenteValue implements Comparable<LivraisonVenteValue> {
 	private Double tauxConversion;
 	private Double montantConverti;
 	
+	private String referenceBlManuel;
 	
+	
+	
+
+	public String getReferenceBlManuel() {
+		return referenceBlManuel;
+	}
+
+	public void setReferenceBlManuel(String referenceBlManuel) {
+		this.referenceBlManuel = referenceBlManuel;
+	}
 
 	public Long getDevise() {
 		return devise;

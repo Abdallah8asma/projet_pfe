@@ -125,6 +125,8 @@ public class BonLivraisonPersistanceUtilities {
 	    dto.setDevise(entity.getDevise());
 	    dto.setMontantConverti(entity.getMontantConverti());
 	    dto.setTauxConversion(entity.getTauxConversion());
+	    
+	    dto.setReferenceBlManuel(entity.getReferenceBlManuel());
 		
 		if(entity.getListDetLivraisonVente() != null){
 	    	List<DetLivraisonVenteValue> list = new ArrayList <DetLivraisonVenteValue>();
@@ -224,6 +226,7 @@ public class BonLivraisonPersistanceUtilities {
 		entity.setTauxConversion(dto.getTauxConversion());
 		entity.setMontantConverti(dto.getMontantConverti());
 		
+		entity.setReferenceBlManuel(dto.getReferenceBlManuel());
 		
 	    if(dto.getListDetLivraisonVente() != null){
 		     Set<DetLivraisonVenteEntity> list = new HashSet <DetLivraisonVenteEntity>();
