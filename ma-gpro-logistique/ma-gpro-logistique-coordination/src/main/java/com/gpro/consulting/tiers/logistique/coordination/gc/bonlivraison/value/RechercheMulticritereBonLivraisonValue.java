@@ -57,6 +57,19 @@ public class RechercheMulticritereBonLivraisonValue {
 
 private String numOF;
 
+private String referenceBlManuel;
+
+
+
+
+
+	public String getReferenceBlManuel() {
+	return referenceBlManuel;
+}
+
+public void setReferenceBlManuel(String referenceBlManuel) {
+	this.referenceBlManuel = referenceBlManuel;
+}
 
 	public String getNumOF() {
 	return numOF;

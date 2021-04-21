@@ -1,24 +1,38 @@
 package com.gpro.consulting.tiers.logistique.persistance.gc.guichet.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.List;
+import java.util.TreeSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Component;
 
 import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.RechercheMulticritereGuichetMensuelValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.GuichetBonReceptionValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.FactureVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.ResultatRechecheFactureValue;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.IBonReceptionPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.entity.GuichetBonReceptionEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.IGuichetMensuelPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.entity.GuichetAnnuelEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.entity.GuichetMensuelEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.utilities.GuichetPersistanceUtilities;
+import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.FactureVenteEntity;
 @Component
 public class GuichetMensuelPersistanceImpl extends AbstractPersistance implements IGuichetMensuelPersistance{
    
@@ -497,6 +511,119 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 		    this.entityManager.merge(vGuichetEntite);
 		    this.entityManager.flush();
 		    return vGuichetEntite.getId();
+	}
+
+
+	@Override
+	public GuichetMensuelValue getByAnneeAndMois(Long year, Long month) {
+		
+		if(year != null && month != null) {
+			
+		
+			  Query vQuery = this.entityManager.createQuery(
+				      "select g from GuichetMensuelEntity g where g.annee =" + year + " and g.mois="+month);
+
+				    Object vResult = vQuery.getSingleResult();
+				    GuichetMensuelEntity vGuichetMesuel = (GuichetMensuelEntity) vResult;
+				
+				    if(vGuichetMesuel != null)
+				    	return GuichetPersistanceUtilities.toMensuelValue(vGuichetMesuel);
+				    
+				     	 
+		}
+			
+    
+	    return null;
+	}
+
+
+	@Override
+	public GuichetMensuelValue getById(Long id) {
+		GuichetMensuelEntity guichetMensuelValue = this.rechercherParId(id, GuichetMensuelEntity.class);
+
+	    return GuichetPersistanceUtilities.toMensuelValue(guichetMensuelValue);
+	}
+
+
+	@Override
+	public String update(GuichetMensuelValue guichetMensuelValue) {
+		
+		GuichetMensuelEntity entity = (GuichetMensuelEntity) this.modifier(GuichetPersistanceUtilities.toMensuelEntity(guichetMensuelValue));
+
+	    return entity.getId().toString();
+	}
+
+
+	@Override
+	public String create(GuichetMensuelValue guichetMensuelValue) {
+		GuichetMensuelEntity entity = (GuichetMensuelEntity) this.creer(GuichetPersistanceUtilities.toMensuelEntity(guichetMensuelValue));
+
+	    return entity.getId().toString();
+	}
+
+
+	@Override
+	public void deleteById(Long id) {
+		
+		this.supprimerEntite(GuichetMensuelEntity.class, id);
+		
+	}
+
+
+	@Override
+	public List<GuichetMensuelValue> rechercheMultiCritere(RechercheMulticritereGuichetMensuelValue request) {
+		//logger.info("rechercherMultiCritere");
+		
+				CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+				
+				CriteriaQuery<GuichetMensuelEntity> criteriaQuery = criteriaBuilder.createQuery(GuichetMensuelEntity.class);
+				List<Predicate> whereClause = new ArrayList<Predicate>();
+				
+				Root<GuichetMensuelEntity> root = criteriaQuery.from(GuichetMensuelEntity.class);
+				
+			
+					//crtitere
+				
+				  // Set nature
+			    if (request.getAnnee() != null ) {
+					whereClause.add(criteriaBuilder.equal(root.get("annee"), request.getAnnee()));
+				}
+			    
+				
+			    if (request.getMois() != null ) {
+					whereClause.add(criteriaBuilder.equal(root.get("mois"), request.getMois()));
+				}
+			 	
+			 	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+			 	
+				criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
+				
+				
+				  List <GuichetMensuelEntity> resultatEntite = null;
+
+				// If criterias are empty
+				/*if (request.isOptimized()) {
+					resultatEntite = this.entityManager.createQuery(criteriaQuery).setMaxResults(MAX_RESULTS).getResultList();
+
+				} else {
+					resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+				}*/
+				
+				resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+
+			    List<GuichetMensuelValue> list = new ArrayList<GuichetMensuelValue>();
+			    
+			    for (GuichetMensuelEntity entity : resultatEntite) {
+			    	GuichetMensuelValue dto = GuichetPersistanceUtilities.toMensuelValue(entity);
+			    	list.add(dto);
+			    }
+
+			/*    ResultatRechecheFactureValue resultat = new ResultatRechecheFactureValue();
+			    Collections.sort(list);
+			    resultat.setNombreResultaRechercher(Long.valueOf(list.size()));
+			    resultat.setList(new TreeSet<>(list));*/
+
+			    return list;
 	}
 
 }

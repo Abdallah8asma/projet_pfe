@@ -675,6 +675,13 @@ public class FactureAchatPersistanceImpl extends AbstractPersistance implements 
 
 			    	resultat.setMontantHTaxe((Double)vResult.get(0)[1]);
 			    	
+			    	
+			    	if(resultat.getMontantTTC() == null)
+			    		resultat.setMontantTTC(0d);
+			    	
+			    	
+			    	if(resultat.getMontantHTaxe() == null)
+			    		resultat.setMontantHTaxe(0d);
 
 			   
 		return resultat;

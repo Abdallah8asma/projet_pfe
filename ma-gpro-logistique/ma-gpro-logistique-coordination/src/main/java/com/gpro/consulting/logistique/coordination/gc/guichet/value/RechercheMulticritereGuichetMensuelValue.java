@@ -1,6 +1,6 @@
 package com.gpro.consulting.logistique.coordination.gc.guichet.value;
 
-public class GuichetMensuelValue {
+public class RechercheMulticritereGuichetMensuelValue {
 
 	/** id */
 	private Long id;
@@ -60,20 +60,9 @@ public class GuichetMensuelValue {
 	  
 	  
 	  
-	  private String prefixeBC ;
-	  
-	  
 	  
 	  
 	
-
-	public String getPrefixeBC() {
-		return prefixeBC;
-	}
-
-	public void setPrefixeBC(String prefixeBC) {
-		this.prefixeBC = prefixeBC;
-	}
 
 	public Double getCibleCA() {
 		return cibleCA;
@@ -235,7 +224,7 @@ public class GuichetMensuelValue {
 	 * 
 	 * /** Constructeur
 	 */
-	public GuichetMensuelValue() {
+	public RechercheMulticritereGuichetMensuelValue() {
 
 	}
 
@@ -245,7 +234,7 @@ public class GuichetMensuelValue {
 	 * @param annee
 	 * @param numReferenceCourant
 	 */
-	public GuichetMensuelValue(Long annee, Long numReferenceCourant) {
+	public RechercheMulticritereGuichetMensuelValue(Long annee, Long numReferenceCourant) {
 		super();
 		this.annee = annee;
 		this.numReferenceBonLivraisonCourant = numReferenceCourant;

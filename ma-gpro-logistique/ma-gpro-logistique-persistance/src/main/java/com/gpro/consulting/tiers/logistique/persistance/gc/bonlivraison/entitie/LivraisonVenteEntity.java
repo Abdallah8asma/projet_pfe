@@ -207,8 +207,27 @@ public class LivraisonVenteEntity implements Serializable {
 	private Double montantConverti;
 	
 	
+	@Column(name = "REFERENCE_BL_MANUEL")
+	private String referenceBlManuel;
 	
 	
+	
+
+	public String getReferenceBlManuel() {
+		return referenceBlManuel;
+	}
+
+	public void setReferenceBlManuel(String referenceBlManuel) {
+		this.referenceBlManuel = referenceBlManuel;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Boolean getBlSuppression() {
+		return blSuppression;
+	}
 
 	public Long getDevise() {
 		return devise;

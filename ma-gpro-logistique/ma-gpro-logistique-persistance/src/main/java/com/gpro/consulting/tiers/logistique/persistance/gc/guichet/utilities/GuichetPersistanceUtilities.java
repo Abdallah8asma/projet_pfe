@@ -182,14 +182,123 @@ public class GuichetPersistanceUtilities {
 		
 		gmv.setAnnee(entity.getAnnee());
 		gmv.setMois(entity.getMois());
-		gmv.setNumReferenceAvoirCourante(entity.getNumReferenceAvoirCourante());
-		gmv.setNumReferenceBonReceptionCourante(entity.getNumReferenceBonReceptionCourante());
-		gmv.setNumReferenceFactureCourante(entity.getNumReferenceFactureCourante());
-	
-		gmv.setNumReferenceBonCommandeCourante(entity.getNumReferenceBonCommandeCourante());
-		gmv.setNumReferenceFactureAchatNonDeclarerCourante(entity.getNumReferenceFactureAchatNDCourante());
-		gmv.setPrefixeFactureAchatNonDeclarer(entity.getPrefixeFactureAchatND());
 		
+		gmv.setNumReferenceBonSortieCourante(entity.getNumReferenceBonSortieCourante());
+		gmv.setNumReferenceBonLivraisonCourant(entity.getNumReferenceBonLivraisonCourante());
+		
+		gmv.setNumReferenceBonCommandeCourante(entity.getNumReferenceBonCommandeCourante());
+		
+		gmv.setPrefixeBC(entity.getPrefixeBC());
+		
+		gmv.setNumReferenceBonReceptionCourante(entity.getNumReferenceBonReceptionCourante());
+		
+		gmv.setPrefixeBonReception(entity.getPrefixeBonReception());
+		
+		gmv.setNumReferenceFactureCourante(entity.getNumReferenceFactureCourante());
+		
+		gmv.setPrefixeFacture(entity.getPrefixeFacture());
+		
+		
+		gmv.setNumReferenceAvoirCourante(entity.getNumReferenceAvoirCourante());
+		
+		gmv.setPrefixeAvoir(entity.getPrefixeAvoir());
+		
+		gmv.setNumReferenceBonReceptionNonDeclarerCourante(entity.getNumReferenceBonReceptionNonDeclarerCourante());
+		
+		
+		gmv.setPrefixeBonReceptionNonDeclarer(entity.getPrefixeBonReceptionNonDeclarer());
+		
+		
+		gmv.setNumReferenceFactureAchatNonDeclarerCourante(entity.getNumReferenceFactureAchatNDCourante());
+		
+		gmv.setPrefixeFactureAchatNonDeclarer(entity.getPrefixeFactureAchatND());
+			
+		
+		gmv.setNumReferenceReglementAchatCourante(entity.getNumReferenceDetReglementAchatCourante());
+	
+		gmv.setPrefixeReglementAchat(entity.getPrefixeReglementAchat());
+		
+		gmv.setNumReferenceDetReglementAchatCourante(entity.getNumReferenceDetReglementAchatCourante());
+	
+		
+		gmv.setPrefixeDetReglementAchat(entity.getPrefixeDetReglementAchat());
+		
+		
+		gmv.setNumReferenceDetReglementCourante(entity.getNumReferenceDetReglementCourante());
+		
+		gmv.setPrefixeDetReglement(entity.getPrefixeDetReglement());
+		
+		gmv.setCibleCA(entity.getCibleCA());
+		
+	
+		return gmv;
+		
+		
+	}
+	
+	
+	public static GuichetMensuelEntity toMensuelEntity(GuichetMensuelValue entity) {
+		
+		GuichetMensuelEntity gmv = new GuichetMensuelEntity();
+		
+		gmv.setId(entity.getId());		
+		
+		gmv.setAnnee(entity.getAnnee());
+		gmv.setMois(entity.getMois());
+		
+		gmv.setNumReferenceBonSortieCourante(entity.getNumReferenceBonSortieCourante());
+		
+		gmv.setNumReferenceBonLivraisonCourante(entity.getNumReferenceBonLivraisonCourant());
+		
+		
+		
+		gmv.setNumReferenceBonCommandeCourante(entity.getNumReferenceBonCommandeCourante());
+		
+		gmv.setPrefixeBC(entity.getPrefixeBC());
+		
+		gmv.setNumReferenceBonReceptionCourante(entity.getNumReferenceBonReceptionCourante());
+		
+		gmv.setPrefixeBonReception(entity.getPrefixeBonReception());
+		
+		gmv.setNumReferenceFactureCourante(entity.getNumReferenceFactureCourante());
+		
+		gmv.setPrefixeFacture(entity.getPrefixeFacture());
+		
+		
+		gmv.setNumReferenceAvoirCourante(entity.getNumReferenceAvoirCourante());
+		
+		gmv.setPrefixeAvoir(entity.getPrefixeAvoir());
+		
+		gmv.setNumReferenceBonReceptionNonDeclarerCourante(entity.getNumReferenceBonReceptionNonDeclarerCourante());
+		
+		
+		gmv.setPrefixeBonReceptionNonDeclarer(entity.getPrefixeBonReceptionNonDeclarer());
+		
+		
+		
+		gmv.setNumReferenceFactureAchatNDCourante(entity.getNumReferenceFactureAchatNonDeclarerCourante());
+		
+		
+		gmv.setPrefixeFactureAchatND(entity.getPrefixeFactureAchatNonDeclarer());
+			
+		
+		gmv.setNumReferenceReglementAchatCourante(entity.getNumReferenceDetReglementAchatCourante());
+	
+		gmv.setPrefixeReglementAchat(entity.getPrefixeReglementAchat());
+		
+		gmv.setNumReferenceDetReglementAchatCourante(entity.getNumReferenceDetReglementAchatCourante());
+	
+		
+		gmv.setPrefixeDetReglementAchat(entity.getPrefixeDetReglementAchat());
+		
+		
+		gmv.setNumReferenceDetReglementCourante(entity.getNumReferenceDetReglementCourante());
+		
+		gmv.setPrefixeDetReglement(entity.getPrefixeDetReglement());
+		
+		gmv.setCibleCA(entity.getCibleCA());
+		
+	
 		return gmv;
 		
 		

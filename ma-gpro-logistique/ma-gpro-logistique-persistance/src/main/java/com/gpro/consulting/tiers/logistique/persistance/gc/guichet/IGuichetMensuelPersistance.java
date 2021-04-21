@@ -1,9 +1,10 @@
 package com.gpro.consulting.tiers.logistique.persistance.gc.guichet;
 
 import java.util.Calendar;
+import java.util.List;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
-import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.GuichetBonReceptionValue;
+import com.gpro.consulting.logistique.coordination.gc.guichet.value.RechercheMulticritereGuichetMensuelValue;
 
 public interface IGuichetMensuelPersistance {
 
@@ -118,6 +119,24 @@ public interface IGuichetMensuelPersistance {
 
 
 	public Long modifierGuichetDetReglementMensuel(GuichetMensuelValue vGuichetValeur);
+
+
+	public GuichetMensuelValue getByAnneeAndMois(Long year, Long month);
+
+
+	public GuichetMensuelValue getById(Long id);
+
+
+	public String update(GuichetMensuelValue guichetMensuelValue);
+
+
+	public String create(GuichetMensuelValue guichetMensuelValue);
+
+
+	public void deleteById(Long id);
+
+
+	public List<GuichetMensuelValue> rechercheMultiCritere(RechercheMulticritereGuichetMensuelValue request);
 
 
 	
