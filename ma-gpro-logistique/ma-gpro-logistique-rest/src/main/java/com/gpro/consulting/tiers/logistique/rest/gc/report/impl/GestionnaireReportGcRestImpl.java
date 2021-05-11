@@ -126,12 +126,15 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 	}
 
 	@RequestMapping(value = "/facture", method = RequestMethod.GET)
-	public void generateFactureVenteReport(@RequestParam("id") Long id,@RequestParam("typerapport") Long typerapport, @RequestParam("type") String type,
+	public void generateFactureVenteReport(@RequestParam("id") Long id,@RequestParam("typerapport") Long typerapport, 
+			@RequestParam("avecObservation") boolean avecObservation ,
+			@RequestParam("type") String type,
+			 
 			HttpServletResponse response) throws JRException, IOException {
 
 		//logger.info("Generate a {} Report FactureVente", type);
 
-		FactureReportValue factureReport = gestionnaireReportGcService.getFactureReportValue(id,typerapport);
+		FactureReportValue factureReport = gestionnaireReportGcService.getFactureReportValue(id,typerapport,avecObservation);
 		
 		
 		this.download(type, factureReport.getReportStream(), factureReport.getParams(), factureReport.getFileName(),
@@ -413,6 +416,11 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("montantMin") Double montantMin,
 			@RequestParam("montantMax") Double montantMax,
 			@RequestParam("idDepot") Long idDepot,
+			
+			@RequestParam("declarerRech") String declarerRech,
+			@RequestParam("hasElementReglement") String hasElementReglement,
+			@RequestParam("hasDetailReglement") String hasDetailReglement,
+			
 			@RequestParam("type") String type,
 			HttpServletResponse response) throws JRException, IOException {
 
@@ -424,6 +432,10 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		request.setMontantMin(montantMin);
 		request.setMontantMax(montantMax);
 		request.setIdDepot(idDepot);
+		
+		request.setDeclarerRech(declarerRech);
+		request.setHasElementReglement(hasElementReglement);
+		request.setHasDetailReglement(hasDetailReglement);
 		
 		//logger.info("Generate a Reglement", type);
 

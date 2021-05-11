@@ -170,13 +170,13 @@ public class ReglementAchatRestImpl {
 		return  reglementAchatService.listeRefReglementCache();
 	}
 	
-	@RequestMapping(value = "/listeRefFactureNonRegleByClientId:{clientId}", method = RequestMethod.GET, produces =  "application/json")
+	@RequestMapping(value = "/listeRefFactureNonRegleByFournisseurId:{clientId}", method = RequestMethod.GET, produces =  "application/json")
 	public List< RefFactureNonRegleValue> getRefFactureNonRegleByFournisseurId(@PathVariable Long clientId) {
 		//logger.info("Delegating request to service layer.");
 		return  reglementAchatService.getRefFactureNonRegleByFournisseurId(clientId);
 	}
 	
-	@RequestMapping(value = "/listRefBLNonRegleByClientId:{clientId}", method = RequestMethod.GET, produces =  "application/json")
+	@RequestMapping(value = "/listRefBRNonRegleByFournisseurId:{clientId}", method = RequestMethod.GET, produces =  "application/json")
 	public List< RefLivraisonNonRegleValue> getRefBLNonRegleByClientId(@PathVariable Long clientId) {
 		//logger.info("Delegating request to service layer.");
 		return  reglementAchatService.getRefBLNonRegleByFournisseurId(clientId);

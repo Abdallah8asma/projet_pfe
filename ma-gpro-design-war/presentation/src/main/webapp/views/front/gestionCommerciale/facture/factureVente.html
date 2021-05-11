@@ -603,26 +603,84 @@
               <span class="ms-CommandButton-dropdownIcon"><i class="ms-Icon ms-Icon--ChevronDown"></i></span>
             </button>
             <ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
-              <li class="ms-ContextualMenu-item">
+            
+            
+                 <li class="ms-ContextualMenu-item">
+
+
+                <div class="row">
+                  <div class="col-sm-8">
+                    <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                      ng-click="download(factureVenteCourant.id,2,factureVenteCourant.avecObservation)">Sans En-t&ecirc;te</a>
+
+                  </div>
+
+                  <div class="col-sm-2">
+                    <label>Observ</label>
+                    <input type="checkbox" ng-model="factureVenteCourant.avecObservation"
+                      ng-init="factureVenteCourant.avecObservation" />
+
+
+                  </div>
+                </div>
+
+
+
+              </li>
+            
+            
+               <li class="ms-ContextualMenu-item">
+
+
+                <div class="row">
+                  <div class="col-sm-8">
+                    <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                      ng-click="download(factureVenteCourant.id,3,factureVenteCourant.avecObservation)">Avec En-t&ecirc;te </a>
+
+                  </div>
+
+                  <div class="col-sm-2">
+                    <label>Observ</label>
+                    <input type="checkbox" ng-model="factureVenteCourant.avecObservation"
+                      ng-init="factureVenteCourant.avecObservation" />
+
+
+                  </div>
+                </div>
+
+
+
+              </li>
+              
+               
+               
+             
+            
+            
+         <!--      <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
                   ng-click="download(factureVenteCourant.id,2)">Sans En-t&ecirc;te</a>
 
               </li>
-              <li class="ms-ContextualMenu-item">
-                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
-                  ng-click="download(factureVenteCourant.id,5)">Sans En-t&ecirc;te $/€</a>
-
-              </li>
+              
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
                   ng-click="download(factureVenteCourant.id,3)">Avec En-t&ecirc;te</a>
 
+              </li> -->
+              
+           <!--    <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                  ng-click="download(factureVenteCourant.id,5)">Sans En-t&ecirc;te $/€</a>
+
               </li>
+              
               <li class="ms-ContextualMenu-item">
                 <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
                   ng-click="download(factureVenteCourant.id,4)">Avec En-t&ecirc;te $/€ </a>
 
-              </li>
+              </li> -->
+              
             </ul>
           </div>
 

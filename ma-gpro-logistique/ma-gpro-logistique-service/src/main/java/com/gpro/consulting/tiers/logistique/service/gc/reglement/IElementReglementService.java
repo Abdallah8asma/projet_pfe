@@ -32,6 +32,10 @@ public interface IElementReglementService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public List<ElementReglementValue> getByRefFactureExact(String refernceFacture);
 
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public Double getSumMontantPayerByReferenceFacture(String reference);
+
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public Double getSumMontantPayerByReferenceBL(String reference);
 
 }

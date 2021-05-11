@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.chart.value.ResultBestElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.echeancier.RechercheMulticritereDetailReglementValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.DetailsReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RechercheMulticritereReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheElementReglementValue;
 
@@ -24,6 +25,10 @@ public interface IDetailsReglementDomaine {
 	public ResultBestElementValue rechercherMultiCritereReglementEchusDuJours(Calendar instance, boolean b,Long boutiqueId);
 
 	public Double getMontantPayer(RechercheMulticritereDetailReglementValue reqDetailReglement);
+
+	public DetailsReglementValue getById(Long detailReglementId);
+
+	public String update(DetailsReglementValue detailsReglementValue);
 
 
 }

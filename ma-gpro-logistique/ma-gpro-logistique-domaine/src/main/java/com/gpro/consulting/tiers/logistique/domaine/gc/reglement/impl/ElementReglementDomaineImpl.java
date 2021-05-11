@@ -84,4 +84,10 @@ public class ElementReglementDomaineImpl implements IElementReglementDomaine{
 		// TODO Auto-generated method stub
 		return elementReglementPersistance.getSumMontantPayerByReferenceFacture(reference);
 	}
+
+	@Override
+	public Double getSumMontantPayerByReferenceBL(String reference) {
+		// TODO Auto-generated method stub
+		return elementReglementPersistance.getSumMontantPayerByReferenceBL(reference);
+	}
 }

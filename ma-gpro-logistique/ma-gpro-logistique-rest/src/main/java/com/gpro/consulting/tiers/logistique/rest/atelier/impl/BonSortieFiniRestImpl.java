@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.RechercheMulticritereBonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ResultatRechecheBonSortieFiniValue;
@@ -37,6 +38,9 @@ public class BonSortieFiniRestImpl {
 	
 	@Autowired
 	IBonSortieFiniService bonSortieFiniService;
+	
+	@Autowired
+	IPartieInteresseeService partieInteresseeService;
 	
 	@Autowired
 	private IGestionnaireLogistiqueCacheService gestionnaireLogistiqueCacheService;
@@ -95,11 +99,18 @@ public class BonSortieFiniRestImpl {
 		for (BonSortieFiniValue elementRechercheBonSortie : vResultatRecherche.getList()) {
 
 			// Client, TypeBS
-			Map<String, String> mapA = gestionnaireLogistiqueCacheService
-					.rechercherDesignationParId(elementRechercheBonSortie.getPartieInt(),null, null, null);
+		/*	Map<String, String> mapA = gestionnaireLogistiqueCacheService
+					.rechercherDesignationParId(elementRechercheBonSortie.getPartieInt(),null, null, null);*/
+			
+			
+			if(elementRechercheBonSortie.getPartieInt() != null) {
+				
+				elementRechercheBonSortie.setPartieIntDesignation(partieInteresseeService.getById(elementRechercheBonSortie.getPartieInt()).getAbreviation());
+				
+			}
+			
 			// Client
-			elementRechercheBonSortie.setPartieIntDesignation(mapA.get("client"));
-			// TypeBS
+		// TypeBS
 
 		}
 		

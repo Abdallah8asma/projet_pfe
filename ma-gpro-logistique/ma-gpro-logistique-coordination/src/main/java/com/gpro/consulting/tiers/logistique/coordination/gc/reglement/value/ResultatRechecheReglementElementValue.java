@@ -21,6 +21,19 @@ public class ResultatRechecheReglementElementValue implements Comparable<Resulta
 	private Long groupeClientId;
 
 	private String groupeClientDesignation;
+	
+	private boolean declarer;
+	
+	
+	
+
+	public boolean isDeclarer() {
+		return declarer;
+	}
+
+	public void setDeclarer(boolean declarer) {
+		this.declarer = declarer;
+	}
 
 	public Long getGroupeClientId() {
 		return groupeClientId;

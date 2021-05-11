@@ -77,6 +77,8 @@ angular
     'gpro.soldeFournisseur',
     'gpro.echeancier',
     'gpro.echeancierFournisseur',
+    'gpro.rapprochement',
+    'gpro.rapprochementFournisseur',
     'gpro.FinanceReporting',
     'gpro.gcReportingFNclient',
     'gpro.gcReportingFNfournisseur',
@@ -88,6 +90,7 @@ angular
     /*'atelier.production',*/
     'gpro.back-commercial',
     'gpro.back-generateur',
+    'gpro.back-generateur-mensuel',
     'atelier.menuGC',
     'atelier.menuGA',
     'gpro.gcVenteBC',
@@ -268,6 +271,34 @@ angular
       $scope.nameUser = localStorage.getItem('name'); 
       $scope.jobUser = localStorage.getItem('job'); 
 
+
+   $scope.changeCurrentMode= function (passBlackMode) {
+	
+	
+	 if(passBlackMode != "159753")
+       return ;
+
+
+      $scope.passBlackMode = "";
+	
+	                             $http
+									.get(
+												UrlCommun
+														+ "/baseInfo/updateCurrentMode"
+												)
+										.success(
+												function(blackMode) {
+													
+													  if(blackMode == "true"){
+														alert("B.M est active") ;
+													  }else
+											         {
+												        alert("B.M est désactive") ; 
+										          	  }
+													});
+	
+	
+	}
 
       $scope.getOperation = function () {
         if (
@@ -1273,6 +1304,14 @@ angular
           },
         })
 
+      .when('/front/finance/rapprochement:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/finance/rapprochement' + param.templateFile + '.html'
+            );
+          },
+        })
+
         .when('/front/finance/reporting:templateFile', {
           templateUrl: function (param) {
             return (
@@ -1332,6 +1371,16 @@ angular
           templateUrl: function (param) {
             return (
               'views/front/financeFournisseur/paiement' +
+              param.templateFile +
+              '.html'
+            );
+          },
+        })
+
+   .when('/front/financeFournisseur/rapprochement:templateFile', {
+          templateUrl: function (param) {
+            return (
+              'views/front/financeFournisseur/rapprochement' +
               param.templateFile +
               '.html'
             );
@@ -1446,6 +1495,9 @@ angular
           templateUrl: 'views/back/commercials/generateur/backGenerateur.html',
         })
 
+       .when('/backGenerateurMensuel', {
+          templateUrl: 'views/back/commercials/generateurMensuel/backGenerateurMensuel.html',
+        })
         .when('/:templateFile', {
           templateUrl: function (param) {
             return 'views/' + param.templateFile + '.html';

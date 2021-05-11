@@ -559,4 +559,67 @@ public class ElementReglementAchatPersistanceImpl extends AbstractPersistance im
 
 	    return resultat;
 	}
+
+
+
+	
+	@Override
+	public Double getSumMontantPayerByReferenceFacture(String refernceFacture) {
+		
+		// Set refernceFacture on whereClause if not null or empty
+		if (estNonVide(refernceFacture)) {
+
+			CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+
+			CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
+
+			List<Predicate> whereClause = new ArrayList<Predicate>();
+			Root<ElementReglementAchatEntity> root = criteriaQuery.from(ElementReglementAchatEntity.class);
+
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_REFERENCE_FACURE), refernceFacture));
+
+			criteriaQuery.select(criteriaBuilder.sum(root.get("montantDemande").as(Double.class)))
+					.where(whereClause.toArray(new Predicate[] {}));
+			Double sommeMont = this.entityManager.createQuery(criteriaQuery).getSingleResult();
+
+			if (sommeMont != null) {
+				return sommeMont;
+			}
+			return 0D;
+
+		}
+
+		return 0D;
+	}
+	
+	
+
+	@Override
+	public Double getSumMontantPayerByReferenceBL(String reference) {
+
+		// Set refernceFacture on whereClause if not null or empty
+		if (estNonVide(reference)) {
+
+			CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+
+			CriteriaQuery<Double> criteriaQuery = criteriaBuilder.createQuery(Double.class);
+
+			List<Predicate> whereClause = new ArrayList<Predicate>();
+			Root<ElementReglementAchatEntity> root = criteriaQuery.from(ElementReglementAchatEntity.class);
+
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_REFERENCE_BL), reference));
+
+			criteriaQuery.select(criteriaBuilder.sum(root.get("montantDemande").as(Double.class)))
+					.where(whereClause.toArray(new Predicate[] {}));
+			Double sommeMont = this.entityManager.createQuery(criteriaQuery).getSingleResult();
+
+			if (sommeMont != null) {
+				return sommeMont;
+			}
+			return 0D;
+
+		}
+
+		return 0D;
+	}
 }

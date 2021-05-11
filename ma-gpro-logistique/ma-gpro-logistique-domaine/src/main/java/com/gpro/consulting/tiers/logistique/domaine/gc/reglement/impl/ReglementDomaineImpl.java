@@ -810,16 +810,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
 							
 						}else{
 							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontant());
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
 						}
 					}
 					
@@ -829,16 +829,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
 							
 						}else{
 							
-							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontant());
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
 						}
 						
 						refBLFromReglement.add(element.getRefBL());
@@ -865,9 +865,9 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				
 				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
 					
-					if(factureVente.getMontantHTaxe() != null){
+					if(factureVente.getMontantTTC() != null){
 						
-						factureMontantTotal = factureMontantTotal + factureVente.getMontantHTaxe();
+						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
 						
 						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
 						
@@ -875,13 +875,13 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
 							
-							Double montantResteARegle = factureVente.getMontantHTaxe() - montantFactureRegle;
+							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
 							
 							if(montantResteARegle > 0){
 								
 								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 								
-								factureNonRegle.setMontantRegle(montantFactureRegle);
+								factureNonRegle.setMontantRegle(montantResteARegle);
 								
 								listFactureNonRegleVentre.add(factureNonRegle);
 								
@@ -890,7 +890,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 					}
 				}else{
 					
-					if(factureVente.getMontantHTaxe() != null){
+					if(factureVente.getMontantTTC() != null){
 
 						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 						
@@ -930,9 +930,9 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				
 				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
 					
-					if(livraisonVente.getMontantHTaxe() != null){
+					if(livraisonVente.getMontantTTC() != null){
 						
-						blMontantTotal = blMontantTotal + livraisonVente.getMontantHTaxe();
+						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
 						
 						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
 						
@@ -940,13 +940,13 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
 							
-							Double montantResteARegle = livraisonVente.getMontantHTaxe() - montantBLRegle;
+							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
 							
 							if(montantResteARegle > 0){
 								
 								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
 								
-								livraisonNonRegle.setMontantRegle(montantBLRegle);
+								livraisonNonRegle.setMontantRegle(montantResteARegle);
 								
 								listLivraisonNonRegle.add(livraisonNonRegle);
 								
@@ -955,7 +955,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 					}
 				}else{
 					
-					if(livraisonVente.getMontantHTaxe() != null){
+					if(livraisonVente.getMontantTTC() != null){
 
 						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
 						
@@ -1027,16 +1027,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
 							
 						}else{
 							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontant());
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
 						}
 					}
 					
@@ -1046,16 +1046,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
 							
 						}else{
 							
-							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontant());
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
 						}
 						
 						refBLFromReglement.add(element.getRefBL());
@@ -1082,9 +1082,9 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				
 				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
 					
-					if(factureVente.getMontantHTaxe() != null){
+					if(factureVente.getMontantTTC() != null){
 						
-						factureMontantTotal = factureMontantTotal + factureVente.getMontantHTaxe();
+						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
 						
 						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
 						
@@ -1092,13 +1092,13 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
 							
-							Double montantResteARegle = factureVente.getMontantHTaxe() - montantFactureRegle;
+							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
 							
 							if(montantResteARegle > 0){
 								
 								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 								
-								factureNonRegle.setMontantRegle(montantFactureRegle);
+								factureNonRegle.setMontantRegle(montantResteARegle);
 								
 								listFactureNonRegleVentre.add(factureNonRegle);
 								
@@ -1107,7 +1107,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 					}
 				}else{
 					
-					if(factureVente.getMontantHTaxe() != null){
+					if(factureVente.getMontantTTC() != null){
 
 						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 						
@@ -1147,9 +1147,9 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				
 				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
 					
-					if(livraisonVente.getMontantHTaxe() != null){
+					if(livraisonVente.getMontantTTC() != null){
 						
-						blMontantTotal = blMontantTotal + livraisonVente.getMontantHTaxe();
+						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
 						
 						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
 						
@@ -1157,13 +1157,13 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
 							
-							Double montantResteARegle = livraisonVente.getMontantHTaxe() - montantBLRegle;
+							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
 							
 							if(montantResteARegle > 0){
 								
 								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
 								
-								livraisonNonRegle.setMontantRegle(montantBLRegle);
+								livraisonNonRegle.setMontantRegle(montantResteARegle);
 								
 								listLivraisonNonRegle.add(livraisonNonRegle);
 								
@@ -1172,7 +1172,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 					}
 				}else{
 					
-					if(livraisonVente.getMontantHTaxe() != null){
+					if(livraisonVente.getMontantTTC() != null){
 
 						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
 						
@@ -1273,16 +1273,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
 							
 						}else{
 							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontant());
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
 						}
 					}
 					
@@ -1292,16 +1292,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
 							
 						}else{
 							
-							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontant());
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
 						}
 						
 						refBLFromReglement.add(element.getRefBL());
@@ -1344,7 +1344,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 								
 								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 								
-								factureNonRegle.setMontantRegle(montantFactureRegle);
+								factureNonRegle.setMontantRegle(montantResteARegle);
 								
 								listFactureNonRegleVentre.add(factureNonRegle);
 								
@@ -1409,7 +1409,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 								
 								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
 								
-								livraisonNonRegle.setMontantRegle(montantBLRegle);
+								livraisonNonRegle.setMontantRegle(montantResteARegle);
 								
 								listLivraisonNonRegle.add(livraisonNonRegle);
 								
@@ -1492,16 +1492,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
 							
 						}else{
 							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontant());
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
 						}
 					}
 					
@@ -1511,16 +1511,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
 							
-							if(currentAmount != null && element.getMontant()!= null){
+							if(currentAmount != null && element.getMontantDemande()!= null){
 								
-								currentAmount = currentAmount + element.getMontant();
+								currentAmount = currentAmount + element.getMontantDemande();
 							}
 							
 							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
 							
 						}else{
 							
-							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontant());
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
 						}
 						
 						refBLFromReglement.add(element.getRefBL());
@@ -1547,9 +1547,9 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				
 				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
 					
-					if(factureVente.getMontantHTaxe() != null){
+					if(factureVente.getMontantTTC() != null){
 						
-						factureMontantTotal = factureMontantTotal + factureVente.getMontantHTaxe();
+						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
 						
 						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
 						
@@ -1557,13 +1557,13 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
 							
-							Double montantResteARegle = factureVente.getMontantHTaxe() - montantFactureRegle;
+							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
 							
 							if(montantResteARegle > 0){
 								
 								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 								
-								factureNonRegle.setMontantRegle(montantFactureRegle);
+								factureNonRegle.setMontantRegle(montantResteARegle);
 								
 								listFactureNonRegleVentre.add(factureNonRegle);
 								
@@ -1572,7 +1572,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 					}
 				}else{
 					
-					if(factureVente.getMontantHTaxe() != null){
+					if(factureVente.getMontantTTC() != null){
 
 						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 						
@@ -1612,9 +1612,9 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				
 				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
 					
-					if(livraisonVente.getMontantHTaxe() != null){
+					if(livraisonVente.getMontantTTC() != null){
 						
-						blMontantTotal = blMontantTotal + livraisonVente.getMontantHTaxe();
+						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
 						
 						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
 						
@@ -1622,13 +1622,13 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
 							
-							Double montantResteARegle = livraisonVente.getMontantHTaxe() - montantBLRegle;
+							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
 							
 							if(montantResteARegle > 0){
 								
 								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
 								
-								livraisonNonRegle.setMontantRegle(montantBLRegle);
+								livraisonNonRegle.setMontantRegle(montantResteARegle);
 								
 								listLivraisonNonRegle.add(livraisonNonRegle);
 								
@@ -1637,7 +1637,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 					}
 				}else{
 					
-					if(livraisonVente.getMontantHTaxe() != null){
+					if(livraisonVente.getMontantTTC() != null){
 
 						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
 						

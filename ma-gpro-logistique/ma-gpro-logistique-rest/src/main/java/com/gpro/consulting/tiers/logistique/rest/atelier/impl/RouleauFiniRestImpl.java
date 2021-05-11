@@ -18,6 +18,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.val
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ResultatRechecheRouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RouleauFiniValue;
+import com.gpro.consulting.tiers.logistique.rest.utilities.ApiResponse;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 import com.gpro.consulting.tiers.logistique.service.atelier.rouleaufini.IRouleauFiniService;
 
@@ -171,4 +172,18 @@ public class RouleauFiniRestImpl{
 		
 		return  result;
 	 }
+	
+	
+	@RequestMapping(value = "/deleteRouleauFiniMultiple", method = RequestMethod.POST)
+	public @ResponseBody ApiResponse deleteRouleauFiniMultiple(@RequestBody List<Long> listIds) {
+		  
+		//logger.info("deleteRouleauFini: Delegating request id {} to service layer.", id);
+		  for(Long id : listIds) {
+			  
+			  rouleauFiniService.deleteRouleauFini(id);
+		  }
+		  
+		  return new ApiResponse("OK");
+		
+	}
 }

@@ -123,10 +123,22 @@ public class FactureReportValue {
 	private String villeClient;
 	
 	
+	private String infoLivraison;
+	
 	
 	
 
+
 	
+
+	public String getInfoLivraison() {
+		return infoLivraison;
+	}
+
+	public void setInfoLivraison(String infoLivraison) {
+		this.infoLivraison = infoLivraison;
+	}
+
 	public Boolean getExistTimbre2() {
 		return existTimbre2;
 	}

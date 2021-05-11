@@ -34,6 +34,19 @@ public class FactureReportElementValue {
 	private String groupePiDesignation;
 	private Long devise;
 	
+	private Double montantConverti;
+	
+	
+	
+	
+
+	public Double getMontantConverti() {
+		return montantConverti;
+	}
+
+	public void setMontantConverti(Double montantConverti) {
+		this.montantConverti = montantConverti;
+	}
 
 	public Long getDevise() {
 		return devise;

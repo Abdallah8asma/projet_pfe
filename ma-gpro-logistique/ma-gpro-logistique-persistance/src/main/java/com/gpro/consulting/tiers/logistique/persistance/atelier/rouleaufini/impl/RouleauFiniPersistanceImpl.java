@@ -181,7 +181,7 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 		Collections.sort(list);
 	    resultat.setNombreResultaRechercher(Long.valueOf(list.size()));
 	    resultat.setList(new TreeSet<>(list));
-	    System.out.println("---Persist---resultat----"+resultat);
+	    //System.out.println("---Persist---resultat----"+resultat);
 	    return resultat;
 	}
 	

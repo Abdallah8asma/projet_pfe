@@ -44,6 +44,7 @@ public class SituationReport extends AbstractGestionnaireDownloadImpl {
 			// @RequestParam("request") RechercheMulticritereFactureValue
 			// request,
 			@RequestParam("regiontId") Long regionId,
+			@RequestParam("deviseId") Long deviseId,
 			@RequestParam("partieIntId") Long partieIntId,
 			@RequestParam("dateMin") String dateMin,
 			@RequestParam("dateMax") String dateMax,
@@ -62,6 +63,7 @@ public class SituationReport extends AbstractGestionnaireDownloadImpl {
 		request.setPartieIntId(partieIntId);
 		request.setSoldeMax(soldeMax);
 		request.setSoldeMin(soldeMin);
+		request.setDeviseId(deviseId);
 		SituationReportingReportListValue report = gestionnaireReportGcReportingService
 				.getListSituationReport(request,solde);
 

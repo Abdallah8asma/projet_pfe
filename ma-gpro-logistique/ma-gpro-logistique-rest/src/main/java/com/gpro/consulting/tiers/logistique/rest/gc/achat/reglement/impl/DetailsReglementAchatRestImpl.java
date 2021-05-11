@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.DetailsReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.RechercheMulticritereReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ResultatRechecheElementReglementAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.DetailsReglementValue;
 import com.gpro.consulting.tiers.logistique.service.gc.achat.reglement.IDetailsReglementAchatService;
 import com.gpro.consulting.tiers.logistique.service.gc.achat.reglement.IReglementAchatService;
 
@@ -75,6 +77,13 @@ public class DetailsReglementAchatRestImpl {
 	}
 	
 
+	
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public String update(@RequestBody DetailsReglementAchatValue detailsReglementValue) {
+	    
+
+		return detailsReglementAchatService.update(detailsReglementValue);
+	}
 	
 	
 	private boolean estNonVide(String val) {

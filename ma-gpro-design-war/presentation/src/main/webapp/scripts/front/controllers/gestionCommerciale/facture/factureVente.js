@@ -316,18 +316,20 @@ angular
 					//$scope.displayMode = "edit";
 
 					//if($scope.clientActif.disableVente){
+						
+						var dateIntroReglement = new Date();
 
-					$http
-						.get(
-							UrlAtelier
-							+ "/reglement/getCurrentReference"
-						)
-						.success(
-							function (res) {
-
-								$scope.reglementCourante.reference = res;
-								$scope.reglementCourante.refAvantChangement = res;
-							});
+				$http
+        	            		.get(
+        	            				UrlAtelier
+        	            						+ "/reglement/getCurrentReferenceByDate:"+formattedDate(dateIntroReglement)
+        	            						)
+        	            		.success(
+        	            				function(res) {
+        	            					
+        	            					$scope.reglementCourante.reference = res;
+        	            					$scope.reglementCourante.refAvantChangement = res;
+        	            				});
 
 
 					//}
@@ -890,7 +892,7 @@ $scope.validerNatureFiniByOF();
 							$scope.factureVenteCourant.groupeClientId = element[0].groupeClientId;
 
 
-							if ($scope.clientActif.blackMode == false) {
+							if ($scope.factureVenteCourant.declarer == true) {
 
 								$http
 									.get(
@@ -2298,12 +2300,17 @@ $scope.validerNatureFiniByOF();
 
 				// generer rapport apres creation d'une facture. mode :
 				// Modification/Consultation
-				$scope.download = function (id, typerapport) {
+				$scope.download = function (id, typerapport,avecObservation) {
+					
+					if(avecObservation === undefined)
+					        avecObservation =false;
 
 					$scope.traitementEnCoursGenererAll = "true";
 					$log.debug("-- id" + id);
 					var url = UrlAtelier + "/reportgc/facture?id=" + id
 						+ "&typerapport=" + typerapport
+						+ "&avecObservation=" + avecObservation
+						
 						+ "&type=pdf";
 
 

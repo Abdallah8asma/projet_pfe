@@ -420,6 +420,34 @@ angular
                 	// 										+ error);
                 	// 							});
                     };
+
+
+  $scope.updateDetailReglementReglee = function (idDetailReglement , isReglee){
+	
+	    //console.log("idDetailReglement ",idDetailReglement);
+		//console.log("isReglee ",isReglee);
+		
+		var conf = confirm("Veuillez confirmer la modification !")
+		
+		  
+		
+		      if(conf){
+			
+			     $http
+                      .get(
+                        UrlAtelier
+                          + "/detailsReglement/updateReglee?detailReglementId="+idDetailReglement+"&reglee="+isReglee)
+                      .success(
+                        function(data) {
+                              
+                        });
+		        }	else
+             {
+	            isReglee = !isReglee ;
+              }
+		 
+      }
+
           
                   $scope.pagingOptions = {
                       pageSizes: [5, 10, 20],
@@ -467,7 +495,28 @@ angular
                                       width: '10%'
                                   },
 
+                                 
+                                  
                                   {
+                                      field: 'montant',
+                                      displayName: 'Montant ',
+                                      width: '10%'
+                                  },{
+                                      field: 'dateEcheance',
+                                      displayName: 'Échéance',
+                                      cellFilter: 'date:\'dd-MM-yyyy\'',
+                                      width: '10%'
+                                  },{
+                                      field: 'regle',
+                                      displayName: 'Reglé',
+                                      cellTemplate: '<input type="checkbox" ng-model="row.entity.regle" ng-change="ffff" ng-disabled = "true" style="margin: 8px;"/>',
+                                      width: '10%'
+                                  },{
+                                      field: 'observation',
+                                      displayName: 'Observations',
+                                      width: '10%'
+                                  },
+ {
                                 	  field: 'banqueSociete',
                                       displayName: 'Banque Soc.',
                                       width: '10%'
@@ -489,26 +538,6 @@ angular
                                   {
                                       field: 'tvaBanque',
                                       displayName: 'TVA Banque',
-                                      width: '10%'
-                                  }
-                                  ,
-                                  {
-                                      field: 'montant',
-                                      displayName: 'Montant ',
-                                      width: '10%'
-                                  },{
-                                      field: 'dateEcheance',
-                                      displayName: 'Échéance',
-                                      cellFilter: 'date:\'dd-MM-yyyy\'',
-                                      width: '10%'
-                                  },{
-                                      field: 'regle',
-                                      displayName: 'Reglé',
-                                      cellTemplate: '<input type="checkbox" ng-model="row.entity.regle" ng-change="ffff" style="margin: 8px;" ng-disabled="true"/>',
-                                      width: '10%'
-                                  },{
-                                      field: 'observation',
-                                      displayName: 'Observations',
                                       width: '10%'
                                   }
                               ];

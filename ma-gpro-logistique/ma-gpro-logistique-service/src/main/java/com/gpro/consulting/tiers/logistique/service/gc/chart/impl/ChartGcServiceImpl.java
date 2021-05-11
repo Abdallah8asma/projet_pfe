@@ -178,6 +178,13 @@ public class ChartGcServiceImpl implements IChartGcService {
 
 		return chartGcDomaine.getTop10Groupe(request);
 	}
+
+	@Override
+	public List<FactureReportElementRecapValue> getDifferenceChiffreAffaireVenteAchatByMonth(
+			RechercheMulticritereFactureValue request) {
+		// TODO Auto-generated method stub
+		return chartGcDomaine.getDifferenceChiffreAffaireVenteAchatByMonth(request);
+	}
 	
 	
 	

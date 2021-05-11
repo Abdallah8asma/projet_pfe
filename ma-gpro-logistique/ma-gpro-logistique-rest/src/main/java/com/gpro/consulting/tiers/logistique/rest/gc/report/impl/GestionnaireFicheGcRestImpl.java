@@ -38,6 +38,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSe
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheProduitSerialisableValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.DeviseValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.GroupeClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.IBaseInfoPersistance;
@@ -45,8 +46,10 @@ import com.gpro.consulting.tiers.commun.service.baseinfo.IBaseInfoService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IBoutiqueService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitSerialisableService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
+import com.gpro.consulting.tiers.commun.service.partieInteressee.IDeviseService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IGroupeClientService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
+import com.gpro.consulting.tiers.commun.service.partieInteressee.IRegionService;
 import com.gpro.consulting.tiers.commun.service.utils.IUtilsService;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.CommandeVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.RechercheMulticritereBonCommandeValue;
@@ -65,6 +68,9 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportProductValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.echeancier.value.EcheancierReportListValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.report.gcReporting.situation.value.RechercheMulticritereSituationReportingValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.report.gcReporting.situation.value.SituationReportingReportListValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.report.gcReporting.situation.value.SituationReportingValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.mouvementproduit.MouvementProduitElementReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.mouvementproduit.MouvementProduitReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.vente.facture.value.FactureReportElementRecapValue;
@@ -89,6 +95,7 @@ import com.gpro.consulting.tiers.logistique.service.gc.bonlivraison.ITaxeService
 import com.gpro.consulting.tiers.logistique.service.gc.reglement.IDetailsReglementService;
 import com.gpro.consulting.tiers.logistique.service.gc.reglement.IElementReglementService;
 import com.gpro.consulting.tiers.logistique.service.gc.report.IGestionnaireReportGcService;
+import com.gpro.consulting.tiers.logistique.service.gc.report.reporting.IGestionnaireReportGcReportingService;
 import com.gpro.consulting.tiers.logistique.service.gc.typeReglement.ITypeReglementService;
 import com.gpro.consulting.tiers.logistique.service.gc.vente.facture.IFactureService;
 import com.gpro.consulting.tiers.logistique.service.gs.IMagasinService;
@@ -192,6 +199,18 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 	
 	@Autowired
 	private ITypeReglementService typeReglementService;
+	
+	
+
+	@Autowired
+	private IDeviseService deviseService;
+	
+	@Autowired
+	private IGestionnaireReportGcReportingService gestionnaireReportGcReportingService;
+	
+	
+	@Autowired
+	private IRegionService regionService;
 	
 	
 	@RequestMapping(value = "/listCommandesVente", method = RequestMethod.POST)
@@ -2994,7 +3013,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		// logger.info("Generate a {} Report BonLivraison", type);
 
-		FactureReportValue factureReport = gestionnaireReportGcService.getFactureReportValue(id, typerapport);
+		FactureReportValue factureReport = gestionnaireReportGcService.getFactureReportValue(id, typerapport,true);
 
 		Date d = new Date();
 
@@ -3485,11 +3504,12 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		sheet3.setColumnView(7, 10);
 		sheet3.setColumnView(8, 10);
-		sheet3.setColumnView(9, 10);
+		sheet3.setColumnView(9, 15);
 		sheet3.setColumnView(10, 15);
 		sheet3.setColumnView(11, 15);
 		sheet3.setColumnView(12, 17);
 		sheet3.setColumnView(13, 15);
+		sheet3.setColumnView(14, 15);
 		/**************************************************************************/
 
 		/*
@@ -3533,7 +3553,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		// Nom du rapport et la date
 
 		sheet3.addCell(new Label(2, 7, "    Liste des Factures", ExcelUtils.boldTitre));
-		sheet3.mergeCells(2, 7, 13, 8);
+		sheet3.mergeCells(2, 7, 14, 8);
 		/*
 		 * // sheet3.addCell(new Label(2, 6, "Le : " + dateFormat2.format(d),
 		 * boldRed3));
@@ -3763,11 +3783,12 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(11, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(12, i - 1, "Montant Remise", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(13, i - 1, "Quantite Totale", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(14, i - 1, "Montant Ouvert", ExcelUtils.boldRed2));
 		
 		Double mantantTtcTotale = 0d;
 		Double remiseTotale = 0d;
 		Double quantiteTotale = 0d;
-
+		Double mantantOuvertTotale = 0d;
 		
 		List<TaxeValue> listeTaxes = taxeService.getAll();
 		for (FactureVenteValue element : report.getList()) {
@@ -3909,6 +3930,29 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			} else {
 				sheet3.addCell(new Label(13, i, "", ExcelUtils.boldRed));
 			}
+			
+			
+		
+
+		      Double montantPaye = elementReglementService.getSumMontantPayerByReferenceFacture(element.getReference());
+			
+			  Double montantOuvert   = element.getMontantTTC() - montantPaye;
+		      
+		      if(montantOuvert < 0 ) {
+		    	  
+		    	  montantOuvert = 0d;
+		      }
+		      
+		      
+		    	 
+			
+			
+		  	if (montantOuvert != null) {
+		  		
+	         	sheet3.addCell(new Label(14, i, convertisseur(mantantOuvertTotale, 4) + "", ExcelUtils.boldRed));
+
+				mantantOuvertTotale += montantOuvert;
+			} 
 		
 
 			i++;
@@ -3918,7 +3962,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		i++;
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Totale", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i, "Total", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 9, i);
 
 		i++;
@@ -3932,12 +3976,20 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(7, i, "Montant TTC Total", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
 		sheet3.addCell(new Label(9, i, convertisseur(mantantTtcTotale, 4) + "", ExcelUtils.boldRed2));
+		
+		
 
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Montant Remise Total", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i, "Montant Ouvert", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, convertisseur(remiseTotale, 4) + "", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i, convertisseur(mantantOuvertTotale, 4) + "", ExcelUtils.boldRed2));
+
+//		i++;
+//
+//		sheet3.addCell(new Label(7, i, "Montant Remise Total", ExcelUtils.boldRed2));
+//		sheet3.mergeCells(7, i, 8, i);
+//		sheet3.addCell(new Label(9, i, convertisseur(remiseTotale, 4) + "", ExcelUtils.boldRed2));
 
 		i++;
 
@@ -4919,7 +4971,11 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			@RequestParam("metrageMax") Double metrageMax, @RequestParam("prixMin") Double prixMin,
 			@RequestParam("prixMax") Double prixMax, @RequestParam("natureLivraison") String natureLivraison,
 			@RequestParam("avecFacture") String avecFacture, @RequestParam("groupeClientId") Long groupeClientId,
-			@RequestParam("idDepot") Long idDepot, HttpServletResponse response) throws WriteException, IOException {
+			@RequestParam("idDepot") Long idDepot,
+			@RequestParam("deviseId") Long deviseId,
+			
+			
+			HttpServletResponse response) throws WriteException, IOException {
 
 		// logger.info("Generate a {} Report BonLivraison", type);
 
@@ -5084,6 +5140,22 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 			request.setPartieIntId(partieIntId);
 		}
+		
+		if (isNotEmty(deviseId))
+
+		{
+
+			DeviseValue devRech = new DeviseValue();
+			devRech.setId(deviseId);
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Devise :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
+					deviseService.rechercheDeviseParId(devRech).getDesignation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+			request.setDevise(deviseId);
+		}
 
 		if (isNotEmty(dateLivraisonMin))
 
@@ -5184,7 +5256,14 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		List<BonLivraisonReportElementValue> listBlNonPaye = new ArrayList<>();
 		for (BonLivraisonReportElementValue element : report.getProductList()) {
 
-			if (!elementReglementService.existElementReglementByReferenceBL(element.getReference()))
+			//if (!elementReglementService.existElementReglementByReferenceBL(element.getReference()))
+			//	listBlNonPaye.add(element);
+			
+			
+			Double montantPayee = elementReglementService.getSumMontantPayerByReferenceBL(element.getReference()) ;
+			
+			
+			if(montantPayee < element.getMontantTTC() )
 				listBlNonPaye.add(element);
 		}
 
@@ -5355,6 +5434,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			@RequestParam("prixMax") Double prixMax, @RequestParam("typeFacture") String typeFacture,
 			@RequestParam("natureLivraison") String natureLivraison,
 			@RequestParam("groupeClientId") Long groupeClientId,
+			@RequestParam("deviseId") Long deviseId,
 
 			HttpServletResponse response) throws WriteException, IOException {
 
@@ -5524,6 +5604,24 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 			request.setPartieIntId(partieIntId);
 		}
+		
+		
+		
+		if (isNotEmty(deviseId))
+
+		{
+
+			DeviseValue devRech = new DeviseValue();
+			devRech.setId(deviseId);
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Devise :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
+					deviseService.rechercheDeviseParId(devRech).getDesignation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+			request.setDevise(deviseId);
+		}
 
 		if (isNotEmty(dateFactureMin))
 
@@ -5624,25 +5722,90 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(3, i - 1, "Référence", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(4, i - 1, "Date", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(5, i - 1, "Montant HT", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(6, i - 1, "Montant TTC", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(6, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i - 1, "Montant TTC", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(8, i - 1, "Montant Réglé", ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(7, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(8, i - 1, "Montant Remise", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(9, i - 1, "Devise", ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(9, i - 1, "Quantite Totale", ExcelUtils.boldRed2));
+//		sheet3.addCell(new Label(9, i - 1, "Quantite Totale", ExcelUtils.boldRed2));
 
 		Double mantantTtcTotale = 0d;
 		Double remiseTotale = 0d;
 		Double quantiteTotale = 0d;
 
+		Double montantPayeeTotale = 0d;
 		List<FactureReportElementValue> listFactureNonPaye = new ArrayList<FactureReportElementValue>();
 		for (FactureReportElementValue element : report.getProductList()) {
 
-			if (!elementReglementService.existElementReglementByReferenceFacture(element.getReference()))
+			/*if (!elementReglementService.existElementReglementByReferenceFacture(element.getReference()))
+				listFactureNonPaye.add(element);
+				*/
+			
+			
+			Double montantPayee = elementReglementService.getSumMontantPayerByReferenceFacture(element.getReference()) ;
+			
+			
+			
+			element.setMetrageTotal(montantPayee);
+			
+			
+			if(montantPayee < element.getMontantTTC() )
 				listFactureNonPaye.add(element);
 		}
+		
+		
+		
+		Map<Long,Double> mapsMontantTTCdevise = new HashMap<Long, Double>();
 
 		for (FactureReportElementValue element : listFactureNonPaye) {
+			
+			
+		
+			
+			if(element.getDevise() != null) {
+				
+				if(mapsMontantTTCdevise.containsKey(element.getDevise())) {
+					
+					Double montant = mapsMontantTTCdevise.get(element.getDevise()) ;
+					
+					
+					if(element.getDevise().equals(DeviseValue.DINAR) && element.getMontantTTC() != null) {
+						
+						montant += element.getMontantTTC()  ;
+						
+					}else
+					{
+						if(element.getMontantConverti() != null)
+					      	montant += element.getMontantConverti()  ;
+					}
+					
+					mapsMontantTTCdevise.put(element.getDevise(), montant);
+					
+					
+				}else
+					
+				{
+					
+					if(element.getDevise().equals(DeviseValue.DINAR) && element.getMontantTTC() != null) {
+				
+						
+						mapsMontantTTCdevise.put(element.getDevise(),  element.getMontantTTC());
+						
+					}else
+					{
+						mapsMontantTTCdevise.put(element.getDevise(),  element.getMontantConverti());
+					}
+					
+				}
+				
+				
+				
+				
+				
+			}
+			
 
 			if (element.getPartieIntAbreviation() != null) {
 				sheet3.addCell(new Label(2, i, element.getPartieIntAbreviation() + "", ExcelUtils.boldRed));
@@ -5672,32 +5835,88 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			// Mantant HT
 
 			if (element.getMontantHTaxe() != null) {
-				sheet3.addCell(new Label(5, i, convertisseur(element.getMontantHTaxe(), 3) + "", ExcelUtils.boldRed));
+				sheet3.addCell( new jxl.write.Number(5, i, convertisseur(element.getMontantHTaxe(), 3), ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
 			}
 
-			// Mantant TTC
-
-			if (element.getMontantTTC() != null) {
-				sheet3.addCell(new Label(6, i, convertisseur(element.getMontantTTC(), 3) + "", ExcelUtils.boldRed));
-
-				mantantTtcTotale += element.getMontantTTC();
-			} else {
-				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
-			}
-
 			// Mantant Taxe
 
 			if (element.getMontantTaxe() != null) {
-				sheet3.addCell(new Label(7, i, convertisseur(element.getMontantTaxe(), 3) + "", ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(6, i, convertisseur(element.getMontantTaxe(), 3), ExcelUtils.boldRed));
 
 			} else {
-				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
+			}
+			
+			
+			
+			// Mantant TTC
+			if(element.getDevise() != null) {
+				
+				if(element.getDevise().equals(DeviseValue.DINAR)){
+					
+					if (element.getMontantTTC() != null) {
+						sheet3.addCell(new jxl.write.Number(7, i, convertisseur(element.getMontantTTC(), 3), ExcelUtils.boldRed));
+
+						mantantTtcTotale += element.getMontantTTC();
+					} else {
+						sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+					}
+
+					
+				}else
+					
+				{
+					if (element.getMontantConverti() != null) {
+						sheet3.addCell(new jxl.write.Number(7, i, convertisseur(element.getMontantConverti(), 3), ExcelUtils.boldRed));
+
+						mantantTtcTotale += element.getMontantTTC();
+					} else {
+						sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+					}
+
+					
+				}
+				
+		
 			}
 
-			// Mantat Remise
+	
+		
+			// montant reglee
+			
+			if (element.getMetrageTotal() != null) {
+				sheet3.addCell(new jxl.write.Number(8, i, convertisseur(element.getMetrageTotal(), 3) , ExcelUtils.boldRed));
+
+				montantPayeeTotale+=element.getMetrageTotal();
+		
+			} else {
+				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
+			}
+			
+			String devis = "" ;
+			
+			if(element.getDevise() != null) {
+				
+				DeviseValue pDeviseRech = new DeviseValue(); pDeviseRech.setId(element.getDevise());
+				
+				DeviseValue deviseValue = deviseService.rechercheDeviseParId(pDeviseRech) ;
+				
+				if(deviseValue != null) devis = deviseValue.getDesignation();
+			}
+			
+			
+			if (devis != null) {
+				sheet3.addCell(new Label(9, i, devis + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+
+			}
+
+	/*		// Mantat Remise
 
 			if (element.getMontantRemise() != null) {
 				sheet3.addCell(new Label(8, i, convertisseur(element.getMontantRemise(), 3) + "", ExcelUtils.boldRed));
@@ -5716,6 +5935,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			} else {
 				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
 			}
+			
+			*/
 
 			i++;
 
@@ -5724,32 +5945,45 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		i++;
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Totale", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 9, i);
+		sheet3.addCell(new Label(4, i, "Total", ExcelUtils.boldRed2));
+		sheet3.mergeCells(3, i, 7, i);
 
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Ligne", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, listFactureNonPaye.size() + "", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(4, i, "Ligne", ExcelUtils.boldRed2));
+		sheet3.mergeCells(4, i, 6, i);
+		sheet3.addCell(new Label(7, i, listFactureNonPaye.size() + "", ExcelUtils.boldRed2));
 
+		/*		i++;
+		
+
+       	sheet3.addCell(new Label(4, i, "Montant Réglé Total", ExcelUtils.boldRed2));
+		sheet3.mergeCells(4, i, 6, i);
+		sheet3.addCell(new jxl.write.Number(7, i, convertisseur(montantPayeeTotale, 4), ExcelUtils.boldRed2));
+*/
 		i++;
+		
+	      for (Map.Entry<Long, Double> mapentry : mapsMontantTTCdevise.entrySet()) {
+	         /*  System.out.println("clé: "+mapentry.getKey() 
+	                              + " | valeur: " + mapentry.getValue());*/
+	    
+	           
+	           DeviseValue devRech = new DeviseValue(); devRech.setId((Long)mapentry.getKey());
+	           
+	       	sheet3.addCell(new Label(4, i, "Montant TTC Total en "+deviseService.rechercheDeviseParId(devRech).getDesignation(), ExcelUtils.boldRed2));
+			sheet3.mergeCells(4, i, 6, i);
+			sheet3.addCell(new jxl.write.Number(7, i, convertisseur((Double)mapentry.getValue(), 4), ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(7, i, "Montant TTC Total", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, convertisseur(mantantTtcTotale, 3) + "", ExcelUtils.boldRed2));
+			i++;
+	           
+	           
+	           
+	        }
+		
 
-		i++;
+	
 
-		sheet3.addCell(new Label(7, i, "Montant Remise Total", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, remiseTotale + "", ExcelUtils.boldRed2));
-
-		i++;
-
-		sheet3.addCell(new Label(7, i, "Quantite Totale", ExcelUtils.boldRed2));
-		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, quantiteTotale + "", ExcelUtils.boldRed2));
+		
 
 		/*******************************************
 		 * BAS DU PAGE
@@ -7084,23 +7318,25 @@ request.setNomRapport(nomRapport);
 		sheet3.addCell(new Label(9, i - 1, "Banque", ExcelUtils.boldRed2));
 		
 		
-		
-		sheet3.addCell(new Label(10, i - 1, "Banque Soc.", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(11, i - 1, "D.Depot Banque", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(12, i - 1, "Charge Banque", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(13, i - 1, "TVA Banque", ExcelUtils.boldRed2));
+	
 		
 		
+		sheet3.addCell(new Label(10, i - 1, "Montant", ExcelUtils.boldRed2));
 		
-		sheet3.addCell(new Label(14, i - 1, "Montant", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(11, i - 1, "Echéance", ExcelUtils.boldRed2));
 		
-		sheet3.addCell(new Label(15, i - 1, "Echéance", ExcelUtils.boldRed2));
-		
-		sheet3.addCell(new Label(16, i - 1, "Réglé", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(12, i - 1, "Réglé", ExcelUtils.boldRed2));
 		
 		
-		sheet3.addCell(new Label(17, i - 1, "Observation", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(13, i - 1, "Observation", ExcelUtils.boldRed2));
 		
+	
+		sheet3.addCell(new Label(14, i - 1, "Banque Soc.", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(15, i - 1, "D.Depot Banque", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(16, i - 1, "Charge Banque", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(17, i - 1, "TVA Banque", ExcelUtils.boldRed2));
+		
+
 		
 		Double mantantTtcTotale = 0d;
 
@@ -7192,15 +7428,63 @@ request.setNomRapport(nomRapport);
 						} else {
 							sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
 
-						}			
+						}		
+						
+						// Mantant
+
+						if (element.getMontant() != null) {
+							
+							mantantTtcTotale += element.getMontant();
+							sheet3.addCell(new jxl.write.Number(10, i, convertisseur(element.getMontant(), 4) , ExcelUtils.boldRed));
+
+						} else {
+							sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+						}		
+						
+						
+ 
+						// date echeance
+
+						if (element.getDateEcheance() != null) {
+							sheet3.addCell(
+									new Label(11, i, dateFormat2.format(element.getDateEcheance().getTime()) + "", ExcelUtils.boldRed));
+
+						} else {
+							sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
+						}
+						
+						//reglee
+										
+						if (element.getRegle()!= null && element.getRegle() == true ) {
+							sheet3.addCell(new Label(12, i, element.getNumPiece() + "OUI", ExcelUtils.boldRed));
+
+						} else {
+							sheet3.addCell(new Label(12, i, "NON", ExcelUtils.boldRed));
+
+						}	
+						
+						
+						//  Observation				
+						if (element.getObservation()!= null) {
+							sheet3.addCell(new Label(13, i, element.getObservation() + "", ExcelUtils.boldRed));
+
+						} else {
+							sheet3.addCell(new Label(13, i, "", ExcelUtils.boldRed));
+
+						}	
+						
+						
+						
+						
+	
 						
 						
 						//  banque	 soc			
 						if (element.getBanqueSociete()!= null) {
-							sheet3.addCell(new Label(10, i, element.getBanqueSociete() + "", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(14, i, element.getBanqueSociete() + "", ExcelUtils.boldRed));
 
 						} else {
-							sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(14, i, "", ExcelUtils.boldRed));
 
 						}	
 			
@@ -7208,10 +7492,10 @@ request.setNomRapport(nomRapport);
 
 						if (element.getDateDepotBanque() != null) {
 							sheet3.addCell(
-									new Label(11, i, dateFormat2.format(element.getDateDepotBanque().getTime()) + "", ExcelUtils.boldRed));
+									new Label(15, i, dateFormat2.format(element.getDateDepotBanque().getTime()) + "", ExcelUtils.boldRed));
 
 						} else {
-							sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(15, i, "", ExcelUtils.boldRed));
 						}
 						
 		
@@ -7221,10 +7505,10 @@ request.setNomRapport(nomRapport);
 						if (element.getChargeBanque() != null) {
 							
 						
-							sheet3.addCell(new Label(12, i, convertisseur(element.getChargeBanque(), 4) + "", ExcelUtils.boldRed));
+							sheet3.addCell(new jxl.write.Number(16, i, convertisseur(element.getChargeBanque(), 4) , ExcelUtils.boldRed));
 
 						} else {
-							sheet3.addCell(new Label(12, i, "", ExcelUtils.boldRed));
+							sheet3.addCell(new Label(16, i, "", ExcelUtils.boldRed));
 						}
 						
 						
@@ -7233,54 +7517,17 @@ request.setNomRapport(nomRapport);
 						if (element.getTvaBanque() != null) {
 							
 							
-							sheet3.addCell(new Label(13, i, convertisseur(element.getTvaBanque(), 4) + "", ExcelUtils.boldRed));
-
-						} else {
-							sheet3.addCell(new Label(13, i, "", ExcelUtils.boldRed));
-						}
-						
-						// Mantant
-
-						if (element.getMontant() != null) {
-							
-							mantantTtcTotale += element.getMontant();
-							sheet3.addCell(new Label(14, i, convertisseur(element.getMontant(), 4) + "", ExcelUtils.boldRed));
-
-						} else {
-							sheet3.addCell(new Label(14, i, "", ExcelUtils.boldRed));
-						}		
-						
-						
- 
-						// date echeance
-
-						if (element.getDateEcheance() != null) {
-							sheet3.addCell(
-									new Label(15, i, dateFormat2.format(element.getDateEcheance().getTime()) + "", ExcelUtils.boldRed));
-
-						} else {
-							sheet3.addCell(new Label(15, i, "", ExcelUtils.boldRed));
-						}
-						
-						//reglee
-										
-						if (element.getRegle()!= null && element.getRegle() == true ) {
-							sheet3.addCell(new Label(16, i, element.getNumPiece() + "OUI", ExcelUtils.boldRed));
-
-						} else {
-							sheet3.addCell(new Label(16, i, "NON", ExcelUtils.boldRed));
-
-						}	
-						
-						
-						//  Observation				
-						if (element.getObservation()!= null) {
-							sheet3.addCell(new Label(17, i, element.getObservation() + "", ExcelUtils.boldRed));
+							sheet3.addCell(new jxl.write.Number(17, i, convertisseur(element.getTvaBanque(), 4) , ExcelUtils.boldRed));
 
 						} else {
 							sheet3.addCell(new Label(17, i, "", ExcelUtils.boldRed));
-
-						}	
+						}
+						
+						
+						
+						
+						
+						
 						
 
 		
@@ -7354,6 +7601,437 @@ request.setNomRapport(nomRapport);
 	
 	
 	
+	@RequestMapping(value = "/situation", method = RequestMethod.GET)
+	public void generateListSituationReport(
+			
+			
+			@RequestParam("type") String type,
+			// @RequestParam("request") RechercheMulticritereFactureValue
+			// request,
+			@RequestParam("regiontId") Long regionId,
+			@RequestParam("deviseId") Long deviseId,
+			@RequestParam("partieIntId") Long partieIntId,
+			@RequestParam("dateMin") String dateMin,
+			@RequestParam("dateMax") String dateMax,
+			@RequestParam("soldeMin") Double soldeMin,
+			@RequestParam("soldeMax") Double soldeMax,
+			@RequestParam("solde") Long solde,
+			
+			HttpServletResponse response)
+			throws WriteException, IOException {
+
+
+
+		Date d = new Date();
+
+		String dat = "" + dateFormat.format(d);
+
+	
+	    BaseInfoValue baseInfo= baseInfoService.getClientActif();
+		
+		excel_file_location = baseInfo.getExcelDirectory();
+		File f = new File(excel_file_location+"SITUATION_LISTE" + "-" + dat + ".xls");
+
+		WritableWorkbook Equilibrageworkbook = Workbook.createWorkbook(f);
+		Equilibrageworkbook.createSheet("SITUATION_LISTE", 0);
+		WritableSheet sheet3 = Equilibrageworkbook.getSheet(0);
+
+		sheet3.setColumnView(0, 7);
+		sheet3.setColumnView(1, 7);
+		sheet3.setColumnView(2, 25);
+
+		sheet3.setColumnView(3, 25);//groupe
+		
+		sheet3.setColumnView(4, 12);
+		sheet3.setColumnView(5, 15);
+		
+		sheet3.setColumnView(6, 15);
+	 
+		sheet3.setColumnView(7, 15);
+
+		sheet3.setColumnView(8, 20);
+		sheet3.setColumnView(9, 15);
+		sheet3.setColumnView(10, 15);
+		sheet3.setColumnView(11, 15);
+		sheet3.setColumnView(12, 15);
+		/**************************************************************************/
+
+		
+		// Nom du rapport et la date
+
+		ExcelUtils.init();
+
+	
+		// Nom du rapport et la date
+
+		sheet3.addCell(new Label(2, 7, "    Situation Reporting", ExcelUtils.boldTitre));
+		sheet3.mergeCells(2, 7, 10, 8);
+
+
+		// Critaire de recherche
+		int numColCritRech = 2;
+		int numLigneCritRech = 14;
+		
+		sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Critère de recherche", ExcelUtils.boldRed5));
+		sheet3.addCell(
+				new Label(numColCritRech + 1, numLigneCritRech, "" + dateTimeFormat2.format(d), ExcelUtils.boldRed3));
+		sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+		numLigneCritRech++;
+
+	
+		RechercheMulticritereSituationReportingValue request = new RechercheMulticritereSituationReportingValue();
+	
+	
+
+		if (isNotEmty(dateMin))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date de :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateMin, ExcelUtils.boldRed3));
+
+			request.setDateMin(stringToCalendar(dateMin));
+		}
+
+		
+		if (isNotEmty(dateMax))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date A :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateMax, ExcelUtils.boldRed3));
+
+			request.setDateMax(stringToCalendar(dateMax));
+		}
+		
+		
+		// solde 
+
+		if (isNotEmty(soldeMin))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Solde de :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, soldeMin +"", ExcelUtils.boldRed3));
+
+			request.setSoldeMin(soldeMin);
+		}
+
+		
+
+		if (isNotEmty(soldeMax))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Solde A :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, soldeMax +"", ExcelUtils.boldRed3));
+
+			request.setSoldeMax(soldeMin);
+		}
+		
+		
+		if (isNotEmty(regionId))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Region :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, regionService.getById(regionId).getDesignation(), ExcelUtils.boldRed3));
+
+			request.setRegionId(regionId);
+		}
+		
+		
+		
+		
+
+
+		if (isNotEmty(partieIntId))
+
+		{
+
+			PartieInteresseValue pi = new PartieInteresseValue();
+			pi.setId(partieIntId);
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Client :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
+					partieInteresseeService.recherchePartieInteresseeParId(pi).getAbreviation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+			request.setPartieIntId(partieIntId);
+		}
+
+	
+
+	
+
+		
+		if (isNotEmty(deviseId))
+
+		{
+			DeviseValue rechDevise = new DeviseValue();rechDevise.setId(deviseId);
+			
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Devise :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, deviseService.rechercheDeviseParId(rechDevise).getDesignation(), ExcelUtils.boldRed3));
+
+			request.setDeviseId(deviseId);
+		}
+
+
+
+		SituationReportingReportListValue report = gestionnaireReportGcReportingService
+				.getListSituationReport(request,solde);
+		
+		int i = numLigneCritRech + 4;
+
+		sheet3.addCell(new Label(2, i - 1, "Référence", ExcelUtils.boldRed2)); 
+		sheet3.addCell(new Label(3, i - 1, "Client", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(4, i - 1, "Solde Init", ExcelUtils.boldRed2));
+		
+		//sheet3.addCell(new Label(5, i - 1, "Chif. d'affaire", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(5, i - 1, "CA / Facture", ExcelUtils.boldRed2));
+		
+		
+		sheet3.addCell(new Label(6, i - 1, "Réglement", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i - 1, "Paiement en cours", ExcelUtils.boldRed2));
+
+		sheet3.addCell(new Label(8, i - 1, "Impayés", ExcelUtils.boldRed2));
+	//	sheet3.addCell(new Label(10, i - 1, "Solde Actuel", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(9, i - 1, "Solde Facturé", ExcelUtils.boldRed2));
+
+		sheet3.addCell(new Label(10, i - 1, "Région", ExcelUtils.boldRed2));
+		
+		Double soldeInitial = 0d;
+		Double chiffreAffaire = 0d;
+		Double reglement = 0d;
+		Double payementEnCours = 0d;
+		Double impaye = 0d;
+		Double soldeActuel = 0d;
+		
+		Double chiffreAffaireFacturee = 0d;
+		Double soldeFacturee = 0d;
+
+		for (SituationReportingValue element : report.getListSituation()) {
+
+			if (element.getClientReference() != null) {
+				sheet3.addCell(new Label(2, i, element.getClientReference() + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(2, i, "", ExcelUtils.boldRed));
+			}
+			
+			if (element.getClientAbreviation() != null) {
+				sheet3.addCell(new Label(3, i, element.getClientAbreviation() + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(3, i, "", ExcelUtils.boldRed));
+			}
+			
+
+			if (element.getSoldeInit() != null) {
+				
+				soldeInitial += element.getSoldeInit() ;
+				
+				sheet3.addCell(new jxl.write.Number(4, i, (double)Math.round( element.getSoldeInit()*1000)/1000  , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
+
+			}
+			
+		/*	if (element.getChiffreDaffaire() != null) {
+				
+				chiffreAffaire += element.getChiffreDaffaire();
+				
+				sheet3.addCell(new jxl.write.Number(5, i, element.getChiffreDaffaire() , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+
+			}*/
+			
+	     if (element.getChiffreDaffaireFacturee() != null) {
+				
+				chiffreAffaireFacturee += element.getChiffreDaffaireFacturee();
+				
+				sheet3.addCell(new jxl.write.Number(5, i,(double)Math.round(element.getChiffreDaffaireFacturee()*1000)/1000 , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+
+			}
+			
+			if (element.getReglement() != null) {
+				
+				reglement += element.getReglement();
+				sheet3.addCell(new jxl.write.Number(6, i,(double)Math.round( element.getReglement()*1000)/1000 , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
+
+			}
+			
+			if (element.getPaiement() != null) {
+				
+				payementEnCours += element.getPaiement();
+				sheet3.addCell(new jxl.write.Number(7, i, (double)Math.round(element.getPaiement()*1000)/1000 , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+
+			}
+			
+			
+			if (element.getImpaye() != null) {
+				impaye += element.getImpaye();
+				sheet3.addCell(new jxl.write.Number(8, i,(double)Math.round( element.getImpaye()*1000)/1000 , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
+
+			}
+
+		/*	if (element.getSoldeActuel() != null) {
+				soldeActuel += element.getSoldeActuel();
+				
+				sheet3.addCell(new jxl.write.Number(10, i, element.getSoldeActuel() , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+
+			}*/
+			
+			
+			if (element.getSoldeFacturee() != null) {
+				soldeFacturee += element.getSoldeFacturee();
+				
+				sheet3.addCell(new jxl.write.Number(9, i, (double)Math.round( element.getSoldeFacturee()*1000)/1000 , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+
+			}
+			
+			if (element.getRegionDesignation()!= null) {
+				sheet3.addCell(new Label(10, i, element.getRegionDesignation() + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+			}
+			
+
+			i++;
+
+		}
+
+		i++;
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Total", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 9, i);
+
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Ligne", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, report.getListSituation().size() + "", ExcelUtils.boldRed2));
+
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Solde Initial", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(soldeInitial* 1000) / 1000 + "", ExcelUtils.boldRed2));
+
+	/*	i++;
+
+		sheet3.addCell(new Label(7, i, "Chiffre d'affaire", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(convertisseur(chiffreAffaire, 4)* 100) / 100 + "", ExcelUtils.boldRed2));
+*/
+		i++;
+		
+		sheet3.addCell(new Label(7, i, "CA / Facture", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(chiffreAffaireFacturee* 1000) / 1000 + "", ExcelUtils.boldRed2));
+
+		i++;
+		
+		
+
+		sheet3.addCell(new Label(7, i, "Réglement", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(reglement* 1000) / 1000  + "", ExcelUtils.boldRed2));
+		
+		
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Paiement en cours", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(payementEnCours* 1000) / 1000  + "", ExcelUtils.boldRed2));
+		
+		
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Impayés", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(impaye* 1000) / 1000  + "", ExcelUtils.boldRed2));
+		
+		
+		/*i++;
+
+		sheet3.addCell(new Label(7, i, "Solde Actuel", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(convertisseur(soldeActuel, 4)* 100) / 100  + "", ExcelUtils.boldRed2));
+		*/
+		
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Solde Facturé", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(soldeFacturee * 1000) / 1000  + "", ExcelUtils.boldRed2));
+		
+
+		/*******************************************
+		 * BAS DU PAGE
+		 ****************************************/
+
+		int numColBasDuPage = 2;
+		int numLigneBasDuPage = i + 2;
+
+		Equilibrageworkbook.write();
+		Equilibrageworkbook.close();
+
+		/******************************************************************************************/
+
+		/****************************
+		 * Ouvrir le nouveau fichier généré
+		 *******************************/
+
+		response.setHeader("Content-disposition", "attachment; filename=" + f.getName());
+
+		response.setContentType("application/vnd.ms-excel");
+		int bufferSize = 64 * 1024;
+		byte[] buf = new byte[bufferSize];
+
+		try {
+			BufferedInputStream fileInBuf = new BufferedInputStream(new FileInputStream(f), bufferSize * 2);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int length;
+			while ((length = fileInBuf.read(buf)) > 0) {
+				baos.write(buf, 0, length);
+			}
+			response.getOutputStream().write(baos.toByteArray());
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+			// context.responseComplete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 

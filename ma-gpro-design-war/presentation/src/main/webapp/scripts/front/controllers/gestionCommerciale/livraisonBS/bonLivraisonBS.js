@@ -727,8 +727,8 @@ angular
 			  * Gestion BonLivraison -Vente
 			  **************************************************/
 			 $scope.pagingOptions = {
-					 pageSizes : [ 5, 10, 13 ],
-					 pageSize : 13,
+					 pageSizes : [ 5, 10, 13 ,39,52,156,468],
+					 pageSize : 156,
 					 currentPage : 1
 			 };
 
@@ -1961,10 +1961,16 @@ angular
 						                	   displayName : 'Reference',
 						                	   width:'10%'
 						                   },
+
+                                           {
+						                	   field : 'referenceBlManuel',
+						                	   displayName : 'Ref. BL Manuel',
+						                	   width:'10%'
+						                   },
 						                   {
 						                	   field : 'partieIntAbreviation',
 						                	   displayName : 'Client',
-						                	   width:'35%'
+						                	   width:'30%'
 						                   },
 						                   {
 						                	   field : 'infoSortie',
@@ -2001,7 +2007,7 @@ angular
 											   <span class="ms-CommandButton-icon "><i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true" ></i></span>
 											   </button>
 											   </div>`,
-											 
+											 width:'7%',
 											 
 											 
 						                   } ];

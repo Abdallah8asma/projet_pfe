@@ -79,6 +79,9 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 	private String PREDICATE_REFERENCE_BON_COMMANDE = "refCommande";
 	
 	
+	private String PREDICATE_REFERENCE_BL_MANUEL = "referenceBlManuel";
+	
+	
 	private String PERCENT = "%";
 	
 	private int FIRST_INDEX = 0;
@@ -261,6 +264,14 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 				whereClause.add(criteriaBuilder.equal(root.get(devise), request.getDevise()));
 			}
 			
+			// Set request.referenceBl on whereClause if not empty or null
+			if (estNonVide(request.getReferenceBlManuel())) {
+				Expression<String> path = root.get(PREDICATE_REFERENCE_BL_MANUEL);
+				Expression<String> upper =criteriaBuilder.upper(path);
+				Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getReferenceBlManuel().toUpperCase() + PERCENT);
+				whereClause.add(criteriaBuilder.and(predicate));
+			}
+			
 		// Set request.getNatureLivraison on whereClause if not null
 //		if (estNonVide(request.getNatureLivraison())) {
 //			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_NATURELIVRAISON), request.getNatureLivraison()));
@@ -297,7 +308,10 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 		 			root.get("montantConverti").as(Double.class),
 		 			root.get("stock").as(Boolean.class),
 		 			root.get("declare").as(Boolean.class),
-		 			root.get("infoSortie").as(String.class)
+		 			root.get("infoSortie").as(String.class),
+		 			
+		 			root.get("referenceBlManuel").as(String.class)
+		 			
 		 			
 		 			
 		 			
@@ -354,6 +368,10 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 	    	entity.setDeclare((Boolean) element[20]);
 	    	
 	    	entity.setInfoSortie((String) element[21]);
+	    	
+	    	
+	    	entity.setReferenceBlManuel((String) element[22]);
+	    	
 	    	////////////////////////////
 	    	LivraisonVenteValue dto = bonLivraisonPersistanceUtilities.toValue(entity);
 	    	list.add(dto);

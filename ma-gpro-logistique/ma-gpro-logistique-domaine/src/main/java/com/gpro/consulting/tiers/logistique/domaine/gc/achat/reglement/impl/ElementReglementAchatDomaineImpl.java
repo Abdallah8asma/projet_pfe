@@ -79,4 +79,16 @@ public class ElementReglementAchatDomaineImpl implements IElementReglementAchatD
 		elementReglementPersistance.deleteElementReglementById(id);
 		
 	}
+
+	@Override
+	public Double getSumMontantPayerByReferenceFacture(String reference) {
+		// TODO Auto-generated method stub
+		return elementReglementPersistance.getSumMontantPayerByReferenceFacture(reference);
+	}
+
+	@Override
+	public Double getSumMontantPayerByReferenceBL(String reference) {
+		// TODO Auto-generated method stub
+		return elementReglementPersistance.getSumMontantPayerByReferenceBL(reference);
+	}
 }

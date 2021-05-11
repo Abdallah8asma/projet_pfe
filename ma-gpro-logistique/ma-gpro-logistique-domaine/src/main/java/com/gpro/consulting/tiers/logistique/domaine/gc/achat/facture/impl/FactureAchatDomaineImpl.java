@@ -380,6 +380,15 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		
 		if(!factureValue.isForcerCalculMontant())
 		{
+			
+			
+			montantHTaxeTotal = 	(double)Math.round(montantHTaxeTotal * 1000) / 1000 ;
+			montantRemiseTotal = 	(double)Math.round(montantRemiseTotal * 1000) / 1000 ;
+			montantTaxesTotal = 	(double)Math.round(montantTaxesTotal * 1000) / 1000 ;
+			metrageTotal = 	(double)Math.round(metrageTotal * 1000) / 1000 ;
+			montantTTCTotal = 	(double)Math.round(montantTTCTotal * 1000) / 1000 ;
+			
+			
 			factureValue.setMontantHTaxe(montantHTaxeTotal);
 			factureValue.setMontantRemise(montantRemiseTotal);
 			factureValue.setMontantTaxe(montantTaxesTotal);
@@ -666,6 +675,12 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		
 		if(!factureValue.isForcerCalculMontant())
 		{
+			
+			montantHTaxeTotal = 	(double)Math.round(montantHTaxeTotal * 1000) / 1000 ;
+			montantRemiseTotal = 	(double)Math.round(montantRemiseTotal * 1000) / 1000 ;
+			montantTaxesTotal = 	(double)Math.round(montantTaxesTotal * 1000) / 1000 ;
+			metrageTotal = 	(double)Math.round(metrageTotal * 1000) / 1000 ;
+			montantTTC = 	(double)Math.round(montantTTC * 1000) / 1000 ;
 			
 			factureValue.setMontantHTaxe(montantHTaxeTotal);
 			factureValue.setMontantRemise(montantRemiseTotal);

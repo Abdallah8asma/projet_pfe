@@ -56,6 +56,32 @@ public class GuichetMensuelValue {
 	
 	
 	
+	private Double cibleCA;
+	  
+	  
+	  
+	  private String prefixeBC ;
+	  
+	  
+	  
+	  
+	
+
+	public String getPrefixeBC() {
+		return prefixeBC;
+	}
+
+	public void setPrefixeBC(String prefixeBC) {
+		this.prefixeBC = prefixeBC;
+	}
+
+	public Double getCibleCA() {
+		return cibleCA;
+	}
+
+	public void setCibleCA(Double cibleCA) {
+		this.cibleCA = cibleCA;
+	}
 
 	public Long getNumReferenceDetReglementCourante() {
 		return numReferenceDetReglementCourante;

@@ -794,6 +794,15 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		bonLivraisonValue.setListTaxeLivraison(listTaxeLivraison);
 
 		Double montantTTC = montantHTaxeTotal + montantTaxesTotal /*- montantRemiseTotal*/;
+		
+		
+		montantHTaxeTotal = 	(double)Math.round(montantHTaxeTotal * 1000) / 1000 ;
+		montantRemiseTotal = 	(double)Math.round(montantRemiseTotal * 1000) / 1000 ;
+		montantTaxesTotal = 	(double)Math.round(montantTaxesTotal * 1000) / 1000 ;
+		metrageTotal = 	(double)Math.round(metrageTotal * 1000) / 1000 ;
+		montantTTC = 	(double)Math.round(montantTTC * 1000) / 1000 ;
+		
+		
 
 		bonLivraisonValue.setMontantHTaxe(montantHTaxeTotal);
 		bonLivraisonValue.setMontantRemise(montantRemiseTotal);
@@ -1941,6 +1950,16 @@ List<LivraisonVenteVue> bonLivraisonlistFinal = new ArrayList<>();
 		bonLivraisonValue.setListTaxeLivraison(listTaxeLivraison);
 		// Modifie by Ghazi Atroussi 16/11/2016
 		Double montantTTCTotal = montantHTaxeTotal + montantTaxesTotal /*- montantRemiseTotal*/;
+		
+		
+		
+		montantHTaxeTotal = 	(double)Math.round(montantHTaxeTotal * 1000) / 1000 ;
+		montantRemiseTotal = 	(double)Math.round(montantRemiseTotal * 1000) / 1000 ;
+		montantTaxesTotal = 	(double)Math.round(montantTaxesTotal * 1000) / 1000 ;
+		metrageTotal = 	(double)Math.round(metrageTotal * 1000) / 1000 ;
+		montantTTCTotal = 	(double)Math.round(montantTTCTotal * 1000) / 1000 ;
+		
+		
 
 		bonLivraisonValue.setMontantHTaxe(montantHTaxeTotal);
 		bonLivraisonValue.setMontantRemise(montantRemiseTotal);

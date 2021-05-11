@@ -66,6 +66,18 @@ public class SoldeClientPersistanceImpl extends AbstractPersistance implements I
 		}
 		
 		
+		if (request.getDeviseId() != null) {
+			
+			Subquery<Long> subQuery = criteriaQuery.subquery(Long.class);
+			Root<PartieInteresseEntite> subRoot = subQuery.from(PartieInteresseEntite.class);
+
+			subQuery.select(subRoot.<Long>get("id"));
+			subQuery.where(criteriaBuilder.equal(subRoot.get("deviseId"), request.getDeviseId()));
+			whereClause.add(criteriaBuilder.in(root.get(COLUMN_PARTIEINT)).value(subQuery));
+			
+		}
+		
+		
 		
 	    // Set request.partieIntId on whereClause if not null
 		if (request.getPartieIntId() != null) {

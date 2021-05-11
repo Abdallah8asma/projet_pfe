@@ -363,7 +363,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3">
+           <!--    <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -378,6 +378,25 @@
                           <span></span></label>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </div> -->
+              
+               <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Regl&eacute;e</label>
+                    </div>
+                  
+                                   <select ui-select2 ng-model="echeancierCourant.regle" ng-init="echeancierCourant.regle =''"
+                      data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="true">OUI</option>
+                         <option value="false">NON</option>
+                  <!--     <option ng-repeat="item in listATerme" value="{{item.valeur}}">{{item.designation}}</option> -->
+                    </select>
+                    
                   </div>
                 </div>
               </div>

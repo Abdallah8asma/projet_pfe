@@ -53,6 +53,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.valu
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ResultatRechecheReglementAchatElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ResultatRechecheReglementAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.TypeReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.report.facture.value.FactureAchatReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.LivraisonVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.ModePaiementValue;
@@ -113,6 +114,7 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.achat.echeancier.IEch
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.IFactureAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.IReceptionAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.IReglementAchatPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.ITypeReglementAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.IBonCommandePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IBonLivraisonPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.ITaxePersistance;
@@ -188,7 +190,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 	private IEcheancierFournisseurPersistance echeancierFournisseurPersistance;
 
 	@Autowired
-	private ITypeReglementPersistance typeReglementPersistance;
+	private ITypeReglementAchatPersistance typeReglementPersistance;
 
 	@Autowired
 	private IReglementAchatPersistance reglementAchatPersistance;
@@ -882,7 +884,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 		report.setNomRapport(request.getNomRapport());
 
 		if (request.getTypeReglementId() != null) {
-			TypeReglementValue typeReglement = typeReglementPersistance.getById(request.getTypeReglementId());
+			TypeReglementAchatValue typeReglement = typeReglementPersistance.getById(request.getTypeReglementId());
 			if (typeReglement != null) {
 
 				report.setTypeReglement(typeReglement.getDesignation());
@@ -916,7 +918,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 			reportElement.setObservation(echeancier.getObservation());
 
 			if (echeancier.getTypeReglementId() != null) {
-				TypeReglementValue typeReglement = typeReglementPersistance.getById(echeancier.getTypeReglementId());
+				TypeReglementAchatValue typeReglement = typeReglementPersistance.getById(echeancier.getTypeReglementId());
 				if (typeReglement != null) {
 
 					reportElement.setTypeReglement(typeReglement.getDesignation());
@@ -1100,7 +1102,7 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 				}
 				element.setRegle(regle);
 
-				TypeReglementValue typeReglementValue = typeReglementPersistance
+				TypeReglementAchatValue typeReglementValue = typeReglementPersistance
 						.getById(reglementValueElt.getTypeReglementId());
 				element.setTypeReglement(typeReglementValue.getDesignation());
 
