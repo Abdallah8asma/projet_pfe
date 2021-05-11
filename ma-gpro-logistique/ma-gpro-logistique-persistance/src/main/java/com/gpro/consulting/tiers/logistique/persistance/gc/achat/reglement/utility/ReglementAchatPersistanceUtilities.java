@@ -51,6 +51,8 @@ public class ReglementAchatPersistanceUtilities {
 		entity.setGroupeClientId(dto.getGroupeClientId());
 		entity.setBoutiqueId(dto.getBoutiqueId());
 		
+		entity.setDeclarer(dto.isDeclarer());
+		
 		
 	    if(dto.getListDetailsReglement() != null){
 		     Set<DetailsReglementAchatEntity> list = new HashSet <DetailsReglementAchatEntity>();
@@ -101,6 +103,8 @@ public class ReglementAchatPersistanceUtilities {
 		dto.setIdDepot(entity.getIdDepot());		
 		dto.setGroupeClientId(entity.getGroupeClientId());
 		dto.setBoutiqueId(entity.getBoutiqueId());
+		
+		dto.setDeclarer(entity.isDeclarer());
 		
 	    if(entity.getListDetailsReglement() != null){
 	    	List<DetailsReglementAchatValue> list = new ArrayList <DetailsReglementAchatValue>();
@@ -331,6 +335,8 @@ public class ReglementAchatPersistanceUtilities {
 		dto.setDate(entity.getDate());
 		dto.setMontantTotal(entity.getMontantTotal());
 		
+		dto.setDeclarer(entity.isDeclarer());
+		
 		return dto;
 	}
 
@@ -357,7 +363,7 @@ public class ReglementAchatPersistanceUtilities {
 			
 			dto.setGroupeClientId(entity.getReglement().getGroupeClientId());
 			
-		
+			dto.setDeclarer(entity.getReglement().isDeclarer());
 			
 		}
 		
@@ -396,7 +402,7 @@ public class ReglementAchatPersistanceUtilities {
 			
 			dto.setGroupeClientId(entity.getReglement().getGroupeClientId());
 			
-		
+			dto.setDeclarer(entity.getReglement().isDeclarer());
 			
 		}
 		

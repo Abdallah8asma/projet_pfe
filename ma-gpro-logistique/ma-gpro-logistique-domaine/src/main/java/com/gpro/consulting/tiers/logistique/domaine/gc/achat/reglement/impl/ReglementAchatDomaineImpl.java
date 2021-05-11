@@ -564,7 +564,7 @@ public class ReglementAchatDomaineImpl implements IReglementAchatDomaine{
 								
 								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 								
-								factureNonRegle.setMontantRegle(montantFactureRegle);
+								factureNonRegle.setMontantRegle(montantResteARegle);
 								
 								listFactureNonRegleVentre.add(factureNonRegle);
 								
@@ -658,6 +658,9 @@ public class ReglementAchatDomaineImpl implements IReglementAchatDomaine{
 				
 				factureNonRegle.setId(elementFactureNonReg.getId());
 				factureNonRegle.setNumFacture(elementFactureNonReg.getNumFacture());
+				
+				factureNonRegle.setMontantFacture(elementFactureNonReg.getMontantFacture());
+				factureNonRegle.setDate(elementFactureNonReg.getDate());
 				
 			
 				resultatlistRefFactureNonRegle.add(factureNonRegle);
@@ -872,6 +875,9 @@ public class ReglementAchatDomaineImpl implements IReglementAchatDomaine{
 				
 				blNonRegle.setId(elementBLNonReg.getId());
 				blNonRegle.setNumBL(elementBLNonReg.getNumBL());
+				
+				blNonRegle.setMontantBL(elementBLNonReg.getMontantBL());
+				blNonRegle.setDate(elementBLNonReg.getDate());
 				
 				resultatlistRefBLNonRegle.add(blNonRegle);
 				

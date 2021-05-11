@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.persistence.EntityManager;
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.RechercheMulticritereReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ResultatRechecheReglementAchatCompletValue;
@@ -56,6 +58,9 @@ public class ReglementAchatPersistanceImpl extends AbstractPersistance implement
 	private String PREDICATE_BOUTIQUEID = "boutiqueId";
 	
 	private String PERCENT = "%";
+	
+	private String PREDICATE_DECLARE = "declarer";
+	
 	
 	@Override
 	public String create(ReglementAchatValue reglement) {
@@ -151,6 +156,54 @@ public class ReglementAchatPersistanceImpl extends AbstractPersistance implement
 	    if (request.getMontantMax() != null) {
 	    	whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Double>get(PREDICATE_MONTANT), request.getMontantMax()));
 	    }
+	    
+	    
+		if (estNonVide(request.getDeclarerRech())) {
+			Expression<Boolean> expression = root.get(PREDICATE_DECLARE);
+			switch (request.getDeclarerRech()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.isTrue(expression));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.isFalse(expression));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
+		
+		if (estNonVide(request.getHasElementReglement())) {
+			switch (request.getHasElementReglement()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.gt(criteriaBuilder.size(root.<Set>get("listElementReglement")), 0));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.equal(criteriaBuilder.size(root.<Set>get("listElementReglement")), 0));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
+	    
+		
+		if (estNonVide(request.getHasDetailReglement())) {
+			switch (request.getHasDetailReglement()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.gt(criteriaBuilder.size(root.<Set>get("listDetailsReglement")), 0));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.equal(criteriaBuilder.size(root.<Set>get("listDetailsReglement")), 0));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
 		
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	    List <ReglementAchatEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
@@ -269,6 +322,55 @@ public class ReglementAchatPersistanceImpl extends AbstractPersistance implement
 	    if (request.getMontantMax() != null) {
 	    	whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Double>get(PREDICATE_MONTANT), request.getMontantMax()));
 	    }
+	    
+	    
+	    
+		if (estNonVide(request.getDeclarerRech())) {
+			Expression<Boolean> expression = root.get(PREDICATE_DECLARE);
+			switch (request.getDeclarerRech()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.isTrue(expression));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.isFalse(expression));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
+		
+		if (estNonVide(request.getHasElementReglement())) {
+			switch (request.getHasElementReglement()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.gt(criteriaBuilder.size(root.<Set>get("listElementReglement")), 0));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.equal(criteriaBuilder.size(root.<Set>get("listElementReglement")), 0));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
+	    
+		
+		if (estNonVide(request.getHasDetailReglement())) {
+			switch (request.getHasDetailReglement()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.gt(criteriaBuilder.size(root.<Set>get("listDetailsReglement")), 0));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.equal(criteriaBuilder.size(root.<Set>get("listDetailsReglement")), 0));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
 		
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	    List <ReglementAchatEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();

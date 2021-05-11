@@ -24,6 +24,19 @@ public class ReglementAchatValue implements Comparable<ReglementAchatValue> {
 	private Long boutiqueId;
 
 	private String refAvantChangement;
+	
+	private boolean declarer;
+	
+	
+	
+
+	public boolean isDeclarer() {
+		return declarer;
+	}
+
+	public void setDeclarer(boolean declarer) {
+		this.declarer = declarer;
+	}
 
 	public String getRefAvantChangement() {
 		return refAvantChangement;

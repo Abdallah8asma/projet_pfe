@@ -87,6 +87,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportTraitementFaconValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.echeancier.value.EcheancierReportListValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.report.ficheclient.value.FicheClientElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.ficheclient.value.FicheClientReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.fichegroupeclient.value.FicheGroupeClientReportValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.gcReporting.reglement.ReglementReportElementValue;
@@ -2297,6 +2298,50 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			report.setJRBeanCollectionDataSource(jRBeanCollectionDataSource);
 
 		}
+		
+		if (request.getTypeRapport().equals("ficheFactureClient")) {
+			/** ficheClient **/
+			report.setFileName(IConstanteCommercialeReport.REPORT_NAME_FICHE_CLIENT);
+			report.setReportStream(new FileInputStream(IConstanteCommercialeReport.PATH_JRXML_FICHE_CLIENT));
+
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put(IConstanteCommercialeReport.PATH_LOGO, IConstanteCommercialeReport.LOGO_STIT);
+
+			report.setParams(params);
+
+			ResultatRechecheFicheClientValue result = ficheClientDomaine.rechercherMultiCritere(request);
+
+			enrichmentFicheClientReportList(report, result, request);
+
+			ArrayList<FicheClientReportValue> dataList = new ArrayList<FicheClientReportValue>();
+			dataList.add(report);
+
+			JRBeanCollectionDataSource jRBeanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
+
+			report.setJRBeanCollectionDataSource(jRBeanCollectionDataSource);
+
+		} else if (request.getTypeRapport().equals("releveFactureClient")) {
+			/** releveClient **/
+			report.setFileName(IConstanteCommercialeReport.REPORT_NAME_RELEVE_CLIENT);
+			report.setReportStream(new FileInputStream(IConstanteCommercialeReport.PATH_JRXML_RELEVE_CLIENT));
+
+			HashMap<String, Object> params = new HashMap<String, Object>();
+			params.put(IConstanteCommercialeReport.PATH_LOGO, IConstanteCommercialeReport.LOGO_STIT);
+
+			report.setParams(params);
+
+			ResultatRechecheFicheClientValue result = ficheClientDomaine.rechercherMultiCritere(request);
+
+			enrichmentFicheClientReportList(report, result, request);
+
+			ArrayList<FicheClientReportValue> dataList = new ArrayList<FicheClientReportValue>();
+			dataList.add(report);
+
+			JRBeanCollectionDataSource jRBeanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
+
+			report.setJRBeanCollectionDataSource(jRBeanCollectionDataSource);
+
+		}
 
 		return report;
 
@@ -2339,8 +2384,49 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			// result.getSoldeInitial());
 
 			if (result.getListElements() != null) {
+				
+				
+				//TODO calcul balance
+				
+				Double soldeInitiale =ZERO;
+				
+				if(result.getSoldeInitial() != null)
+					soldeInitiale = result.getSoldeInitial();
+				
+				
+				for(FicheClientElementValue element : result.getListElements()) {
+					
+					if ((element.getType().equals(FicheClientElementValue.TYPE_BL)
+							|| element.getType().equals(FicheClientElementValue.TYPE_FACTURE))
 
-				report.getListElements().addAll(result.getListElements());
+							&& element.getDebit() != null
+
+					) {
+
+						soldeInitiale += element.getDebit();
+						
+						element.setBalance(soldeInitiale);
+
+					}else
+						if ((element.getType().equals(FicheClientElementValue.TYPE_AVOIR)
+								|| element.getType().equals(FicheClientElementValue.TYPE_REGLEMENT))
+
+								&& element.getCredit()!= null
+
+						) {
+
+							soldeInitiale -= element.getCredit();
+							element.setBalance(soldeInitiale);
+						}
+					
+					
+					
+					report.getListElements().add(element);
+					
+				}
+				
+				
+	          	//report.getListElements().addAll(result.getListElements());
 			}
 		}
 

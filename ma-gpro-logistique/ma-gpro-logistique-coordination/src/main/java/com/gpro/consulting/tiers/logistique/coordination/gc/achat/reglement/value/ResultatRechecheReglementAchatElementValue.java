@@ -18,6 +18,18 @@ public class ResultatRechecheReglementAchatElementValue implements Comparable<Re
 	private String partieIntAbreviation;
 	private String partieIntReference;
 	
+	private boolean declarer;
+	
+	
+	
+	public boolean isDeclarer() {
+		return declarer;
+	}
+
+	public void setDeclarer(boolean declarer) {
+		this.declarer = declarer;
+	}
+
 	public int compareTo(ResultatRechecheReglementAchatElementValue element) {
 		return (element.getId().compareTo(id));
 	}

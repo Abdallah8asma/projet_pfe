@@ -93,9 +93,25 @@ public class ReglementAchatEntity implements Serializable{
 	@Column(name = "boutique_id")
 	private Long boutiqueId;
 	
+	  @Column(name = "declarer")
+		private boolean declarer;
+	    
+	  
+	  
 	
 	
-	
+
+	public boolean isDeclarer() {
+		return declarer;
+	}
+
+	public void setDeclarer(boolean declarer) {
+		this.declarer = declarer;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Long getBoutiqueId() {
 		return boutiqueId;

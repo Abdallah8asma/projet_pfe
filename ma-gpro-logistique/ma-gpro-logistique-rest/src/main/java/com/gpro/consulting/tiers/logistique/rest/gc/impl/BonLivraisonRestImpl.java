@@ -126,7 +126,7 @@ public class BonLivraisonRestImpl {
 		
 		request.setOptimized(this.checkForOptimization(request));
 
-		if (request.getDateLivraisonMin() == null) {
+	/*	if (request.getDateLivraisonMin() == null) {
 
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.YEAR, 2020);
@@ -138,7 +138,7 @@ public class BonLivraisonRestImpl {
 			date.set(Calendar.MILLISECOND, 0);
 
 			request.setDateLivraisonMin(date);
-		}
+		}*/
 		
 		// logger.info("rechercheMulticritere: Delegating request {} to service layer.",
 		// request);

@@ -416,6 +416,11 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("montantMin") Double montantMin,
 			@RequestParam("montantMax") Double montantMax,
 			@RequestParam("idDepot") Long idDepot,
+			
+			@RequestParam("declarerRech") String declarerRech,
+			@RequestParam("hasElementReglement") String hasElementReglement,
+			@RequestParam("hasDetailReglement") String hasDetailReglement,
+			
 			@RequestParam("type") String type,
 			HttpServletResponse response) throws JRException, IOException {
 
@@ -427,6 +432,10 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		request.setMontantMin(montantMin);
 		request.setMontantMax(montantMax);
 		request.setIdDepot(idDepot);
+		
+		request.setDeclarerRech(declarerRech);
+		request.setHasElementReglement(hasElementReglement);
+		request.setHasDetailReglement(hasDetailReglement);
 		
 		//logger.info("Generate a Reglement", type);
 
