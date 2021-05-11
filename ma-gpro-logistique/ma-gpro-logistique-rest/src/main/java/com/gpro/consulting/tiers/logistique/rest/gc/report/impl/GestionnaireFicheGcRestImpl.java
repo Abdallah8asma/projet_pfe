@@ -7644,12 +7644,16 @@ request.setNomRapport(nomRapport);
 		
 		sheet3.setColumnView(4, 12);
 		sheet3.setColumnView(5, 15);
+		
 		sheet3.setColumnView(6, 15);
+	 
+		sheet3.setColumnView(7, 15);
 
-		sheet3.setColumnView(7, 20);
-		sheet3.setColumnView(8, 15);
+		sheet3.setColumnView(8, 20);
 		sheet3.setColumnView(9, 15);
 		sheet3.setColumnView(10, 15);
+		sheet3.setColumnView(11, 15);
+		sheet3.setColumnView(12, 15);
 		/**************************************************************************/
 
 		
@@ -7784,12 +7788,19 @@ request.setNomRapport(nomRapport);
 		sheet3.addCell(new Label(2, i - 1, "Référence", ExcelUtils.boldRed2)); 
 		sheet3.addCell(new Label(3, i - 1, "Client", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(4, i - 1, "Solde Init", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(5, i - 1, "Chif. d'affaire", ExcelUtils.boldRed2));
+		
+		//sheet3.addCell(new Label(5, i - 1, "Chif. d'affaire", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(5, i - 1, "CA / Facture", ExcelUtils.boldRed2));
+		
+		
 		sheet3.addCell(new Label(6, i - 1, "Réglement", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(7, i - 1, "Paiement en cours", ExcelUtils.boldRed2));
 
 		sheet3.addCell(new Label(8, i - 1, "Impayés", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(9, i - 1, "Solde Actuel", ExcelUtils.boldRed2));
+	//	sheet3.addCell(new Label(10, i - 1, "Solde Actuel", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(9, i - 1, "Solde Facturé", ExcelUtils.boldRed2));
 
 		sheet3.addCell(new Label(10, i - 1, "Région", ExcelUtils.boldRed2));
 		
@@ -7799,6 +7810,9 @@ request.setNomRapport(nomRapport);
 		Double payementEnCours = 0d;
 		Double impaye = 0d;
 		Double soldeActuel = 0d;
+		
+		Double chiffreAffaireFacturee = 0d;
+		Double soldeFacturee = 0d;
 
 		for (SituationReportingValue element : report.getListSituation()) {
 
@@ -7821,18 +7835,29 @@ request.setNomRapport(nomRapport);
 				
 				soldeInitial += element.getSoldeInit() ;
 				
-				sheet3.addCell(new jxl.write.Number(4, i, element.getSoldeInit() , ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(4, i, (double)Math.round( element.getSoldeInit()*1000)/1000  , ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
 
 			}
 			
-			if (element.getChiffreDaffaire() != null) {
+		/*	if (element.getChiffreDaffaire() != null) {
 				
 				chiffreAffaire += element.getChiffreDaffaire();
 				
 				sheet3.addCell(new jxl.write.Number(5, i, element.getChiffreDaffaire() , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+
+			}*/
+			
+	     if (element.getChiffreDaffaireFacturee() != null) {
+				
+				chiffreAffaireFacturee += element.getChiffreDaffaireFacturee();
+				
+				sheet3.addCell(new jxl.write.Number(5, i,(double)Math.round(element.getChiffreDaffaireFacturee()*1000)/1000 , ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
@@ -7842,7 +7867,7 @@ request.setNomRapport(nomRapport);
 			if (element.getReglement() != null) {
 				
 				reglement += element.getReglement();
-				sheet3.addCell(new jxl.write.Number(6, i, element.getReglement() , ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(6, i,(double)Math.round( element.getReglement()*1000)/1000 , ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
@@ -7852,7 +7877,7 @@ request.setNomRapport(nomRapport);
 			if (element.getPaiement() != null) {
 				
 				payementEnCours += element.getPaiement();
-				sheet3.addCell(new jxl.write.Number(7, i, element.getPaiement() , ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(7, i, (double)Math.round(element.getPaiement()*1000)/1000 , ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
@@ -7862,17 +7887,28 @@ request.setNomRapport(nomRapport);
 			
 			if (element.getImpaye() != null) {
 				impaye += element.getImpaye();
-				sheet3.addCell(new jxl.write.Number(8, i, element.getImpaye() , ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(8, i,(double)Math.round( element.getImpaye()*1000)/1000 , ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
 
 			}
 
-			if (element.getSoldeActuel() != null) {
+		/*	if (element.getSoldeActuel() != null) {
 				soldeActuel += element.getSoldeActuel();
 				
-				sheet3.addCell(new jxl.write.Number(9, i, element.getSoldeActuel() , ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(10, i, element.getSoldeActuel() , ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+
+			}*/
+			
+			
+			if (element.getSoldeFacturee() != null) {
+				soldeFacturee += element.getSoldeFacturee();
+				
+				sheet3.addCell(new jxl.write.Number(9, i, (double)Math.round( element.getSoldeFacturee()*1000)/1000 , ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
@@ -7907,40 +7943,55 @@ request.setNomRapport(nomRapport);
 
 		sheet3.addCell(new Label(7, i, "Solde Initial", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, (double) Math.round(convertisseur(soldeInitial, 4)* 100) / 100 + "", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i, (double) Math.round(soldeInitial* 1000) / 1000 + "", ExcelUtils.boldRed2));
 
-		i++;
+	/*	i++;
 
 		sheet3.addCell(new Label(7, i, "Chiffre d'affaire", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
 		sheet3.addCell(new Label(9, i, (double) Math.round(convertisseur(chiffreAffaire, 4)* 100) / 100 + "", ExcelUtils.boldRed2));
+*/
+		i++;
+		
+		sheet3.addCell(new Label(7, i, "CA / Facture", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(chiffreAffaireFacturee* 1000) / 1000 + "", ExcelUtils.boldRed2));
 
 		i++;
+		
+		
 
 		sheet3.addCell(new Label(7, i, "Réglement", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, (double) Math.round(convertisseur(reglement, 4)* 100) / 100  + "", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i, (double) Math.round(reglement* 1000) / 1000  + "", ExcelUtils.boldRed2));
 		
 		
 		i++;
 
 		sheet3.addCell(new Label(7, i, "Paiement en cours", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, (double) Math.round(convertisseur(payementEnCours, 4)* 100) / 100  + "", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i, (double) Math.round(payementEnCours* 1000) / 1000  + "", ExcelUtils.boldRed2));
 		
 		
 		i++;
 
 		sheet3.addCell(new Label(7, i, "Impayés", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
-		sheet3.addCell(new Label(9, i, (double) Math.round(convertisseur(impaye, 4)* 100) / 100  + "", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i, (double) Math.round(impaye* 1000) / 1000  + "", ExcelUtils.boldRed2));
 		
 		
-		i++;
+		/*i++;
 
 		sheet3.addCell(new Label(7, i, "Solde Actuel", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
 		sheet3.addCell(new Label(9, i, (double) Math.round(convertisseur(soldeActuel, 4)* 100) / 100  + "", ExcelUtils.boldRed2));
+		*/
+		
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Solde Facturé", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(soldeFacturee * 1000) / 1000  + "", ExcelUtils.boldRed2));
 		
 
 		/*******************************************
