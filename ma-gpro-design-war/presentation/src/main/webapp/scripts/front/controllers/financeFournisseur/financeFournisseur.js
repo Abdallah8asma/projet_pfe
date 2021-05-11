@@ -6,6 +6,22 @@ angular
 	.module('gpro.menuFinanceFournisseur', [])
 	.controller(
 		'MenuFinanceFournisseurController', function ($rootScope, $scope, $http, $log, initCommercialService, UrlAtelier, $route,UrlCommun) {
+		
+			$scope.clientActif = {};
+			$scope.getClientActif = function () {
+				//TODO cache
+				$http
+					.get(
+						UrlCommun
+						+ "/baseInfo/getClientActif")
+					.success(
+						function (baseInfo) {
+							// $log.debug("baseInfo : ",baseInfo);
+							$scope.clientActif = baseInfo;
+						});
+			}
+			$scope.getClientActif();
+		
 			$scope.listeTypeDocumentsCacheALL = [];
 
 			$scope.getListeTypeDocumentsCache = function() {

@@ -892,7 +892,7 @@ $scope.validerNatureFiniByOF();
 							$scope.factureVenteCourant.groupeClientId = element[0].groupeClientId;
 
 
-							if ($scope.clientActif.blackMode == false) {
+							if ($scope.factureVenteCourant.declarer == true) {
 
 								$http
 									.get(

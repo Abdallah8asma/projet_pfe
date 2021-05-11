@@ -51,10 +51,11 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
     $scope.msgChargement = '';
 
+    $scope.reglementCourante = {"declarerRech" : "oui" , "hasElementReglement":"" , "hasDetailReglement":"","idDepot":""};
 
     $scope.currentFactureOrBl = { };
 	
-	
+
 	     $scope.getListeBanquePI = function () {
               $http.get(UrlCommun+"/banquePI/all").success(function (data) {
                 $log.debug("listeCathegorie : "+data.length);
@@ -255,7 +256,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       $scope.disableClient = false;
       $scope.disableValider = false;
 
-      $scope.reglementCourante = {"date":new Date()};
+      $scope.reglementCourante = {"date":new Date() , "declarer":true};
 
 
   
@@ -277,7 +278,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       $scope.listeDocumentProduit = [];
       $scope.isEnCoursValider = false;
 
-      $scope.reglementCourante = {};
+         $scope.reglementCourante = {"declarerRech" : "oui" , "hasElementReglement":"" , "hasDetailReglement":"" , "idDepot":""};
 
       $scope.InitializeArray();
 
@@ -288,7 +289,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
       $scope.creationReglementForm.$setPristine();
       $scope.rechercheReglementForm.$setPristine();
-      $scope.rechercheReglement({});
+      $scope.rechercheReglement($scope.reglementCourante);
       // bouton pdf show
       $scope.modePdf = 'NotActif';
       $scope.displayMode = 'list';
@@ -353,7 +354,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         });
     };
     $scope.listClients();
-    $scope.rechercheReglement({});
+    $scope.rechercheReglement($scope.reglementCourante);
 
     // Liste des Clients
     $scope.listTypes = function () {
@@ -664,7 +665,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       }).success(function () {
         $scope.myData.splice($scope.index, 1);
         $scope.closePopupDelete();
-        $scope.rechercheReglement({});
+        $scope.rechercheReglement($scope.reglementCourante);
       });
     };
 
@@ -750,6 +751,16 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         reglementCourante.montantMax +
         '&idDepot=' +
         reglementCourante.idDepot +
+
+       '&declarerRech=' +
+        reglementCourante.declarerRech +
+
+       '&hasElementReglement=' +
+        reglementCourante.hasElementReglement +
+
+       '&hasDetailReglement=' +
+        reglementCourante.hasDetailReglement +
+
         '&type=pdf';
 
       console.log('-- URL--- :' + url);

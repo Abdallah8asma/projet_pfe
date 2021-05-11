@@ -53,6 +53,33 @@
               <span class="ms-CommandButton-label">Releve</span>
             </button>
           </div>
+          
+          
+          
+          <div class="ms-CommandButton">
+            <button
+              class="ms-CommandButton-button"
+              ng-disabled="!rechercheClientForm.$valid;"
+              ng-click="downloadClientReporting(ordreFabricationCourant,3)"
+            >
+              <span class="ms-CommandButton-icon"
+                ><i class="ms-Icon ms-Icon--Generate"></i
+              ></span>
+              <span class="ms-CommandButton-label">Fiche/Facture</span>
+            </button>
+          </div>
+          <div class="ms-CommandButton">
+            <button
+              class="ms-CommandButton-button"
+              ng-disabled="!rechercheClientForm.$valid;"
+              ng-click="downloadClientReporting(ordreFabricationCourant,4)"
+            >
+              <span class="ms-CommandButton-icon"
+                ><i class="ms-Icon ms-Icon--FolderSearch"></i
+              ></span>
+              <span class="ms-CommandButton-label">Releve/Facture</span>
+            </button>
+          </div>
 
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="annulerOFAjout()">

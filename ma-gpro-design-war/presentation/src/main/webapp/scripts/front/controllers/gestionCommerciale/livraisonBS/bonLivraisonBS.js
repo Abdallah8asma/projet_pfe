@@ -727,8 +727,8 @@ angular
 			  * Gestion BonLivraison -Vente
 			  **************************************************/
 			 $scope.pagingOptions = {
-					 pageSizes : [ 5, 10, 13 ],
-					 pageSize : 13,
+					 pageSizes : [ 5, 10, 13 ,39,52,156,468],
+					 pageSize : 156,
 					 currentPage : 1
 			 };
 

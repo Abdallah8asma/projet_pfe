@@ -178,7 +178,7 @@
   
   
   
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -195,14 +195,32 @@
   
   
                 </div>
+                
+                
+                 <div class="col-sm-3" ng-show="clientActif.blackMode==true">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Declaree</label>
+                    </div>
+                    <select ui-select2 ng-model="reglementCourante.declarerRech" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                      <option value="non">NON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
               </div>
   
               <div class="row">
-                <div class="col-sm-6" ng-controller="DatepickerDemoController">
+                <div class="col-sm-3" ng-controller="DatepickerDemoController">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text">Date Reglement. Entre:</span>
+                        <span class="input-group-text">Date Reglement. Entre</span>
                       </div>
                       <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
                         ng-model="reglementCourante.dateReglementMin" is-open="opened" datepicker-options="dateOptions"
@@ -223,7 +241,7 @@
   
   
   
-                <div class="col-sm-6" ng-controller="DatepickerDemoController">
+                <div class="col-sm-3" ng-controller="DatepickerDemoController">
   
   
                   <div class="form-group">
@@ -248,10 +266,8 @@
   
   
                 </div>
-              </div>
-  
-              <div class="row">
-                <div class="col-sm-6">
+                
+                  <div class="col-sm-3">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -264,7 +280,7 @@
   
   
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                   <div class="form-group">
                     <div class="input-group">
                       <div class="input-group-prepend">
@@ -277,6 +293,52 @@
   
   
                 </div>
+                
+                
+                
+              </div>
+  
+              <div class="row">
+              
+              
+                     
+                <div class="col-sm-6">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">BL Ou Facture</label>
+                    </div>
+                    <select ui-select2 ng-model="reglementCourante.hasElementReglement" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                      <option value="non">NON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              
+               <div class="col-sm-6">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Detail</label>
+                    </div>
+                    <select ui-select2 ng-model="reglementCourante.hasDetailReglement" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                      <option value="non">NON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
               </div>
             </form>
           </div>
@@ -507,6 +569,28 @@
   
   
                 </div>
+                
+                    <div class="col-sm-4" ng-show="clientActif.blackMode==true">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label is-required">Declaree</label>
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="checkbox checkbox-square checkbox-primary">
+                          <input type="checkbox" class="form-control"
+                            ng-model="reglementCourante.declarer"
+                            >
+
+                          <span></span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
   
   
               </div>
