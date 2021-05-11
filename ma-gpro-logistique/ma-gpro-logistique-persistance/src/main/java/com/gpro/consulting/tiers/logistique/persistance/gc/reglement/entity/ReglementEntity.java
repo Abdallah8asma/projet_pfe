@@ -92,8 +92,24 @@ public class ReglementEntity implements Serializable{
     @Column(name = "ajout_special")
     private String ajoutSpecial;
     
+    @Column(name = "declarer")
+	private boolean declarer;
     
     
+    
+    
+
+	public boolean isDeclarer() {
+		return declarer;
+	}
+
+	public void setDeclarer(boolean declarer) {
+		this.declarer = declarer;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public String getAjoutSpecial() {
 		return ajoutSpecial;

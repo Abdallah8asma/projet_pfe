@@ -14,6 +14,18 @@ public class FicheClientElementValue {
 	private Double debit;
 	private Double credit;
 	private String referenceComparator;
+	
+	private Double balance;
+	
+	
+	private String type;
+	
+	
+	public static String TYPE_BL = "BL";
+	public static String TYPE_FACTURE = "FACTURE";
+	public static String TYPE_AVOIR = "AVOIR";
+	public static String TYPE_REGLEMENT = "REGLEMENT";
+	
 
 //	@Override
 //	public int compareTo(FicheClientElementValue element) {
@@ -21,6 +33,30 @@ public class FicheClientElementValue {
 //		return (element.getDate().compareTo(date));
 //	}
 	
+
+
+	public Double getBalance() {
+		return balance;
+	}
+
+
+
+	public void setBalance(Double balance) {
+		this.balance = balance;
+	}
+
+
+
+	public String getType() {
+		return type;
+	}
+
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 
 
 	public String getReferenceComparator() {

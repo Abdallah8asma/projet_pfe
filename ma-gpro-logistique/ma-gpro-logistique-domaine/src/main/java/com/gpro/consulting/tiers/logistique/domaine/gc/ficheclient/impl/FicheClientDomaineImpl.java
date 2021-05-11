@@ -82,13 +82,11 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 			requestFacture.setDateFactureMax(request.getDateMax());
 			requestFacture.setDateFactureMin(request.getDateMin());
 			ResultatRechecheFactureValue resultFacture = facturePersistance.rechercherMultiCritere(requestFacture);
+			
+			
+		
 
-			RechercheMulticritereBonLivraisonValue requestBL = new RechercheMulticritereBonLivraisonValue();
-			requestBL.setPartieIntId(request.getClientId());
-			requestBL.setDateLivraisonMax(request.getDateMax());
-			requestBL.setDateLivraisonMin(request.getDateMin());
-			requestBL.setAvecFacture("nonFacture");
-			ResultatRechecheBonLivraisonValue resultBL = bonLivraisonPersistance.rechercherMultiCritere(requestBL);
+
 
 			RechercheMulticritereReglementValue requestReglement = new RechercheMulticritereReglementValue();
 			requestReglement.setPartieIntId(request.getClientId());
@@ -123,6 +121,12 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 			for (FactureVenteValue facture : resultFacture.getList()) {
 
 				FicheClientElementValue element = new FicheClientElementValue();
+				
+				
+				if(facture.getType().equals("Normal"))
+					element.setType(FicheClientElementValue.TYPE_FACTURE);
+				else
+					element.setType(FicheClientElementValue.TYPE_AVOIR);
 
 				element.setDate(facture.getDate());
 				element.setReferenceComparator("F" + facture.getReference());
@@ -156,30 +160,49 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 
 				listElements.add(element);
 			}
+			
+			
+	      if(request.getTypeRapport().equals("ficheClient") || request.getTypeRapport().equals("releveClient")){
+				
+				RechercheMulticritereBonLivraisonValue requestBL = new RechercheMulticritereBonLivraisonValue();
+				requestBL.setPartieIntId(request.getClientId());
+				requestBL.setDateLivraisonMax(request.getDateMax());
+				requestBL.setDateLivraisonMin(request.getDateMin());
+				requestBL.setAvecFacture("nonFacture");
+				ResultatRechecheBonLivraisonValue resultBL = bonLivraisonPersistance.rechercherMultiCritere(requestBL);
+				
+				
+				for (LivraisonVenteValue bl : resultBL.getList()) {
 
-			for (LivraisonVenteValue bl : resultBL.getList()) {
+					FicheClientElementValue element = new FicheClientElementValue();
+					
+					
+				
+					element.setType(FicheClientElementValue.TYPE_BL);
 
-				FicheClientElementValue element = new FicheClientElementValue();
+					element.setCredit(credit);
+					element.setDebit(bl.getMontantTTC());
+					element.setDate(bl.getDate());
+					element.setReferenceComparator("L" + bl.getReference());
 
-				element.setCredit(credit);
-				element.setDebit(bl.getMontantTTC());
-				element.setDate(bl.getDate());
-				element.setReferenceComparator("L" + bl.getReference());
+					libelle = "BL N° " + bl.getReference();
+					element.setLibelle(libelle);
 
-				libelle = "BL N° " + bl.getReference();
-				element.setLibelle(libelle);
+					if (element.getDebit() != null) {
 
-				if (element.getDebit() != null) {
+						debitTotal = debitTotal + element.getDebit();
+					}
 
-					debitTotal = debitTotal + element.getDebit();
+					if (bl.getDate() == null) {
+						element.setDate(dateIfNotExist);
+					}
+
+					listElements.add(element);
 				}
-
-				if (bl.getDate() == null) {
-					element.setDate(dateIfNotExist);
-				}
-
-				listElements.add(element);
+				
 			}
+
+		
 
 			for (ReglementValue reglement : resultReglement.getList()) {
 
@@ -195,6 +218,8 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 							
 							
 							FicheClientElementValue element = new FicheClientElementValue();
+							
+							element.setType(FicheClientElementValue.TYPE_REGLEMENT);
 
 							//element.setCredit(reglement.getMontantTotal());
 							element.setCredit(detail.getMontant());

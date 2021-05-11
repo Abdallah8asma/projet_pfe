@@ -42,8 +42,41 @@ public class RechercheMulticritereReglementValue {
 	
 	private String referenceDetailReglement;
 	
+	private String declarerRech;
 	
 	
+	private String hasElementReglement;
+	
+	private String hasDetailReglement;
+	
+	
+	
+	
+	
+
+	public String getHasElementReglement() {
+		return hasElementReglement;
+	}
+
+	public void setHasElementReglement(String hasElementReglement) {
+		this.hasElementReglement = hasElementReglement;
+	}
+
+	public String getHasDetailReglement() {
+		return hasDetailReglement;
+	}
+
+	public void setHasDetailReglement(String hasDetailReglement) {
+		this.hasDetailReglement = hasDetailReglement;
+	}
+
+	public String getDeclarerRech() {
+		return declarerRech;
+	}
+
+	public void setDeclarerRech(String declarerRech) {
+		this.declarerRech = declarerRech;
+	}
 
 	public String getReferenceDetailReglement() {
 		return referenceDetailReglement;

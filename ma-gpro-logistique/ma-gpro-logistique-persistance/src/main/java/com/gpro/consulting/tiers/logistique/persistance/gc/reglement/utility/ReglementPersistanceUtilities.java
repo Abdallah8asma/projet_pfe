@@ -52,6 +52,8 @@ public class ReglementPersistanceUtilities {
 		
 		entity.setAjoutSpecial(dto.getAjoutSpecial());
 		
+		entity.setDeclarer(dto.isDeclarer());
+		
 	    if(dto.getListDetailsReglement() != null){
 		     Set<DetailsReglementEntity> list = new HashSet <DetailsReglementEntity>();
 		     for (DetailsReglementValue detailsReglementValue : dto.getListDetailsReglement()) {
@@ -104,6 +106,8 @@ public class ReglementPersistanceUtilities {
 		dto.setBoutiqueId(entity.getBoutiqueId());
 		
 		dto.setAjoutSpecial(entity.getAjoutSpecial());
+		
+		dto.setDeclarer(entity.isDeclarer());
 		
 	    if(entity.getListDetailsReglement() != null){
 	    	List<DetailsReglementValue> list = new ArrayList <DetailsReglementValue>();
@@ -386,6 +390,8 @@ public class ReglementPersistanceUtilities {
 		
 		dto.setGroupeClientId(entity.getGroupeClientId());
 		
+		dto.setDeclarer(entity.isDeclarer());
+		
 		return dto;
 	}
 
@@ -412,7 +418,7 @@ public class ReglementPersistanceUtilities {
 			
 			dto.setGroupeClientId(entity.getReglement().getGroupeClientId());
 			
-		
+			dto.setDeclarer(entity.getReglement().isDeclarer());
 			
 		}
 		
@@ -456,7 +462,7 @@ public class ReglementPersistanceUtilities {
 			
 			dto.setGroupeClientId(entity.getReglement().getGroupeClientId());
 			
-		
+			dto.setDeclarer(entity.getReglement().isDeclarer());
 			
 		}
 		

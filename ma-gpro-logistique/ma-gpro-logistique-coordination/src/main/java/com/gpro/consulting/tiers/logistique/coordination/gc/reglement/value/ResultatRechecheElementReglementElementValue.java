@@ -52,7 +52,17 @@ public class ResultatRechecheElementReglementElementValue
 	private String banqueSociete;
 	
 	
-	
+private boolean declarer;
+
+
+
+	public boolean isDeclarer() {
+	return declarer;
+}
+
+public void setDeclarer(boolean declarer) {
+	this.declarer = declarer;
+}
 
 	public String getBanqueSociete() {
 		return banqueSociete;

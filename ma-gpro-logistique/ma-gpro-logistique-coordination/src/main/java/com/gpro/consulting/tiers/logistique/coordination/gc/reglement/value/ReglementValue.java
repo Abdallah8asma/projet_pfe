@@ -31,6 +31,19 @@ public class ReglementValue implements Comparable<ReglementValue> {
 	private String refBC;
 
 	private Long boutiqueId;
+	
+	private boolean declarer;
+	
+	
+	
+
+	public boolean isDeclarer() {
+		return declarer;
+	}
+
+	public void setDeclarer(boolean declarer) {
+		this.declarer = declarer;
+	}
 
 	public Long getBoutiqueId() {
 		return boutiqueId;
