@@ -132,6 +132,7 @@ public class SituationReportingDomaineImpl implements ISituationReportingDomaine
 				Double regle_init = 0D;
 				Double ca_Init = 0D;
 				Double caTotal = 0D;
+				Double caTotalFacturee = 0D;
 				Double reglementTotal = 0D;
 				
 				Calendar calendar = Calendar.getInstance();
@@ -177,10 +178,14 @@ public class SituationReportingDomaineImpl implements ISituationReportingDomaine
 				//TODO : Vérifier le calcul
 				caTotal = (caTotalFacture - caTotalFactureAvoir) + (caTotalBL /*- caBLFactures*/);
 				
+				caTotalFacturee  = (caTotalFacture - caTotalFactureAvoir) ;
+				
 				//logger.info("Client ID: " + requestBL.getPartieIntId() + "\n caTotalBL=" + caTotalBL + "\n caBLFactures =" + caBLFactures + "\n caTotalFacture= " + caTotalFacture + "\n caTotalFactureAvoir =" + caTotalFactureAvoir +"\n caTotal =" + caTotal);
 				
 				caTotal += ca_Init;
 				situationReportingElement.setChiffreDaffaire(caTotal);
+				
+				situationReportingElement.setChiffreDaffaireFacturee(caTotalFacturee);
 				//System.out.println("-----------soldeActuel :.setChiffreDaffaire(caTotal)-------"+caTotal);
 
 				
@@ -194,11 +199,14 @@ public class SituationReportingDomaineImpl implements ISituationReportingDomaine
 				situationReportingElement.setReglement(reglementTotal);
 				
 				/** Solde Actuel **/
-				Double soldeActuel = 0D;
+				Double soldeActuel = 0D; Double soldeFacturee = 0D;
 				Double vSoldeInitial=0D;
 				if (soldeClientElement.getSoldeInitial()!=null)
 				vSoldeInitial=soldeClientElement.getSoldeInitial();
                 soldeActuel = (caTotal + vSoldeInitial-reglementTotal);
+                
+                soldeFacturee = caTotalFacture + vSoldeInitial - reglementTotal;
+                
 				//System.out.println("-----------soldeActuel :Solde Initial-------"+soldeClientElement.getSoldeInitial());
 				//System.out.println("-----------soldeActuel :caTotal-------"+caTotal);
 				//System.out.println("-----------soldeActuel :reglementTotal-------"+reglementTotal);
@@ -210,6 +218,8 @@ public class SituationReportingDomaineImpl implements ISituationReportingDomaine
 					
 				
 				situationReportingElement.setSoldeActuel(soldeActuel);
+				
+				situationReportingElement.setSoldeFacturee(soldeFacturee);
 				
 			//	}
 				

@@ -19,12 +19,35 @@ public class SituationReportingValue {//implements Comparable<SituationReporting
 	private String clientAbreviation;
 	private String regionDesignation;
 	
+	
+	private Double chiffreDaffaireFacturee;
+	private Double soldeFacturee;
 //	public int compareTo(SituationReportingValue element) {
 //		return (element.getId().compareTo(id));
 //	}
 
+	
+	
+	
+	
 	public Long getId() {
 		return id;
+	}
+
+	public Double getChiffreDaffaireFacturee() {
+		return chiffreDaffaireFacturee;
+	}
+
+	public void setChiffreDaffaireFacturee(Double chiffreDaffaireFacturee) {
+		this.chiffreDaffaireFacturee = chiffreDaffaireFacturee;
+	}
+
+	public Double getSoldeFacturee() {
+		return soldeFacturee;
+	}
+
+	public void setSoldeFacturee(Double soldeFacturee) {
+		this.soldeFacturee = soldeFacturee;
 	}
 
 	public void setId(Long id) {
