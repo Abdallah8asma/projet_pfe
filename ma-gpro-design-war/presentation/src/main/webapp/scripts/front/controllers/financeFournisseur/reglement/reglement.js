@@ -37,6 +37,8 @@
         	                $scope.modePdf = "notActive";
         	                $scope.idClient = null;
 
+                            $scope.reglementCourante = {"declarerRech" : "oui"};
+
 
         	                //REST SERVICE MAGAZINS
         					$scope.listeMagazinCache = function() {
@@ -237,7 +239,7 @@
         	                      $scope.disableClient =false;
         	                      $scope.disableValider = false;
         	                      
-        	                     $scope.reglementCourante = {"date": new Date()};
+        	                     $scope.reglementCourante = {"date": new Date(), "declarer":true};
 
 
 
@@ -261,7 +263,9 @@
 														
 														$scope.listDocReglement = [];
         	                	                  
-        	                     $scope.reglementCourante = {};
+        	             
+   $scope.reglementCourante = {"declarerRech" : "oui" , "hasElementReglement":"" , "hasDetailReglement":"","idDepot":""};
+
         	                  
         	                      $scope.InitializeArray();
         	                  
@@ -273,7 +277,7 @@
         	                   
         	                        $scope.creationReglementForm.$setPristine();
         	                        $scope.rechercheReglementForm.$setPristine();
-        	                        $scope.rechercheReglement({});
+        	                        $scope.rechercheReglement($scope.reglementCourante);
         	                        //bouton pdf show
         	                        $scope.modePdf = "NotActif";
         	                        $scope.displayMode = "list";
@@ -341,7 +345,7 @@
         	                              });
         	                  }
         	                  $scope.listClients();
-        	                  $scope.rechercheReglement({});
+        	                  $scope.rechercheReglement($scope.reglementCourante);
 
         	               // Liste des Clients
         	                  $scope.listTypes = function() {
@@ -611,7 +615,7 @@
         	                      }).success(function() {
         	                          $scope.myData.splice($scope.index, 1);
         	                          $scope.closePopupDelete();
-        	                          $scope.rechercheReglement({});
+        	                          $scope.rechercheReglement($scope.reglementCourante);
         	                       
         	                      });
         	                     
@@ -682,6 +686,9 @@
         	                             + "&montantMin="+reglementCourante.montantMin
         	                             + "&montantMax="+reglementCourante.montantMax
         	                             + "&idDepot="+reglementCourante.idDepot
+										 + "&declarerRech="+reglementCourante.declarerRech
+										 + "&hasElementReglement="+reglementCourante.hasElementReglement
+										 + "&hasDetailReglement="+reglementCourante.hasDetailReglement
         	                             + "&type=pdf";
         	                    
 																		console.log("-- URL--- :" + url );
@@ -1203,7 +1210,7 @@
         	                          
         	                      }
 
-        	                initCommercialService.getRefFactureList($scope.idClient)
+        	                initCommercialService.getRefFactureAchatList($scope.idClient)
         	                              .then(
         	                                  function(success) {
         	                                    $scope.b = success;
@@ -1218,7 +1225,7 @@
         	                                  function(error) {
         	                                    $log.error('****ErrorRefFactureList : '+ error);
         	                                  });
-        	                initCommercialService.getRefBLList($scope.idClient)
+        	                initCommercialService.getRefBRList($scope.idClient)
         	                              .then(
         	                                  function(success) {
         	                                    $scope.bL = success;
@@ -1235,6 +1242,47 @@
         	                                  });
         	               
         	              };
+
+
+
+    $scope.onChangeRefFacture = function (refFacture, index) {
+      if (refFacture != null) {
+        // $log.debug(">>>>> Click onChangeRefFacture ...");
+        // $log.debug(">>>>> RefFacture = ",refFacture);
+        // $log.debug(">>>>> index = ",index);
+
+        var elementListRefFacture = $scope.listRefFacture.filter(
+          (e) => e.numFacture === refFacture
+        );
+
+        if (elementListRefFacture && elementListRefFacture[0]) {
+          $scope.finalElementList[index].montantDemande =
+            elementListRefFacture[0].montantFacture;
+          $scope.finalElementList[index].dateEcheance =
+            elementListRefFacture[0].date;
+        }
+      }
+    };
+
+    $scope.onChangeRefBL = function (refBL, index) {
+      if (refBL != null) {
+        // $log.debug(">>>>> Click onChangeRefBL ...");
+        // $log.debug(">>>>> RefBL = ",refBL);
+        // $log.debug(">>>>> index = ",index);
+
+        var elementListRefBL = $scope.listRefBL.filter(
+          (e) => e.numBL === refBL
+        );
+
+        if (elementListRefBL && elementListRefBL[0]) {
+          $scope.finalElementList[index].montantDemande =
+            elementListRefBL[0].montantBL;
+          $scope.finalElementList[index].dateEcheance =
+            elementListRefBL[0].date;
+        }
+      }
+    };
+
         	              
         	              // used to delete an element from the list
         	              $scope.deleteElement = function(item, indexLine) {

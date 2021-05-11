@@ -8,6 +8,40 @@
             
             	
 				return {
+					
+					
+						getRefFactureAchatList: function(idClient){
+					/** Devise **/
+					var defer = $q.defer();
+				    $http
+				    	.get(UrlAtelier + "/reglementAchat/listeRefFactureNonRegleByFournisseurId:"+idClient)
+					    .success(function(data){
+					    	$log.debug("=========**listeRefFactureList : "+data.length+" idClient : "+idClient);
+					    	
+				            defer.resolve(data);
+					    })
+					    .error(function(msg, code) {
+				          	defer.reject(msg);
+				          	$log.error(msg, code);
+				       	});
+					return defer.promise;
+				},
+				getRefBRList: function(idClient){
+					/** Devise **/
+					var defer = $q.defer();
+				    $http
+				    	.get(UrlAtelier + "/reglementAchat/listRefBRNonRegleByFournisseurId:"+idClient)
+					    .success(function(data){
+					    	$log.debug("=========**listeRefBLList : "+data.length+" idClient : "+idClient);
+					    	
+				            defer.resolve(data);
+					    })
+					    .error(function(msg, code) {
+				          	defer.reject(msg);
+				          	$log.error(msg, code);
+				       	});
+					return defer.promise;
+				},
 
 				getRefFactureList: function(idClient){
 					/** Devise **/

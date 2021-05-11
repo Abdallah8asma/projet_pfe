@@ -116,6 +116,23 @@ angular
 				                                                          + "&typeRapport=releveClient"
 				                                                          + "&type=pdf";
 				                    }
+                                   else if(action == 3){
+				                        //Releve
+				                        url = UrlAtelier + "/reportgc/ficheClient?clientId=" + feuilleCourante.clientId
+				                                                          + "&dateMin="+newdateSaisieMinFormat
+				                                                          + "&dateMax="+newdateSaisieMaxFormat
+				                                                          + "&typeRapport=ficheFactureClient"
+				                                                          + "&type=pdf";
+				                    }
+
+                                   else if(action == 4){
+				                        //Releve
+				                        url = UrlAtelier + "/reportgc/ficheClient?clientId=" + feuilleCourante.clientId
+				                                                          + "&dateMin="+newdateSaisieMinFormat
+				                                                          + "&dateMax="+newdateSaisieMaxFormat
+				                                                          + "&typeRapport=releveFactureClient"
+				                                                          + "&type=pdf";
+				                    }
 														$log.info("URL "+url);
 														
 

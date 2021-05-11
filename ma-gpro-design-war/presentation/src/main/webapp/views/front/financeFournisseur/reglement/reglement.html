@@ -210,7 +210,7 @@
             </div>
 
             <div class="row">
-                 <div class="col-sm-4">
+                 <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -227,7 +227,26 @@
 
 
               </div>
-              <div class="col-sm-4">
+              
+                      <div class="col-sm-3" ng-show="clientActif.blackMode==true">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Declaree</label>
+                    </div>
+                    <select ui-select2 ng-model="reglementCourante.declarerRech" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                      <option value="non">NON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              
+              <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -241,7 +260,7 @@
 
 
               </div>
-              <div class="col-sm-4">
+              <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -255,6 +274,50 @@
 
               </div>
             </div>
+            
+            
+                  <div class="row">
+              
+              
+                     
+                <div class="col-sm-6">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">BL Ou Facture</label>
+                    </div>
+                    <select ui-select2 ng-model="reglementCourante.hasElementReglement" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                      <option value="non">NON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              
+               <div class="col-sm-6">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Detail</label>
+                    </div>
+                    <select ui-select2 ng-model="reglementCourante.hasDetailReglement" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                      <option value="non">NON</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+              </div>
           </form>
         </div>
       </div>
@@ -447,6 +510,30 @@
                   </div>
                 </div>
               </div>
+              
+                  <div class="col-sm-4" ng-show="clientActif.blackMode==true">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label is-required">Declaree</label>
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="checkbox checkbox-square checkbox-primary">
+                          <input type="checkbox" class="form-control"
+                            ng-model="reglementCourante.declarer"
+                            >
+
+                          <span></span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
             </div>
 
 
@@ -858,6 +945,7 @@
                           <div ng-if="finalElementList[$index].isNew">
                             <select ui-select2 ng-model="finalElementList[$index].refFacture"
                               ng-show="finalElementList[$index].checked" data-placeholder="- Select Facture -"
+                               ng-change="onChangeRefFacture(finalElementList[$index].refFacture,$index)"
                               class="form-control" style="border: 1px solid #e5eaee !important;">
                               <option value="">Tous</option>
                               <option ng-repeat="facture in listRefFacture" refresh="refreshList()"
@@ -865,6 +953,7 @@
                             </select>
                             <select ui-select2 ng-model="finalElementList[$index].refBL"
                               ng-show="!finalElementList[$index].checked" data-placeholder="- Select BL -"
+                               ng-change="onChangeRefBL(finalElementList[$index].refBL,$index)"
                               class="form-control" style="border: 1px solid #e5eaee !important;">
                               <option value="">Tous</option>
                               <option ng-repeat="bl in listRefBL" value="{{bl.numBL}}">{{bl.numBL}}</option>
@@ -875,21 +964,25 @@
                         <td>
                           <input class="form-control" ng-model="item.montantDemande" type="number" />
                         </td>
-                        <td>
-                          <div class="input-group" ng-controller="DatepickerDemoController">
-                            <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-                              ng-model="item.dateEcheance" is-open="opened" datepicker-options="dateOptions"
-                              date-="enabled(date, mode)" close-text="Close" />
-                            <div class="input-group-btn">
-                              <button type="button" class="btn1 btn-default" ng-click="open($event)">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                              </button>
+                           <td>
+  
+                          <div class="form-group">
+                            <div class="input-group">
+  
+                              <input type="date" class="form-control " datepicker-popup="{{format}}"
+                                ng-model="item.dateEcheance" />
+  
                             </div>
                           </div>
+  
+  
                         </td>
                         <td>
-                          <button data-nodrag class="btn btn-default btn-xs" ng-click="deleteElement(item,$index)">
-                            <i class="fa fa-fw fa-trash-o"></i>
+                    
+                          
+                              <button data-nodrag class="btn " ng-click="deleteElement(item,$index)">
+                            <i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro">
+                            </i>
                           </button>
                         </td>
                       </tr>
