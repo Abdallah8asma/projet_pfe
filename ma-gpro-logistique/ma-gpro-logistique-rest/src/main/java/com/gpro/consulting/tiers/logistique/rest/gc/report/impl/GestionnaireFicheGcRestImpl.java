@@ -5466,6 +5466,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.setColumnView(7, 10);
 		sheet3.setColumnView(8, 10);
 		sheet3.setColumnView(9, 10);
+		
+		sheet3.setColumnView(10, 10);
 		/**************************************************************************/
 
 		/*
@@ -5509,7 +5511,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		// Nom du rapport et la date
 
 		sheet3.addCell(new Label(2, 7, "    Liste des Factures Non Payées", ExcelUtils.boldTitre));
-		sheet3.mergeCells(2, 7, 9, 8);
+		sheet3.mergeCells(2, 7, 10, 8);
 		/*
 		 * // sheet3.addCell(new Label(2, 6, "Le : " + dateFormat2.format(d),
 		 * boldRed3));
@@ -5728,7 +5730,11 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		
 		sheet3.addCell(new Label(9, i - 1, "Devise", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(10, i - 1, "Reste", ExcelUtils.boldRed2));
 
+		
+		
 //		sheet3.addCell(new Label(9, i - 1, "Quantite Totale", ExcelUtils.boldRed2));
 
 		Double mantantTtcTotale = 0d;
@@ -5736,6 +5742,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		Double quantiteTotale = 0d;
 
 		Double montantPayeeTotale = 0d;
+		
+		Double mantantResteTotale = 0d;
 		List<FactureReportElementValue> listFactureNonPaye = new ArrayList<FactureReportElementValue>();
 		for (FactureReportElementValue element : report.getProductList()) {
 
@@ -5914,6 +5922,21 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			} else {
 				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
 
+			}
+			
+			
+			
+			// Mantant Reste
+
+			if (element.getMetrageTotal() != null && element.getMontantTTC() != null) {
+				
+				Double reste = element.getMontantTTC() - element.getMetrageTotal();
+				sheet3.addCell(new jxl.write.Number(10, i, convertisseur(reste, 3) , ExcelUtils.boldRed));
+
+				mantantResteTotale += reste ;
+				
+			} else {
+				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
 			}
 
 	/*		// Mantat Remise

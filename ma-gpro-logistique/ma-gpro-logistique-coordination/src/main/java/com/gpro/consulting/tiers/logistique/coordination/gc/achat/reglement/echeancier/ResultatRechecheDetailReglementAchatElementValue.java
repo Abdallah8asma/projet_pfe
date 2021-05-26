@@ -30,9 +30,51 @@ public class ResultatRechecheDetailReglementAchatElementValue implements Compara
 	
 	private String referenceDetReglement;
 	
+
+	private Calendar dateDepotBanque;
+
+	private Double chargeBanque;
+
+	private Double tvaBanque;
+
+	private String banqueSociete;
 	
 	
 	
+	
+	
+	public Calendar getDateDepotBanque() {
+		return dateDepotBanque;
+	}
+
+	public void setDateDepotBanque(Calendar dateDepotBanque) {
+		this.dateDepotBanque = dateDepotBanque;
+	}
+
+	public Double getChargeBanque() {
+		return chargeBanque;
+	}
+
+	public void setChargeBanque(Double chargeBanque) {
+		this.chargeBanque = chargeBanque;
+	}
+
+	public Double getTvaBanque() {
+		return tvaBanque;
+	}
+
+	public void setTvaBanque(Double tvaBanque) {
+		this.tvaBanque = tvaBanque;
+	}
+
+	public String getBanqueSociete() {
+		return banqueSociete;
+	}
+
+	public void setBanqueSociete(String banqueSociete) {
+		this.banqueSociete = banqueSociete;
+	}
+
 	public String getReferenceDetReglement() {
 		return referenceDetReglement;
 	}
