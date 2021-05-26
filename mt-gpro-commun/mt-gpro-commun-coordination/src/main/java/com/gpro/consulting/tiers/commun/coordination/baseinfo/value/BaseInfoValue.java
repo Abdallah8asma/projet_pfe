@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.commun.coordination.baseinfo.value;
 
+import java.util.Calendar;
+
 /**
  * @author Wahid Gazzah
  * @since 01/06/2016
@@ -69,7 +71,17 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 	private boolean blackMode;
 	
 	
+	private Calendar dateDemarrage;
 	
+	
+
+	public Calendar getDateDemarrage() {
+		return dateDemarrage;
+	}
+
+	public void setDateDemarrage(Calendar dateDemarrage) {
+		this.dateDemarrage = dateDemarrage;
+	}
 
 	public boolean isBlackMode() {
 		return blackMode;

@@ -170,6 +170,12 @@ public class ReglementAchatPersistanceUtilities {
 		entity.setObservation(dto.getObservation());
 		entity.setReference(dto.getReference());
 		
+		entity.setDateDepotBanque(dto.getDateDepotBanque());
+		entity.setChargeBanque(dto.getChargeBanque());
+		entity.setTvaBanque(dto.getTvaBanque());
+		
+		entity.setBanqueSociete(dto.getBanqueSociete());
+		
 		if(dto.getTypeReglementId() != null){
 			TypeReglementAchatEntity typeReglement = new TypeReglementAchatEntity();
 			typeReglement.setId(dto.getTypeReglementId());
@@ -239,6 +245,14 @@ public class ReglementAchatPersistanceUtilities {
 		
 		dto.setReference(entity.getReference());
 		
+		
+		
+		dto.setDateDepotBanque(entity.getDateDepotBanque());
+		dto.setChargeBanque(entity.getChargeBanque());
+		dto.setTvaBanque(entity.getTvaBanque());
+		
+		dto.setBanqueSociete(entity.getBanqueSociete());
+		
 		if(entity.getReglement() != null){
 			dto.setReglementId(entity.getReglement().getId());
 		}
@@ -266,6 +280,14 @@ public class ReglementAchatPersistanceUtilities {
 		dto.setObservation(entity.getObservation());
 		
 		dto.setReferenceDetReglement(entity.getReference());
+		
+		
+		dto.setDateDepotBanque(entity.getDateDepotBanque());
+		dto.setChargeBanque(entity.getChargeBanque());
+		dto.setTvaBanque(entity.getTvaBanque());
+		
+		dto.setBanqueSociete(entity.getBanqueSociete());
+		
 		
 		if(entity.getTypeReglement() != null){
 			if(entity.getTypeReglement().getId() != null){
@@ -391,6 +413,14 @@ public class ReglementAchatPersistanceUtilities {
 		dto.setReferenceDetReglement(entity.getReference());
 		
 	
+		
+		
+		dto.setDateDepotBanque(entity.getDateDepotBanque());
+		dto.setChargeBanque(entity.getChargeBanque());
+		dto.setTvaBanque(entity.getTvaBanque());
+		dto.setBanqueSociete(entity.getBanqueSociete());
+		
+		
 		
 		if(entity.getReglement() != null){
 			

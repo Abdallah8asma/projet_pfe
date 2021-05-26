@@ -185,6 +185,8 @@ public class PersistanceUtilities {
         dto.setExcelDirectory(entity.getExcelDirectory());
         dto.setBlackMode(entity.isBlackMode());
         
+        dto.setDateDemarrage(entity.getDateDemarrage());
+        
 		return dto;
 	}
 
@@ -236,6 +238,8 @@ public class PersistanceUtilities {
 		
 		entity.setExcelDirectory(dto.getExcelDirectory());
 		entity.setBlackMode(dto.isBlackMode());
+		
+		entity.setDateDemarrage(dto.getDateDemarrage());
 	
 		return entity;
 	}

@@ -45,6 +45,15 @@ angular
 
 
 			$scope.listeRegionCache();
+			
+				$scope.getListeBanquePI = function() {
+				$http.get(UrlCommun + "/banquePI/all").success(function(data) {
+					$log.debug("listeCathegorie : " + data.length);
+					$scope.listeBanque = data;
+				});
+			}
+
+			$scope.getListeBanquePI();
 
 
 			// Liste des listGroupeClient
@@ -457,7 +466,7 @@ angular
 			
 				$scope.updateDetailReglementAchat = function(detailReglement) {
 
-				console.log("detailReglement ",detailReglement);
+				//console.log("detailReglement ",detailReglement);
 				
 				
 				//console.log("isReglee ",isReglee);
@@ -543,21 +552,51 @@ angular
 								//  width: '10%'
 							},*/
 							
-							{
+							 {
 								field: 'regle',
 								displayName: 'Reglé',
 								cellTemplate: '<input type="checkbox" ng-model="row.entity.regle"  style="margin: 8px;"/>',
 								width: '10%'
-							},
-							
-							
-							
-							
-							 {
+							}, {
 								field: 'observation',
 								displayName: 'Observations',
-								// width: '10%'
+							    cellTemplate: '<input type="text" ng-model="row.entity.observation"/>',
+								width: '10%'
 							},
+							{
+								field: 'banqueSociete',
+								displayName: 'Banque Soc.',
+								cellTemplate: `  <select  ui-select2 ng-model="row.entity.banqueSociete"   data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;" >
+                                                   <option value=""></option>
+                                                   <option ng-repeat="categorie in listeBanque | filter : {societe : true}" value="{{categorie.abreviation}}">{{categorie.code}}/{{categorie.abreviation}}</option>
+                                                 </select> `,
+
+								width: '10%'
+							},
+
+							{
+								field: 'dateDepotBanque',
+								displayName: 'D.Depot Banque',
+									cellTemplate: '<input type="date"   datepicker-popup="{{format}}" ng-model="row.entity.dateDepotBanque">',
+								width: '15%'
+							}
+							,
+
+							{
+								field: 'chargeBanque',
+								displayName: 'Charge Banque',
+								cellTemplate: '<input type="number" ng-model="row.entity.chargeBanque"/>',
+								
+								width: '10%'
+							},
+							{
+								field: 'tvaBanque',
+								displayName: 'TVA Banque',
+								cellTemplate: '<input type="number" ng-model="row.entity.tvaBanque"/>',
+								width: '10%'
+							}
+							
+							,
 							    {
           field: '',
           width: '5%',

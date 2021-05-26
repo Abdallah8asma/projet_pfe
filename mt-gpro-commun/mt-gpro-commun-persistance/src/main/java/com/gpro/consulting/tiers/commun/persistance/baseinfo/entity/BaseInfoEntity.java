@@ -168,7 +168,27 @@ public class BaseInfoEntity implements Serializable{
 	private boolean blackMode;
 	
 	
+	@Column(name = "date_demarrage")
+	private Calendar dateDemarrage;
 	
+	
+	
+	
+	
+	
+	
+	public Calendar getDateDemarrage() {
+		return dateDemarrage;
+	}
+
+	public void setDateDemarrage(Calendar dateDemarrage) {
+		this.dateDemarrage = dateDemarrage;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public boolean isBlackMode() {
 		return blackMode;
 	}
