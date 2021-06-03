@@ -230,7 +230,44 @@ public class GuichetAnnuelEntity {
 	  
 	  
 	  
-	  public String getPrefixeFAND() {
+	  
+	  
+	  /***reglement inverse vente **/
+	  
+	  
+	  
+	  /** prefixe_reglement  */
+	  @Column(name = "prefixe_reglement_inverse ")
+	  private String prefixeReglementInverse; 
+	  
+	  /** Numéro Reglement courant. */
+	  @Column(name = "ref_reglement_inverse")
+	  private Long numReferenceReglementInverseCourante;
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  public String getPrefixeReglementInverse() {
+		return prefixeReglementInverse;
+	}
+
+	public void setPrefixeReglementInverse(String prefixeReglementInverse) {
+		this.prefixeReglementInverse = prefixeReglementInverse;
+	}
+
+	public Long getNumReferenceReglementInverseCourante() {
+		return numReferenceReglementInverseCourante;
+	}
+
+	public void setNumReferenceReglementInverseCourante(Long numReferenceReglementInverseCourante) {
+		this.numReferenceReglementInverseCourante = numReferenceReglementInverseCourante;
+	}
+
+	public String getPrefixeFAND() {
 		return prefixeFAND;
 	}
 

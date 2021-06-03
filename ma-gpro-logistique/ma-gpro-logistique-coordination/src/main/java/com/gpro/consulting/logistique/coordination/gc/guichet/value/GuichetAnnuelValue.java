@@ -106,7 +106,37 @@ public class GuichetAnnuelValue {
 	  private String prefixeFAND ;
 	  
 	  
+	  
+	  
+	  /***reglement inverse ***/
+	  
+	  
+
+	  private String prefixeReglementInverse; 
+	  
+
+	  private Long numReferenceReglementInverseCourante;
+	  
+	  
+	  
+	  
 	
+	public String getPrefixeReglementInverse() {
+		return prefixeReglementInverse;
+	}
+
+	public void setPrefixeReglementInverse(String prefixeReglementInverse) {
+		this.prefixeReglementInverse = prefixeReglementInverse;
+	}
+
+	public Long getNumReferenceReglementInverseCourante() {
+		return numReferenceReglementInverseCourante;
+	}
+
+	public void setNumReferenceReglementInverseCourante(Long numReferenceReglementInverseCourante) {
+		this.numReferenceReglementInverseCourante = numReferenceReglementInverseCourante;
+	}
+
 	public Long getNumReferenceFactureNDCourante() {
 		return numReferenceFactureNDCourante;
 	}

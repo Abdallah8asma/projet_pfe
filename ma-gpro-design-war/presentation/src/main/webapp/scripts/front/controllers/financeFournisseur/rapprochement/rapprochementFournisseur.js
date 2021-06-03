@@ -166,7 +166,7 @@ angular
 
 
 				$http
-					.get(UrlAtelier + "/gestionnaireLogistiqueCache/listeTypeReglementCache")
+					.get(UrlAtelier + "/gestionnaireLogistiqueCache/listeTypeReglementAchatCache")
 					.success(
 						function (dataProduit) {
 

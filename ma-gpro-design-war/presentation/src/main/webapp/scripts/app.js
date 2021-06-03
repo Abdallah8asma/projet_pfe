@@ -114,6 +114,24 @@ angular
   'gpro.remiseVente','gpro.packageVente',
   'gpro.bondelivraisonBS',
 
+
+
+
+  /*** reglement inverse ***/
+
+'gpro.reglementInverse',
+'gpro.elementReglementInverse',
+ 'gpro.echeancierInverse',
+
+  
+
+
+ /*** reglement achat inverse */
+
+'gpro.reglementInversefournisseur',
+'gpro.elementReglementInverseAchat',
+ 'gpro.echeancierInverseFournisseur',
+
     /** ************ modules Achat *********** */
 
     'gpro.factureAchat',

@@ -139,6 +139,33 @@ public interface IGuichetMensuelPersistance {
 	public List<GuichetMensuelValue> rechercheMultiCritere(RechercheMulticritereGuichetMensuelValue request);
 
 
+	public Long getNextNumReglementInverseAchat(Calendar c);
+
+
+	public String getPrefixReglementInverseAchat(Calendar c);
+
+
+	public Long modifierGuichetReglementInverseAchatMensuel(GuichetMensuelValue vGuichetValeur);
+
+
+	public Long getNextNumDetReglementInverseAchat(Calendar c);
+
+
+	public String getPrefixDetReglementInverseAchat(Calendar c);
+
+
+	public Long modifierGuichetDetReglementInverseAchatMensuel(GuichetMensuelValue vGuichetValeur);
+
+
+	public Long getNextNumDetReglementInverse(Calendar c);
+
+
+	public String getPrefixDetReglementInverse(Calendar c);
+
+
+	public Long modifierGuichetDetReglementInverseMensuel(GuichetMensuelValue vGuichetValeur);
+
+
 	
 	
 }

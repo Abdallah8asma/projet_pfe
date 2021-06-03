@@ -626,4 +626,121 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 			    return list;
 	}
 
+
+	@Override
+	public Long getNextNumReglementInverseAchat(Calendar c) {
+		  int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.numReferenceReglementInverseAchatCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    Long vNextNumBonReception= (Long) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public String getPrefixReglementInverseAchat(Calendar c) {
+		 int vAnneeCourante =c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.prefixeReglementInverseAchat from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    String vNextNumBonReception= (String) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public Long modifierGuichetReglementInverseAchatMensuel(GuichetMensuelValue pGuichetValeur) {
+		   GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
+			
+		    vGuichetEntite.setNumReferenceReglementInverseAchatCourante(pGuichetValeur.getNumReferenceReglementInverseAchatCourante()); 
+		    this.entityManager.merge(vGuichetEntite);
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+	}
+
+
+	@Override
+	public Long getNextNumDetReglementInverseAchat(Calendar c) {
+		  int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.numReferenceDetReglementInverseAchatCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    Long vNextNumBonReception= (Long) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public String getPrefixDetReglementInverseAchat(Calendar c) {
+		 int vAnneeCourante =c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.prefixeDetReglementInverseAchat from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    String vNextNumBonReception= (String) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public Long modifierGuichetDetReglementInverseAchatMensuel(GuichetMensuelValue pGuichetValeur) {
+		   GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
+			
+		    vGuichetEntite.setNumReferenceDetReglementInverseAchatCourante(pGuichetValeur.getNumReferenceDetReglementInverseAchatCourante()); 
+		    this.entityManager.merge(vGuichetEntite);
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+	}
+
+
+	@Override
+	public Long getNextNumDetReglementInverse(Calendar c) {
+		 int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.numReferenceDetReglementInverseCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    Long vNextNumBonReception= (Long) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public String getPrefixDetReglementInverse(Calendar c) {
+		 int vAnneeCourante =c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.prefixeDetReglementInverse from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    String vNextNumBonReception= (String) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public Long modifierGuichetDetReglementInverseMensuel(GuichetMensuelValue pGuichetValeur) {
+		   GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
+			
+		    vGuichetEntite.setNumReferenceDetReglementInverseCourante(pGuichetValeur.getNumReferenceDetReglementInverseCourante()); 
+		    this.entityManager.merge(vGuichetEntite);
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+	}
+
 }

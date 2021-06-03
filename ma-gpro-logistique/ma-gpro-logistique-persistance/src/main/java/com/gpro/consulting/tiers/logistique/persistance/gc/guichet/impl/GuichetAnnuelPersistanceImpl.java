@@ -547,5 +547,17 @@ public class GuichetAnnuelPersistanceImpl extends AbstractPersistance implements
 	    return GuichetPersistanceUtilities.toValue(GuichetAnnuelEntity);
 
 	}
+
+	@Override
+	public Long modifierGuichetReglementInverseAnnuel(GuichetAnnuelValue pGuichetValeur) {
+		// TODO Auto-generated method stub
+		// Convertir la valeur du guichet en une entité.
+		  GuichetAnnuelEntity vGuichetEntite = rechercherGuichetAnnuel(pGuichetValeur);
+		// Sauvegarde de l'instance dans la base
+	    vGuichetEntite.setNumReferenceReglementInverseCourante(pGuichetValeur.getNumReferenceReglementInverseCourante());
+	    this.entityManager.merge(vGuichetEntite);
+	    this.entityManager.flush();
+	    return vGuichetEntite.getId();
+	}
 	
 }
