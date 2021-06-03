@@ -65,6 +65,16 @@ public interface IConstanteCommerciale {
 	/********** package depot produit *************/
 	//
 	public static String TABLE_EB_PRODUITDEPOT = "eb_produitdepot";
+	
+	
+	
+	/********* reglement inverse vente **********/
+	public static String TABLE_GC_DOCUMENTS_REGLEMENT_INVERSE = "GC_DOCUMENTS_REGLEMENT_INVERSE";
+	public static String TABLE_GC_DETAILSREGLEMENT_INVERSE = "GC_DETAILSREGLEMENT_INVERSE";
+	public static String TABLE_GC_ELEMENTREGLEMENT_INVERSE = "GC_ELEMENTREGLEMENT_INVERSE";
+	public static String TABLE_GC_REGLEMENT_INVERSE = "GC_REGLEMENT_INVERSE";
+	
+	
 
 	/** Liste des séquences */
 	//
@@ -137,6 +147,22 @@ public interface IConstanteCommerciale {
 	public static final String SEQUENCE_GC_TAXEBCOMMANDE = "GC_TAXEBCOMMANDE_SEQ";
 
 	public static String SEQUENCE_PRDE = "prde_seq";
+	
+	
+	/*************sequence reglement inverse vente *****************/
+	
+	public static String SEQUENCE_GC_DOCUMENTS_REGLEMENT_INVERSE = "CDOCRG_INV_SEQ";
+	public static String SEQUENCE_GC_DETAILSREGLEMENT_INVERSE = "CDR_INV_SEQ";
+	public static String SEQUENCE_GC_ELEMENTREGLEMENT_INVERSE = "CER_INV_SEQ";
+	public static String SEQUENCE_GC_REGLEMENT_INVERSE = "CRG_INV_SEQ";
+	
+	
+	/*************sequence reglement inverse achat *****************/
+	public static String SEQUENCE_GC_DOCUMENTS_REGLEMENT_INVERSE_ACHAT = "CDOCRG_INV_ACH_SEQ";
+	public static String SEQUENCE_GC_DETAILSREGLEMENT_INVERSE_ACHAT = "CDR_INV_ACHAT_SEQ";
+	public static String SEQUENCE_GC_ELEMENTREGLEMENT_INVERSE_ACHAT = "CER_INV_ACHAT_SEQ";
+	public static String SEQUENCE_GC_REGLEMENT_INVERSE_ACHAT = "CRG_INV_ACHAT_SEQ";
+	
 
 	// Partie Achat
 
@@ -150,6 +176,16 @@ public interface IConstanteCommerciale {
 	public static String TABLE_GC_ELEMENTREGLEMENT_ACHAT = "GC_ELEMENTREGLEMENT_ACHAT ";
 	public static String TABLE_GC_REGLEMENT_ACHAT = "GC_REGLEMENT_ACHAT ";
 	public static String TABLE_GC_TYPEREGLEMENT_ACHAT = "GC_TYPEREGLEMENT_ACHAT ";
+	
+	
+	//table reglement inverse achat
+	
+	public static String TABLE_GC_DOCUMENTS_REGLEMENT_INVERSE_ACHAT = "GC_DOCUMENTS_REGLEMENT_INVERSE_ACHAT";
+	public static String TABLE_GC_DETAILSREGLEMENT_INVERSE_ACHAT = "GC_DETAILSREGLEMENT_INVERSE_ACHAT ";
+	public static String TABLE_GC_ELEMENTREGLEMENT_INVERSE_ACHAT = "GC_ELEMENTREGLEMENT_INVERSE_ACHAT ";
+	public static String TABLE_GC_REGLEMENT_INVERSE_ACHAT = "GC_REGLEMENT_INVERSE_ACHAT ";
+	
+	
 
 	public static String OK = "OK";
 

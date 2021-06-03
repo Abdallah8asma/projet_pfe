@@ -93,6 +93,12 @@ public class GuichetPersistanceUtilities {
 		entity.setPrefixeBLND(dto.getPrefixeBLND());
 		entity.setNumReferenceFactureNDCourante(dto.getNumReferenceFactureNDCourante());
 		entity.setPrefixeFAND(dto.getPrefixeFAND());
+		
+
+		entity.setPrefixeReglementInverse(dto.getPrefixeReglementInverse());
+		entity.setNumReferenceReglementInverseCourante(dto.getNumReferenceReglementInverseCourante());
+		
+		
 		return entity;
 	}
 
@@ -170,6 +176,12 @@ public class GuichetPersistanceUtilities {
 		
 		dto.setNumReferenceFactureNDCourante(entity.getNumReferenceFactureNDCourante());
 		dto.setPrefixeFAND(entity.getPrefixeFAND());
+		
+		
+
+		dto.setPrefixeReglementInverse(entity.getPrefixeReglementInverse());
+		dto.setNumReferenceReglementInverseCourante(entity.getNumReferenceReglementInverseCourante());
+		
 		return dto;
 	}
 	
@@ -229,6 +241,22 @@ public class GuichetPersistanceUtilities {
 		gmv.setPrefixeDetReglement(entity.getPrefixeDetReglement());
 		
 		gmv.setCibleCA(entity.getCibleCA());
+		
+
+		gmv.setNumReferenceDetReglementInverseAchatCourante(entity.getNumReferenceDetReglementInverseAchatCourante());
+
+		gmv.setPrefixeDetReglementInverseAchat(entity.getPrefixeDetReglementInverseAchat());
+
+		gmv.setNumReferenceReglementInverseAchatCourante(entity.getNumReferenceReglementInverseAchatCourante());
+
+		gmv.setPrefixeReglementInverseAchat(entity.getPrefixeReglementInverseAchat());
+		
+		
+
+		  
+		gmv.setNumReferenceDetReglementInverseCourante(entity.getNumReferenceDetReglementInverseCourante());
+		  		  
+		gmv.setPrefixeDetReglementInverse(entity.getPrefixeDetReglementInverse());
 		
 	
 		return gmv;
@@ -297,6 +325,19 @@ public class GuichetPersistanceUtilities {
 		gmv.setPrefixeDetReglement(entity.getPrefixeDetReglement());
 		
 		gmv.setCibleCA(entity.getCibleCA());
+		
+
+		gmv.setNumReferenceDetReglementInverseAchatCourante(entity.getNumReferenceDetReglementInverseAchatCourante());
+
+		gmv.setPrefixeDetReglementInverseAchat(entity.getPrefixeDetReglementInverseAchat());
+
+		gmv.setNumReferenceReglementInverseAchatCourante(entity.getNumReferenceReglementInverseAchatCourante());
+
+		gmv.setPrefixeReglementInverseAchat(entity.getPrefixeReglementInverseAchat());
+		
+		gmv.setNumReferenceDetReglementInverseCourante(entity.getNumReferenceDetReglementInverseCourante());
+		  
+		gmv.setPrefixeDetReglementInverse(entity.getPrefixeDetReglementInverse());
 		
 	
 		return gmv;
