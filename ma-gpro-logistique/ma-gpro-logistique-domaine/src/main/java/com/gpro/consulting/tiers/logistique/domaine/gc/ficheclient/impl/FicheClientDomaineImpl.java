@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
+import com.gpro.consulting.tiers.commun.persistance.baseinfo.IBaseInfoPersistance;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommercialeReport;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.LivraisonVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.RechercheMulticritereBonLivraisonValue;
@@ -57,6 +59,9 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 
 	@Autowired
 	private ISoldeClientPersistance soldeClientPersistance;
+	
+	@Autowired
+	private IBaseInfoPersistance baseInfoPersistance;
 
 	private final static String FACTURE_TYPE_AVOIRE = "avoir";
 	private final static String SPACE = " ";
@@ -91,7 +96,27 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 			RechercheMulticritereReglementValue requestReglement = new RechercheMulticritereReglementValue();
 			requestReglement.setPartieIntId(request.getClientId());
 			requestReglement.setDateReglementMax(request.getDateMax());
-			requestReglement.setDateReglementMin(request.getDateMin());
+			
+			
+			//cas de date demarrage 
+			
+			BaseInfoValue baseInfo  = baseInfoPersistance.getClientActif() ; 
+			
+			if(baseInfo.getDateDemarrage() != null)
+			{
+				requestReglement.setDateReglementMin(baseInfo.getDateDemarrage());
+			}
+			
+			else
+				
+			{
+				requestReglement.setDateReglementMin(request.getDateMin());
+			}
+			
+	
+			
+			
+		
 			ResultatRechecheReglementCompletValue resultReglement = reglementPersistance
 					.rechercherMultiCritereComplet(requestReglement);
 

@@ -100,4 +100,6 @@ public interface IGuichetAnnuelPersistance {
 
 	public GuichetAnnuelValue getCurrentGuichetAnnuel(Calendar c);
 
+	public Long modifierGuichetReglementInverseAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
 }

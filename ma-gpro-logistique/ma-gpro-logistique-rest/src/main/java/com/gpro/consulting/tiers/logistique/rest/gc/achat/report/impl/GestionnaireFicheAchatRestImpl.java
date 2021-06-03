@@ -2571,14 +2571,16 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 		sheet3.setColumnView(1, 7);
 		sheet3.setColumnView(2, 25);
 
-		sheet3.setColumnView(3, 12);
-		sheet3.setColumnView(4, 10);
+		sheet3.setColumnView(3, 16);
+		sheet3.setColumnView(4, 16);
 		sheet3.setColumnView(5, 10);
 
 		sheet3.setColumnView(6, 10);
 		sheet3.setColumnView(7, 10);
 		sheet3.setColumnView(8, 10);
 		sheet3.setColumnView(9, 10);
+		
+		sheet3.setColumnView(10, 10);
 		/**************************************************************************/
 
 		/*
@@ -2622,7 +2624,7 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 		// Nom du rapport et la date
 
 		sheet3.addCell(new Label(2, 7, "    Liste des Factures Non Payées", ExcelUtils.boldTitre));
-		sheet3.mergeCells(2, 7, 8, 8);
+		sheet3.mergeCells(2, 7, 10, 8);
 		/*
 		 * // sheet3.addCell(new Label(2, 6, "Le : " + dateFormat2.format(d),
 		 * boldRed3));
@@ -2817,11 +2819,16 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 
 		sheet3.addCell(new Label(2, i - 1, "Client", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(3, i - 1, "Référence", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(4, i - 1, "Date", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(5, i - 1, "Montant HT", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(6, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(7, i - 1, "Montant TTC", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(8, i - 1, "Montant Réglé", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(4, i - 1, "Réf. Fourn.", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(5, i - 1, "Date", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(6, i - 1, "Montant HT", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(8, i - 1, "Montant TTC", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i - 1, "Montant Réglé", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(10, i - 1, "Reste", ExcelUtils.boldRed2));
 
 
 		//sheet3.addCell(new Label(8, i - 1, "Montant Remise", ExcelUtils.boldRed2));
@@ -2833,6 +2840,9 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 		Double remiseTotale = 0d;
 		Double quantiteTotale = 0d;
 		
+		
+		Double mantantRegleTotale = 0d;
+		Double mantantResteTotale = 0d;
 
 		
 		Map<Long, PartieInteresseValue>  mapsFournisseur= 	gestionnaireLogistiqueCacheService.mapClientById();
@@ -2881,21 +2891,31 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 				sheet3.addCell(new Label(3, i, "", ExcelUtils.boldRed));
 
 			}
+			
+			
+			
+			if (element.getRefexterne() != null) {
+				sheet3.addCell(new Label(4, i, element.getRefexterne() + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
+
+			}
 
 			// date
 
 			if (element.getDate() != null) {
 				sheet3.addCell(
-						new Label(4, i, dateFormat2.format(element.getDate().getTime()) + "", ExcelUtils.boldRed));
+						new Label(5, i, dateFormat2.format(element.getDate().getTime()) + "", ExcelUtils.boldRed));
 
 			} else {
-				sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
+				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
 			}
 
 			// Mantant HT
 
 			if (element.getMontantHTaxe() != null) {
-				sheet3.addCell(new jxl.write.Number(5, i, convertisseur(element.getMontantHTaxe(), 4) , ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(6, i, convertisseur(element.getMontantHTaxe(), 4) , ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
@@ -2905,31 +2925,47 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 			// Mantant Taxe
 
 			if (element.getMontantTaxe() != null) {
-				sheet3.addCell(new jxl.write.Number(6, i, convertisseur(element.getMontantTaxe(), 4) , ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(7, i, convertisseur(element.getMontantTaxe(), 4) , ExcelUtils.boldRed));
 
 			} else {
-				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
+				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
 			}
 
 			// Mantant TTC
 
 			if (element.getMontantTTC() != null) {
-				sheet3.addCell(new jxl.write.Number(7, i, convertisseur(element.getMontantTTC(), 4) , ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(8, i, convertisseur(element.getMontantTTC(), 4) , ExcelUtils.boldRed));
 
 				mantantTtcTotale += element.getMontantTTC();
 			} else {
-				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
 			}
 
 			
 			// Mantant regle
 
 			if (element.getMetrageTotal() != null) {
-				sheet3.addCell(new jxl.write.Number(7, i, convertisseur(element.getMetrageTotal(), 3) , ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(9, i, convertisseur(element.getMetrageTotal(), 3) , ExcelUtils.boldRed));
 
+				mantantRegleTotale += element.getMetrageTotal();
 				
 			} else {
-				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+			}
+			
+			
+			
+			// Mantant Reste
+
+			if (element.getMetrageTotal() != null && element.getMontantTTC() != null) {
+				
+				Double reste = element.getMontantTTC() - element.getMetrageTotal();
+				sheet3.addCell(new jxl.write.Number(10, i, convertisseur(reste, 3) , ExcelUtils.boldRed));
+
+				mantantResteTotale += reste ;
+				
+			} else {
+				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
 			}
 		
 
@@ -2960,7 +2996,7 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 		i++;
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Totale", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i, "Total", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 9, i);
 
 		i++;
@@ -2976,6 +3012,17 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 		sheet3.addCell(new jxl.write.Number(9, i, convertisseur(mantantTtcTotale, 3) , ExcelUtils.boldRed2));
 		
 		i++;
+		
+		sheet3.addCell(new Label(7, i, "Montant Reglé Total", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new jxl.write.Number(9, i, convertisseur(mantantRegleTotale, 3) , ExcelUtils.boldRed2));
+		
+		i++;
+		
+
+		sheet3.addCell(new Label(7, i, "Montant Reste Total", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new jxl.write.Number(9, i, convertisseur(mantantResteTotale, 3) , ExcelUtils.boldRed2));
 
 		/*sheet3.addCell(new Label(7, i, "Montant Remise Total", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);

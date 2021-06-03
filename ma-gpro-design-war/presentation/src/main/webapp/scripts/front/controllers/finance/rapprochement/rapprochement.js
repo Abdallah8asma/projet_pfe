@@ -66,7 +66,7 @@ angular
 						+ "/groupeClient/all")
 					.success(
 						function(dataCategorieCache) {
-							console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+							//console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 							//	$log.debug("listeCategorie : "+dataCategorieCache.length);
 							$scope.listGroupeClient = dataCategorieCache;
 

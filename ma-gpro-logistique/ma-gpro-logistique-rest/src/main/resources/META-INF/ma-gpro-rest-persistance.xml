@@ -99,6 +99,15 @@
 		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.ElementReglementEntity</class>
 		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.ReglementEntity</class>
 		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.TypeReglementEntity</class>
+		
+				<!-- Reglement inverse -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.entity.DocumentReglementInverseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.entity.DetailsReglementInverseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.entity.ElementReglementInverseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.entity.ReglementInverseEntity</class>
+	
+		
+		
 
 		<!-- SoldeClient -->
 		<class> com.gpro.consulting.tiers.logistique.persistance.gc.soldeClient.entite.SoldeClientEntity</class>
@@ -196,6 +205,13 @@
 		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.ElementReglementAchatEntity</class>
 		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.ReglementAchatEntity</class>
 		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.TypeReglementAchatEntity</class>
+		
+			
+		<!-- Reglement inverse Achat-->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.entity.DocumentReglementInverseAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.entity.DetailsReglementInverseAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.entity.ElementReglementInverseAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.entity.ReglementInverseAchatEntity</class>
 	
 	
 	

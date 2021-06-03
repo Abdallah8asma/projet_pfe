@@ -96,6 +96,19 @@ angular
 				case 'rapprochement':
 					$scope.ITEM = 'rapprochement';
 				break;
+				
+				
+					case 'reglementInverseVente':
+					$scope.ITEM = 'reglementInverseVente';
+					break;
+				case 'elementReglementInverseAchat':
+					$scope.ITEM = 'elementReglementInverseAchat';
+					break;
+						case 'echeancierInverse':
+					$scope.ITEM = 'echeancierInverse';
+					break;
+					
+					
 			}
 
 			$scope.goCoutsVente = function () {

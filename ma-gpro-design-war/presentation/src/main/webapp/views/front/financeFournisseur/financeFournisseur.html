@@ -22,4 +22,19 @@
   </div>
   
   
+<!--   reglement inverse -->
+  <div ng-if="ITEM == 'reglementInverseVente'">
+    <div ng-include="'views/front/financeFournisseur/reglementInverse/reglementInverse.html'"></div>
+  </div>
+
+  <div ng-if="ITEM == 'elementReglementInverseAchat'">
+    <div ng-include="'views/front/financeFournisseur/reglementInverse/elementReglementInverse.html'"></div>
+  </div>
+  
+    <div ng-if="ITEM == 'echeancierInverse'">
+    <div ng-include="'views/front/financeFournisseur/paiementInverse/echeancierInverse.html'"></div>
+  </div>
+
+  
+  
 </div>

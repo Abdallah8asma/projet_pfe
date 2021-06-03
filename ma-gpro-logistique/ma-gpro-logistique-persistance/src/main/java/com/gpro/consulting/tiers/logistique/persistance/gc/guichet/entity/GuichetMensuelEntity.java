@@ -140,7 +140,90 @@ public class GuichetMensuelEntity {
 	  
 	  
 	  
+	  //reglement inverse achat
 	  
+	  
+	  /** ref_det_reglement_achat. */
+	  @Column(name = "ref_det_reglement_inverse_achat")
+	  private Long numReferenceDetReglementInverseAchatCourante;
+	  
+	  /** prefixe_det_reglement_achat  */
+	  @Column(name = "prefixe_det_reglement_inverse_achat ")
+	  private String prefixeDetReglementInverseAchat ;
+	  
+	  
+	  /** Numéro reg inverse achat courant. */
+	  @Column(name = "ref_reglement_inverse_achat")
+	  private Long numReferenceReglementInverseAchatCourante;
+	  
+	  /** prefixe_fact  */
+	  @Column(name = "prefixe_reglement_inverse_achat ")
+	  private String prefixeReglementInverseAchat ;
+	  
+	  
+	  //reglement inverse vente
+	  
+	  
+	  /** ref_det_reglement. */
+	  @Column(name = "ref_det_reglement_inverse")
+	  private Long numReferenceDetReglementInverseCourante;
+	  
+	  /** prefixe_det_reglement_achat  */
+	  @Column(name = "prefixe_det_reglement_inverse ")
+	  private String prefixeDetReglementInverse ;
+	  
+	  
+	  
+	  
+	  
+	public Long getNumReferenceDetReglementInverseCourante() {
+		return numReferenceDetReglementInverseCourante;
+	}
+
+	public void setNumReferenceDetReglementInverseCourante(Long numReferenceDetReglementInverseCourante) {
+		this.numReferenceDetReglementInverseCourante = numReferenceDetReglementInverseCourante;
+	}
+
+	public String getPrefixeDetReglementInverse() {
+		return prefixeDetReglementInverse;
+	}
+
+	public void setPrefixeDetReglementInverse(String prefixeDetReglementInverse) {
+		this.prefixeDetReglementInverse = prefixeDetReglementInverse;
+	}
+
+	public Long getNumReferenceDetReglementInverseAchatCourante() {
+		return numReferenceDetReglementInverseAchatCourante;
+	}
+
+	public void setNumReferenceDetReglementInverseAchatCourante(Long numReferenceDetReglementInverseAchatCourante) {
+		this.numReferenceDetReglementInverseAchatCourante = numReferenceDetReglementInverseAchatCourante;
+	}
+
+	public String getPrefixeDetReglementInverseAchat() {
+		return prefixeDetReglementInverseAchat;
+	}
+
+	public void setPrefixeDetReglementInverseAchat(String prefixeDetReglementInverseAchat) {
+		this.prefixeDetReglementInverseAchat = prefixeDetReglementInverseAchat;
+	}
+
+	public Long getNumReferenceReglementInverseAchatCourante() {
+		return numReferenceReglementInverseAchatCourante;
+	}
+
+	public void setNumReferenceReglementInverseAchatCourante(Long numReferenceReglementInverseAchatCourante) {
+		this.numReferenceReglementInverseAchatCourante = numReferenceReglementInverseAchatCourante;
+	}
+
+	public String getPrefixeReglementInverseAchat() {
+		return prefixeReglementInverseAchat;
+	}
+
+	public void setPrefixeReglementInverseAchat(String prefixeReglementInverseAchat) {
+		this.prefixeReglementInverseAchat = prefixeReglementInverseAchat;
+	}
+
 	public Double getCibleCA() {
 		return cibleCA;
 	}

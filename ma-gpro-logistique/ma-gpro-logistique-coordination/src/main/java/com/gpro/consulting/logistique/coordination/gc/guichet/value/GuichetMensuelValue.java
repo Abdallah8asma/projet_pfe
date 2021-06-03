@@ -64,8 +64,83 @@ public class GuichetMensuelValue {
 	  
 	  
 	  
+	  //reglement inverse
+	  
+	  
+
+	  private Long numReferenceDetReglementInverseAchatCourante;
+	  
+
+	  private String prefixeDetReglementInverseAchat ;
+	  
 	  
 	
+	  private Long numReferenceReglementInverseAchatCourante;
+	  
+
+	  private String prefixeReglementInverseAchat ;
+	  
+	  
+	  
+	  //reglement inverse vente
+	  
+	  
+
+	  private Long numReferenceDetReglementInverseCourante;
+	  
+
+	  private String prefixeDetReglementInverse ;
+	  
+	  
+	
+
+	public Long getNumReferenceDetReglementInverseCourante() {
+		return numReferenceDetReglementInverseCourante;
+	}
+
+	public void setNumReferenceDetReglementInverseCourante(Long numReferenceDetReglementInverseCourante) {
+		this.numReferenceDetReglementInverseCourante = numReferenceDetReglementInverseCourante;
+	}
+
+	public String getPrefixeDetReglementInverse() {
+		return prefixeDetReglementInverse;
+	}
+
+	public void setPrefixeDetReglementInverse(String prefixeDetReglementInverse) {
+		this.prefixeDetReglementInverse = prefixeDetReglementInverse;
+	}
+
+	public Long getNumReferenceDetReglementInverseAchatCourante() {
+		return numReferenceDetReglementInverseAchatCourante;
+	}
+
+	public void setNumReferenceDetReglementInverseAchatCourante(Long numReferenceDetReglementInverseAchatCourante) {
+		this.numReferenceDetReglementInverseAchatCourante = numReferenceDetReglementInverseAchatCourante;
+	}
+
+	public String getPrefixeDetReglementInverseAchat() {
+		return prefixeDetReglementInverseAchat;
+	}
+
+	public void setPrefixeDetReglementInverseAchat(String prefixeDetReglementInverseAchat) {
+		this.prefixeDetReglementInverseAchat = prefixeDetReglementInverseAchat;
+	}
+
+	public Long getNumReferenceReglementInverseAchatCourante() {
+		return numReferenceReglementInverseAchatCourante;
+	}
+
+	public void setNumReferenceReglementInverseAchatCourante(Long numReferenceReglementInverseAchatCourante) {
+		this.numReferenceReglementInverseAchatCourante = numReferenceReglementInverseAchatCourante;
+	}
+
+	public String getPrefixeReglementInverseAchat() {
+		return prefixeReglementInverseAchat;
+	}
+
+	public void setPrefixeReglementInverseAchat(String prefixeReglementInverseAchat) {
+		this.prefixeReglementInverseAchat = prefixeReglementInverseAchat;
+	}
 
 	public String getPrefixeBC() {
 		return prefixeBC;

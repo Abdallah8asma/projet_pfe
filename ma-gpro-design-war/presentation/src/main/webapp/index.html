@@ -1813,6 +1813,59 @@
                             <span class="menu-text">Rapprochement</span>
                           </a>
                         </li>
+                        
+                        
+                        
+                       <!--  reglement inverse -->
+                       
+                       
+                       
+                       
+                                   <li class="menu-item" aria-haspopup="true" permission="['FC_Reglement_Consult']">
+                          <a
+                            href="#/finance/reglementInverseVente"
+                            ng-click="upSelectedMenu('Finance Client ',' Réglement Inverse')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Réglement Inverse</span>
+                          </a>
+                        </li>
+                        
+                        
+                        <li class="menu-item" aria-haspopup="true" permission="['FC_Det_Reglement_Consult']">
+                          <a
+                            href="#/finance/elementReglementInverseVente"
+                            ng-click="upSelectedMenu('Finance Client ',' Det.Réglement Inverse')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Det.Réglement Inverse</span>
+                          </a>
+                        </li>
+                       
+                       
+                           <li class="menu-item" aria-haspopup="true" permission="['FC_Client_Paiement']">
+                          <a
+                            href="#/finance/echeancierInverse"
+                            ng-click="upSelectedMenu('Finance Client ',' Paiement Inverse')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Paiement Inverse</span>
+                          </a>
+                        </li>
+                       
+                        
+                        
+                        
+                        
                         <li class="menu-item" aria-haspopup="true" permission="['FC_Client_Reporting_Consult']">
                           <a
                             href="#/finance/reporting"
@@ -1962,6 +2015,51 @@
                             <span class="menu-text">Rapprochement</span>
                           </a>
                         </li>
+                        
+                        
+                       <!--  reglement inverse achat  -->
+                   
+                               <li class="menu-item" aria-haspopup="true" permission="['Reglement_Consulter']">
+                          <a
+                            href="#/financeFournisseur/reglementInverseVente"
+                            ng-click="upSelectedMenu('Finance Fournisseur ',' Réglement Inverse')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Réglement Inverse</span>
+                          </a>
+                        </li>
+                        <li class="menu-item" aria-haspopup="true" permission="['Det_Reglement_Consult']">
+                          <a
+                            href="#/financeFournisseur/elementReglementInverseAchat"
+                            ng-click="upSelectedMenu('Finance Fournisseur ',' Det.Réglement Inverse')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Det.Réglement Inverse</span>
+                          </a>
+                        </li>
+                        
+                        
+                             <li class="menu-item" aria-haspopup="true" permission="['FF_Paiement_Consult']">
+                          <a
+                            href="#/financeFournisseur/echeancierInverse"
+                            ng-click="upSelectedMenu('Finance Fournisseur ',' Paiement Inverse')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Paiement Inverse</span>
+                          </a>
+                        </li>
+                       
+                        
+                        
                         <li class="menu-item" aria-haspopup="true" permission="['FF_Reporting_Consult']">
                           <a
                             href="#/financeFournisseur/reporting"
@@ -5474,6 +5572,13 @@
     <script src="scripts/front/controllers/finance/caisse/caisse.js"></script>
     <script src="scripts/front/controllers/finance/caisse/mouvementCaisse.js"></script>
     <script src="scripts/front/controllers/finance/rapprochement/rapprochement.js"></script>
+    
+   <!--  reglement inverse vente -->
+    
+    <script src="scripts/front/controllers/finance/reglementInverse/reglementInverse.js"></script>
+    <script src="scripts/front/controllers/finance/reglementInverse/elementReglementInverse.js"></script>
+    <script src="scripts/front/controllers/finance/paiementInverse/echeancierInverse.js"></script>
+    
 
     <!---------Controllers FinanceFournisseur---------->
 
@@ -5485,6 +5590,12 @@
     <script src="scripts/front/controllers/financeFournisseur/soldeFournisseur/soldeFournisseur.js"></script>
     <script src="scripts/front/controllers/financeFournisseur/reporting/reportingFNfournisseur.js"></script>
     <script src="scripts/front/controllers/financeFournisseur/rapprochement/rapprochementFournisseur.js"></script>
+   
+   <!--  reglement inverse achat -->
+       <script src="scripts/front/controllers/financeFournisseur/reglementInverse/reglementInverse.js"></script>
+    <script src="scripts/front/controllers/financeFournisseur/reglementInverse/elementReglementInverse.js"></script>
+    <script src="scripts/front/controllers/financeFournisseur/paiementInverse/echeancierInverseFournisseur.js"></script>
+    
    
     <!----------------- Gestion Achat -new -------------------->
 

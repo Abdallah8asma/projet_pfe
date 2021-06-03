@@ -118,5 +118,10 @@ public interface IGuichetAnnuelDomaine {
 
 	public GuichetAnnuelValue getCurrentGuichetAnnuel(Calendar instance);
 
+
+	public Long modifierGuichetReglementInverseAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+	
+
+
 		
 }
