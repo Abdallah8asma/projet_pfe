@@ -108,5 +108,8 @@ public interface IGestionnaireReportGcDomaine {
 	public List<ResultBestElementValue> getTop10Groupe(RechercheMulticritereDetLivraisonValue request);
 
 
+	public EcheancierReportListValue getListEcheanceInverseReport(RechercheMulticritereDetailReglementValue request)			throws IOException;
+
+
 
 }

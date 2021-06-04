@@ -109,10 +109,10 @@ public class ReglementInverseDomaineImpl implements IReglementInverseDomaine{
 			
 			if(reglement.getReference()==null || reglement.getReference().equals("")) {
 			//	reglement.setReference(this.getNumeroReglement(reglement.getDate()));
-				reglement.setReference(getCurrentReference(Calendar.getInstance(), true));
+				reglement.setReference(getCurrentReferenceMensuelByDate(Calendar.getInstance(), true));
 			}else if (reglement.getRefAvantChangement() != null
 					&& reglement.getReference().equals(reglement.getRefAvantChangement())) {
-				this.getCurrentReference(reglement.getDate(), true);
+				this.getCurrentReferenceMensuelByDate(reglement.getDate(), true);
 			}
 			
 
@@ -1963,4 +1963,46 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 	 private boolean estNonVide(String val) {
 			return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 		}
+
+	 @Override
+		public String getCurrentReferenceMensuelByDate(Calendar c, boolean increment) {
+			Long vNumGuichetBonLiv = this.guichetierMensuelPersistance.getNextNumReglementInverse(c); 
+			String vNumGuichetPrefix=this.guichetierMensuelPersistance.getPrefixReglementInverse(c);
+			
+			
+			
+			int vAnneeCourante = c.get(Calendar.YEAR);
+			int moisActuel = c.get(Calendar.MONTH) + 1;
+
+			/** Format du numero de la Bon Reception= AAAA-NN. */
+			StringBuilder vNumBonLiv = new StringBuilder("");
+			vNumBonLiv.append(vNumGuichetPrefix);
+			
+			//vNumBonLiv.append(vAnneeCourante);
+			//vNumBonLiv.append(String.format("%02d", moisActuel));
+			vNumBonLiv.append(String.format("%04d", vNumGuichetBonLiv));
+			
+			
+			/** Inserer une nouvelle valeur dans Guichet BonReception. */
+			GuichetMensuelValue vGuichetValeur = new GuichetMensuelValue();
+			/** idMensuel = (annuelcourante - 2016) + moisCourant */
+
+			Calendar cal = Calendar.getInstance();
+			int anneActuelle = cal.get(Calendar.YEAR);
+
+			int idMensuel = (anneActuelle - 2016) * 12 + moisActuel;
+
+			vGuichetValeur.setId(new Long(idMensuel));
+			vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+			vGuichetValeur.setNumReferenceReglementInverseCourante(new Long(vNumGuichetBonLiv + 1L));
+			/** Modification de la valeur en base du numéro. */
+			
+			if(increment)
+			      this.guichetierMensuelPersistance.modifierGuichetReglementInverseMensuel(vGuichetValeur); 
+			
+			
+
+			return vNumBonLiv.toString();
+		}
+		
 }

@@ -145,6 +145,12 @@ public class GestionnaireReportGcServiceImpl implements IGestionnaireReportGcSer
 		return gestionnaireReportGcDomaine.getBonLivraisonParId(id, avecPrix);
 		
 	}
+
+	@Override
+	public EcheancierReportListValue getListEcheanceInverseReport(RechercheMulticritereDetailReglementValue request)
+			throws IOException {
+		return gestionnaireReportGcDomaine.getListEcheanceInverseReport(request);
+	}
 	
 
 }

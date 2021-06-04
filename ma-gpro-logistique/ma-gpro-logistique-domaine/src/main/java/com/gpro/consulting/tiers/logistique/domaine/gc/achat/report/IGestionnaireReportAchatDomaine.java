@@ -89,4 +89,7 @@ public interface IGestionnaireReportAchatDomaine {
 
 	public BLReportElementRecapValue getDepenseBRbyMonth(RechercheMulticritereBonReceptionAchatValue request);
 
+	public EcheancierReportListValue getListEcheanceInverseReport(
+			RechercheMulticritereDetailReglementAchatValue request) throws IOException;
+
 }

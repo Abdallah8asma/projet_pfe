@@ -232,7 +232,7 @@ angular.module('gpro.reglementInverse', []).controller('ReglementInverseControll
 	$http
         	            		.get(
         	            				UrlAtelier
-        	            						+ "/reglementInverse/getCurrentReferenceByDate:"+formattedDate(dateIntro)
+        	            						+ "/reglementInverse/getCurrentReferenceMensuelByDate:"+formattedDate(dateIntro)
         	            						)
         	            		.success(
         	            				function(res) {

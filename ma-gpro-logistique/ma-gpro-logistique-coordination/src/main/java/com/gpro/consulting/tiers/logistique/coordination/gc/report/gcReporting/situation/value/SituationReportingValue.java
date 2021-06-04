@@ -28,8 +28,18 @@ public class SituationReportingValue {//implements Comparable<SituationReporting
 
 	
 	
+	private Double impayeInverse;
 	
 	
+	
+	public Double getImpayeInverse() {
+		return impayeInverse;
+	}
+
+	public void setImpayeInverse(Double impayeInverse) {
+		this.impayeInverse = impayeInverse;
+	}
+
 	public Long getId() {
 		return id;
 	}

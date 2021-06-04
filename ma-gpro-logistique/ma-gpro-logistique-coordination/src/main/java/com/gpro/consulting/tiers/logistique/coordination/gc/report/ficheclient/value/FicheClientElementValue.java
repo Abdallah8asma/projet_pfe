@@ -26,6 +26,7 @@ public class FicheClientElementValue {
 	public static String TYPE_AVOIR = "AVOIR";
 	public static String TYPE_REGLEMENT = "REGLEMENT";
 	
+	public static String TYPE_REGLEMENT_INVERSE = "REGLEMENT_INVERSE";
 
 //	@Override
 //	public int compareTo(FicheClientElementValue element) {

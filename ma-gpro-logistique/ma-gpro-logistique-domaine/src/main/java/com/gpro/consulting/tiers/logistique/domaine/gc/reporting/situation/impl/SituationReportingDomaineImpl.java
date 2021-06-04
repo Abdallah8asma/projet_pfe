@@ -30,6 +30,7 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.IFactur
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.IReceptionAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IBonLivraisonPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.echeancier.IEcheancierPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.echeancier.inverse.IEcheancierInversePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.soldeClient.ISoldeClientPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.IFacturePersistance;
 
@@ -53,6 +54,9 @@ public class SituationReportingDomaineImpl implements ISituationReportingDomaine
 	
 	@Autowired
 	private IEcheancierPersistance detailReglementPersistance;
+	
+	@Autowired
+	private IEcheancierInversePersistance detailReglementInversePersistance;
 	
 	@Autowired
 	private IRegionPersistance regionPersistance;
@@ -238,6 +242,25 @@ public class SituationReportingDomaineImpl implements ISituationReportingDomaine
 		        Double impayee = detailReglementPersistance.getMontantImpaye(requestDetailReglement);
 				
 				situationReportingElement.setImpaye(impayee);
+				
+				
+				
+				
+				//reglement inverse
+				
+			
+				//Impayer == (non regler et date echeance < today)
+				
+		        Double impayeeInverse = detailReglementInversePersistance.getMontantImpaye(requestDetailReglement);
+				
+				situationReportingElement.setImpayeInverse(impayeeInverse);
+				
+				
+				
+				
+				
+				
+				
 				
 				listSituationReporting.add(situationReportingElement);
 				

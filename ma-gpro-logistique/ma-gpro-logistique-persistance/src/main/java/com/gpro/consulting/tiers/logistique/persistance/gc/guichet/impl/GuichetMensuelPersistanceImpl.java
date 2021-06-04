@@ -2,9 +2,7 @@ package com.gpro.consulting.tiers.logistique.persistance.gc.guichet.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
@@ -12,27 +10,17 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.stereotype.Component;
 
 import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
-import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.RechercheMulticritereGuichetMensuelValue;
-import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
-import com.gpro.consulting.tiers.logistique.coordination.atelier.bonReception.value.GuichetBonReceptionValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.FactureVenteValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.ResultatRechecheFactureValue;
-import com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.IBonReceptionPersistance;
-import com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.entity.GuichetBonReceptionEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.IGuichetMensuelPersistance;
-import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.entity.GuichetAnnuelEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.entity.GuichetMensuelEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.utilities.GuichetPersistanceUtilities;
-import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.FactureVenteEntity;
 @Component
 public class GuichetMensuelPersistanceImpl extends AbstractPersistance implements IGuichetMensuelPersistance{
    
@@ -741,6 +729,46 @@ public class GuichetMensuelPersistanceImpl extends AbstractPersistance implement
 		    this.entityManager.merge(vGuichetEntite);
 		    this.entityManager.flush();
 		    return vGuichetEntite.getId();
+	}
+
+
+	@Override
+	public String getPrefixReglementInverse(Calendar c) {
+		 int vAnneeCourante =c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.prefixeReglementInverse from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    String vNextNumBonReception= (String) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public Long getNextNumReglementInverse(Calendar c) {
+		  int vAnneeCourante = c.get(Calendar.YEAR);
+		    int vMoisCourant=(c.get(Calendar.MONTH)+1);
+		       Query vQuery = this.entityManager.createQuery(
+		      "select g.numReferenceReglementInverseCourante from GuichetMensuelEntity g where g.annee =" + vAnneeCourante + " and g.mois="+vMoisCourant);
+
+		    Object vResult = vQuery.getSingleResult();
+		    Long vNextNumBonReception= (Long) vResult;
+		 
+		    return vNextNumBonReception;
+	}
+
+
+	@Override
+	public Long modifierGuichetReglementInverseMensuel(GuichetMensuelValue pGuichetValeur) {
+		   GuichetMensuelEntity vGuichetEntite = rechercherGuichetMensuel(pGuichetValeur);
+			
+		    vGuichetEntite.setNumReferenceReglementInverseCourante(pGuichetValeur.getNumReferenceReglementInverseCourante()); 
+		    this.entityManager.merge(vGuichetEntite);
+		    this.entityManager.flush();
+		    return vGuichetEntite.getId();
+		
 	}
 
 }

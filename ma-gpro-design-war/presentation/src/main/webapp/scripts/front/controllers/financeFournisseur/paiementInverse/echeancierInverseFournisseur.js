@@ -396,7 +396,7 @@ angular
 				}
 
 				//$log.info("------- echeancierCourant " + JSON.stringify(echeancierCourant, null, "  ") );
-				url = UrlAtelier + "/fichesAchat/listEcheance?reference=" + echeancierCourant.reference
+				url = UrlAtelier + "/fichesAchat/listEcheanceInverse?reference=" + echeancierCourant.reference
 				    + "&referenceDetReglement=" +echeancierCourant.referenceDetReglement
 					+ "&partieIntId=" + echeancierCourant.partieIntId
 					+ "&dateReglementDu=" + newdateSaisieMinFormat
