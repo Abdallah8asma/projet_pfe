@@ -246,6 +246,15 @@ public class ReglementInverseRestImpl {
  	}
 	
 	
+	
+	
+	@RequestMapping(value = "/getCurrentReferenceMensuelByDate:{date}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceMensuelByDate( @PathVariable String date) {
+ 		
+ 		return  reglementInverseService.getCurrentReferenceMensuelByDate(stringToCalendar(date),false);
+ 	}
+	
+	
 	private Calendar stringToCalendar(String dateString) {
 		
 		Calendar dateCalendar = null;

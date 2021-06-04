@@ -377,8 +377,8 @@ public class EcheancierInversePersistanceImpl extends AbstractPersistance implem
 					criteriaBuilder.equal(jointureDtReg.get(COLUMN_PARTIEINT_REGLEMENT), request.getPartieIntId()));
 		}
 		
-		
-		whereClause.add(criteriaBuilder.equal(root.get(COLUMN_REGLE), false));
+		//TODO A verifier commente par samer le 04.06.21
+		//whereClause.add(criteriaBuilder.equal(root.get(COLUMN_REGLE), false));
 		
 		
 		Calendar today = Calendar.getInstance();

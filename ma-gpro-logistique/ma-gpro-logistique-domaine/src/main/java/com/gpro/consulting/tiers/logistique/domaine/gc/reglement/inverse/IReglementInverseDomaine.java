@@ -47,4 +47,6 @@ public interface IReglementInverseDomaine {
 	public List<RefLivraisonNonRegleValue> getRefBLNonRegleByGroupeId(Long groupeId);
 
 	public String getCurrentReference(Calendar instance, boolean b);
+
+	public String getCurrentReferenceMensuelByDate(Calendar stringToCalendar, boolean b);
 }

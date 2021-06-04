@@ -375,7 +375,7 @@ angular
                     nomRapport = "Echeancier Client"}
                 	
                   //$log.info("------- echeancierCourant " + JSON.stringify(echeancierCourant, null, "  ") );
-                      url = UrlAtelier+"/fiches/listEcheance?reference="+echeancierCourant.reference
+                      url = UrlAtelier+"/fiches/listEcheanceInverse?reference="+echeancierCourant.reference
                           + "&referenceDetReglement=" +echeancierCourant.referenceDetReglement
                           + "&partieIntId=" +echeancierCourant.partieIntId
                           + "&dateReglementDu="+newdateSaisieMinFormat

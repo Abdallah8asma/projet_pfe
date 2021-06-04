@@ -18,7 +18,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.gpro.consulting.tiers.commun.coordination.IConstante;
 import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.OptionArticleProduitValue;
@@ -41,9 +40,7 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.ISousFamilleProd
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IGroupeClientPersistance;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInteresseePersistance;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IRegionPersistance;
-import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
-import com.gpro.consulting.tiers.logistique.coordination.atelier.boninventairefini.value.ListProduitElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommercialeReport;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reception.value.ProduitReceptionAchatValue;
@@ -122,7 +119,6 @@ import com.gpro.consulting.tiers.logistique.coordination.gl.suivi.value.Personne
 import com.gpro.consulting.tiers.logistique.coordination.gl.suivi.value.RemorqueValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.MagasinValue;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.bonsortiefini.IBonSortieFiniDomain;
-import com.gpro.consulting.tiers.logistique.domaine.atelier.bonsortiefini.impl.BonSortieFiniDomainImpl;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.cache.IGestionnaireLogistiqueCacheDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.mise.IMiseDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.bonlivraison.IModePaiementDomaine;
@@ -145,8 +141,10 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IBonLivr
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IDetLivraisonVentePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.ITaxePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.echeancier.IEcheancierPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.echeancier.inverse.IEcheancierInversePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.reception.IReceptionPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.IReglementPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.IReglementInversePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.typeReglement.ITypeReglementPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.IFacturePersistance;
 
@@ -219,12 +217,18 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 
 	@Autowired
 	private IEcheancierPersistance echeancierPersistance;
+	
+	@Autowired
+	private IEcheancierInversePersistance echeancierInversePersistance;
 
 	@Autowired
 	private ITypeReglementPersistance typeReglementPersistance;
 
 	@Autowired
 	private IReglementPersistance reglementPersistance;
+	
+	@Autowired
+	private IReglementInversePersistance reglementInversePersistance;
 
 	@Autowired
 	private IPartieInteresseePersistance partieInteresseePersistance;
@@ -2420,6 +2424,21 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 						}
 					
 					
+						else
+							if ((element.getType().equals(FicheClientElementValue.TYPE_REGLEMENT_INVERSE) && element.getDebit() != null	)
+								
+								) {
+
+								soldeInitiale += element.getDebit();
+								
+								element.setBalance(soldeInitiale);
+
+							}
+					
+									
+
+						
+					
 					
 					report.getListElements().add(element);
 					
@@ -3727,5 +3746,136 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 
 		return bonLivraisonReport;
 	}
+
+	@Override
+	public EcheancierReportListValue getListEcheanceInverseReport(RechercheMulticritereDetailReglementValue request)
+			throws IOException {
+
+
+		EcheancierReportListValue echeanceReportList = new EcheancierReportListValue();
+
+		// enrechissement des param du report
+		echeanceReportList.setFileName(REPORT_NAME_ECHEANCIER_LIST);
+		echeanceReportList.setReportStream(
+				new FileInputStream("C://ERP/Lib/EcheancierClient/ListeEcheancier/echeancier_List_report.jrxml"));
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("p_PathLogo", "/report/logo_commercial.png");
+		params.put("SUBREPORT_ECHEANCIER_PATH",
+				"C://ERP/Lib/EcheancierClient/ListeEcheancier/echeancier_sub_List_report.jasper");
+
+		echeanceReportList.setParams(params);
+		if (request != null) {
+			ResultatRechecheDetailReglementValue result = echeancierInversePersistance.rechercherMultiCritere(request);
+			if (result != null) {
+				List<ResultatRechecheDetailReglementElementValue> echeancierList = new ArrayList<ResultatRechecheDetailReglementElementValue>(
+						result.getList());
+				if (echeancierList != null) {
+					// enrichissement du report
+					enrichissementEcheancierInverseReportList(echeanceReportList, echeancierList, request);
+				}
+			}
+		}
+		ArrayList<EcheancierReportListValue> dataList = new ArrayList<EcheancierReportListValue>();
+		dataList.add(echeanceReportList);
+
+		JRBeanCollectionDataSource jRBeanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
+
+		echeanceReportList.setjRBeanCollectionDataSource(jRBeanCollectionDataSource);
+
+		return echeanceReportList;
+	}
 	
+	
+	private void enrichissementEcheancierInverseReportList(EcheancierReportListValue report,
+			List<ResultatRechecheDetailReglementElementValue> echeancierList,
+			RechercheMulticritereDetailReglementValue request) {
+
+		report.setDateReglementAu(request.getDateReglementAu());
+		report.setDateReglementDu(request.getDateReglementDu());
+		report.setDateEcheanceDu(request.getDateEcheanceDu());
+		report.setDateEcheanceAu(request.getDateEcheanceAu());
+		report.setNumPiece(request.getNumPiece());
+		report.setPartieIntId(request.getPartieIntId());
+		report.setReference(request.getReference());
+		report.setRegle(request.getRegle());
+		report.setTypeReglementId(request.getTypeReglementId());
+		report.setAvecTerme(request.getAvecTerme());
+		report.setNomRapport(request.getNomRapport());
+
+		if (request.getTypeReglementId() != null) {
+			TypeReglementValue typeReglement = typeReglementPersistance.getById(request.getTypeReglementId());
+			if (typeReglement != null) {
+
+				report.setTypeReglement(typeReglement.getDesignation());
+			}
+		}
+
+		if (request.getPartieIntId() != null) {
+			PartieInteresseValue pi = partieInteresseePersistance.getById(request.getPartieIntId());
+			if (pi != null) {
+
+				report.setPartieIntAbreviation(pi.getAbreviation());
+			}
+		}
+
+		List<ResultatRechecheDetailReglementElementValue> echeanceElementList = new ArrayList<ResultatRechecheDetailReglementElementValue>();
+		for (ResultatRechecheDetailReglementElementValue echeancier : echeancierList) {
+
+			ResultatRechecheDetailReglementElementValue reportElement = new ResultatRechecheDetailReglementElementValue();
+
+			reportElement.setDateEcheance(echeancier.getDateEcheance());
+			reportElement.setDateEmission(echeancier.getDateEmission());
+			reportElement.setBanque(echeancier.getBanque());
+			reportElement.setMontant(echeancier.getMontant());
+			reportElement.setNumPiece(echeancier.getNumPiece());
+			reportElement.setRefFacture(echeancier.getRefFacture());
+			reportElement.setRegle(echeancier.getRegle());
+			reportElement.setReglementId(echeancier.getReglementId());
+			reportElement.setTypeReglementId(echeancier.getTypeReglementId());
+			
+			reportElement.setReferenceDetReglement(echeancier.getReferenceDetReglement());
+			reportElement.setObservation(echeancier.getObservation());
+			
+			
+			reportElement.setBanqueSociete(echeancier.getBanqueSociete());
+			reportElement.setDateDepotBanque(echeancier.getDateDepotBanque());
+			reportElement.setChargeBanque(echeancier.getChargeBanque());
+			reportElement.setTvaBanque(echeancier.getTvaBanque());
+		
+
+			if (echeancier.getTypeReglementId() != null) {
+				TypeReglementValue typeReglement = typeReglementPersistance.getById(echeancier.getTypeReglementId());
+				if (typeReglement != null) {
+
+					reportElement.setTypeReglement(typeReglement.getDesignation());
+				}
+			}
+
+			if (echeancier.getReglementId() != null) {
+				ReglementValue reglement = reglementInversePersistance.getById(echeancier.getReglementId());
+				if (reglement != null) {
+
+					reportElement.setRefReglement(reglement.getReference());
+					reportElement.setDateReglement(reglement.getDate());
+					if (reglement.getPartieIntId() != null) {
+						PartieInteresseValue partieInterssee = partieInteresseePersistance
+								.getById(reglement.getPartieIntId());
+						if (partieInterssee != null) {
+							reportElement.setClientAbreviation(partieInterssee.getAbreviation());
+							if (partieInterssee.getRegionId() != null) {
+								RegionValue region = regionPersistance.getById(partieInterssee.getRegionId());
+								reportElement.setClientRegion(region.getDesignation());
+							}
+
+						}
+					}
+				}
+			}
+
+			echeanceElementList.add(reportElement);
+		}
+		report.setEcheancierList(echeanceElementList);
+
+	}
 }

@@ -154,6 +154,13 @@ public class GestionnaireReportAchatServiceImpl implements IGestionnaireReportAc
 		// TODO Auto-generated method stub
 		return gestionnaireReportAchatDomaine.getListSituationReport(request,solde);
 	}
+
+	@Override
+	public EcheancierReportListValue getListEcheanceInverseReport(
+			RechercheMulticritereDetailReglementAchatValue request) throws IOException {
+		// TODO Auto-generated method stub
+		return gestionnaireReportAchatDomaine.getListEcheanceInverseReport(request);
+	}
 	
 
 }

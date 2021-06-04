@@ -99,6 +99,11 @@ public interface IGestionnaireReportAchatService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public SituationReportingReportListValue getListSituationReport(
 			RechercheMulticritereSituationReportingValue request, Long solde) 	throws IOException;
+	
+	
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public EcheancierReportListValue getListEcheanceInverseReport(RechercheMulticritereDetailReglementAchatValue request)
+			throws IOException;
 
 
 }

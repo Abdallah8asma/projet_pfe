@@ -164,6 +164,17 @@ public class GuichetMensuelEntity {
 	  //reglement inverse vente
 	  
 	  
+	  /** Numéro reg inverse achat courant. */
+	  @Column(name = "ref_reglement_inverse")
+	  private Long numReferenceReglementInverseCourante;
+	  
+	  /** prefixe_fact  */
+	  @Column(name = "prefixe_reglement_inverse ")
+	  private String prefixeReglementInverse ;
+	  
+	  
+	  
+	  
 	  /** ref_det_reglement. */
 	  @Column(name = "ref_det_reglement_inverse")
 	  private Long numReferenceDetReglementInverseCourante;
@@ -176,6 +187,22 @@ public class GuichetMensuelEntity {
 	  
 	  
 	  
+	public Long getNumReferenceReglementInverseCourante() {
+		return numReferenceReglementInverseCourante;
+	}
+
+	public void setNumReferenceReglementInverseCourante(Long numReferenceReglementInverseCourante) {
+		this.numReferenceReglementInverseCourante = numReferenceReglementInverseCourante;
+	}
+
+	public String getPrefixeReglementInverse() {
+		return prefixeReglementInverse;
+	}
+
+	public void setPrefixeReglementInverse(String prefixeReglementInverse) {
+		this.prefixeReglementInverse = prefixeReglementInverse;
+	}
+
 	public Long getNumReferenceDetReglementInverseCourante() {
 		return numReferenceDetReglementInverseCourante;
 	}

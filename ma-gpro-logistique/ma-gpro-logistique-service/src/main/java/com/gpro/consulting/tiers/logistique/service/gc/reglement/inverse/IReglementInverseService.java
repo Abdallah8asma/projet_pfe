@@ -63,4 +63,6 @@ public interface IReglementInverseService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public String getCurrentReference(Calendar instance, boolean b);
 
+	public String getCurrentReferenceMensuelByDate(Calendar stringToCalendar, boolean b);
+
 }

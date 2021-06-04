@@ -83,6 +83,10 @@ public class GuichetMensuelValue {
 	  
 	  
 	  //reglement inverse vente
+
+	  private Long numReferenceReglementInverseCourante;
+	  
+	  private String prefixeReglementInverse ;
 	  
 	  
 
@@ -92,7 +96,25 @@ public class GuichetMensuelValue {
 	  private String prefixeDetReglementInverse ;
 	  
 	  
+	  
+	  
 	
+
+	public Long getNumReferenceReglementInverseCourante() {
+		return numReferenceReglementInverseCourante;
+	}
+
+	public void setNumReferenceReglementInverseCourante(Long numReferenceReglementInverseCourante) {
+		this.numReferenceReglementInverseCourante = numReferenceReglementInverseCourante;
+	}
+
+	public String getPrefixeReglementInverse() {
+		return prefixeReglementInverse;
+	}
+
+	public void setPrefixeReglementInverse(String prefixeReglementInverse) {
+		this.prefixeReglementInverse = prefixeReglementInverse;
+	}
 
 	public Long getNumReferenceDetReglementInverseCourante() {
 		return numReferenceDetReglementInverseCourante;
