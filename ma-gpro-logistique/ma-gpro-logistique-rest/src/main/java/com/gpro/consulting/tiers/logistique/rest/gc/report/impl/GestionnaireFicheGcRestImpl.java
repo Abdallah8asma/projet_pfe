@@ -7055,7 +7055,12 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			@RequestParam("dateReglementAu") String dateReglementAu,
 			@RequestParam("dateReglementDu") String dateReglementDu,
 			@RequestParam("dateEcheanceDu") String dateEcheanceDu,
-			@RequestParam("dateEcheanceAu") String dateEcheanceAu, @RequestParam("numPiece") String numPiece,
+			@RequestParam("dateEcheanceAu") String dateEcheanceAu,
+			
+			@RequestParam("dateDepotBanqueDe") String dateDepotBanqueDe,
+			@RequestParam("dateDepotBanqueA") String dateDepotBanqueA,
+			
+			@RequestParam("numPiece") String numPiece,
 			@RequestParam("regle") Boolean regle, @RequestParam("typeReglementId") Long typeReglementId,
 			@RequestParam("avecTerme") Boolean avecTerme, @RequestParam("nomRapport") String nomRapport,
 			
@@ -7239,6 +7244,35 @@ request.setNomRapport(nomRapport);
 			request.setDateEcheanceAu(stringToCalendar(dateEcheanceAu));
 		}
 
+		
+		
+		if (isNotEmty(dateDepotBanqueDe))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "D.Dep. Banque. Du :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateDepotBanqueDe, ExcelUtils.boldRed3));
+
+			request.setDateDepotBanqueDe(stringToCalendar(dateDepotBanqueDe));
+		}
+		
+		
+	
+		
+		if (isNotEmty(dateDepotBanqueA))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "D.Dep. Banque. A :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateDepotBanqueA, ExcelUtils.boldRed3));
+
+			request.setDateDepotBanqueA(stringToCalendar(dateDepotBanqueA));
+		}
+		
+		
+	
 
 		
 

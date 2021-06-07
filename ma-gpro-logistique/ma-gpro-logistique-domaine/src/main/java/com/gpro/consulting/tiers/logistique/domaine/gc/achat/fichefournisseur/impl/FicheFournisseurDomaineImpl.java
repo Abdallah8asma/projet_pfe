@@ -22,6 +22,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.valu
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ReglementAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.ResultatRechecheReglementAchatCompletValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reglement.value.TypeReglementAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheReglementCompletValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.ficheclient.value.FicheClientComparator;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.ficheclient.value.FicheClientElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.soldeClient.value.SoldeClientValue;
@@ -30,6 +31,8 @@ import com.gpro.consulting.tiers.logistique.domaine.gc.ficheclient.IFicheClientD
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.IFactureAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.IReceptionAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.IReglementAchatPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.IReglementInverseAchatPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.IReglementInversePersistance;
 
 /**
  * Implementation of {@link IFicheClientDomaine}
@@ -51,6 +54,10 @@ public class FicheFournisseurDomaineImpl implements IFicheFournisseurDomaine {
 	@Autowired
 	private IReglementAchatPersistance reglementAchatPersistance;
 
+	
+	@Autowired
+	private IReglementInverseAchatPersistance reglementInversePersistance;
+	
 //	@Autowired
 	//private ISoldeFournisseurPersistance soldeClientPersistance;
 
@@ -116,6 +123,10 @@ public class FicheFournisseurDomaineImpl implements IFicheFournisseurDomaine {
 					}
 				}
 			}
+			
+			
+			ResultatRechecheReglementAchatCompletValue resultReglementInverse = reglementInversePersistance
+					.rechercherMultiCritereComplet(requestReglement);
 
 			Double credit = IConstanteCommercialeReport.ZEROD;
 			Double debit = IConstanteCommercialeReport.ZEROD;
@@ -248,6 +259,68 @@ public class FicheFournisseurDomaineImpl implements IFicheFournisseurDomaine {
 
 				listElements.add(element);
 			}
+			
+			
+			
+			
+			
+			
+			for (ReglementAchatValue reglement : resultReglementInverse.getList()) {
+
+				FicheClientElementValue element = new FicheClientElementValue();
+
+				element.setCredit(reglement.getMontantTotal());
+				element.setDebit(debit);
+				element.setDate(reglement.getDate());
+				element.setReferenceComparator("R" + reglement.getReference());
+
+				libelle = "Payement Inv N° " + reglement.getReference();
+
+				if (reglement.getListDetailsReglement() != null) {
+
+					if (reglement.getListDetailsReglement().size() > 0) {
+
+						DetailsReglementAchatValue detail = reglement.getListDetailsReglement().iterator().next();
+
+						String type = SPACE;
+
+						if (detail.getTypeReglementId() != null) {
+
+							TypeReglementAchatValue typeReglement = reglementAchatPersistance
+									.getTypeReglementById(detail.getTypeReglementId());
+
+							if (typeReglement != null) {
+
+								type = typeReglement.getDesignation();
+							}
+						}
+                        String refFacture ="";
+                        if(detail.getRefFacture()!=null)
+                        	refFacture=detail.getRefFacture();
+						libelle = libelle + detail.getBanque() + SPACE + type + SPACE + detail.getNumPiece() + SPACE
+								+ refFacture;
+					}
+				}
+
+				element.setLibelle(libelle);
+
+		
+				
+				if (element.getDebit() != null) {
+
+					debitTotal = debitTotal + element.getDebit();
+				}
+				
+				
+
+				if (reglement.getDate() == null) {
+					element.setDate(dateIfNotExist);
+				}
+
+				listElements.add(element);
+			}
+			
+			
 
 			soldeClient = debitTotal - creditTotal + soldeInitial;
 
