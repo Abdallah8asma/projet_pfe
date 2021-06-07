@@ -189,6 +189,19 @@ angular
                    }
 
 					function formattedDate(date) {
+						
+						
+						if(!angular.isDefined(date))
+						 return "";
+					
+						
+						if(date == null)
+						 return "";
+					
+						if(date == "")
+						 return "";
+					
+					
 					    var d = new Date(date),
 					        month = '' + (d.getMonth() + 1),
 					        day = '' + d.getDate(),
@@ -270,6 +283,10 @@ angular
                           + "&dateReglementAu="+newdateSaisieMaxFormat
                           + "&dateEcheanceDu="+newdateEchecMinFormat
                           + "&dateEcheanceAu="+newdateEchecMaxFormat
+
+                          + "&dateDepotBanqueDe="+formattedDate(echeancierCourant.dateDepotBanqueDe)
+                          + "&dateDepotBanqueA="+formattedDate(echeancierCourant.dateDepotBanqueA)
+
                           + "&numPiece="+echeancierCourant.numPiece
                           + "&regle="+echeancierCourant.regle
                           + "&typeReglementId="+echeancierCourant.typeReglementId
@@ -382,6 +399,12 @@ angular
                           + "&dateReglementAu="+newdateSaisieMaxFormat
                           + "&dateEcheanceDu="+newdateEchecMinFormat
                           + "&dateEcheanceAu="+newdateEchecMaxFormat
+
+
+
+                          + "&dateDepotBanqueDe="+formattedDate(echeancierCourant.dateDepotBanqueDe)
+                          + "&dateDepotBanqueA="+formattedDate(echeancierCourant.dateDepotBanqueA)
+
                           + "&numPiece="+echeancierCourant.numPiece
                           + "&regle="+echeancierCourant.regle
                           + "&typeReglementId="+echeancierCourant.typeReglementId

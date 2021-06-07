@@ -3996,7 +3996,15 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 			@RequestParam("dateReglementAu") String dateReglementAu,
 			@RequestParam("dateReglementDu") String dateReglementDu,
 			@RequestParam("dateEcheanceDu") String dateEcheanceDu,
-			@RequestParam("dateEcheanceAu") String dateEcheanceAu, @RequestParam("numPiece") String numPiece,
+			@RequestParam("dateEcheanceAu") String dateEcheanceAu, 
+			
+			
+			@RequestParam("dateDepotBanqueDe") String dateDepotBanqueDe,
+			@RequestParam("dateDepotBanqueA") String dateDepotBanqueA,
+			
+			
+			
+			@RequestParam("numPiece") String numPiece,
 			@RequestParam("regle") Boolean regle, @RequestParam("typeReglementId") Long typeReglementId,
 			@RequestParam("avecTerme") Boolean avecTerme, @RequestParam("nomRapport") String nomRapport,
 			
@@ -4173,6 +4181,30 @@ request.setNomRapport(nomRapport);
 		}
 
 
+		if (isNotEmty(dateDepotBanqueDe))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "D.Dep. Banque. Du :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateDepotBanqueDe, ExcelUtils.boldRed3));
+
+			request.setDateDepotBanqueDe(stringToCalendar(dateDepotBanqueDe));
+		}
+		
+		
+	
+		
+		if (isNotEmty(dateDepotBanqueA))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "D.Dep. Banque. A :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateDepotBanqueA, ExcelUtils.boldRed3));
+
+			request.setDateDepotBanqueA(stringToCalendar(dateDepotBanqueA));
+		}
 		
 
 		if (isNotEmty(numPiece))
@@ -5116,8 +5148,12 @@ request.setNomRapport(nomRapport);
 
 		sheet3.setColumnView(7, 20);
 		sheet3.setColumnView(8, 15);
+		
 		sheet3.setColumnView(9, 15);
+		
+		
 		sheet3.setColumnView(10, 15);
+		sheet3.setColumnView(11, 15);
 		/**************************************************************************/
 
 		
@@ -5129,7 +5165,7 @@ request.setNomRapport(nomRapport);
 		// Nom du rapport et la date
 
 		sheet3.addCell(new Label(2, 7, "    Situation Reporting", ExcelUtils.boldTitre));
-		sheet3.mergeCells(2, 7, 10, 8);
+		sheet3.mergeCells(2, 7, 11, 8);
 
 
 		// Critaire de recherche
@@ -5257,17 +5293,22 @@ request.setNomRapport(nomRapport);
 		sheet3.addCell(new Label(6, i - 1, "Réglement", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(7, i - 1, "Paiement en cours", ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(8, i - 1, "Impayés", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(9, i - 1, "Solde Actuel", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(8, i - 1, "Impayés/Date", ExcelUtils.boldRed2));
+		
+		sheet3.addCell(new Label(9, i - 1, "Impayés Inv.", ExcelUtils.boldRed2));
+		
+		
+		sheet3.addCell(new Label(10, i - 1, "Solde Actuel", ExcelUtils.boldRed2));
 
-		sheet3.addCell(new Label(10, i - 1, "Région", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(11, i - 1, "Région", ExcelUtils.boldRed2));
 		
 		Double soldeInitial = 0d;
 		Double chiffreAffaire = 0d;
 		Double reglement = 0d;
 		Double payementEnCours = 0d;
 		Double impaye = 0d;
-		Double soldeActuel = 0d;
+		Double impayeInverse = 0d;
+        Double soldeActuel = 0d;
 
 		for (SituationReportingValue element : report.getListSituation()) {
 
@@ -5337,22 +5378,34 @@ request.setNomRapport(nomRapport);
 				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
 
 			}
-
-			if (element.getSoldeActuel() != null) {
-				soldeActuel += element.getSoldeActuel();
-				
-				sheet3.addCell(new jxl.write.Number(9, i, element.getSoldeActuel() , ExcelUtils.boldRed));
+			
+			
+			if (element.getImpayeInverse() != null) {
+				impayeInverse += element.getImpayeInverse();
+				sheet3.addCell(new jxl.write.Number(9, i,(double)Math.round( element.getImpayeInverse()*1000)/1000 , ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
 
 			}
 			
-			if (element.getRegionDesignation()!= null) {
-				sheet3.addCell(new Label(10, i, element.getRegionDesignation() + "", ExcelUtils.boldRed));
+			
+
+			if (element.getSoldeActuel() != null) {
+				soldeActuel += element.getSoldeActuel();
+				
+				sheet3.addCell(new jxl.write.Number(10, i, element.getSoldeActuel() , ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+
+			}
+			
+			if (element.getRegionDesignation()!= null) {
+				sheet3.addCell(new Label(11, i, element.getRegionDesignation() + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
 			}
 			
 
@@ -5400,9 +5453,15 @@ request.setNomRapport(nomRapport);
 		
 		i++;
 
-		sheet3.addCell(new Label(7, i, "Impayés", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i, "Impayés/Date", ExcelUtils.boldRed2));
 		sheet3.mergeCells(7, i, 8, i);
 		sheet3.addCell(new Label(9, i, (double) Math.round(convertisseur(impaye, 4)* 100) / 100  + "", ExcelUtils.boldRed2));
+		
+		i++;
+
+		sheet3.addCell(new Label(7, i, "Impayés Inv.", ExcelUtils.boldRed2));
+		sheet3.mergeCells(7, i, 8, i);
+		sheet3.addCell(new Label(9, i, (double) Math.round(impayeInverse* 1000) / 1000  + "", ExcelUtils.boldRed2));
 		
 		
 		i++;

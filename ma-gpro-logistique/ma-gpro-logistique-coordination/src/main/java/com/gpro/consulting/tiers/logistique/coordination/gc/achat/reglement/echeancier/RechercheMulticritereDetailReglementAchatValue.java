@@ -36,7 +36,29 @@ public class RechercheMulticritereDetailReglementAchatValue {
 	private String referenceDetReglement;
 	
 	
+	private Calendar dateDepotBanqueDe;
 	
+	private Calendar dateDepotBanqueA;
+	
+	
+	
+	
+
+	public Calendar getDateDepotBanqueDe() {
+		return dateDepotBanqueDe;
+	}
+
+	public void setDateDepotBanqueDe(Calendar dateDepotBanqueDe) {
+		this.dateDepotBanqueDe = dateDepotBanqueDe;
+	}
+
+	public Calendar getDateDepotBanqueA() {
+		return dateDepotBanqueA;
+	}
+
+	public void setDateDepotBanqueA(Calendar dateDepotBanqueA) {
+		this.dateDepotBanqueA = dateDepotBanqueA;
+	}
 
 	public String getReferenceDetReglement() {
 		return referenceDetReglement;
