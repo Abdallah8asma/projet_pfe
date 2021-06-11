@@ -520,7 +520,7 @@ angular
 												  "metrageMin": "",
 												  "metrageMax": "",
 												  "type":"Avoir",
-												  "nature":"Retour",
+												  "nature":"",
 												  "avecRetourStock":false
 										 		};
 				 //init de la Grid 
@@ -533,7 +533,7 @@ angular
 			 // AffectationBLVente BonLivVente
 			 $scope.affectationBLVente = function(factureVente) {
 
-				 $scope.factureVenteCourant = {"date":new Date(),"nature":"Retour",
+				 $scope.factureVenteCourant = {"date":new Date(),"nature":"",
 						 "avecRetourStock":false, "devise":"2"};
 				/* $scope.factureVenteCourant = factureVente ? angular
 						 .copy(factureVente) : {};*/
