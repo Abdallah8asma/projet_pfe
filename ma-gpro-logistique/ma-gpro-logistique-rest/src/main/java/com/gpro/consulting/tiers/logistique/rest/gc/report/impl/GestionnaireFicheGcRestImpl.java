@@ -8414,7 +8414,7 @@ request.setNomRapport(nomRapport);
 
 
 
-		EcheancierReportListValue report = gestionnaireReportGcService.getListEcheanceReport(request);
+		EcheancierReportListValue report = gestionnaireReportGcService.getListEcheanceInverseReport(request);
 
 		int i = numLigneCritRech + 4;
 
