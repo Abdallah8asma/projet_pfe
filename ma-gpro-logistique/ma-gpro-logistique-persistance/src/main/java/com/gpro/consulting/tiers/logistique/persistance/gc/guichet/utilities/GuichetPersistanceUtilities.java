@@ -258,6 +258,10 @@ public class GuichetPersistanceUtilities {
 		  		  
 		gmv.setPrefixeDetReglementInverse(entity.getPrefixeDetReglementInverse());
 		
+		
+		gmv.setPrefixeReglementInverse(entity.getPrefixeReglementInverse());
+		gmv.setNumReferenceReglementInverseCourante(entity.getNumReferenceReglementInverseCourante());
+		
 	
 		return gmv;
 		
@@ -339,6 +343,9 @@ public class GuichetPersistanceUtilities {
 		  
 		gmv.setPrefixeDetReglementInverse(entity.getPrefixeDetReglementInverse());
 		
+		
+		gmv.setPrefixeReglementInverse(entity.getPrefixeReglementInverse());
+		gmv.setNumReferenceReglementInverseCourante(entity.getNumReferenceReglementInverseCourante());
 	
 		return gmv;
 		

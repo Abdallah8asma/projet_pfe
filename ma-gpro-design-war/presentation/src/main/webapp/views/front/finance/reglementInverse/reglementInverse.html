@@ -595,7 +595,7 @@
   
               </div>
   
-  
+  <!-- 
               <div class="form-group alert alert-info">
                 <div class="row">
                   <div class="col-sm-4">
@@ -647,7 +647,7 @@
                   </div>
                 </div>
               </div>
-            </form>
+             --></form>
           </div>
   
   
@@ -707,7 +707,7 @@
                         style="border-radius: 5px ; height:37px ; width : 130px ; border: 1px solid #e5eaee !important;
                        padding-top : 7px ; padding-left : 2px"  ng-change="onChangeTypeReglement(item,$index)">
                           <option value="">Tous</option>
-                          <option ng-repeat="pi in listTypes" value="{{pi.id}}">{{pi.designation}}</option>
+                          <option ng-repeat="pi in listTypes | filter : {aTerme : true}" value="{{pi.id}}">{{pi.designation}}</option>
                         </select>
                    
                     </td>
@@ -866,7 +866,7 @@
   
             <div class="center">{{msgChargement}}</div>
           </div>
-          <div class="row" ng-show="!isEnCoursValider">
+        <!--   <div class="row" ng-show="!isEnCoursValider">
             <div class="col-sm-6 BL_FACT_Reglement">
   
   
@@ -957,12 +957,12 @@
                 </div>
               </div>
   
-              <!--style="
+              style="
                         height: 400px;
                         display: block;
                         overflow-y: auto;
                         overflow-x: hidden;
-                      "-->
+                      "
   
               <div class="panel-body">
                 <div class="row">
@@ -1007,9 +1007,9 @@
               </div>
             </div>
           </div>
+   -->
   
-  
-          <div class="row" ng-show="!isEnCoursValider">
+<!--           <div class="row" ng-show="!isEnCoursValider">
             <div class="col-sm-12 elementReglement">
   
               <span class="ms-ListItem-primaryText">list Element R&eacute;glement</span>
@@ -1120,7 +1120,7 @@
   
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
   

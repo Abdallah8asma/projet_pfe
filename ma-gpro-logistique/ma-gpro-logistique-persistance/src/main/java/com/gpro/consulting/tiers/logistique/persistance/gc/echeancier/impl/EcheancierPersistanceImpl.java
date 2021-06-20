@@ -54,6 +54,10 @@ public class EcheancierPersistanceImpl extends AbstractPersistance implements IE
 	private String COLUMN_REGLE = "regle";
 
 	private String COLUMN_DATE_ECHEANCE = "dateEcheance";
+	
+	private String COLUMN_DATE_DEPOT_BANQUE = "dateDepotBanque";
+	
+	
 	private String PERCENT = "%";
 
 	@PersistenceContext
@@ -170,6 +174,22 @@ public class EcheancierPersistanceImpl extends AbstractPersistance implements IE
 			whereClause
 					.add(criteriaBuilder.equal(root.get(COLUMN_REFERENCE_REGLEMENT), request.getReferenceDetReglement()));
 		}
+		
+		
+		// date depot banque
+		if (request.getDateDepotBanqueDe() != null) {
+			whereClause.add(criteriaBuilder.greaterThanOrEqualTo(root.<Calendar>get(COLUMN_DATE_DEPOT_BANQUE),
+					request.getDateDepotBanqueDe()));
+		}
+
+		// Set request.dateEcheanceMax on whereClause if not null
+		if (request.getDateDepotBanqueA() != null) {
+			whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Calendar>get(COLUMN_DATE_DEPOT_BANQUE),
+					request.getDateDepotBanqueA()));
+		}
+		
+		
+		
 
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 		List<DetailsReglementEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
@@ -294,6 +314,22 @@ public class EcheancierPersistanceImpl extends AbstractPersistance implements IE
 
 			whereClause.add(criteriaBuilder.equal(jointureDtTyp.get("aTerme"), request.getAvecTerme()));
 		}
+		
+		
+
+		// date depot banque
+		if (request.getDateDepotBanqueDe() != null) {
+			whereClause.add(criteriaBuilder.greaterThanOrEqualTo(root.<Calendar>get(COLUMN_DATE_DEPOT_BANQUE),
+					request.getDateDepotBanqueDe()));
+		}
+
+		// Set request.dateEcheanceMax on whereClause if not null
+		if (request.getDateDepotBanqueA() != null) {
+			whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Calendar>get(COLUMN_DATE_DEPOT_BANQUE),
+					request.getDateDepotBanqueA()));
+		}
+		
+		
 
 		criteriaQuery.select(criteriaBuilder.sum(root.get("montant").as(Double.class)))
 				.where(whereClause.toArray(new Predicate[] {}));

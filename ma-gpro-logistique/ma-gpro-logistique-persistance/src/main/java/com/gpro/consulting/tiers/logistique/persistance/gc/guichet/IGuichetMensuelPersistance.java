@@ -166,6 +166,15 @@ public interface IGuichetMensuelPersistance {
 	public Long modifierGuichetDetReglementInverseMensuel(GuichetMensuelValue vGuichetValeur);
 
 
+	public String getPrefixReglementInverse(Calendar c);
+
+
+	public Long getNextNumReglementInverse(Calendar c);
+
+
+	public Long modifierGuichetReglementInverseMensuel(GuichetMensuelValue vGuichetValeur);
+
+
 	
 	
 }

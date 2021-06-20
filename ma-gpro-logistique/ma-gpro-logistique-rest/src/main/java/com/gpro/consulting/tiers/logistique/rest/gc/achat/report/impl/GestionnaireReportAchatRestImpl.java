@@ -167,7 +167,13 @@ public class GestionnaireReportAchatRestImpl extends AbstractGestionnaireDownloa
 			@RequestParam("dateReglementAu") String dateReglementAu,
 			@RequestParam("dateReglementDu") String dateReglementDu,
 			@RequestParam("dateEcheanceDu") String dateEcheanceDu,
-			@RequestParam("dateEcheanceAu") String dateEcheanceAu, @RequestParam("numPiece") String numPiece,
+			@RequestParam("dateEcheanceAu") String dateEcheanceAu,
+			
+			@RequestParam("dateDepotBanqueDe") String dateDepotBanqueDe,
+			@RequestParam("dateDepotBanqueA") String dateDepotBanqueA,
+			
+			
+			@RequestParam("numPiece") String numPiece,
 			@RequestParam("regle") Boolean regle, @RequestParam("typeReglementId") Long typeReglementId,
 			@RequestParam("avecTerme") Boolean avecTerme, @RequestParam("nomRapport") String nomRapport,
 			HttpServletResponse response) throws JRException, IOException {
@@ -188,6 +194,12 @@ public class GestionnaireReportAchatRestImpl extends AbstractGestionnaireDownloa
 		request.setNomRapport(nomRapport);
 		request.setReferenceDetReglement(referenceDetReglement);
 
+		
+		request.setDateDepotBanqueDe(stringToCalendar(dateDepotBanqueDe));
+		
+		request.setDateDepotBanqueA(stringToCalendar(dateDepotBanqueA));
+		
+		
 		EcheancierReportListValue report = gestionnaireReportAchatService.getListEcheanceReport(request);
 
 		this.download(type, report.getReportStream(), report.getParams(), report.getFileName(),

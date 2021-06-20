@@ -34,6 +34,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.
 import com.gpro.consulting.tiers.logistique.domaine.gc.ficheclient.IFicheClientDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IBonLivraisonPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.IReglementPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.IReglementInversePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.soldeClient.ISoldeClientPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.IFacturePersistance;
 
@@ -62,6 +63,9 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 	
 	@Autowired
 	private IBaseInfoPersistance baseInfoPersistance;
+	
+	@Autowired
+	private IReglementInversePersistance reglementInversePersistance;
 
 	private final static String FACTURE_TYPE_AVOIRE = "avoir";
 	private final static String SPACE = " ";
@@ -135,6 +139,9 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 					}
 				}
 			}
+			
+			ResultatRechecheReglementCompletValue resultReglementInverse = reglementInversePersistance
+					.rechercherMultiCritereComplet(requestReglement);
 
 			Double credit = IConstanteCommercialeReport.ZEROD;
 			Double debit = IConstanteCommercialeReport.ZEROD;
@@ -303,6 +310,97 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 
 		
 			}
+			
+			
+			
+			
+			
+
+			for (ReglementValue reglement : resultReglementInverse.getList()) {
+
+				
+
+				if (reglement.getListDetailsReglement() != null) {
+
+					if (reglement.getListDetailsReglement().size() > 0) {
+						
+						
+						for(DetailsReglementValue detail : reglement.getListDetailsReglement()) {
+							
+							
+							
+							FicheClientElementValue element = new FicheClientElementValue();
+							
+							element.setType(FicheClientElementValue.TYPE_REGLEMENT_INVERSE);
+
+							//element.setCredit(reglement.getMontantTotal());
+							//element.setCredit(detail.getMontant());
+							//element.setDebit(debit);
+						
+							
+							element.setCredit(credit);
+							element.setDebit(detail.getMontant());
+							
+							
+							element.setDate(reglement.getDate());
+							element.setReferenceComparator("RINV" + reglement.getReference()  + " TR N° "+detail.getReference());
+
+							//libelle = "Payement N° " + reglement.getReference();
+							
+							libelle = "Payement Inv N° " + reglement.getReference() + " TR N° "+detail.getReference() + " ";
+							
+							
+							
+							
+							//	DetailsReglementValue detail = reglement.getListDetailsReglement().iterator().next();
+
+							String type = SPACE;
+
+							if (detail.getTypeReglementId() != null) {
+
+								TypeReglementValue typeReglement = reglementPersistance
+										.getTypeReglementById(detail.getTypeReglementId());
+
+								if (typeReglement != null) {
+
+									type = typeReglement.getDesignation();
+								}
+							}
+	                        String refFacture ="";
+	                        if(detail.getRefFacture()!=null)
+	                        	refFacture=detail.getRefFacture();
+							libelle = libelle + detail.getBanque() + SPACE + type + SPACE + detail.getNumPiece() + SPACE
+									+ refFacture;
+							
+							
+							element.setLibelle(libelle);
+
+						
+							
+							if (element.getDebit() != null) {
+
+								debitTotal = debitTotal + element.getDebit();
+							}
+
+							if (reglement.getDate() == null) {
+								element.setDate(dateIfNotExist);
+							}
+
+							listElements.add(element);
+							
+							
+						}
+
+				
+					}
+				}
+
+		
+			}
+			
+			
+			
+			
 
 			soldeClient = debitTotal - creditTotal + soldeInitial;
 

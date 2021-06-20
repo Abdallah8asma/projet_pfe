@@ -52,12 +52,12 @@
           </div>
         </div> -->
         <div class="ms-CommandBar-mainArea">
-          <div class="ms-CommandButton">
+      <!--     <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="downloadAllecheanciers(echeancierCourant, 0)">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--PaymentCard"></i></span>
               <span class="ms-CommandButton-label">Paiement</span>
             </button>
-          </div>
+          </div> 
 
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="downloadAllecheanciers(echeancierCourant, 1)">
@@ -66,7 +66,7 @@
             </button>
           </div>
           
-          
+          -->
           
           
             <div class="ms-CommandButton">
@@ -76,13 +76,13 @@
             </button>
           </div>
 
-          <div class="ms-CommandButton">
+       <!--    <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="downloadAllecheanciersExcel(echeancierCourant, 1)">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Timeline"></i></span>
               <span class="ms-CommandButton-label"> Ech&eacute;ancier Excel</span>
             </button>
           </div>
-          
+           -->
           
           
           
@@ -313,7 +313,7 @@
                       ng-init="echeancierCourant.typeReglementId =''" data-placeholder="..." class="form-control"
                       style="border: 1px solid #e5eaee !important;">
                       <option value="">Tous les Types</option>
-                      <option ng-repeat="pi in listTypes" value="{{pi.id}}">{{pi.designation}}</option>
+                      <option ng-repeat="pi in listTypes | filter : {aTerme : true}" value="{{pi.id}}">{{pi.designation}}</option>
                     </select>
                   </div>
                 </div>

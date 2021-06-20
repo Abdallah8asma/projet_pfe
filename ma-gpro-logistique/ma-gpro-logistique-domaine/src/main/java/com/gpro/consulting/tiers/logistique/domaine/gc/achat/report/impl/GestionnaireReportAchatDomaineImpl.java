@@ -111,10 +111,12 @@ import com.gpro.consulting.tiers.logistique.domaine.gl.suivi.IRemorqueDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gs.IMagasinDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.boncommande.IBonCommandeAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.echeancier.IEcheancierFournisseurPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.achat.echeancier.inverse.IEcheancierInverseFournisseurPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.IFactureAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.IReceptionAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.IReglementAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.ITypeReglementAchatPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.IReglementInverseAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.IBonCommandePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IBonLivraisonPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.ITaxePersistance;
@@ -188,12 +190,19 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 
 	@Autowired
 	private IEcheancierFournisseurPersistance echeancierFournisseurPersistance;
+	
+	
+	@Autowired
+	private IEcheancierInverseFournisseurPersistance echeancierInverseFournisseurPersistance;
 
 	@Autowired
 	private ITypeReglementAchatPersistance typeReglementPersistance;
 
 	@Autowired
 	private IReglementAchatPersistance reglementAchatPersistance;
+	
+	@Autowired
+	private IReglementInverseAchatPersistance reglementInverseAchatPersistance;
 
 	@Autowired
 	private IPartieInteresseePersistance partieInteresseePersistance;
@@ -1887,6 +1896,132 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 	public BLReportElementRecapValue getDepenseBRbyMonth(RechercheMulticritereBonReceptionAchatValue request) {
 
 		return receptionAchatPersistance.getDepenseBRbyMonth(request);
+	}
+
+	@Override
+	public EcheancierReportListValue getListEcheanceInverseReport(
+			RechercheMulticritereDetailReglementAchatValue request) throws IOException {
+
+		EcheancierReportListValue echeanceReportList = new EcheancierReportListValue();
+
+		// enrechissement des param du report
+		echeanceReportList.setFileName(REPORT_NAME_ECHEANCIER_LIST);
+		echeanceReportList.setReportStream(new FileInputStream(
+				"C://ERP/Lib/COM_Echeancier_Fournisseur/ListeEcheancier/echeancier_List_report.jrxml"));
+
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("p_PathLogo", "/report/logo_commercial.png");
+		params.put("SUBREPORT_ECHEANCIER_PATH",
+				"C://ERP/Lib/COM_Echeancier_Fournisseur/ListeEcheancier/echeancier_sub_List_report.jasper");
+
+		echeanceReportList.setParams(params);
+		if (request != null) {
+			ResultatRechecheDetailReglementAchatValue result = echeancierInverseFournisseurPersistance
+					.rechercherMultiCritere(request);
+			if (result != null) {
+				List<ResultatRechecheDetailReglementAchatElementValue> echeancierList = new ArrayList<ResultatRechecheDetailReglementAchatElementValue>(
+						result.getList());
+				if (echeancierList != null) {
+					// enrichissement du report
+					enrichissementEcheancierInverseReportList(echeanceReportList, echeancierList, request);
+				}
+			}
+		}
+		ArrayList<EcheancierReportListValue> dataList = new ArrayList<EcheancierReportListValue>();
+		dataList.add(echeanceReportList);
+
+		JRBeanCollectionDataSource jRBeanCollectionDataSource = new JRBeanCollectionDataSource(dataList);
+
+		echeanceReportList.setjRBeanCollectionDataSource(jRBeanCollectionDataSource);
+
+		return echeanceReportList;
+	}
+	
+	
+	
+	private void enrichissementEcheancierInverseReportList(EcheancierReportListValue report,
+			List<ResultatRechecheDetailReglementAchatElementValue> echeancierList,
+			RechercheMulticritereDetailReglementAchatValue request) {
+
+		report.setDateReglementAu(request.getDateReglementAu());
+		report.setDateReglementDu(request.getDateReglementDu());
+		report.setDateEcheanceDu(request.getDateEcheanceDu());
+		report.setDateEcheanceAu(request.getDateEcheanceAu());
+		report.setNumPiece(request.getNumPiece());
+		report.setPartieIntId(request.getPartieIntId());
+		report.setReference(request.getReference());
+		report.setRegle(request.getRegle());
+		report.setTypeReglementId(request.getTypeReglementId());
+		report.setAvecTerme(request.getAvecTerme());
+		report.setNomRapport(request.getNomRapport());
+
+		if (request.getTypeReglementId() != null) {
+			TypeReglementAchatValue typeReglement = typeReglementPersistance.getById(request.getTypeReglementId());
+			if (typeReglement != null) {
+
+				report.setTypeReglement(typeReglement.getDesignation());
+			}
+		}
+
+		if (request.getPartieIntId() != null) {
+			PartieInteresseValue pi = partieInteresseePersistance.getById(request.getPartieIntId());
+			if (pi != null) {
+
+				report.setPartieIntAbreviation(pi.getAbreviation());
+			}
+		}
+
+		List<ResultatRechecheDetailReglementElementValue> echeanceElementList = new ArrayList<ResultatRechecheDetailReglementElementValue>();
+		for (ResultatRechecheDetailReglementAchatElementValue echeancier : echeancierList) {
+
+			ResultatRechecheDetailReglementElementValue reportElement = new ResultatRechecheDetailReglementElementValue();
+
+			reportElement.setDateEcheance(echeancier.getDateEcheance());
+			reportElement.setDateEmission(echeancier.getDateEmission());
+			reportElement.setBanque(echeancier.getBanque());
+			reportElement.setMontant(echeancier.getMontant());
+			reportElement.setNumPiece(echeancier.getNumPiece());
+			reportElement.setRefFacture(echeancier.getRefFacture());
+			reportElement.setRegle(echeancier.getRegle());
+			reportElement.setReglementId(echeancier.getReglementId());
+			reportElement.setTypeReglementId(echeancier.getTypeReglementId());
+			
+			reportElement.setReferenceDetReglement(echeancier.getReferenceDetReglement());
+			reportElement.setObservation(echeancier.getObservation());
+
+			if (echeancier.getTypeReglementId() != null) {
+				TypeReglementAchatValue typeReglement = typeReglementPersistance.getById(echeancier.getTypeReglementId());
+				if (typeReglement != null) {
+
+					reportElement.setTypeReglement(typeReglement.getDesignation());
+				}
+			}
+
+			if (echeancier.getReglementId() != null) {
+				ReglementAchatValue reglement = reglementInverseAchatPersistance.getById(echeancier.getReglementId());
+				if (reglement != null) {
+
+					reportElement.setRefReglement(reglement.getReference());
+					reportElement.setDateReglement(reglement.getDate());
+					if (reglement.getPartieIntId() != null) {
+						PartieInteresseValue partieInterssee = partieInteresseePersistance
+								.getById(reglement.getPartieIntId());
+						if (partieInterssee != null) {
+							reportElement.setClientAbreviation(partieInterssee.getAbreviation());
+							if (partieInterssee.getRegionId() != null) {
+								RegionValue region = regionPersistance.getById(partieInterssee.getRegionId());
+								reportElement.setClientRegion(region.getDesignation());
+							}
+
+						}
+					}
+				}
+			}
+
+			echeanceElementList.add(reportElement);
+		}
+		report.setEcheancierList(echeanceElementList);
+
 	}
 
 }

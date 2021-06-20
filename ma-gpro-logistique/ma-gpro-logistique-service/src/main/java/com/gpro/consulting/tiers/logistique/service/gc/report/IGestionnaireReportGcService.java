@@ -95,6 +95,8 @@ public interface IGestionnaireReportGcService {
 
 
 
-
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public EcheancierReportListValue getListEcheanceInverseReport(RechercheMulticritereDetailReglementValue request)
+			throws IOException;
 	
 }

@@ -537,7 +537,7 @@
             </div>
 
 
-
+<!-- 
             <div class="row alert alert-primary">
               <div class="col-sm-3">
                 <div class="form-group">
@@ -592,7 +592,7 @@
 
               </div>
             </div>
-          </form>
+          --> </form>
         </div>
 
 
@@ -660,7 +660,7 @@
                         <select ui-select2 ng-model="item.typeReglementId" data-placeholder="..." class="form-control"
                           style="border: 1px solid #e5eaee !important;" ng-change="onChangeTypeReglement(item,$index)">
                           <option value="">Tous</option>
-                          <option ng-repeat="pi in listTypes" value="{{pi.id}}">{{pi.designation}}</option>
+                          <option ng-repeat="pi in listTypes | filter : {aTerme : true}" value="{{pi.id}}">{{pi.designation}}</option>
                         </select>
                       </div>
                     </td>
@@ -742,6 +742,10 @@
           </div>
         </div>
 
+
+
+
+<!-- 
         <div class="row">
           <div class="col-sm-6 BL_FACT_Reglement">
             <div class="title-ajout row">
@@ -889,11 +893,11 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
 
         <div class="row">
-          <div class="col-sm-12 elementReglement">
+<!--           <div class="col-sm-12 elementReglement">
 
             <span class="ms-ListItem-primaryText" style="font-size:130%">list Element R&eacute;glement</span>
             <div class="panel-body">
@@ -993,7 +997,7 @@
 
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="col-sm-12">
          
