@@ -834,6 +834,13 @@ angular
 				 //interface en mode : list
 				 $scope.displayMode = "list";			
 			 }
+		
+		
+		
+		      $scope.annulerAjoutRapide = function(){
+				 		
+				 $scope.displayMode = "list";			
+			 }
 
 			 // AffectationBLVente BonLivVente
 			 $scope.affectationBLVente = function(bonLVente) {

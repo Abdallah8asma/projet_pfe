@@ -43,8 +43,21 @@ public class RechercheMulticritereDetailReglementValue {
 	
 	private Calendar dateDepotBanqueA;
 	
+	private String declarerRech;
 	
 	
+	
+	
+	
+	
+
+	public String getDeclarerRech() {
+		return declarerRech;
+	}
+
+	public void setDeclarerRech(String declarerRech) {
+		this.declarerRech = declarerRech;
+	}
 
 	public Calendar getDateDepotBanqueDe() {
 		return dateDepotBanqueDe;

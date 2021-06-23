@@ -63,4 +63,8 @@ public interface IReglementService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 	public String getCurrentReference(Calendar instance, boolean b);
 
+
+
+	public String getCurrentReferenceByDateAndDeclaree(Calendar stringToCalendar, boolean declarer, boolean increment);
+
 }

@@ -120,7 +120,33 @@ public class GuichetAnnuelValue {
 	  
 	  
 	  
+	  
+	  //reglement non declarer 
+	  
+	  private Long numReferenceReglementNonDeclarerCourante;
+	  
+	  private String prefixeReglementNonDeclarer;
+	  
+	  
+	  
+	  
 	
+	public Long getNumReferenceReglementNonDeclarerCourante() {
+		return numReferenceReglementNonDeclarerCourante;
+	}
+
+	public void setNumReferenceReglementNonDeclarerCourante(Long numReferenceReglementNonDeclarerCourante) {
+		this.numReferenceReglementNonDeclarerCourante = numReferenceReglementNonDeclarerCourante;
+	}
+
+	public String getPrefixeReglementNonDeclarer() {
+		return prefixeReglementNonDeclarer;
+	}
+
+	public void setPrefixeReglementNonDeclarer(String prefixeReglementNonDeclarer) {
+		this.prefixeReglementNonDeclarer = prefixeReglementNonDeclarer;
+	}
+
 	public String getPrefixeReglementInverse() {
 		return prefixeReglementInverse;
 	}

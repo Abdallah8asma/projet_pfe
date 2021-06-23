@@ -78,6 +78,11 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	
 	
 	
+	
+	private String PREDICATE_MODALITE_PAIEMENT = "modalitePaiement";
+	private String PREDICATE_DATE_ECHEANCE = "dateEcheance";
+	
+	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
@@ -264,6 +269,23 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 						break;
 				}
 			}
+			
+			
+			
+			if (request.getDateEcheanceDe() != null) {
+				whereClause.add(criteriaBuilder.greaterThanOrEqualTo(root.<Calendar> get(PREDICATE_DATE_ECHEANCE),
+						request.getDateEcheanceDe()));
+			}
+
+			if (request.getDateEcheanceA() != null) {
+				whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Calendar> get(PREDICATE_DATE_ECHEANCE),
+						request.getDateEcheanceA()));
+			}
+			
+			
+		    if (estNonVide(request.getModalitePaiement() )) {
+				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_MODALITE_PAIEMENT), request.getModalitePaiement()));
+			}
 	 //	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	 	
 	 	
@@ -295,8 +317,12 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	 			root.get("devise").as(Long.class),
 	 			root.get("montantConverti").as(Double.class),
 	 			root.get("declarer").as(boolean.class),
-	 			root.get("forcerCalculMontant").as(boolean.class)
+	 			root.get("forcerCalculMontant").as(boolean.class),
 	 			
+	 			root.get("modalitePaiement").as(String.class),
+	 			root.get("dateEcheance").as(Calendar.class)
+
+
 	 			
 				
 				)).where(whereClause.toArray(new Predicate[] {}));
@@ -350,6 +376,9 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	    entity.setDeclarer((boolean) element[24]);
 	    
 	    entity.setForcerCalculMontant((boolean) element[25]);
+	    
+	    entity.setModalitePaiement((String) element[26]);
+	    entity.setDateEcheance((Calendar)element[27]);
 	    	
 	    	FactureVenteValue dto = FacturePersistanceUtilities.toValue(entity);
 	    	list.add(dto);
@@ -541,6 +570,22 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 					default:
 						break;
 				}
+			}
+			
+			
+			if (request.getDateEcheanceDe() != null) {
+				whereClause.add(criteriaBuilder.greaterThanOrEqualTo(root.<Calendar> get(PREDICATE_DATE_ECHEANCE),
+						request.getDateEcheanceDe()));
+			}
+
+			if (request.getDateEcheanceA() != null) {
+				whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Calendar> get(PREDICATE_DATE_ECHEANCE),
+						request.getDateEcheanceA()));
+			}
+			
+			
+		    if (estNonVide(request.getModalitePaiement() )) {
+				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_MODALITE_PAIEMENT), request.getModalitePaiement()));
 			}
 	 	
 	 	

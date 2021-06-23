@@ -283,6 +283,11 @@
         	                        $scope.displayMode = "list";
         	                    }
 
+    $scope.annulerAjoutRapide = function () {
+   
+      $scope.displayMode = 'list';
+    };
+
         	                // declaration variable
         	                $scope.displayAlert = "sleep";
         	                  

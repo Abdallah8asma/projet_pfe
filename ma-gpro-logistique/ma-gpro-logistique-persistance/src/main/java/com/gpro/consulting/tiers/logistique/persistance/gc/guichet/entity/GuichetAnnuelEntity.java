@@ -247,11 +247,37 @@ public class GuichetAnnuelEntity {
 	  
 	  
 	  
+	  //reglement non declarer vente
+	  
+	  @Column(name = "ref_reglement_non_declarer")
+	  private Long numReferenceReglementNonDeclarerCourante;
+	  
+	  
+	  @Column(name = "prefixe_reglement_non_declarer")
+	  private String prefixeReglementNonDeclarer;
 	  
 	  
 	  
 	  
-	  public String getPrefixeReglementInverse() {
+	  
+	  
+	  public Long getNumReferenceReglementNonDeclarerCourante() {
+		return numReferenceReglementNonDeclarerCourante;
+	}
+
+	public void setNumReferenceReglementNonDeclarerCourante(Long numReferenceReglementNonDeclarerCourante) {
+		this.numReferenceReglementNonDeclarerCourante = numReferenceReglementNonDeclarerCourante;
+	}
+
+	public String getPrefixeReglementNonDeclarer() {
+		return prefixeReglementNonDeclarer;
+	}
+
+	public void setPrefixeReglementNonDeclarer(String prefixeReglementNonDeclarer) {
+		this.prefixeReglementNonDeclarer = prefixeReglementNonDeclarer;
+	}
+
+	public String getPrefixeReglementInverse() {
 		return prefixeReglementInverse;
 	}
 

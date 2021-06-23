@@ -1167,6 +1167,13 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
       $scope.colDefs = [];
       $scope.$watch('myData', function () {
         $scope.colDefs = [
+	
+	      {
+	    	   field : 'dateIntroduction',
+	    	   displayName : 'Date Intro',
+	    	   cellFilter: "date: 'yyyy-MM-dd'",
+	    	   width:'10%'
+	       },
 		
 		   /*  {
               field: 'numero',
@@ -1209,14 +1216,26 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
           //											displayName : 'PI',
           //											width:200
           //	
-          {
+      /*    {
             field: 'prixAchatTTC',
             displayName: 'P.Achat TTC',
     		cellFilter: 'number:3',
             cellClass: 'grid-align',
             width: '9%'
           },
+		  */
+
+
+           {
+            field: 'prixUnitaire',
+            displayName: 'P.Vente HT',
+    		cellFilter: 'number:3',
+            cellClass: 'grid-align',
+            width: '9%'
+            },
 		  
+
+
 		  
           {
             field: 'prixVenteTTC',
@@ -1227,14 +1246,14 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
           },
 		  
 		  
-		    {
+		/*    {
            
             displayName: 'Marge',
 			cellTemplate:`<div>{{(row.entity.prixVenteTTC - row.entity.prixAchatTTC)/(row.entity.prixAchatTTC)*100  | number : 2}}</div>`,
     		
             cellClass: 'grid-align',
             width: '7%'
-          },
+          },*/
 		  
 		  
 		  

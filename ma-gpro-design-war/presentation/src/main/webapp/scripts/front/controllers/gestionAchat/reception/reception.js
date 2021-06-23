@@ -765,6 +765,16 @@ angular
 					$scope.displayMode = "list";
 					$scope.closeNotif();
 				}
+				
+				
+				
+				
+					// Annulation de l'ajout
+				$scope.annulerAjoutRapide = function () {
+			
+					$scope.displayMode = "list";
+				
+				}
 
 				$scope.rechercherReceptionAchat = function (
 					receptionAchatCourante) {

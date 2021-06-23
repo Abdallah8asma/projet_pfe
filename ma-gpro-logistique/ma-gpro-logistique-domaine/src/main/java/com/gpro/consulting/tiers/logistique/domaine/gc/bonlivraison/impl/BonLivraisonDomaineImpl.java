@@ -716,8 +716,10 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			if (taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() != null) {
 				assietteFodec = montantHTaxeTotal;
 				montantTaxeFodec = (assietteFodec * taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage()) / 100;
-
+				montantTaxeFodec = 	(double)Math.round(montantTaxeFodec * 1000) / 1000 ;
 				taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).setMontant(montantTaxeFodec);
+				
+				
 				montantTaxesTotal = montantTaxesTotal + montantTaxeFodec;
 			}
 		}
@@ -754,6 +756,8 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
    					montantTaxeTVA = produitTaxeMap.get(taxe) * taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
 						
 					}
+					
+					montantTaxeTVA = 	(double)Math.round(montantTaxeTVA * 1000) / 1000 ;
 				}
 
 				taxeLivraisonIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
@@ -1855,6 +1859,8 @@ List<LivraisonVenteVue> bonLivraisonlistFinal = new ArrayList<>();
 				assietteFodec = montantHTaxeTotal;
 				montantTaxeFodec = (assietteFodec * taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage()) / 100;
 
+				montantTaxeFodec = 	(double)Math.round(montantTaxeFodec * 1000) / 1000 ;
+				
 				taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).setMontant(montantTaxeFodec);
 				montantTaxesTotal = montantTaxesTotal + montantTaxeFodec;
 			}
@@ -1887,7 +1893,8 @@ List<LivraisonVenteVue> bonLivraisonlistFinal = new ArrayList<>();
 					if (taxeLivraisonIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
 						
 						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * taxeLivraisonIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() /100 )* taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
-						
+					
+			
 					}else 
 						
 					{
@@ -1895,6 +1902,8 @@ List<LivraisonVenteVue> bonLivraisonlistFinal = new ArrayList<>();
 						montantTaxeTVA = produitTaxeMap.get(taxe) * taxeLivraisonIdTaxeMap.get(taxe).getPourcentage() / 100;
 						
 					}
+					
+					montantTaxeTVA = 	(double)Math.round(montantTaxeTVA * 1000) / 1000 ;
 				}
 					
 

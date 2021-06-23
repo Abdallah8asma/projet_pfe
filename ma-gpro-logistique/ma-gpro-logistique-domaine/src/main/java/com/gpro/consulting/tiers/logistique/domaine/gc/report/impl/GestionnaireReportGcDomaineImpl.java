@@ -2095,8 +2095,8 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 				designationProductReport.append(impressionProduitDomaine.rechercheImpressionProduitById(matiere.getImpressionProduitId()).getDesignation() + ", ");
 			
 				
-			if(estNonVide(matiere.getDimension()))
-				designationProductReport.append(matiere.getDimension() + ", ");
+			/*if(estNonVide(matiere.getDimension()))
+				designationProductReport.append(matiere.getDimension() + ", ");*/
 			
 			
 			for(OptionArticleProduitValue opt : matiere.getOptionArticleProduits()) {

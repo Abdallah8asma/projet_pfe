@@ -925,7 +925,14 @@ public class GestionnaireReportAchatDomaineImpl implements IGestionnaireReportAc
 			
 			reportElement.setReferenceDetReglement(echeancier.getReferenceDetReglement());
 			reportElement.setObservation(echeancier.getObservation());
-
+			
+			
+			reportElement.setBanqueSociete(echeancier.getBanqueSociete());
+			reportElement.setDateDepotBanque(echeancier.getDateDepotBanque());
+			reportElement.setChargeBanque(echeancier.getChargeBanque());
+			reportElement.setTvaBanque(echeancier.getTvaBanque());
+			
+			
 			if (echeancier.getTypeReglementId() != null) {
 				TypeReglementAchatValue typeReglement = typeReglementPersistance.getById(echeancier.getTypeReglementId());
 				if (typeReglement != null) {

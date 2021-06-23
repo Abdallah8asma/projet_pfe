@@ -101,6 +101,10 @@ public class FacturePersistanceUtilities {
 	    dto.setForcerCalculMontant(entity.isForcerCalculMontant());
 	    
 	    
+	    dto.setModalitePaiement(entity.getModalitePaiement());
+	    dto.setDateEcheance(entity.getDateEcheance());
+	    
+	    
 		if(entity.getListDetFactureVente() != null){
 	    	List<DetFactureVenteValue> list = new ArrayList <DetFactureVenteValue>();
 		     for (DetFactureVenteEntity detFactureVenteEntity : entity.getListDetFactureVente()) {
@@ -186,6 +190,9 @@ public class FacturePersistanceUtilities {
 	    entity.setDeclarer(dto.isDeclarer());
 	    
 	    entity.setForcerCalculMontant(dto.isForcerCalculMontant());
+	    
+	    entity.setModalitePaiement(dto.getModalitePaiement());
+	    entity.setDateEcheance(dto.getDateEcheance());
 	    
 	    
 		if(dto.getListDetFactureVente() != null){
