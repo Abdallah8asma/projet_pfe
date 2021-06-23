@@ -277,7 +277,12 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 			
 			@RequestParam("numPiece") String numPiece,
 			@RequestParam("regle") Boolean regle, @RequestParam("typeReglementId") Long typeReglementId,
-			@RequestParam("avecTerme") Boolean avecTerme, @RequestParam("nomRapport") String nomRapport,
+			@RequestParam("avecTerme") Boolean avecTerme,
+			
+			@RequestParam("declarerRech") String declarerRech,
+			
+			
+			@RequestParam("nomRapport") String nomRapport,
 			HttpServletResponse response) throws JRException, IOException {
 
 		//logger.info("Generate a {} Report FactureVente List", type);
@@ -301,6 +306,9 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		request.setDateDepotBanqueDe(stringToCalendar(dateDepotBanqueDe));
 		
 		request.setDateDepotBanqueA(stringToCalendar(dateDepotBanqueA));
+		
+		
+		request.setDeclarerRech(declarerRech);
 
 		EcheancierReportListValue report = gestionnaireReportGcService.getListEcheanceReport(request);
 

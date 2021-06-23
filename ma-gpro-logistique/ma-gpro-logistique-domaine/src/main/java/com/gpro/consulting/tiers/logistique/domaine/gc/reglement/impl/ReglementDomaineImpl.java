@@ -1964,4 +1964,47 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 	 private boolean estNonVide(String val) {
 			return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 		}
+
+	
+
+	@Override
+	public String getCurrentReferenceByDateAndDeclaree(Calendar date, boolean declarer, boolean increment) {
+		GuichetAnnuelValue currentGuichetAnnuel = guichetAnnuelDomaine.getCurrentGuichetAnnuel(date);
+		
+		if(declarer) 
+			return getCurrentReference(date, increment);
+		else
+			return getCurrentReferenceNonDeclarer(date, increment);
+
+		
+	}
+	
+	public String getCurrentReferenceNonDeclarer(Calendar instance, boolean increment) {
+		
+		GuichetAnnuelValue currentGuichetAnnuel = guichetAnnuelDomaine.getCurrentGuichetAnnuel(instance);
+
+		Long vNumGuichetFacture = currentGuichetAnnuel.getNumReferenceReglementNonDeclarerCourante();
+
+		// Format du numero de la Bon Reception= AAAA-NN. /
+		StringBuilder vNumFacture = new StringBuilder("");
+		
+		if (currentGuichetAnnuel.getPrefixeReglementNonDeclarer()!= null)
+			vNumFacture.append(currentGuichetAnnuel.getPrefixeReglementNonDeclarer());
+		
+		//vNumFacture.append(vAnneeCourante);
+		vNumFacture.append(String.format("%06d", vNumGuichetFacture));
+		// Inserer une nouvelle valeur dans Guichet BonReception. /
+		//GuichetAnnuelValue vGuichetValeur = new GuichetAnnuelValue();
+		
+
+		
+		currentGuichetAnnuel.setNumReferenceReglementNonDeclarerCourante(new Long(
+				vNumGuichetFacture + 1L));
+		// Modification de la valeur en base du numéro./
+		
+		if (increment)
+		this.guichetAnnuelDomaine.modifierGuichetReglementAnnuel(currentGuichetAnnuel);
+			
+		return vNumFacture.toString();
+	}
 }

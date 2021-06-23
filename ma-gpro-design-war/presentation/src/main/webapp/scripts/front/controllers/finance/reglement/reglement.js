@@ -295,6 +295,12 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       $scope.displayMode = 'list';
     };
 
+    // Annulation de l'ajout rapide
+    $scope.annulerAjoutRapide = function () {
+   
+      $scope.displayMode = 'list';
+    };
+
     // declaration variable
     $scope.displayAlert = 'sleep';
 

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 
 import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.PartieInteresseEntite;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.echeancier.RechercheMulticritereDetailReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.echeancier.ResultatRechecheDetailReglementElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.echeancier.ResultatRechecheDetailReglementValue;
@@ -57,6 +59,8 @@ public class EcheancierPersistanceImpl extends AbstractPersistance implements IE
 	
 	private String COLUMN_DATE_DEPOT_BANQUE = "dateDepotBanque";
 	
+	
+	private String PREDICATE_DECLARE = "declarer";
 	
 	private String PERCENT = "%";
 
@@ -189,7 +193,22 @@ public class EcheancierPersistanceImpl extends AbstractPersistance implements IE
 		}
 		
 		
-		
+		if (estNonVide(request.getDeclarerRech())) {
+			Join<DetailsReglementEntity, ReglementEntity> jointureDtReg = root.join(JOINTURE_REGLEMENT);
+			Expression<Boolean> expression = jointureDtReg.get(PREDICATE_DECLARE);
+			switch (request.getDeclarerRech()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.isTrue(expression));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.isFalse(expression));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
 
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 		List<DetailsReglementEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();

@@ -367,6 +367,8 @@ public class FactureDomaineImpl implements IFactureDomaine {
 				assietteFodec = montantHTaxeTotal;
 				montantTaxeFodec = (assietteFodec * taxeFactureIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage()) / 100;
 
+				montantTaxeFodec = 	(double)Math.round(montantTaxeFodec * 1000) / 1000 ;
+				
 				taxeFactureIdTaxeMap.get(TAXE_ID_FODEC).setMontant(montantTaxeFodec);
 				montantTaxesTotal = montantTaxesTotal + montantTaxeFodec;
 			}
@@ -405,6 +407,8 @@ public class FactureDomaineImpl implements IFactureDomaine {
 						montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
 						
 					}
+					
+					montantTaxeTVA = 	(double)Math.round(montantTaxeTVA * 1000) / 1000 ;
 				}
 					
 
@@ -715,7 +719,7 @@ public class FactureDomaineImpl implements IFactureDomaine {
 			if (taxeFactureIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() != null) {
 				assietteFodec = montantHTaxeTotal;
 				montantTaxeFodec = (assietteFodec * taxeFactureIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage()) / 100;
-
+				montantTaxeFodec = 	(double)Math.round(montantTaxeFodec * 1000) / 1000 ;
 				taxeFactureIdTaxeMap.get(TAXE_ID_FODEC).setMontant(montantTaxeFodec);
 				montantTaxesTotal = montantTaxesTotal + montantTaxeFodec;
 			}
@@ -753,6 +757,8 @@ public class FactureDomaineImpl implements IFactureDomaine {
 						montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
 						
 					}
+					
+					montantTaxeTVA = 	(double)Math.round(montantTaxeTVA * 1000) / 1000 ;
 				}
 					
 

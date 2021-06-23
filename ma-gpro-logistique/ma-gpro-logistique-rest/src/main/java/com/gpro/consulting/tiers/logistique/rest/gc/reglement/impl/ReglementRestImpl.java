@@ -246,6 +246,15 @@ public class ReglementRestImpl {
  	}
 	
 	
+	
+	@RequestMapping(value = "/getCurrentReferenceByDateAndDeclaree:{date}:{declarer}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceByDateAndDeclaree(@PathVariable String date , @PathVariable boolean declarer) {
+ 		
+ 		return  reglementService.getCurrentReferenceByDateAndDeclaree(stringToCalendar(date),declarer,false);
+ 	}
+	
+	
+	
 	private Calendar stringToCalendar(String dateString) {
 		
 		Calendar dateCalendar = null;

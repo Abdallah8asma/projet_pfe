@@ -40,7 +40,7 @@
         <div class="ms-CommandBar-mainArea">
        
        
-   <!--        <div class="ms-CommandButton" permission="['FC_Client_Paiement']">
+  <div class="ms-CommandButton" permission="['FC_Client_Paiement']">
             <button class="ms-CommandButton-button" ng-click="downloadAllecheanciers(echeancierCourant, 0)">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--PaymentCard"></i></span>
               <span class="ms-CommandButton-label">Paiement</span>
@@ -67,7 +67,7 @@
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Timeline"></i></span>
               <span class="ms-CommandButton-label"> Ech&eacute;ancier Excel</span>
             </button>
-          </div> -->
+          </div>
           
           
           <div class="ms-CommandButton">
@@ -377,6 +377,33 @@
                 </div>
               </div>
             </div>
+         
+         
+         
+         
+         <div class="row" ng-show="clientActif.blackMode==true" >
+           <div class="col-sm-4" ng-show="clientActif.blackMode==true">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Declare</label>
+                    </div>
+                  
+                  <select ui-select2 ng-model="echeancierCourant.declarerRech"
+                      data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                         <option value="non">NON</option>
+                
+                    </select>
+                    
+                  </div>
+                </div>
+              </div>
+         
+         </div>
+           
+         
           </form>
         </div>
       </div>
