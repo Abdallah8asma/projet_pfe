@@ -331,6 +331,26 @@ angular
 
         //Init liste PI (ng-grid)
         $scope.rechercherPartieInteressee($scope.partieInteresseeCourante);
+		
+		
+		
+		
+		
+		$scope.annulerAjoutRapide = function () {
+					
+						
+					// interface en mode : list
+					$scope.displayMode = "list";
+					
+				}
+		
+		
+		
+		
+		
+		
+		
+		
 
         // ** Ajout Partie Interesse **
         $scope.AffectationPartieInteressee = function (partieInteressee) {
@@ -627,35 +647,35 @@ angular
             {
               field: 'telephone',
               displayName: 'Téléphone',
-              width: '8%',
+              width: '10%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },
 
             {
               field: 'telephoneMobile',
               displayName: 'Téléphone Mobile',
-              width: '8%',
+              width: '10%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },
             {
               field: 'email',
               displayName: 'Email',
-              width: '25%',
+              width: '20%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },
 
-            {
-              field: 'compteComptablePartieInteresseeDesignation',
-              displayName: 'Compte Comptable',
-              width: '8%',
-              fontfamily: 'Poppins, Helvetica, sans-serif',
-            },
-            {
-              field: 'nature',
-              displayName: 'Nature',
-              width: '8%',
-              fontfamily: 'Poppins, Helvetica, sans-serif',
-            },
+            // {
+              // field: 'compteComptablePartieInteresseeDesignation',
+              // displayName: 'Compte Comptable',
+              // width: '8%',
+              // fontfamily: 'Poppins, Helvetica, sans-serif',
+            // },
+            // {
+              // field: 'nature',
+              // displayName: 'Nature',
+              // width: '8%',
+              // fontfamily: 'Poppins, Helvetica, sans-serif',
+            // },
 
 
             {
