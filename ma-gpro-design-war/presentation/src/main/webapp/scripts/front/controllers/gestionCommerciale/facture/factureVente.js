@@ -1572,7 +1572,15 @@ $scope.validerNatureFiniByOF();
 						.success(
 							function (res) {
 								$scope.factureVenteCourant.reference = res;
-								$scope.factureVenteCourant.refAvantChangement = res;
+								
+								    if ($scope.modePdf != 'actif'){
+														
+										//creation
+		
+										$scope.factureVenteCourant.refAvantChangement = res;
+		
+									   }
+								
 
 							}
 						);
@@ -1753,7 +1761,7 @@ $scope.validerNatureFiniByOF();
 							});
 
 
-
+/*
 					var dateLivraison = null;
 					if ($scope.myData[index].date !== null) {
 						dateLivraison = $scope.modifierFormatDate($scope.myData[index].date);
@@ -1767,13 +1775,13 @@ $scope.validerNatureFiniByOF();
 						//  $scope.partieInteresseeCourante = $scope.myData[index]
 						? angular.copy($scope.myData[index])
 						: {};
+*/
 
 
 
-
-					//  $scope.factureVenteCourant = $scope.myData[index] ? angular
-					// 		 .copy($scope.myData[index])
-					// 		 : {};
+					  $scope.factureVenteCourant = $scope.myData[index] ? angular
+					 		 .copy($scope.myData[index])
+						 : {};
 
 					// mode edit activé
 					$scope.displayMode = "edit";

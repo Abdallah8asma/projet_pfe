@@ -225,20 +225,30 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 					return [year, month, day].join('-');
 				}
 
-          $scope.getCurrentReferenceMensuelByDate = function(dateIntro) {
+          $scope.getCurrentReferenceByDateAndDeclaree = function(dateIntro,declarer) {
 	
 	
 	
 	$http
         	            		.get(
         	            				UrlAtelier
-        	            						+ "/reglement/getCurrentReferenceByDate:"+formattedDate(dateIntro)
+        	            						+ "/reglement/getCurrentReferenceByDateAndDeclaree:"+formattedDate(dateIntro)+":"+declarer
         	            						)
         	            		.success(
         	            				function(res) {
         	            					
         	            					$scope.reglementCourante.reference = res;
-        	            					$scope.reglementCourante.refAvantChangement = res;
+
+
+                                               if ($scope.modePdf != 'actif'){
+														
+													//creation
+					
+													$scope.reglementCourante.refAvantChangement = res;
+					
+												   }
+
+        	            					
         	            				});
 	
 	
@@ -260,7 +270,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
 
   
-             $scope.getCurrentReferenceMensuelByDate( $scope.reglementCourante.date);
+             $scope.getCurrentReferenceByDateAndDeclaree( $scope.reglementCourante.date,$scope.reglementCourante.declarer);
       $scope.creationReglementForm.$setPristine();
 
       $scope.finalOperationsList = [];

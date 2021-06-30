@@ -181,7 +181,7 @@
                       ng-init="echeancierCourant.partieIntId =''" data-placeholder="..." class="form-control"
                       style="border: 1px solid #e5eaee !important;">
                       <option value="">Tous les Clients</option>
-                      <option ng-repeat="pi in listClients" value="{{pi.id}}">{{pi.reference}}-{{pi.abreviation}}
+                      <option ng-repeat="pi in listClients  | filter:{famillePartieInteressee:1}" value="{{pi.id}}">{{pi.reference}}-{{pi.abreviation}}
                       </option>
                     </select>
                   </div>
