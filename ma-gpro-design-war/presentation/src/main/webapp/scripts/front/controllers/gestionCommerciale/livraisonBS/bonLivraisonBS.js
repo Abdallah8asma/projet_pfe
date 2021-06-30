@@ -1530,13 +1530,13 @@ $scope.downloadAllBonLiv = function(
 	$scope.traitementEnCoursGenererAll = "true";
 
 	bonLivraisonVenteCourant.referenceBs = '';
-	if ($scope.checkboxModelRech.stock == "oui") {
+	/*if ($scope.checkboxModelRech.stock == "oui") {
 		bonLivraisonVenteCourant.stock = true;
 	} else
 		bonLivraisonVenteCourant.stock = false
 
-
-	console.log("etat stock generer: " + bonLivraisonVenteCourant.stock);
+*/
+	//console.log("etat stock generer: " + bonLivraisonVenteCourant.stock);
 	console
 		.log("---Objet recherche : bonLivraisonVenteCourant----"
 			+ JSON
@@ -1627,9 +1627,10 @@ $scope.downloadAllBonLiv = function(
 		+ bonLivraisonVenteCourant.natureLivraison
 		+ "&avecFacture="
 		+ bonLivraisonVenteCourant.avecFacture
-		+ "&stock=" + bonLivraisonVenteCourant.stock
+		+ "&stock=" + ""
 		+ "&idDepot=" + newIdDepot
 		+ "&groupeClientId=" + bonLivraisonVenteCourant.groupeClientId
+		+ "&declare=" + bonLivraisonVenteCourant.declare
 		+ "&type=pdf";
 
 	$log.debug("--downloadAllBonLiv URL" + url);
@@ -1780,12 +1781,9 @@ $scope.downloadAllBonLivExcel = function(
 		+ "&prixMax="
 		+ bonLivraisonVenteCourant.prixMax
 		//+ "&natureLivraison="+ bonLivraisonVenteCourant.natureLivraison
-		+ "&avecFacture="
-		+ bonLivraisonVenteCourant.avecFacture
-		//+ "&stock="+""
-		//+ "&idDepot="+newIdDepot
-		//	+ "&groupeClientId="+""
-		+ "&devise=" + newDevise
+		+ "&avecFacture="+ bonLivraisonVenteCourant.avecFacture
+        + "&devise=" + newDevise
+        + "&declare=" + bonLivraisonVenteCourant.declare
 		+ "&type=pdf";
 
 	$log.debug("--downloadAllBonLiv URL" + url);
@@ -1930,6 +1928,9 @@ $scope.downloadAllBonLivExcelDevise = function(
 		//+ "&idDepot="+newIdDepot
 		//	+ "&groupeClientId="+""
 		+ "&devise=" + newDevise
+		
+		+ "&declare=" + bonLivraisonVenteCourant.declare
+		
 		+ "&type=pdf";
 
 	$log.debug("--downloadAllBonLiv URL" + url);

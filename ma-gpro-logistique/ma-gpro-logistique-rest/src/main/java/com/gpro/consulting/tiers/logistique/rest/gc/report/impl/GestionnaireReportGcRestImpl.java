@@ -155,6 +155,12 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("groupeClientId") Long groupeClientId,
 			@RequestParam("devise") Long devise,
 			
+			@RequestParam("dateEcheanceDe") String dateEcheanceDe,
+			@RequestParam("dateEcheanceA") String dateEcheanceA,
+			@RequestParam("declarerecherche") String declarerecherche,
+			
+			
+			
 			HttpServletResponse response)
 			throws JRException, IOException {
 
@@ -175,6 +181,13 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		request.setGroupeClientId(groupeClientId);
 		
 		request.setDevise(devise);
+		
+		request.setDateEcheanceDe(stringToCalendar(dateEcheanceDe));
+		request.setDateEcheanceA(stringToCalendar(dateEcheanceA));
+		
+		request.setDeclarerecherche(declarerecherche);
+		
+		
 		
 		request.setOptimized(this.checkForOptimization(request));
 		
@@ -211,7 +224,7 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 			@RequestParam("avecFacture") String avecFacture,@RequestParam("stock") Boolean stock,@RequestParam("idDepot") Long idDepot ,
 			@RequestParam("groupeClientId") Long groupeClientId,
 			@RequestParam("numof") String numof,
-			
+			@RequestParam("declare") String declare,
 			
 			HttpServletResponse response)
 			throws JRException, IOException {
@@ -234,6 +247,8 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		request.setIdDepot(idDepot);
 		
 		request.setGroupeClientId(groupeClientId);
+		
+		request.setDeclare(declare);
 		
 		request.setNumOF(numof);
 		request.setOptimized(this.checkForOptimization(request));

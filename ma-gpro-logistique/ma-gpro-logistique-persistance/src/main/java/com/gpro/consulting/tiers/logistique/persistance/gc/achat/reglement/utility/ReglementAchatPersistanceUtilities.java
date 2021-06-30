@@ -21,6 +21,7 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entit
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.ElementReglementAchatEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.ReglementAchatEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.TypeReglementAchatEntity;
+import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.DetailsReglementEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.DocumentReglementEntity;
 
 /**
@@ -358,6 +359,16 @@ public class ReglementAchatPersistanceUtilities {
 		dto.setMontantTotal(entity.getMontantTotal());
 		
 		dto.setDeclarer(entity.isDeclarer());
+		
+		String referenceDetailReglement = "";
+		
+		for(DetailsReglementAchatEntity detail : entity.getListDetailsReglement()) {
+			
+			if(detail.getReference() != null)
+				referenceDetailReglement += detail.getReference() + " ";
+		}
+		
+		dto.setReferenceDetailReglement(referenceDetailReglement);
 		
 		return dto;
 	}

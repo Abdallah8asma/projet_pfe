@@ -21,7 +21,20 @@ public class ResultatRechecheReglementAchatElementValue implements Comparable<Re
 	private boolean declarer;
 	
 	
+	private String referenceDetailReglement;
 	
+	
+	
+	
+	
+	public String getReferenceDetailReglement() {
+		return referenceDetailReglement;
+	}
+
+	public void setReferenceDetailReglement(String referenceDetailReglement) {
+		this.referenceDetailReglement = referenceDetailReglement;
+	}
+
 	public boolean isDeclarer() {
 		return declarer;
 	}
