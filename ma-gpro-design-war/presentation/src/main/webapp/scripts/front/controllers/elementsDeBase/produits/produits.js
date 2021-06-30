@@ -825,6 +825,28 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
         $scope.displayMode = 'edit'; 
         $scope.qte = true;
       };
+	  
+	  
+	  
+	  $scope.annulerAjoutRapide = function () {
+					
+						
+					// interface en mode : list
+					$scope.displayMode = "list";
+					
+				}
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 
       // Sauvegarder Produit
       $scope.sauvegarderAjout = function (Produit) {
@@ -1168,12 +1190,12 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
       $scope.$watch('myData', function () {
         $scope.colDefs = [
 	
-	      {
-	    	   field : 'dateIntroduction',
-	    	   displayName : 'Date Intro',
-	    	   cellFilter: "date: 'yyyy-MM-dd'",
-	    	   width:'10%'
-	       },
+	      // {
+	    	   // field : 'dateIntroduction',
+	    	   // displayName : 'Date Intro',
+	    	   // cellFilter: "date: 'yyyy-MM-dd'",
+	    	   // width:'10%'
+	       // },
 		
 		   /*  {
               field: 'numero',
@@ -1188,7 +1210,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
           {
             field: 'designation',
             displayName: 'Désignation',
-            width: '28%',
+            width: '40%',
           },
          /* {
             field: 'unite',
@@ -1201,16 +1223,16 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
               displayName: 'Famille',
               width: '15%',
             }, */
-          {
-            field: 'familleDesignation',
-            displayName: 'Categorie',
-            width: '10%',
-          },
-          {
-            field: 'sousFamilleDesignation',
-            displayName: 'Sous Categorie',
-            width: '8%',
-          },
+          // {
+            // field: 'familleDesignation',
+            // displayName: 'Categorie',
+            // width: '10%',
+          // },
+          // {
+            // field: 'sousFamilleDesignation',
+            // displayName: 'Sous Categorie',
+            // width: '8%',
+          // },
           //										{
           //											field : 'partieIntersseDesignation',
           //											displayName : 'PI',
@@ -1224,14 +1246,22 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
             width: '9%'
           },
 		  */
-
+				
+				 {
+            field: 'partieIntersseDesignation',
+            displayName: 'Client',
+            width: '20%',
+          },
+				
+				
+				
 
            {
             field: 'prixUnitaire',
             displayName: 'P.Vente HT',
     		cellFilter: 'number:3',
             cellClass: 'grid-align',
-            width: '9%'
+            width: '7%'
             },
 		  
 
@@ -1242,7 +1272,7 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
             displayName: 'P.Vente TTC',
     		cellFilter: 'number:3',
             cellClass: 'grid-align',
-            width: '9%'
+            width: '7%'
           },
 		  
 		  
@@ -1298,6 +1328,8 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
           $scope.$apply();
         }
       };
+	  
+	    
 
       $scope.getPagedDataAsync = function (pageSize, page, searchText) {
         setTimeout(function () {
@@ -1359,6 +1391,17 @@ $scope.deleteOperationArticleProduit = function (operation,operationArticleProdu
         selectedItems: $scope.selectedRows,
         filterOptions: $scope.filterOptions,
       };
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 
       /** Fin de gestion des Grids de la partie Interesse */
 

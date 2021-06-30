@@ -911,13 +911,15 @@ angular
 
 				}
 
-				factureVenteCourant.declarerRech
+				$scope.factureVenteCourant.declarerRech
 
 
 				$scope.isEnCoursChargement = false;
 
 
 				$log.info("=========Gc Reporting Client========");
+				
+				
 
 				$scope.ListClientCache = [];
 

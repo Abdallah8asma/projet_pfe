@@ -471,6 +471,30 @@ angular
 								$scope.currentMode = "ADD";
 								
 							}
+							
+							
+							
+							
+							$scope.annulerAjoutRapide = function () {
+					
+						
+					// interface en mode : list
+					$scope.displayMode = "list";
+					
+				}
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
 							//Choix
 
 							/***************************************************
@@ -806,49 +830,49 @@ angular
                                                     	   	width : '9%'
                                                        }, */
                                                        
-                                                        {
-                                                    	   	field : 'machine',
-                                                    	   	displayName : 'Machine',
-                                                    	   	width : '5%'
-                                                       },
+                                                        // {
+                                                    	   	// field : 'machine',
+                                                    	   	// displayName : 'Machine',
+                                                    	   	// width : '5%'
+                                                       // },
 												                  
 														{
 															field : 'reference',
 															displayName : 'NUMERO',
-															width : '10%'
+															width : '9%'
 														},
 														{
 															field : 'referenceProduit',
 															displayName : 'Reference',
-															width : '8%'
+															width : '12%'
 														},
 														{
 															field : 'destinationProduit',
 															displayName : 'Description',
-															width : '20%'
+															width : '42%'
 														},
 														{
 															field : 'dateIntroduction',
 															displayName : 'Date Introduction',
-															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss"',
-															width : '14%'
+															cellFilter : 'date:"dd-MM-yyyy"',
+															width : '10%'
 														},
 														{
 															field : 'dateFin',
 															displayName : 'Date Fin',
-															cellFilter : 'date:"dd-MM-yyyy HH:mm:ss"',
-															width : '15%'
+															cellFilter : 'date:"dd-MM-yyyy"',
+															width : '10%'
 														},
 														{
 															field : 'quantite',
 															displayName : 'Quantite',
-															width : '9%'
+															width : '7%'
 														},
-														{
-															field : 'poidFini',
-															displayName : 'Quantite colis',
-															width : '10%'
-														},
+														// {
+															// field : 'poidFini',
+															// displayName : 'Quantite colis',
+															// width : '10%'
+														// },
 													/* 	{
 															field : '',
 															width : '5%',
