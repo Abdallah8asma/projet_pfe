@@ -2160,6 +2160,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			//@RequestParam("idDepot") Long idDepot, 
 			//@RequestParam("groupeClientId") Long groupeClientId,
 			@RequestParam("devise") Long devise,
+			@RequestParam("declare") String declare,
+			
 			HttpServletResponse response) throws WriteException, IOException {
 
 		// logger.info("Generate a {} Report BonLivraison", type);
@@ -2279,6 +2281,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		RechercheMulticritereBonLivraisonValue request = new RechercheMulticritereBonLivraisonValue();
 
 
+		request.setDeclare(declare);
 		//request.setNatureLivraison(natureLivraison);
 
 		//request.setStock(stock);
@@ -2629,6 +2632,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			//@RequestParam("idDepot") Long idDepot, 
 			//@RequestParam("groupeClientId") Long groupeClientId,
 			@RequestParam("devise") Long devise,
+			@RequestParam("declare") String declare,
 			HttpServletResponse response) throws WriteException, IOException {
 
 		// logger.info("Generate a {} Report BonLivraison", type);
@@ -2694,6 +2698,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		//request.setStock(stock);
 		//request.setIdDepot(idDepot);
+		
+		request.setDeclare(declare);
        
 	
 		if (isNotEmty(referenceBl))

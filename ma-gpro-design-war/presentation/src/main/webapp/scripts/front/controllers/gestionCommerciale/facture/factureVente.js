@@ -2620,6 +2620,10 @@ $scope.validerNatureFiniByOF();
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + groupeClient
 							+ "&devise=" + newDevise
+							
+								+ "&dateEcheanceDe=" + formattedDate(factureVenteCourant.dateEcheanceDe)
+							+ "&dateEcheanceA=" + formattedDate(factureVenteCourant.dateEcheanceA)
+							+ "&declarerecherche=" + factureVenteCourant.declarerecherche
 						
 							+ "&type=pdf";
 
@@ -2637,6 +2641,11 @@ $scope.validerNatureFiniByOF();
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + groupeClient
 							+ "&devise=" + newDevise
+							
+								+ "&dateEcheanceDe=" + formattedDate(factureVenteCourant.dateEcheanceDe)
+							+ "&dateEcheanceA=" + formattedDate(factureVenteCourant.dateEcheanceA)
+							+ "&declarerecherche=" + factureVenteCourant.declarerecherche
+							
 						
 							+ "&type=pdf";
 					}
@@ -2751,6 +2760,7 @@ $scope.validerNatureFiniByOF();
 							+ "&devise=" + newDevise
 							+ "&dateEcheanceDe=" + formattedDate(factureVenteCourant.dateEcheanceDe)
 							+ "&dateEcheanceA=" + formattedDate(factureVenteCourant.dateEcheanceA)
+							+ "&declarerecherche=" + factureVenteCourant.declarerecherche
 							+ "&type=pdf";
 					$log.debug("-- URL" + url);
 

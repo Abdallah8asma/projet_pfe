@@ -953,6 +953,14 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
           displayName: 'Ref.Reg',
           // width: '13%'
         },
+
+        {
+          field: 'referenceDetailReglement',
+          displayName: 'Ref.Transact.',
+          // width: '13%'
+        },
+
+
         {
           field: 'groupeClientDesignation',
           displayName: 'Groupe',
