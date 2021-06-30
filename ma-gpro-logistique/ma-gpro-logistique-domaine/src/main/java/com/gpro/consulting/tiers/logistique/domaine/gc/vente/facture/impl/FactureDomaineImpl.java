@@ -576,6 +576,16 @@ public class FactureDomaineImpl implements IFactureDomaine {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public String updateFacture(FactureVenteValue factureValue) {
+		
+		
+		if (factureValue.getReference() != null && factureValue.getRefAvantChangement() != null
+				&& factureValue.getType() != null
+
+				&& !factureValue.getReference().equals(factureValue.getRefAvantChangement())) {
+
+			getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.isDeclarer(), factureValue.getDate(), true);
+					
+		}
 
 		String FACTURE_TYPE_AVOIRE = "Avoir";
 

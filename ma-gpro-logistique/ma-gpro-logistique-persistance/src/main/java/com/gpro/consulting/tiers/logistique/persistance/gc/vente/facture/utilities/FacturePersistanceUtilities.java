@@ -56,6 +56,7 @@ public class FacturePersistanceUtilities {
 		
 		dto.setId(entity.getId());
 		dto.setReference(entity.getReference());
+		dto.setRefAvantChangement(entity.getReference());
 		dto.setDate(entity.getDate());
 		dto.setMontantHTaxe(entity.getMontantHTaxe());
 		dto.setMontantTTC(entity.getMontantTTC());

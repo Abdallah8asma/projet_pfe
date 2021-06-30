@@ -220,6 +220,8 @@ public class BonLivraisonRestImpl {
 		// layer.", id);
 
 		LivraisonVenteValue livraisonVenteValue = bonLivraisonService.getBonLivraisonById(id);
+		
+		livraisonVenteValue.setRefAvantChangement(livraisonVenteValue.getReference());
 
 		if (livraisonVenteValue != null) {
 			Map<Long, PartieInteresseValue> mapClientById = gestionnaireLogistiqueCacheService.mapClientById();

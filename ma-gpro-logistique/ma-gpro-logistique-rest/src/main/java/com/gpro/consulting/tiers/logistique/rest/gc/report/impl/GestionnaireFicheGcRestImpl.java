@@ -5490,6 +5490,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			@RequestParam("natureLivraison") String natureLivraison,
 			@RequestParam("groupeClientId") Long groupeClientId,
 			@RequestParam("deviseId") Long deviseId,
+			@RequestParam("declarerRech") String declarerRech,
 
 			HttpServletResponse response) throws WriteException, IOException {
 
@@ -5770,6 +5771,21 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 			request.setNatureLivraison(natureLivraison);
 		}
+		
+		
+		if (isNotEmty(declarerRech))
+
+		{
+
+		/*	numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Declaree :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, declarerRech + "", ExcelUtils.boldRed3));
+         */
+			request.setDeclarerecherche(declarerRech);
+	
+		}
+		
+		
 
 		FactureReportListValue report = gestionnaireReportGcService.getListFactureReport(request);
 

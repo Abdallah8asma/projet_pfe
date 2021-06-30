@@ -110,10 +110,10 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 			
 			if(reglement.getReference()==null || reglement.getReference().equals("")) {
 			//	reglement.setReference(this.getNumeroReglement(reglement.getDate()));
-				reglement.setReference(getCurrentReference(Calendar.getInstance(), true));
+				reglement.setReference(getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(),reglement.isDeclarer(), true));
 			}else if (reglement.getRefAvantChangement() != null
 					&& reglement.getReference().equals(reglement.getRefAvantChangement())) {
-				this.getCurrentReference(reglement.getDate(), true);
+				this.getCurrentReferenceByDateAndDeclaree(reglement.getDate(),reglement.isDeclarer(), true);
 			}
 			
 
@@ -196,6 +196,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 	public String update(ReglementValue reglement) {
 		
 		if(reglement != null){
+
+			
+			if (reglement.getReference() != null || reglement.getRefAvantChangement() != null
+					&& !reglement.getReference().equals(reglement.getRefAvantChangement())) {
+				
+				
+						getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(), reglement.isDeclarer(), true);
+			}
+			
+			
 			
 			if(reglement.getPartieIntId() != null)
 				reglement.setGroupeClientId(partieInteresseeDomaine.getById(reglement.getPartieIntId()).getGroupeClientId());
@@ -1992,7 +2002,7 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 			vNumFacture.append(currentGuichetAnnuel.getPrefixeReglementNonDeclarer());
 		
 		//vNumFacture.append(vAnneeCourante);
-		vNumFacture.append(String.format("%06d", vNumGuichetFacture));
+		vNumFacture.append(String.format("%04d", vNumGuichetFacture));
 		// Inserer une nouvelle valeur dans Guichet BonReception. /
 		//GuichetAnnuelValue vGuichetValeur = new GuichetAnnuelValue();
 		
@@ -2003,7 +2013,7 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 		// Modification de la valeur en base du numéro./
 		
 		if (increment)
-		this.guichetAnnuelDomaine.modifierGuichetReglementAnnuel(currentGuichetAnnuel);
+		this.guichetAnnuelDomaine.modifierGuichetReglementNonDeclarerAnnuel(currentGuichetAnnuel);
 			
 		return vNumFacture.toString();
 	}

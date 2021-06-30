@@ -102,4 +102,6 @@ public interface IGuichetAnnuelPersistance {
 
 	public Long modifierGuichetReglementInverseAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
 
+	public Long modifierGuichetReglementNonDeclarerAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
 }

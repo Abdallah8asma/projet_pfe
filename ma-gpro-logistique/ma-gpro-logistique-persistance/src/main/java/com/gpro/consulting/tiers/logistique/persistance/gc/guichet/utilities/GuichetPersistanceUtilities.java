@@ -98,6 +98,9 @@ public class GuichetPersistanceUtilities {
 		entity.setPrefixeReglementInverse(dto.getPrefixeReglementInverse());
 		entity.setNumReferenceReglementInverseCourante(dto.getNumReferenceReglementInverseCourante());
 		
+		entity.setNumReferenceReglementNonDeclarerCourante(dto.getNumReferenceReglementNonDeclarerCourante());		
+		entity.setPrefixeReglementNonDeclarer(dto.getPrefixeReglementNonDeclarer());
+		
 		
 		return entity;
 	}
@@ -181,6 +184,10 @@ public class GuichetPersistanceUtilities {
 
 		dto.setPrefixeReglementInverse(entity.getPrefixeReglementInverse());
 		dto.setNumReferenceReglementInverseCourante(entity.getNumReferenceReglementInverseCourante());
+		
+		
+		dto.setNumReferenceReglementNonDeclarerCourante(entity.getNumReferenceReglementNonDeclarerCourante());		
+		dto.setPrefixeReglementNonDeclarer(entity.getPrefixeReglementNonDeclarer());
 		
 		return dto;
 	}

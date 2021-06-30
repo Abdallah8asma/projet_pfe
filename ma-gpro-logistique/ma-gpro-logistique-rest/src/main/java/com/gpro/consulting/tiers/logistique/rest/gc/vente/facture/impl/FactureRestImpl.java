@@ -253,6 +253,8 @@ public class FactureRestImpl {
 		//logger.info("getFactureById: Delegating request id {} to service layer.", id);
 
 		FactureVenteValue factureVenteValue = factureService.getFactureById(id);
+		
+		factureVenteValue.setRefAvantChangement(factureVenteValue.getReference());
 
 		if (factureVenteValue != null) {
 

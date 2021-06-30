@@ -1189,6 +1189,45 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 	    return list;
 	}
 
+	@Override
+	public LivraisonVenteValue getByInfoSortie(String infoSortie) {
+
+
+		LivraisonVenteValue resultat = null;
+
+		// Set reference on whereClause if not empty or null
+		if (estNonVide(infoSortie)) {
+			
+			CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+			
+			CriteriaQuery<LivraisonVenteEntity> criteriaQuery = criteriaBuilder.createQuery(LivraisonVenteEntity.class);
+			List<Predicate> whereClause = new ArrayList<Predicate>();
+			
+			Root<LivraisonVenteEntity> root = criteriaQuery.from(LivraisonVenteEntity.class);
+			
+			/*Expression<String> path = root.get(PREDICATE_REFERENCE);
+			Expression<String> upper =criteriaBuilder.upper(path);
+			Predicate predicate = criteriaBuilder.like(upper, PERCENT + reference.toUpperCase() + PERCENT);
+			whereClause.add(criteriaBuilder.and(predicate));
+			*/
+			
+			
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_INFO_SORTIE), infoSortie));
+			
+			
+
+			criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+		    List <LivraisonVenteEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		    
+		    if(resultatEntite != null)
+		    	if(resultatEntite.size() > 0)
+		    		resultat = bonLivraisonPersistanceUtilities.toValue(resultatEntite.get(FIRST_INDEX));
+		    	
+		}
+
+	    return resultat;
+	}
+
 	
 	
 	
