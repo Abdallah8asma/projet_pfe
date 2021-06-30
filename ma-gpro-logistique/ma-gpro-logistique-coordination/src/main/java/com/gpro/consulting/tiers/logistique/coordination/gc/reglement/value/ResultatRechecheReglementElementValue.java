@@ -24,8 +24,29 @@ public class ResultatRechecheReglementElementValue implements Comparable<Resulta
 	
 	private boolean declarer;
 	
+	private String refAvantChangement;
 	
 	
+	private String referenceDetailReglement;
+	
+	
+	
+
+	public String getReferenceDetailReglement() {
+		return referenceDetailReglement;
+	}
+
+	public void setReferenceDetailReglement(String referenceDetailReglement) {
+		this.referenceDetailReglement = referenceDetailReglement;
+	}
+
+	public String getRefAvantChangement() {
+		return refAvantChangement;
+	}
+
+	public void setRefAvantChangement(String refAvantChangement) {
+		this.refAvantChangement = refAvantChangement;
+	}
 
 	public boolean isDeclarer() {
 		return declarer;

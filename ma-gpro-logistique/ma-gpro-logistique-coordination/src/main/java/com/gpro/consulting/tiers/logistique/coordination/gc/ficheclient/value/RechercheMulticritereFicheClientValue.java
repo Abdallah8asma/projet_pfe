@@ -15,6 +15,19 @@ public class RechercheMulticritereFicheClientValue {
 	private Calendar dateMax;
 	private String typeRapport;
 
+	
+	private String declarerRech ;
+	
+	
+	
+	
+	
+	public String getDeclarerRech() {
+		return declarerRech;
+	}
+	public void setDeclarerRech(String declarerRech) {
+		this.declarerRech = declarerRech;
+	}
 	public Long getClientId() {
 		return clientId;
 	}

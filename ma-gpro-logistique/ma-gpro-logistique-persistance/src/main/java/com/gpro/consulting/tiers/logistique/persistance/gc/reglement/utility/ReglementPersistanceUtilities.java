@@ -96,6 +96,7 @@ public class ReglementPersistanceUtilities {
 		dto.setId(entity.getId());
 		dto.setPartieIntId(entity.getPartieIntId());
 		dto.setReference(entity.getReference());
+		dto.setRefAvantChangement(entity.getReference());
 		dto.setDate(entity.getDate());
 		dto.setMontantTotal(entity.getMontantTotal());
 		dto.setObservations(entity.getObservations());
@@ -391,6 +392,18 @@ public class ReglementPersistanceUtilities {
 		dto.setGroupeClientId(entity.getGroupeClientId());
 		
 		dto.setDeclarer(entity.isDeclarer());
+		
+		dto.setRefAvantChangement(entity.getReference());
+		
+		String referenceDetailReglement = "";
+		
+		for(DetailsReglementEntity detail : entity.getListDetailsReglement()) {
+			
+			if(detail.getReference() != null)
+				referenceDetailReglement += detail.getReference() + " ";
+		}
+		
+		dto.setReferenceDetailReglement(referenceDetailReglement);
 		
 		return dto;
 	}

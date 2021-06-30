@@ -410,11 +410,33 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public String updateBonLivraison(LivraisonVenteValue bonLivraisonValue) {
+		
+           String type = "";
+        
+        
+        if(bonLivraisonValue.getDeclare() != null && bonLivraisonValue.getDeclare() == true)
+        	type = "declarer";
+        else
+         	type = "non-declare";
+		
+		if (bonLivraisonValue.getReference() != null && bonLivraisonValue.getRefAvantChangement() != null
+
+				&& !bonLivraisonValue.getReference().equals(bonLivraisonValue.getRefAvantChangement())) {
+
+			 getCurrentReferenceByType(type, Calendar.getInstance(), true);
+
+		}
+		
+		
 
 		if (bonLivraisonValue.getGroupeClientId() == null && bonLivraisonValue.getPartieIntId() != null)
 			bonLivraisonValue.setGroupeClientId(
 					partieInteresseePersistance.getById(bonLivraisonValue.getPartieIntId()).getGroupeClientId());
 
+		
+		
+		
+		
 		
 		
 		String msgVerifierContrainteModificationBL = verifierContrainteModificationBL(bonLivraisonValue);
@@ -1543,6 +1565,20 @@ List<LivraisonVenteVue> bonLivraisonlistFinal = new ArrayList<>();
 
 		boolean modeRemiseEstTotal = false;
 		// System.out.println("stock etat: "+bonLivraisonValue.getStock());
+		
+		//verification contrainte unique de info sortie
+		if(bonLivraisonValue.getInfoSortie() != null) {
+			
+			
+			LivraisonVenteValue blrechByInfoSortie =  bonLivraisonPersistance.getByInfoSortie(bonLivraisonValue.getInfoSortie());
+		
+		     if(blrechByInfoSortie != null) {
+			  
+			     	return IConstanteCommerciale.CODE_ERROR_CREATION_BL_BS_EXSIT;
+			  
+		     }
+		
+		}
 		
 		
 		

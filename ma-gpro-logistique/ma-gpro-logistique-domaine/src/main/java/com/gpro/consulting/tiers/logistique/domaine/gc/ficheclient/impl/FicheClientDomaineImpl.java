@@ -90,6 +90,9 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 			requestFacture.setPartieIntId(request.getClientId());			
 			requestFacture.setDateFactureMax(request.getDateMax());
 			requestFacture.setDateFactureMin(request.getDateMin());
+			
+			requestFacture.setDeclarerecherche(request.getDeclarerRech());
+			
 			ResultatRechecheFactureValue resultFacture = facturePersistance.rechercherMultiCritere(requestFacture);
 			
 			
@@ -100,6 +103,8 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 			RechercheMulticritereReglementValue requestReglement = new RechercheMulticritereReglementValue();
 			requestReglement.setPartieIntId(request.getClientId());
 			requestReglement.setDateReglementMax(request.getDateMax());
+			
+			requestReglement.setDeclarerRech(request.getDeclarerRech());
 			
 			
 			//cas de date demarrage 
@@ -140,6 +145,8 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 				}
 			}
 			
+			
+			requestReglement.setDeclarerRech(null);
 			ResultatRechecheReglementCompletValue resultReglementInverse = reglementInversePersistance
 					.rechercherMultiCritereComplet(requestReglement);
 
@@ -201,6 +208,8 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 				requestBL.setDateLivraisonMax(request.getDateMax());
 				requestBL.setDateLivraisonMin(request.getDateMin());
 				requestBL.setAvecFacture("nonFacture");
+				
+				requestBL.setDeclare(request.getDeclarerRech());
 				ResultatRechecheBonLivraisonValue resultBL = bonLivraisonPersistance.rechercherMultiCritere(requestBL);
 				
 				

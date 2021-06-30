@@ -320,7 +320,10 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 	@RequestMapping(value = "/ficheClient", method = RequestMethod.GET)
 	public void generateFicheClientReport(@RequestParam("type") String type, @RequestParam("clientId") Long clientId,
 			@RequestParam("dateMin") String dateMin, @RequestParam("dateMax") String dateMax,
-			@RequestParam("typeRapport") String typeRapport, HttpServletResponse response)
+			@RequestParam("typeRapport") String typeRapport,
+			@RequestParam("declarerRech") String declarerRech,
+			
+			HttpServletResponse response)
 			throws JRException, IOException {
 
 		//logger.info("Generate a {} Report FciheClient", type);
@@ -330,6 +333,8 @@ public class GestionnaireReportGcRestImpl extends AbstractGestionnaireDownloadIm
 		request.setDateMin(stringToCalendar(dateMin));
 		request.setDateMax(stringToCalendar(dateMax));
 		request.setTypeRapport(typeRapport);
+		
+		request.setDeclarerRech(declarerRech);
 
 		FicheClientReportValue report = gestionnaireReportGcService.getFicheClientReport(request);
 
