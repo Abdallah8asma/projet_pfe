@@ -1823,7 +1823,7 @@ $scope.validerNatureFiniByOF();
 						$scope.creerFactureVente(factureVente);
 					}
 					// Actualiser la Grid
-					$scope.rechercherFactureVente({});
+					//$scope.rechercherFactureVente({});
 				}
 
 				// Mise à jour des Factures de Vente
