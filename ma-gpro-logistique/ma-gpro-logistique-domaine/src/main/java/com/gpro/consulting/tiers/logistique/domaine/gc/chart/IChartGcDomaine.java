@@ -13,6 +13,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.R
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.RechercheMulticritereDetLivraisonValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.chart.value.ResultBestElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RechercheMulticritereReglementValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RegelementChartValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RegelementReportElementRecapValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheReglementElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.vente.facture.value.BLReportElementRecapValue;
@@ -69,6 +70,8 @@ public interface IChartGcDomaine {
 
 	List<FactureReportElementRecapValue> getDifferenceChiffreAffaireVenteAchatByMonth(
 			RechercheMulticritereFactureValue request);
+
+	List<RegelementChartValue> getReglementChart(RechercheMulticritereReglementValue request);
 
 
 	

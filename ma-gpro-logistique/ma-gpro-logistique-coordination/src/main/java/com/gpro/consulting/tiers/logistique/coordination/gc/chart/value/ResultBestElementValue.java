@@ -43,6 +43,45 @@ public class ResultBestElementValue
 	
 	
 	
+	private Long nbTotalLastMonth;
+	
+	private Long nbTotalThisMonth;
+	
+	
+	
+	
+
+	public Long getNbTotalLastMonth() {
+		return nbTotalLastMonth;
+	}
+
+
+
+
+
+	public void setNbTotalLastMonth(Long nbTotalLastMonth) {
+		this.nbTotalLastMonth = nbTotalLastMonth;
+	}
+
+
+
+
+
+	public Long getNbTotalThisMonth() {
+		return nbTotalThisMonth;
+	}
+
+
+
+
+
+	public void setNbTotalThisMonth(Long nbTotalThisMonth) {
+		this.nbTotalThisMonth = nbTotalThisMonth;
+	}
+
+
+
+
 
 	public Double getQuantiteActuelle() {
 		return quantiteActuelle;
