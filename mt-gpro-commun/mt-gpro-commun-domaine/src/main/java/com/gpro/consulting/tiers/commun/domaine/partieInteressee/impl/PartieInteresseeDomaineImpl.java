@@ -188,4 +188,11 @@ public class PartieInteresseeDomaineImpl implements IPartieInteresseeDomaine {
 		return partieInteresseePersistance.nbPartieIntByFamille(famille,boutiqueId);
 	}
 
+	@Override
+	public Long getCountRechercherPartieInteresseMultiCritere(
+			RechercheMulticriterePartieInteresseeValue pRecherchePartieInteresseMulitCritere) {
+		// TODO Auto-generated method stub
+		return partieInteresseePersistance.getCountRechercherPartieInteresseMultiCritere(pRecherchePartieInteresseMulitCritere);
+	}
+
 }
