@@ -29,11 +29,14 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.R
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.RechercheMulticritereDetLivraisonValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.chart.value.ResultBestElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RechercheMulticritereReglementValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RegelementChartValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RegelementReportElementRecapValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheReglementElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.vente.facture.value.BLReportElementRecapValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.vente.facture.value.FactureReportElementRecapValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.FactureVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.RechercheMulticritereFactureValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.ResultatRechecheFactureValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture.IFactureAchatDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.reglement.IReglementAchatDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.report.IGestionnaireReportAchatDomaine;
@@ -42,6 +45,7 @@ import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetAnnuelDom
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetMensuelDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.impl.GuichetAnnuelDomaineImpl;
 import com.gpro.consulting.tiers.logistique.domaine.gc.reglement.IDetailsReglementDomaine;
+import com.gpro.consulting.tiers.logistique.domaine.gc.reglement.IElementReglementDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.report.IGestionnaireReportGcDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.DetailsReglementAchatEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IBonLivraisonPersistance;
@@ -87,6 +91,10 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 	
 	@Autowired
 	IGuichetMensuelDomaine guichetMensuelDomaine;
+	
+	
+	@Autowired
+	IElementReglementDomaine elementReglementDomaine;
 
 	@Override
 	public List<BLReportElementRecapValue> getChiffreAffaireBLbyMonth(RechercheMulticritereBonLivraisonValue request) {
@@ -474,6 +482,53 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 		ResultBestElementValue nbClient = new ResultBestElementValue();
 
 		nbClient.setNbTotal(partieInteresseeDomaine.nbPartieIntByFamille(1L, request.getBoutiqueId()));
+		
+		
+		
+		
+	//last month
+		
+		Calendar debutLastMonth = Calendar.getInstance();
+		
+		debutLastMonth.add(Calendar.MONTH, -1);
+		debutLastMonth.set(Calendar.DATE, 1);
+		
+		
+		Calendar finLastMonth = Calendar.getInstance();
+		finLastMonth.add(Calendar.MONTH, -1);
+		finLastMonth.set(Calendar.DATE, finLastMonth.getActualMaximum(Calendar.DAY_OF_MONTH));
+		
+
+		 
+		
+		//this month
+		Calendar thisMonthDebut = Calendar.getInstance();
+		thisMonthDebut.set(Calendar.DATE, 1);
+		
+		
+		Calendar thisMonthFin = Calendar.getInstance();
+	    thisMonthFin.set(Calendar.DATE, thisMonthFin.getActualMaximum(Calendar.DAY_OF_MONTH));
+		
+		
+		RechercheMulticriterePartieInteresseeValue reqClientLastMonth = new RechercheMulticriterePartieInteresseeValue();
+		
+		reqClientLastMonth.setvFamillePartieInteressee("1");
+		reqClientLastMonth.setDateIntroductionDe(debutLastMonth);
+		reqClientLastMonth.setDateIntroductionA(finLastMonth);
+		
+		
+		Long nbrTotalLastMonth = partieInteresseeDomaine.getCountRechercherPartieInteresseMultiCritere(reqClientLastMonth);
+		
+		
+		reqClientLastMonth.setDateIntroductionDe(thisMonthDebut);
+		reqClientLastMonth.setDateIntroductionA(thisMonthFin);
+		
+		Long nbrTotalThisMonth = partieInteresseeDomaine.getCountRechercherPartieInteresseMultiCritere(reqClientLastMonth);
+		
+		
+		
+		nbClient.setNbTotalLastMonth(nbrTotalLastMonth);
+		nbClient.setNbTotalThisMonth(nbrTotalThisMonth);
 
 		return nbClient;
 	}
@@ -535,6 +590,200 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 		}
 		
 		return listChiffreAffaireFactureByMonth;
+	}
+
+	@Override
+	public List<RegelementChartValue> getReglementChart(RechercheMulticritereReglementValue request) {
+		
+		
+		List<RegelementChartValue>  reglementList = new ArrayList<RegelementChartValue>();
+		
+		//last month
+		
+		Calendar debutLastMonth = Calendar.getInstance();
+		
+		debutLastMonth.add(Calendar.MONTH, -1);
+		debutLastMonth.set(Calendar.DATE, 1);
+		
+		
+		Calendar finLastMonth = Calendar.getInstance();
+		finLastMonth.add(Calendar.MONTH, -1);
+		finLastMonth.set(Calendar.DATE, finLastMonth.getActualMaximum(Calendar.DAY_OF_MONTH));
+		
+		
+		
+		
+		RegelementChartValue reglementLastMonth = getReglementChart(debutLastMonth,finLastMonth);
+		
+		
+		 
+		 reglementList.add(reglementLastMonth);
+		 
+		 
+		 
+		 
+		
+		//this month
+		Calendar thisMonthDebut = Calendar.getInstance();
+		thisMonthDebut.set(Calendar.DATE, 1);
+		
+		
+		Calendar thisMonthFin = Calendar.getInstance();
+	    thisMonthFin.set(Calendar.DATE, thisMonthFin.getActualMaximum(Calendar.DAY_OF_MONTH));
+		
+		
+	    
+	    RegelementChartValue reglementThisMonth = getReglementMoisActuelleChart(thisMonthDebut, thisMonthFin);
+	
+		
+		
+		 reglementList.add(reglementThisMonth);
+	    
+
+		
+		//next month
+		Calendar nextMonthDebut = Calendar.getInstance();
+		nextMonthDebut.add(Calendar.MONTH, 1);
+		nextMonthDebut.set(Calendar.DATE, 1);
+		
+		
+		Calendar nextMonthFin = Calendar.getInstance();
+		nextMonthFin.add(Calendar.MONTH, 1);
+		nextMonthFin.set(Calendar.DATE, nextMonthFin.getActualMaximum(Calendar.DAY_OF_MONTH));
+		
+		
+		
+		RegelementChartValue reglementNextMonth = getReglementChart(nextMonthDebut, nextMonthFin);
+		 
+		reglementNextMonth.setReglementEchu(0d);
+		
+		
+		 reglementList.add(reglementNextMonth);
+		
+		
+		
+		
+		return reglementList;
+		
+	}
+
+	private RegelementChartValue getReglementChart(Calendar debutLastMonth, Calendar finLastMonth) {
+
+		RegelementChartValue  reglementLastMonth = new RegelementChartValue();
+		reglementLastMonth.setDebut(debutLastMonth);
+		reglementLastMonth.setFin(finLastMonth);	
+		reglementLastMonth.setMois(debutLastMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.FRANCE));
+		
+		//Prévisionnel : Les Factures dont date Échéance est dans le mois 	
+		
+		
+		RechercheMulticritereFactureValue requestReglementLastMonth = new RechercheMulticritereFactureValue();
+		requestReglementLastMonth.setDateEcheanceDe(debutLastMonth);
+		requestReglementLastMonth.setDateEcheanceA(finLastMonth);
+		
+		ResultatRechecheFactureValue reultatRechReglementLastMonth =  facturePersistance.rechercherMultiCritere(requestReglementLastMonth);
+
+		
+
+		 Double reglementPrevisionTotal = new Double(0);
+		 Double reglementPayeTotal  =  new Double(0);
+		 Double reglementEchuTotal =  new Double(0);
+		
+		
+		
+		 for(FactureVenteValue factureVente : reultatRechReglementLastMonth.getList()) {
+			 
+			 if(factureVente.getMontantTTC() != null) {
+				 reglementPrevisionTotal += factureVente.getMontantTTC();
+				 
+				 
+				 Double montantPayee =  elementReglementDomaine.getSumMontantPayerByReferenceFacture(factureVente.getReference()) ;
+			
+				 
+				 Double montantOuvert = factureVente.getMontantTTC() - montantPayee ;
+			 
+				 reglementPayeTotal += montantPayee;
+				 
+
+				 
+				 reglementEchuTotal +=montantOuvert;
+			 }
+			 
+		 }
+		 
+		 
+		 
+		 reglementLastMonth.setReglementPrevision(reglementPrevisionTotal);
+		 reglementLastMonth.setReglementPaye(reglementPayeTotal);
+		 reglementLastMonth.setReglementEchu(reglementEchuTotal);
+		 
+		  
+		 return  reglementLastMonth;
+	}
+	
+	
+	
+	
+	
+	private RegelementChartValue getReglementMoisActuelleChart(Calendar debutLastMonth, Calendar finLastMonth) {
+
+		RegelementChartValue  reglementLastMonth = new RegelementChartValue();
+		reglementLastMonth.setDebut(debutLastMonth);
+		reglementLastMonth.setFin(finLastMonth);	
+		reglementLastMonth.setMois(debutLastMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.FRANCE));
+		
+		//Prévisionnel : Les Factures dont date Échéance est dans le mois 	
+		
+		
+		RechercheMulticritereFactureValue requestReglementLastMonth = new RechercheMulticritereFactureValue();
+		requestReglementLastMonth.setDateEcheanceDe(debutLastMonth);
+		requestReglementLastMonth.setDateEcheanceA(finLastMonth);
+		
+		ResultatRechecheFactureValue reultatRechReglementLastMonth =  facturePersistance.rechercherMultiCritere(requestReglementLastMonth);
+
+		
+
+		 Double reglementPrevisionTotal = new Double(0);
+		 Double reglementPayeTotal  =  new Double(0);
+		 Double reglementEchuTotal =  new Double(0);
+		
+		
+		 Calendar today = Calendar.getInstance();
+		
+		
+		 for(FactureVenteValue factureVente : reultatRechReglementLastMonth.getList()) {
+			 
+			 if(factureVente.getMontantTTC() != null) {
+				 reglementPrevisionTotal += factureVente.getMontantTTC();
+				 
+				 
+				 Double montantPayee =  elementReglementDomaine.getSumMontantPayerByReferenceFacture(factureVente.getReference()) ;
+			
+				 
+				 Double montantOuvert = factureVente.getMontantTTC() - montantPayee ;
+			 
+				 reglementPayeTotal += montantPayee;
+				 
+
+				 
+				 if(factureVente.getDateEcheance().before(today) ||  factureVente.getDateEcheance().equals(today) )
+				 {
+					 
+					 reglementEchuTotal +=montantOuvert;
+				 }
+				
+			 }
+			 
+		 }
+		 
+		 
+		 
+		 reglementLastMonth.setReglementPrevision(reglementPrevisionTotal);
+		 reglementLastMonth.setReglementPaye(reglementPayeTotal);
+		 reglementLastMonth.setReglementEchu(reglementEchuTotal);
+		 
+		  
+		 return  reglementLastMonth;
 	}
 
 }
