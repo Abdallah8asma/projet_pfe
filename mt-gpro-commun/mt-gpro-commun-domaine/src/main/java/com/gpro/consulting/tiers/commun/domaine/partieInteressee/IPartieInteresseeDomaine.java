@@ -43,7 +43,9 @@ public interface IPartieInteresseeDomaine {
   
   public Long nbPartieIntByFamille(Long famille,Long boutiqueId);
   
-  
+
+public Long  getCountRechercherPartieInteresseMultiCritere(
+	    RechercheMulticriterePartieInteresseeValue pRecherchePartieInteresseMulitCritere);
 
 	  
   
