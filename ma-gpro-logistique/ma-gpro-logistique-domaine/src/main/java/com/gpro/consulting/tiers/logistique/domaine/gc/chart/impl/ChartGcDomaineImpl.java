@@ -29,7 +29,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.R
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.RechercheMulticritereDetLivraisonValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.chart.value.ResultBestElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RechercheMulticritereReglementValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RegelementChartValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ReglementChartValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RegelementReportElementRecapValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheReglementElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.vente.facture.value.BLReportElementRecapValue;
@@ -593,10 +593,10 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 	}
 
 	@Override
-	public List<RegelementChartValue> getReglementChart(RechercheMulticritereReglementValue request) {
+	public List<ReglementChartValue> getReglementChart(RechercheMulticritereReglementValue request) {
 		
 		
-		List<RegelementChartValue>  reglementList = new ArrayList<RegelementChartValue>();
+		List<ReglementChartValue>  reglementList = new ArrayList<ReglementChartValue>();
 		
 		//last month
 		
@@ -613,7 +613,7 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 		
 		
 		
-		RegelementChartValue reglementLastMonth = getReglementChart(debutLastMonth,finLastMonth);
+		ReglementChartValue reglementLastMonth = getReglementChart(debutLastMonth,finLastMonth);
 		
 		
 		 
@@ -633,7 +633,7 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 		
 		
 	    
-	    RegelementChartValue reglementThisMonth = getReglementMoisActuelleChart(thisMonthDebut, thisMonthFin);
+	    ReglementChartValue reglementThisMonth = getReglementMoisActuelleChart(thisMonthDebut, thisMonthFin);
 	
 		
 		
@@ -653,7 +653,7 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 		
 		
 		
-		RegelementChartValue reglementNextMonth = getReglementChart(nextMonthDebut, nextMonthFin);
+		ReglementChartValue reglementNextMonth = getReglementChart(nextMonthDebut, nextMonthFin);
 		 
 		reglementNextMonth.setReglementEchu(0d);
 		
@@ -667,9 +667,9 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 		
 	}
 
-	private RegelementChartValue getReglementChart(Calendar debutLastMonth, Calendar finLastMonth) {
+	private ReglementChartValue getReglementChart(Calendar debutLastMonth, Calendar finLastMonth) {
 
-		RegelementChartValue  reglementLastMonth = new RegelementChartValue();
+		ReglementChartValue  reglementLastMonth = new ReglementChartValue();
 		reglementLastMonth.setDebut(debutLastMonth);
 		reglementLastMonth.setFin(finLastMonth);	
 		reglementLastMonth.setMois(debutLastMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.FRANCE));
@@ -725,9 +725,9 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 	
 	
 	
-	private RegelementChartValue getReglementMoisActuelleChart(Calendar debutLastMonth, Calendar finLastMonth) {
+	private ReglementChartValue getReglementMoisActuelleChart(Calendar debutLastMonth, Calendar finLastMonth) {
 
-		RegelementChartValue  reglementLastMonth = new RegelementChartValue();
+		ReglementChartValue  reglementLastMonth = new ReglementChartValue();
 		reglementLastMonth.setDebut(debutLastMonth);
 		reglementLastMonth.setFin(finLastMonth);	
 		reglementLastMonth.setMois(debutLastMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.FRANCE));

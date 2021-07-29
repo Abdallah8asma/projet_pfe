@@ -24,7 +24,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.R
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.RechercheMulticritereDetLivraisonValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.chart.value.ResultBestElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RechercheMulticritereReglementValue;
-import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RegelementChartValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ReglementChartValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RegelementReportElementRecapValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.ResultatRechecheReglementElementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.vente.facture.value.BLReportElementRecapValue;
@@ -61,7 +61,7 @@ public class ChartGcRestImpl {
 	
 	
 	@RequestMapping(value = "/getReglementChart", method = RequestMethod.POST, produces = "application/json")
-	public @ResponseBody List<RegelementChartValue> getReglementChart(
+	public @ResponseBody List<ReglementChartValue> getReglementChart(
 			@RequestBody RechercheMulticritereReglementValue request) {
 		
 		

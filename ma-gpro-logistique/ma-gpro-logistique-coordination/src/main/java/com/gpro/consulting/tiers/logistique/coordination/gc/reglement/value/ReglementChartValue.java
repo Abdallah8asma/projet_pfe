@@ -2,7 +2,7 @@ package com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value;
 
 import java.util.Calendar;
 
-public class RegelementChartValue {
+public class ReglementChartValue {
 
 	private int nbr;
 
