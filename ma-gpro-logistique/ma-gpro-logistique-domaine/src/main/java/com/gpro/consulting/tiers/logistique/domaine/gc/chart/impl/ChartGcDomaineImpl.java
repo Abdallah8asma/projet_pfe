@@ -493,6 +493,8 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 		debutLastMonth.add(Calendar.MONTH, -1);
 		debutLastMonth.set(Calendar.DATE, 1);
 		
+		nbClient.setMoisDernier(debutLastMonth.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.FRANCE));
+		
 		
 		Calendar finLastMonth = Calendar.getInstance();
 		finLastMonth.add(Calendar.MONTH, -1);
@@ -504,6 +506,8 @@ public class ChartGcDomaineImpl implements IChartGcDomaine {
 		//this month
 		Calendar thisMonthDebut = Calendar.getInstance();
 		thisMonthDebut.set(Calendar.DATE, 1);
+		
+		nbClient.setCeMois(thisMonthDebut.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.FRANCE));
 		
 		
 		Calendar thisMonthFin = Calendar.getInstance();
