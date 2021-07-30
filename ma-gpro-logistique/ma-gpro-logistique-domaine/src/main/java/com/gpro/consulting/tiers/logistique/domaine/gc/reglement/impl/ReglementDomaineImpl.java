@@ -110,10 +110,10 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 			
 			if(reglement.getReference()==null || reglement.getReference().equals("")) {
 			//	reglement.setReference(this.getNumeroReglement(reglement.getDate()));
-				reglement.setReference(getCurrentReference(Calendar.getInstance(), true));
+				reglement.setReference(getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(),reglement.isDeclarer(), true));
 			}else if (reglement.getRefAvantChangement() != null
 					&& reglement.getReference().equals(reglement.getRefAvantChangement())) {
-				this.getCurrentReference(reglement.getDate(), true);
+				this.getCurrentReferenceByDateAndDeclaree(reglement.getDate(),reglement.isDeclarer(), true);
 			}
 			
 
@@ -196,6 +196,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 	public String update(ReglementValue reglement) {
 		
 		if(reglement != null){
+
+			
+			if (reglement.getReference() != null || reglement.getRefAvantChangement() != null
+					&& !reglement.getReference().equals(reglement.getRefAvantChangement())) {
+				
+				
+						getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(), reglement.isDeclarer(), true);
+			}
+			
+			
 			
 			if(reglement.getPartieIntId() != null)
 				reglement.setGroupeClientId(partieInteresseeDomaine.getById(reglement.getPartieIntId()).getGroupeClientId());
@@ -1964,4 +1974,47 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 	 private boolean estNonVide(String val) {
 			return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 		}
+
+	
+
+	@Override
+	public String getCurrentReferenceByDateAndDeclaree(Calendar date, boolean declarer, boolean increment) {
+		GuichetAnnuelValue currentGuichetAnnuel = guichetAnnuelDomaine.getCurrentGuichetAnnuel(date);
+		
+		if(declarer) 
+			return getCurrentReference(date, increment);
+		else
+			return getCurrentReferenceNonDeclarer(date, increment);
+
+		
+	}
+	
+	public String getCurrentReferenceNonDeclarer(Calendar instance, boolean increment) {
+		
+		GuichetAnnuelValue currentGuichetAnnuel = guichetAnnuelDomaine.getCurrentGuichetAnnuel(instance);
+
+		Long vNumGuichetFacture = currentGuichetAnnuel.getNumReferenceReglementNonDeclarerCourante();
+
+		// Format du numero de la Bon Reception= AAAA-NN. /
+		StringBuilder vNumFacture = new StringBuilder("");
+		
+		if (currentGuichetAnnuel.getPrefixeReglementNonDeclarer()!= null)
+			vNumFacture.append(currentGuichetAnnuel.getPrefixeReglementNonDeclarer());
+		
+		//vNumFacture.append(vAnneeCourante);
+		vNumFacture.append(String.format("%04d", vNumGuichetFacture));
+		// Inserer une nouvelle valeur dans Guichet BonReception. /
+		//GuichetAnnuelValue vGuichetValeur = new GuichetAnnuelValue();
+		
+
+		
+		currentGuichetAnnuel.setNumReferenceReglementNonDeclarerCourante(new Long(
+				vNumGuichetFacture + 1L));
+		// Modification de la valeur en base du numéro./
+		
+		if (increment)
+		this.guichetAnnuelDomaine.modifierGuichetReglementNonDeclarerAnnuel(currentGuichetAnnuel);
+			
+		return vNumFacture.toString();
+	}
 }

@@ -27,6 +27,28 @@ angular
 
                 $scope.displayMode = "list";
 
+              $scope.echeancierCourant = {
+                          "reference":"",
+                          "partieIntId":"",
+                          "typeReglementId":"",
+                          "dateReglementDu":"",
+                          "dateReglementAu":"",
+                          "dateEmissionDu":"",
+                          "dateEmissionAu":"",
+                          "dateEcheanceDu":"",
+                          "dateEcheanceAu":"",
+                          "numPiece":"",
+                          "espece":"",
+                          "regle":"",
+                          "declarerRech":""
+                        };
+
+
+               	 if ($scope.clientActif.blackMode == false) {
+						 $scope.echeancierCourant.declarerRech = "oui";
+
+					}
+
                 $scope.listATerme = [{"valeur":true, "designation":"Oui"}, {"valeur":false, "designation":"Non"}];
                     // Liste des listeRegion
                    $scope.listeRegionCache = function() {
@@ -110,12 +132,24 @@ angular
                           "dateEcheanceAu":"",
                           "numPiece":"",
                           "espece":"",
-                          "regle":""
+                          "regle":"",
+                          "declarerRech":""
                         };
+
+
+               	 if ($scope.clientActif.blackMode == false) {
+						 $scope.echeancierCourant.declarerRech = "oui";
+
+					}
+
+
+
                         $scope.rechercheecheancierForm.$setPristine();
-                        $scope.rechercheecheancier({});
+                        $scope.rechercheecheancier($scope.echeancierCourant);
                         $scope.displayMode = "list";
                     }
+
+             
 
                 // declaration variable
                 $scope.displayAlert = "sleep";
@@ -167,7 +201,7 @@ angular
                   $scope.listTypes();
                 
 
-                  $scope.rechercheecheancier({});
+                 // $scope.rechercheecheancier($scope.echeancierCourant);
 
                 //boutton Generer
                    $scope.Generate = function(idreg) {
@@ -292,6 +326,8 @@ angular
                           + "&typeReglementId="+echeancierCourant.typeReglementId
                           + "&avecTerme="+avecTerme
                           + "&nomRapport="+nomRapport
+
+                          + "&declarerRech="+echeancierCourant.declarerRech
                           + "&type=pdf";
                       
                       $log.info("------- URL " + url );
@@ -410,6 +446,7 @@ angular
                           + "&typeReglementId="+echeancierCourant.typeReglementId
                           + "&avecTerme="+avecTerme
                           + "&nomRapport="+nomRapport
+                          + "&declarerRech="+echeancierCourant.declarerRech
                           + "&type=pdf";
                       
                       $log.info("------- URL " + url );

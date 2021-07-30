@@ -43,6 +43,81 @@ public class ResultBestElementValue
 	
 	
 	
+	private Long nbTotalLastMonth;
+	
+	private Long nbTotalThisMonth;
+	
+	
+	private String moisDernier;
+	
+	private String ceMois;
+	
+	
+	
+
+	public String getMoisDernier() {
+		return moisDernier;
+	}
+
+
+
+
+
+	public void setMoisDernier(String moisDernier) {
+		this.moisDernier = moisDernier;
+	}
+
+
+
+
+
+	public String getCeMois() {
+		return ceMois;
+	}
+
+
+
+
+
+	public void setCeMois(String ceMois) {
+		this.ceMois = ceMois;
+	}
+
+
+
+
+
+	public Long getNbTotalLastMonth() {
+		return nbTotalLastMonth;
+	}
+
+
+
+
+
+	public void setNbTotalLastMonth(Long nbTotalLastMonth) {
+		this.nbTotalLastMonth = nbTotalLastMonth;
+	}
+
+
+
+
+
+	public Long getNbTotalThisMonth() {
+		return nbTotalThisMonth;
+	}
+
+
+
+
+
+	public void setNbTotalThisMonth(Long nbTotalThisMonth) {
+		this.nbTotalThisMonth = nbTotalThisMonth;
+	}
+
+
+
+
 
 	public Double getQuantiteActuelle() {
 		return quantiteActuelle;

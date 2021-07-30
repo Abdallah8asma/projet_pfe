@@ -73,6 +73,8 @@ public class BonLivraisonPersistanceUtilities {
 		}
 		
 		dto.setReference(entity.getReference());
+		dto.setRefAvantChangement(entity.getReference());
+		
 		dto.setRefexterne(entity.getRefexterne());
 		dto.setDate(entity.getDate());
 		dto.setMontantHTaxe(entity.getMontantHTaxe());

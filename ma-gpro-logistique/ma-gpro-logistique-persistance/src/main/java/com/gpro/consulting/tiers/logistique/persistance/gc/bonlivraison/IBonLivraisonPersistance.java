@@ -65,4 +65,6 @@ public interface IBonLivraisonPersistance {
 	public boolean existeBC(String reference);
 
 	public List<LivraisonVenteValue> getByIdReglement(Long id);
+
+	public LivraisonVenteValue getByInfoSortie(String infoSortie);
 }

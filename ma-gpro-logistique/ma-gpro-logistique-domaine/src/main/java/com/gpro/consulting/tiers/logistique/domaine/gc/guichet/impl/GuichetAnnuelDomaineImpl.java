@@ -242,4 +242,10 @@ public class GuichetAnnuelDomaineImpl implements IGuichetAnnuelDomaine{
 		// TODO Auto-generated method stub
 		return this.guichetAnnuelPersistance.modifierGuichetReglementInverseAnnuel(currentGuichetAnnuel);
 	}
+
+	@Override
+	public Long modifierGuichetReglementNonDeclarerAnnuel(GuichetAnnuelValue currentGuichetAnnuel) {
+		// TODO Auto-generated method stub
+		return this.guichetAnnuelPersistance.modifierGuichetReglementNonDeclarerAnnuel(currentGuichetAnnuel);
+	}
 }

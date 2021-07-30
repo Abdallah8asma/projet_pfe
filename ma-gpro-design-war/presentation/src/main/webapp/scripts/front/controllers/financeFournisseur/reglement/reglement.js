@@ -283,6 +283,11 @@
         	                        $scope.displayMode = "list";
         	                    }
 
+    $scope.annulerAjoutRapide = function () {
+   
+      $scope.displayMode = 'list';
+    };
+
         	                // declaration variable
         	                $scope.displayAlert = "sleep";
         	                  
@@ -894,6 +899,12 @@
         	                                      displayName: 'Ref.Reg',
         	                                      width: '15%'
         	                                  },
+
+										      {
+										          field: 'referenceDetailReglement',
+										          displayName: 'Ref.Transact.',
+										          // width: '13%'
+										        },
         	                                  {
         	                                      field: 'partieIntReference',
         	                                      displayName: 'Ref.Fournisseur',

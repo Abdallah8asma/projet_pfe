@@ -2160,6 +2160,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			//@RequestParam("idDepot") Long idDepot, 
 			//@RequestParam("groupeClientId") Long groupeClientId,
 			@RequestParam("devise") Long devise,
+			@RequestParam("declare") String declare,
+			
 			HttpServletResponse response) throws WriteException, IOException {
 
 		// logger.info("Generate a {} Report BonLivraison", type);
@@ -2279,6 +2281,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		RechercheMulticritereBonLivraisonValue request = new RechercheMulticritereBonLivraisonValue();
 
 
+		request.setDeclare(declare);
 		//request.setNatureLivraison(natureLivraison);
 
 		//request.setStock(stock);
@@ -2629,6 +2632,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			//@RequestParam("idDepot") Long idDepot, 
 			//@RequestParam("groupeClientId") Long groupeClientId,
 			@RequestParam("devise") Long devise,
+			@RequestParam("declare") String declare,
 			HttpServletResponse response) throws WriteException, IOException {
 
 		// logger.info("Generate a {} Report BonLivraison", type);
@@ -2694,6 +2698,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 		//request.setStock(stock);
 		//request.setIdDepot(idDepot);
+		
+		request.setDeclare(declare);
        
 	
 		if (isNotEmty(referenceBl))
@@ -3473,6 +3479,11 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			@RequestParam("groupeClientId") Long groupeClientId,
 			@RequestParam("devise") Long devise,
 			
+			@RequestParam("dateEcheanceDe") String dateEcheanceDe,
+			@RequestParam("dateEcheanceA") String dateEcheanceA,
+			@RequestParam("declarerecherche") String declarerecherche,
+			
+			
 			HttpServletResponse response)
 			throws WriteException, IOException {
 
@@ -3510,6 +3521,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.setColumnView(12, 17);
 		sheet3.setColumnView(13, 15);
 		sheet3.setColumnView(14, 15);
+		
+		sheet3.setColumnView(15, 15);
 		/**************************************************************************/
 
 		/*
@@ -3748,6 +3761,42 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 			request.setDevise(devise);
 		}
+		
+		
+		if (isNotEmty(dateEcheanceDe))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Echeance Du :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateEcheanceDe, ExcelUtils.boldRed3));
+
+			request.setDateEcheanceDe(stringToCalendar(dateEcheanceDe));
+		}
+
+		if (isNotEmty(dateEcheanceA))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Echeance A :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateEcheanceA, ExcelUtils.boldRed3));
+
+			request.setDateEcheanceA(stringToCalendar(dateEcheanceA));
+		}
+		
+		
+		if (isNotEmty(declarerecherche))
+
+		{
+
+			/*numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Declaree :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, declarerecherche + "", ExcelUtils.boldRed3));
+            */
+			request.setDeclarerecherche(declarerecherche);
+		}
+		
 
 		request.setOptimized(this.checkForOptimization(request));
 
@@ -3783,7 +3832,8 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		sheet3.addCell(new Label(11, i - 1, "Montant Taxe", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(12, i - 1, "Montant Remise", ExcelUtils.boldRed2));
 		sheet3.addCell(new Label(13, i - 1, "Quantite Totale", ExcelUtils.boldRed2));
-		sheet3.addCell(new Label(14, i - 1, "Montant Ouvert", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(14, i - 1, "Montant Ouvert", ExcelUtils.boldRed2));		
+		sheet3.addCell(new Label(15, i - 1, "Date Echeance", ExcelUtils.boldRed2));
 		
 		Double mantantTtcTotale = 0d;
 		Double remiseTotale = 0d;
@@ -3953,6 +4003,17 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 				mantantOuvertTotale += montantOuvert;
 			} 
+		  	
+		  	
+			// date echeance
+
+			if (element.getDateEcheance() != null) {
+				sheet3.addCell(
+						new Label(15, i, dateFormat2.format(element.getDateEcheance().getTime()) + "", ExcelUtils.boldRed));
+
+			} else {
+				sheet3.addCell(new Label(15, i, "", ExcelUtils.boldRed));
+			}
 		
 
 			i++;
@@ -5435,6 +5496,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			@RequestParam("natureLivraison") String natureLivraison,
 			@RequestParam("groupeClientId") Long groupeClientId,
 			@RequestParam("deviseId") Long deviseId,
+			@RequestParam("declarerRech") String declarerRech,
 
 			HttpServletResponse response) throws WriteException, IOException {
 
@@ -5715,6 +5777,21 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 
 			request.setNatureLivraison(natureLivraison);
 		}
+		
+		
+		if (isNotEmty(declarerRech))
+
+		{
+
+		/*	numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Declaree :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, declarerRech + "", ExcelUtils.boldRed3));
+         */
+			request.setDeclarerecherche(declarerRech);
+	
+		}
+		
+		
 
 		FactureReportListValue report = gestionnaireReportGcService.getListFactureReport(request);
 
@@ -7062,7 +7139,11 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			
 			@RequestParam("numPiece") String numPiece,
 			@RequestParam("regle") Boolean regle, @RequestParam("typeReglementId") Long typeReglementId,
-			@RequestParam("avecTerme") Boolean avecTerme, @RequestParam("nomRapport") String nomRapport,
+			@RequestParam("avecTerme") Boolean avecTerme,
+			@RequestParam("declarerRech") String declarerRech,
+			
+			
+			@RequestParam("nomRapport") String nomRapport,
 			
 			HttpServletResponse response)
 			throws WriteException, IOException {
@@ -7358,6 +7439,15 @@ request.setNomRapport(nomRapport);
 		}
 	
 
+		if (isNotEmty(declarerRech))
+
+		{
+			/*numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Declaree :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, declarerRech, ExcelUtils.boldRed3));
+*/
+			request.setDeclarerRech(declarerRech);
+		}
 
 
 		EcheancierReportListValue report = gestionnaireReportGcService.getListEcheanceReport(request);
@@ -8811,6 +8901,7 @@ request.setNomRapport(nomRapport);
 		return
 
 		isNullOrEmpty(request.getDateFactureMin()) && isNullOrEmpty(request.getDateFactureMax())
+		&& isNullOrEmpty(request.getDateEcheanceDe()) && isNullOrEmpty(request.getDateEcheanceA())
 				&& isNullOrEmpty(request.getPartieIntId()) && isNullOrEmpty(request.getGroupeClientId());
 
 	}

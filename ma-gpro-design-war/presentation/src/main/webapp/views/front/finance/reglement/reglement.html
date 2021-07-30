@@ -409,6 +409,15 @@
                 <span class="ms-CommandButton-label">Retour</span>
               </button>
             </div>
+            
+              <div class="ms-CommandButton">
+              <button class="ms-CommandButton-button" ng-click="annulerAjoutRapide()">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span>
+                <span class="ms-CommandButton-label">Retour Rapide</span>
+              </button>
+            </div>
+            
+            
              <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
               <button class="ms-CommandButton-button">
                 <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
@@ -582,8 +591,8 @@
                       <div class="input-group-text">
                         <label class="checkbox checkbox-square checkbox-primary">
                           <input type="checkbox" class="form-control"
-                            ng-model="reglementCourante.declarer"
-                            >
+                            ng-model="reglementCourante.declarer" ng-change="getCurrentReferenceByDateAndDeclaree(reglementCourante.date,reglementCourante.declarer)"
+                            />
 
                           <span></span></label>
                       </div>

@@ -53,6 +53,135 @@ angular
 				$scope.closeNotifS = function () {
 					$scope.hiddenNotifSucc = "false";
 				}
+				
+				
+				/****** calcul date echeance  ****/
+				
+					$scope.calculerDateEcheance = function(dateBL, modalitePayement) {
+
+					if (modalitePayement != null && dateBL != null) {
+
+						var modalitePmt = modalitePayement.replace(/\s+/g, " ");
+
+
+						var listModalitePayement = modalitePmt.split(" ").filter(s => s);
+
+						var modaliteParJour = 0;
+						var modaliteParMois = 0;
+						
+						var modaliteDFM = false;
+						
+						var modaliteReception = false;
+
+
+
+						for (var i = 0; i < listModalitePayement.length; i++) {
+
+							if (listModalitePayement[i].indexOf("jour") > -1 || listModalitePayement[i].indexOf("Jour") > -1) {
+
+								if ((i - 1) >= 0) {
+
+									modaliteParJour = parseInt(listModalitePayement[i - 1]);
+
+
+
+								}
+
+
+
+							} else
+
+								if (listModalitePayement[i].indexOf("mois") > -1 || listModalitePayement[i].indexOf("Mois") > -1) {
+
+									if ((i - 1) >= 0) {
+
+										modaliteParMois = parseInt(listModalitePayement[i - 1]);
+
+
+
+									}
+
+								}
+								
+								
+								if (listModalitePayement[i].indexOf("DFM") > -1 || listModalitePayement[i].indexOf("dfm") > -1) {
+
+							
+						             	modaliteDFM =true ;
+
+
+						        }
+
+
+ 		                      if (listModalitePayement[i].indexOf("réception") > -1 || listModalitePayement[i].indexOf("reception") > -1) {
+
+							
+						             	modaliteReception =true ;
+
+
+						        }
+
+
+						var dateFacture = angular.copy(dateBL);
+					
+				    //	var dateFacture = angular.copy(dateBL);
+					
+					dateFacture = new Date(dateFacture);
+
+						$scope.factureVenteCourant.dateEcheance = angular.copy(dateBL);
+						
+						
+						if(modaliteReception == false){
+							
+							
+							  if(modaliteDFM == true){
+	
+	                                 dateFacture = new Date(dateFacture.getFullYear(), dateFacture.getMonth()+1, 0);
+
+                                     $scope.factureVenteCourant.dateEcheance = dateFacture ;
+
+
+                                     // $scope.factureVenteCourant.dateEcheance = $scope.modifierFormatDat($scope.factureVenteCourant.dateEcheance) ;
+                                   
+                                  }
+							
+							
+						if (!isNaN(modaliteParJour) && modaliteParJour != 0) {
+
+                                  
+                              
+
+							//console.log("modaliteParJour :" , modaliteParJour );
+
+							$scope.factureVenteCourant.dateEcheance = dateFacture.setDate(dateFacture.getDate() + modaliteParJour);
+						
+						 //$scope.factureVenteCourant.dateEcheance = $scope.modifierFormatDat($scope.factureVenteCourant.dateEcheance) ;
+						
+						}
+
+						if (!isNaN(modaliteParMois) && modaliteParMois != 0) {
+
+							//console.log("modaliteParMois :" , modaliteParMois );
+
+							$scope.factureVenteCourant.dateEcheance = dateFacture.setMonth(dateFacture.getMonth() + modaliteParMois);
+
+ //$scope.factureVenteCourant.dateEcheance = $scope.modifierFormatDat($scope.factureVenteCourant.dateEcheance) ;
+						}
+							
+							
+							
+						}
+
+
+
+
+					}
+
+
+
+                 }
+
+				};
 
 
 				$scope.getStyleRow = function (montantOuvert, montantTTC) {
@@ -1337,6 +1466,15 @@ $scope.validerNatureFiniByOF();
 					$scope.displayMode = "list";
 					//$scope.closeNotif();
 				}
+				
+				
+					$scope.annulerAjoutRapide = function () {
+					
+						
+					// interface en mode : list
+					$scope.displayMode = "list";
+					
+				}
 
 				// AffectationBLVente BonLivVente
 				$scope.affectationBLVente = function (factureVente) {
@@ -1434,7 +1572,15 @@ $scope.validerNatureFiniByOF();
 						.success(
 							function (res) {
 								$scope.factureVenteCourant.reference = res;
-								$scope.factureVenteCourant.refAvantChangement = res;
+								
+								    if ($scope.modePdf != 'actif'){
+														
+										//creation
+		
+										$scope.factureVenteCourant.refAvantChangement = res;
+		
+									   }
+								
 
 							}
 						);
@@ -1615,7 +1761,7 @@ $scope.validerNatureFiniByOF();
 							});
 
 
-
+/*
 					var dateLivraison = null;
 					if ($scope.myData[index].date !== null) {
 						dateLivraison = $scope.modifierFormatDate($scope.myData[index].date);
@@ -1629,13 +1775,13 @@ $scope.validerNatureFiniByOF();
 						//  $scope.partieInteresseeCourante = $scope.myData[index]
 						? angular.copy($scope.myData[index])
 						: {};
+*/
 
 
 
-
-					//  $scope.factureVenteCourant = $scope.myData[index] ? angular
-					// 		 .copy($scope.myData[index])
-					// 		 : {};
+					  $scope.factureVenteCourant = $scope.myData[index] ? angular
+					 		 .copy($scope.myData[index])
+						 : {};
 
 					// mode edit activé
 					$scope.displayMode = "edit";
@@ -1677,7 +1823,7 @@ $scope.validerNatureFiniByOF();
 						$scope.creerFactureVente(factureVente);
 					}
 					// Actualiser la Grid
-					$scope.rechercherFactureVente({});
+					//$scope.rechercherFactureVente({});
 				}
 
 				// Mise à jour des Factures de Vente
@@ -2287,6 +2433,11 @@ $scope.validerNatureFiniByOF();
 				/** * PDF ** */
 				// conversion date en String
 				function formattedDate(date) {
+					
+					if(date === undefined) return "";
+					if(date == null) return "";
+					
+					
 					var d = new Date(date),
 						month = '' + (d.getMonth() + 1),
 						day = '' + d.getDate(),
@@ -2469,6 +2620,11 @@ $scope.validerNatureFiniByOF();
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + groupeClient
 							+ "&devise=" + newDevise
+							
+								+ "&dateEcheanceDe=" + formattedDate(factureVenteCourant.dateEcheanceDe)
+							+ "&dateEcheanceA=" + formattedDate(factureVenteCourant.dateEcheanceA)
+							+ "&declarerecherche=" + factureVenteCourant.declarerecherche
+						
 							+ "&type=pdf";
 
 					} else {
@@ -2485,6 +2641,12 @@ $scope.validerNatureFiniByOF();
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + groupeClient
 							+ "&devise=" + newDevise
+							
+								+ "&dateEcheanceDe=" + formattedDate(factureVenteCourant.dateEcheanceDe)
+							+ "&dateEcheanceA=" + formattedDate(factureVenteCourant.dateEcheanceA)
+							+ "&declarerecherche=" + factureVenteCourant.declarerecherche
+							
+						
 							+ "&type=pdf";
 					}
 					$log.debug("-- URL" + url);
@@ -2596,6 +2758,9 @@ $scope.validerNatureFiniByOF();
 							+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 							+ "&groupeClientId=" + factureVenteCourant.groupeClientId
 							+ "&devise=" + newDevise
+							+ "&dateEcheanceDe=" + formattedDate(factureVenteCourant.dateEcheanceDe)
+							+ "&dateEcheanceA=" + formattedDate(factureVenteCourant.dateEcheanceA)
+							+ "&declarerecherche=" + factureVenteCourant.declarerecherche
 							+ "&type=pdf";
 					$log.debug("-- URL" + url);
 
@@ -2700,6 +2865,7 @@ $scope.validerNatureFiniByOF();
 						+ "&natureLivraison=" + factureVenteCourant.natureLivraison
 						+ "&groupeClientId=" + factureVenteCourant.groupeClientId
 						+ "&devise=" + newDevise
+						
 						+ "&type=pdf";
 
 
@@ -3074,6 +3240,13 @@ $scope.validerNatureFiniByOF();
 								{
 									field: 'date',
 									displayName: 'Date facture',
+									cellFilter: "date: 'yyyy-MM-dd'",
+									// width:'8%'
+								},
+								
+								{
+									field: 'dateEcheance',
+									displayName: 'Date Echeance',
 									cellFilter: "date: 'yyyy-MM-dd'",
 									// width:'8%'
 								},

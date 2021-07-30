@@ -267,6 +267,13 @@ angular
             $scope.recherchePartieIntereseeFormCritere.$setPristine();
           });
       };
+	  
+	  
+	  
+  
+	  
+	  
+	  
 
       //Init liste PI (ng-grid)
       $scope.rechercherPartieInteressee($scope.partieInteresseeCourante);
@@ -292,6 +299,28 @@ angular
 
         $scope.displayMode = 'edit';
       };
+	  
+	  
+	  
+	  
+	  $scope.annulerAjoutRapide = function () {
+					
+						
+					// interface en mode : list
+					$scope.displayMode = "list";
+					
+				}
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 
       // Ajout et Modification Partie Interessee
       $scope.modifierOuCreerPartieInteressee = function () {
@@ -502,7 +531,7 @@ angular
             {
               field: 'raisonSociale',
               displayName: 'Raison Sociale',
-              width: '20%',
+              width: '28%',
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },
 			
@@ -533,12 +562,12 @@ angular
               fontfamily: 'Poppins, Helvetica, sans-serif',
             },*/
           
-			{
-              field: 'ville',
-              displayName: 'Ville',
-              width: '7%',
-              fontfamily: 'Poppins, Helvetica, sans-serif',
-            },
+			// {
+              // field: 'ville',
+              // displayName: 'Ville',
+              // width: '7%',
+              // fontfamily: 'Poppins, Helvetica, sans-serif',
+            // },
 			  {
             	field: 'representants[0].nom',
               displayName: 'Vis à vis',

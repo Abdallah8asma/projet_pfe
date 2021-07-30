@@ -128,7 +128,7 @@ angular
 
 
 				$http
-					.get(UrlAtelier + "/reglement/listeRefReglement")
+					.get(UrlAtelier + "/reglementAchat/listeRefReglement")
 					.success(
 						function (dataProduit) {
 

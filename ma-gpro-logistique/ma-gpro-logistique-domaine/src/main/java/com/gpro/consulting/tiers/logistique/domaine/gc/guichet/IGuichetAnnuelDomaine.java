@@ -120,6 +120,9 @@ public interface IGuichetAnnuelDomaine {
 
 
 	public Long modifierGuichetReglementInverseAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
+
+
+	public Long modifierGuichetReglementNonDeclarerAnnuel(GuichetAnnuelValue currentGuichetAnnuel);
 	
 
 

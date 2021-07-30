@@ -247,6 +247,33 @@
             </div>
          
          
+         <div class="row" ng-show="clientActif.blackMode==true">
+         
+         
+              <div class="col-sm-4" ng-show="clientActif.blackMode==true">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Declare</label>
+                    </div>
+                  
+                  <select ui-select2 ng-model="ordreFabricationCourant.declarerRech"
+                      data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                         <option value="non">NON</option>
+                
+                    </select>
+                    
+                  </div>
+                </div>
+              </div>
+         
+         
+         
+         </div>
+         
+         
          
          
          
@@ -1478,6 +1505,31 @@
                   </div>
                 </div>
               </div>
+              
+              
+               
+         
+              <div class="col-sm-4" ng-show="clientActif.blackMode==true">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Declare</label>
+                    </div>
+                  
+                  <select ui-select2 ng-model="factureVenteCourant.declarerRech"
+                      data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                         <option value="non">NON</option>
+                
+                    </select>
+                    
+                  </div>
+                </div>
+              </div>
+         
+         
+  
             
             </div>
             

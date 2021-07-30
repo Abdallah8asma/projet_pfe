@@ -225,20 +225,30 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 					return [year, month, day].join('-');
 				}
 
-          $scope.getCurrentReferenceMensuelByDate = function(dateIntro) {
+          $scope.getCurrentReferenceByDateAndDeclaree = function(dateIntro,declarer) {
 	
 	
 	
 	$http
         	            		.get(
         	            				UrlAtelier
-        	            						+ "/reglement/getCurrentReferenceByDate:"+formattedDate(dateIntro)
+        	            						+ "/reglement/getCurrentReferenceByDateAndDeclaree:"+formattedDate(dateIntro)+":"+declarer
         	            						)
         	            		.success(
         	            				function(res) {
         	            					
         	            					$scope.reglementCourante.reference = res;
-        	            					$scope.reglementCourante.refAvantChangement = res;
+
+
+                                               if ($scope.modePdf != 'actif'){
+														
+													//creation
+					
+													$scope.reglementCourante.refAvantChangement = res;
+					
+												   }
+
+        	            					
         	            				});
 	
 	
@@ -260,7 +270,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
 
   
-             $scope.getCurrentReferenceMensuelByDate( $scope.reglementCourante.date);
+             $scope.getCurrentReferenceByDateAndDeclaree( $scope.reglementCourante.date,$scope.reglementCourante.declarer);
       $scope.creationReglementForm.$setPristine();
 
       $scope.finalOperationsList = [];
@@ -292,6 +302,12 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       $scope.rechercheReglement($scope.reglementCourante);
       // bouton pdf show
       $scope.modePdf = 'NotActif';
+      $scope.displayMode = 'list';
+    };
+
+    // Annulation de l'ajout rapide
+    $scope.annulerAjoutRapide = function () {
+   
       $scope.displayMode = 'list';
     };
 
@@ -937,6 +953,14 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
           displayName: 'Ref.Reg',
           // width: '13%'
         },
+
+        {
+          field: 'referenceDetailReglement',
+          displayName: 'Ref.Transact.',
+          // width: '13%'
+        },
+
+
         {
           field: 'groupeClientDesignation',
           displayName: 'Groupe',

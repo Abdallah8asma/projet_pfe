@@ -177,9 +177,36 @@ public class FactureVenteEntity implements Serializable {
 	private boolean forcerCalculMontant;
 	
 	
+	@Column(name="modalite_paiement")
+	private String modalitePaiement;
 	
+	
+	
+	@Column(name="DATE_ECHEANCE")
+	private Calendar dateEcheance;
+	
+	
+	
+	
+	
+	
+	
+	public String getModalitePaiement() {
+		return modalitePaiement;
+	}
 
-	
+	public void setModalitePaiement(String modalitePaiement) {
+		this.modalitePaiement = modalitePaiement;
+	}
+
+	public Calendar getDateEcheance() {
+		return dateEcheance;
+	}
+
+	public void setDateEcheance(Calendar dateEcheance) {
+		this.dateEcheance = dateEcheance;
+	}
+
 	public boolean isForcerCalculMontant() {
 		return forcerCalculMontant;
 	}

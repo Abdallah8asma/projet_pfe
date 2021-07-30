@@ -51,7 +51,41 @@ public class RechercheMulticritereFactureValue {
 	
 	private String forcerCalculMontantRech;
 	
+	
+	private String modalitePaiement;
+	
+	
 
+	private Calendar dateEcheanceDe;
+	
+	private Calendar dateEcheanceA;
+	
+	
+
+
+	public String getModalitePaiement() {
+		return modalitePaiement;
+	}
+
+	public void setModalitePaiement(String modalitePaiement) {
+		this.modalitePaiement = modalitePaiement;
+	}
+
+	public Calendar getDateEcheanceDe() {
+		return dateEcheanceDe;
+	}
+
+	public void setDateEcheanceDe(Calendar dateEcheanceDe) {
+		this.dateEcheanceDe = dateEcheanceDe;
+	}
+
+	public Calendar getDateEcheanceA() {
+		return dateEcheanceA;
+	}
+
+	public void setDateEcheanceA(Calendar dateEcheanceA) {
+		this.dateEcheanceA = dateEcheanceA;
+	}
 
 	public String getForcerCalculMontantRech() {
 		return forcerCalculMontantRech;

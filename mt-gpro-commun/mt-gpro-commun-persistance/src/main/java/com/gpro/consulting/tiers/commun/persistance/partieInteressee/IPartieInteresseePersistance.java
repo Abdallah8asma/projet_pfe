@@ -67,5 +67,9 @@ public PartieInteresseValue getById(Long id);
 public String rechercheAbreviationPartieInteresseeParId(Long long1);
 
 public Long nbPartieIntByFamille(Long famille,Long boutiqueId);
+
+
+public Long  getCountRechercherPartieInteresseMultiCritere(
+	    RechercheMulticriterePartieInteresseeValue pRecherchePartieInteresseMulitCritere);
   
 }

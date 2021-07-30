@@ -56,6 +56,7 @@ public class FacturePersistanceUtilities {
 		
 		dto.setId(entity.getId());
 		dto.setReference(entity.getReference());
+		dto.setRefAvantChangement(entity.getReference());
 		dto.setDate(entity.getDate());
 		dto.setMontantHTaxe(entity.getMontantHTaxe());
 		dto.setMontantTTC(entity.getMontantTTC());
@@ -99,6 +100,10 @@ public class FacturePersistanceUtilities {
 	    dto.setDeclarer(entity.isDeclarer());
 	    
 	    dto.setForcerCalculMontant(entity.isForcerCalculMontant());
+	    
+	    
+	    dto.setModalitePaiement(entity.getModalitePaiement());
+	    dto.setDateEcheance(entity.getDateEcheance());
 	    
 	    
 		if(entity.getListDetFactureVente() != null){
@@ -186,6 +191,9 @@ public class FacturePersistanceUtilities {
 	    entity.setDeclarer(dto.isDeclarer());
 	    
 	    entity.setForcerCalculMontant(dto.isForcerCalculMontant());
+	    
+	    entity.setModalitePaiement(dto.getModalitePaiement());
+	    entity.setDateEcheance(dto.getDateEcheance());
 	    
 	    
 		if(dto.getListDetFactureVente() != null){

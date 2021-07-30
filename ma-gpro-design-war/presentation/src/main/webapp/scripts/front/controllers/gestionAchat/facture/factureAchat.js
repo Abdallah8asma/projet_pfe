@@ -930,6 +930,14 @@ angular
 					$scope.closeNotif();
 				}
 
+
+	// Annuler Recherche
+				$scope.annulerAjoutRapide = function () {
+
+				
+					$scope.displayMode = "list";
+					
+				}
 				// AffectationBLAchat BonLivAchat
 				$scope.affectationBLAchat = function (factureAchat) {
 					$scope.listDocFactureAchat = [];

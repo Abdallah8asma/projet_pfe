@@ -1,6 +1,7 @@
 package com.gpro.consulting.tiers.commun.persistance.partieInteressee.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -48,6 +49,8 @@ public class PartieInteresseePersistanceImpl extends AbstractPersistance impleme
   
   private String boutiqueId="boutiqueId";
   private String deviseId="deviseId";
+  
+  private String dateIntroduction="dateIntroduction";
 
   /**
    * methode de creation Partie Interessée
@@ -228,6 +231,18 @@ public class PartieInteresseePersistanceImpl extends AbstractPersistance impleme
 	      vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get(deviseId),
 	    		  pRecherchePartieInteresseMulitCritere.getDeviseId()));
 	    }
+    
+    
+    
+	if (pRecherchePartieInteresseMulitCritere.getDateIntroductionDe() != null) {
+		vWhereClause.add(vBuilder.greaterThanOrEqualTo(vRootParitieInteresse.<Calendar> get(dateIntroduction),
+				pRecherchePartieInteresseMulitCritere.getDateIntroductionDe()));
+	}
+
+	if (pRecherchePartieInteresseMulitCritere.getDateIntroductionA() != null) {
+		vWhereClause.add(vBuilder.lessThanOrEqualTo(vRootParitieInteresse.<Calendar> get(dateIntroduction),
+				pRecherchePartieInteresseMulitCritere.getDateIntroductionA()));
+	}
     
     /** execute query and do something with result **/
 
@@ -410,5 +425,138 @@ public class PartieInteresseePersistanceImpl extends AbstractPersistance impleme
 			    private boolean estNonVide(Long val) {
 					return val != null && !"".equals(val) && !"undefined".equals(val) && !"null".equals(val);
 				}
+
+				@Override
+				public Long getCountRechercherPartieInteresseMultiCritere(
+						RechercheMulticriterePartieInteresseeValue pRecherchePartieInteresseMulitCritere) {
+
+
+				    CriteriaBuilder vBuilder = this.entityManager.getCriteriaBuilder();
+				    /** entity principale **/
+				    CriteriaQuery < Long > vCriteriaQuery = vBuilder.createQuery(Long.class);
+				    List < Predicate > vWhereClause = new ArrayList < Predicate >();
+
+				    /** create liste resyltat ***/
+
+				    /************ entity jointure *****************/
+				    Root < PartieInteresseEntite > vRootParitieInteresse = vCriteriaQuery.from(PartieInteresseEntite.class);
+
+				    /***************** Predicate *************/
+				    
+				    
+				    
+				    if (pRecherchePartieInteresseMulitCritere.getBoutiqueId() != null ) {
+					      vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get(boutiqueId),
+					    		  pRecherchePartieInteresseMulitCritere.getBoutiqueId()));
+					    }
+				    
+				    
+				    if (pRecherchePartieInteresseMulitCritere.getGroupeClientId() != null) {
+				        vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("groupeClientId"),
+				          pRecherchePartieInteresseMulitCritere.getGroupeClientId()));
+				      }
+
+				    
+				    
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getvReference())) {
+				      vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("reference"),
+				        pRecherchePartieInteresseMulitCritere.getvReference()));
+				    }
+
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getvRaisonSociale())) {
+				      vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("raisonSociale"),
+				        pRecherchePartieInteresseMulitCritere.getvRaisonSociale()));
+				    }
+
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getvFamillePartieInteressee())) {
+				      vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("famillePartieInteressee"),
+				        pRecherchePartieInteresseMulitCritere.getvFamillePartieInteressee()));
+				    }
+
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getvCategoriePartieInteressee())) {
+				      vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("categoriePartieInteressee"),
+				        pRecherchePartieInteresseMulitCritere.getvCategoriePartieInteressee()));
+				    }
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getvTypePartieInteressee())) {
+				      vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("typePartieInteressee"),
+				        pRecherchePartieInteresseMulitCritere.getvTypePartieInteressee()));
+				    }
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getvActivite())) {
+				      vWhereClause
+				        .add(vBuilder.equal(vRootParitieInteresse.get("activite"), pRecherchePartieInteresseMulitCritere.getvActivite()));
+				    }
+
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getActif())) {
+				      if (pRecherchePartieInteresseMulitCritere.getActif().equals(IConstante.OUI)) {
+				        vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("actif"), true));
+				      } else if(pRecherchePartieInteresseMulitCritere.getActif().equals(IConstante.NON)) {
+				        vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("actif"), false));
+				      }
+
+				    }
+				    
+				    
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getPassager())) {
+				        if (pRecherchePartieInteresseMulitCritere.getPassager().equals(IConstante.OUI)) {
+				          vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("passager"), true));
+				        } else if(pRecherchePartieInteresseMulitCritere.getPassager().equals(IConstante.NON)) {
+				          vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("passager"), false));
+				        }
+
+				      }
+				    
+				    
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getTelephoneMobile())) {
+				        vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("telephoneMobile"),
+				          pRecherchePartieInteresseMulitCritere.getTelephoneMobile()));
+				      }
+
+				    
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getPayementTerme())) {
+				        vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("payementTerme"),
+				          pRecherchePartieInteresseMulitCritere.getPayementTerme()));
+				      }
+				    
+				    if (estNonVide(pRecherchePartieInteresseMulitCritere.getNature())) {
+				        vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get("nature"),
+				          pRecherchePartieInteresseMulitCritere.getNature()));
+				      }
+				    
+				    
+				    
+				    if (pRecherchePartieInteresseMulitCritere.getDeviseId() != null ) {
+					      vWhereClause.add(vBuilder.equal(vRootParitieInteresse.get(deviseId),
+					    		  pRecherchePartieInteresseMulitCritere.getDeviseId()));
+					    }
+				    
+				    
+				    
+					if (pRecherchePartieInteresseMulitCritere.getDateIntroductionDe() != null) {
+						vWhereClause.add(vBuilder.greaterThanOrEqualTo(vRootParitieInteresse.<Calendar> get(dateIntroduction),
+								pRecherchePartieInteresseMulitCritere.getDateIntroductionDe()));
+					}
+
+					if (pRecherchePartieInteresseMulitCritere.getDateIntroductionA() != null) {
+						vWhereClause.add(vBuilder.lessThanOrEqualTo(vRootParitieInteresse.<Calendar> get(dateIntroduction),
+								pRecherchePartieInteresseMulitCritere.getDateIntroductionA()));
+					}
+				    
+				    /** execute query and do something with result **/
+
+			
+				    
+				    vCriteriaQuery.select(vBuilder.count(vRootParitieInteresse))
+					.where(vWhereClause.toArray(new Predicate[] {}));
+			Long sommeMont = this.entityManager.createQuery(vCriteriaQuery).getSingleResult();
+
+			if (sommeMont != null) {
+				return sommeMont;
+			}
+			return 0l;
+			
+			
+				  }
+
+				
 
 }

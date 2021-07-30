@@ -156,7 +156,7 @@
                       ng-init="echeancierCourant.partieIntId =''" data-placeholder="..." class="form-control"
                       style="border: 1px solid #e5eaee !important;">
                       <option value="">Tous les Clients</option>
-                      <option ng-repeat="pi in listClients" value="{{pi.id}}">{{pi.reference}}-{{pi.abreviation}}
+                      <option ng-repeat="pi in listClients  | filter:{famillePartieInteressee:1}" value="{{pi.id}}">{{pi.reference}}-{{pi.abreviation}}
                       </option>
                     </select>
                   </div>
@@ -397,6 +397,28 @@
                         <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
                       </button>
                     </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+              
+                  <div class="col-sm-4" ng-show="clientActif.blackMode==true">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Declare</label>
+                    </div>
+                  
+                  <select ui-select2 ng-model="echeancierCourant.declarerRech"
+                      data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="oui">OUI</option>
+                         <option value="non">NON</option>
+                
+                    </select>
+                    
                   </div>
                 </div>
               </div>

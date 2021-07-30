@@ -137,7 +137,7 @@ angular
 
 
 				$http
-					.get(UrlAtelier + "/reglement/listeRefReglement")
+					.get(UrlAtelier + "/reglementAchat/listeRefReglement")
 					.success(
 						function (dataProduit) {
 
@@ -198,6 +198,17 @@ angular
 			}
 
 			function formattedDate(date) {
+				
+				if(!angular.isDefined(date))
+						 return "";
+					
+						
+						if(date == null)
+						 return "";
+					
+						if(date == "")
+						 return "";
+					
 				var d = new Date(date),
 					month = '' + (d.getMonth() + 1),
 					day = '' + d.getDate(),
@@ -283,6 +294,9 @@ angular
 					+ "&dateReglementAu=" + newdateSaisieMaxFormat
 					+ "&dateEcheanceDu=" + newdateEchecMinFormat
 					+ "&dateEcheanceAu=" + newdateEchecMaxFormat
+					   + "&dateDepotBanqueDe="+formattedDate(echeancierCourant.dateDepotBanqueDe)
+                          + "&dateDepotBanqueA="+formattedDate(echeancierCourant.dateDepotBanqueA)
+
 					+ "&numPiece=" + echeancierCourant.numPiece
 					+ "&regle=" + echeancierCourant.regle
 					+ "&typeReglementId=" + echeancierCourant.typeReglementId
@@ -412,6 +426,11 @@ angular
 					+ "&dateReglementAu=" + newdateSaisieMaxFormat
 					+ "&dateEcheanceDu=" + newdateEchecMinFormat
 					+ "&dateEcheanceAu=" + newdateEchecMaxFormat
+					
+					        + "&dateDepotBanqueDe="+formattedDate(echeancierCourant.dateDepotBanqueDe)
+                          + "&dateDepotBanqueA="+formattedDate(echeancierCourant.dateDepotBanqueA)
+
+
 					+ "&numPiece=" + echeancierCourant.numPiece
 					+ "&regle=" + echeancierCourant.regle
 					+ "&typeReglementId=" + echeancierCourant.typeReglementId
@@ -514,37 +533,37 @@ angular
 								field: 'dateReglement',
 								displayName: 'Date',
 								cellFilter: 'date:\'dd-MM-yyyy\'',
-								// width: '10%'
+								 width: '10%'
 							},
 							{
 								field: 'refReglement',
 								displayName: 'Ref.Regl',
-								//   width: '10%'
+								   width: '10%'
 							}, {
 								field: 'typeReglement',
 								displayName: 'Type',
-								//  width: '10%'
+								  width: '10%'
 							}, {
 								field: 'clientAbreviation',
 								displayName: 'Fournisseur',
-								//  width: '10%'
+								  width: '10%'
 							}, {
 								field: 'numPiece',
 								displayName: 'N° Pièce',
-								// width: '10%'
+								 width: '10%'
 							}, {
 								field: 'banque',
 								displayName: 'Banque',
-								//    width: '10%'
+								    width: '10%'
 							}, {
 								field: 'montant',
 								displayName: 'Montant ',
-								//   width: '10%'
+								   width: '10%'
 							}, {
 								field: 'dateEcheance',
 								displayName: 'Échéance',
 								cellFilter: 'date:\'dd-MM-yyyy\'',
-								//   width: '10%'
+								   width: '10%'
 							}, /*{
 								field: 'regle',
 								displayName: 'Reglé',

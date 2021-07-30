@@ -139,4 +139,12 @@ public class ReglementServiceImpl implements IReglementService{
 		// TODO Auto-generated method stub
 		return reglementDomaine.getCurrentReference(instance,b);
 	}
+
+	@Override
+	public String getCurrentReferenceByDateAndDeclaree(Calendar date, boolean declarer, boolean increment) {
+		// TODO Auto-generated method stub
+		return reglementDomaine.getCurrentReferenceByDateAndDeclaree(date,declarer,increment);
+	}
+
+	
 }

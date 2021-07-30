@@ -47,4 +47,8 @@ public interface IReglementDomaine {
 	public List<RefLivraisonNonRegleValue> getRefBLNonRegleByGroupeId(Long groupeId);
 
 	public String getCurrentReference(Calendar instance, boolean b);
+
+	public String getCurrentReferenceByDateAndDeclaree(Calendar date, boolean declarer, boolean increment);
+
+
 }

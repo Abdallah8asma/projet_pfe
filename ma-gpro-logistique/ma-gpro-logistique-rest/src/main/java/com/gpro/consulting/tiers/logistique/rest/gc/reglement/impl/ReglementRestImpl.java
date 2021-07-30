@@ -135,7 +135,11 @@ public class ReglementRestImpl {
 		  
 		//logger.info("Delegating request id: {} to service layer.", id);
 		
-		return reglementService.getById(id);
+		ReglementValue reglement  =  reglementService.getById(id);
+		
+		reglement.setRefAvantChangement(reglement.getReference());
+		
+		return reglement;
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
@@ -244,6 +248,15 @@ public class ReglementRestImpl {
  		
  		return  reglementService.getCurrentReference(stringToCalendar(date),false);
  	}
+	
+	
+	
+	@RequestMapping(value = "/getCurrentReferenceByDateAndDeclaree:{date}:{declarer}", method = RequestMethod.GET, produces =  "application/json")
+ 	public @ResponseBody String getCurrentReferenceByDateAndDeclaree(@PathVariable String date , @PathVariable boolean declarer) {
+ 		
+ 		return  reglementService.getCurrentReferenceByDateAndDeclaree(stringToCalendar(date),declarer,false);
+ 	}
+	
 	
 	
 	private Calendar stringToCalendar(String dateString) {

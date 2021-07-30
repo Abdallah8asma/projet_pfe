@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.commun.coordination.value.partieInteressee;
 
+import java.util.Calendar;
+
 public class RechercheMulticriterePartieInteresseeValue {
 
   /** The ref. */
@@ -46,8 +48,29 @@ public class RechercheMulticriterePartieInteresseeValue {
 	private Long deviseId;
 
 	
+
+	private Calendar dateIntroductionDe;
+	private Calendar dateIntroductionA;
+	
+	
 	
 
+
+public Calendar getDateIntroductionDe() {
+		return dateIntroductionDe;
+	}
+
+	public void setDateIntroductionDe(Calendar dateIntroductionDe) {
+		this.dateIntroductionDe = dateIntroductionDe;
+	}
+
+	public Calendar getDateIntroductionA() {
+		return dateIntroductionA;
+	}
+
+	public void setDateIntroductionA(Calendar dateIntroductionA) {
+		this.dateIntroductionA = dateIntroductionA;
+	}
 
 public Long getDeviseId() {
 		return deviseId;
