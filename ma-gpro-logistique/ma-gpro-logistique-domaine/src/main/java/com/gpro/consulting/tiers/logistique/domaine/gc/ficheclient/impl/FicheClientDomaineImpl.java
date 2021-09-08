@@ -192,6 +192,11 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 
 					debitTotal = debitTotal + element.getDebit();
 				}
+				
+				if (element.getCredit() != null) {
+
+					creditTotal = creditTotal + element.getCredit();
+				}
 
 				if (facture.getDate() == null) {
 					element.setDate(dateIfNotExist);
