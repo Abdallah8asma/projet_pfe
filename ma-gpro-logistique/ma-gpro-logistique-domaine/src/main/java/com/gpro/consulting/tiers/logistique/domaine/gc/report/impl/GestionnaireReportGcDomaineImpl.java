@@ -708,7 +708,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		Map<Long, PartieInteresseValue> clientIdMap = gestionnaireLogistiqueCacheDomaine.mapClientById();
 
 		Long clientId = null;
-		Long passager = 517L;
+	//	Long passager = 517L;
 
 		if (livraisonVente.getGroupeClientId() != null) {
 
@@ -718,12 +718,12 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		}
 		bonLivraisonReportValue.setClientId(clientId);
 		////////////
-	if (livraisonVente.getPartieIntId() != null && !livraisonVente.getPartieIntId().equals(passager)) {
+	if (livraisonVente.getPartieIntId() != null /*&& !livraisonVente.getPartieIntId().equals(passager)*/) {
 			clientId = livraisonVente.getPartieIntId();
 			bonLivraisonReportValue.setClientId(clientId);
 		}
 
-		if (clientIdMap.containsKey(clientId) && !livraisonVente.getPartieIntId().equals(passager)) {
+		if (clientIdMap.containsKey(clientId) /*&& !livraisonVente.getPartieIntId().equals(passager)*/) {
 			bonLivraisonReportValue.setClient(clientIdMap.get(clientId).getRaisonSociale());
 			bonLivraisonReportValue.setMatriculeFiscal(clientIdMap.get(clientId).getMatriculeFiscal());
 			bonLivraisonReportValue.setAdresse(clientIdMap.get(clientId).getAdresse());
@@ -733,14 +733,14 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		}
 
 		
-		if (livraisonVente.getPartieIntId().equals(passager)) {
+		/*if (livraisonVente.getPartieIntId().equals(passager)) {
 
 			if (livraisonVente.getTransporteur() != null)
 				bonLivraisonReportValue.setClient(livraisonVente.getTransporteur());
 			else
 				bonLivraisonReportValue.setClient("PASSAGER");
 
-		}
+		}*/
 		
 		/////////////////
 		
