@@ -107,7 +107,7 @@ public interface IMiseDomaine {
 	 */
 	public String listRefMiseParRefBR(String referenceBR);
 
-	  public MiseValue rechercheMiseParReference(Long pId);
+	  public MiseValue rechercheMiseParReference(String pId);
 
 	  public List<MiseValue> getReferenceMise();
 }

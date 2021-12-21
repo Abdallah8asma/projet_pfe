@@ -23,7 +23,7 @@ angular
 				$scope.displayMode = "list";
 				// bouton pdf hide
 				$scope.modePdf = "notActive";
-				$scope.factureVenteCourant = { "type": "Normal" };
+				$scope.factureVenteCourant = { "type": "Normal" , "declarerecherche" :"oui" };
 				// mode list activé
 				$scope.displayMode = "list";
 				$scope.listeBonSortie = [];
@@ -1454,7 +1454,8 @@ $scope.validerNatureFiniByOF();
 						"prixMax": "",
 						"metrageMin": "",
 						"metrageMax": "",
-						"type": "Normal"
+						"type": "Normal",
+						"declarerecherche" :"oui"
 
 					};
 					// init de la Grid

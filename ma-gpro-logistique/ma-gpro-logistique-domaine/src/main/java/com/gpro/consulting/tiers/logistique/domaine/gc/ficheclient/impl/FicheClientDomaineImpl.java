@@ -175,7 +175,7 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 				if (facture.getType() != null && facture.getType().equalsIgnoreCase(FACTURE_TYPE_AVOIRE)) {
 
 					libelle = "Avoir" + SPACE + facture.getReference() + SPACE + "Sur facture" + SPACE
-							+ facture.getRefFactures();
+							+ facture.getInfoLivraison();
 
 					element.setCredit(facture.getMontantTTC());
 					element.setDebit(debit);

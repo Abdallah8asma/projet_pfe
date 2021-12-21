@@ -20,6 +20,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.v
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.RechercheMulticritereBonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.ResultatRechecheBonSortieFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RouleauFiniValue;
+import com.gpro.consulting.tiers.logistique.persistance.atelier.bonsortiefini.utilities.BonSortieFiniPersistanceUtilities;
 import com.gpro.consulting.tiers.logistique.service.atelier.bonsortiefini.IBonSortieFiniService;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 
@@ -45,12 +46,26 @@ public class BonSortieFiniRestImpl {
 	@Autowired
 	private IGestionnaireLogistiqueCacheService gestionnaireLogistiqueCacheService;
 	
+	@Autowired
+	private BonSortieFiniPersistanceUtilities bonSortieFiniPersistanceUtilities;
+	
 	@RequestMapping(value = "/getAvailableListBonSortieFiniRef", method = RequestMethod.GET , produces = "application/json")
 	public @ResponseBody List<String> getAvailableBonSortieFiniRef() {
 		
 		//logger.info("getListBonSortieFiniRef");
 		
 		return bonSortieFiniService.getListBonSortieFiniRef();
+	}
+	
+	@RequestMapping(value = "/getAvailableListBonSortieFiniRefByClientId:{clientId}", method = RequestMethod.GET , produces = "application/json")
+	public @ResponseBody List<String> getAvailableBonSortieFiniRefByClientId(@PathVariable Long clientId) {
+		
+		if(clientId == null) {
+			return new ArrayList<String>() ;
+		}
+		//logger.info("getListBonSortieFiniRef");
+		
+		return bonSortieFiniService.getListBonSortieFiniRefByClientId(clientId);
 	}
 	
 	// Prepare the list of RouleauFiniValue 
@@ -92,6 +107,8 @@ public class BonSortieFiniRestImpl {
 	public @ResponseBody ResultatRechecheBonSortieFiniValue rechercherMultiCritereBonSortieFini(@RequestBody RechercheMulticritereBonSortieFiniValue request) {
 		 
 		//logger.info("rechercheMulticritere: Delegating request {} to service layer.", request);
+		
+		request.setOptimized(bonSortieFiniPersistanceUtilities.checkForOptimization(request));
 		 
 		ResultatRechecheBonSortieFiniValue vResultatRecherche = bonSortieFiniService.rechercherMultiCritere(request);
 		

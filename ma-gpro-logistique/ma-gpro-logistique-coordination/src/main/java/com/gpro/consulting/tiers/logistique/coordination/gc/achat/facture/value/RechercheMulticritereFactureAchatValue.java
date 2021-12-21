@@ -73,9 +73,20 @@ public class RechercheMulticritereFactureAchatValue {
 	
 	
 	
+	private String infoLivraison;
 	
 	
 	
+	
+	
+
+	public String getInfoLivraison() {
+		return infoLivraison;
+	}
+
+	public void setInfoLivraison(String infoLivraison) {
+		this.infoLivraison = infoLivraison;
+	}
 
 	public String getForcerCalculMontantRech() {
 		return forcerCalculMontantRech;

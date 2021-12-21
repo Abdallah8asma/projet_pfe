@@ -16,6 +16,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.Mise
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.RechercheMulticritereMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.ResultatRechercheMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.TraitementMiseValue;
+import com.gpro.consulting.tiers.logistique.persistance.atelier.mise.utilities.MisePersistanceUtilities;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 import com.gpro.consulting.tiers.logistique.service.atelier.mise.IMiseService;
 
@@ -28,6 +29,10 @@ public class MiseRestImpl {
 
 	@Autowired
 	private IGestionnaireLogistiqueCacheService gestionnaireLogistiqueCacheService;
+	
+	
+	@Autowired
+	private MisePersistanceUtilities vMisePersistanceUtilities;
 
 	public MiseRestImpl() {
 		// Constructeur vide
@@ -40,6 +45,10 @@ public class MiseRestImpl {
 	@RequestMapping(value = "/rechercheMiseMulticritere", method = RequestMethod.POST)
 	public @ResponseBody ResultatRechercheMiseValue rechercherMiseMultiCritere(
 			@RequestBody final RechercheMulticritereMiseValue pRechercheMulticritereMise) {
+		
+		pRechercheMulticritereMise.setOptimized(vMisePersistanceUtilities.checkForOptimization(pRechercheMulticritereMise));
+		
+		
 		ResultatRechercheMiseValue vResultatRecherche = vMiseService
 				.rechercherMiseMultiCritere(pRechercheMulticritereMise);
 
@@ -70,6 +79,13 @@ public class MiseRestImpl {
 
 		return vMiseService.rechercheMiseParId(id);
 	}
+	
+	@RequestMapping(value = "/rechercheMiseParReference:{ref}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody MiseValue getMiseByReferene(@PathVariable String ref) {
+
+		return vMiseService.rechercheMiseParReference(ref);
+	}
+
 
 	/**********************
 	 * Méthode de modification d'un Mise

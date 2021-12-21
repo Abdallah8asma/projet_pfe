@@ -168,8 +168,18 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 	    
 	    
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
-	    List < RouleauFiniEntity > resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	    
+		List < RouleauFiniEntity > resultatEntite = null;
+	    		
 
+		if (request.isOptimized()) {
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).setMaxResults(1040).getResultList();
+
+		} else {
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		}
+	    
+	    
 	    List<RouleauFiniValue> list = new ArrayList<RouleauFiniValue>();
 	    
 	    for (RouleauFiniEntity entity : resultatEntite) {
@@ -339,7 +349,18 @@ public class RouleauFiniPersistanceImpl extends AbstractPersistance implements I
 		}
 		
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
-	    List < RouleauFiniEntity > resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	   
+	    
+	    
+		List < RouleauFiniEntity > resultatEntite = null;
+		
+
+		if (request.isOptimized()) {
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).setMaxResults(1040).getResultList();
+
+		} else {
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		}
 
 	    List<RouleauFiniValue> list = new ArrayList<RouleauFiniValue>();
 	    

@@ -40,7 +40,7 @@
               					 * à changer par Cache
               					 ********************************/
       					$scope.bonSortieCourantS = {};
-
+     $scope.traitementEnCours = "false";
               				//Liste Type des Bons de sortie
               				$scope.listeTypeBS = [{id:1,designation:"Expédition"},{id:2,designation:"Echantillon"}];
               				$scope.bonSortieCourantS.listeTypeBS = [{id:"1",designation:"Expédition"},{id:"2",designation:"Echantillon"}];
@@ -48,7 +48,7 @@
               			$scope.bonSortieCourantS.type = $scope.bonSortieCourantS.listeTypeBS[0];
               					console.log("-----$scope.bonSortieCourant.type-----"+$scope.bonSortieCourantS.type);
               					
-              			
+              			  $scope.traitementEnCours = "false";
 $scope.removeCode =function(index){
 $scope.listCode.splice(index,1);
 }	
@@ -432,8 +432,8 @@ $scope.listCode.splice(index,1);
               					 **************************************************/
               					
               				    $scope.pagingOptions = {
-              							pageSizes : [ 5, 10, 13 ],
-              							pageSize : 13,
+              							pageSizes : [ 5, 10, 13, 65,130 ],
+              							pageSize : 65,
               							currentPage : 1
               						};
 
@@ -463,6 +463,10 @@ $scope.listCode.splice(index,1);
 //              					
               						// annuler Recherche
               						$scope.annulerAjout = function() {
+	
+	                              $scope.traitementEnCours = "false";
+
+
               							$scope.modePdf = "notActive";
               							$scope.bonSortieCourant = {
 					              									"reference": "",
@@ -486,6 +490,10 @@ $scope.listCode.splice(index,1);
               							$scope.creationBonSortie.$setPristine();
               							$scope.displayMode = "list";
               							$scope.displayView = "view1";
+
+                                       
+
+
               						}
               						
               						//
@@ -563,11 +571,13 @@ $scope.listCode.splice(index,1);
               								$scope.creerBonSortie(bonSortie);
               							}
               						
-              							$scope.rechercherBonSortie({});
+              							//$scope.rechercherBonSortie({});
               						}
 
               						// Mise à jour des BonSorties
               						$scope.updateBonSortie = function(bonSortie) {
+	
+                                   	$scope.traitementEnCours = "true";
               							
           								// si le metrage est modifié, l'attribut rouleauFini.metrageModif prend  'true', sinon 'false'. 
               							angular.forEach($scope.listeRouleauFini, function(rouleauFini, key){
@@ -622,6 +632,8 @@ $scope.listCode.splice(index,1);
         																		$scope.bonSortieCourant = dataGetBonSortie ? angular
         								              									.copy(dataGetBonSortie)
         								              									: {};
+
+                                                                                  $scope.traitementEnCours = "false";
         																	});
               												//$scope.annulerAjout ();
               											});
@@ -629,6 +641,8 @@ $scope.listCode.splice(index,1);
 
               						// Création BonSortie
               						$scope.creerBonSortie = function(bonSortie) {
+	
+		                                $scope.traitementEnCours = "true";
           								
               							// si le metrage est modifié, l'attribut rouleauFini.metrageModif prend  'true', sinon 'false'. 
               							angular.forEach($scope.listeRouleauFini, function(rouleauFini, key){
@@ -679,6 +693,9 @@ $scope.listCode.splice(index,1);
 																		$scope.bonSortieCourant = dataGetBonSortie ? angular
 								              									.copy(dataGetBonSortie)
 								              									: {};
+			
+			
+		                                                             	$scope.traitementEnCours = "false";
 																	});
               									});
               						}

@@ -74,7 +74,7 @@ public interface IMiseService {
   
   
   @Transactional(readOnly = true, rollbackFor = Exception.class)
-  public MiseValue rechercheMiseParReference(Long reference);
+  public MiseValue rechercheMiseParReference(String reference);
   
 
 }

@@ -658,8 +658,8 @@ angular
 							 **************************************************/
 
 							$scope.pagingOptions = {
-								pageSizes : [ 5, 10, 13 ],
-								pageSize : 13,
+								pageSizes : [ 5, 10, 13 ,65, 130],
+								pageSize : 65,
 								currentPage : 1
 							};
 

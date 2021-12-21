@@ -18,6 +18,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.val
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ResultatRechecheRouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RouleauFiniValue;
+import com.gpro.consulting.tiers.logistique.persistance.atelier.rouleaufini.utilities.RouleauFiniPersistanceUtilities;
 import com.gpro.consulting.tiers.logistique.rest.utilities.ApiResponse;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 import com.gpro.consulting.tiers.logistique.service.atelier.rouleaufini.IRouleauFiniService;
@@ -40,11 +41,16 @@ public class RouleauFiniRestImpl{
 	@Autowired
 	private IGestionnaireLogistiqueCacheService gestionnaireLogistiqueCacheService;
 	
+	@Autowired
+	private RouleauFiniPersistanceUtilities persistanceUtilities;
+	
 	
 	@RequestMapping(value = "/rechercheMulticritere", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody ResultatRechecheRouleauFiniValue rechercherMultiCritere(@RequestBody RechercheMulticritereRouleauFiniValue request) {
 		 
 		//logger.info("RechercheMulticritere: Delegating request {} to service layer.", request);
+		
+		request.setOptimized(persistanceUtilities.checkForOptimization(request));
 		 
 		ResultatRechecheRouleauFiniValue result = rouleauFiniService.rechercherMultiCritere(request);
 		// Traitement : transformation de l'Id a sa propre Designation
@@ -74,6 +80,8 @@ public class RouleauFiniRestImpl{
 	public @ResponseBody ResultatRechecheRouleauFiniValue rechercherMultiCritereStandard(@RequestBody RechercheMulticritereRouleauFiniStandardValue request) {
 		 
 		//logger.info("RechercheMulticritereStandard: Delegating request {} to service layer.", request);
+		
+		request.setOptimized(persistanceUtilities.checkForOptimization(request));
 		 
 		ResultatRechecheRouleauFiniValue result = rouleauFiniService.rechercherMultiCritereStandard(request);
 		// Traitement : transformation de l'Id a sa propre Designation

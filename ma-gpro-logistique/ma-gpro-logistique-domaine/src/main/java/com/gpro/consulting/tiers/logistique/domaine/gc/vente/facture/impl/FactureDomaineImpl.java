@@ -201,6 +201,12 @@ public class FactureDomaineImpl implements IFactureDomaine {
 			}
 
 		}
+		
+		
+		if(factureValue.getType().equals(FACTURE_TYPE_AVOIRE)) {
+			
+			factureValue.setDeclarer(true);
+		}
 
 		if (factureValue.getGroupeClientId() == null && factureValue.getPartieIntId() != null) {
 			PartieInteresseValue pi = partieInteresseePersistance.getById(factureValue.getPartieIntId());

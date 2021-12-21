@@ -56,6 +56,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.D
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportProductValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.bonlivraison.utilities.DetLivraisonVenteValidateComparator;
+import com.gpro.consulting.tiers.logistique.persistance.atelier.mise.utilities.MisePersistanceUtilities;
 import com.gpro.consulting.tiers.logistique.rest.report.utilities.ExcelUtils;
 import com.gpro.consulting.tiers.logistique.service.atelier.bonsortiefini.IBonSortieFiniService;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
@@ -147,6 +148,9 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 	
 	@Autowired
 	private IProduitPersistance produitPersistance;
+	
+	@Autowired
+	private MisePersistanceUtilities vMisePersistanceUtilities;
 	/*
 	 * @Autowired IBaseInfoService baseInfoService;
 	 */
@@ -438,6 +442,8 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			request.setDateFinProductionA(calendarStringToCalendarObject(dateFinProdA));
 
 		}
+		
+		request.setOptimized(vMisePersistanceUtilities.checkForOptimization(request));
 
 		ResultatRechercheMiseValue resultatRecherche = miseService.rechercherMiseMultiCritere(request);
 
@@ -1213,6 +1219,9 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			request.setDateFinProductionA(calendarStringToCalendarObject(dateFinProdA));
 
 		}
+		
+		request.setOptimized(vMisePersistanceUtilities.checkForOptimization(request));
+		
 
 		ResultatRechercheMiseValue resultatRecherche = miseService.rechercherMiseMultiCritere(request);
 
@@ -3117,7 +3126,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 					// 3- remplir cracteristique du produit
 
-					MiseValue mise = miseService.rechercheMiseParReference(Long.parseLong(element.getNumeroOF()));
+					MiseValue mise = miseService.rechercheMiseParReference(element.getNumeroOF());
 
 					if (mise != null) {
 
@@ -3615,7 +3624,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 					// 3- remplir cracteristique du produit
 
-					MiseValue mise = miseService.rechercheMiseParReference(Long.parseLong(element.getNumeroOF()));
+					MiseValue mise = miseService.rechercheMiseParReference(element.getNumeroOF());
 
 					if (mise != null) {
 
@@ -5314,7 +5323,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 				// 3- remplir cracteristique du produit
 
-				MiseValue mise = miseService.rechercheMiseParReference(Long.parseLong(element.getNumeroOF()));
+				MiseValue mise = miseService.rechercheMiseParReference(element.getNumeroOF());
 
 				if (mise != null) {
 
@@ -5765,7 +5774,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 				// 3- remplir cracteristique du produit
 
-				MiseValue mise = miseService.rechercheMiseParReference(Long.parseLong(element.getNumeroOF()));
+				MiseValue mise = miseService.rechercheMiseParReference(element.getNumeroOF());
 
 				if (mise != null) {
 
