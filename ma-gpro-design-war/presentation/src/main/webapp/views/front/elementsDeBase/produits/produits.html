@@ -240,6 +240,22 @@
 									</div>
 								</div>
 							</div>
+							
+										 <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <select ui-select2 ng-model="produitCourante.partieInteressee" data-placeholder="..."
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="pi in listePartieInteressee | filter:{famillePartieInteressee : 1}"
+                        value="{{pi.id}}">{{pi.raisonSociale}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
 						</div>
 					</form>

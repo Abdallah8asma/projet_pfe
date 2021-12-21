@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.val
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.DetLivraisonVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.LivraisonVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.RechercheMulticritereBonLivraisonValue;
 import com.gpro.consulting.tiers.logistique.coordination.gl.facon.value.FicheFaconValue;
 import com.gpro.consulting.tiers.logistique.coordination.gl.facon.value.TraitementFicheValue;
 import com.gpro.consulting.tiers.logistique.domaine.atelier.bonReception.IBonReceptionDomaine;
@@ -1191,6 +1193,52 @@ public class BonSortieFiniDomainImpl implements IBonSortieFiniDomain {
 
 		return result;
 
+	}
+
+	@Override
+	public List<String> getListBonSortieFiniRefByClientId(Long clientId) {
+
+
+		List<String> listBonSortieFiniToRemove = new ArrayList<String>();
+		
+		RechercheMulticritereBonLivraisonValue requestBl = new RechercheMulticritereBonLivraisonValue();
+		
+		requestBl.setPartieIntId(clientId);
+
+		Set<LivraisonVenteValue> LivraisonVenteList = bonLivraisonPersistance.rechercherMultiCritere(requestBl).getList();
+
+		for (LivraisonVenteValue livraisonVente : LivraisonVenteList) {
+
+			String infoSortieSplitted[];
+
+			if (livraisonVente.getInfoSortie() != null) {
+
+				infoSortieSplitted = livraisonVente.getInfoSortie().split(SEPARATOR);
+
+				for (int index = 0; index < infoSortieSplitted.length; index++) {
+
+					listBonSortieFiniToRemove.add(infoSortieSplitted[index]);
+
+				}
+			}
+
+		}
+
+		List<String> listBonSortieFini = new ArrayList<String>();
+
+		RechercheMulticritereBonSortieFiniValue requestBs = new RechercheMulticritereBonSortieFiniValue();
+		requestBs.setPartieInt(clientId);
+		
+		Set<BonSortieFiniValue> bonSortieFinilist = bonSortieFiniPersistance.rechercherMultiCritereOptimized(requestBs).getList();
+
+		for (BonSortieFiniValue bonSortieFini : bonSortieFinilist) {
+			if (bonSortieFini.getReference() != null && bonSortieFini.getReference().length() != 0)
+				listBonSortieFini.add(bonSortieFini.getReference());
+		}
+
+		listBonSortieFini.removeAll(listBonSortieFiniToRemove);
+
+		return listBonSortieFini;
 	}
 }
 	

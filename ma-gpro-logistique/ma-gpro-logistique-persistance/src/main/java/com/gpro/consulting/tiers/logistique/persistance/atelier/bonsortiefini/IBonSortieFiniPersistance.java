@@ -39,5 +39,7 @@ public interface IBonSortieFiniPersistance {
 	public List<BonSortieFiniOptimizedValue> getBonSortieEnCours();
 	
 	public BonSortieFiniOptimizedValue getBonSortieFiniOptimizedById(Long id);
+	
+	public ResultatRechecheBonSortieFiniValue rechercherMultiCritereOptimized(RechercheMulticritereBonSortieFiniValue request);
 
 }

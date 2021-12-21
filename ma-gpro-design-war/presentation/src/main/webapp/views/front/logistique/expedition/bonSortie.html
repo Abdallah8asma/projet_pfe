@@ -330,7 +330,7 @@
 						</div>
 
 						<div class="ms-CommandButton">
-							<button class="ms-CommandButton-button" permission="['Production_Expedition_Edit']"  ng-disabled="!creationBonSortie.$valid;"
+							<button class="ms-CommandButton-button" permission="['Production_Expedition_Edit']"  ng-disabled="!creationBonSortie.$valid || traitementEnCours =='true'"
 								ng-click="sauvegarderBonSortie(bonSortieCourant)">
 								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span> <span
 									class="ms-CommandButton-label">Enregistrer</span>

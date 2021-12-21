@@ -257,6 +257,17 @@ public class FactureAchatPersistanceImpl extends AbstractPersistance implements 
 					break;
 			}
 		}
+		
+		
+
+		// Set request.referenceBl on whereClause if not empty or null
+		if (estNonVide(request.getInfoLivraison())) {
+			Expression<String> path = root.get(PREDICATE_INFO_LIVRAISON);
+			Expression<String> upper = criteriaBuilder.upper(path);
+			Predicate predicate = criteriaBuilder.like(upper,
+					PERCENT + request.getInfoLivraison().toUpperCase() + PERCENT);
+			whereClause.add(criteriaBuilder.and(predicate));
+		}
 
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 		List<FactureAchatEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();

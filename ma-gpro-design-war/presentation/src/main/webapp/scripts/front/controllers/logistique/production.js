@@ -24,7 +24,7 @@ angular
                             d.setHours(0,0,0,0);
 
 						//	$scope.rouleauCourant.dateProductionA = new Date();
-							$scope.rouleauCourant.dateProductionDe = d;
+							//$scope.rouleauCourant.dateProductionDe = d;
 							/********************************
 							 * Gestion des listes deroulantes*
 							 * à changer par Cache
@@ -175,7 +175,7 @@ angular
 												});
 							}
 							$scope.listeChoixRouleauCache();
-							$scope.listeMise();
+							//$scope.listeMise();
 							$scope.listeProduitCache();
 							$scope.listeClientCache();
 							$scope.listeEntrepotCache();
@@ -186,8 +186,8 @@ angular
 							 **************************************************/
 							
 						    $scope.pagingOptions = {
-									pageSizes : [ 5, 10, 13 ],
-									pageSize : 13,
+									pageSizes : [ 5, 10, 13 , 1040 ],
+									pageSize : 1040,
 									currentPage : 1
 								};
 

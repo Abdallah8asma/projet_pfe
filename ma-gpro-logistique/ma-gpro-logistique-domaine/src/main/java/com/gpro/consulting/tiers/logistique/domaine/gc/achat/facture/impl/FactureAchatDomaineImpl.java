@@ -166,6 +166,11 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
            }
 			
 		}
+		
+	   if(factureValue.getType().equals(FACTURE_TYPE_AVOIRE)) {
+			
+			factureValue.setDeclarer(true);
+		}
 
 		if (factureValue.getInfoLivraison() != null && estNonVide(factureValue.getInfoLivraison())) {
 			String infoSortieSplitted[] = factureValue.getInfoLivraison().split(SEPARATOR);

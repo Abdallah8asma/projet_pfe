@@ -286,6 +286,15 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 		    if (estNonVide(request.getModalitePaiement() )) {
 				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_MODALITE_PAIEMENT), request.getModalitePaiement()));
 			}
+		    
+		    
+			if (estNonVide(request.getInfoLivraison())) {
+				Expression<String> path = root.get(PREDICATE_INFO_LIVRAISON);
+				Expression<String> upper =criteriaBuilder.upper(path);
+				Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getInfoLivraison().toUpperCase() + PERCENT);
+				whereClause.add(criteriaBuilder.and(predicate));
+			}
+			
 	 //	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	 	
 	 	
@@ -320,9 +329,9 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	 			root.get("forcerCalculMontant").as(boolean.class),
 	 			
 	 			root.get("modalitePaiement").as(String.class),
-	 			root.get("dateEcheance").as(Calendar.class)
-
-
+	 			root.get("dateEcheance").as(Calendar.class),
+	 			root.get("refFactures").as(String.class)
+	 			
 	 			
 				
 				)).where(whereClause.toArray(new Predicate[] {}));
@@ -379,6 +388,8 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	    
 	    entity.setModalitePaiement((String) element[26]);
 	    entity.setDateEcheance((Calendar)element[27]);
+	    
+	    entity.setRefFactures((String) element[28]);
 	    	
 	    	FactureVenteValue dto = FacturePersistanceUtilities.toValue(entity);
 	    	list.add(dto);

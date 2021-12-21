@@ -6,7 +6,9 @@ import org.springframework.stereotype.Component;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.ElementRechecheMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.GuichetMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.MiseValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.RechercheMulticritereMiseValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.mise.value.TraitementMiseValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.mise.entity.GuichetMiseEntity;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.mise.entity.MiseEntity;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.mise.entity.TraitementMiseEntity;
@@ -205,6 +207,30 @@ public class MisePersistanceUtilities {
 	return dto;
 	
   }
+  
+	
+	public boolean checkForOptimization(
+			RechercheMulticritereMiseValue request) {
+
+		return isNullOrEmpty(request.getDateIntroduction())
+				&& isNullOrEmpty(request.getDateIntroductionDE())
+				&& isNullOrEmpty(request.getDateIntroductionA())
+				&& isNullOrEmpty(request.getProduitId())
+				&& isNullOrEmpty(request.getClient())
+				&& isNullOrEmpty(request.getDateLivraisonDE())
+				&& isNullOrEmpty(request.getDateLivraisonA())
+				&& isNullOrEmpty(request.getDateDebutProductionDe())
+				&& isNullOrEmpty(request.getDateDebutProductionA())
+				
+				&& isNullOrEmpty(request.getReferenceMise())
+				&& isNullOrEmpty(request.getReferenceProduit())
+		
+			;
+
+	}
+	public boolean isNullOrEmpty(Object criteria) {
+		return criteria == null || criteria.toString().length() == 0;
+	}
   /**
    * 
    * Méthode permettant la conversion d'une entité en valeur : MiseValue

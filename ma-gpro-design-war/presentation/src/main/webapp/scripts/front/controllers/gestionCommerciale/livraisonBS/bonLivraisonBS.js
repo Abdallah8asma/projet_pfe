@@ -536,21 +536,35 @@ angular
 					'multiple': true,
 					'simple_tags': true,
 					'tags': function() {
-						//reload de la liste des RefBS
+						
+							$scope.traitementEnCours = "true";
+						
+						if($scope.bonLivraisonVenteCourant.partieIntId != undefined && $scope.bonLivraisonVenteCourant.partieIntId != "" ){
+							
+								//reload de la liste des RefBS
 						$http
 							.get(
 								UrlAtelier
-								+ "/bonsortiefini/getAvailableListBonSortieFiniRef")
+								+ "/bonsortiefini/getAvailableListBonSortieFiniRefByClientId:"+$scope.bonLivraisonVenteCourant.partieIntId)
 							.success(
 								function(resultat) {
 									$log.debug("--ResultatListBS " + resultat.length);
 									$scope.listReferenceBS = resultat;
+									
+									$scope.traitementEnCours = "false";
+									
+							    	return $scope.listReferenceBS;
 									//$log.debug("listBS : "+resultat.list.length);
 									//$log.debug("--listReferenceBS : "+JSON.stringify($scope.listReferenceBS, null, "    "));
 
 								});
+								
 						$log.debug("--OnClicklistReferenceBS : " + JSON.stringify($scope.listReferenceBS, null, "    "));
+						//return $scope.listReferenceBS;s
+						}
+						
 						return $scope.listReferenceBS;
+					
 					}
 				};
 

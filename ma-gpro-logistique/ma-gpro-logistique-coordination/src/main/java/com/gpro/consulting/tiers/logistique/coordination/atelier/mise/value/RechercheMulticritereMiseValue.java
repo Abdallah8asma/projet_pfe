@@ -57,6 +57,18 @@ public class RechercheMulticritereMiseValue {
 		
 		private String refCommande;
 		
+		private boolean optimized;
+		
+		
+		
+
+	public boolean isOptimized() {
+			return optimized;
+		}
+
+		public void setOptimized(boolean optimized) {
+			this.optimized = optimized;
+		}
 
 	public String getRefCommande() {
 			return refCommande;

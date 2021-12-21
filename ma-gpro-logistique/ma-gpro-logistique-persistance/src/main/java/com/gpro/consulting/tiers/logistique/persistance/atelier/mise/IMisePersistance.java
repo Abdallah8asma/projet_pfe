@@ -62,5 +62,5 @@ public interface IMisePersistance {
 	 
 	 public List<MiseValue> getReferenceMise();
 	 
-	 public MiseValue rechercheMiseParReference(Long pMise);
+	 public MiseValue rechercheMiseParReference(String pMise);
 }

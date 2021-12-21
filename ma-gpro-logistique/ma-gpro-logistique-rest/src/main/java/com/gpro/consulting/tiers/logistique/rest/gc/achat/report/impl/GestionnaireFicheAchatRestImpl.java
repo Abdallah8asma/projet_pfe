@@ -71,6 +71,8 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.report.gcReporting.s
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.gcReporting.situation.value.SituationReportingReportListValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.gcReporting.situation.value.SituationReportingValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.vente.facture.value.FactureReportElementValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.RechercheMulticritereFactureValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.ResultatRechecheFactureValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.BonInventaireValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.MagasinValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereBonInventaireValue;
@@ -2863,8 +2865,10 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 			element.setMetrageTotal(montantPayee);
 			
 			
-			if(montantPayee < element.getMontantTTC() )
+			if((montantPayee < element.getMontantTTC()) && !hasFactureAvoir(element.getReference()) ) {
 				listFactureNonPaye.add(element);
+			}
+			
 		}
 
 		for (FactureAchatValue element : listFactureNonPaye) {
@@ -5601,6 +5605,23 @@ request.setNomRapport(nomRapport);
 		}
 		return result;
 	}
+	
+	private boolean hasFactureAvoir(String reference) {
+		
+		
+		RechercheMulticritereFactureAchatValue requestAvoir = new RechercheMulticritereFactureAchatValue();
+		
+		requestAvoir.setInfoLivraison(reference);
+		
+		ResultatRechecheFactureAchatValue result = factureAchatService.rechercherMultiCritere(requestAvoir) ; 
+		
+	  
+		
+		return (result.getList().size() > 0) ? true : false ;
+		
+	}
+
+
 	public boolean checkForOptimization(RechercheMulticritereFactureAchatValue request) {
 
 		return

@@ -155,6 +155,112 @@ angular
 							
 							
 							
+							
+										$scope.remplirRouleauMiseByReference = function(idMise) {
+											
+								$scope.clientId.status = "";
+											
+											
+								$scope.remplir = true;
+								$log.debug("IdMise "+idMise);
+								console.log("IdMise "+idMise)
+								
+								// getBonReception
+								if(idMise!= null){
+									$http
+									.get(
+											UrlAtelier
+													+ "/mise/rechercheMiseParReference:"+ idMise)
+									.success(
+											function(datagetMise) {
+												$scope.resultatRechercheMise = datagetMise;
+												//referenceMise 
+												$log.debug("---Mise Reference "+datagetMise.reference);
+												console.log("---Mise Reference "+datagetMise.reference)
+												$scope.resultatRechercheMise.referenceMise = datagetMise.reference;
+												//PoidFini
+												console.log("---Mise poid fini: "+datagetMise.poidFini);
+												$scope.resultatRechercheMise.poidFini = datagetMise.poidFini;
+												//refBonReception
+												$scope.resultatRechercheMise.refBonreception = datagetMise.refBonreception;
+												//miseFini
+												$log.debug("---MiseFini "+datagetMise.fini);
+												$scope.resultatRechercheMise.fini = datagetMise.fini;
+												//Produit
+												$log.debug("---TissuId : "+ datagetMise.produitId);
+												//Client
+												$log.debug("---ClientId : "+ datagetMise.partieintId);
+												
+												/**conversion Produit & sousFamilleProduit **/
+											    /*Methode 1: utilise le service getId pour convertir le produit avec l'Id x à sa propre reference
+												 */
+												if(datagetMise.produitId!= null){
+													$http
+													.get(
+															UrlCommun
+																	+ "/produit/getId:"+ datagetMise.produitId)
+													.success(
+															function(datagetProduit) {
+																$log.debug(" --TissuId : " + datagetProduit.id);
+																$log.debug(" --TissuReference : " + datagetProduit.reference);
+																$log.debug(" --SousFamilleId : " + datagetProduit.sousFamilleId);
+																$log.debug(" --SousFamilleDesignation : " + datagetProduit.sousFamilleDesignation);
+
+																//affectation de sousFamilleProduit et referenceProduit au rouleau selectionné
+																$scope.resultatRechercheMise.produitId = datagetProduit.id;
+																$scope.resultatRechercheMise.reference = datagetProduit.reference;
+																$scope.resultatRechercheMise.sousFamille = datagetProduit.sousFamilleDesignation
+																$scope.resultatRechercheMise.composition = datagetProduit.composition;
+																
+																$scope.resultatRechercheMise.designationProduit = datagetProduit.designation;
+															});
+												}else{
+													$log.debug(" -- aucun Produit n'est affecté à ce Rouleau !");
+												}
+												
+												/** conversion Client **/
+												/* Methode2: utilise le Filtre de Angular pour faire la conversion des Id en leurs propre designations
+												 * tout en recuperant la liste des clients de la BD. (TODO recuperation de la cache des listes clients et Produit)
+												 */
+												if(datagetMise.partieintId != null){
+													$scope.clientId.status = datagetMise.partieintId;
+													var selected = $filter('showClientFilter')($scope.listeClient,{id : $scope.clientId.status});
+															
+													if ($scope.clientId.status && selected.length) {
+														$scope.resultatRechercheMise.partieintId = selected[0].id;
+														$scope.resultatRechercheMise.clientAbreviation = selected[0].abreviation;
+														$log.debug(" --ClientAbreviation : "
+																				+ $scope.resultatRechercheMise.clientAbreviation);
+													} else {
+														$log.debug("NotSet Client");
+													}
+												}else{
+													$log.debug(" -- aucun Client n'est affecté à ce Rouleau !");
+												}
+
+											});
+								}else{
+									$log.debug("idMise is null");
+								}
+
+							}
+							
+								$scope.cleanChamps = function() {
+									
+
+								$scope.clientId.status = {};
+								$scope.resultatRechercheMise = [];
+								$scope.id = {};
+								
+								$scope.rouleauCourant = {};
+								$scope.rouleauCourantRecherche = {};
+							
+									
+									
+									}
+							
+							
+							
 							/***************************************************
 							 * Invocation des services pour les listes
 							 * déroulantes
@@ -230,7 +336,7 @@ angular
 							}
 							
 							$scope.listeQualite();
-							$scope.listeMise();
+							//$scope.listeMise();
 							$scope.listeEntrepot();
 							$scope.listeTissu();
 							$scope.listeClient();
@@ -380,6 +486,10 @@ angular
 							     }
 							// annuler Ajout
 							$scope.annulerAjout = function() {
+									
+								
+								$scope.referenceMise = "";
+								
 								$scope.enCoursDelete = false;
 								$scope.checkList = false;
 								$scope.creation = true;

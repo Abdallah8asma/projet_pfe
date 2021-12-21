@@ -294,10 +294,10 @@ public class ProduitPersistanceImpl extends AbstractPersistance implements IProd
 			    		  pRechercheProduitMulitCritere.getFamille()));
 			    }
 		    
-//		    if (estNonVide(pRechercheProduitMulitCritere.getPartieInteressee())) {
-//			      vWhereClause.add(vBuilder.equal(vRootProduit.get(partieIntersseId),
-//			    		  pRechercheProduitMulitCritere.getPartieInteressee()));
-//			    }
+		    if (estNonVide(pRechercheProduitMulitCritere.getPartieInteressee())) {
+			      vWhereClause.add(vBuilder.equal(vRootProduit.get(partieIntersseId),
+		    		  pRechercheProduitMulitCritere.getPartieInteressee()));
+		    }
 		    
 		    if (estNonVide(pRechercheProduitMulitCritere.getSite())) {
 			      vWhereClause.add(vBuilder.equal(vRootProduit.get(siteId),

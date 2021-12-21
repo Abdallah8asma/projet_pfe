@@ -5836,8 +5836,11 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			element.setMetrageTotal(montantPayee);
 			
 			
-			if(montantPayee < element.getMontantTTC() )
+			if((montantPayee < element.getMontantTTC()) && !hasFactureAvoir(element.getReference()) ) {
+				
 				listFactureNonPaye.add(element);
+			}
+			
 		}
 		
 		
@@ -6131,6 +6134,26 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		 * bonLivraisonReport.getJRBeanCollectionDataSource(), response);
 		 */
 	}
+
+	private boolean hasFactureAvoir(String reference) {
+		
+	
+		RechercheMulticritereFactureValue requestAvoir = new RechercheMulticritereFactureValue();
+		
+		requestAvoir.setInfoLivraison(reference);
+		
+		ResultatRechecheFactureValue result = factureService.rechercherMultiCritere(requestAvoir) ; 
+		
+	  
+		
+		return (result.getList().size() > 0) ? true : false ;
+		
+	}
+
+
+
+
+
 
 	@RequestMapping(value = "/produit-depot-list", method = RequestMethod.GET)
 	public void generateListProduitDepotReport(

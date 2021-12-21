@@ -61,7 +61,20 @@ public class RechercheMulticritereFactureValue {
 	private Calendar dateEcheanceA;
 	
 	
+	
+	private String infoLivraison ;
+	
+	
+	
 
+
+	public String getInfoLivraison() {
+		return infoLivraison;
+	}
+
+	public void setInfoLivraison(String infoLivraison) {
+		this.infoLivraison = infoLivraison;
+	}
 
 	public String getModalitePaiement() {
 		return modalitePaiement;
