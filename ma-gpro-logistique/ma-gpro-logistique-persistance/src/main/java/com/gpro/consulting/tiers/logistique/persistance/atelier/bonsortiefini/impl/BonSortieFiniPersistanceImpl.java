@@ -167,6 +167,9 @@ public class BonSortieFiniPersistanceImpl extends AbstractPersistance implements
 		}
 	    
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+		criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
+		
+		
 	    List <BonSortieFiniEntity> resultatEntite = null;
 	    
 

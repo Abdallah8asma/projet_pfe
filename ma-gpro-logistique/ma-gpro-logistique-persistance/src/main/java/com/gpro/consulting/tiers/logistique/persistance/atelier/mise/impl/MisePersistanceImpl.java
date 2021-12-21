@@ -378,6 +378,8 @@ public class MisePersistanceImpl extends AbstractPersistance implements
 		/** Lancer la requete */
 		vCriteriaQuery.select(vMiseRoot).where(
 				vWhereClause.toArray(new Predicate[] {}));
+		
+		vCriteriaQuery.orderBy(vCriteriaBuilder.desc(vMiseRoot.get("id")));
 
 		/** Récupération du résultat de la base */
 		List<MiseEntity> vListResultatRechercheMise = null;
