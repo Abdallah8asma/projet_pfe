@@ -50,6 +50,10 @@ public class SoldeClientPersistanceUtilities {
 			dto.setTotalFactureNonPaye(entity.getTotalFactureNonPaye());
 			dto.setSoldeAnterieur(entity.getSoldeAnterieur());
 			dto.setDateSoldeAnterieur(entity.getDateSoldeAnterieur());
+			
+			dto.setSoldeInitialNonDeclaree(entity.getSoldeInitialNonDeclaree());
+			
+			
 		}
 		
 		return dto;
@@ -78,6 +82,8 @@ public class SoldeClientPersistanceUtilities {
 		entity.setTotalFactureNonPaye(dto.getTotalFactureNonPaye());
 		entity.setSoldeAnterieur(dto.getSoldeAnterieur());
 		entity.setDateSoldeAnterieur(dto.getDateSoldeAnterieur());
+		
+		entity.setSoldeInitialNonDeclaree(dto.getSoldeInitialNonDeclaree());
 		
 		return entity;
 	}
