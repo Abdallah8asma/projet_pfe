@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.IConstanteLogistique;
+import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.ModePaiementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.echeancier.RechercheMulticritereDetailReglementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.RechercheMulticritereReglementValue;
@@ -225,8 +227,25 @@ public class FactureRestImpl {
 					
 				
 				      Double montantPaye = elementReglementService.getSumMontantPayerByReferenceFacture(factureVenteValue.getReference());
+				      
+				      Double montantAvoir = new Double(0);
+				      
+				      
+				      RechercheMulticritereFactureValue requestAvoir = new RechercheMulticritereFactureValue();
+				      
+				      requestAvoir.setType(IConstanteCommerciale.FACTURE_TYPE_AVOIR);
+				      requestAvoir.setInfoLivraison(factureVenteValue.getReference());
+				      ResultatRechecheFactureValue resultAvoir = factureService.rechercherMultiCritere(requestAvoir);
+				      
+				      
+				      
+				      for(FactureVenteValue factureAvoir : resultAvoir.getList()) {
+				    	  
+				    	  montantAvoir += factureAvoir.getMontantTTC() ;
+				      }
+				      
 					
-				      factureVenteValue.setMontantOuvert(factureVenteValue.getMontantTTC() - montantPaye);
+				      factureVenteValue.setMontantOuvert(factureVenteValue.getMontantTTC() - montantAvoir - montantPaye);
 				      
 				      if(factureVenteValue.getMontantOuvert() < 0 )
 				    	  factureVenteValue.setMontantOuvert(0d);

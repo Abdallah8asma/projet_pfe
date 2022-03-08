@@ -33,31 +33,37 @@ angular
 
 			 //Tableau de Taxe Prédefini 
 			 $scope.listTaxeFactureInit = [
-			                                 /*{//FODEC
-			                                	 taxeId: 1,
-			                                	 pourcentage: 1,
-			                                	 montant: '',
-			                                 },*/
-			                                 {//TVA
-			                                	 taxeId: 2,
-			                                	 pourcentage: 19,
-			                                	 montant: '',
-			                                 },
-			                                 {//TVA7
-			                                	 taxeId: 4,
-			                                	 pourcentage: 7,
-			                                	 montant: '',
-			                                 },
-			                                 {//TVA13
-			                                	 taxeId: 5,
-			                                	 pourcentage: 13,
-			                                	 montant: '',
-			                                 },
-			                                 {//TIMBRE
-			                                	 taxeId: 3,
-			                                	 pourcentage: '',
-			                                	 montant: 0.600,
-			                                 }];
+			                               
+										   
+										   
+						{//FODEC 
+							taxeId: 1,
+							pourcentage: 1,
+							montant: '',
+						},
+
+						{// TVA
+							taxeId: 2,
+							pourcentage: 19,
+							montant: '',
+						},
+					/*	{// TVA7
+							taxeId: 4,
+							pourcentage: 7,
+							montant: '',
+						},
+						{// TVA13
+							taxeId: 5,
+							pourcentage: 13,
+							montant: '',
+						},*/
+						{// TIMBRE
+							taxeId: 3,
+							pourcentage: '',
+							montant: 0.600,
+						}
+										   
+										   ];
 			 //modeValider
 			 $scope.modeValider = "notActif";
 			 //init deleteValue pour cancelAddBLVente
@@ -493,17 +499,35 @@ angular
 				 $scope.listDetFactureVentePRBL = [];
 				 $scope.listeDocumentProduit = [];
 				 //Tableau Prédefini 
-				 $scope.listTaxeFactureInit = [
-				                                 /*{//FODEC
-				                                	 taxeId: 1,
-				                                	 pourcentage: 1,
-				                                	 montant: '',
-				                                 },*/
-				                                 {//TVA
-				                                	 taxeId: 2,
-				                                	 pourcentage: 18,
-				                                	 montant: '',
-				                                 }];
+				$scope.listTaxeFactureInit = [
+							{//FODEC 
+							taxeId: 1,
+							pourcentage: 1,
+							montant: '',
+						},
+
+						{// TVA
+							taxeId: 2,
+							pourcentage: 19,
+							montant: '',
+						},
+					/*	{// TVA7
+							taxeId: 4,
+							pourcentage: 7,
+							montant: '',
+						},
+						{// TVA13
+							taxeId: 5,
+							pourcentage: 13,
+							montant: '',
+						},*/
+						{// TIMBRE
+							taxeId: 3,
+							pourcentage: '',
+							montant: 0.600,
+						}
+
+						];
 				 //initialiser le design des champs
 				 $scope.creationFactureVenteForm.$setPristine();
 				 $scope.rechercheFactureVenteForm.$setPristine();
@@ -890,55 +914,54 @@ angular
 				}
 
 			//generer rapport apres creation d'une facture. mode : Modification/Consultation 
-			 $scope.download = function(id,typerapport) {
-				 $log.debug("-- id" + id);
-				 var url = UrlAtelier+ "/reportgc/facture?id=" + id
-				 					+ "&typerapport="+typerapport
-									 + "&type=pdf";
-
-
-
-							
-
-										
-									 var a = document.createElement('a');
-									 document.body.appendChild(a);
-									 downloadService.download(url).then(function (result) {
-										var heasersFileName = result.headers(['content-disposition']).substring(17);
-										var fileName = heasersFileName.split('.');
-									var typeFile = result.headers(['content-type']);
-									var file = new Blob([result.data], {type: typeFile});
-									var fileURL = window.URL.createObjectURL(file);
-									if(typeFile == 'application/vnd.ms-excel'){
-			
-									 // a.href = fileURL;
-										 a.download = fileName[0];
-										$window.open(fileURL)
-										 a.click();
+			$scope.download = function (id, typerapport,avecObservation) {
 					
-									}else{
-								
-										a.href = fileURL;
-										a.download = fileName[0];
-									 $window.open(fileURL)
-										a.click();
+					if(avecObservation === undefined)
+					        avecObservation =false;
+
+					$scope.traitementEnCoursGenererAll = "true";
+					$log.debug("-- id" + id);
+					var url = UrlAtelier + "/reportgc/facture?id=" + id
+						+ "&typerapport=" + typerapport
+						+ "&avecObservation=" + avecObservation
+						
+						+ "&type=pdf";
+
+
+					var numeroFacture = '_';
+					if ($scope.factureVenteCourant.reference)
+						numeroFacture = $scope.factureVenteCourant.reference + '_';
+					var fileName = 'Facture_' + numeroFacture + formattedDate(new Date());
+					var a = document.createElement('a');
+					document.body.appendChild(a);
+					downloadService.download(url).then(function (result) {
+						var heasersFileName = result.headers(['content-disposition']).substring(17);
+						var fileName = heasersFileName.split('.');
+						var typeFile = result.headers(['content-type']);
+						var file = new Blob([result.data], { type: typeFile });
+						var fileURL = window.URL.createObjectURL(file);
+						if (typeFile == 'application/vnd.ms-excel') {
+
+							// a.href = fileURL;
+							a.download = fileName[0];
+							$window.open(fileURL)
+							a.click();
+
+						} else {
+							console.log('llll pdf');
+							a.href = fileURL;
+							a.download = fileName[0];
+							$window.open(fileURL)
+							a.click();
+
+						}
+
+						$scope.traitementEnCoursGenererAll = "false";
+
+					});
 					
-									}
-										
-									 
-									});
 					
-
-
-
-				//  downloadService.download(url).then(
-				// 		 function(success) {
-				// 			 $log.debug('success : ' + success);
-				// 			 $scope.annulerAjout();
-				// 		 }, function(info) {
-				// 			 $log.debug('info : ' + info);
-				// 		 });
-			 };
+			}
 
 			//generer rapport de tous les bons de livraison. mode : List 
 			 $scope.downloadAllFactures = function(factureVenteCourant) {

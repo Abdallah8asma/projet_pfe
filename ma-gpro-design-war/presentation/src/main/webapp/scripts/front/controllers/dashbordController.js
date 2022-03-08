@@ -24,10 +24,10 @@ angular
                 
                 //$scope.year=null;
                 
-                $scope.date=new Date();
-        		$scope.date.setMonth(0);
+                $scope.date=new Date();       	
         		$scope.date.setDate(1);
-				
+				$scope.date.setMonth($scope.date.getMonth() - 12);
+					
 				$scope.year=$scope.date.getFullYear();
 				
 
