@@ -644,7 +644,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
 							
-							if(montantResteARegle > 0){
+							if(montantResteARegle > 0.1){
 								
 								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
 								
@@ -709,7 +709,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 							
 							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
 							
-							if(montantResteARegle > 0){
+							if(montantResteARegle > 0.1){
 								
 								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
 								
