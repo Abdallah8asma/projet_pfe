@@ -112,7 +112,7 @@ public class ReglementRestImpl {
 					
 					for(ElementReglementValue elementReglement : reglement.getListElementReglement()){
 						
-						if(elementReglement.getMontantDemande() != null && elementReglement.getMontantDemande() >0)
+						if(elementReglement.getMontantDemande() != null && elementReglement.getMontantDemande() > 0)
 							listElementReglement.add(elementReglement);
 						
 						//logger.info("----refBL: "+elementReglement.getRefBL());
