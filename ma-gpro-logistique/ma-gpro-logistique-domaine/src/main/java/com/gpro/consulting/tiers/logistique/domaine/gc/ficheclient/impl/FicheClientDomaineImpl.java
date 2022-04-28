@@ -174,14 +174,14 @@ public class FicheClientDomaineImpl implements IFicheClientDomaine {
 			}
 			
 			
-			requestReglement.setDeclarerRech(null);
+			//requestReglement.setDeclarerRech(null);
 			ResultatRechecheReglementCompletValue resultReglementInverse = null ;
 			
 			
-			if(request.getDeclarerRech()  != null && (request.getDeclarerRech().equals("") ||  request.getDeclarerRech().equals("oui")  )) {
+			//if(request.getDeclarerRech()  != null && (request.getDeclarerRech().equals("") ||  request.getDeclarerRech().equals("oui")  )) {
 				
 				resultReglementInverse = reglementInversePersistance.rechercherMultiCritereComplet(requestReglement);
-			}
+			//}
 			
 					
 			
