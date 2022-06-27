@@ -263,12 +263,23 @@ angular
 							
 												
 			
-												if(typeof $scope.inventaireCourant.dateEtat === 'undefined'  ||  $scope.inventaireCourant.dateEtat == null){
-													var newDate = "";
-												}
-												else{
-													var newDate=$scope.inventaireCourant.dateEtat;
-												}
+											
+												
+												
+													var newdateFormat=null;
+								if(angular.isDefined(inventaireCourant.dateEtat)){
+									//$log.debug("==dateEtat "+inventaireCourant.dateEtat);
+									//$log.debug("==dateEtat AFTER CONVERT "+formattedDate(inventaireCourant.dateEtat));
+									
+									if(inventaireCourant.dateEtat != null){
+									var newdateFormat = formattedDate(inventaireCourant.dateEtat);
+									$log.debug("===== newdateFormat "+newdateFormat);
+									}else{
+										$log.debug("===== newdateFormat is Null");
+									}
+								}else{
+									$log.debug("==dateEtat Undefined");
+								}
 							
 																			  var url = UrlAtelier+"/fichesLogistique/inventaireByOF?client="+inventaireCourant.client+
 																			  "&nombreColieDu="+""+
@@ -277,7 +288,7 @@ angular
 																		
 																			  "&metrageDu="+inventaireCourant.metrageDu+
 																			  "&metrageA="+inventaireCourant.metrageA+
-																			  "&dateEtat="+newDate+
+																			  "&dateEtat="+newdateFormat+
 																			  "&designationQuiContient="+inventaireCourant.designationQuiContient+
 																			  "&referenceProduit="+inventaireCourant.idProduitParRef+
 																			  "&fini=" +
@@ -330,13 +341,20 @@ angular
 
 
 		
-
-		if(typeof $scope.inventaireCourant.dateEtat === 'undefined'  ||  $scope.inventaireCourant.dateEtat == null){
-			var newDate = "";
-		}
-		else{
-			var newDate=$scope.inventaireCourant.dateEtat;
-		}
+							var newdateFormat=null;
+								if(angular.isDefined(inventaireCourant.dateEtat)){
+									//$log.debug("==dateEtat "+inventaireCourant.dateEtat);
+									//$log.debug("==dateEtat AFTER CONVERT "+formattedDate(inventaireCourant.dateEtat));
+									
+									if(inventaireCourant.dateEtat != null){
+									var newdateFormat = formattedDate(inventaireCourant.dateEtat);
+									$log.debug("===== newdateFormat "+newdateFormat);
+									}else{
+										$log.debug("===== newdateFormat is Null");
+									}
+								}else{
+									$log.debug("==dateEtat Undefined");
+								}
 
 									  var url = UrlAtelier+"/fichesLogistique/inventaire?client="+inventaireCourant.client+
 									  "&nombreColieDu="+""+
@@ -345,7 +363,7 @@ angular
 								
 									  "&metrageDu="+inventaireCourant.metrageDu+
 									  "&metrageA="+inventaireCourant.metrageA+
-									  "&dateEtat="+newDate+
+									  "&dateEtat="+newdateFormat+
 									  "&designationQuiContient="+inventaireCourant.designationQuiContient+
 									  "&referenceProduit="+inventaireCourant.idProduitParRef+
 									  "&fini=" +
