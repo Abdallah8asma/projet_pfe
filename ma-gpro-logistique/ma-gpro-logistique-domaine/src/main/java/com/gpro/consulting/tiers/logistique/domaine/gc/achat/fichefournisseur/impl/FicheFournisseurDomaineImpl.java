@@ -147,9 +147,9 @@ public class FicheFournisseurDomaineImpl implements IFicheFournisseurDomaine {
 				if (facture.getType() != null && facture.getType().equalsIgnoreCase(FACTURE_TYPE_AVOIRE)) {
 
 					String refFactures=SPACE;
-					if (facture.getRefFactures()!=null) 
+					if (facture.getInfoLivraison()!=null) 
 					{
-						refFactures=facture.getRefFactures();
+						refFactures=facture.getInfoLivraison();
 					}
 						
 					libelle = "Avoir" + SPACE + facture.getReference() + SPACE + "Sur facture" + SPACE

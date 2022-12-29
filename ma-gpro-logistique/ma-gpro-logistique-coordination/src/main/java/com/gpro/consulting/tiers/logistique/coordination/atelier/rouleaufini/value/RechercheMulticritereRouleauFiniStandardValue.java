@@ -52,9 +52,18 @@ public class RechercheMulticritereRouleauFiniStandardValue {
 		
 		
 		
+		private boolean optimized;
 		
 		
 		
+		
+		
+		public boolean isOptimized() {
+			return optimized;
+		}
+		public void setOptimized(boolean optimized) {
+			this.optimized = optimized;
+		}
 		public String getUsername() {
 			return username;
 		}

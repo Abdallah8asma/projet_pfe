@@ -127,13 +127,20 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">OF</span>
                                             </div>
-                                            <select ui-select2="true" class="form-control" ng-model="rouleauCourant.numMise"
+                                     <!--        <select ui-select2="true" class="form-control" ng-model="rouleauCourant.numMise"
                                                 ng-init="rouleauCourant.numMise=''" style="border: 1px solid #e5eaee !important;">
                                                 <option value="">Tous OF</option>
                                                 <option ng-repeat="mise in listeMise" value="{{mise.reference}}">
                                                     {{mise.reference}}</option>
 
-                                            </select>
+                                            </select> -->
+                                            
+                                              <input class="form-control" type="text" 
+                                                ng-model="rouleauCourant.numMise"
+                                                ng-init="rouleauCourant.numMise=''" />
+                                                
+                                                
+                                                
                                         </div>
                                     </div>
                                 </div>

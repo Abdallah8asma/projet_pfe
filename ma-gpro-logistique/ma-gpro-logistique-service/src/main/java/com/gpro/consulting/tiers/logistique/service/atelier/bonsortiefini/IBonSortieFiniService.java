@@ -63,4 +63,7 @@ public interface IBonSortieFiniService {
 	@Transactional(readOnly = true, rollbackFor = Exception.class)
 
 	public ListProduitElementValue getProduitElementListByOF(List<String> refBonSortieList, Long livraisonVenteId);
+
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<String> getListBonSortieFiniRefByClientId(Long clientId);
 }

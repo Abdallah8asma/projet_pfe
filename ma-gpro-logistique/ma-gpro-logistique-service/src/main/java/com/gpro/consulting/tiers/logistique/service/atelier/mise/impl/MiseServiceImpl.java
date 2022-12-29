@@ -140,7 +140,7 @@ public class MiseServiceImpl implements IMiseService {
 	}
 	
 	@Override
-	public MiseValue rechercheMiseParReference(Long reference) {
+	public MiseValue rechercheMiseParReference(String reference) {
 		
 		return vMiseDomaine.rechercheMiseParReference(reference);
 	}

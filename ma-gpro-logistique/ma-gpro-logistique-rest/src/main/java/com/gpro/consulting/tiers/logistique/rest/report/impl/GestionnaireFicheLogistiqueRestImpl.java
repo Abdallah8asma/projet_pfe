@@ -56,6 +56,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.D
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportProductValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.report.bonlivraison.value.BonLivraisonReportValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.bonlivraison.utilities.DetLivraisonVenteValidateComparator;
+import com.gpro.consulting.tiers.logistique.persistance.atelier.mise.utilities.MisePersistanceUtilities;
 import com.gpro.consulting.tiers.logistique.rest.report.utilities.ExcelUtils;
 import com.gpro.consulting.tiers.logistique.service.atelier.bonsortiefini.IBonSortieFiniService;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
@@ -147,6 +148,9 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 	
 	@Autowired
 	private IProduitPersistance produitPersistance;
+	
+	@Autowired
+	private MisePersistanceUtilities vMisePersistanceUtilities;
 	/*
 	 * @Autowired IBaseInfoService baseInfoService;
 	 */
@@ -438,6 +442,8 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			request.setDateFinProductionA(calendarStringToCalendarObject(dateFinProdA));
 
 		}
+		
+		request.setOptimized(vMisePersistanceUtilities.checkForOptimization(request));
 
 		ResultatRechercheMiseValue resultatRecherche = miseService.rechercherMiseMultiCritere(request);
 
@@ -1213,6 +1219,9 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			request.setDateFinProductionA(calendarStringToCalendarObject(dateFinProdA));
 
 		}
+		
+		request.setOptimized(vMisePersistanceUtilities.checkForOptimization(request));
+		
 
 		ResultatRechercheMiseValue resultatRecherche = miseService.rechercherMiseMultiCritere(request);
 
@@ -3117,7 +3126,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 					// 3- remplir cracteristique du produit
 
-					MiseValue mise = miseService.rechercheMiseParReference(Long.parseLong(element.getNumeroOF()));
+					MiseValue mise = miseService.rechercheMiseParReference(element.getNumeroOF());
 
 					if (mise != null) {
 
@@ -3615,7 +3624,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 					// 3- remplir cracteristique du produit
 
-					MiseValue mise = miseService.rechercheMiseParReference(Long.parseLong(element.getNumeroOF()));
+					MiseValue mise = miseService.rechercheMiseParReference(element.getNumeroOF());
 
 					if (mise != null) {
 
@@ -5314,7 +5323,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 				// 3- remplir cracteristique du produit
 
-				MiseValue mise = miseService.rechercheMiseParReference(Long.parseLong(element.getNumeroOF()));
+				MiseValue mise = miseService.rechercheMiseParReference(element.getNumeroOF());
 
 				if (mise != null) {
 
@@ -5765,7 +5774,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 
 				// 3- remplir cracteristique du produit
 
-				MiseValue mise = miseService.rechercheMiseParReference(Long.parseLong(element.getNumeroOF()));
+				MiseValue mise = miseService.rechercheMiseParReference(element.getNumeroOF());
 
 				if (mise != null) {
 
@@ -6758,14 +6767,14 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 	
 		}
 
-		if (isNotEmty(type))
+	/*	if (isNotEmty(type))
 
 		{
 			numLigneCritRech++;
 			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Type :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, type, ExcelUtils.boldRed3));
 
-		}
+		}*/
 
 		if (isNotEmty(designationQuiContient))
 
@@ -6818,9 +6827,9 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 		if (isNotEmty(dateEtat)) {
 			
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Intro. De :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
-					new SimpleDateFormat("dd-MM-yyyy").format(calendarStringToCalendarObject(dateEtat).getTime()),
+					dateEtat,
 					ExcelUtils.boldRed3));
 
 		}
@@ -6887,7 +6896,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			}
 
 			if (element.getPrixUnitaire() != null) {
-				sheet3.addCell(new Label(7, i, element.getPrixUnitaire()+ "", ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(7, i, element.getPrixUnitaire(), ExcelUtils.boldRed));
 			
 			} else {
 				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
@@ -6896,7 +6905,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			
 			
 			if (element.getPrixTotal() != null) {
-				sheet3.addCell(new Label(8, i, element.getPrixTotal()+ "", ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(8, i, convertisseur(element.getPrixTotal(), 4), ExcelUtils.boldRed));
 				mantantTtcTotale += element.getPrixTotal();
 			} else {
 				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
@@ -7090,14 +7099,14 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 	
 		}
 
-		if (isNotEmty(type))
+		/*if (isNotEmty(type))
 
 		{
 			numLigneCritRech++;
 			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Type :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, type, ExcelUtils.boldRed3));
 
-		}
+		}*/
 
 		if (isNotEmty(designationQuiContient))
 
@@ -7150,10 +7159,10 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 		if (isNotEmty(dateEtat)) {
 			
 			numLigneCritRech++;
-			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Intro. De :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date :", ExcelUtils.boldRed3));
 			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech,
-					new SimpleDateFormat("dd-MM-yyyy").format(calendarStringToCalendarObject(dateEtat).getTime()),
-					ExcelUtils.boldRed3));
+					dateEtat,ExcelUtils.boldRed3));
+					
 
 		}
 
@@ -7221,7 +7230,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			
 
 			if (element.getPrixUnitaire() != null) {
-				sheet3.addCell(new Label(7, i, element.getPrixUnitaire()+ "", ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(7, i, element.getPrixUnitaire(), ExcelUtils.boldRed));
 			
 			} else {
 				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
@@ -7230,7 +7239,7 @@ public class GestionnaireFicheLogistiqueRestImpl extends AbstractGestionnaireDow
 			
 			
 			if (element.getPrixTotal() != null) {
-				sheet3.addCell(new Label(8, i, element.getPrixTotal()+ "", ExcelUtils.boldRed));
+				sheet3.addCell(new jxl.write.Number(8, i,convertisseur(element.getPrixTotal(), 4) , ExcelUtils.boldRed));
 				mantantTtcTotale += element.getPrixTotal();
 			} else {
 				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));

@@ -28,11 +28,20 @@ public class RechercheMulticritereRouleauFiniValue {
 	
 	
 	
+	private boolean optimized;
 	
 	
 	
 	
 	
+	
+	
+	public boolean isOptimized() {
+		return optimized;
+	}
+	public void setOptimized(boolean optimized) {
+		this.optimized = optimized;
+	}
 	public Long getNumberOfBox() {
 		return numberOfBox;
 	}

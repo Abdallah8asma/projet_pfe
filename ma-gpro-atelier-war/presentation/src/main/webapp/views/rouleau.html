@@ -63,10 +63,17 @@
 										id="recherchePartieIntereseeFormCritere">
 										<div class="form-group">
 											<div class="row">
+												
+												
+												
 												<div class="col-sm-12">
 													<div class="input-group input-group-sm">
 														<span class="input-group-addon label1" id="basic-addon1">O.F
-														</span> <select ui-select2
+														</span> 
+														
+														
+														
+													<!-- 	<select ui-select2
 															ng-model="rouleauCourantRecherche.refMise"
 															data-placeholder="choisir .." style="width: 100%">
 
@@ -74,8 +81,19 @@
 															<option ng-repeat="mise in listeMise"
 																value="{{mise.reference}}">{{mise.reference}}</option>
 														</select>
+														 -->
+														 
+														  <input type="text" class="form-control"
+															ng-model="rouleauCourantRecherche.refMise" />
+														
 													</div>
 												</div>
+												
+												
+												
+												
+												
+												
 											</div>
 										</div>
 
@@ -155,16 +173,31 @@
 															O.F :</span>
 
 														<!-- modeCreationMise -->
-														<select ng-show="creation" ui-select2
+														<!-- <select ng-show="creation" ui-select2
 															data-placeholder="---" style="width: 100%" ng-model="id"
 															ng-change="remplirRouleauMise(id)" required>
 															<option ng-repeat="mise in listeMise"
 																value="{{mise.idMise}}">{{mise.reference}}</option>
-														</select>
+														</select> -->
+														
+														
+														 <div style="display : flex">
+														 		  <input ng-show="creation" type="text" class="form-control"
+															ng-model="referenceMise" style="width : 100px" ng-change="cleanChamps()" />
+															
+														
+														
+														
 														<!-- modeModificationMise -->
 														<input ng-hide="creation" class="form-control"
 															readonly="readonly"
-															value="{{resultatRechercheMise.referenceMise}}" />
+															value="{{resultatRechercheMise.referenceMise}}" style="width : 100px"/>
+															
+															<button style="margin-left : 20px" ng-show="creation" class="btn btn-action"
+											               ng-click="remplirRouleauMiseByReference(referenceMise)">valider</button>
+														 
+														 </div>
+												
 													</div>
 												</div>
 											<!-- 	<div class="col-sm-6">

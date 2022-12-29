@@ -2517,14 +2517,20 @@ public class PersistanceUtilities {
 
 	/** ConverstionGroupeClientINT entite en GroupeClientINT value **/
 	public static GroupeClientValue toValue(GroupeClientEntite categorieEntite) {
-		GroupeClientValue categorieValue = new GroupeClientValue();
-
-		categorieValue.setId(categorieEntite.getId());
-		categorieValue.setDesignation(categorieEntite.getDesignation());
 		
-		categorieValue.setFamillePartieInteressee(categorieEntite.getFamillePartieInteressee());
+		if(categorieEntite != null) {
+			GroupeClientValue categorieValue = new GroupeClientValue();
 
-		return categorieValue;
+			categorieValue.setId(categorieEntite.getId());
+			categorieValue.setDesignation(categorieEntite.getDesignation());
+			
+			categorieValue.setFamillePartieInteressee(categorieEntite.getFamillePartieInteressee());
+			
+			return categorieValue;
+
+		}
+	
+		return null;
 	}
 	
 	

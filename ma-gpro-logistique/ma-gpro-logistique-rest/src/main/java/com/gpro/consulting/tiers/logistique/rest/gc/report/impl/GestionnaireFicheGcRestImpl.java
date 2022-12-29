@@ -51,6 +51,7 @@ import com.gpro.consulting.tiers.commun.service.partieInteressee.IGroupeClientSe
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IRegionService;
 import com.gpro.consulting.tiers.commun.service.utils.IUtilsService;
+import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.CommandeVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.RechercheMulticritereBonCommandeValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ResultatRechecheBonCommandeValue;
@@ -3985,8 +3986,25 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		
 
 		      Double montantPaye = elementReglementService.getSumMontantPayerByReferenceFacture(element.getReference());
+		      
+		      
+		      Double montantAvoir = new Double(0);
+		      
+		      
+		      
+		      RechercheMulticritereFactureValue requestAvoir = new RechercheMulticritereFactureValue();
+		      
+		      requestAvoir.setType(IConstanteCommerciale.FACTURE_TYPE_AVOIR);
+		      requestAvoir.setInfoLivraison(element.getReference());
+		      ResultatRechecheFactureValue resultAvoir = factureService.rechercherMultiCritere(requestAvoir);
+		      
+		      
+		      for(FactureVenteValue factureAvoir : resultAvoir.getList()) {
+		    	  
+		    	  montantAvoir += factureAvoir.getMontantTTC() ;
+		      }
 			
-			  Double montantOuvert   = element.getMontantTTC() - montantPaye;
+			  Double montantOuvert   = element.getMontantTTC() - montantAvoir - montantPaye;
 		      
 		      if(montantOuvert < 0 ) {
 		    	  
@@ -3999,7 +4017,7 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			
 		  	if (montantOuvert != null) {
 		  		
-	         	sheet3.addCell(new Label(14, i, convertisseur(mantantOuvertTotale, 4) + "", ExcelUtils.boldRed));
+	         	sheet3.addCell(new Label(14, i, convertisseur(montantOuvert, 4) + "", ExcelUtils.boldRed));
 
 				mantantOuvertTotale += montantOuvert;
 			} 
@@ -5836,8 +5854,11 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 			element.setMetrageTotal(montantPayee);
 			
 			
-			if(montantPayee < element.getMontantTTC() )
+			if((montantPayee < element.getMontantTTC()) && !hasFactureAvoir(element.getReference()) ) {
+				
 				listFactureNonPaye.add(element);
+			}
+			
 		}
 		
 		
@@ -6131,6 +6152,26 @@ public class GestionnaireFicheGcRestImpl extends AbstractGestionnaireDownloadImp
 		 * bonLivraisonReport.getJRBeanCollectionDataSource(), response);
 		 */
 	}
+
+	private boolean hasFactureAvoir(String reference) {
+		
+	
+		RechercheMulticritereFactureValue requestAvoir = new RechercheMulticritereFactureValue();
+		
+		requestAvoir.setInfoLivraison(reference);
+		
+		ResultatRechecheFactureValue result = factureService.rechercherMultiCritere(requestAvoir) ; 
+		
+	  
+		
+		return (result.getList().size() > 0) ? true : false ;
+		
+	}
+
+
+
+
+
 
 	@RequestMapping(value = "/produit-depot-list", method = RequestMethod.GET)
 	public void generateListProduitDepotReport(

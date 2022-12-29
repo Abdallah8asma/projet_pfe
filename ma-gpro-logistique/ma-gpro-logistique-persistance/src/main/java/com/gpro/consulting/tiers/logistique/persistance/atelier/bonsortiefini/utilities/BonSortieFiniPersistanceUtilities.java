@@ -8,6 +8,8 @@ import java.util.Set;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.BonSortieFiniValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.bonsortiefini.value.RechercheMulticritereBonSortieFiniValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniStandardValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.bonsortiefini.entity.BonSortieFiniEntity;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.rouleaufini.entity.EntrepotEntity;
@@ -179,5 +181,25 @@ public class BonSortieFiniPersistanceUtilities {
 		}
 		
 		return list;
+	}
+	
+	
+	public boolean checkForOptimization(
+			RechercheMulticritereBonSortieFiniValue request) {
+
+		return isNullOrEmpty(request.getDateSortieMax())
+				&& isNullOrEmpty(request.getDateSortieMin())
+				&& isNullOrEmpty(request.getPartieInt())
+				&& isNullOrEmpty(request.getReference())
+	
+				
+			
+				
+		
+			;
+
+	}
+	public boolean isNullOrEmpty(Object criteria) {
+		return criteria == null || criteria.toString().length() == 0;
 	}
 }

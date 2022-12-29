@@ -14,6 +14,8 @@ import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersista
 import com.gpro.consulting.tiers.commun.persistance.elementBase.impl.ProduitPersistanceImpl;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.ChoixRouleauValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.EntrepotValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniStandardValue;
+import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RechercheMulticritereRouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.coordination.atelier.rouleaufini.value.RouleauFiniValue;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.boninventairefini.entity.BonInventaireFiniEntity;
 import com.gpro.consulting.tiers.logistique.persistance.atelier.bonsortiefini.entity.BonSortieFiniEntity;
@@ -348,5 +350,37 @@ public class RouleauFiniPersistanceUtilities {
 		
 		return dto;
 	}
+	
+	
+	public boolean checkForOptimization(
+			RechercheMulticritereRouleauFiniValue request) {
 
+		return isNullOrEmpty(request.getIds())
+				&& isNullOrEmpty(request.getRefMise())
+				&& isNullOrEmpty(request.getPartieInteresseeId())
+				&& isNullOrEmpty(request.getProduitId())
+				&& isNullOrEmpty(request.getReference())
+		
+			;
+
+	}
+	
+	public boolean checkForOptimization(
+			RechercheMulticritereRouleauFiniStandardValue request) {
+
+		return isNullOrEmpty(request.getDateProductionA())
+				&& isNullOrEmpty(request.getDateProductionDe())
+				&& isNullOrEmpty(request.getPartieInteresseeId())
+				&& isNullOrEmpty(request.getProduitId())
+				&& isNullOrEmpty(request.getReference())
+				
+			
+				
+		
+			;
+
+	}
+	public boolean isNullOrEmpty(Object criteria) {
+		return criteria == null || criteria.toString().length() == 0;
+	}
 }

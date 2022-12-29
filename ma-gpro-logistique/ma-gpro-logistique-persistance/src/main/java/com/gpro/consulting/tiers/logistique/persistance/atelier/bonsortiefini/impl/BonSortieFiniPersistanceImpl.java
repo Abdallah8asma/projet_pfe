@@ -167,8 +167,20 @@ public class BonSortieFiniPersistanceImpl extends AbstractPersistance implements
 		}
 	    
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
-	    List <BonSortieFiniEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
+		
+		
+	    List <BonSortieFiniEntity> resultatEntite = null;
 	    
+
+		if (request.isOptimized()) {
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).setMaxResults(65).getResultList();
+
+		} else {
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		}
+		
+		
 	    List<BonSortieFiniValue> list = new ArrayList<BonSortieFiniValue>();
 	    
 	    for (BonSortieFiniEntity entity : resultatEntite) {
@@ -381,6 +393,144 @@ CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
 		return vBonSortieFiniOptimizedValue;
 	    
 	    
+	}
+
+
+	@Override
+	public ResultatRechecheBonSortieFiniValue rechercherMultiCritereOptimized(
+			RechercheMulticritereBonSortieFiniValue request) {
+
+		
+		//logger.info("rechercherMultiCritere");
+		
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+		
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		
+		Root<BonSortieFiniEntity> root = criteriaQuery.from(BonSortieFiniEntity.class);
+		
+		// Set request.reference on whereClause if not empty or null
+		if (estNonVide(request.getReference())) {
+			Expression<String> path = root.get(PREDICATE_REFBS);
+			Expression<String> upper =criteriaBuilder.upper(path);
+			Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getReference().toUpperCase() + PERCENT);
+			whereClause.add(criteriaBuilder.and(predicate));
+		}
+		
+		
+		// Set request.type on whereClause if not empty or null
+		if (estNonVide(request.getType())) {
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_TYPE), request.getType()));
+		}
+		
+		// Set request.partieInt on whereClause if not null
+		if (request.getPartieInt() != null) {
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_CLIENT), request.getPartieInt()));
+		}
+		
+		// Set request.metrageMin on whereClause if not null
+	    if (request.getDateSortieMin() != null) {
+	    	whereClause.add(criteriaBuilder.greaterThanOrEqualTo(root.<Calendar>get(PREDICATE_DATESORTIE), request.getDateSortieMin()));
+	    }
+	    
+		// Set request.metrageMax on whereClause if not null
+	    if (request.getDateSortieMax() != null) {
+	    	whereClause.add(criteriaBuilder.lessThanOrEqualTo(root.<Calendar>get(PREDICATE_DATESORTIE), request.getDateSortieMax()));
+	    }
+	    
+		/** Set request.fini on whereClause if not empty or null.
+			if fini = oui  --> cherche only RouleauFini that FINI = true.
+			if fini = non  --> cherche only RouleauFini that FINI = false.
+			if fini = tous --> cherche on all RouleauFini.
+		 */
+		if (estNonVide(request.getFini())) {
+			Expression<Boolean> expression = root.get(PREDICATE_FINI);
+			switch (request.getFini()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.isTrue(expression));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.isFalse(expression));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
+		
+		if (estNonVide(request.getRempli())) {
+			switch (request.getRempli()) {
+				case IConstanteLogistique.YES:
+					whereClause.add(criteriaBuilder.gt(criteriaBuilder.size(root.<Set>get("listeRouleauFini")), 0));
+					break;
+				case IConstanteLogistique.NO:
+					whereClause.add(criteriaBuilder.equal(criteriaBuilder.size(root.<Set>get("listeRouleauFini")), 0));
+					break;
+				case IConstanteLogistique.ALL:
+					break;
+				default:
+					break;
+			}
+		}
+		
+		
+		
+		
+		
+		
+		List<Object[]> resultatEntite = null;
+		
+		 //   criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+				
+				
+				criteriaQuery.select(criteriaBuilder.array(
+			 			
+			 			root.get("id").as(Long.class),
+			 			root.get("reference").as(String.class),
+			 			root.get("dateSortie").as(Calendar.class),
+			 			 root.get("observation").as(String.class),	 			 
+			 			root.get("type").as(String.class),
+			 			root.get("partieInt").as(Long.class)
+			 			
+			 			
+						)).where(whereClause.toArray(new Predicate[] {}));
+				
+
+	    
+
+		if (request.isOptimized()) {
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).setMaxResults(65).getResultList();
+
+		} else {
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		}
+		
+		
+	    List<BonSortieFiniValue> list = new ArrayList<BonSortieFiniValue>();
+	    
+	    for (Object[] element : resultatEntite) {
+	    	
+	    	BonSortieFiniEntity  entity = new BonSortieFiniEntity();
+	    	
+	     	entity.setId((Long) element[0]);
+	     	entity.setReference((String) element[1]);
+	    	entity.setDateSortie((Calendar) element[2]);
+	    	entity.setObservation((String) element[3]);
+	    	entity.setType((String) element[4]);
+	    	entity.setPartieInt((Long) element[5]);
+	    	
+	    	BonSortieFiniValue dto = bonSortieFiniPersistanceUtilities.toValue(entity);
+	    	list.add(dto);
+	    }
+	    
+	    ResultatRechecheBonSortieFiniValue resultat = new ResultatRechecheBonSortieFiniValue();
+	    Collections.sort(list);
+	    resultat.setNombreResultaRechercher(Long.valueOf(list.size()));
+	    resultat.setList(new TreeSet<>(list));
+	    
+	    return resultat;
 	}
 
 

@@ -40,8 +40,18 @@ public class SoldeClientValue implements Comparable<SoldeClientValue> {
 
 	
 	
+	private Double soldeInitialNonDeclaree;
 	
 	
+	
+
+	public Double getSoldeInitialNonDeclaree() {
+		return soldeInitialNonDeclaree;
+	}
+
+	public void setSoldeInitialNonDeclaree(Double soldeInitialNonDeclaree) {
+		this.soldeInitialNonDeclaree = soldeInitialNonDeclaree;
+	}
 
 	public Double getTotalReglement() {
 		return totalReglement;

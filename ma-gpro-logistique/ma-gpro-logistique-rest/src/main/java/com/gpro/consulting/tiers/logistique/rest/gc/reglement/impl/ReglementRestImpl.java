@@ -87,9 +87,16 @@ public class ReglementRestImpl {
 		    	}
 				
 				
-				if(element.getGroupeClientId() != null)
-	    			element.setGroupeClientDesignation(groupeClientService.rechercheGroupeClientParId(new GroupeClientValue(element.getGroupeClientId())).getDesignation());
-	    
+				if(element.getGroupeClientId() != null) {
+					GroupeClientValue groupeClient = groupeClientService.rechercheGroupeClientParId(new GroupeClientValue(element.getGroupeClientId())) ;
+					
+					if(groupeClient != null) {
+						element.setGroupeClientDesignation(groupeClient.getDesignation());
+					}
+					
+				    
+				}
+	    		
 				
 			}
 		}
@@ -112,7 +119,7 @@ public class ReglementRestImpl {
 					
 					for(ElementReglementValue elementReglement : reglement.getListElementReglement()){
 						
-						if(elementReglement.getMontantDemande() != null && elementReglement.getMontantDemande() >0)
+						if(elementReglement.getMontantDemande() != null && elementReglement.getMontantDemande() > 0)
 							listElementReglement.add(elementReglement);
 						
 						//logger.info("----refBL: "+elementReglement.getRefBL());

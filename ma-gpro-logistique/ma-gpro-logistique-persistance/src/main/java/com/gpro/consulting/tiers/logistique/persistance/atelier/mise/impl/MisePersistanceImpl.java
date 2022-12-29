@@ -378,10 +378,21 @@ public class MisePersistanceImpl extends AbstractPersistance implements
 		/** Lancer la requete */
 		vCriteriaQuery.select(vMiseRoot).where(
 				vWhereClause.toArray(new Predicate[] {}));
+		
+		vCriteriaQuery.orderBy(vCriteriaBuilder.desc(vMiseRoot.get("id")));
 
 		/** Récupération du résultat de la base */
-		List<MiseEntity> vListResultatRechercheMise = this.entityManager
-				.createQuery(vCriteriaQuery).getResultList();
+		List<MiseEntity> vListResultatRechercheMise = null;
+		
+		
+		if (pRechercheMiseMulitCritere.isOptimized()) {
+			vListResultatRechercheMise = this.entityManager.createQuery(vCriteriaQuery).setMaxResults(65).getResultList();
+
+		} else {
+			vListResultatRechercheMise = this.entityManager.createQuery(vCriteriaQuery).getResultList();
+		}
+	    
+		
 		/** Conversion de la liste en valeur */
 		List<ElementRechecheMiseValue> vListeResultat = new ArrayList<ElementRechecheMiseValue>();
 		for (MiseEntity mise : vListResultatRechercheMise) {
@@ -469,30 +480,38 @@ public class MisePersistanceImpl extends AbstractPersistance implements
 	
 	
 	@Override
-	public MiseValue rechercheMiseParReference(Long referenceMise) {
+	public MiseValue rechercheMiseParReference(String referenceMise) {
 
-		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
-		CriteriaQuery<MiseEntity> criteriaQuery = criteriaBuilder.createQuery(MiseEntity.class);
-		List<Predicate> whereClause = new ArrayList<Predicate>();
-		Root<MiseEntity> root = criteriaQuery.from(MiseEntity.class);
+		
+		if (estNonVide(referenceMise)) {
+			
+			CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+			CriteriaQuery<MiseEntity> criteriaQuery = criteriaBuilder.createQuery(MiseEntity.class);
+			List<Predicate> whereClause = new ArrayList<Predicate>();
+			Root<MiseEntity> root = criteriaQuery.from(MiseEntity.class);
 
-		// Set referenceMise on whereClause if not null
-		if (referenceMise != null) {
+			// Set referenceMise on whereClause if not null
+			
+			
 			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_REF_MISE), referenceMise.toString()));
+			
+			criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+			List<MiseEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+
+			List<MiseValue> list = new ArrayList<MiseValue>();
+
+			for (MiseEntity entity : resultatEntite) {
+				MiseValue dto = vPersistanceUtilities.toValue(entity);
+				list.add(dto);
+			}
+
+			if (list.size() >= 1)
+				return list.get(0);
+			
+			
 		}
 
-		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
-		List<MiseEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
-
-		List<MiseValue> list = new ArrayList<MiseValue>();
-
-		for (MiseEntity entity : resultatEntite) {
-			MiseValue dto = vPersistanceUtilities.toValue(entity);
-			list.add(dto);
-		}
-
-		if (list.size() >= 1)
-			return list.get(0);
+	
 
 		return null;
 	}

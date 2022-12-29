@@ -216,7 +216,7 @@ public class MiseDomaineImpl implements IMiseDomaine {
 	}
 
 	@Override
-	public MiseValue rechercheMiseParReference(Long pId) {
+	public MiseValue rechercheMiseParReference(String pId) {
 		
 		MiseValue mv = vMisePersitance.rechercheMiseParReference(pId);
 		ProduitValue produit = null ;

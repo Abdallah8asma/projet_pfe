@@ -166,6 +166,11 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
            }
 			
 		}
+		
+	   if(factureValue.getType().equals(FACTURE_TYPE_AVOIRE)) {
+			
+			factureValue.setDeclarer(true);
+		}
 
 		if (factureValue.getInfoLivraison() != null && estNonVide(factureValue.getInfoLivraison())) {
 			String infoSortieSplitted[] = factureValue.getInfoLivraison().split(SEPARATOR);
@@ -322,11 +327,41 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
 			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_TIMBRE_2 && taxe != TAXE_ID_TIMBRE_3 && taxe != TAXE_ID_FODEC) {
 				montantTaxeTVA = ZERO;
-				if (produitTaxeMap.containsKey(taxe))
+				
+				/*if (produitTaxeMap.containsKey(taxe))
 					montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
 
 				taxeFactureIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;*/
+				
+				
+	          if (produitTaxeMap.containsKey(taxe)) {
+					
+					if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
+						
+						montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() /100 )* taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}else 
+						
+					{
+						
+						montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
+						
+					}
+					
+					montantTaxeTVA = 	(double)Math.round(montantTaxeTVA * 1000) / 1000 ;
+				}
+					
+
+				taxeFactureIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
 				montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;
+				
+				
+				
+				
+				
+				
+				
 
 			}
 
@@ -620,11 +655,33 @@ public class FactureAchatDomaineImpl implements IFactureAchatDomaine {
 		for (Long taxe : taxeFactureIdTaxeMap.keySet()) {
 			if (taxe != TAXE_ID_TIMBRE && taxe != TAXE_ID_TIMBRE_2 && taxe != TAXE_ID_TIMBRE_3 &&  taxe != TAXE_ID_FODEC) {
 				montantTaxeTVA = ZERO;
-				if (produitTaxeMap.containsKey(taxe))
+				/*if (produitTaxeMap.containsKey(taxe))
 					montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
 
 				taxeFactureIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
-				montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;
+				montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;*/
+				
+				
+			     if (produitTaxeMap.containsKey(taxe)) {
+						
+						if (taxeFactureIdTaxeMap.containsKey(TAXE_ID_FODEC)) {
+							
+							montantTaxeTVA = (produitTaxeMap.get(taxe) + produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(TAXE_ID_FODEC).getPourcentage() /100 )* taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
+							
+						}else 
+							
+						{
+							
+							montantTaxeTVA = produitTaxeMap.get(taxe) * taxeFactureIdTaxeMap.get(taxe).getPourcentage() / 100;
+							
+						}
+						
+						montantTaxeTVA = 	(double)Math.round(montantTaxeTVA * 1000) / 1000 ;
+					}
+			     
+			     
+			     taxeFactureIdTaxeMap.get(taxe).setMontant(montantTaxeTVA);
+					montantTaxesTotal = montantTaxesTotal + montantTaxeTVA;
 
 			}
 

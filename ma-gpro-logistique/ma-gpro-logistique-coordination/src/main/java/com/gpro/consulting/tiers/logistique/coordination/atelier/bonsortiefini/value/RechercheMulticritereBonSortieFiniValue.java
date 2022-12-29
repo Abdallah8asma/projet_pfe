@@ -19,6 +19,16 @@ public class RechercheMulticritereBonSortieFiniValue {
 	private String fini;
 	private String rempli; // oui ou non
 	
+	private boolean optimized;
+	
+	
+	
+	public boolean isOptimized() {
+		return optimized;
+	}
+	public void setOptimized(boolean optimized) {
+		this.optimized = optimized;
+	}
 	public String getReference() {
 		return reference;
 	}

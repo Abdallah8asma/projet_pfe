@@ -96,7 +96,19 @@ public class SoldeClientEntity  implements Serializable {
 	
 	
 	
+	@Column(name="solde_initial_nd")
+	private Double soldeInitialNonDeclaree;
 	
+	
+	
+
+	public Double getSoldeInitialNonDeclaree() {
+		return soldeInitialNonDeclaree;
+	}
+
+	public void setSoldeInitialNonDeclaree(Double soldeInitialNonDeclaree) {
+		this.soldeInitialNonDeclaree = soldeInitialNonDeclaree;
+	}
 
 	public Double getTotalReglement() {
 		return totalReglement;
