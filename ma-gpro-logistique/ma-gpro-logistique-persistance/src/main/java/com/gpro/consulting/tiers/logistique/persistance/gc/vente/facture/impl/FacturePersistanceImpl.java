@@ -43,7 +43,7 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	
 	private static final Logger logger = LoggerFactory.getLogger(FacturePersistanceImpl.class);
 	
-	
+	private String PREDICATE_refCommande = "refCommande";
 	private String PREDICATE_ID_DEPOT = "idDepot";
 	private String PREDICATE_NATURE = "nature";
 	private String PREDICATE_OBSERVATIONS = "observations";
@@ -295,6 +295,14 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 				whereClause.add(criteriaBuilder.and(predicate));
 			}
 			
+			
+
+			  // Set nature
+		    if (estNonVide(request.getRefCommande() )) {
+				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_refCommande), request.getRefCommande()));
+			}
+		    
+			
 	 //	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	 	
 	 	
@@ -330,7 +338,9 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	 			
 	 			root.get("modalitePaiement").as(String.class),
 	 			root.get("dateEcheance").as(Calendar.class),
-	 			root.get("refFactures").as(String.class)
+	 			root.get("refFactures").as(String.class),
+	 			
+	 			root.get("refCommande").as(String.class)
 	 			
 	 			
 				
@@ -390,6 +400,9 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	    entity.setDateEcheance((Calendar)element[27]);
 	    
 	    entity.setRefFactures((String) element[28]);
+	    
+		entity.setRefCommande((String) element[29]);
+		
 	    	
 	    	FactureVenteValue dto = FacturePersistanceUtilities.toValue(entity);
 	    	list.add(dto);

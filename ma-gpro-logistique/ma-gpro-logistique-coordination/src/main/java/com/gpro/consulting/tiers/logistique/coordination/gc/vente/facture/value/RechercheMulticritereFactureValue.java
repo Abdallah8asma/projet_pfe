@@ -65,8 +65,20 @@ public class RechercheMulticritereFactureValue {
 	private String infoLivraison ;
 	
 	
+	private String refCommande;
+	
+	
+	
 	
 
+
+	public String getRefCommande() {
+		return refCommande;
+	}
+
+	public void setRefCommande(String refCommande) {
+		this.refCommande = refCommande;
+	}
 
 	public String getInfoLivraison() {
 		return infoLivraison;

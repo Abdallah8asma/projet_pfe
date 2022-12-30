@@ -92,7 +92,11 @@ public class BonLivraisonPersistanceUtilities {
 		dto.setEtat(entity.getEtat());
 		dto.setTransporteur(entity.getTransporteur());
 		dto.setMetrageTotal(entity.getMetrageTotal());
-		dto.setNatureLivraison(entity.getNatureLivraison().trim());
+		
+		if(entity.getNatureLivraison() != null) {
+			dto.setNatureLivraison(entity.getNatureLivraison().trim());
+		}
+	
 		dto.setTotalPourcentageRemise(entity.getTotalPourcentageRemise());
 		dto.setStock(entity.getStock());
 		dto.setIdDepot(entity.getIdDepot());

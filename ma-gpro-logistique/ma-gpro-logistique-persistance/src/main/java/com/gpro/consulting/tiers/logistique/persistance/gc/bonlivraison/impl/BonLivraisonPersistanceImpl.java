@@ -1230,7 +1230,140 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 
 	
 	
+	@Override
+	public List<LivraisonVenteValue> getByClientIdOptimiser(Long clientId) {
+		
+		List<LivraisonVenteValue> resultat = new ArrayList<LivraisonVenteValue>();
+
+		// Set clientId on whereClause if not null
+		if (clientId != null) {
+			
+			CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+			
+			//CriteriaQuery<LivraisonVenteEntity> criteriaQuery = criteriaBuilder.createQuery(LivraisonVenteEntity.class);
+			
+			CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+			
+			
+			List<Predicate> whereClause = new ArrayList<Predicate>();
+			
+			Root<LivraisonVenteEntity> root = criteriaQuery.from(LivraisonVenteEntity.class);
+			
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_CLIENT), clientId));
+
+			//criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+			
+			
+			
+			
+			criteriaQuery.select(criteriaBuilder.array(
+		 			
+		 			root.get("id").as(Long.class),
+		 			root.get("reference").as(String.class),
+		 			root.get("montantTTC").as(Double.class),	 	 		
+		 			root.get("date").as(Calendar.class),
+		 		    root.get("montantHTaxe").as(Double.class),
+		 		   root.get("refCommande").as(String.class)
+		 			
+					)).where(whereClause.toArray(new Predicate[] {}));
+			
+			
+			
+			List<Object[]> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		    
+		    if(resultatEntite != null){
+		    	
+		    	for(Object[] element : resultatEntite){
+		    		
+		    		
+    	           LivraisonVenteEntity entity = new LivraisonVenteEntity();
+			    	
+			    	
+			    	entity.setId((Long) element[0]);
+			    	entity.setReference((String) element[1]);
+			    	entity.setMontantTTC((Double) element[2]);
+			     	entity.setDate((Calendar) element[3]);
+			     	entity.setMontantHTaxe((Double) element[4]);
+			     	entity.setRefCommande((String) element[5]);
+		    		
+		    		resultat.add(bonLivraisonPersistanceUtilities.toValue(entity));
+		    	}
+		    	
+		    	
+			    
+
+		    }
+		}
+
+	    return resultat;
+	}
 	
 	
+
+	@Override
+	public List<LivraisonVenteValue> getByGroupeClientIdOptimiser(Long groupeClientId) {
+
+		
+		List<LivraisonVenteValue> resultat = new ArrayList<LivraisonVenteValue>();
+
+		// Set clientId on whereClause if not null
+		if (groupeClientId != null) {
+			
+			CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+			
+			CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+			
+			
+			List<Predicate> whereClause = new ArrayList<Predicate>();
+			
+			Root<LivraisonVenteEntity> root = criteriaQuery.from(LivraisonVenteEntity.class);
+			
+			whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_GROUPE_CLIENT), groupeClientId));
+
+			
+			
+			
+			criteriaQuery.select(criteriaBuilder.array(
+		 			
+		 			root.get("id").as(Long.class),
+		 			root.get("reference").as(String.class),
+		 			root.get("montantTTC").as(Double.class),	 	 		
+		 			 root.get("date").as(Calendar.class),
+		 			 root.get("montantHTaxe").as(Double.class),
+		 			 root.get("refCommande").as(String.class)
+		 			 
+		 			
+		 			
+					)).where(whereClause.toArray(new Predicate[] {}));
+			
+			
+			
+			
+			List<Object[]> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		   
+			
+		    if(resultatEntite != null){
+		    	
+		      	for(Object[] element : resultatEntite){
+		    		
+		    		
+	    	           LivraisonVenteEntity entity = new LivraisonVenteEntity();
+				    	
+				    	
+				    	entity.setId((Long) element[0]);
+				    	entity.setReference((String) element[1]);
+				    	entity.setMontantTTC((Double) element[2]);
+				     	entity.setDate((Calendar) element[3]);
+				    	entity.setMontantHTaxe((Double) element[4]);
+				    	entity.setRefCommande((String) element[5]);
+			    		
+			    		resultat.add(bonLivraisonPersistanceUtilities.toValue(entity));
+			    	}
+			    	
+		    }
+		}
+
+	    return resultat;
+	}
 
 }
