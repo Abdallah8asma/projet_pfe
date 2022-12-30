@@ -105,6 +105,8 @@ public class FacturePersistanceUtilities {
 	    dto.setModalitePaiement(entity.getModalitePaiement());
 	    dto.setDateEcheance(entity.getDateEcheance());
 	    
+	    dto.setRefCommande(entity.getRefCommande());
+	    
 	    
 		if(entity.getListDetFactureVente() != null){
 	    	List<DetFactureVenteValue> list = new ArrayList <DetFactureVenteValue>();
@@ -194,6 +196,8 @@ public class FacturePersistanceUtilities {
 	    
 	    entity.setModalitePaiement(dto.getModalitePaiement());
 	    entity.setDateEcheance(dto.getDateEcheance());
+	    
+	    entity.setRefCommande(dto.getRefCommande());
 	    
 	    
 		if(dto.getListDetFactureVente() != null){

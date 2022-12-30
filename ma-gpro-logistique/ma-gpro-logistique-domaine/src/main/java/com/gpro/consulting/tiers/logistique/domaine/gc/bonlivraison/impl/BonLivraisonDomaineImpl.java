@@ -1104,6 +1104,8 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 			// Added By Ghazi on 25/05/2018
 			listProduitElementValue.setIdMarche(listLivraisonVenteValue.get(FIRST_INDEX).getMarcheId());
 			listProduitElementValue.setIdDepot(listLivraisonVenteValue.get(FIRST_INDEX).getIdDepot());
+			
+			listProduitElementValue.setRefCommande(listLivraisonVenteValue.get(FIRST_INDEX).getRefCommande());
 
 		}
 

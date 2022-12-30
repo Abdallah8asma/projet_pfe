@@ -28,7 +28,18 @@ public class ListProduitElementValue {
 	private List<DetFactureAchatValue> listDetFactureAchat;
 	
 	
+	private String refCommande;
 	
+	
+	
+
+	public String getRefCommande() {
+		return refCommande;
+	}
+
+	public void setRefCommande(String refCommande) {
+		this.refCommande = refCommande;
+	}
 
 	public String getRefexterne() {
 		return refexterne;

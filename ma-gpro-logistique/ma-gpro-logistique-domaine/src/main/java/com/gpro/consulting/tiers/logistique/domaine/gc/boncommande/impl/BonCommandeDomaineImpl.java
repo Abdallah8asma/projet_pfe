@@ -436,7 +436,7 @@ public class BonCommandeDomaineImpl implements IBonCommandeDomaine {
 
 		List<String> listBonCommandeToRemove = new ArrayList<String>();
 
-		List<LivraisonVenteValue> livraisonVenteList = bonLivraisonPersistance.getAll();
+		List<LivraisonVenteValue> livraisonVenteList = bonLivraisonPersistance.getByClientIdOptimiser(idClient);
 
 		for (LivraisonVenteValue commandeVente : livraisonVenteList) {
 
@@ -456,10 +456,20 @@ public class BonCommandeDomaineImpl implements IBonCommandeDomaine {
 		}
 
 		List<CommandeVenteValue> bonCommandelist = bonCommandePersistance.getReferenceBCByClientId(idClient);
+		
+		
+		List<CommandeVenteValue> bonCommandelistFinal = new ArrayList<CommandeVenteValue>();
+		
+		for(CommandeVenteValue cv : bonCommandelist)
+		{
+			
+			if(cv.getReference() != null && !listBonCommandeToRemove.contains(cv.getReference()))	{
+				bonCommandelistFinal.add(cv);
+			}
+		}
 
-		bonCommandelist.removeAll(listBonCommandeToRemove);
 
-		return bonCommandelist;
+		return bonCommandelistFinal;
 	}
 
 	/**

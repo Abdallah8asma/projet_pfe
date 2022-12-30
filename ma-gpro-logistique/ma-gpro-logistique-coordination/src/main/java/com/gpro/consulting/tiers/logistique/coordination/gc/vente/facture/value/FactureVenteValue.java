@@ -100,9 +100,21 @@ public class FactureVenteValue implements Comparable<FactureVenteValue> {
 	private Calendar dateEcheance;
 	
 	
+	private String refCommande;
 	
 	
 	
+	
+	
+	
+	public String getRefCommande() {
+		return refCommande;
+	}
+
+	public void setRefCommande(String refCommande) {
+		this.refCommande = refCommande;
+	}
+
 	public String getModalitePaiement() {
 		return modalitePaiement;
 	}

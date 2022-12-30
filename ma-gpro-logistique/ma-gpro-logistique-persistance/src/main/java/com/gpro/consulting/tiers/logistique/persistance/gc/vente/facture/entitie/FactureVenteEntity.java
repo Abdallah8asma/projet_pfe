@@ -186,11 +186,22 @@ public class FactureVenteEntity implements Serializable {
 	private Calendar dateEcheance;
 	
 	
+	@Column(name="ref_commande")
+	private String refCommande;
 	
 	
 	
 	
 	
+	
+	public String getRefCommande() {
+		return refCommande;
+	}
+
+	public void setRefCommande(String refCommande) {
+		this.refCommande = refCommande;
+	}
+
 	public String getModalitePaiement() {
 		return modalitePaiement;
 	}
