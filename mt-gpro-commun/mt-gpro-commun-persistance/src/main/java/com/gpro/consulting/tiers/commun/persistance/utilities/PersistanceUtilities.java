@@ -187,6 +187,13 @@ public class PersistanceUtilities {
         
         dto.setDateDemarrage(entity.getDateDemarrage());
         
+        
+        dto.setTva19(entity.getTva19());
+        dto.setFodec(entity.getFodec());
+		
+		
+		
+        
 		return dto;
 	}
 
@@ -241,6 +248,9 @@ public class PersistanceUtilities {
 		
 		entity.setDateDemarrage(dto.getDateDemarrage());
 	
+		entity.setTva19(dto.getTva19());
+		entity.setFodec(dto.getFodec());
+		
 		return entity;
 	}
 	

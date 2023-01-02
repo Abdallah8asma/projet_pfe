@@ -58,5 +58,9 @@ public interface IFacturePersistance {
 	
 	public ResultatRechecheFactureValue rechercherMultiCritereAvecDetail(
 			RechercheMulticritereFactureValue request);
+	
+	public List<FactureVenteValue> getByClientIdOptimiser(Long clientId);
+	
+	public List<FactureVenteValue> getByGroupeClientIdOptimiser(Long groupeClientId);
 
 }

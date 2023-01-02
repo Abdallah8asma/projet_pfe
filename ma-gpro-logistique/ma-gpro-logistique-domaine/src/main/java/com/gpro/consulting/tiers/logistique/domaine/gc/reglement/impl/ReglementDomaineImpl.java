@@ -37,6 +37,7 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.IType
 import com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.IBonCommandePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IBonLivraisonPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.IGuichetMensuelPersistance;
+import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.IElementReglementPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.IReglementPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.typeReglement.ITypeReglementPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.IFacturePersistance;
@@ -82,6 +83,10 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 	
 	@Autowired
 	private ITypeReglementPersistance typeReglementPersistance;
+	
+	@Autowired
+	private IElementReglementPersistance elementReglementPersistance;
+	
 	
 	@Override
 	public String create(ReglementValue reglement) {
@@ -552,10 +557,17 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		Double blMontantTotal = ZERO;
 		Double blMontantTotalRegle = ZERO;
 		
-		List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
+		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
 		
-		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientId(clientId);
-		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientId(clientId);
+		RechercheMulticritereReglementValue requestElementReglement = new RechercheMulticritereReglementValue();
+		requestElementReglement.setPartieIntId(clientId);
+		
+		List<ElementReglementValue> listElementReglement  = elementReglementPersistance.rechercherMultiCritereOptimiser(requestElementReglement);
+		
+		
+		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientIdOptimiser(clientId);
+		
+		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientIdOptimiser(clientId);
 		
 		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
 		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
@@ -565,11 +577,13 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		List<String> refBLFromBL = new ArrayList<String>();
 		
-		if(listReglementByClientId.size() > 0 ){
+		//if(listReglementByClientId.size() > 0 ){
 			
-			for(ReglementValue reglement : listReglementByClientId){
+			//for(ReglementValue reglement : listReglementByClientId){
 				
-				for(ElementReglementValue element: reglement.getListElementReglement()){
+				//for(ElementReglementValue element: reglement.getListElementReglement()){
+		
+	  	for(ElementReglementValue element: listElementReglement){
 					
 					if(element.getRefFacture() != null){
 						
@@ -611,8 +625,8 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 						refBLFromReglement.add(element.getRefBL());
 					}
 				}
-			}
-		}
+			//}
+		//}
 		
 		
 		if(listBLByClientId.size() > 0 ){
@@ -691,7 +705,8 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		for(String refBLNonRergle : refBLFromBL){
 			
-			LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			//LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			LivraisonVenteValue livraisonVente = findBlByReference(listBLByClientId,refBLNonRergle);
 			
 			if(livraisonVente != null){
 				
@@ -795,10 +810,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		Double blMontantTotal = ZERO;
 		Double blMontantTotalRegle = ZERO;
 		
-		List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
+		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
 		
-		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientId(clientId);
-		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientId(clientId);
+		RechercheMulticritereReglementValue requestElementReglement = new RechercheMulticritereReglementValue();
+		requestElementReglement.setPartieIntId(clientId);
+		
+		List<ElementReglementValue> listElementReglement  = elementReglementPersistance.rechercherMultiCritereOptimiser(requestElementReglement);
+		
+		
+		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientIdOptimiser(clientId);
+		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientIdOptimiser(clientId);
 		
 		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
 		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
@@ -808,11 +829,13 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		List<String> refBLFromBL = new ArrayList<String>();
 		
-		if(listReglementByClientId.size() > 0 ){
+		//if(listReglementByClientId.size() > 0 ){
 			
-			for(ReglementValue reglement : listReglementByClientId){
+		//	for(ReglementValue reglement : listReglementByClientId){
 				
-				for(ElementReglementValue element: reglement.getListElementReglement()){
+				//for(ElementReglementValue element: reglement.getListElementReglement()){
+					
+					for(ElementReglementValue element : listElementReglement){
 					
 					if(element.getRefFacture() != null){
 						
@@ -854,8 +877,8 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 						refBLFromReglement.add(element.getRefBL());
 					}
 				}
-			}
-		}
+			//}
+	//	}
 		
 		
 		if(listBLByClientId.size() > 0 ){
@@ -934,7 +957,8 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		for(String refBLNonRergle : refBLFromBL){
 			
-			LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			//LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			LivraisonVenteValue livraisonVente = findBlByReference(listBLByClientId, refBLNonRergle);                                      
 			
 			if(livraisonVente != null){
 				
@@ -1012,256 +1036,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		Double blMontantTotal = ZERO;
 		Double blMontantTotalRegle = ZERO;
 		
-		List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
+		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
 		
-		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientId(clientId);
-		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientId(clientId);
+		RechercheMulticritereReglementValue requestElementReglement = new RechercheMulticritereReglementValue();
+		requestElementReglement.setPartieIntId(clientId);
 		
-		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
-		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
-		
-		List<String> refBLFromFacture = new ArrayList<String>();
-		List<String> refBLFromReglement = new ArrayList<String>();
-		
-		List<String> refBLFromBL = new ArrayList<String>();
-		
-		if(listReglementByClientId.size() > 0 ){
-			
-			for(ReglementValue reglement : listReglementByClientId){
-				
-				for(ElementReglementValue element: reglement.getListElementReglement()){
-					
-					if(element.getRefFacture() != null){
-						
-						if(mapFactureRefMontantRegle.containsKey(element.getRefFacture())){
-							
-							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
-							
-							if(currentAmount != null && element.getMontantDemande()!= null){
-								
-								currentAmount = currentAmount + element.getMontantDemande();
-							}
-							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
-							
-						}else{
-							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
-						}
-					}
-					
-					if(element.getRefBL() != null){
-						
-						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
-							
-							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
-							
-							if(currentAmount != null && element.getMontantDemande()!= null){
-								
-								currentAmount = currentAmount + element.getMontantDemande();
-							}
-							
-							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
-							
-						}else{
-							
-							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
-						}
-						
-						refBLFromReglement.add(element.getRefBL());
-					}
-				}
-			}
-		}
+		List<ElementReglementValue> listElementReglement  = elementReglementPersistance.rechercherMultiCritereOptimiser(requestElementReglement);
 		
 		
-		if(listBLByClientId.size() > 0 ){
-			
-			for(LivraisonVenteValue livraisonVente : listBLByClientId){
-				
-				if(livraisonVente.getReference() != null){
-					
-					refBLFromBL.add(livraisonVente.getReference());
-				}
-			}
-		}
-		
-		if(listFactureByClientId.size() > 0 ){
-			
-			for(FactureVenteValue factureVente : listFactureByClientId){
-				
-				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
-					
-					if(factureVente.getMontantTTC() != null){
-						
-						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
-						
-						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
-						
-						if(montantFactureRegle != null){
-							
-							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
-							
-							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
-							
-							if(montantResteARegle > 0){
-								
-								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
-								
-								factureNonRegle.setMontantRegle(montantResteARegle);
-								
-								listFactureNonRegleVentre.add(factureNonRegle);
-								
-							}
-						}	
-					}
-				}else{
-					
-					if(factureVente.getMontantTTC() != null){
-
-						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
-						
-						factureNonRegle.setMontantRegle(ZERO);
-						
-						listFactureNonRegleVentre.add(factureNonRegle);
-						
-					}
-				}
-				
-				String refBLSplitted[];
-				
-				if(factureVente.getInfoLivraison() != null){
-					
-					refBLSplitted = factureVente.getInfoLivraison().split(SEPARATOR);
-					
-					for(int index=0; index < refBLSplitted.length ;index++){
-
-						refBLFromFacture.add(refBLSplitted[index]);
-						
-					}	
-					
-				}
-				
-			}
-			
-		}
-		
-		//list des refBL nonRegle
-		refBLFromBL.removeAll(refBLFromFacture);
-		
-		for(String refBLNonRergle : refBLFromBL){
-			
-			LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
-			
-			if(livraisonVente != null){
-				
-				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
-					
-					if(livraisonVente.getMontantTTC() != null){
-						
-						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
-						
-						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
-						
-						if(montantBLRegle != null){
-							
-							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
-							
-							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
-							
-							if(montantResteARegle > 0){
-								
-								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
-								
-								livraisonNonRegle.setMontantRegle(montantResteARegle);
-								
-								listLivraisonNonRegle.add(livraisonNonRegle);
-								
-							}
-						}	
-					}
-				}else{
-					
-					if(livraisonVente.getMontantTTC() != null){
-
-						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
-						
-						livraisonNonRegle.setMontantRegle(ZERO);
-						
-						listLivraisonNonRegle.add(livraisonNonRegle);
-						
-					}
-				}
-			}
-		}
-		
-		//DISCUSS:  recuperation des RefBL Non reglées
-		if(listLivraisonNonRegle != null){
-			for(LivraisonNonRegleValue elementBLNonReg : listLivraisonNonRegle){
-				RefLivraisonNonRegleValue blNonRegle = new RefLivraisonNonRegleValue();
-				
-				blNonRegle.setId(elementBLNonReg.getId());
-				blNonRegle.setNumBL(elementBLNonReg.getNumBL());
-				
-				blNonRegle.setMontantBL(elementBLNonReg.getMontantBL());
-				blNonRegle.setDate(elementBLNonReg.getDate());
-				
-				resultatlistRefBLNonRegle.add(blNonRegle);
-				
-			}
-			Collections.sort(resultatlistRefBLNonRegle);
-		}
-		return resultatlistRefBLNonRegle;
-				
-	}
-	
-	private String getNumeroReglement(final Calendar pDateBonFacture) {
-
-		Long vNumGuichetFacture = this.guichetAnnuelDomaine.getNextNumReglementReference();
-		/** Année courante. */
-		int vAnneeCourante = pDateBonFacture.get(Calendar.YEAR);
-		/** Format du numero de la Bon Reception= AAAA-NN. */
-		StringBuilder vNumFacture = new StringBuilder("");
-		vNumFacture.append(vAnneeCourante);
-		vNumFacture.append(String.format("%06d", vNumGuichetFacture));
-		/** Inserer une nouvelle valeur dans Guichet BonReception. */
-		GuichetAnnuelValue vGuichetValeur = new GuichetAnnuelValue();
-		
-
-		Calendar cal = Calendar.getInstance();
-		int anneActuelle = cal.get(Calendar.YEAR);
-
-		int idAnnuel = (anneActuelle - 2016) +1;
-
-		vGuichetValeur.setId(new Long(idAnnuel));
-		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
-		vGuichetValeur.setNumReferenceReglementCourante(new Long(
-				vNumGuichetFacture + 1L));
-		/** Modification de la valeur en base du numéro. */
-		this.guichetAnnuelDomaine
-				.modifierGuichetReglementAnnuel(vGuichetValeur);
-		return vNumFacture.toString();
-	}
-
-	@Override
-	public ValidateReglementResultValue validateByGroupeClientId(Long groupeClientId) {
-
-		
-		ValidateReglementResultValue result = new ValidateReglementResultValue();
-		
-		List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
-		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
-		
-		Double factureMontantTotal = ZERO;
-		Double factureMontantTotalRegle = ZERO;
-		
-		Double blMontantTotal = ZERO;
-		Double blMontantTotalRegle = ZERO;
-		
-		List<ReglementValue> listReglementByClientId = reglementPersistance.getByGroupeClientId(groupeClientId);
-		
-		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByGroupeClientId(groupeClientId);
-		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByGroupeClientId(groupeClientId);
+		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientIdOptimiser(clientId);
+		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientIdOptimiser(clientId);
 		
 		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
 		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
@@ -1271,445 +1055,13 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		List<String> refBLFromBL = new ArrayList<String>();
 		
-		if(listReglementByClientId.size() > 0 ){
+		//if(listReglementByClientId.size() > 0 ){
 			
-			for(ReglementValue reglement : listReglementByClientId){
+			//for(ReglementValue reglement : listReglementByClientId){
 				
-				for(ElementReglementValue element: reglement.getListElementReglement()){
+				//for(ElementReglementValue element: reglement.getListElementReglement()){
 					
-					if(element.getRefFacture() != null){
-						
-						if(mapFactureRefMontantRegle.containsKey(element.getRefFacture())){
-							
-							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
-							
-							if(currentAmount != null && element.getMontantDemande()!= null){
-								
-								currentAmount = currentAmount + element.getMontantDemande();
-							}
-							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
-							
-						}else{
-							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
-						}
-					}
-					
-					if(element.getRefBL() != null){
-						
-						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
-							
-							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
-							
-							if(currentAmount != null && element.getMontantDemande()!= null){
-								
-								currentAmount = currentAmount + element.getMontantDemande();
-							}
-							
-							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
-							
-						}else{
-							
-							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
-						}
-						
-						refBLFromReglement.add(element.getRefBL());
-					}
-				}
-			}
-		}
-		
-		
-		if(listBLByClientId.size() > 0 ){
-			
-			for(LivraisonVenteValue livraisonVente : listBLByClientId){
-				
-				if(livraisonVente.getReference() != null){
-					
-					refBLFromBL.add(livraisonVente.getReference());
-				}
-			}
-		}
-		
-		if(listFactureByClientId.size() > 0 ){
-			
-			for(FactureVenteValue factureVente : listFactureByClientId){
-				
-				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
-					
-					if(factureVente.getMontantTTC() != null){
-						
-						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
-						
-						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
-						
-						if(montantFactureRegle != null){
-							
-							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
-							
-							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
-							
-							if(montantResteARegle > 0){
-								
-								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
-								
-								factureNonRegle.setMontantRegle(montantResteARegle);
-								
-								listFactureNonRegleVentre.add(factureNonRegle);
-								
-							}
-						}	
-					}
-				}else{
-					
-					if(factureVente.getMontantTTC() != null){
-
-						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
-						
-						factureNonRegle.setMontantRegle(ZERO);
-						
-						listFactureNonRegleVentre.add(factureNonRegle);
-						
-					}
-				}
-				
-				String refBLSplitted[];
-				
-				if(factureVente.getInfoLivraison() != null){
-					
-					refBLSplitted = factureVente.getInfoLivraison().split(SEPARATOR);
-					
-					for(int index=0; index < refBLSplitted.length ;index++){
-
-						refBLFromFacture.add(refBLSplitted[index]);
-						
-					}	
-					
-				}
-				
-			}
-			
-		}
-		
-		//list des refBL nonRegle
-		refBLFromBL.removeAll(refBLFromFacture);
-		
-		for(String refBLNonRergle : refBLFromBL){
-			
-			LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
-			
-			if(livraisonVente != null){
-				
-				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
-					
-					if(livraisonVente.getMontantTTC() != null){
-						
-						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
-						
-						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
-						
-						if(montantBLRegle != null){
-							
-							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
-							
-							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
-							
-							if(montantResteARegle > 0){
-								
-								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
-								
-								livraisonNonRegle.setMontantRegle(montantResteARegle);
-								
-								listLivraisonNonRegle.add(livraisonNonRegle);
-								
-							}
-						}	
-					}
-				}else{
-					
-					if(livraisonVente.getMontantTTC() != null){
-
-						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
-						
-						livraisonNonRegle.setMontantRegle(ZERO);
-						
-						listLivraisonNonRegle.add(livraisonNonRegle);
-						
-					}
-				}
-			}
-		}
-		
-		result.setFactureMontantTotal(factureMontantTotal);
-		result.setFactureMontantTotalRegle(factureMontantTotalRegle);
-		result.setFactureMontantTotalNonRegle(factureMontantTotal - factureMontantTotalRegle);
-		
-		result.setBlMontantTotal(blMontantTotal);
-		result.setBlMontantTotalRegle(blMontantTotalRegle);
-		result.setBlMontantTotalNonRegle(blMontantTotal - blMontantTotalRegle);
-		
-		result.setListFactureNonRegle(new TreeSet<>(listFactureNonRegleVentre));
-		result.setListLivraisonNonRegle(new TreeSet<>(listLivraisonNonRegle));
-		
-		return result;
-	}
-
-	@Override
-	public List<RefFactureNonRegleValue> getRefFactureNonRegleByGroupeId(Long groupeId) {
-
-		
-		List< RefFactureNonRegleValue> resultatlistRefFactureNonRegle = new ArrayList< RefFactureNonRegleValue>();
-		
-		List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
-		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
-		
-		Double factureMontantTotal = ZERO;
-		Double factureMontantTotalRegle = ZERO;
-		
-		Double blMontantTotal = ZERO;
-		Double blMontantTotalRegle = ZERO;
-		
-	//	List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
-		
-		List<ReglementValue> listReglementByClientId = reglementPersistance.getByGroupeClientId(groupeId);
-		
-	//	List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientId(clientId);
-		
-		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByGroupeClientId(groupeId);
-		
-		//List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientId(clientId);
-		
-		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByGroupeClientId(groupeId);
-		
-		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
-		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
-		
-		List<String> refBLFromFacture = new ArrayList<String>();
-		List<String> refBLFromReglement = new ArrayList<String>();
-		
-		List<String> refBLFromBL = new ArrayList<String>();
-		
-		if(listReglementByClientId.size() > 0 ){
-			
-			for(ReglementValue reglement : listReglementByClientId){
-				
-				for(ElementReglementValue element: reglement.getListElementReglement()){
-					
-					if(element.getRefFacture() != null){
-						
-						if(mapFactureRefMontantRegle.containsKey(element.getRefFacture())){
-							
-							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
-							
-							if(currentAmount != null && element.getMontantDemande()!= null){
-								
-								currentAmount = currentAmount + element.getMontantDemande();
-							}
-							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
-							
-						}else{
-							
-							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
-						}
-					}
-					
-					if(element.getRefBL() != null){
-						
-						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
-							
-							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
-							
-							if(currentAmount != null && element.getMontantDemande()!= null){
-								
-								currentAmount = currentAmount + element.getMontantDemande();
-							}
-							
-							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
-							
-						}else{
-							
-							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
-						}
-						
-						refBLFromReglement.add(element.getRefBL());
-					}
-				}
-			}
-		}
-		
-		
-		if(listBLByClientId.size() > 0 ){
-			
-			for(LivraisonVenteValue livraisonVente : listBLByClientId){
-				
-				if(livraisonVente.getReference() != null){
-					
-					refBLFromBL.add(livraisonVente.getReference());
-				}
-			}
-		}
-		
-		if(listFactureByClientId.size() > 0 ){
-			
-			for(FactureVenteValue factureVente : listFactureByClientId){
-				
-				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
-					
-					if(factureVente.getMontantTTC() != null){
-						
-						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
-						
-						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
-						
-						if(montantFactureRegle != null){
-							
-							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
-							
-							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
-							
-							if(montantResteARegle > 0){
-								
-								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
-								
-								factureNonRegle.setMontantRegle(montantResteARegle);
-								
-								listFactureNonRegleVentre.add(factureNonRegle);
-								
-							}
-						}	
-					}
-				}else{
-					
-					if(factureVente.getMontantTTC() != null){
-
-						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
-						
-						factureNonRegle.setMontantRegle(ZERO);
-						
-						listFactureNonRegleVentre.add(factureNonRegle);
-						
-					}
-				}
-				
-				String refBLSplitted[];
-				
-				if(factureVente.getInfoLivraison() != null){
-					
-					refBLSplitted = factureVente.getInfoLivraison().split(SEPARATOR);
-					
-					for(int index=0; index < refBLSplitted.length ;index++){
-
-						refBLFromFacture.add(refBLSplitted[index]);
-						
-					}	
-					
-				}
-				
-			}
-			
-		}
-		
-		//list des refBL nonRegle
-		refBLFromBL.removeAll(refBLFromFacture);
-		
-		for(String refBLNonRergle : refBLFromBL){
-			
-			LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
-			
-			if(livraisonVente != null){
-				
-				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
-					
-					if(livraisonVente.getMontantTTC() != null){
-						
-						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
-						
-						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
-						
-						if(montantBLRegle != null){
-							
-							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
-							
-							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
-							
-							if(montantResteARegle > 0){
-								
-								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
-								
-								livraisonNonRegle.setMontantRegle(montantResteARegle);
-								
-								listLivraisonNonRegle.add(livraisonNonRegle);
-								
-							}
-						}	
-					}
-				}else{
-					
-					if(livraisonVente.getMontantTTC() != null){
-
-						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
-						
-						livraisonNonRegle.setMontantRegle(ZERO);
-						
-						listLivraisonNonRegle.add(livraisonNonRegle);
-						
-					}
-				}
-			}
-		}
-		
-		//DISCUSS: recuperation des RefFacture Non reglées
-		if(listFactureNonRegleVentre != null){
-			for(FactureNonRegleValue elementFactureNonReg : listFactureNonRegleVentre){
-				RefFactureNonRegleValue factureNonRegle = new RefFactureNonRegleValue();
-				
-				factureNonRegle.setId(elementFactureNonReg.getId());
-				factureNonRegle.setNumFacture(elementFactureNonReg.getNumFacture());
-				factureNonRegle.setMontantFacture(elementFactureNonReg.getMontantFacture());
-				factureNonRegle.setDate(elementFactureNonReg.getDate());
-				
-			
-				resultatlistRefFactureNonRegle.add(factureNonRegle);
-			}
-			
-			Collections.sort(resultatlistRefFactureNonRegle);
-		}
-		return resultatlistRefFactureNonRegle;
-	}
-
-	@Override
-	public List<RefLivraisonNonRegleValue> getRefBLNonRegleByGroupeId(Long groupeId) {
-List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefLivraisonNonRegleValue>();
-		
-		List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
-		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
-		
-		Double factureMontantTotal = ZERO;
-		Double factureMontantTotalRegle = ZERO;
-		
-		Double blMontantTotal = ZERO;
-		Double blMontantTotalRegle = ZERO;
-		
-		List<ReglementValue> listReglementByClientId = reglementPersistance.getByGroupeClientId(groupeId);
-		
-		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByGroupeClientId(groupeId);
-		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByGroupeClientId(groupeId);
-		
-		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
-		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
-		
-		List<String> refBLFromFacture = new ArrayList<String>();
-		List<String> refBLFromReglement = new ArrayList<String>();
-		
-		List<String> refBLFromBL = new ArrayList<String>();
-		
-		if(listReglementByClientId.size() > 0 ){
-			
-			for(ReglementValue reglement : listReglementByClientId){
-				
-				for(ElementReglementValue element: reglement.getListElementReglement()){
+					for(ElementReglementValue element: listElementReglement){
 					
 					if(element.getRefFacture() != null){
 						
@@ -1751,8 +1103,8 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 						refBLFromReglement.add(element.getRefBL());
 					}
 				}
-			}
-		}
+			//}
+		//}
 		
 		
 		if(listBLByClientId.size() > 0 ){
@@ -1831,7 +1183,726 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 		
 		for(String refBLNonRergle : refBLFromBL){
 			
-			LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			//LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			LivraisonVenteValue livraisonVente = findBlByReference(listBLByClientId, refBLNonRergle);
+			
+			if(livraisonVente != null){
+				
+				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
+					
+					if(livraisonVente.getMontantHTaxe() != null){
+						
+						blMontantTotal = blMontantTotal + livraisonVente.getMontantHTaxe();
+						
+						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
+						
+						if(montantBLRegle != null){
+							
+							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
+							
+							Double montantResteARegle = livraisonVente.getMontantHTaxe() - montantBLRegle;
+							
+							if(montantResteARegle > 0){
+								
+								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+								
+								livraisonNonRegle.setMontantRegle(montantBLRegle);
+								
+								listLivraisonNonRegle.add(livraisonNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(livraisonVente.getMontantHTaxe() != null){
+
+						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+						
+						livraisonNonRegle.setMontantRegle(ZERO);
+						
+						listLivraisonNonRegle.add(livraisonNonRegle);
+						
+					}
+				}
+			}
+		}
+		
+		//DISCUSS:  recuperation des RefBL Non reglées
+		if(listLivraisonNonRegle != null){
+			for(LivraisonNonRegleValue elementBLNonReg : listLivraisonNonRegle){
+				RefLivraisonNonRegleValue blNonRegle = new RefLivraisonNonRegleValue();
+				
+				blNonRegle.setId(elementBLNonReg.getId());
+				blNonRegle.setNumBL(elementBLNonReg.getNumBL());
+				
+				blNonRegle.setMontantBL(elementBLNonReg.getMontantBL());
+				blNonRegle.setDate(elementBLNonReg.getDate());
+				
+				resultatlistRefBLNonRegle.add(blNonRegle);
+				
+			}
+			Collections.sort(resultatlistRefBLNonRegle);
+		}
+		return resultatlistRefBLNonRegle;
+				
+	}
+	
+	private String getNumeroReglement(final Calendar pDateBonFacture) {
+
+		Long vNumGuichetFacture = this.guichetAnnuelDomaine.getNextNumReglementReference();
+		/** Année courante. */
+		int vAnneeCourante = pDateBonFacture.get(Calendar.YEAR);
+		/** Format du numero de la Bon Reception= AAAA-NN. */
+		StringBuilder vNumFacture = new StringBuilder("");
+		vNumFacture.append(vAnneeCourante);
+		vNumFacture.append(String.format("%06d", vNumGuichetFacture));
+		/** Inserer une nouvelle valeur dans Guichet BonReception. */
+		GuichetAnnuelValue vGuichetValeur = new GuichetAnnuelValue();
+		
+
+		Calendar cal = Calendar.getInstance();
+		int anneActuelle = cal.get(Calendar.YEAR);
+
+		int idAnnuel = (anneActuelle - 2016) +1;
+
+		vGuichetValeur.setId(new Long(idAnnuel));
+		vGuichetValeur.setAnnee(new Long(vAnneeCourante));
+		vGuichetValeur.setNumReferenceReglementCourante(new Long(
+				vNumGuichetFacture + 1L));
+		/** Modification de la valeur en base du numéro. */
+		this.guichetAnnuelDomaine
+				.modifierGuichetReglementAnnuel(vGuichetValeur);
+		return vNumFacture.toString();
+	}
+
+	
+	
+	@Override
+	public ValidateReglementResultValue validateByGroupeClientId(Long groupeClientId) {
+
+		
+		ValidateReglementResultValue result = new ValidateReglementResultValue();
+		
+		List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
+		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
+		
+		Double factureMontantTotal = ZERO;
+		Double factureMontantTotalRegle = ZERO;
+		
+		Double blMontantTotal = ZERO;
+		Double blMontantTotalRegle = ZERO;
+		
+		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByGroupeClientId(groupeClientId);
+		
+		
+		
+		RechercheMulticritereReglementValue requestElementReglement = new RechercheMulticritereReglementValue();
+		requestElementReglement.setGroupeClientId(groupeClientId);
+		
+		List<ElementReglementValue> listElementReglement  = elementReglementPersistance.rechercherMultiCritereOptimiser(requestElementReglement);
+		
+		
+		
+		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByGroupeClientIdOptimiser(groupeClientId);
+		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByGroupeClientIdOptimiser(groupeClientId);
+		
+		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
+		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
+		
+		List<String> refBLFromFacture = new ArrayList<String>();
+		List<String> refBLFromReglement = new ArrayList<String>();
+		
+		List<String> refBLFromBL = new ArrayList<String>();
+		
+		//if(listReglementByClientId.size() > 0 ){
+			
+			//for(ReglementValue reglement : listReglementByClientId){
+				
+				//for(ElementReglementValue element: reglement.getListElementReglement()){
+					
+			      for(ElementReglementValue element: listElementReglement){
+					
+					if(element.getRefFacture() != null){
+						
+						if(mapFactureRefMontantRegle.containsKey(element.getRefFacture())){
+							
+							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
+							
+						}else{
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
+						}
+					}
+					
+					if(element.getRefBL() != null){
+						
+						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
+							
+							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
+							
+						}else{
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
+						}
+						
+						refBLFromReglement.add(element.getRefBL());
+					}
+				}
+			//}
+		//}
+		
+		
+		if(listBLByClientId.size() > 0 ){
+			
+			for(LivraisonVenteValue livraisonVente : listBLByClientId){
+				
+				if(livraisonVente.getReference() != null){
+					
+					refBLFromBL.add(livraisonVente.getReference());
+				}
+			}
+		}
+		
+		if(listFactureByClientId.size() > 0 ){
+			
+			for(FactureVenteValue factureVente : listFactureByClientId){
+				
+				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
+					
+					if(factureVente.getMontantTTC() != null){
+						
+						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
+						
+						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
+						
+						if(montantFactureRegle != null){
+							
+							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
+							
+							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
+							
+							if(montantResteARegle > 0.1){
+								
+								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+								
+								factureNonRegle.setMontantRegle(montantResteARegle);
+								
+								listFactureNonRegleVentre.add(factureNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(factureVente.getMontantTTC() != null){
+
+						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+						
+						factureNonRegle.setMontantRegle(ZERO);
+						
+						listFactureNonRegleVentre.add(factureNonRegle);
+						
+					}
+				}
+				
+				String refBLSplitted[];
+				
+				if(factureVente.getInfoLivraison() != null){
+					
+					refBLSplitted = factureVente.getInfoLivraison().split(SEPARATOR);
+					
+					for(int index=0; index < refBLSplitted.length ;index++){
+
+						refBLFromFacture.add(refBLSplitted[index]);
+						
+					}	
+					
+				}
+				
+			}
+			
+		}
+		
+		//list des refBL nonRegle
+		refBLFromBL.removeAll(refBLFromFacture);
+		
+		for(String refBLNonRergle : refBLFromBL){
+			
+			//LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			
+			LivraisonVenteValue livraisonVente = findBlByReference(listBLByClientId,refBLNonRergle);
+			
+			if(livraisonVente != null){
+				
+				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
+					
+					if(livraisonVente.getMontantTTC() != null){
+						
+						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
+						
+						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
+						
+						if(montantBLRegle != null){
+							
+							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
+							
+							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
+							
+							if(montantResteARegle > 0.1){
+								
+								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+								
+								livraisonNonRegle.setMontantRegle(montantResteARegle);
+								
+								listLivraisonNonRegle.add(livraisonNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(livraisonVente.getMontantTTC() != null){
+
+						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+						
+						livraisonNonRegle.setMontantRegle(ZERO);
+						
+						listLivraisonNonRegle.add(livraisonNonRegle);
+						
+					}
+				}
+			}
+		}
+		
+		result.setFactureMontantTotal(factureMontantTotal);
+		result.setFactureMontantTotalRegle(factureMontantTotalRegle);
+		result.setFactureMontantTotalNonRegle(factureMontantTotal - factureMontantTotalRegle);
+		
+		result.setBlMontantTotal(blMontantTotal);
+		result.setBlMontantTotalRegle(blMontantTotalRegle);
+		result.setBlMontantTotalNonRegle(blMontantTotal - blMontantTotalRegle);
+		
+		result.setListFactureNonRegle(new TreeSet<>(listFactureNonRegleVentre));
+		result.setListLivraisonNonRegle(new TreeSet<>(listLivraisonNonRegle));
+		
+		return result;
+	}
+
+	
+	@Override
+	public List<RefFactureNonRegleValue> getRefFactureNonRegleByGroupeId(Long groupeId) {
+
+		
+		List< RefFactureNonRegleValue> resultatlistRefFactureNonRegle = new ArrayList< RefFactureNonRegleValue>();
+		
+		List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
+		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
+		
+		Double factureMontantTotal = ZERO;
+		Double factureMontantTotalRegle = ZERO;
+		
+		Double blMontantTotal = ZERO;
+		Double blMontantTotalRegle = ZERO;
+		
+	//	List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
+		
+		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByGroupeClientId(groupeId);
+		
+		
+		RechercheMulticritereReglementValue requestElementReglement = new RechercheMulticritereReglementValue();
+		requestElementReglement.setGroupeClientId(groupeId);
+		
+		List<ElementReglementValue> listElementReglement  = elementReglementPersistance.rechercherMultiCritereOptimiser(requestElementReglement);
+		
+		
+		
+		
+	//	List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientId(clientId);
+		
+		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByGroupeClientIdOptimiser(groupeId);
+		
+		//List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientId(clientId);
+		
+		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByGroupeClientIdOptimiser(groupeId);
+		
+		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
+		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
+		
+		List<String> refBLFromFacture = new ArrayList<String>();
+		List<String> refBLFromReglement = new ArrayList<String>();
+		
+		List<String> refBLFromBL = new ArrayList<String>();
+		
+		//if(listReglementByClientId.size() > 0 ){
+			
+			//for(ReglementValue reglement : listReglementByClientId){
+				
+				//for(ElementReglementValue element: reglement.getListElementReglement()){
+					for(ElementReglementValue element: listElementReglement){
+					
+					if(element.getRefFacture() != null){
+						
+						if(mapFactureRefMontantRegle.containsKey(element.getRefFacture())){
+							
+							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
+							
+						}else{
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
+						}
+					}
+					
+					if(element.getRefBL() != null){
+						
+						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
+							
+							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
+							
+						}else{
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
+						}
+						
+						refBLFromReglement.add(element.getRefBL());
+					}
+				}
+			//}
+		//}
+		
+		
+		if(listBLByClientId.size() > 0 ){
+			
+			for(LivraisonVenteValue livraisonVente : listBLByClientId){
+				
+				if(livraisonVente.getReference() != null){
+					
+					refBLFromBL.add(livraisonVente.getReference());
+				}
+			}
+		}
+		
+		if(listFactureByClientId.size() > 0 ){
+			
+			for(FactureVenteValue factureVente : listFactureByClientId){
+				
+				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
+					
+					if(factureVente.getMontantTTC() != null){
+						
+						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
+						
+						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
+						
+						if(montantFactureRegle != null){
+							
+							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
+							
+							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
+							
+							if(montantResteARegle > 0){
+								
+								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+								
+								factureNonRegle.setMontantRegle(montantResteARegle);
+								
+								listFactureNonRegleVentre.add(factureNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(factureVente.getMontantTTC() != null){
+
+						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+						
+						factureNonRegle.setMontantRegle(ZERO);
+						
+						listFactureNonRegleVentre.add(factureNonRegle);
+						
+					}
+				}
+				
+				String refBLSplitted[];
+				
+				if(factureVente.getInfoLivraison() != null){
+					
+					refBLSplitted = factureVente.getInfoLivraison().split(SEPARATOR);
+					
+					for(int index=0; index < refBLSplitted.length ;index++){
+
+						refBLFromFacture.add(refBLSplitted[index]);
+						
+					}	
+					
+				}
+				
+			}
+			
+		}
+		
+		//list des refBL nonRegle
+		refBLFromBL.removeAll(refBLFromFacture);
+		
+		for(String refBLNonRergle : refBLFromBL){
+			
+			//LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			LivraisonVenteValue livraisonVente = findBlByReference(listBLByClientId, refBLNonRergle);
+			
+			if(livraisonVente != null){
+				
+				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
+					
+					if(livraisonVente.getMontantTTC() != null){
+						
+						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
+						
+						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
+						
+						if(montantBLRegle != null){
+							
+							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
+							
+							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
+							
+							if(montantResteARegle > 0){
+								
+								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+								
+								livraisonNonRegle.setMontantRegle(montantResteARegle);
+								
+								listLivraisonNonRegle.add(livraisonNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(livraisonVente.getMontantTTC() != null){
+
+						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+						
+						livraisonNonRegle.setMontantRegle(ZERO);
+						
+						listLivraisonNonRegle.add(livraisonNonRegle);
+						
+					}
+				}
+			}
+		}
+		
+		//DISCUSS: recuperation des RefFacture Non reglées
+		if(listFactureNonRegleVentre != null){
+			for(FactureNonRegleValue elementFactureNonReg : listFactureNonRegleVentre){
+				RefFactureNonRegleValue factureNonRegle = new RefFactureNonRegleValue();
+				
+				factureNonRegle.setId(elementFactureNonReg.getId());
+				factureNonRegle.setNumFacture(elementFactureNonReg.getNumFacture());
+				factureNonRegle.setMontantFacture(elementFactureNonReg.getMontantFacture());
+				factureNonRegle.setDate(elementFactureNonReg.getDate());
+				
+			
+				resultatlistRefFactureNonRegle.add(factureNonRegle);
+			}
+			
+			Collections.sort(resultatlistRefFactureNonRegle);
+		}
+		return resultatlistRefFactureNonRegle;
+	}
+	
+	@Override
+	public List<RefLivraisonNonRegleValue> getRefBLNonRegleByGroupeId(Long groupeId) {
+List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefLivraisonNonRegleValue>();
+		
+		List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
+		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
+		
+		Double factureMontantTotal = ZERO;
+		Double factureMontantTotalRegle = ZERO;
+		
+		Double blMontantTotal = ZERO;
+		Double blMontantTotalRegle = ZERO;
+		
+		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByGroupeClientId(groupeId);
+		
+		RechercheMulticritereReglementValue requestElementReglement = new RechercheMulticritereReglementValue();
+		requestElementReglement.setGroupeClientId(groupeId);
+		
+		List<ElementReglementValue> listElementReglement  = elementReglementPersistance.rechercherMultiCritereOptimiser(requestElementReglement);
+		
+		
+		
+		
+		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByGroupeClientIdOptimiser(groupeId);
+		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByGroupeClientIdOptimiser(groupeId);
+		
+		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
+		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
+		
+		List<String> refBLFromFacture = new ArrayList<String>();
+		List<String> refBLFromReglement = new ArrayList<String>();
+		
+		List<String> refBLFromBL = new ArrayList<String>();
+		
+		//if(listReglementByClientId.size() > 0 ){
+			
+		//	for(ReglementValue reglement : listReglementByClientId){
+				
+				//for(ElementReglementValue element: reglement.getListElementReglement()){
+				for(ElementReglementValue element: listElementReglement){
+					
+					
+					if(element.getRefFacture() != null){
+						
+						if(mapFactureRefMontantRegle.containsKey(element.getRefFacture())){
+							
+							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
+							
+							if(currentAmount != null && element.getMontant()!= null){
+								
+								currentAmount = currentAmount + element.getMontant();
+							}
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
+							
+						}else{
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontant());
+						}
+					}
+					
+					if(element.getRefBL() != null){
+						
+						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
+							
+							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
+							
+							if(currentAmount != null && element.getMontant()!= null){
+								
+								currentAmount = currentAmount + element.getMontant();
+							}
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
+							
+						}else{
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontant());
+						}
+						
+						refBLFromReglement.add(element.getRefBL());
+					}
+				}
+		//	}
+		//}
+		
+		
+		if(listBLByClientId.size() > 0 ){
+			
+			for(LivraisonVenteValue livraisonVente : listBLByClientId){
+				
+				if(livraisonVente.getReference() != null){
+					
+					refBLFromBL.add(livraisonVente.getReference());
+				}
+			}
+		}
+		
+		if(listFactureByClientId.size() > 0 ){
+			
+			for(FactureVenteValue factureVente : listFactureByClientId){
+				
+				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
+					
+					if(factureVente.getMontantHTaxe() != null){
+						
+						factureMontantTotal = factureMontantTotal + factureVente.getMontantHTaxe();
+						
+						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
+						
+						if(montantFactureRegle != null){
+							
+							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
+							
+							Double montantResteARegle = factureVente.getMontantHTaxe() - montantFactureRegle;
+							
+							if(montantResteARegle > 0){
+								
+								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+								
+								factureNonRegle.setMontantRegle(montantFactureRegle);
+								
+								listFactureNonRegleVentre.add(factureNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(factureVente.getMontantHTaxe() != null){
+
+						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+						
+						factureNonRegle.setMontantRegle(ZERO);
+						
+						listFactureNonRegleVentre.add(factureNonRegle);
+						
+					}
+				}
+				
+				String refBLSplitted[];
+				
+				if(factureVente.getInfoLivraison() != null){
+					
+					refBLSplitted = factureVente.getInfoLivraison().split(SEPARATOR);
+					
+					for(int index=0; index < refBLSplitted.length ;index++){
+
+						refBLFromFacture.add(refBLSplitted[index]);
+						
+					}	
+					
+				}
+				
+			}
+			
+		}
+		
+		//list des refBL nonRegle
+		refBLFromBL.removeAll(refBLFromFacture);
+		
+		for(String refBLNonRergle : refBLFromBL){
+			
+			//LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			LivraisonVenteValue livraisonVente = findBlByReference(listBLByClientId, refBLNonRergle);
 			
 			if(livraisonVente != null){
 				
@@ -1893,6 +1964,7 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 		return resultatlistRefBLNonRegle;
 	}
 
+	
 	@Override
 	public String getCurrentReference(Calendar instance, boolean increment) {
 		
@@ -2016,5 +2088,18 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 		this.guichetAnnuelDomaine.modifierGuichetReglementNonDeclarerAnnuel(currentGuichetAnnuel);
 			
 		return vNumFacture.toString();
+	}
+	
+	
+	private LivraisonVenteValue findBlByReference(List<LivraisonVenteValue> listBLByClientId, String refBLNonRergle) {
+		
+		for(LivraisonVenteValue livraisonVente : listBLByClientId) {
+			
+			if(livraisonVente.getReference() != null && refBLNonRergle!= null && livraisonVente.getReference().equals(refBLNonRergle)) {
+				return livraisonVente ;
+			}
+		}
+		
+		return null;
 	}
 }
