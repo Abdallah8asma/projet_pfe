@@ -592,22 +592,11 @@ angular
 
 
 				$scope.listTaxeFactureInitMethod = function () {
-
-
-
+					
+					
 					$scope.listTaxeFactureInit = [
 
-						{//FODEC 
-							taxeId: 1,
-							pourcentage: 1,
-							montant: '',
-						},
-
-						{// TVA
-							taxeId: 2,
-							pourcentage: 19,
-							montant: '',
-						},
+						
 					/*	{// TVA7
 							taxeId: 4,
 							pourcentage: 7,
@@ -625,8 +614,37 @@ angular
 						}
 
 					];
+					
+			
+					
+			
+     	       if($scope.clientActif.tva19 == true){
+	
+					let taxeTva19 = 	{// TVA
+							taxeId: 2,
+							pourcentage: 19,
+							montant: '',
+						};
+
+     	            $scope.listTaxeFactureInit.unshift(taxeTva19);
 
 
+				}
+				
+				
+						if($scope.clientActif.fodec == true){
+					
+					let taxeFodec = 	{
+						   //FODEC 
+							taxeId: 1,
+							pourcentage: 1,
+							montant: '',
+						} ;
+
+                    	$scope.listTaxeFactureInit.unshift(taxeFodec);
+						
+					}
+					
 				}
 
 				$scope.initTaxeRemoved = function () {
@@ -1532,17 +1550,7 @@ $scope.validerNatureFiniByOF();
 
 						type = false;
 						$scope.listTaxeFactureInit = [
-							{//FODEC 
-								taxeId: 1,
-								pourcentage: 1,
-								montant: '',
-							},
-
-							{// TVA
-								taxeId: 2,
-								pourcentage: 10,
-								montant: '',
-							},
+							
 					/*		{// TVA7
 								taxeId: 4,
 								pourcentage: 7,
@@ -1560,6 +1568,35 @@ $scope.validerNatureFiniByOF();
 							}
 
 						];
+						
+						
+						
+     	       if($scope.clientActif.tva19 == true){
+	
+					let taxeTva19 = 	{// TVA
+							taxeId: 2,
+							pourcentage: 19,
+							montant: '',
+						};
+
+     	            $scope.listTaxeFactureInit.unshift(taxeTva19);
+
+
+				}
+				
+				
+						if($scope.clientActif.fodec == true){
+					
+					let taxeFodec = 	{
+						   //FODEC 
+							taxeId: 1,
+							pourcentage: 1,
+							montant: '',
+						} ;
+
+                    	$scope.listTaxeFactureInit.unshift(taxeFodec);
+						
+					}
 
 					}
 

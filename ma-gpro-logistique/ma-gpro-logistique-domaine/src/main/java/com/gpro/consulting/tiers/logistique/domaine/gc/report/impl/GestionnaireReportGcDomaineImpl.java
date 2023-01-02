@@ -1894,7 +1894,13 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					
 					//modifier par samer le 24.09.20
 					//factureReportProduct.setTauxTvaArt(produitIdMap.get(produitId).getIdTaxe().intValue());
-					factureReportProduct.setTauxTvaArt(detFactureVente.getTaxeId().intValue());
+					
+					
+					if(detFactureVente.getTaxeId() != null) {
+						factureReportProduct.setTauxTvaArt(detFactureVente.getTaxeId().intValue());
+					}
+					
+				
 
 					// //// Ajout TVA /////////////
 					
@@ -2016,7 +2022,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			// taxeFactureIdTaxeMap.get(TAXE_ID_TVA).getMontant());
 
 			
-			if(reportValue.getMontantTaxeFodec() != null) {
+			if(reportValue.getMontantTaxeFodec() != null && produitTaxeMap.get(TAXE_ID_TVA) != null) {
 				reportValue.setAssietteTVA(produitTaxeMap.get(TAXE_ID_TVA)+reportValue.getMontantTaxeFodec());
 			}else
 			{

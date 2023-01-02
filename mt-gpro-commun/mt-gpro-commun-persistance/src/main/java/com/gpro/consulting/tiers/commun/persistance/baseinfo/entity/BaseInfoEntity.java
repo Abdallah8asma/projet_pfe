@@ -175,8 +175,31 @@ public class BaseInfoEntity implements Serializable{
 	
 	
 	
+	@Column(name = "fodec")
+	private Boolean fodec;
+	
+	@Column(name = "tva_19")
+	private Boolean tva19;
 	
 	
+
+	
+	public Boolean getFodec() {
+		return fodec;
+	}
+
+	public void setFodec(Boolean fodec) {
+		this.fodec = fodec;
+	}
+
+	public Boolean getTva19() {
+		return tva19;
+	}
+
+	public void setTva19(Boolean tva19) {
+		this.tva19 = tva19;
+	}
+
 	public Calendar getDateDemarrage() {
 		return dateDemarrage;
 	}

@@ -628,4 +628,158 @@ public class ElementReglementPersistanceImpl extends AbstractPersistance impleme
 
 		return 0D;
 	}
+
+
+
+
+
+
+
+	@Override
+	public List<ElementReglementValue> rechercherMultiCritereOptimiser(RechercheMulticritereReglementValue request) {
+
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+		//CriteriaQuery<ElementReglementEntity> criteriaQuery = criteriaBuilder.createQuery(ElementReglementEntity.class);
+		
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+		
+		
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		Root<ElementReglementEntity> root = criteriaQuery.from(ElementReglementEntity.class);
+		
+		
+		
+		// reference facture 
+		
+	    // Set request.reference on whereClause if not null
+			if (estNonVide(request.getRefFacture())) {
+				Expression<String> path = root.get(PREDICATE_REFERENCE_FACURE);
+				Expression<String> upper =criteriaBuilder.upper(path);
+				Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getRefFacture().toUpperCase() + PERCENT);
+				whereClause.add(criteriaBuilder.and(predicate));
+			}
+		
+		//reference bl
+		
+			if (estNonVide(request.getRefBL())) {
+				Expression<String> path = root.get(PREDICATE_REFERENCE_BL);
+				Expression<String> upper =criteriaBuilder.upper(path);
+				Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getRefBL().toUpperCase() + PERCENT);
+				whereClause.add(criteriaBuilder.and(predicate));
+			}
+		
+			
+		//reference reglement
+		
+			if (estNonVide(request.getReference())) {
+				
+				Join<ElementReglementEntity,ReglementEntity> jointure_elementReglement_reglement = root.join(PREDICATE_REGLEMENT);
+				
+				Expression<String> path = jointure_elementReglement_reglement.get(PREDICATE_REFERENCE);
+				Expression<String> upper =criteriaBuilder.upper(path);
+				Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getReference().toUpperCase() + PERCENT);
+				whereClause.add(criteriaBuilder.and(predicate));
+			}
+			
+			
+			// Set request.dateReglementMin on whereClause if not null
+		    if (request.getDateReglementMin() != null) {
+		    	Join<ElementReglementEntity,ReglementEntity> jointure_elementReglement_reglement = root.join(PREDICATE_REGLEMENT);
+				
+		    	whereClause.add(criteriaBuilder.greaterThanOrEqualTo(jointure_elementReglement_reglement.<Calendar>get(PREDICATE_DATE_REGLEMENT), request.getDateReglementMin()));
+		    }
+		    
+		    // Set request.dateReglementMax on whereClause if not null
+		    if (request.getDateReglementMax() != null) {
+		    	Join<ElementReglementEntity,ReglementEntity> jointure_elementReglement_reglement = root.join(PREDICATE_REGLEMENT);
+				
+		    	whereClause.add(criteriaBuilder.lessThanOrEqualTo(jointure_elementReglement_reglement.<Calendar>get(PREDICATE_DATE_REGLEMENT), request.getDateReglementMax()));
+		    }
+		    
+		    
+		
+	    // Set request.partieIntId on whereClause if not null
+		if (request.getPartieIntId()!= null) {
+		   	Join<ElementReglementEntity,ReglementEntity> jointure_elementReglement_reglement = root.join(PREDICATE_REGLEMENT);
+			
+			whereClause.add(criteriaBuilder.equal(jointure_elementReglement_reglement.get(PREDICATE_PARTIEINT), request.getPartieIntId()));
+		}
+		
+	    // Set request.Groupe client on whereClause if not null
+			if (request.getGroupeClientId()!= null) {
+				
+			 	Join<ElementReglementEntity,ReglementEntity> jointure_elementReglement_reglement = root.join(PREDICATE_REGLEMENT);
+				
+				whereClause.add(criteriaBuilder.equal(jointure_elementReglement_reglement.get(PREDICATE_GROUPE_CLIENT), request.getGroupeClientId()));
+			}
+		
+		 // magazin
+		if (request.getIdDepot() != null) {
+			Join<ElementReglementEntity,ReglementEntity> jointure_elementReglement_reglement = root.join(PREDICATE_REGLEMENT);
+			
+			whereClause.add(criteriaBuilder.equal(jointure_elementReglement_reglement.get(PREDICATE_IDDEPOT), request.getIdDepot()));
+		}
+		
+	
+		
+	
+		
+		// Set request.montantMin on whereClause if not null
+	    if (request.getMontantMin() != null) {
+	    	Join<ElementReglementEntity,ReglementEntity> jointure_elementReglement_reglement = root.join(PREDICATE_REGLEMENT);
+			
+	    	whereClause.add(criteriaBuilder.greaterThanOrEqualTo(jointure_elementReglement_reglement.<Double>get(PREDICATE_MONTANT), request.getMontantMin()));
+	    }
+	    
+		// Set request.montantMax on whereClause if not null
+	    if (request.getMontantMax() != null) {
+	    	Join<ElementReglementEntity,ReglementEntity> jointure_elementReglement_reglement = root.join(PREDICATE_REGLEMENT);
+    	
+	    	whereClause.add(criteriaBuilder.lessThanOrEqualTo(jointure_elementReglement_reglement.<Double>get(PREDICATE_MONTANT), request.getMontantMax()));
+	    }
+		
+		
+		
+		criteriaQuery.select(criteriaBuilder.array(
+	 			
+	 			root.get("id").as(Long.class),
+	 			root.get("montant").as(Double.class),
+	 			root.get("refFacture").as(String.class),	 	 		
+	 			root.get("refBL").as(String.class),
+	 		    root.get("montantDemande").as(Double.class),
+	 		    root.get("dateEcheance").as(Calendar.class)
+	 			
+	 			
+				)).where(whereClause.toArray(new Predicate[] {}));
+		
+		
+		
+		List<Object[]> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		
+		
+		List<ElementReglementValue> resultat = new ArrayList<ElementReglementValue>();
+	    
+		for(Object[] element : resultatEntite){
+    		
+    		
+			ElementReglementEntity entity = new ElementReglementEntity();
+		    	
+		    	
+		    	entity.setId((Long) element[0]);
+		    	entity.setMontant((Double)element[1]);
+		    	entity.setRefFacture((String) element[2]);
+		    	entity.setRefBL((String) element[3]);
+		    	entity.setMontantDemande((Double)element[4]);
+		    	entity.setDateEcheance((Calendar) element[5]);
+		    	
+		    	
+		    	
+	    		
+		    	resultat.add(ReglementPersistanceUtilities.toValue(entity));
+	    	}
+	    	
+
+
+	    return resultat;
+	}
 }
