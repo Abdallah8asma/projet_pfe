@@ -191,6 +191,9 @@ public class PersistanceUtilities {
         dto.setTva19(entity.getTva19());
         dto.setFodec(entity.getFodec());
 		
+        dto.setRefCommandeFactureObligatoire(entity.getRefCommandeFactureObligatoire());
+		
+        dto.setIdentifiantFactureObligatoire(entity.getIdentifiantFactureObligatoire());
 		
 		
         
@@ -250,6 +253,11 @@ public class PersistanceUtilities {
 	
 		entity.setTva19(dto.getTva19());
 		entity.setFodec(dto.getFodec());
+		
+		
+		entity.setRefCommandeFactureObligatoire(dto.getRefCommandeFactureObligatoire());
+		
+		entity.setIdentifiantFactureObligatoire(dto.getIdentifiantFactureObligatoire());
 		
 		return entity;
 	}
@@ -2521,6 +2529,8 @@ public class PersistanceUtilities {
 		categorieEntite.setDesignation(categorieValue.getDesignation());
 		
 		categorieEntite.setFamillePartieInteressee(categorieValue.getFamillePartieInteressee());
+		
+		categorieEntite.setCodeEntreprise(categorieValue.getCodeEntreprise());
 
 		return categorieEntite;
 	}
@@ -2535,6 +2545,8 @@ public class PersistanceUtilities {
 			categorieValue.setDesignation(categorieEntite.getDesignation());
 			
 			categorieValue.setFamillePartieInteressee(categorieEntite.getFamillePartieInteressee());
+			
+			categorieValue.setCodeEntreprise(categorieEntite.getCodeEntreprise());
 			
 			return categorieValue;
 

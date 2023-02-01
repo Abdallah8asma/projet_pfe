@@ -106,6 +106,7 @@ public class FacturePersistanceUtilities {
 	    dto.setDateEcheance(entity.getDateEcheance());
 	    
 	    dto.setRefCommande(entity.getRefCommande());
+	    dto.setIdentifiant(entity.getIdentifiant());
 	    
 	    
 		if(entity.getListDetFactureVente() != null){
@@ -198,6 +199,7 @@ public class FacturePersistanceUtilities {
 	    entity.setDateEcheance(dto.getDateEcheance());
 	    
 	    entity.setRefCommande(dto.getRefCommande());
+	    entity.setIdentifiant(dto.getIdentifiant());
 	    
 	    
 		if(dto.getListDetFactureVente() != null){

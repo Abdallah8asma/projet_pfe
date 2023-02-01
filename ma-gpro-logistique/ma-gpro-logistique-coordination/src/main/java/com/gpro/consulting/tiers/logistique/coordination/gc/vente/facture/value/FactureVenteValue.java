@@ -103,10 +103,20 @@ public class FactureVenteValue implements Comparable<FactureVenteValue> {
 	private String refCommande;
 	
 	
+	private String identifiant;
 	
 	
 	
 	
+	
+	public String getIdentifiant() {
+		return identifiant;
+	}
+
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
+	}
+
 	public String getRefCommande() {
 		return refCommande;
 	}

@@ -182,8 +182,36 @@ public class BaseInfoEntity implements Serializable{
 	private Boolean tva19;
 	
 	
+	@Column(name="ref_commande_facture_obligatoire")
+	private Boolean refCommandeFactureObligatoire;
+	
+	
+	@Column(name="identifiant_facture_obligatoire")
+	private Boolean identifiantFactureObligatoire;
+	
+	
+	
+	
+
 
 	
+
+	public Boolean getRefCommandeFactureObligatoire() {
+		return refCommandeFactureObligatoire;
+	}
+
+	public void setRefCommandeFactureObligatoire(Boolean refCommandeFactureObligatoire) {
+		this.refCommandeFactureObligatoire = refCommandeFactureObligatoire;
+	}
+
+	public Boolean getIdentifiantFactureObligatoire() {
+		return identifiantFactureObligatoire;
+	}
+
+	public void setIdentifiantFactureObligatoire(Boolean identifiantFactureObligatoire) {
+		this.identifiantFactureObligatoire = identifiantFactureObligatoire;
+	}
+
 	public Boolean getFodec() {
 		return fodec;
 	}
