@@ -80,6 +80,30 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 	private Boolean tva19;
 	
 	
+	private Boolean refCommandeFactureObligatoire;
+	
+
+	private Boolean identifiantFactureObligatoire;
+	
+	
+	
+	
+
+	public Boolean getRefCommandeFactureObligatoire() {
+		return refCommandeFactureObligatoire;
+	}
+
+	public void setRefCommandeFactureObligatoire(Boolean refCommandeFactureObligatoire) {
+		this.refCommandeFactureObligatoire = refCommandeFactureObligatoire;
+	}
+
+	public Boolean getIdentifiantFactureObligatoire() {
+		return identifiantFactureObligatoire;
+	}
+
+	public void setIdentifiantFactureObligatoire(Boolean identifiantFactureObligatoire) {
+		this.identifiantFactureObligatoire = identifiantFactureObligatoire;
+	}
 
 	public Boolean getFodec() {
 		return fodec;

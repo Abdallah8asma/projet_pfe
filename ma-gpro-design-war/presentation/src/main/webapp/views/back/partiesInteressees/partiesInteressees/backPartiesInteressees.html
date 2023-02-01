@@ -651,6 +651,7 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 						<thead>
 							<tr>
 								<th style="width: 35%">Groupe</th>
+								<th style="width: 35%">Code Entreprise</th>
 								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterCathegorie()">
 										<a href="javascript:void(0)">
 											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
@@ -665,6 +666,15 @@ for (var i = 0; i < CommandBarElements.length; i++) {
 										e-name="nom" e-form="rowform" e-required> {{ cathegorie.designation ||
 									'empty' }} </span>
 								</td>
+								
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.codeEntreprise"
+										e-name="nom" e-form="rowform" e-required> {{ cathegorie.codeEntreprise ||
+									'empty' }} </span>
+								</td>
+								
+								
+								
 								<td style="white-space: nowrap">
 
 									<div class="row">

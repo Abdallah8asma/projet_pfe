@@ -82,6 +82,11 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	private String PREDICATE_MODALITE_PAIEMENT = "modalitePaiement";
 	private String PREDICATE_DATE_ECHEANCE = "dateEcheance";
 	
+	private String PREDICATE_IDENTIFIANT = "identifiant";
+	
+	
+	
+	
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -302,6 +307,10 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_refCommande), request.getRefCommande()));
 			}
 		    
+		    
+		    if (estNonVide(request.getIdentifiant() )) {
+				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_IDENTIFIANT), request.getIdentifiant()));
+			}
 			
 	 //	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	 	
@@ -340,7 +349,10 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	 			root.get("dateEcheance").as(Calendar.class),
 	 			root.get("refFactures").as(String.class),
 	 			
-	 			root.get("refCommande").as(String.class)
+	 			root.get("refCommande").as(String.class),
+	 			
+	 			root.get("identifiant").as(String.class)
+	 			
 	 			
 	 			
 				
@@ -402,6 +414,8 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	    entity.setRefFactures((String) element[28]);
 	    
 		entity.setRefCommande((String) element[29]);
+		
+		entity.setIdentifiant((String) element[30]);
 		
 	    	
 	    	FactureVenteValue dto = FacturePersistanceUtilities.toValue(entity);
@@ -611,6 +625,12 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 		    if (estNonVide(request.getModalitePaiement() )) {
 				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_MODALITE_PAIEMENT), request.getModalitePaiement()));
 			}
+		    
+		    
+		    if (estNonVide(request.getIdentifiant() )) {
+						whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_IDENTIFIANT), request.getIdentifiant()));
+				}
+					
 	 	
 	 	
 	 	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
