@@ -610,7 +610,7 @@ angular
 						{// TIMBRE
 							taxeId: 3,
 							pourcentage: '',
-							montant: 0.600,
+							montant: 1,
 						}
 
 					];
@@ -1564,7 +1564,7 @@ $scope.validerNatureFiniByOF();
 							{// TIMBRE
 								taxeId: 3,
 								pourcentage: '',
-								montant: 0.600,
+								montant: 1,
 							}
 
 						];

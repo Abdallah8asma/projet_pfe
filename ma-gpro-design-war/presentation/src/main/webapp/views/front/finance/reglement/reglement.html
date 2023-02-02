@@ -478,7 +478,7 @@
                       </div>
                       <select ui-select2 ng-model="reglementCourante.partieIntId"
                         ng-init="reglementCourante.partieIntId =''" data-placeholder="..." class="form-control"
-                        style="border: 1px solid #e5eaee !important;" required>
+                        style="border: 1px solid #e5eaee !important;" >
                         <option value="">Tous</option>
                         <option ng-repeat="pi in listePartieInteresseeCache | filter:{famillePartieInteressee:1}"
                           value="{{pi.id}}">{{pi.reference}}-{{pi.abreviation}}</option>
