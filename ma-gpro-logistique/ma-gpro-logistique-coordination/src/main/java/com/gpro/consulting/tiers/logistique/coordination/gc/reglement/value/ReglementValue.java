@@ -32,16 +32,16 @@ public class ReglementValue implements Comparable<ReglementValue> {
 
 	private Long boutiqueId;
 	
-	private boolean declarer;
+	private Boolean declarer;
 	
 	
 	
 
-	public boolean isDeclarer() {
+	public Boolean getDeclarer() {
 		return declarer;
 	}
 
-	public void setDeclarer(boolean declarer) {
+	public void setDeclarer(Boolean declarer) {
 		this.declarer = declarer;
 	}
 

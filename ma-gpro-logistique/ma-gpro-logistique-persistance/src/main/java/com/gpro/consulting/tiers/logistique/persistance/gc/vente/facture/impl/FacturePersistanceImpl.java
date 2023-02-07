@@ -358,7 +358,7 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 				
 				)).where(whereClause.toArray(new Predicate[] {}));
 	 	
-		criteriaQuery.orderBy(criteriaBuilder.desc(root.get("reference")));
+		criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
 		
 		
 		List<Object[]> resultatEntite = null;

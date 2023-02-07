@@ -86,8 +86,18 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 	private Boolean identifiantFactureObligatoire;
 	
 	
+	private Boolean contrainteModificationBl;
 	
 	
+	
+
+	public Boolean getContrainteModificationBl() {
+		return contrainteModificationBl;
+	}
+
+	public void setContrainteModificationBl(Boolean contrainteModificationBl) {
+		this.contrainteModificationBl = contrainteModificationBl;
+	}
 
 	public Boolean getRefCommandeFactureObligatoire() {
 		return refCommandeFactureObligatoire;

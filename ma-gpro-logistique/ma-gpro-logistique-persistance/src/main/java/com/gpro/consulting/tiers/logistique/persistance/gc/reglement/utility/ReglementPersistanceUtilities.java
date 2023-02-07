@@ -52,7 +52,7 @@ public class ReglementPersistanceUtilities {
 		
 		entity.setAjoutSpecial(dto.getAjoutSpecial());
 		
-		entity.setDeclarer(dto.isDeclarer());
+		entity.setDeclarer(dto.getDeclarer());
 		
 	    if(dto.getListDetailsReglement() != null){
 		     Set<DetailsReglementEntity> list = new HashSet <DetailsReglementEntity>();
@@ -108,7 +108,7 @@ public class ReglementPersistanceUtilities {
 		
 		dto.setAjoutSpecial(entity.getAjoutSpecial());
 		
-		dto.setDeclarer(entity.isDeclarer());
+		dto.setDeclarer(entity.getDeclarer());
 		
 	    if(entity.getListDetailsReglement() != null){
 	    	List<DetailsReglementValue> list = new ArrayList <DetailsReglementValue>();
@@ -391,7 +391,7 @@ public class ReglementPersistanceUtilities {
 		
 		dto.setGroupeClientId(entity.getGroupeClientId());
 		
-		dto.setDeclarer(entity.isDeclarer());
+		dto.setDeclarer(entity.getDeclarer());
 		
 		dto.setRefAvantChangement(entity.getReference());
 		
@@ -431,7 +431,7 @@ public class ReglementPersistanceUtilities {
 			
 			dto.setGroupeClientId(entity.getReglement().getGroupeClientId());
 			
-			dto.setDeclarer(entity.getReglement().isDeclarer());
+			dto.setDeclarer(entity.getReglement().getDeclarer());
 			
 		}
 		
@@ -475,7 +475,7 @@ public class ReglementPersistanceUtilities {
 			
 			dto.setGroupeClientId(entity.getReglement().getGroupeClientId());
 			
-			dto.setDeclarer(entity.getReglement().isDeclarer());
+			dto.setDeclarer(entity.getReglement().getDeclarer());
 			
 		}
 		

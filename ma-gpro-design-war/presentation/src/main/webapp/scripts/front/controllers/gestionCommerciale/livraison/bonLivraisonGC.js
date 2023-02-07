@@ -84,7 +84,8 @@ angular
 								"prixMax" : '',
 								"natureLivraison" : '',
 								"avecFacture" : '',
-								"idDepot" :''
+								"idDepot" :'',
+								"declare": true,
 							};
 							
 							
@@ -2091,6 +2092,11 @@ angular
 							 * "));
 							 * 
 							 */
+						
+							if ($scope.clientActif.blackMode == false) {
+						bonLivraisonVenteCourant.declare = "oui";
+
+					}
 								$http
 										.post(
 												UrlAtelier
@@ -3710,6 +3716,11 @@ angular
 											var data;
 											var bonLivraisonVenteCourant = $scope.bonLivraisonVenteCourant;
 											bonLivraisonVenteCourant.natureLivraison = "FINI";
+											
+											if ($scope.clientActif.blackMode == false) {
+												bonLivraisonVenteCourant.declare = "oui";
+								
+											}
 
 											if (searchText) {
 												var ft = searchText

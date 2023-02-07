@@ -170,7 +170,7 @@ public class FactureVenteEntity implements Serializable {
 	
 	
 	@Column(name = "declarer")
-	private boolean declarer;
+	private Boolean declarer;
 	
 	
 	@Column(name = "force_calcul_montant")
@@ -242,11 +242,14 @@ public class FactureVenteEntity implements Serializable {
 		return serialVersionUID;
 	}
 
-	public boolean isDeclarer() {
+
+	
+
+	public Boolean getDeclarer() {
 		return declarer;
 	}
 
-	public void setDeclarer(boolean declarer) {
+	public void setDeclarer(Boolean declarer) {
 		this.declarer = declarer;
 	}
 

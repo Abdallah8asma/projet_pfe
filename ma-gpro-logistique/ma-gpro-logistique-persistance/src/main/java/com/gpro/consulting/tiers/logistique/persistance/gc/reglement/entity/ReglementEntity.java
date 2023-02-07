@@ -93,17 +93,17 @@ public class ReglementEntity implements Serializable{
     private String ajoutSpecial;
     
     @Column(name = "declarer")
-	private boolean declarer;
-    
+	private Boolean declarer;
     
     
     
 
-	public boolean isDeclarer() {
+
+	public Boolean getDeclarer() {
 		return declarer;
 	}
 
-	public void setDeclarer(boolean declarer) {
+	public void setDeclarer(Boolean declarer) {
 		this.declarer = declarer;
 	}
 

@@ -191,10 +191,19 @@ public class BaseInfoEntity implements Serializable{
 	
 	
 	
-	
+	@Column(name="contrainte_modification_bl")
+	private Boolean contrainteModificationBl;
 
 
 	
+
+	public Boolean getContrainteModificationBl() {
+		return contrainteModificationBl;
+	}
+
+	public void setContrainteModificationBl(Boolean contrainteModificationBl) {
+		this.contrainteModificationBl = contrainteModificationBl;
+	}
 
 	public Boolean getRefCommandeFactureObligatoire() {
 		return refCommandeFactureObligatoire;
