@@ -194,7 +194,8 @@ public class PersistanceUtilities {
         dto.setRefCommandeFactureObligatoire(entity.getRefCommandeFactureObligatoire());
 		
         dto.setIdentifiantFactureObligatoire(entity.getIdentifiantFactureObligatoire());
-		
+   
+        dto.setContrainteModificationBl(entity.getContrainteModificationBl());
 		
         
 		return dto;
@@ -258,6 +259,8 @@ public class PersistanceUtilities {
 		entity.setRefCommandeFactureObligatoire(dto.getRefCommandeFactureObligatoire());
 		
 		entity.setIdentifiantFactureObligatoire(dto.getIdentifiantFactureObligatoire());
+		
+		entity.setContrainteModificationBl(dto.getContrainteModificationBl());
 		
 		return entity;
 	}

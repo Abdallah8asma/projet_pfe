@@ -97,7 +97,7 @@ public class FacturePersistanceUtilities {
 	    dto.setDevise(entity.getDevise());
 	    dto.setTauxConversion(entity.getTauxConversion());
 	    dto.setMontantConverti(entity.getMontantConverti());
-	    dto.setDeclarer(entity.isDeclarer());
+	    dto.setDeclarer(entity.getDeclarer());
 	    
 	    dto.setForcerCalculMontant(entity.isForcerCalculMontant());
 	    
@@ -191,7 +191,7 @@ public class FacturePersistanceUtilities {
 	    entity.setDevise(dto.getDevise());
 	    entity.setTauxConversion(dto.getTauxConversion());
 	    entity.setMontantConverti(dto.getMontantConverti());
-	    entity.setDeclarer(dto.isDeclarer());
+	    entity.setDeclarer(dto.getDeclarer());
 	    
 	    entity.setForcerCalculMontant(dto.isForcerCalculMontant());
 	    

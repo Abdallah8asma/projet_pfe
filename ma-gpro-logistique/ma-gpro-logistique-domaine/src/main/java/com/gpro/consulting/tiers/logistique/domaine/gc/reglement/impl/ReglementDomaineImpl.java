@@ -96,6 +96,10 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 			if(reglement.getDate() == null)
 				reglement.setDate(Calendar.getInstance());
 			
+			if(reglement.getDeclarer() == null) {
+				reglement.setDeclarer(true);
+			}
+			
 			if(reglement.getListDetailsReglement() != null){
 				
 				Double montantTotal = ZERO;
@@ -115,10 +119,10 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 			
 			if(reglement.getReference()==null || reglement.getReference().equals("")) {
 			//	reglement.setReference(this.getNumeroReglement(reglement.getDate()));
-				reglement.setReference(getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(),reglement.isDeclarer(), true));
+				reglement.setReference(getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(),reglement.getDeclarer(), true));
 			}else if (reglement.getRefAvantChangement() != null
 					&& reglement.getReference().equals(reglement.getRefAvantChangement())) {
-				this.getCurrentReferenceByDateAndDeclaree(reglement.getDate(),reglement.isDeclarer(), true);
+				this.getCurrentReferenceByDateAndDeclaree(reglement.getDate(),reglement.getDeclarer(), true);
 			}
 			
 
@@ -207,7 +211,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 					&& !reglement.getReference().equals(reglement.getRefAvantChangement())) {
 				
 				
-						getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(), reglement.isDeclarer(), true);
+						getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(), reglement.getDeclarer(), true);
 			}
 			
 			

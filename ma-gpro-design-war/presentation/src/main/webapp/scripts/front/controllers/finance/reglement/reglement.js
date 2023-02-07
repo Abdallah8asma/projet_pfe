@@ -594,22 +594,100 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       reglement.listElementReglement = $scope.finalElementList; 
       $scope.test = reglement.listElementReglement;
 
-      console.log('update:magazin: ' + reglement.idDepot);
+      //console.log('update:magazin: ' + reglement.idDepot);
 
-      $http
-        .put(UrlAtelier + '/reglement/update', reglement)
-        .success(function (reglementModifiee) {
-          // TODO Code à revoir
-          for (var i = 0; i < $scope.myData.length; i++) {
-            if ($scope.myData[i].id == reglementModifiee) {
-              $scope.myData[i] = reglementModifiee;
 
-              break;
-            }
-          }
+          let montantRegleeTotal = 0;
 
-          $scope.annulerAjout();
-        });
+             angular.forEach($scope.finalOperationsList, function(elementDetailReglement, key){
+	                     if(elementDetailReglement.montant != null){
+		
+		                      montantRegleeTotal+= elementDetailReglement.montant ;
+		
+	                      }
+
+                     });
+
+
+               montantRegleeTotal = Math.round(montantRegleeTotal * 100) / 100 ;
+
+           let montantFactureAndBLTotal = 0;
+
+             angular.forEach($scope.finalElementList, function(elementReglement, key){
+	                     if(elementReglement.montantDemande != null){
+		                      console.log("elementReglement.montantDemande = "+elementReglement.montantDemande);
+		                      montantFactureAndBLTotal+= elementReglement.montantDemande ;
+		
+	                      }
+
+              });
+
+       montantFactureAndBLTotal = Math.round(montantFactureAndBLTotal * 100) / 100 ;
+
+                  if(montantRegleeTotal != montantFactureAndBLTotal ){
+	
+	                     let msg = "Montant réglé (" + montantRegleeTotal+  ") est différent au montant des factures et BLs ("+montantFactureAndBLTotal + ")" ;
+	
+	                     let conf = confirm(msg+ "\n"+" Veuillez confirmer l'enregistrement ?");
+
+                       if(conf){
+	
+	
+	      $http
+                   .put(
+                       UrlAtelier +
+                       "/reglement/update",
+                       reglement)
+                   .success(
+                       function(reglementModifiee) {
+                         
+                       
+                           // TODO Code à revoir
+                           for (var i = 0; i < $scope.myData.length; i++) {
+
+                               if ($scope.myData[i].id == reglementModifiee) {
+                                   $scope.myData[i] = reglementModifiee;
+                                   
+                                   break;
+                               }
+                           }
+                         
+                           $scope.annulerAjout();
+                       });
+	
+}
+
+
+               }else{
+	
+	
+	
+	      $http
+                   .put(
+                       UrlAtelier +
+                       "/reglement/update",
+                       reglement)
+                   .success(
+                       function(reglementModifiee) {
+                         
+                       
+                           // TODO Code à revoir
+                           for (var i = 0; i < $scope.myData.length; i++) {
+
+                               if ($scope.myData[i].id == reglementModifiee) {
+                                   $scope.myData[i] = reglementModifiee;
+                                   
+                                   break;
+                               }
+                           }
+                         
+                           $scope.annulerAjout();
+                       });
+	
+}
+
+
+
     };
 
     // Création Reglement
@@ -617,7 +695,20 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       reglement.listDetailsReglement = $scope.finalOperationsList;
       reglement.listDocReglement= $scope.listeDocumentProduit;
 
+
+                     let montantRegleeTotal = 0;
+
+                     angular.forEach($scope.finalOperationsList, function(elementDetailReglement, key){
+	                     if(elementDetailReglement.montant){
+		
+		                      montantRegleeTotal+= elementDetailReglement.montant ;
+		
+	                      }
+
+                     });
+
       var tmplistElementReglement = [];
+  let montantFactureAndBLTotal = 0;
       // Facture
       angular.forEach($scope.finalFacturesList, function (elementFact, key) {
         var tmp = {};
@@ -628,6 +719,10 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         tmp.montantDemande = elementFact.montantRegle;
         tmp.dateEcheance = elementFact.date;
         tmp.reglementId = elementFact.reglementId;
+
+                 if(elementFact.montantRegle != null){
+	                            montantFactureAndBLTotal += elementFact.montantRegle;
+                       }
 
         tmplistElementReglement.push(tmp);
       });
@@ -642,18 +737,60 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         tmp.dateEcheance = elementBl.date;
         tmp.reglementId = elementBl.reglementId;
 
+
+                      if(elementBl.montantRegle != null){
+	                            montantFactureAndBLTotal += elementBl.montantRegle;
+                       }
+
         tmplistElementReglement.push(tmp);
       });
 
       reglement.listElementReglement = tmplistElementReglement;
 
-      $http
-        .post(UrlAtelier + '/reglement/create', reglement)
-        .success(function (newreglement) {
-          // TODO getId
 
-          $scope.annulerAjout();
-        });
+                      if(montantRegleeTotal != montantFactureAndBLTotal ){
+	
+	                     let msg = "Montant réglé (" + montantRegleeTotal+  ") est différent au montant des factures et BLs ("+montantFactureAndBLTotal + ")" ;
+	
+	                     let conf = confirm(msg+ "\n"+" Veuillez confirmer l'enregistrement ?");
+
+                     if(conf){
+	
+	                      $http
+                          .post(
+                              UrlAtelier +
+                              "/reglement/create",
+                              reglement)
+                          .success(
+                              function(newreglement) {
+
+                                  // TODO getId
+                            
+                                  
+                                  $scope.annulerAjout();
+                                  
+                                  
+                              });
+}
+                       }else {
+	
+	       $http
+                          .post(
+                              UrlAtelier +
+                              "/reglement/create",
+                              reglement)
+                          .success(
+                              function(newreglement) {
+
+                                  // TODO getId
+                            
+                                  
+                                  $scope.annulerAjout();
+                                  
+                                  
+                              });
+}
+     
     };
 
     $scope.InitializeArray = function () {

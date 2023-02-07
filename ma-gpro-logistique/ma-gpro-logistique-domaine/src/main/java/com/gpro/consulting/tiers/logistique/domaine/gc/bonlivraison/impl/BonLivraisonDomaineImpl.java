@@ -21,9 +21,11 @@ import org.springframework.stereotype.Component;
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
 import com.gpro.consulting.tiers.commun.coordination.IConstante;
+import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.domaine.elementBase.IPrixClientDomaine;
+import com.gpro.consulting.tiers.commun.persistance.baseinfo.IBaseInfoPersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitSerialisablePersistance;
 import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInteresseePersistance;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
@@ -159,6 +161,11 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 	@Autowired
 	private IElementReglementPersistance elementReglementPersistance;
 
+	
+	@Autowired
+	private IBaseInfoPersistance baseInfoPersistance;
+	
+	
 	@Override
 	public ResultatRechecheBonLivraisonValue rechercherMultiCritere(RechercheMulticritereBonLivraisonValue request) {
 
@@ -437,13 +444,19 @@ public class BonLivraisonDomaineImpl implements IBonLivraisonDomaine {
 		
 		
 		
+		BaseInfoValue baseInfo = baseInfoPersistance.getClientActif() ;
 		
 		
-		String msgVerifierContrainteModificationBL = verifierContrainteModificationBL(bonLivraisonValue);
+		if(Boolean.TRUE.equals(baseInfo.getContrainteModificationBl())) {
+			
+			String msgVerifierContrainteModificationBL = verifierContrainteModificationBL(bonLivraisonValue);
+			
+			if(msgVerifierContrainteModificationBL != null) return msgVerifierContrainteModificationBL;
+			
+			
+		}
 		
-		if(msgVerifierContrainteModificationBL != null) return msgVerifierContrainteModificationBL;
-		
-		
+	
 		updateProduitSerialisableIfUpdateBL(bonLivraisonValue);
 
 		updateStockAfterDeleteDetLivraisonVente(bonLivraisonValue);

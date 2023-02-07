@@ -336,6 +336,9 @@ angular
 
 					reglement.listDocReglement = $scope.listeDocumentProduit;
 					reglement.listDetailsReglement = $scope.finalOperationsList;
+					
+					reglement.declarer = $scope.factureVenteCourant.declarer;
+					
 
 					var tmplistElementReglement = [];
 					//Facture
@@ -659,12 +662,24 @@ angular
 				$scope.validerNatureFini = function () {
 
 					// $log.debug("Log1: idBonLiv = " + $scope.idFactureVente);
+                           if($scope.clientActif.fodec){
+	                              $scope.validerNatureFiniByOF();
+	 						}else
+							{
+								
+								 $scope.validerNatureFiniStandard();
+							}
 
+                       
 
-$scope.validerNatureFiniByOF();
-
-					// if($scope.idFactureVente!=null)
-				/*	FactureServices.validateFini($scope.tagReferenceBLivList, $scope.idFactureVente).then(function (resultat) {
+			
+				}
+				
+				$scope.validerNatureFiniStandard = function () {
+					
+					
+							// if($scope.idFactureVente!=null)
+					FactureServices.validateFini($scope.tagReferenceBLivList, $scope.idFactureVente).then(function (resultat) {
 						// bouton Valider en mode : Actif :afficher le tableau
 						// resultant de DetLivVene
 						$scope.modeValider = "actif";
@@ -680,8 +695,10 @@ $scope.validerNatureFiniByOF();
 					}
 						, function (error) {
 							console.log(error.statusText);
-						});*/
-				}
+						});
+					
+					
+					}
 				
 					$scope.validerNatureFiniByOF = function () {
 
@@ -737,7 +754,8 @@ $scope.validerNatureFiniByOF();
 						"modepaiementId": $scope.sendedBL.modepaiementId.toString(),
 						"partieIntId": $scope.sendedBL.partieIntId.toString(),
 						"typePartieInteressee": $scope.sendedBL.typePartieInteressee.toString(),
-						"groupeClientId": $scope.affectedgroupeClientId
+						"groupeClientId": $scope.affectedgroupeClientId,
+						"declarer": $scope.sendedBL.declare,
 					};
 
 

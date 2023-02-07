@@ -52,7 +52,7 @@ public class ReglementInversePersistanceUtilities {
 		
 		entity.setAjoutSpecial(dto.getAjoutSpecial());
 		
-		entity.setDeclarer(dto.isDeclarer());
+		entity.setDeclarer(dto.getDeclarer());
 		
 	    if(dto.getListDetailsReglement() != null){
 		     Set<DetailsReglementInverseEntity> list = new HashSet <DetailsReglementInverseEntity>();

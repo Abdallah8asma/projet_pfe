@@ -87,7 +87,7 @@ public class FactureVenteValue implements Comparable<FactureVenteValue> {
 	private Double tauxConversion;
 	private Double montantConverti;
 	
-	private boolean declarer;
+	private Boolean declarer;
 	
 	private boolean forcerCalculMontant;
 	
@@ -149,11 +149,13 @@ public class FactureVenteValue implements Comparable<FactureVenteValue> {
 		this.forcerCalculMontant = forcerCalculMontant;
 	}
 
-	public boolean isDeclarer() {
+
+
+	public Boolean getDeclarer() {
 		return declarer;
 	}
 
-	public void setDeclarer(boolean declarer) {
+	public void setDeclarer(Boolean declarer) {
 		this.declarer = declarer;
 	}
 
