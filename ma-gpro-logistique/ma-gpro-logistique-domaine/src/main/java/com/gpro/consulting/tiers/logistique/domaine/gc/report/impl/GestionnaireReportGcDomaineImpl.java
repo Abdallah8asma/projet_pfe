@@ -1812,6 +1812,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		reportValue.setMontantTaxes(factureVente.getMontantTaxe());
 		
 		reportValue.setRefCommande(factureVente.getRefCommande());
+		reportValue.setIdentifiant(factureVente.getIdentifiant());
 
 		List<FactureReportProductValue> productList = new ArrayList<FactureReportProductValue>();
 		List<FactureReportTraitementFaconValue> traitementFaconList = new ArrayList<FactureReportTraitementFaconValue>();
