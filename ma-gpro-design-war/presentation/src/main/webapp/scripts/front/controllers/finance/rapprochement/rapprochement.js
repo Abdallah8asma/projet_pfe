@@ -15,10 +15,10 @@ angular
 		'$rootScope',
 		'$route',
 		'$window',
-
+		'$timeout',
 		function($scope, $http, $log, $filter,
 			downloadService, UrlAtelier, UrlCommun,
-			$rootScope, $route, $window) {
+			$rootScope, $route, $window,$timeout) {
 			$log.info("=========echeancier========");
 
 			// Déclaration des variables globales utilisées
@@ -518,7 +518,10 @@ angular
 							+ "/detailsReglement/update",detailReglement)
 						.success(
 							function(data) {
-                                 alert("Paiement est modifié avec succès");
+								$scope.alertCreatSuc = true;
+							$timeout(function () {  
+						      $scope.alertCreatSuc = false;
+							 }, 3000);
 							});
 				} else {
 				   

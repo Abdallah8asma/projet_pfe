@@ -409,14 +409,23 @@
       </div>
     </div>
   </div>
+  <div ng-show="alertCreatSuc">
+  
+    <alert type="success" class="alert-success-sauvegarde light"
+    style="text-align: center !important; background-color: #1BC5BD !important">
+    <span ng-bind-html="'Paiement est modifié avec succès' ">
 
+    </span>
+   
+       </alert>
+  </div>
   <div class="row" ng-show="displayMode != 'edit'">
     <div class="col-md-12" style="margin-left:0.5%;">
        <span class="ms-ListItem-primaryText line" style="font-size:130%">Liste des Echeanciers</span>
       <div style="height: 500px;" ng-grid="gridOptions"></div>
     </div>
   </div>
-
+  
 
   <div id="light" class="white_content">
     <pop-up type="delete-article"></pop-up>
