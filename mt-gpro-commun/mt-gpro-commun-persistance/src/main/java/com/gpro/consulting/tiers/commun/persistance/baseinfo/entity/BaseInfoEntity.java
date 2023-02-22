@@ -193,7 +193,14 @@ public class BaseInfoEntity implements Serializable{
 	
 	@Column(name="contrainte_modification_bl")
 	private Boolean contrainteModificationBl;
-
+    @Column(name="details")
+    private String details ;
+    @Column(name="spécial")
+    private String spécial;
+    @Column(name="reglement_avoir")
+    private Boolean reglementAvoir ;
+    @Column(name="besoin ")
+    private Boolean besoin ;
 
 	
 
@@ -553,6 +560,38 @@ public class BaseInfoEntity implements Serializable{
 
 	public void setCoutMinute(Double coutMinute) {
 		this.coutMinute = coutMinute;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public String getSpécial() {
+		return spécial;
+	}
+
+	public void setSpécial(String spécial) {
+		this.spécial = spécial;
+	}
+
+	public Boolean getReglementAvoir() {
+		return reglementAvoir;
+	}
+
+	public void setReglementAvoir(Boolean reglementAvoir) {
+		this.reglementAvoir = reglementAvoir;
+	}
+
+	public Boolean getBesoin() {
+		return besoin;
+	}
+
+	public void setBesoin(Boolean besoin) {
+		this.besoin = besoin;
 	}
 	
 }
