@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.erp.socle.j2ee.mt.socle.report.impl.AbstractGestionnaireDownloadImpl;
 import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.BoutiqueValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
@@ -42,6 +43,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.Part
 import com.gpro.consulting.tiers.commun.persistance.baseinfo.IBaseInfoPersistance;
 import com.gpro.consulting.tiers.commun.service.baseinfo.IBaseInfoService;
 import com.gpro.consulting.tiers.commun.service.baseinfo.impl.BaseInfoServiceImpl;
+import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IGroupeClientService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
@@ -50,8 +52,11 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommercial
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.boncommande.value.CommandeAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.boncommande.value.RechercheMulticritereBonCommandeAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.boncommande.value.ResultatRechecheBonCommandeAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.DetFactureAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.FactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.RechercheMulticritereDetFactureAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.RechercheMulticritereFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.ResultatRechecheDetFactureAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.ResultatRechecheFactureAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reception.value.ProduitReceptionAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.reception.value.ReceptionAchatValue;
@@ -80,6 +85,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechec
 import com.gpro.consulting.tiers.logistique.rest.report.utilities.ExcelUtils;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 import com.gpro.consulting.tiers.logistique.service.gc.achat.bonCommande.IBonCommandeAchatService;
+import com.gpro.consulting.tiers.logistique.service.gc.achat.facture.IDetFactureAchatService;
 import com.gpro.consulting.tiers.logistique.service.gc.achat.facture.IFactureAchatService;
 import com.gpro.consulting.tiers.logistique.service.gc.achat.reception.IProduitReceptionAchatService;
 import com.gpro.consulting.tiers.logistique.service.gc.achat.reception.IReceptionAchatService;
@@ -202,7 +208,10 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 	
 	@Autowired
 	private IRegionService regionService;
-	
+	@Autowired
+	private IDetFactureAchatService detFactureAchatService;
+	@Autowired
+	private IArticleService articleService;
 	
 	@RequestMapping(value = "/listCommandesAchat", method = RequestMethod.POST)
 	public ResponseEntity<byte[]> generatelistCommandesAchatReport(
@@ -1439,8 +1448,8 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 			// prod reference
 			
 			
-			if (element.getProduitValue().getReference() != null) {
-				sheet3.addCell(new Label(6, i, element.getProduitValue().getReference() + "", ExcelUtils.boldRed));
+			if (element.getArticleValue().getRef() != null) {
+				sheet3.addCell(new Label(6, i, element.getArticleValue().getRef() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
@@ -1450,8 +1459,8 @@ public class GestionnaireFicheAchatRestImpl extends AbstractGestionnaireDownload
 			//prod designation
 			
 			
-			if (element.getProduitValue().getDesignation() != null) {
-				sheet3.addCell(new Label(7, i, element.getProduitValue().getDesignation() + "", ExcelUtils.boldRed));
+			if (element.getArticleValue().getDesignation() != null) {
+				sheet3.addCell(new Label(7, i, element.getArticleValue().getDesignation() + "", ExcelUtils.boldRed));
 
 			} else {
 				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
@@ -5640,5 +5649,494 @@ request.setNomRapport(nomRapport);
 		
 	    return val != null && !"".equals(val) && !"undefined".equals(val) ;
 	}
+	@RequestMapping(value = "/listDetfactureAchat", method = RequestMethod.POST)
+	public ResponseEntity<byte[]> generatelistDetFactureAchatReport(
+
+			@RequestBody RechercheMulticritereDetFactureAchatValue request
+
+	) throws WriteException, IOException {
+
+		Date d = new Date();
+
+		String dat = "" + dateFormat.format(d);
+
+		// this.rapport=true;
+        BaseInfoValue baseInfo= baseInfoService.getClientActif();
+		
+		excel_file_location = baseInfo.getExcelDirectory();
+		
+		File f = new File(excel_file_location+"Liste_Det_Facture_Achat_" + "-" + dat + ".xlsx");
+
+		ByteArrayOutputStream fileOut = new ByteArrayOutputStream();
+		WritableWorkbook Equilibrageworkbook = Workbook.createWorkbook(fileOut);
+
+		// WritableWorkbook Equilibrageworkbook = Workbook.createWorkbook(f);
+			Equilibrageworkbook.createSheet("Liste_Det_Facture_Achat__", 0);
+		WritableSheet sheet3 = Equilibrageworkbook.getSheet(0);
+
+		sheet3.setColumnView(0, 7);
+		sheet3.setColumnView(1, 7);
+		sheet3.setColumnView(2, 25);
+		sheet3.setColumnView(3, 20);
+
+		sheet3.setColumnView(3, 20);
+		sheet3.setColumnView(4, 30);
+		sheet3.setColumnView(5, 20);
+		sheet3.setColumnView(6, 20);
+		sheet3.setColumnView(7, 20);
+		sheet3.setColumnView(8, 20);
+		sheet3.setColumnView(9, 20);
+		sheet3.setColumnView(10, 20);
+		sheet3.setColumnView(11, 20);
+		sheet3.setColumnView(12, 20);
+		sheet3.setColumnView(13, 20);
+		
+		/**************************************************************************/
+
+		// Nom du rapport et la date
+
+		ExcelUtils.init();
+
+		// Nom du rapport et la date
+
+	 
+			sheet3.addCell(new Label(2, 7, " Liste_Det_Facture_Achat", ExcelUtils.boldTitre));
+
+		sheet3.mergeCells(2, 7, 9, 8);
+
+		// Critaire de recherche
+		int numColCritRech = 2;
+		int numLigneCritRech = 14;
+
+		sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Critère de recherche", ExcelUtils.boldRed5));
+		sheet3.addCell(
+				new Label(numColCritRech + 1, numLigneCritRech, "" + dateTimeFormat2.format(d), ExcelUtils.boldRed3));
+		sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+		numLigneCritRech++;
+
+		if (isNotEmty(request.getFactureReference()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Réf Facture :", ExcelUtils.boldRed3));
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, request.getFactureReference(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+		}
+		
+		if (isNotEmty(request.getPartieIntId()))
+
+		{
+			numLigneCritRech++;
+			 
+				sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Client :", ExcelUtils.boldRed3));
+			
+			PartieInteresseValue partieInteresse= partieInteresseeService.getById(request.getPartieIntId());
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, partieInteresse.getAbreviation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+
+		}
+		
+		if (isNotEmty(request.getInfoLivraison()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Réf.Bon.Rec:", ExcelUtils.boldRed3));
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, request.getInfoLivraison(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+		}
+		if (isNotEmty(request.getReferenceBlExterne()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Réf.Bon.Rec.Externe:", ExcelUtils.boldRed3));
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, request.getReferenceBlExterne(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+		}
+		
+		
+		
+		
+		if (isNotEmty(request.getDateFactureDe()))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Facture De :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateFormat2.format(request.getDateFactureDe().getTime()), ExcelUtils.boldRed3));
+
+	
+		}
+		
+		if (isNotEmty(request.getDateFactureA()))
+
+		{
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Date Facture A :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, dateFormat2.format(request.getDateFactureA().getTime()), ExcelUtils.boldRed3));
+
+	
+		}
+		
+		
+		
+		if (isNotEmty(request.getProduitId()))
+
+		{
+			numLigneCritRech++;
+			 
+				sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Ref Article :", ExcelUtils.boldRed3));
+			
+				ArticleValue articleValue= articleService.getArticleParId(request.getProduitId());
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, articleValue.getRef(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+
+		}
+		if (isNotEmty(request.getProduitId()))
+
+		{
+			numLigneCritRech++;
+			 
+				sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Designation produit :", ExcelUtils.boldRed3));
+			
+			ArticleValue articleValue= articleService.getArticleParId(request.getProduitId());
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, articleValue.getDesignation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+
+		}
+		
+		
+		
+		if (isNotEmty(request.getQuantiteDe()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Quantité Du :", ExcelUtils.boldRed3));
+			
+			 
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech,request.getQuantiteDe().toString() , ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+
+		}
+		if (isNotEmty(request.getQunatiteA()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Quantité A :", ExcelUtils.boldRed3));
+			
+			 
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech,request.getQunatiteA().toString() , ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+
+		}
+		
+		
+		
+		if (isNotEmty(request.getPrixMin()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Prix Du :", ExcelUtils.boldRed3));
+			
+			 
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech,request.getPrixMin().toString() , ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+
+		}
+		if (isNotEmty(request.getPrixMax()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Prix A :", ExcelUtils.boldRed3));
+			
+			 
+			
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech,request.getPrixMax().toString() , ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech,numColCritRech + 2, numLigneCritRech);
+
+
+		}
+		
+		
+
+		/*
+		 * if (isNotEmty(request.getBoutiqueId()))
+		 * 
+		 * {
+		 * 
+		 * numLigneCritRech++; sheet3.addCell(new Label(numColCritRech,
+		 * numLigneCritRech, "Boutique :", ExcelUtils.boldRed3)); sheet3.addCell(new
+		 * Label(numColCritRech + 1, numLigneCritRech, request.getPrixMin() + "",
+		 * ExcelUtils.boldRed3));
+		 * 
+		 * 
+		 * }
+		 */
+
+		request.setOptimized(RechercheMulticritereDetFactureAchatValue.checkForOptimization(request));
+		
+		 
+		
+		ResultatRechecheDetFactureAchatValue result = detFactureAchatService.rechercherMultiCritere(request);
+
+		int i = numLigneCritRech + 4;
+
+		sheet3.addCell(new Label(2, i - 1, "Réference", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(3, i - 1, "Client", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(4, i - 1, "Réf.Bon.Rec", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(5, i - 1, "Réf.Bon.Rec.Externe", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(6, i - 1, "Date Facture", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i - 1, "Ref.Article", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(8, i - 1, "ArticleDesignation", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i - 1, "Quantité", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(10, i - 1, "prix", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(11, i - 1, "Montant TTC", ExcelUtils.boldRed2));
+		
+
+
+
+
+	  if(result.getList()!=null && result.getList().size()>0) {
+	    	 
+		
+		for (DetFactureAchatValue element : result.getList()) {
+			
+			if(element.getFactureReference()!=null) {
+				
+				 
+				sheet3.addCell(new Label(2, i, element.getFactureReference()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(2, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+			if(element.getPartieIntId()!=null) {
+				
+				 
+				sheet3.addCell(new Label(3, i, element.getClientAbreviation()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(3, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+			
+			if(element.getInfoLivraison()!=null) {
+				
+				 
+				sheet3.addCell(new Label(4, i, element.getInfoLivraison()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+			if(element.getReferenceBlExterne()!=null) {
+				
+				 
+				sheet3.addCell(new Label(5, i, element.getReferenceBlExterne()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+			
+			
+			if (element.getDateIntroduction() != null) {
+				sheet3.addCell(
+						new Label(6, i, dateFormat2.format(element.getDateIntroduction().getTime()) + "", ExcelUtils.boldRed));
+				 
+
+
+			} else {
+				
+				
+				
+				sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+
+			
+			if(element.getProduitReference()!=null) {
+				
+				 
+				sheet3.addCell(new Label(7, i, element.getProduitReference()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+			
+			
+			if(element.getProduitDesignation()!=null) {
+				
+				 
+				sheet3.addCell(new Label(8, i, element.getProduitDesignation()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+			
+			
+			if(element.getQuantite()!=null) {
+				
+				 
+				sheet3.addCell(new Label(9, i, element.getQuantite()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+			
+			if(element.getPrixUnitaireHT()!=null) {
+				
+				 
+				sheet3.addCell(new Label(10, i, element.getPrixUnitaireHT()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+			
+			if(element.getPrixTotalHT()!=null) {
+				
+				 
+				sheet3.addCell(new Label(11, i, element.getPrixTotalHT()+ "", ExcelUtils.boldRed));
+				 
+				
+
+			} else {
+				sheet3.addCell(new Label(11, i, "", ExcelUtils.boldRed));
+				 
+
+			}
+			
+			
+			
+
+			i++;
+
+		}
+	}
+		i++;
+		i++;
+
+		/*
+		 * sheet3.addCell(new Label(7, i, "Totale", ExcelUtils.boldRed2));
+		 * sheet3.mergeCells(7, i, 9, i);
+		 * 
+		 * i++;
+		 */
+
+		
+
+	
+	/*******************************************
+	 * BAS DU PAGE
+	 ****************************************/
+
+
+	int numColBasDuPage = 2;
+	int numLigneBasDuPage = i + 2;
+
+	sheet3.mergeCells(numColBasDuPage, numLigneBasDuPage, numColBasDuPage + 1, numLigneBasDuPage);
+	sheet3.addCell(new Label(numColBasDuPage, numLigneBasDuPage, "nombre des lignes ", ExcelUtils.boldRed5));
+	sheet3.addCell(new Label(numColBasDuPage + 2, numLigneBasDuPage,
+			result.getNombreResultaRechercher() + "", ExcelUtils.boldRed3));
+
+	numLigneBasDuPage++;
+
+	sheet3.mergeCells(numColBasDuPage, numLigneBasDuPage, numColBasDuPage + 1, numLigneBasDuPage);
+
+	numLigneBasDuPage++;
+
+	/*******************************************
+	 * BAS DU PAGE
+	 ****************************************/
+
+	// int numColBasDuPage = 2;
+	// int numLigneBasDuPage = i + 2;
+
+	Equilibrageworkbook.write();
+	Equilibrageworkbook.close();
+
+	/******************************************************************************************/
+	HttpHeaders headers = new HttpHeaders();
+	headers.setContentType(new MediaType("application", "octet-stream"));
+
+	Date now = new Date();
+	String dateFormat1 = dateFormat.format(now);
+	String filename = "list_Det_Factues_Achat" + dateFormat1 + ".xls";
+	
+	// String filename = "sortie-stock_" + dateFormat1 ;
+	headers.setContentDispositionFormData(filename, filename);
+	headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+	return new ResponseEntity<>(fileOut.toByteArray(), headers, HttpStatus.OK);
+	/******************************************************************************************/
+
+	/****************************
+	 * Ouvrir le nouveau fichier généré
+	 *******************************/
+
+	/*
+	 * // context.getExternalContext().getResponse();
+	 * response.setHeader("Content-disposition", "attachment; filename=" +
+	 * f.getName()); // System.out.println("nom du fichier" + f.getName());
+	 * response.setContentType("application/vnd.ms-excel"); int bufferSize = 64 *
+	 * 1024;
+	 */
+}
 
 }

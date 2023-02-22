@@ -1,6 +1,8 @@
 package com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.DetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.RechercheMulticritereDetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.ResultatRechecheDetFactureAchatValue;
 
 /**
  * DetFactureAchat Persistance interface.
@@ -57,5 +59,7 @@ public interface IDetFactureAchatPersistance {
 	 * @return the by facture achat and produit
 	 */
 	public DetFactureAchatValue getByFactureAchatAndProduit(Long FactureAchatId, Long produitId, String choix);
+	public ResultatRechecheDetFactureAchatValue rechercherMultiCritere(RechercheMulticritereDetFactureAchatValue request);
+
 
 }

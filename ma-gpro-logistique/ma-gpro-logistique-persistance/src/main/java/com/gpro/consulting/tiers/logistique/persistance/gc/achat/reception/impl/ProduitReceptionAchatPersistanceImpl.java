@@ -28,6 +28,7 @@ import com.erp.socle.j2ee.mt.commun.persistance.AbstractPersistance;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitSerialisableValue;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IArticlePersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitSerialisablePersistance;
 import com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitEntity;
@@ -63,6 +64,8 @@ public class ProduitReceptionAchatPersistanceImpl extends AbstractPersistance
 
 	@Autowired
 	private IProduitPersistance produitPersistance;
+	@Autowired
+	private IArticlePersistance articlePersistance;
 	
 
 	@Autowired
@@ -343,7 +346,7 @@ public class ProduitReceptionAchatPersistanceImpl extends AbstractPersistance
 			
 			if(dto.getProduitId() != null) {
 				
-				dto.setProduitValue(produitPersistance.rechercheProduitById(dto.getProduitId()));
+				dto.setArticleValue(articlePersistance.getArticleParId(dto.getProduitId()));
 				
 				if (dto.isSerialisable() && dto.getReceptionAchatValue() != null) {
 					/*RechercheMulticritereProduitSerialisableValue pRechercheProduitSerialisableMulitCritere = new RechercheMulticritereProduitSerialisableValue();

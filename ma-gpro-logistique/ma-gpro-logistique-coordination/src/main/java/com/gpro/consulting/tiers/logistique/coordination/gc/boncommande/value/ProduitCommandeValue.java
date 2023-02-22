@@ -29,6 +29,24 @@ public class ProduitCommandeValue implements Comparable<ProduitCommandeValue> {
 	private Double remise;
 
 	private Long taxeId;
+	private Calendar dateCommande;
+	private String referenceCommande;
+	private String produitDesignation;
+	private String produitReference;
+	private Double montantHTTotal;
+	private Double montantTaxe;
+	private Double montantRemise;
+	private Long  deviseId;
+	private String deviseDesignation;
+	
+	
+	public String getReferenceCommande() {
+		return referenceCommande;
+	}
+
+	public void setReferenceCommande(String referenceCommande) {
+		this.referenceCommande = referenceCommande;
+	}
 
 	public Long getTaxeId() {
 		return taxeId;
@@ -131,5 +149,71 @@ public class ProduitCommandeValue implements Comparable<ProduitCommandeValue> {
 		ProduitCommandeValue element = (ProduitCommandeValue) o;
 		return element.getProduitId().compareTo(produitId);
 	}
+
+	public Calendar getDateCommande() {
+		return dateCommande;
+	}
+
+	public void setDateCommande(Calendar dateCommande) {
+		this.dateCommande = dateCommande;
+	}
+
+	public String getProduitDesignation() {
+		return produitDesignation;
+	}
+
+	public void setProduitDesignation(String produitDesignation) {
+		this.produitDesignation = produitDesignation;
+	}
+
+	public String getProduitReference() {
+		return produitReference;
+	}
+
+	public void setProduitReference(String produitReference) {
+		this.produitReference = produitReference;
+	}
+
+	public Double getMontantHTTotal() {
+		return montantHTTotal;
+	}
+
+	public void setMontantHTTotal(Double montantHTTotal) {
+		this.montantHTTotal = montantHTTotal;
+	}
+
+	public Double getMontantTaxe() {
+		return montantTaxe;
+	}
+
+	public void setMontantTaxe(Double montantTaxe) {
+		this.montantTaxe = montantTaxe;
+	}
+
+	public Double getMontantRemise() {
+		return montantRemise;
+	}
+
+	public void setMontantRemise(Double montantRemise) {
+		this.montantRemise = montantRemise;
+	}
+
+	public Long getDeviseId() {
+		return deviseId;
+	}
+
+	public void setDeviseId(Long deviseId) {
+		this.deviseId = deviseId;
+	}
+
+	public String getDeviseDesignation() {
+		return deviseDesignation;
+	}
+
+	public void setDeviseDesignation(String deviseDesignation) {
+		this.deviseDesignation = deviseDesignation;
+	}
+
+	
 
 }

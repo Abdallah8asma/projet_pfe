@@ -3,6 +3,8 @@ package com.gpro.consulting.tiers.logistique.persistance.gc.boncommande;
 import java.util.List;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ProduitCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.RechercheMulticritereProduitBonCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ResultatRechecheProduitBonCommandeValue;
 
 /**
  * ProduitCommande Persistance interface
@@ -22,5 +24,7 @@ public interface IProduitCommandePersistance {
 	public void delete(Long id);
 
 	public List<ProduitCommandeValue> getAll();
+	public ResultatRechecheProduitBonCommandeValue rechercherMultiCritere(
+			RechercheMulticritereProduitBonCommandeValue request);
 
 }

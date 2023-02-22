@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ProduitCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.RechercheMulticritereProduitBonCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ResultatRechecheProduitBonCommandeValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.boncommande.IProduitCommandeDomaine;
 import com.gpro.consulting.tiers.logistique.service.gc.bonCommande.IProduitCommandeService;
 
@@ -75,6 +77,13 @@ public class ProduitCommandeServiceImpl implements IProduitCommandeService {
 	@Override
 	public List<ProduitCommandeValue> getAll() {
 		return produitCommandeDomaine.getAll();
+	}
+
+	@Override
+	public ResultatRechecheProduitBonCommandeValue rechercherMultiCritere(
+			RechercheMulticritereProduitBonCommandeValue request) {
+		// TODO Auto-generated method stub
+		return produitCommandeDomaine.rechercherMultiCritere(request);
 	}
 
 }

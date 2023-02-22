@@ -1,6 +1,8 @@
 package com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.DetFactureVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.RechercheMulticritereDetFactureVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.ResultatRechecheDetFactureVenteValue;
 
 
 /**
@@ -25,5 +27,7 @@ public interface IDetFactureVentePersistance {
 
 
 	public DetFactureVenteValue getByFactureVenteAndNumeroOF(Long factureVenteId, String numeroOF, String choix);
+	public ResultatRechecheDetFactureVenteValue rechercherMultiCritere(RechercheMulticritereDetFactureVenteValue request);
+
 
 }

@@ -5,7 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersistance;
+import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInteresseePersistance;
 import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.DetFactureVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.RechercheMulticritereDetFactureVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.ResultatRechecheDetFactureVenteValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.vente.facture.IDetFactureVenteDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.IDetFactureVentePersistance;
 
@@ -21,10 +27,14 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.IDetFac
 public class DetFactureVenteDomaineImpl implements IDetFactureVenteDomaine{
 	
 	private static final Logger logger = LoggerFactory.getLogger(DetFactureVenteDomaineImpl.class);
-	
+
 	@Autowired
 	private IDetFactureVentePersistance detFactureVentePersistance;
-
+	@Autowired
+	IProduitPersistance produitPersistance;
+	
+	@Autowired
+	IPartieInteresseePersistance partieInteresseePersistance;
 	
 	@Override
 	public String create(DetFactureVenteValue bonFactureValue) {
@@ -48,6 +58,35 @@ public class DetFactureVenteDomaineImpl implements IDetFactureVenteDomaine{
 	public void delete(Long id) {
 		
 		detFactureVentePersistance.delete(id);
+	}
+
+	@Override
+	public ResultatRechecheDetFactureVenteValue rechercherMultiCritere(
+			RechercheMulticritereDetFactureVenteValue request) {
+		
+		ResultatRechecheDetFactureVenteValue result = detFactureVentePersistance.rechercherMultiCritere(request);
+	
+		for(DetFactureVenteValue detFactureVenteValue : result.getList()){
+			
+			
+			
+			if(detFactureVenteValue.getProduitId()!=null)
+			{
+			ProduitValue produitValue=	produitPersistance.rechercheProduitById(detFactureVenteValue.getProduitId());
+			detFactureVenteValue.setProduitDesignation(produitValue.getDesignation());
+			detFactureVenteValue.setProduitReference(produitValue.getReference());
+			
+		
+			}
+			if(detFactureVenteValue.getPartieIntId()!=null)
+			{
+				PartieInteresseValue partieInteresseValue=partieInteresseePersistance.getPartieInteresseById(detFactureVenteValue.getPartieIntId());
+				detFactureVenteValue.setClientAbreviation(partieInteresseValue.getAbreviation());
+			}
+		}
+			
+		
+		return result;
 	}
 
 }

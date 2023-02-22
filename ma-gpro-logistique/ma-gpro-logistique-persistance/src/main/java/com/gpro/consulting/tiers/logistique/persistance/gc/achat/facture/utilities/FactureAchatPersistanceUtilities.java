@@ -17,6 +17,7 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.MarcheValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.ModePaiementValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.TaxeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.DetFactureVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.DocumentFactureVenteValue;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.entitie.DetFactureAchatEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.entitie.DocumentFactureAchatEntity;
@@ -25,6 +26,7 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.entitie
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.MarcheEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.ModePaiementEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.TaxeEntity;
+import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.DetFactureVenteEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.DocumentFactureVenteEntity;
 
 /**
@@ -235,7 +237,7 @@ public class FactureAchatPersistanceUtilities {
 		return entity;
 	}
 
-	public DetFactureAchatValue toValue(DetFactureAchatEntity entity) {
+	public  static    DetFactureAchatValue toValue(DetFactureAchatEntity entity) {
 
 		DetFactureAchatValue dto = new DetFactureAchatValue();
 
@@ -263,6 +265,26 @@ public class FactureAchatPersistanceUtilities {
 		}
 
 		return dto;
+	}
+	public static DetFactureAchatValue toValueEnrichi(DetFactureAchatEntity entity) 
+	{
+		DetFactureAchatValue det=toValue(entity);
+		if(entity.getFactureAchat() != null)
+		{
+			det.setDateIntroduction(entity.getFactureAchat().getDate());
+		
+			det.setFactureReference(entity.getFactureAchat().getReference());
+			det.setInfoLivraison(entity.getFactureAchat().getInfoLivraison());
+			det.setReferenceBlExterne(entity.getFactureAchat().getRefexterne());
+			det.setPartieIntId(entity.getFactureAchat().getPartieIntId());
+			det.setPrixTotalHT(entity.getFactureAchat().getMontantTTC());
+			
+		    
+		}
+		return det;
+		
+			
+		
 	}
 
 	public TaxeFactureAchatEntity toEntity(TaxeFactureAchatValue dto) {

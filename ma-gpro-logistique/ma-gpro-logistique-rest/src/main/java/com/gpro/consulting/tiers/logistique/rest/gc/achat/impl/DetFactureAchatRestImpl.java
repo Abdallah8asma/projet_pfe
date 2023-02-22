@@ -1,5 +1,7 @@
 package com.gpro.consulting.tiers.logistique.rest.gc.achat.impl;
 
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.DetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.RechercheMulticritereDetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.ResultatRechecheDetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.RechercheMulticritereDetFactureVenteValue;
 import com.gpro.consulting.tiers.logistique.service.gc.achat.facture.IDetFactureAchatService;
 
 @Controller
@@ -53,5 +58,14 @@ public class DetFactureAchatRestImpl {
 
 		detFactureAchatService.delete(id);
 	}
+	@RequestMapping(value = "/rechercheMulticritere", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody ResultatRechecheDetFactureAchatValue rechercherMultiCritere(
+			@RequestBody RechercheMulticritereDetFactureAchatValue request) {
+		request.setOptimized(RechercheMulticritereDetFactureAchatValue.checkForOptimization(request));
+		
+		return  detFactureAchatService.rechercherMultiCritere(request);
+	}
+	
 
+	
 }

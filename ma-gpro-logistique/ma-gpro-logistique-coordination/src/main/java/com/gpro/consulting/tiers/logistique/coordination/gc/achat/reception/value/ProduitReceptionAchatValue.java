@@ -4,8 +4,7 @@ package com.gpro.consulting.tiers.logistique.coordination.gc.achat.reception.val
 import java.util.Calendar;
 import java.util.Set;
 
-
-
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
 
@@ -48,7 +47,7 @@ public class ProduitReceptionAchatValue implements Comparable<ProduitReceptionAc
 
 	private ReceptionAchatValue receptionAchatValue;
 
-	private ProduitValue produitValue;
+	private ArticleValue articleValue;
 
 	private Double quantiteAncien;
 
@@ -143,12 +142,14 @@ public class ProduitReceptionAchatValue implements Comparable<ProduitReceptionAc
 		this.quantiteAncien = quantiteAncien;
 	}
 
-	public ProduitValue getProduitValue() {
-		return produitValue;
+	
+
+	public ArticleValue getArticleValue() {
+		return articleValue;
 	}
 
-	public void setProduitValue(ProduitValue produitValue) {
-		this.produitValue = produitValue;
+	public void setArticleValue(ArticleValue articleValue) {
+		this.articleValue = articleValue;
 	}
 
 	public ReceptionAchatValue getReceptionAchatValue() {
