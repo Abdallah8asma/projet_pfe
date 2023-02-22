@@ -92,6 +92,9 @@ angular
 				case 'bonCommande':
 					$scope.ITEM = 'bonCommande';
 					break;
+					case 'detBonCommande':
+						$scope.ITEM = 'detBonCommande';
+						break;	
 				case 'devis':
 					$scope.ITEM = 'devis';
 					break;
@@ -110,6 +113,9 @@ angular
 				case 'factureVente':
 					$scope.ITEM = 'factureVente';
 					break;
+				case 'detailsFactureVente':
+					$scope.ITEM = 'detailsFactureVente';
+					break;	
 				case 'factureAvoirVente':
 					$scope.ITEM = 'factureAvoirVente';
 					break;
@@ -172,10 +178,7 @@ angular
 				$scope.ITEM = 'detlivraison';
 			}
 
-			$scope.goFactureVente = function () {
-				$scope.navMode = "normal";
-				$scope.ITEM = 'factureVente';
-			}
+			
 			$scope.goFactureAvoirVente = function () {
 				$scope.navMode = "normal";
 				$scope.ITEM = 'factureAvoirVente';
