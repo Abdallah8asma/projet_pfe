@@ -537,5 +537,25 @@ public class FacturePersistanceUtilities {
 		raisonFactureEntite.setDesignation(pRaisonFactureValue.getDesignation());
 		return raisonFactureEntite;
 	}
+	public  DetFactureVenteValue toValueEnrichi(DetFactureVenteEntity entity) 
+	{
+		DetFactureVenteValue det=toValue(entity);
+		if(entity.getFactureVente() != null)
+		{
+			det.setDateFacture(entity.getFactureVente().getDateEcheance());
+			det.setDateFacture(entity.getFactureVente().getDate());
+			det.setReferenceFacture(entity.getFactureVente().getReference());
+			det.setReferenceBl(entity.getFactureVente().getInfoLivraison());
+			det.setCommandeReference(entity.getFactureVente().getRefCommande());
+			det.setPartieIntId(entity.getFactureVente().getPartieIntId());
+			det.setPrixTotalHT(entity.getFactureVente().getMontantTTC());
+			
+		    
+		}
+		return det;
+		
+			
+		
+	}
 
 }

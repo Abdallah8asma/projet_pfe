@@ -1,8 +1,9 @@
 package com.gpro.consulting.tiers.logistique.service.gc.vente.facture;
 
 import org.springframework.transaction.annotation.Transactional;
-
 import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.DetFactureVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.RechercheMulticritereDetFactureVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.ResultatRechecheDetFactureVenteValue;
 
 /**
  * DetFacture Vente Service Interface
@@ -24,5 +25,7 @@ public interface IDetFactureVenteService {
 
 	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public void delete(Long id);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public ResultatRechecheDetFactureVenteValue rechercherMultiCritere(RechercheMulticritereDetFactureVenteValue request);
 
 }

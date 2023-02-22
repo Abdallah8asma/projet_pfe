@@ -1,5 +1,6 @@
 package com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value;
 
+import java.util.Calendar;
 import java.util.Set;
 
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
@@ -70,6 +71,19 @@ public class DetFactureAchatValue implements Comparable<DetFactureAchatValue> {
 	private Long taxeId;
 
 	private Set<ProduitSerialisableValue> produitsSerialisable;
+
+	private Long partieIntId;
+
+	 private String clientAbreviation;
+
+	 private String referenceBlExterne;
+	 private String infoLivraison;
+
+	private Calendar dateIntroduction;
+
+	private String factureReference;
+
+	
 
 	public Long getTaxeId() {
 		return taxeId;
@@ -393,6 +407,52 @@ public class DetFactureAchatValue implements Comparable<DetFactureAchatValue> {
 		return montanTaxeTVA;
 	}
 
+	public Long getPartieIntId() {
+		return partieIntId;
+	}
+
+	public void setPartieIntId(Long partieIntId) {
+		this.partieIntId = partieIntId;
+	}
+
+	public String getClientAbreviation() {
+		return clientAbreviation;
+	}
+
+	public void setClientAbreviation(String clientAbreviation) {
+		this.clientAbreviation = clientAbreviation;
+	}
+   
+
+
+	public String getReferenceBlExterne() {
+		return referenceBlExterne;
+	}
+
+	public void setReferenceBlExterne(String referenceBlExterne) {
+		this.referenceBlExterne = referenceBlExterne;
+	}
+
+	public String getInfoLivraison() {
+		return infoLivraison;
+	}
+
+	public void setInfoLivraison(String infoLivraison) {
+		this.infoLivraison = infoLivraison;
+	}
+
+	public Calendar getDateIntroduction() {
+		return dateIntroduction;
+	}
+
+	public void setDateIntroduction(Calendar dateIntroduction) {
+		this.dateIntroduction = dateIntroduction;
+	}
+
+	public void setFactureReference(String factureReference) {
+		this.factureReference = factureReference;
+	}
+
 	/**
 	 * Sets the montan taxe TVA.
 	 *
@@ -400,6 +460,10 @@ public class DetFactureAchatValue implements Comparable<DetFactureAchatValue> {
 	 */
 	public void setMontanTaxeTVA(Double montanTaxeTVA) {
 		this.montanTaxeTVA = montanTaxeTVA;
+	}
+
+	public String getFactureReference() {
+		return factureReference;
 	}
 
 }
