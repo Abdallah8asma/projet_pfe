@@ -96,6 +96,9 @@ angular
 				case 'factureAchat':
 					$scope.ITEM = 'factureAchat';
 					break;
+				case 'factureAchatDetail':
+						$scope.ITEM = 'factureAchatDetail';
+						break;	
 				case 'factureAvoirAchat':
 					$scope.ITEM = 'factureAvoirAchat';
 					break;
