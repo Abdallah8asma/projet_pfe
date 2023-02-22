@@ -196,6 +196,10 @@ public class PersistanceUtilities {
         dto.setIdentifiantFactureObligatoire(entity.getIdentifiantFactureObligatoire());
    
         dto.setContrainteModificationBl(entity.getContrainteModificationBl());
+        dto.setDetails(entity.getDetails());
+        dto.setSpécial(entity.getSpécial());
+        dto.setReglementAvoir(entity.getReglementAvoir());
+        dto.setBesoin(entity.getBesoin());
 		
         
 		return dto;
@@ -261,6 +265,10 @@ public class PersistanceUtilities {
 		entity.setIdentifiantFactureObligatoire(dto.getIdentifiantFactureObligatoire());
 		
 		entity.setContrainteModificationBl(dto.getContrainteModificationBl());
+		entity.setDetails(dto.getDetails());
+		entity.setSpécial(dto.getSpécial());
+		entity.setReglementAvoir(dto.getReglementAvoir());
+		entity.setBesoin(dto.getBesoin());
 		
 		return entity;
 	}

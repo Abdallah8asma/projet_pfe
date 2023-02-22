@@ -87,6 +87,10 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 	
 	
 	private Boolean contrainteModificationBl;
+	  private String details ;
+	  private String spécial;
+	  private Boolean reglementAvoir ;
+	  private Boolean besoin ;
 	
 	
 	
@@ -405,6 +409,38 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 
 	public void setCodeTVA(String codeTVA) {
 		this.codeTVA = codeTVA;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	public String getSpécial() {
+		return spécial;
+	}
+
+	public void setSpécial(String spécial) {
+		this.spécial = spécial;
+	}
+
+	public Boolean getReglementAvoir() {
+		return reglementAvoir;
+	}
+
+	public void setReglementAvoir(Boolean reglementAvoir) {
+		this.reglementAvoir = reglementAvoir;
+	}
+
+	public Boolean getBesoin() {
+		return besoin;
+	}
+
+	public void setBesoin(Boolean besoin) {
+		this.besoin = besoin;
 	}
 
 }
