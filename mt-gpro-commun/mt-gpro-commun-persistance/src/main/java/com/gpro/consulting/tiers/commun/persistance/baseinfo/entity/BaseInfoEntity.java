@@ -195,8 +195,8 @@ public class BaseInfoEntity implements Serializable{
 	private Boolean contrainteModificationBl;
     @Column(name="details")
     private String details ;
-    @Column(name="spécial")
-    private String spécial;
+    @Column(name="special")
+    private String special;
     @Column(name="reglement_avoir")
     private Boolean reglementAvoir ;
     @Column(name="besoin ")
@@ -570,12 +570,14 @@ public class BaseInfoEntity implements Serializable{
 		this.details = details;
 	}
 
-	public String getSpécial() {
-		return spécial;
+	
+
+	public String getSpecial() {
+		return special;
 	}
 
-	public void setSpécial(String spécial) {
-		this.spécial = spécial;
+	public void setSpecial(String special) {
+		this.special = special;
 	}
 
 	public Boolean getReglementAvoir() {
