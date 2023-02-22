@@ -1531,7 +1531,8 @@ angular
 						date: new Date(), modepaiementId: 1,
 						"devise": "2",
 						"declarer": true,
-						"forcerCalculMontant": false
+						"forcerCalculMontant": false,
+						"dateIntroduction":new Date()
 
 					};
 					// $scope.factureVenteCourant = factureVente ? angular
