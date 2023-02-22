@@ -18,7 +18,11 @@
       ng-include="'views/front/gestionAchat/facture/factureAchat.html'"
     ></div>
   </div>
-
+  <div ng-if="ITEM == 'factureAchatDetail'">
+    <div
+      ng-include="'views/front/gestionAchat/facture/factureAchatDetail.html'"
+    ></div>
+  </div>
   <div ng-if="ITEM == 'factureAvoirAchat'">
     <div
       ng-include="'views/front/gestionAchat/facture/factureAvoirAchat.html'"
