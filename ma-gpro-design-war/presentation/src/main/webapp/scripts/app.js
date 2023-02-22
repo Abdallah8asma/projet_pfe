@@ -94,6 +94,7 @@ angular
     'atelier.menuGC',
     'atelier.menuGA',
     'gpro.gcVenteBC',
+    'gpro.gcDetBonCommande',
     'gpro.gcVenteDevis',
     'gpro.gcReception',
     'gpro.gcReceptionAchat',
@@ -107,6 +108,7 @@ angular
     'gpro.detbondelivraisonGC',
     'gpro.marche',
     'gpro.factureVente',
+    'gpao.detailsFactureVente',
     'gpro.factureAvoirVente',
     'gpro.factureRetourVente',
     'gpro.back-logistique',
@@ -135,6 +137,7 @@ angular
     /** ************ modules Achat *********** */
 
     'gpro.factureAchat',
+    'gpro.detFactureAchat',
     'gpro.factureAvoirAchat',
     'gpro.factureRetourAchat',
 

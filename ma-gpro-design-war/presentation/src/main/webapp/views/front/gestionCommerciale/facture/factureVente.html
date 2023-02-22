@@ -1171,7 +1171,7 @@
 
 
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-sm-4">
 
 
                 <div class="form-group">
@@ -1181,6 +1181,22 @@
                     </div>
                     <textarea cols="9" rows="1" class="form-control"
                       ng-model="factureVenteCourant.observations"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label"> Date Introduction</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-model="factureVenteCourant.dateIntroduction" is-open="opened" datepicker-options="dateOptions"
+                      date-disabled="enabled(date, mode)" close-text="Close"  />
+
+                    
                   </div>
                 </div>
               </div>
