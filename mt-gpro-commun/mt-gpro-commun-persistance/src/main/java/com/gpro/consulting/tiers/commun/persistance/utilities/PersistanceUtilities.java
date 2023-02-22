@@ -197,7 +197,7 @@ public class PersistanceUtilities {
    
         dto.setContrainteModificationBl(entity.getContrainteModificationBl());
         dto.setDetails(entity.getDetails());
-        dto.setSpécial(entity.getSpécial());
+        dto.setSpecial(entity.getSpecial());
         dto.setReglementAvoir(entity.getReglementAvoir());
         dto.setBesoin(entity.getBesoin());
 		
@@ -266,7 +266,7 @@ public class PersistanceUtilities {
 		
 		entity.setContrainteModificationBl(dto.getContrainteModificationBl());
 		entity.setDetails(dto.getDetails());
-		entity.setSpécial(dto.getSpécial());
+		entity.setSpecial(dto.getSpecial());
 		entity.setReglementAvoir(dto.getReglementAvoir());
 		entity.setBesoin(dto.getBesoin());
 		
