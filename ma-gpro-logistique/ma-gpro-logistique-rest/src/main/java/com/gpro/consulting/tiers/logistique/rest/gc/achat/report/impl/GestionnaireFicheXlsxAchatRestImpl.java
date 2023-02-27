@@ -1,19 +1,25 @@
 package com.gpro.consulting.tiers.logistique.rest.gc.achat.report.impl;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.ClientAnchor;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Drawing;
+import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
+import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -36,11 +42,10 @@ import com.gpro.consulting.tiers.commun.service.partieInteressee.IRegionService;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.DetFactureAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.RechercheMulticritereDetFactureAchatValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.ResultatRechecheDetFactureAchatValue;
-import com.gpro.consulting.tiers.logistique.rest.report.utilities.ExcelUtils;
 import com.gpro.consulting.tiers.logistique.rest.report.utilities.ExcelUtilsXlsx;
 import com.gpro.consulting.tiers.logistique.service.gc.achat.facture.IDetFactureAchatService;
-import jxl.write.WriteException;
 
+import jxl.write.WriteException;
 
 @Controller
 @RequestMapping("/fichesAchatXlsx")
@@ -120,18 +125,36 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 		// Nom du rapport et la date
 
 		ExcelUtilsXlsx.init(workbook);
-		Row   titreRows = sheet3.createRow(8);
-		
-	
+			
+		        if(baseInfo.getLogoPNG()!=null)
+		        {
+		        	InputStream inputStream = new FileInputStream(baseInfo.getLogoPNG());
+					byte[] inputImageBytes = IOUtils.toByteArray(inputStream);
+					int inputImagePicture = workbook.addPicture(inputImageBytes, Workbook.PICTURE_TYPE_PNG);
+					XSSFDrawing drawing = (XSSFDrawing) sheet3.createDrawingPatriarch();
+					XSSFClientAnchor ironManAnchor = new XSSFClientAnchor();
+					ironManAnchor.setRow1(1);
+					ironManAnchor.setRow2(5);
+					ironManAnchor.setCol1(2);
+					ironManAnchor.setCol2(3);
+					drawing.createPicture(ironManAnchor, inputImagePicture);	
+		        }
+				
 
+			
+		
+
+		Row   titreRows = sheet3.createRow(7);
 		Cell cellule  = titreRows.createCell(2) ; 
 			
-		cellule.setCellValue("hassen mahjoub ");
+		cellule.setCellValue("Liste_Det_Facture_Achat ");
 		
 		cellule.setCellStyle(ExcelUtilsXlsx.boldTitre);
-	
-        
-	    sheet3.addMergedRegion(new CellRangeAddress(8,9,2,7));
+	    sheet3.addMergedRegion(new CellRangeAddress(7,8,2,9));
+	    Row   rowDate = sheet3.createRow(6);
+	    Cell cellDate=rowDate.createCell(2);
+		cellDate.setCellValue("Le"+dateFormat2.format(d));
+		cellDate.setCellStyle(ExcelUtilsXlsx.boldRed3);
 	    		 
 
 		// Critaire de recherche
@@ -140,15 +163,20 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 		Row row=sheet3.createRow(numLigneCritRech);
 		Cell cell1=  row.createCell(numColCritRech);
 		cell1.setCellValue("Critère de recherche");
-		row.createCell(numColCritRech+1).setCellValue(dateTimeFormat2.format(d));
+		cell1.setCellStyle(ExcelUtilsXlsx.boldRed5);
+		
 		numLigneCritRech++;
 		if (isNotEmty(request.getFactureReference()))
 
 		{
 			numLigneCritRech++;
 			Row row0=sheet3.createRow(numLigneCritRech);
-			row0.createCell(numColCritRech).setCellValue("Réf Facture :");
-			row0.createCell(numColCritRech + 1).setCellValue(request.getFactureReference());
+			Cell cell2= row0.createCell(numColCritRech);
+			cell2.setCellStyle(ExcelUtilsXlsx.boldRed3);
+			cell2.setCellValue("Réf Facture :");
+			Cell cell3=row0.createCell(numColCritRech + 1);
+			cell3.setCellValue(request.getFactureReference());
+			cell3.setCellStyle(ExcelUtilsXlsx.boldRed3);
 			
 			
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
@@ -163,12 +191,15 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			PartieInteresseValue partieInteresse= partieInteresseeService.getById(request.getPartieIntId());
 
 			
-			row1.createCell(numColCritRech).setCellValue("Client :");
+			 Cell cell4= row1.createCell(numColCritRech);
+			cell4.setCellValue("Client :");
+			cell4.setCellStyle(ExcelUtilsXlsx.boldRed3);
 
-			row1.createCell(numColCritRech + 1).setCellValue( partieInteresse.getAbreviation());
-			
-			
-		
+			Cell cell5=row1.createCell(numColCritRech + 1);
+			cell5.setCellValue( partieInteresse.getAbreviation());
+			cell5.setCellStyle(ExcelUtilsXlsx.boldRed3);
+
+
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
 
 
@@ -180,8 +211,12 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			numLigneCritRech++;
 			Row row2=sheet3.createRow(numLigneCritRech);
 
-			row2.createCell(numColCritRech).setCellValue("Réf.Bon.Rec:");
-			row2.createCell(numColCritRech + 1).setCellValue(request.getInfoLivraison());
+			 Cell cell6=row2.createCell(numColCritRech);
+			cell6.setCellValue("Réf.Bon.Rec:");
+			cell6.setCellStyle(ExcelUtilsXlsx.boldRed3);
+			 Cell cell7=row2.createCell(numColCritRech + 1);
+			 cell7.setCellValue(request.getInfoLivraison());
+			 cell7.setCellStyle(ExcelUtilsXlsx.boldRed3);
 			
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
 
@@ -191,10 +226,14 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 		{
 			numLigneCritRech++;
 			Row row3=sheet3.createRow(numLigneCritRech);
-
-			row3.createCell(numColCritRech).setCellValue("Réf.Bon.Rec.Externe: :");
-			row3.createCell(numColCritRech + 1).setCellValue(request.getReferenceBlExterne());
+          
 			
+			Cell cell8=row3.createCell(numColCritRech);
+			cell8.setCellValue("Réf.Bon.Rec.Externe: :");
+			cell8.setCellStyle(ExcelUtilsXlsx.boldRed3);
+			 Cell cell9=row3.createCell(numColCritRech + 1);
+			 cell9.setCellValue(request.getReferenceBlExterne());
+			 cell9.setCellStyle(ExcelUtilsXlsx.boldRed3);			
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
 
 		}
@@ -209,8 +248,13 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			numLigneCritRech++;
 			Row row4=sheet3.createRow(numLigneCritRech);
 
-			row4.createCell(numColCritRech).setCellValue("Date Facture De:");
-			row4.createCell(numColCritRech + 1).setCellValue(dateFormat2.format(request.getDateFactureDe().getTime()));
+			Cell cell10=row4.createCell(numColCritRech);
+			cell10.setCellValue("Date Facture De:");
+			 cell10.setCellStyle(ExcelUtilsXlsx.boldRed3);			
+
+			 Cell cell11=row4.createCell(numColCritRech + 1);
+			 cell11.setCellValue(dateFormat2.format(request.getDateFactureDe().getTime()));
+			 cell11.setCellStyle(ExcelUtilsXlsx.boldRed3);			
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
 
 	
@@ -222,8 +266,14 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 
 			numLigneCritRech++;
 			Row row5=sheet3.createRow(numLigneCritRech);
-			row5.createCell(numColCritRech).setCellValue("Date Facture A :");
-			row5.createCell(numColCritRech + 1).setCellValue(dateFormat2.format(request.getDateFactureA().getTime()));
+			
+			Cell cell12=row5.createCell(numColCritRech);
+			cell12.setCellValue("Date Facture A :");
+			 cell12.setCellStyle(ExcelUtilsXlsx.boldRed3);			
+			 Cell cell13=row5.createCell(numColCritRech + 1);
+			cell13.setCellValue(dateFormat2.format(request.getDateFactureA().getTime()));
+			 cell13.setCellStyle(ExcelUtilsXlsx.boldRed3);			
+
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
 
 	
@@ -237,10 +287,16 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			numLigneCritRech++;
 			Row row6=sheet3.createRow(numLigneCritRech);
 
-			row6.createCell(numColCritRech).setCellValue("Ref Article :");
-			ArticleValue articleValue= articleService.getArticleParId(request.getProduitId());
+		Cell cell14=row6.createCell(numColCritRech);
+		cell14.setCellValue("Ref Article :");
+		cell14.setCellStyle(ExcelUtilsXlsx.boldRed3);			
 
-			row6.createCell(numColCritRech + 1).setCellValue(articleValue.getRef());
+		ArticleValue articleValue= articleService.getArticleParId(request.getProduitId());
+
+			Cell cell15=row6.createCell(numColCritRech + 1);
+			cell15.setCellValue(articleValue.getRef());
+			cell15.setCellStyle(ExcelUtilsXlsx.boldRed3);			
+
 			 
 			
 				
@@ -254,11 +310,16 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			numLigneCritRech++;
 			Row row7=sheet3.createRow(numLigneCritRech);
 
-			row7.createCell(numColCritRech).setCellValue("Designation  Article :");
+			 Cell cell16=row7.createCell(numColCritRech);
+			cell16.setCellValue("Designation  Article :");
+			cell16.setCellStyle(ExcelUtilsXlsx.boldRed3);			
+
 			ArticleValue articleValue= articleService.getArticleParId(request.getProduitId());
 
-			row7.createCell(numColCritRech + 1).setCellValue(articleValue.getDesignation());
-			 
+			 Cell cell17=row7.createCell(numColCritRech + 1);
+			 cell17.setCellValue(articleValue.getDesignation());
+			cell16.setCellStyle(ExcelUtilsXlsx.boldRed3);			
+
 			
 				
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
@@ -275,8 +336,13 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			Row row9=sheet3.createRow(numLigneCritRech);
 
 		
-			row9.createCell(numColCritRech).setCellValue("Quantité Du :");
-			row9.createCell(numColCritRech + 1).setCellValue(request.getQuantiteDe());
+	          Cell Cell18=row9.createCell(numColCritRech);
+			  Cell18.setCellValue("Quantité Du :");
+			  Cell18.setCellStyle(ExcelUtilsXlsx.boldRed3);
+		
+			  Cell Cell19= row9.createCell(numColCritRech + 1);
+			  Cell19.setCellValue(request.getQuantiteDe());
+			  Cell19.setCellStyle(ExcelUtilsXlsx.boldRed3);
 			
 			 
 			
@@ -290,8 +356,13 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			numLigneCritRech++;
 			Row row10=sheet3.createRow(numLigneCritRech);
 
-			row10.createCell(numColCritRech).setCellValue("Quantité A:");
-			row10.createCell(numColCritRech + 1).setCellValue(request.getQunatiteA());
+			 Cell cell20=row10.createCell(numColCritRech);
+			 cell20.setCellValue("Quantité A:");
+			 cell20.setCellStyle(ExcelUtilsXlsx.boldRed3);
+			 Cell cell21=row10.createCell(numColCritRech + 1);
+			cell21.setCellValue(request.getQunatiteA());
+			 cell21.setCellStyle(ExcelUtilsXlsx.boldRed3);
+
 			
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
 
@@ -306,8 +377,13 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			numLigneCritRech++;
 			Row row12=sheet3.createRow(numLigneCritRech);
 
-			row12.createCell(numColCritRech).setCellValue("Prix Du :");
-			row12.createCell(numColCritRech + 1).setCellValue(request.getPrixMin().toString());
+			Cell cell22=row12.createCell(numColCritRech);
+			cell22.setCellValue("Prix Du :");
+			 cell22.setCellStyle(ExcelUtilsXlsx.boldRed3);
+			Cell cell23=row12.createCell(numColCritRech + 1);
+			cell23.setCellValue(request.getPrixMin().toString());
+			 cell23.setCellStyle(ExcelUtilsXlsx.boldRed3);
+
 			
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
 
@@ -319,8 +395,14 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			numLigneCritRech++;
 			Row row13=sheet3.createRow(numLigneCritRech);
 
-			row13.createCell(numColCritRech).setCellValue("Prix A  :");
-			row13.createCell(numColCritRech + 1).setCellValue(request.getPrixMax().toString());
+			Cell cell24=row13.createCell(numColCritRech);
+			cell24.setCellValue("Prix A  :");
+			 cell24.setCellStyle(ExcelUtilsXlsx.boldRed3);
+
+			Cell cell25=row13.createCell(numColCritRech + 1);
+			cell25.setCellValue(request.getPrixMax().toString());
+			 cell25.setCellStyle(ExcelUtilsXlsx.boldRed3);
+
 			
 			sheet3.addMergedRegion(new CellRangeAddress(numLigneCritRech,numLigneCritRech,numColCritRech + 1,numColCritRech + 2));
 
@@ -338,16 +420,36 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 
 		int i = numLigneCritRech + 4;
 		 Row rowColones= sheet3.createRow(i-1);
-		 rowColones.createCell(2).setCellValue("Réference");
-		 rowColones.createCell(3).setCellValue("Client");
-		 rowColones.createCell(4).setCellValue("Réf.Bon.Rec");
-		 rowColones.createCell(5).setCellValue("Réf.Bon.Rec.Externe");
-		 rowColones.createCell(6).setCellValue("Date Facture");
-		 rowColones.createCell(7).setCellValue("Ref.Article");
-		 rowColones.createCell(8).setCellValue("ArticleDesignation");
-		 rowColones.createCell(9).setCellValue("Quantité");
-		 rowColones.createCell(10).setCellValue("prix");
-		 rowColones.createCell(11).setCellValue("Montant TTC");
+		 Cell cell26=rowColones.createCell(2);
+		 cell26 .setCellValue("Réference");
+		 cell26.setCellStyle(ExcelUtilsXlsx.boldRed2);
+		 Cell cell27=rowColones.createCell(3);
+		 cell27.setCellValue("Client");
+		 cell27.setCellStyle(ExcelUtilsXlsx.boldRed2);
+		 Cell cell28= rowColones.createCell(4);
+		 cell28.setCellValue("Réf.Bon.Rec");
+		 cell28.setCellStyle(ExcelUtilsXlsx.boldRed2);
+		 Cell cell29=rowColones.createCell(5);
+		 cell29.setCellValue("Réf.Bon.Rec.Externe");
+		 cell29.setCellStyle(ExcelUtilsXlsx.boldRed2);
+		 Cell cell30=rowColones.createCell(6);
+		 cell30.setCellValue("Date Facture");
+		 cell30.setCellStyle(ExcelUtilsXlsx.boldRed2);
+		 Cell cell31= rowColones.createCell(7);
+		cell31.setCellValue("Ref.Article");
+		 cell31.setCellStyle(ExcelUtilsXlsx.boldRed2);
+		 Cell cell32= rowColones.createCell(8);
+		 cell32.setCellValue("ArticleDesignation");
+		 cell32.setCellStyle(ExcelUtilsXlsx.boldRed2);
+		 Cell cell33=rowColones.createCell(9);
+		 cell33 .setCellValue("Quantité");
+		 cell33.setCellStyle(ExcelUtilsXlsx.boldRed2);
+		 Cell cell34=rowColones.createCell(10);
+		 cell34.setCellValue("prix");
+		 cell34.setCellStyle(ExcelUtilsXlsx.boldRed2);
+		 Cell cell35=rowColones.createCell(11);
+		cell35.setCellValue("Montant TTC");
+		 cell35.setCellStyle(ExcelUtilsXlsx.boldRed2);
 
 		  if(result.getList()!=null && result.getList().size()>0) {
 		    	 
@@ -356,63 +458,81 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 			{
 				 Row rowDonne=sheet3.createRow(i);
 
-				
+					Cell cell36=rowDonne.createCell(2);
+
 				if(element.getFactureReference()!=null) 
 				{
 					
 					 
-				rowDonne.createCell(2).setCellValue(element.getFactureReference());
+					cell36.setCellValue(element.getFactureReference());
+					cell36.setCellStyle(ExcelUtilsXlsx.boldRed);
 					 
 					
 
 				} 
 				else 
 				{
-					rowDonne.createCell(2).setCellValue("");
+					cell36.setCellValue("");
+					cell36.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 					 
 
 				}
+				Cell cell37=rowDonne.createCell(3);
+
 				if(element.getPartieIntId()!=null) {
 					
 					 
-					rowDonne.createCell(3).setCellValue(element.getClientAbreviation());
+					cell37.setCellValue(element.getClientAbreviation());
+					cell37.setCellStyle(ExcelUtilsXlsx.boldRed);
 					 
 					
 
 				} else {
-					rowDonne.createCell(3).setCellValue("");
+					cell37.setCellValue("");
+					cell37.setCellStyle(ExcelUtilsXlsx.boldRed);
 					 
 
 				}
-				
+				Cell cell38=rowDonne.createCell(4);
+
 				if(element.getInfoLivraison()!=null) {
 					
 					 
-					rowDonne.createCell(4).setCellValue(element.getInfoLivraison());
+					cell38.setCellValue(element.getInfoLivraison());
+					cell38.setCellStyle(ExcelUtilsXlsx.boldRed);
 					 
 					
 
 				} else {
-					rowDonne.createCell(4).setCellValue("");
+					cell38.setCellValue("");
+					cell38.setCellStyle(ExcelUtilsXlsx.boldRed);
 					 
 
 				}
+				Cell cell39=rowDonne.createCell(5);
+
 				if(element.getReferenceBlExterne()!=null) {
 					
-					rowDonne.createCell(5).setCellValue(element.getReferenceBlExterne());
+					cell39.setCellValue(element.getReferenceBlExterne());
+					cell39.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 
 					 
 					
 
 				} else {
-					rowDonne.createCell(5).setCellValue("");
+					cell39.setCellValue("");
+					cell39.setCellStyle(ExcelUtilsXlsx.boldRed);
 					 
 
 				}
 				
-				
+				Cell cell40=rowDonne.createCell(6);
+
 				if (element.getDateIntroduction() != null) {
-					rowDonne.createCell(6).setCellValue(dateFormat2.format(element.getDateIntroduction().getTime()));
+					cell40.setCellValue(dateFormat2.format(element.getDateIntroduction().getTime()));
+					cell40.setCellStyle(ExcelUtilsXlsx.boldRed);
 
 					 
 
@@ -421,14 +541,19 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 					
 					
 					
-					rowDonne.createCell(6).setCellValue("");
+					cell40.setCellValue("");
+					cell40.setCellStyle(ExcelUtilsXlsx.boldRed);
+
+					
 					 
 
 				}
 
-				
+				Cell cell41=rowDonne.createCell(7);
+
 				if(element.getProduitReference()!=null) {
-					rowDonne.createCell(7).setCellValue(element.getProduitReference());
+					cell41.setCellValue(element.getProduitReference());
+					cell41.setCellStyle(ExcelUtilsXlsx.boldRed);
 
 					
 					 
@@ -436,61 +561,79 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 					
 
 				} else {
-					rowDonne.createCell(7).setCellValue("");
-					 
+					cell41.setCellValue("");
+					cell41.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 
 				}
 				
-				
+				Cell cell42=rowDonne.createCell(8);
+
 				if(element.getProduitDesignation()!=null) {
 					
-					rowDonne.createCell(8).setCellValue(element.getProduitDesignation());
+					cell42.setCellValue(element.getProduitDesignation());
+					cell42.setCellStyle(ExcelUtilsXlsx.boldRed);
 
 					 
 					
 
 				} else {
-					rowDonne.createCell(8).setCellValue("");
+					cell42.setCellValue("");
+					cell42.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 					 
 
 				}
 				
-				
+				Cell cell43=rowDonne.createCell(9);
+
 				if(element.getQuantite()!=null) {
 					
-					rowDonne.createCell(9).setCellValue(element.getQuantite());
+					cell43.setCellValue(element.getQuantite());
 
-					 
+					cell43.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 					
 
 				} else {
-					rowDonne.createCell(9).setCellValue("");
+					cell43.setCellValue("");
+					cell43.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 					 
 
 				}
-				
+				Cell cell44=rowDonne.createCell(10);
+
 				if(element.getPrixUnitaireHT()!=null) {
 					
 					 
-					rowDonne.createCell(10).setCellValue(element.getPrixUnitaireHT());
-					 
+					cell44.setCellValue(element.getPrixUnitaireHT());
+					cell44.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 					
 
 				} else {
-					rowDonne.createCell(10).setCellValue("");
+					cell44.setCellValue("");
+					cell44.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 					 
 
 				}
-				
+				Cell cell45=rowDonne.createCell(11);
+
 				if(element.getPrixTotalHT()!=null) {
 					
 					 
-				rowDonne.createCell(11).setCellValue(element.getPrixTotalHT());
+					cell45.setCellValue(element.getPrixTotalHT());
+					cell45.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 					 
 					
 
 				} else {
-					rowDonne.createCell(11).setCellValue("");
+					cell45.setCellValue("");
+					cell45.setCellStyle(ExcelUtilsXlsx.boldRed);
+
 					 
 
 				}
@@ -513,12 +656,18 @@ public class GestionnaireFicheXlsxAchatRestImpl  extends AbstractGestionnaireDow
 
 			int numColBasDuPage = 2;
 			int numLigneBasDuPage = i + 2;
-//	sheet3.mergeCells(numColBasDuPage, numLigneBasDuPage, numColBasDuPage + 1, numLigneBasDuPage);
+
 
 			 sheet3.addMergedRegion(new CellRangeAddress(numLigneBasDuPage, numLigneBasDuPage,numColBasDuPage, numColBasDuPage + 1));
 			 Row rowNombrelignes= sheet3.createRow(numLigneBasDuPage);
-			 rowNombrelignes.createCell(numColBasDuPage).setCellValue("nombre des lignes");
-			 rowNombrelignes.createCell(numColBasDuPage + 2).setCellValue(result.getNombreResultaRechercher());
+			Cell cell46= rowNombrelignes.createCell(numColBasDuPage);
+			cell46.setCellValue("nombre des lignes");
+			cell46.setCellStyle(ExcelUtilsXlsx.boldRed5);
+
+			Cell cell47=rowNombrelignes.createCell(numColBasDuPage + 2);
+			cell47.setCellValue(result.getNombreResultaRechercher());
+			cell47.setCellStyle(ExcelUtilsXlsx.boldRed3);
+
 			 
 
 

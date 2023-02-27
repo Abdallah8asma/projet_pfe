@@ -46,6 +46,7 @@ public class EntiteStockValue implements Comparable<Object>{
 	
 	
 	private String producteurArticle;
+	private Double stockMin;
 	
 	
 	
@@ -553,6 +554,14 @@ public class EntiteStockValue implements Comparable<Object>{
 				+ ", finconeActuel=" + finconeActuel + ", libelleArticle=" + libelleArticle + ", poidsActuel="
 				+ poidsActuel + ", poidsReserve=" + poidsReserve + ", qteActuelle=" + qteActuelle
 				+ ", referenceArticle=" + referenceArticle + ", magasin=" + magasin + "]";
+	}
+
+	public Double getStockMin() {
+		return stockMin;
+	}
+
+	public void setStockMin(Double stockMin) {
+		this.stockMin = stockMin;
 	}
 
 

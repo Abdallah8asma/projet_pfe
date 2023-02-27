@@ -249,7 +249,7 @@ public class DetFactureAchatPersistanceImpl extends AbstractPersistance implemen
 
 			ResultatRechecheDetFactureAchatValue result = new ResultatRechecheDetFactureAchatValue();
 			result.setNombreResultaRechercher(Long.valueOf(list.size()));
-			Collections.sort(list);
+			//Collections.sort(list);
 			result.setList(list);
 		
 			
