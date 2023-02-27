@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IArticlePersistance;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.EntiteStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.RechercheMulticritereEntiteStockValue;
 import com.gpro.consulting.tiers.logistique.coordination.gs.value.ResultatRechecheEntiteStockStockValue;
@@ -17,7 +18,8 @@ public class EntiteStockDomaineImpl implements IEntiteStockDomaine{
 	
 	@Autowired
 	IEntiteStockPersistance entiteStockPersistance;
-	
+	@Autowired
+	IArticlePersistance articlePersistance;
 	
 	@Override
 	public ResultatRechecheEntiteStockStockValue rechercherEntiteStockMultiCritere(
@@ -29,6 +31,8 @@ public class EntiteStockDomaineImpl implements IEntiteStockDomaine{
 			for(EntiteStockValue value : result.getEntiteStock()){
 				if(value.getQteActuelle()!=null && value.getPmp()!=null)
 					value.setPrixTotal(value.getQteActuelle() * value.getPmp());
+				if (value.getArticle() != null)
+					value.setStockMin(articlePersistance.getArticleParId(value.getArticle()).getStockMin());
 			}
 		}
 		

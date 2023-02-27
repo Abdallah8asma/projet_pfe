@@ -147,7 +147,7 @@ public class ExcelUtilsXlsx {
 				
 				Font fontTitre = workbook.createFont();
 				fontTitre.setFontName("Arial");
-				fontTitre.setFontHeightInPoints((short) 12);
+				fontTitre.setFontHeightInPoints((short) 16);
 				fontTitre.setBold(true);
 				fontTitre.setUnderline((byte) 5);
 				fontTitre.setItalic(false);
