@@ -121,7 +121,21 @@ angular
       };
 
       $scope.getSousFamilleArticle();
+      $scope.getClientActif = function() {
 
+				//TODO cache
+				$http
+				  .get(
+					UrlCommun
+					 + "/baseInfo/getClientActif")
+				  .success(
+					function(baseInfo) {
+					  // $log.debug("baseInfo : ",baseInfo);
+					  $scope.clientActif = baseInfo;
+				
+					});
+			  }
+        $scope.getClientActif();
 
            // get Liste des compte comptable PI
            $scope.getListeCompteComptable = function () {
