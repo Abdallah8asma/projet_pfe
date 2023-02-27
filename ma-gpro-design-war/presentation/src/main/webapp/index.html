@@ -706,6 +706,7 @@
                         class="menu-item"
                         aria-haspopup="true"
                         permission="['Matiere_premiere_Consult']"
+                        ng-show="clientActif.special=='imprimerie'"
                       >
                         <a
                           href="#/elementsDeBase/film"
@@ -715,7 +716,7 @@
                           <i class="menu-bullet menu-bullet-dot">
                             <span></span>
                           </i>
-                          <span class="menu-text">Film</span>
+                          <span class="menu-text" >Film</span>
                         </a>
                       </li>
 
@@ -724,6 +725,8 @@
                       class="menu-item"
                       aria-haspopup="true"
                       permission="['Matiere_premiere_Consult']"
+                      ng-show="clientActif.special=='imprimerie'"
+
                     >
                       <a
                         href="#/elementsDeBase/forme"
