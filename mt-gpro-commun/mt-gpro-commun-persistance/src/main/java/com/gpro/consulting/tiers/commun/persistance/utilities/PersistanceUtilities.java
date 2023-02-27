@@ -1421,6 +1421,7 @@ public class PersistanceUtilities {
 	    vArticleEntity.setPiEntite(pArticleValue.getPiEntite());
 	    vArticleEntity.setNbrPose(pArticleValue.getNbrPose());
 	    vArticleEntity.setFichier(pArticleValue.getFichier());
+	    vArticleEntity.setStockMin(pArticleValue.getStockMin());
 	    
 	    // Liste Document
 	    if (pArticleValue.getDocumentEntites() != null) {
@@ -1555,6 +1556,7 @@ public class PersistanceUtilities {
 	    
 	    vArticleValue.setGrammage(pArticleEntity.getGrammage());
 	    vArticleValue.setDimension(pArticleEntity.getDimension());
+	    vArticleValue.setStockMin(pArticleEntity.getStockMin());
 	    
 	    // Liste Documents
 	    if (pArticleEntity.getDocumentEntites() != null) {
