@@ -173,6 +173,7 @@ public class ArticleValue implements Comparable<ArticleValue>{
 		private String nbrPose ;
 		
 		private String fichier;
+		private Double stockMin;
 		
 	public String getFichier() {
 			return fichier;
@@ -739,5 +740,15 @@ public class ArticleValue implements Comparable<ArticleValue>{
 		
 		return (element.getId().compareTo(id));
 	}
+
+	public Double getStockMin() {
+		return stockMin;
+	}
+
+	public void setStockMin(Double stockMin) {
+		this.stockMin = stockMin;
+	}
+
+	
 	
 }

@@ -124,7 +124,7 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">RÃ©f.</span>
+											<span class="input-group-text">R&eacute;f</span>
 										</div>
 										<input class="form-control" ng-model="articleCourante.ref"
 											ng-init="articleCourante.ref=''" />
@@ -135,7 +135,7 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">DÃ©signation</span>
+											<span class="input-group-text">D&eacute;signation</span>
 										</div>
 										<input class="form-control" ng-model="articleCourante.designation"
 											ng-init="articleCourante.designation=''" />
@@ -353,7 +353,7 @@
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
-											<label class="input-group-text ms-Label is-required">RÃ©f.</label>
+											<label class="input-group-text ms-Label is-required">R&eacute;f</label>
 										</div>
 										<input type="text" class="form-control" ng-model="articleCourante.ref"
 										
@@ -361,7 +361,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-8">
+							<div class="col-sm-4">
 								<div class="form-group">
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -372,6 +372,18 @@
 											ng-model="articleCourante.designation"
 										
 											required />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">StockMin</label>
+										</div>
+										<input type="text" class="form-control" ng-model="articleCourante.stockMin"
+										
+										/>
 									</div>
 								</div>
 							</div>
@@ -448,7 +460,7 @@
 										</div>
 										<select ui-select2 class="form-control" ng-model="articleCourante.uniteEntite"
 											ng-init="articleCourante.uniteEntite=''">
-											<OPTION value="">Toutes les UnitÃ©s</OPTION>
+											<OPTION value="">Toutes les Unit&eacute;s</OPTION>
 											<option ng-repeat="unite in ListUniteArticleCache" value="{{unite.id}}">{{unite.designation}}
 											</option>
 											
@@ -467,7 +479,7 @@
 										</div>
 										<select ui-select2 class="form-control" ng-model="articleCourante.unite2Entite"
 											ng-init="articleCourante.unite2Entite=''">
-											<OPTION value="">Toutes les UnitÃ©s</OPTION>
+											<OPTION value="">Toutes les Unit&eacute;s</OPTION>
 											<option ng-repeat="unite in ListUniteArticleCache" value="{{unite.id}}">{{unite.designation}}
 											</option>
 											
@@ -593,7 +605,7 @@
 									<div class="form-group">
 										<div class="input-group">
 											<div class="input-group-prepend">
-												<label class="input-group-text ms-Label is-required">MÃ©thode</label>
+												<label class="input-group-text ms-Label is-required">M&eacute;thode</label>
 											</div>
 											<select class="form-control" ng-model="articleCourante.methodeGestion"
 												ng-init="articleCourante.methodeGestion=''">

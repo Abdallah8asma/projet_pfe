@@ -498,6 +498,12 @@ angular.module('gpro.etatMP', [])
 					width :'8%'
 
 				},
+				{
+					field : 'stockMin',
+					displayName : 'Stock.Min',
+					width :'8%'
+
+				},
 			/*	{
 					field : 'prixUnitaire',
 					displayName : 'Price / U',
