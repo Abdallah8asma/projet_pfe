@@ -217,7 +217,7 @@ angular
 								$http
 										.get(
 												UrlAtelier
-														+ "/gestionnaireCache/listeMagasinCache")
+														+ "/magasin/depots")
 										.success(
 												function(dataMagasin) {
 													$scope.listeMagasinCache = dataMagasin;

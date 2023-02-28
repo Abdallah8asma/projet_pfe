@@ -1192,9 +1192,10 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text ms-Label"> Date Introduction</span>
                     </div>
-                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
-                      ng-model="factureVenteCourant.dateIntroduction" is-open="opened" datepicker-options="dateOptions"
-                      date-disabled="enabled(date, mode)" close-text="Close"  disabled />
+                    <input class="form-control" readonly="readonly"
+                    value="{{factureVenteCourant.dateIntroduction}}" datepicker-popup="{{format}}"
+                      ng-model="factureVenteCourant.dateIntroduction"  />
+                   
 
                     
                   </div>

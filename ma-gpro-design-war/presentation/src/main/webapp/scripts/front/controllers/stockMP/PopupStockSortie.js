@@ -32,7 +32,9 @@ angular
 								// entiteStockFourniture;
 								$scope.objetRechercher = {
 									typeEntite : typeEntite,
-									magasin : idMagasin
+									magasin : idMagasin,
+									quantite:0,
+									operateurQuantite:'>',
 								};
 
 								var deferred = $q.defer();
