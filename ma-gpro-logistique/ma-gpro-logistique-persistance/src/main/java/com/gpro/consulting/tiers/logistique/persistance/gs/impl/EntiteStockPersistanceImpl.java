@@ -538,6 +538,41 @@ public EntiteStockValue rechercheEntiteStockByArticleMagasin(Long IdArticle, Lon
 	    if (estNonVide(pRechercheMulticritereEntiteStockValue.getRefArticle())) {
 	    	  vWhereClause.add(vBuilder.equal(vRootEntiteStock.get("referenceArticle"),pRechercheMulticritereEntiteStockValue.getRefArticle()));
 	    }
+	    
+		if (pRechercheMulticritereEntiteStockValue.getQuantite() != null) {
+			Expression<Double> qte = vRootEntiteStock.get(qteActuelle);
+			switch (pRechercheMulticritereEntiteStockValue
+					.getOperateurQuantite()) {
+			case IConstante.OPERATEUR_EGALE:
+				vWhereClause.add(vBuilder.equal(
+						vRootEntiteStock.get(qteActuelle),
+						pRechercheMulticritereEntiteStockValue.getQuantite()));
+				break;
+			case IConstante.OPERATEUR_INFERIEUR:
+				vWhereClause.add(vBuilder.lt(qte,
+						pRechercheMulticritereEntiteStockValue.getQuantite()));
+				break;
+			case IConstante.OPERATEUR_SUPERIEUR:
+				vWhereClause.add(vBuilder.gt(qte,
+						pRechercheMulticritereEntiteStockValue.getQuantite()));
+				break;
+			case IConstante.OPERATEUR_INF_EGAL:
+				vWhereClause.add(vBuilder.le(qte,
+						pRechercheMulticritereEntiteStockValue.getQuantite()));
+
+				break;
+			case IConstante.OPERATEUR_SUP_EGALE:
+				vWhereClause.add(vBuilder.ge(qte,
+						pRechercheMulticritereEntiteStockValue.getQuantite()));
+				break;
+			case IConstante.OPERATEUR_DEFFERENT:
+				vWhereClause.add(vBuilder.notEqual(qte,
+						pRechercheMulticritereEntiteStockValue.getQuantite()));
+				break;
+			default:
+			}
+		}
+		
 
 	    /** execute query and do something with result **/
 	    vCriteriaQuery.select(vRootEntiteStock).where(vWhereClause.toArray(new Predicate[] {}));
