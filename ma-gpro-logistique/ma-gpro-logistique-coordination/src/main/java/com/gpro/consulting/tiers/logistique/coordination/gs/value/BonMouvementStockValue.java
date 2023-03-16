@@ -60,6 +60,7 @@ public class BonMouvementStockValue implements Comparable<Object> {
 	// Rempli pour le bon de type sortie
 	// Qui relie avec le bonReservation
 	private String numBRSortie;
+	
 
 	/**
 	 * @author Zeineb Medimagh
@@ -85,6 +86,7 @@ public class BonMouvementStockValue implements Comparable<Object> {
 
 	/** The origineFSuiveuse. */
 	private boolean origineFSuiveuse;
+	private String referenceBonReception;
 
 	/**
 	 * @return the partieintId
@@ -355,6 +357,14 @@ public class BonMouvementStockValue implements Comparable<Object> {
 
 	public void setOrigineFSuiveuse(boolean origineFSuiveuse) {
 		this.origineFSuiveuse = origineFSuiveuse;
+	}
+
+	public String getReferenceBonReception() {
+		return referenceBonReception;
+	}
+
+	public void setReferenceBonReception(String referenceBonReception) {
+		this.referenceBonReception = referenceBonReception;
 	}
 
 	@Override

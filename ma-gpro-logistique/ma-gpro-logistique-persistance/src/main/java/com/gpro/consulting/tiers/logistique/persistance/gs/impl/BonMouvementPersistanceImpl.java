@@ -274,6 +274,9 @@ public class BonMouvementPersistanceImpl extends AbstractPersistance implements 
 		bonMouvementEntite.setOfId(pBonMouvementStockValue.getOfId());
 		bonMouvementEntite.setNumBRSortie(pBonMouvementStockValue.getNumBRSortie());
 		bonMouvementEntite.setOrigineFSuiveuse(pBonMouvementStockValue.isOrigineFSuiveuse());
+		bonMouvementEntite.setReferenceBonReception(pBonMouvementStockValue.getReferenceBonReception());
+
+		
 		return bonMouvementEntite;
 	}
 
@@ -469,10 +472,10 @@ public class BonMouvementPersistanceImpl extends AbstractPersistance implements 
 	@Override
 	public BonMouvementStockValue rechercheBonMouvementParId(Long pBonMouvementId) {
 
-		System.out.println("-----rechercheBonMouvementParId---pBonMouvementId  :" + pBonMouvementId);
+		//System.out.println("-----rechercheBonMouvementParId---pBonMouvementId  :" + pBonMouvementId);
 		BonMouvementEntite vBonMouvementEntite = this.rechercherParId(pBonMouvementId, BonMouvementEntite.class);
 
-		System.out.println("-----rechercheBonMouvementParId-resultat--vBonMouvementEntite  :" + vBonMouvementEntite);
+		//System.out.println("-----rechercheBonMouvementParId-resultat--vBonMouvementEntite  :" + vBonMouvementEntite);
 
 		BonMouvementStockValue vBonMouvementValueResult = PersistanceUtilitiesGs.toValue(vBonMouvementEntite);
 		return vBonMouvementValueResult;
