@@ -201,7 +201,8 @@ public class BaseInfoEntity implements Serializable{
     private Boolean reglementAvoir ;
     @Column(name="besoin ")
     private Boolean besoin ;
-
+    @Column(name="reglement_bl")
+    private Boolean reglementBl ;
 	
 
 	public Boolean getContrainteModificationBl() {
@@ -594,6 +595,14 @@ public class BaseInfoEntity implements Serializable{
 
 	public void setBesoin(Boolean besoin) {
 		this.besoin = besoin;
+	}
+
+	public Boolean getReglementBl() {
+		return reglementBl;
+	}
+
+	public void setReglementBl(Boolean reglementBl) {
+		this.reglementBl = reglementBl;
 	}
 	
 }

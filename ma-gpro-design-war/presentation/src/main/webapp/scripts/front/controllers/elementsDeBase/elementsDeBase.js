@@ -26,7 +26,9 @@ angular
 					case 'produitFinancier':
 						$scope.ITEM = 'produitFinancier';
 						break;
-
+						case 'produitComposition':
+							$scope.ITEM = 'produitComposition';
+							break;
 				
 						case 'film':
 							$scope.ITEM = 'film';

@@ -200,6 +200,9 @@ public class PersistanceUtilities {
         dto.setSpecial(entity.getSpecial());
         dto.setReglementAvoir(entity.getReglementAvoir());
         dto.setBesoin(entity.getBesoin());
+        dto.setReglementBl(entity.getReglementBl());
+
+        
 		
         
 		return dto;
@@ -269,6 +272,7 @@ public class PersistanceUtilities {
 		entity.setSpecial(dto.getSpecial());
 		entity.setReglementAvoir(dto.getReglementAvoir());
 		entity.setBesoin(dto.getBesoin());
+		entity.setReglementBl(dto.getReglementBl());
 		
 		return entity;
 	}
@@ -3121,6 +3125,24 @@ public class PersistanceUtilities {
 			ebMoldsValue.setEmplacement(moldsEntite.getEmplacement());
 			return ebMoldsValue;
 		}
-	
+		public static ArticleProduitValue toValueEnrichi(ArticleProduitEntity entity) 
+		{
+			ArticleProduitValue articleProduitValue=toValue(entity);
+			if(entity.getId() != null)
+			{
+				articleProduitValue.setReferenceArticle(entity.getProduit().getReference());
+				articleProduitValue.setDesignationArticle(entity.getProduit().getDesignation());
 
-}
+			
+				
+				
+			    
+			}
+			return articleProduitValue;
+			
+				
+			
+		}
+		
+
+          }

@@ -30,17 +30,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.erp.socle.j2ee.mt.socle.report.impl.AbstractGestionnaireDownloadImpl;
 import com.gpro.consulting.tiers.commun.coordination.baseinfo.value.BaseInfoValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.BoutiqueValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.FamilleArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.FamilleProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ImpressionProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.PrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RechercheMulticritereProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherchePrixClientValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.RecherecheMulticritereArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheArticleProduitValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheArticleValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheProduitSerialisableValue;
 import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ResultatRechecheProduitValue;
@@ -57,10 +61,12 @@ import com.gpro.consulting.tiers.commun.rest.elementBase.impl.PrixClientRestImpl
 import com.gpro.consulting.tiers.commun.rest.report.utilities.ExcelUtils;
 import com.gpro.consulting.tiers.commun.service.baseinfo.IBaseInfoService;
 import com.gpro.consulting.tiers.commun.service.cache.IGestionnaireCacheService;
+import com.gpro.consulting.tiers.commun.service.elementBase.IArticleProduitService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IBoutiqueService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IFamilleArticleService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IFamilleProduitService;
+import com.gpro.consulting.tiers.commun.service.elementBase.IImpressionProduitService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IPrixClientService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitSerialisableService;
 import com.gpro.consulting.tiers.commun.service.elementBase.IProduitService;
@@ -159,7 +165,10 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 	@Autowired
 	IUniteArticleService uniteArticleService;
 
-
+     @Autowired
+     IArticleProduitService articleProduitService;
+     @Autowired
+     IImpressionProduitService iImpressionProduitService;
 	
 	
 	@RequestMapping(value = "/listArticle", method = RequestMethod.POST)
@@ -2532,5 +2541,360 @@ public class GestionnaireFicheCommunRestImpl extends AbstractGestionnaireDownloa
 											 * 
 											 * }
 											 */
+	@RequestMapping(value = "/listArticleProduit", method = RequestMethod.POST)
+	public ResponseEntity<byte[]> generateListArticleProduitReport(
+
+			@RequestBody RechercheMulticritereArticleProduitValue request
+			
+
+	) throws WriteException, IOException {
+		
+		BaseInfoValue baseInfo= baseInfoService.getClientActif();
+
+		Date d = new Date();
+
+		String dat = "" + dateFormat.format(d);
+		
+		excel_file_location = baseInfo.getExcelDirectory();
+
+
+		// this.rapport=true;
+		File f = new File(excel_file_location+"Article_Produit" + "-" + dat + ".xls");
+
+
+		ByteArrayOutputStream fileOut = new ByteArrayOutputStream();
+		WritableWorkbook Equilibrageworkbook = Workbook.createWorkbook(fileOut);
+
+		
+		Equilibrageworkbook.createSheet("Article_Produit", 0);
+		WritableSheet sheet3 = Equilibrageworkbook.getSheet(0);
+
+		sheet3.setColumnView(0, 7);
+		sheet3.setColumnView(1, 7);
+		sheet3.setColumnView(2, 25);
+
+		sheet3.setColumnView(3, 30);
+		sheet3.setColumnView(4, 20);
+		sheet3.setColumnView(5, 20);
+		sheet3.setColumnView(6, 20);
+		sheet3.setColumnView(7, 20);
+		sheet3.setColumnView(8, 20);
+		sheet3.setColumnView(9, 20);
+		sheet3.setColumnView(10, 20);
+
+		/**************************************************************************/
+		
+	
+		
+		if(baseInfo.getLogoPNG()!=null) {
+			WritableImage image = new WritableImage(2, 1, 1, 6, new File(baseInfo.getLogoPNG()));
+			sheet3.addImage(image);
+		}
+		
+
+		// Nom du rapport et la date
+
+		ExcelUtils.init();
+
+		// Nom du rapport et la date
+
+	
+		sheet3.addCell(new Label(2, 7, "    Liste des Articles du Produit", ExcelUtils.boldTitre));
+
+		sheet3.mergeCells(2, 7, 7, 8);
+
+		// Critaire de recherche
+		int numColCritRech = 2;
+		int numLigneCritRech = 14;
+
+		sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Critère de recherche", ExcelUtils.boldRed5));
+		sheet3.addCell(
+				new Label(numColCritRech + 1, numLigneCritRech, "" + dateTimeFormat2.format(d), ExcelUtils.boldRed3));
+		sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+		numLigneCritRech++;
+
+		if (isNotEmty(request.getArticleId()))
+
+		{
+			ProduitValue produitValue= produitService.rechercheProduitById(request.getArticleId());
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Réf :", ExcelUtils.boldRed3));
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, produitValue.getReference(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		if (isNotEmty(request.getArticleId()))
+
+		{			ProduitValue produitValue= produitService.rechercheProduitById(request.getArticleId());
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Désignation :", ExcelUtils.boldRed3));
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, produitValue.getDesignation() ,ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		if (isNotEmty(request.getSousFamilleArticleId()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Famille :", ExcelUtils.boldRed3));
+			
+			
+			
+			SousFamilleArticleValue sousFamilleArticleValue= sousFamilleArticleService.rechercheSousFamilleArticleById(request.getSousFamilleArticleId());
+
+
+			sheet3.addCell(
+					new Label(numColCritRech + 1, numLigneCritRech, sousFamilleArticleValue.getDesignation(), ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+		
+		if (isNotEmty(request.getDimension()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Dimension :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, request.getDimension().toString(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+
+		if (isNotEmty(request.getGrammage()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Grammage:", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, request.getGrammage().toString(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+		if (isNotEmty(request.getQteDe()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Quantité De :", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, request.getQteDe().toString(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+		if (isNotEmty(request.getQteA()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "quantité A:", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, request.getQteA().toString(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+		if (isNotEmty(request.getInfoMatiere()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "Info Matiere:", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, request.getInfoMatiere(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+		if (isNotEmty(request.getProduitSemiFini()))
+
+		{
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "ProduitSemiFini:", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, request.getProduitSemiFini(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+		if (isNotEmty(request.getImpressionProduitId()))
+
+		{
+						ImpressionProduitValue impressionProduitValue= iImpressionProduitService.rechercheImpressionProduitParId(request.getImpressionProduitId());
+
+			numLigneCritRech++;
+			sheet3.addCell(new Label(numColCritRech, numLigneCritRech, "ImpressionProduit:", ExcelUtils.boldRed3));
+			sheet3.addCell(new Label(numColCritRech + 1, numLigneCritRech, impressionProduitValue.getDesignation(),
+					ExcelUtils.boldRed3));
+			sheet3.mergeCells(numColCritRech + 1, numLigneCritRech, numColCritRech + 2, numLigneCritRech);
+
+		}
+		 request.setOptimized(RechercheMulticritereArticleProduitValue.checkForOptimization(request));
+
+		ResultatRechecheArticleProduitValue  result =  articleProduitService.rechercherProduitArticleMultiCritere(request);
+
+
+
+		int i = numLigneCritRech + 4;
+
+		sheet3.addCell(new Label(2, i - 1, "Référence", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(3, i - 1, "Désignation", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(4, i - 1, "Sous Famille", ExcelUtils.boldRed2));
+	
+		sheet3.addCell(new Label(5, i - 1, "Dimension", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(6, i - 1, "Grammage", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(7, i - 1, "Quantité", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(8, i - 1, "Info Matiere", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(9, i - 1, "ProduitSemiFini", ExcelUtils.boldRed2));
+		sheet3.addCell(new Label(10, i - 1, "ImpressionProduit", ExcelUtils.boldRed2));
+	
+
+			for (ArticleProduitValue element : result.getList()) {
+				
+				
+				
+		
+				if (element.getReferenceArticle() != null) {
+
+					sheet3.addCell(new Label(2, i, element.getReferenceArticle() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(2, i, "", ExcelUtils.boldRed));
+
+				}
+				
+				
+				if (element.getDesignationArticle() != null) {
+
+					sheet3.addCell(new Label(3, i, element.getDesignationArticle() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(3, i, "", ExcelUtils.boldRed));
+
+				}
+				
+				
+				if (element.getReferenceFamilleArticle() != null) {
+
+					sheet3.addCell(new Label(4, i, element.getReferenceFamilleArticle() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(4, i, "", ExcelUtils.boldRed));
+
+				}
+				
+				
+				if (element.getDimension() != null) {
+
+					sheet3.addCell(new Label(5, i, element.getDimension() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(5, i, "", ExcelUtils.boldRed));
+
+				}
+				
+				
+
+				if (element.getGrammage() != null) {
+
+					sheet3.addCell(new Label(6, i, element.getGrammage() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(6, i, "", ExcelUtils.boldRed));
+
+				}
+				
+				
+				if (element.getQte() != null) {
+
+					sheet3.addCell(new Label(7, i, element.getQte() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(7, i, "", ExcelUtils.boldRed));
+
+				}
+				if (element.getInfoMatiere() != null) {
+
+					sheet3.addCell(new Label(8, i, element.getInfoMatiere() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(8, i, "", ExcelUtils.boldRed));
+
+				}
+				if (element.getProduitSemiFini() != null) {
+
+					sheet3.addCell(new Label(9, i, element.getProduitSemiFini() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(9, i, "", ExcelUtils.boldRed));
+
+				}
+				if (element.getImpressionProduitId() != null) {
+
+					sheet3.addCell(new Label(10, i, element.getImpressionDesignation() + "", ExcelUtils.boldRed));
+
+				} else {
+					sheet3.addCell(new Label(10, i, "", ExcelUtils.boldRed));
+
+				}
+				i++;
+
+			}
+		
+
+
+		/*
+		 * sheet3.addCell(new Label(7, i, "Totale", ExcelUtils.boldRed2));
+		 * sheet3.mergeCells(7, i, 9, i);
+		 * 
+		 * i++;
+		 */
+
+		/*******************************************
+		 * BAS DU PAGE
+		 ****************************************/
+
+		int numColBasDuPage = 2;
+		int numLigneBasDuPage = i + 2;
+		sheet3.mergeCells(numColBasDuPage, numLigneBasDuPage, numColBasDuPage + 1, numLigneBasDuPage);
+		sheet3.addCell(new Label(numColBasDuPage, numLigneBasDuPage, "nombre des lignes ", ExcelUtils.boldRed5));
+		sheet3.addCell(new Label(numColBasDuPage + 2, numLigneBasDuPage,
+				result.getNombreResultaRechercher() + "", ExcelUtils.boldRed3));
+
+		numLigneBasDuPage++;
+
+		sheet3.mergeCells(numColBasDuPage, numLigneBasDuPage, numColBasDuPage + 1, numLigneBasDuPage);
+
+		numLigneBasDuPage++;
+		Equilibrageworkbook.write();
+		Equilibrageworkbook.close();
+
+		/******************************************************************************************/
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(new MediaType("application", "octet-stream"));
+
+		Date now = new Date();
+		String dateFormat1 = dateFormat.format(now);
+		String filename;
+	
+			filename = "mp-list" + dateFormat1 + ".xls";
+		// String filename = "sortie-stock_" + dateFormat1 ;
+		headers.setContentDispositionFormData(filename, filename);
+		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+		return new ResponseEntity<>(fileOut.toByteArray(), headers, HttpStatus.OK);
+		/******************************************************************************************/
+
+		/****************************
+		 * Ouvrir le nouveau fichier généré
+		 *******************************/
+
+		/*
+		 * // context.getExternalContext().getResponse();
+		 * response.setHeader("Content-disposition", "attachment; filename=" +
+		 * f.getName()); // System.out.println("nom du fichier" + f.getName());
+		 * response.setContentType("application/vnd.ms-excel"); int bufferSize = 64 *
+		 * 1024;
+		 */
+
+	}
 
 }
+

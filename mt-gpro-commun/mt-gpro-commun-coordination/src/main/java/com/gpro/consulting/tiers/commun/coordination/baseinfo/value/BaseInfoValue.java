@@ -91,6 +91,7 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 	  private String special;
 	  private Boolean reglementAvoir ;
 	  private Boolean besoin ;
+	  private Boolean reglementBl ;
 	
 	
 	
@@ -442,6 +443,14 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 
 	public void setBesoin(Boolean besoin) {
 		this.besoin = besoin;
+	}
+
+	public Boolean getReglementBl() {
+		return reglementBl;
+	}
+
+	public void setReglementBl(Boolean reglementBl) {
+		this.reglementBl = reglementBl;
 	}
 
 }

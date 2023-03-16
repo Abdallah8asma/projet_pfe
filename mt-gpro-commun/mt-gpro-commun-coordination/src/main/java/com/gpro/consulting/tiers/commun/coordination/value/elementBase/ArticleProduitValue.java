@@ -14,8 +14,11 @@ public class ArticleProduitValue {
 	private String produitSemiFini;
 
 	private String referenceArticle;
+	private String designationArticle;
+
 	
 	private Long impressionProduitId;
+	private String impressionDesignation;
 	
 	private String grammage;
 	
@@ -23,6 +26,7 @@ public class ArticleProduitValue {
 	
 	
 	private Long sousFamilleArticleId;
+	private String referenceFamilleArticle;
 	
 	
 	private String infoMatiere;
@@ -131,5 +135,33 @@ public class ArticleProduitValue {
 	public void setReferenceArticle(String referenceArticle) {
 		this.referenceArticle = referenceArticle;
 	}
+
+	
+
+	public String getDesignationArticle() {
+		return designationArticle;
+	}
+
+	public void setDesignationArticle(String designationArticle) {
+		this.designationArticle = designationArticle;
+	}
+
+	public String getReferenceFamilleArticle() {
+		return referenceFamilleArticle;
+	}
+
+	public void setReferenceFamilleArticle(String referenceFamilleArticle) {
+		this.referenceFamilleArticle = referenceFamilleArticle;
+	}
+
+	public String getImpressionDesignation() {
+		return impressionDesignation;
+	}
+
+	public void setImpressionDesignation(String impressionDesignation) {
+		this.impressionDesignation = impressionDesignation;
+	}
+
+	
 
 }
