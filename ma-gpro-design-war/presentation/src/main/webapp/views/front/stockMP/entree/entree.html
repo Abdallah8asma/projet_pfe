@@ -691,7 +691,7 @@
 												<th style="width: 10%">Palette</th>
 												<th style="width: 10%">Famille</th>
 												<!--<th>S.Famille</th>-->
-												<th style="width: 6%">Q.BL</th>
+												<!-- <th style="width: 6%">Q.BL</th> -->
 												<th style="width: 6%">Q.R</th>
 												<th style="width: 6%">P.U</th>
 												<th style="width: 6%">P.T</th>
@@ -711,9 +711,9 @@
 														class="form-control" /></td>
 												<td><span ng-model="articleF.familleArticle">{{articleF.familleArticle
 													|| 'empty' }}</span></td>
-												<td><input type="text"
+												<!-- <td><input type="text"
 														ng-disabled="!listArticlesFournituresE[$index].nouveau"
-														ng-model="articleF.quantite" class="form-control" /></td>
+														ng-model="articleF.quantite" class="form-control" /></td> -->
 												<td><input ng-change="controlEmptyField('fourniture')" required
 														type="text"
 														ng-disabled="!listArticlesFournituresE[$index].nouveau"

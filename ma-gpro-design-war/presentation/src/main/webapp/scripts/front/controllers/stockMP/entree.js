@@ -933,6 +933,11 @@ angular
 															displayName : 'Etat'
 														},
 														{
+															field : 'referenceBonReception',
+															displayName : 'Réf.B Réception'
+														},
+														
+														{
 															field : '',
 															width: 80,
 															
