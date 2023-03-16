@@ -3,7 +3,7 @@
   <head>
     <base href="" />
     <meta charset="utf-8" />
-    <title>GPRO | HELIA PACK</title>
+    <title>GPRO | the lebanese factory</title>
     <meta name="description" content="Updates and statistics" />
     <meta
       name="viewport"
@@ -903,6 +903,22 @@
                               <span></span>
                             </i>
                             <span class="menu-text">Produit Reporting</span>
+                          </a>
+                        </li>
+                        <li
+                          class="menu-item"
+                          aria-haspopup="true"
+                          permission="['Article_Consult']"
+                        >
+                          <a
+                            href="#/elementsDeBase/produitComposition"
+                            ng-click="upSelectedMenu('Produits ',' Produit Composition')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Composition Produit</span>
                           </a>
                         </li>
                         <!-- <li class="menu-item" aria-haspopup="true">
@@ -5714,6 +5730,8 @@
     <script src="scripts/front/services/gestionCommerciale/initialiserCommercial.js"></script>
     <script src="scripts/front/services/logistique/initialiserLogistique.js"></script>
     <script src="scripts/front/services/referentiel/initialiserReferentiel.js"></script>
+    <!-------------------------produitComposition--------------------->
+    <script src="scripts\front\controllers\elementsDeBase\produits\produitComposition.js"></script>
 
     <script src="scripts/app.js"></script>
     <!-- endbuild -->

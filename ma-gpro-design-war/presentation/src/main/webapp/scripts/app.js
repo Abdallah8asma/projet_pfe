@@ -235,8 +235,9 @@ angular
    'atelier.suivieOF',
    'gpro.film',
    'gpro.forme',
-   'gpro.service'
-   
+   'gpro.service',
+   /***************produitComposition */
+   'gpao.produitComposition'
 
 	
 	
