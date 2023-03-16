@@ -81,6 +81,7 @@ public class ReceptionAchatPersistanceUtilities {
 		entity.setRefFacture(value.getRefFacture());
 		
 		entity.setBoutiqueId(value.getBoutiqueId());
+		entity.setBonMouvementEntreeId(value.getBonMouvementEntreeId());
 
 		if (value.getListProduitReceptions() != null) {
 
@@ -171,6 +172,7 @@ public class ReceptionAchatPersistanceUtilities {
 		value.setRefBL(entity.getRefBL());
 		value.setRefFacture(entity.getRefFacture());
 		value.setBoutiqueId(entity.getBoutiqueId());
+		value.setBonMouvementEntreeId(entity.getBonMouvementEntreeId());
 
 		if (entity.getListProduitReceptions() != null) {
 

@@ -446,7 +446,18 @@
 			</span>
 		</div>
 	</div>
-
+	<div class="row" ng-hide="Stock">
+		<div class="col-sm-8"></div>
+		<div class="col-sm-4">
+			<br> <span>
+				<alert type="success" class="alert-success-sauvegarde light"
+					style="text-align: center !important; background-color: #1BC5BD !important">
+					<span ng-bind-html="'Entr&eacute;e De Stock effectu&eacute;e ' | safe_html"></span>
+					<a> <i class="fa fa-times close-notif" ng-click="closeStock()" style="color: #fff !important;"></i>
+					</a> </alert>
+			</span>
+		</div>
+	</div>
 	<div class="row" ng-show="displayMode != 'edit'">
 		<div class="col-md-12">
 		  <span class="ms-ListItem-primaryText line">Liste des Bons de Reception</span>
@@ -512,7 +523,7 @@
 								<span class="ms-CommandButton-label">Enregistrer</span>
 							</button>
 						</div>
-
+                        
 
 
 
@@ -551,7 +562,13 @@
 								<span class="ms-CommandButton-label">Facture</span>
 							</button>
 						</div>
-
+						<div class="ms-CommandButton" ng-show="modePdf == 'actif'">
+							<button class="ms-CommandButton-button" ng-click="creerBonMouvementStock(receptionAchatCourante)" 
+							ng-show="receptionAchatCourante.bonMouvementEntreeId==null">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+								<span class="ms-CommandButton-label">Stock</span>
+							</button>
+						</div>
 
 
 						<div class="ms-CommandButton">

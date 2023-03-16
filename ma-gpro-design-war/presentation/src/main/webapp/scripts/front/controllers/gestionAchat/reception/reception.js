@@ -24,7 +24,7 @@ angular
 				$scope.responseMsgDeleteReceptionAchat = "";
 
 				$scope.refBRIsInvalid = "false";
-
+			
 				// **Variables Modif/Ajout
 				// init objetCourant
 				$scope.receptionAchatCourante = {
@@ -76,6 +76,7 @@ angular
 				
 				
 				$scope.hiddenNotif ="true";
+				$scope.Stock ="true";
 				
 				$scope.traitementEnCours = "false";
 				$scope.traitementEnCoursGenererAll = "false";
@@ -111,6 +112,13 @@ angular
 										
 				$scope.closeNotif = function(){
 					$scope.hiddenNotif ="true";
+				}
+				$scope.showStock = function(){
+					$scope.Stock ="false";
+				}
+										
+				$scope.closeStock = function(){
+					$scope.Stock ="true";
 				}
 				
 
@@ -739,7 +747,7 @@ angular
 					$scope.receptionAchatCourante = {
 						"reference": "",
 						"partieInteresseId": "",
-						"idProduitParRef": "",
+						"creerBonMouvementStock": "",
 						"idProduitParDesignation": "",
 						"dateIntroductionDu": "",
 						"dateIntroductionA": "",
@@ -1469,11 +1477,12 @@ angular
 						$log.debug("Sauvegarder Ajout"
 							+ reception.reference);
 						$scope.creerReceptionAchat(reception);
+						
 					}
 					// refresh de la liste
 					// $scope.rechercherReceptionAchat({});
 				}
-
+				
 				// Création d'un Bon de reception de Achat
 				$scope.creerReceptionAchat = function (reception) {
 					
@@ -2114,6 +2123,53 @@ angular
 										.push($scope.documentReceptionAchatInserree);
 
 							};
+							$scope.creerBonMouvementStock = function(receptionAchatCourante
+								) {
+									$scope.traitementEnCours = "true";
+									let  bonMvtEntree= {
+												
+										'date':$scope.receptionAchatCourante.dateIntroduction,
+										'partieintId':$scope.receptionAchatCourante.partieIntersseId,
+										'type':"ENTREE",
+										'idMagasin':$scope.receptionAchatCourante.idDepot,
+										'bonMouvementEntreeId':$scope.receptionAchatCourante.bonMouvementEntreeId,
+										'referenceBonReception':$scope.receptionAchatCourante.reference,
+										'mouvements':[]
+ 
+									  };
+									for (var i = 0; i < $scope.listProduitReceptions.length; i++) {
+
+
+										let mvt = {} ;
+										
+										mvt.idArticle=$scope.listProduitReceptions[i].produitId;
+										mvt.quantiteReelle=$scope.listProduitReceptions[i].quantite;
+										mvt.prixUnitaire=$scope.listProduitReceptions[i].prixUnitaire;
+										mvt.type="ENTREE";
+
+										bonMvtEntree.mouvements.push(mvt);
+												
+												
+									}
+
+	
+								
+					
+					
+							$http
+									.post(
+											UrlAtelier
+													+ "/bonMouvementStock/creerBonMouvementStock",
+													bonMvtEntree)
+									.success(function(data) {
+										$scope.traitementEnCours = "false";
+					        	         $scope.showStock();
+                                        $scope.receptionAchatCourante.bonMouvementEntreeId=data;
+										$scope.updateReceptionAchat(receptionAchatCourante);
+
+									});
+			
+						}
 
 							// Enregistrer DocumentReceptionAchat
 							$scope.saveDocumentReceptionAchat = function(
@@ -2146,6 +2202,7 @@ angular
 											$log.debug('error : ' + error);
 										});
 							};
+							
 							/** Fin de gestion des DocumentProduit */
 				/** Fin de gestion des DocumentProduit */
 				/** Fin de gestion des DocumentReceptionAchat */

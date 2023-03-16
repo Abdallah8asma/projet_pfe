@@ -114,6 +114,9 @@ public class BonMouvementEntite implements Serializable {
 	/** The origineFSuiveuse. */
 	@Column(name = "origine_f_suiveuse")
 	private boolean origineFSuiveuse;
+	@Column(name="reference_bon_reception")
+	private String referenceBonReception;
+
 
 	/**
 	 * Gets the id.
@@ -387,6 +390,14 @@ public class BonMouvementEntite implements Serializable {
 
 	public void setOrigineFSuiveuse(boolean origineFSuiveuse) {
 		this.origineFSuiveuse = origineFSuiveuse;
+	}
+
+	public String getReferenceBonReception() {
+		return referenceBonReception;
+	}
+
+	public void setReferenceBonReception(String referenceBonReception) {
+		this.referenceBonReception = referenceBonReception;
 	}
 
 }
