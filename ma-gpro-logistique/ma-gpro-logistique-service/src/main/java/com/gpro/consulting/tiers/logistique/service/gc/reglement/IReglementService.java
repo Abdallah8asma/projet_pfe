@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.FactureNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.LivraisonNonRegleValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureAvoirNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefLivraisonNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.ValidateReglementResultValue;
@@ -66,5 +67,10 @@ public interface IReglementService {
 
 
 	public String getCurrentReferenceByDateAndDeclaree(Calendar stringToCalendar, boolean declarer, boolean increment);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByClientId(Long clientId);
+	@Transactional(readOnly = true, rollbackFor = Exception.class)
+	public List<RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByGroupeId(Long groupeId);
+
 
 }

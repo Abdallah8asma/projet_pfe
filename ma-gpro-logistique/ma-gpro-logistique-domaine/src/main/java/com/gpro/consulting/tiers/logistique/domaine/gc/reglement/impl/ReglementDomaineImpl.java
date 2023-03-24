@@ -4,24 +4,28 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.stereotype.Component;
 
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetAnnuelValue;
 import com.gpro.consulting.logistique.coordination.gc.guichet.value.GuichetMensuelValue;
-import com.gpro.consulting.tiers.commun.domaine.partieInteressee.IGroupeClientDomaine;
 import com.gpro.consulting.tiers.commun.domaine.partieInteressee.IPartieInteresseeDomaine;
 import com.gpro.consulting.tiers.logistique.coordination.gc.IConstanteCommerciale;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.CommandeVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.bonlivraison.value.LivraisonVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.FactureAvoirNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.FactureNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.LivraisonNonRegleValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureAvoirNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefLivraisonNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.ValidateReglementResultValue;
@@ -33,7 +37,6 @@ import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value.Resu
 import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.FactureVenteValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.guichet.IGuichetAnnuelDomaine;
 import com.gpro.consulting.tiers.logistique.domaine.gc.reglement.IReglementDomaine;
-import com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.ITypeReglementAchatPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.IBonCommandePersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.IBonLivraisonPersistance;
 import com.gpro.consulting.tiers.logistique.persistance.gc.guichet.IGuichetMensuelPersistance;
@@ -100,6 +103,28 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				reglement.setDeclarer(true);
 			}
 			
+			
+			if(reglement.getReference()==null || reglement.getReference().equals("")) {
+				//	reglement.setReference(this.getNumeroReglement(reglement.getDate()));
+					reglement.setReference(getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(),reglement.getDeclarer(), true));
+				}else if (reglement.getRefAvantChangement() != null
+						&& reglement.getReference().equals(reglement.getRefAvantChangement())) {
+					this.getCurrentReferenceByDateAndDeclaree(reglement.getDate(),reglement.getDeclarer(), true);
+				}
+				
+
+				
+				
+				if(reglement.getPartieIntId() != null) {
+					reglement.setGroupeClientId(partieInteresseeDomaine.getById(reglement.getPartieIntId()).getGroupeClientId());
+					
+				}
+					
+				
+				
+				
+				
+			
 			if(reglement.getListDetailsReglement() != null){
 				
 				Double montantTotal = ZERO;
@@ -117,20 +142,90 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				reglement.setMontantTotal(montantTotal);
 			}
 			
-			if(reglement.getReference()==null || reglement.getReference().equals("")) {
-			//	reglement.setReference(this.getNumeroReglement(reglement.getDate()));
-				reglement.setReference(getCurrentReferenceByDateAndDeclaree(Calendar.getInstance(),reglement.getDeclarer(), true));
-			}else if (reglement.getRefAvantChangement() != null
-					&& reglement.getReference().equals(reglement.getRefAvantChangement())) {
-				this.getCurrentReferenceByDateAndDeclaree(reglement.getDate(),reglement.getDeclarer(), true);
-			}
+	
 			
+			
+			Set<ElementReglementValue> listElementReglement = new HashSet<ElementReglementValue>();
+			
+			//logger.info("Delegating request to Service layer.");
 
 			
-			
-			if(reglement.getPartieIntId() != null)
-				reglement.setGroupeClientId(partieInteresseeDomaine.getById(reglement.getPartieIntId()).getGroupeClientId());
 				
+				if(reglement.getListElementReglement() != null){
+					
+					if(!reglement.getListElementReglement().isEmpty()){
+						
+						
+						Double montantBlRegle = 0d;
+						Double montantFactureRegle = 0d;
+						Double montantFactureAvoirRegle = 0d;
+						 Long  nombreBlRegle=0l;
+						 Long nombreFactureRegle=0l;
+						 Long nombreFactureAvoirRegle=0l;
+						
+						
+						for(ElementReglementValue elementReglement : reglement.getListElementReglement()){
+							
+							if(elementReglement.getMontantDemande() != null && elementReglement.getMontantDemande() != 0) {
+								
+								
+								if(estNonVide(elementReglement.getRefBL())) {
+									
+									montantBlRegle += elementReglement.getMontantDemande();
+									nombreBlRegle++;
+									
+								}
+								
+								
+
+								if(estNonVide(elementReglement.getRefFacture())) {
+									
+									montantFactureRegle += elementReglement.getMontantDemande();
+									
+									nombreFactureRegle++;
+								}
+								
+								
+								
+                                 if(estNonVide(elementReglement.getRefAvoir())) {
+									
+                                    montantFactureAvoirRegle += elementReglement.getMontantDemande();
+                                    nombreFactureAvoirRegle++;
+									
+								} 
+                                
+								
+                
+								listElementReglement.add(elementReglement);
+							}
+							
+								
+							
+							//logger.info("----refBL: "+elementReglement.getRefBL());
+							//logger.info("----refFacture: "+elementReglement.getRefFacture());
+							//logger.info("----montant: "+elementReglement.getMontant());
+						//logger.info("----montantDemande: "+elementReglement.getMontantDemande());
+							//logger.info("----dateEcheance: "+elementReglement.getDateEcheance());
+						}
+						reglement.setMontantBlRegle(montantBlRegle);
+						reglement.setMontantFactureAvoirRegle(montantFactureAvoirRegle);
+						reglement.setMontantFactureRegle(montantFactureRegle);
+						reglement.setNombreBlRegle(nombreBlRegle);
+						reglement.setNombreFactureRegle(nombreFactureRegle);
+						reglement.setNombreFactureAvoirRegle(nombreFactureAvoirRegle);
+						
+						
+					}
+					
+					
+				}
+			
+			
+			reglement.setListElementReglement(listElementReglement);
+			
+			
+			
+			
 		}
 		
 		//logger.info("Delegating request to Persistance layer.");
@@ -196,7 +291,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 	@Override
 	public ReglementValue getById(Long id) {
 		
-		//logger.info("Delegating request id: {} to Persistance layer.",id);
+		
 		
 		return reglementPersistance.getById(id);
 	}
@@ -237,7 +332,76 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				reglement.setMontantTotal(montantTotal);
 			}
 		}
+		Set<ElementReglementValue> listElementReglement = new HashSet<ElementReglementValue>();
 		
+		//logger.info("Delegating request to Service layer.");
+		
+		
+			
+			if(reglement.getListElementReglement() != null){
+				
+				if(!reglement.getListElementReglement().isEmpty()){
+					
+					
+					Double montantBlRegle = 0d;
+					Double montantFactureRegle = 0d;
+					Double montantFactureAvoirRegle = 0d;
+					Long  nombreBlRegle=0l;
+					Long nombreFactureRegle=0l;
+					Long nombreFactureAvoirRegle=0l;
+				
+					
+					for(ElementReglementValue elementReglement : reglement.getListElementReglement()){
+						
+						if(elementReglement.getMontantDemande() != null && elementReglement.getMontantDemande() != 0) {
+							
+							
+							if(estNonVide(elementReglement.getRefBL())) {
+								
+								montantBlRegle += elementReglement.getMontantDemande();
+								nombreBlRegle++;
+								
+							}
+                  
+
+							if(estNonVide(elementReglement.getRefFacture())) {
+								
+								montantFactureRegle += elementReglement.getMontantDemande();
+								
+								nombreFactureRegle++;
+							}
+                             
+							
+                             if(estNonVide(elementReglement.getRefAvoir())) {
+								
+                                montantFactureAvoirRegle += elementReglement.getMontantDemande();
+                                nombreFactureAvoirRegle++;
+								
+							}            
+							
+                             
+							listElementReglement.add(elementReglement);
+						}
+						
+							
+						
+						//logger.info("----refBL: "+elementReglement.getRefBL());
+						//logger.info("----refFacture: "+elementReglement.getRefFacture());
+						//logger.info("----montant: "+elementReglement.getMontant());
+					//logger.info("----montantDemande: "+elementReglement.getMontantDemande());
+						//logger.info("----dateEcheance: "+elementReglement.getDateEcheance());
+					}
+					reglement.setMontantBlRegle(montantBlRegle);
+					reglement.setMontantFactureAvoirRegle(montantFactureAvoirRegle);
+					reglement.setMontantFactureRegle(montantFactureRegle);
+					reglement.setNombreBlRegle(nombreBlRegle);
+					reglement.setNombreFactureRegle(nombreFactureRegle);
+					reglement.setNombreFactureAvoirRegle(nombreFactureAvoirRegle);
+					
+				}
+				
+				
+			}
 		//logger.info("Delegating request to Persistance layer.");
 		
 		return reglementPersistance.update(reglement);
@@ -553,6 +717,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		ValidateReglementResultValue result = new ValidateReglementResultValue();
 		
 		List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
+		List<FactureAvoirNonRegleValue> listFactureAvoirNonRegleVentre = new ArrayList<FactureAvoirNonRegleValue>();
 		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
 		
 		Double factureMontantTotal = ZERO;
@@ -560,6 +725,9 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		Double blMontantTotal = ZERO;
 		Double blMontantTotalRegle = ZERO;
+		//facture avoir 
+		Double factureAvoirMontantTotal = ZERO;
+		Double factureAvoirMontantTotalRegle = ZERO;
 		
 		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
 		
@@ -570,26 +738,34 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		
 		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientIdOptimiser(clientId);
+		List<FactureVenteValue> listFactureAvoirByClientId = facturePersistance.getByClientAvoirIdOptimiser(clientId);
+
 		
 		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientIdOptimiser(clientId);
 		
 		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
+		Map<String, Double> mapFactureAvoirRefMontantRegle = new HashMap<String, Double>();
 		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
 		
 		List<String> refBLFromFacture = new ArrayList<String>();
+		List<String> refAvoirFromFacture = new ArrayList<String>();
 		List<String> refBLFromReglement = new ArrayList<String>();
 		
 		List<String> refBLFromBL = new ArrayList<String>();
+
 		
 		//if(listReglementByClientId.size() > 0 ){
 			
 			//for(ReglementValue reglement : listReglementByClientId){
 				
-				//for(ElementReglementValue element: reglement.getListElementReglement()){
+				//for(ReglementValue reglement: reglement.getListElementReglement()){
+		
 		
 	  	for(ElementReglementValue element: listElementReglement){
+	  		
 					
 					if(element.getRefFacture() != null){
+						
 						
 						if(mapFactureRefMontantRegle.containsKey(element.getRefFacture())){
 							
@@ -608,6 +784,25 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 						}
 					}
 					
+                    if(element.getRefAvoir() != null){
+                    
+						//("zied"+mapFactureAvoirRefMontantRegle);
+
+						if(mapFactureAvoirRefMontantRegle.containsKey(element.getRefAvoir())){
+							//("saber hassen "+mapFactureAvoirRefMontantRegle);
+							Double currentAmount = mapFactureAvoirRefMontantRegle.get(element.getRefAvoir());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapFactureAvoirRefMontantRegle.put(element.getRefAvoir(), currentAmount);
+							
+						}else{
+							mapFactureAvoirRefMontantRegle.put(element.getRefAvoir(), element.getMontantDemande());
+						}
+					}
 					if(element.getRefBL() != null){
 						
 						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
@@ -647,10 +842,10 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		if(listFactureByClientId.size() > 0 ){
 			
 			for(FactureVenteValue factureVente : listFactureByClientId){
-				
 				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
-					
+			
 					if(factureVente.getMontantTTC() != null){
+						
 						
 						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
 						
@@ -684,7 +879,9 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 						listFactureNonRegleVentre.add(factureNonRegle);
 						
 					}
+					
 				}
+				
 				
 				String refBLSplitted[];
 				
@@ -702,7 +899,80 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 				
 			}
 			
+			
+			
 		}
+		//liste facture de type=avoir
+		
+        if(listFactureAvoirByClientId.size() > 0 ){
+        	
+        	
+		for(FactureVenteValue factureVenteAvoir : listFactureAvoirByClientId){
+			
+			
+			if(mapFactureAvoirRefMontantRegle.containsKey(factureVenteAvoir.getReference())){
+				
+				if(factureVenteAvoir.getMontantTTC() != null){
+					
+				
+					factureAvoirMontantTotal = factureAvoirMontantTotal + factureVenteAvoir.getMontantTTC();
+			
+					Double montantFactureAvoirRegle = mapFactureAvoirRefMontantRegle.get(factureVenteAvoir.getReference());
+					
+					if(montantFactureAvoirRegle != null){
+						
+						factureAvoirMontantTotalRegle = factureAvoirMontantTotalRegle + montantFactureAvoirRegle;
+						
+						Double montantResteARegle = factureVenteAvoir.getMontantTTC() - Math.abs(montantFactureAvoirRegle);
+						
+						if(montantResteARegle > 0.1){
+							
+						
+							
+							FactureAvoirNonRegleValue factureAvoirNonRegleValue = factureToFactureAvoirNonRegle(factureVenteAvoir);
+							
+							factureAvoirNonRegleValue.setMontantRegleAvoir(montantResteARegle);
+							
+							listFactureAvoirNonRegleVentre.add(factureAvoirNonRegleValue);
+							
+						}
+					}	
+				}
+			}else{
+			
+			
+				if(factureVenteAvoir.getMontantTTC() != null){
+					
+
+					FactureAvoirNonRegleValue factureAvoirNonRegleValue  = factureToFactureAvoirNonRegle(factureVenteAvoir);
+					
+					factureAvoirNonRegleValue.setMontantRegleAvoir(ZERO);
+					
+					listFactureAvoirNonRegleVentre.add(factureAvoirNonRegleValue);
+					
+				}
+			}
+			String refAvoirSplitted[];
+			
+			if(factureVenteAvoir.getInfoLivraison() != null){
+				
+				refAvoirSplitted = factureVenteAvoir.getInfoLivraison().split(SEPARATOR);
+				
+				for(int index=0; index < refAvoirSplitted.length ;index++){
+
+					refAvoirFromFacture.add(refAvoirSplitted[index]);
+					
+				}	
+				
+			}
+			
+		}
+		
+		
+		
+	}
+			
+		
 		
 		//list des refBL nonRegle
 		refBLFromBL.removeAll(refBLFromFacture);
@@ -757,6 +1027,10 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		result.setFactureMontantTotal(factureMontantTotal);
 		result.setFactureMontantTotalRegle(factureMontantTotalRegle);
 		result.setFactureMontantTotalNonRegle(factureMontantTotal - factureMontantTotalRegle);
+		//facture avoir;
+		result.setFactureAvoirMontantTotal(factureAvoirMontantTotal);
+		result.setFactureAvoirTotalRegle(factureAvoirMontantTotalRegle);
+		result.setFactureMontantAvoirTotalNonRegle(factureAvoirMontantTotal - factureAvoirMontantTotalRegle);
 		
 		result.setBlMontantTotal(blMontantTotal);
 		result.setBlMontantTotalRegle(blMontantTotalRegle);
@@ -764,6 +1038,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		result.setListFactureNonRegle(new TreeSet<>(listFactureNonRegleVentre));
 		result.setListLivraisonNonRegle(new TreeSet<>(listLivraisonNonRegle));
+		result.setListFactureAvoirNonRegle(new TreeSet<>(listFactureAvoirNonRegleVentre));
 		
 		return result;
 	}
@@ -778,6 +1053,19 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		factureNonRegle.setMontantFacture(factureVente.getMontantTTC());
 		
 		return factureNonRegle;
+	}
+private FactureAvoirNonRegleValue factureToFactureAvoirNonRegle(FactureVenteValue factureVente) 
+{
+		
+
+	FactureAvoirNonRegleValue factureAvoirNonRegle = new FactureAvoirNonRegleValue();
+	
+	factureAvoirNonRegle.setId(factureVente.getId());
+	factureAvoirNonRegle.setNumFactureAvoir(factureVente.getReference());
+	factureAvoirNonRegle.setDateAvoir(factureVente.getDate());
+	factureAvoirNonRegle.setMontantFactureAvoir(factureVente.getMontantTTC());
+	
+	return factureAvoirNonRegle;
 	}
 
 	private LivraisonNonRegleValue blToBLNonRegle(LivraisonVenteValue livraisonVente) {
@@ -1289,6 +1577,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		ValidateReglementResultValue result = new ValidateReglementResultValue();
 		
 		List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
+		List<FactureAvoirNonRegleValue> listFactureAvoirNonRegleVentre = new ArrayList<FactureAvoirNonRegleValue>();
 		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
 		
 		Double factureMontantTotal = ZERO;
@@ -1296,6 +1585,10 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		Double blMontantTotal = ZERO;
 		Double blMontantTotalRegle = ZERO;
+		//facture vente Avoir
+		Double factureAvoirMontantTotal = ZERO;
+		Double factureAvoirMontantTotalRegle = ZERO;
+		
 		
 		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByGroupeClientId(groupeClientId);
 		
@@ -1309,14 +1602,16 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		
 		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByGroupeClientIdOptimiser(groupeClientId);
+		List<FactureVenteValue> listFactureAvoirByClientId = facturePersistance.getByGroupeClientAvoirIdOptimiser(groupeClientId);
 		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByGroupeClientIdOptimiser(groupeClientId);
 		
 		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
 		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
+		Map<String, Double> mapFactureAvoirRefMontantRegle = new HashMap<String, Double>();
 		
 		List<String> refBLFromFacture = new ArrayList<String>();
 		List<String> refBLFromReglement = new ArrayList<String>();
-		
+		List<String> refAvoirFromFacture = new ArrayList<String>();
 		List<String> refBLFromBL = new ArrayList<String>();
 		
 		//if(listReglementByClientId.size() > 0 ){
@@ -1346,6 +1641,27 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 						}
 					}
 					
+					
+
+					 if(element.getRefAvoir() != null){
+		                    
+							//("zied"+mapFactureAvoirRefMontantRegle);
+
+							if(mapFactureAvoirRefMontantRegle.containsKey(element.getRefAvoir())){
+								//("saber hassen "+mapFactureAvoirRefMontantRegle);
+								Double currentAmount = mapFactureAvoirRefMontantRegle.get(element.getRefAvoir());
+								
+								if(currentAmount != null && element.getMontantDemande()!= null){
+									
+									currentAmount = currentAmount + element.getMontantDemande();
+								}
+								
+								mapFactureAvoirRefMontantRegle.put(element.getRefAvoir(), currentAmount);
+								
+							}else{
+								mapFactureAvoirRefMontantRegle.put(element.getRefAvoir(), element.getMontantDemande());
+							}
+						}
 					if(element.getRefBL() != null){
 						
 						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
@@ -1441,7 +1757,76 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 			}
 			
 		}
+//liste facture de type=avoir
 		
+        if(listFactureAvoirByClientId.size() > 0 ){
+        	
+        	
+		for(FactureVenteValue factureVenteAvoir : listFactureAvoirByClientId){
+			
+			
+			if(mapFactureAvoirRefMontantRegle.containsKey(factureVenteAvoir.getReference())){
+				
+				if(factureVenteAvoir.getMontantTTC() != null){
+					
+				
+					factureAvoirMontantTotal = factureAvoirMontantTotal + factureVenteAvoir.getMontantTTC();
+			
+					Double montantFactureAvoirRegle = mapFactureAvoirRefMontantRegle.get(factureVenteAvoir.getReference());
+					
+					if(montantFactureAvoirRegle != null){
+						
+						factureAvoirMontantTotalRegle = factureAvoirMontantTotalRegle + montantFactureAvoirRegle;
+						
+						Double montantResteARegle = factureVenteAvoir.getMontantTTC() - Math.abs(montantFactureAvoirRegle);
+						
+						if(montantResteARegle > 0.1){
+							
+						
+							
+							FactureAvoirNonRegleValue factureAvoirNonRegleValue = factureToFactureAvoirNonRegle(factureVenteAvoir);
+							
+							factureAvoirNonRegleValue.setMontantRegleAvoir(montantResteARegle);
+							
+							listFactureAvoirNonRegleVentre.add(factureAvoirNonRegleValue);
+							
+						}
+					}	
+				}
+			}else{
+			
+			
+				if(factureVenteAvoir.getMontantTTC() != null){
+					
+
+					FactureAvoirNonRegleValue factureAvoirNonRegleValue  = factureToFactureAvoirNonRegle(factureVenteAvoir);
+					
+					factureAvoirNonRegleValue.setMontantRegleAvoir(ZERO);
+					
+					listFactureAvoirNonRegleVentre.add(factureAvoirNonRegleValue);
+					
+				}
+			}
+			String refAvoirSplitted[];
+			
+			if(factureVenteAvoir.getInfoLivraison() != null){
+				
+				refAvoirSplitted = factureVenteAvoir.getInfoLivraison().split(SEPARATOR);
+				
+				for(int index=0; index < refAvoirSplitted.length ;index++){
+
+					refAvoirFromFacture.add(refAvoirSplitted[index]);
+					
+				}	
+				
+			}
+			
+		}
+		
+		
+		
+	}
+			
 		//list des refBL nonRegle
 		refBLFromBL.removeAll(refBLFromFacture);
 		
@@ -1497,12 +1882,18 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		result.setFactureMontantTotalRegle(factureMontantTotalRegle);
 		result.setFactureMontantTotalNonRegle(factureMontantTotal - factureMontantTotalRegle);
 		
+		//facture avoir;
+		result.setFactureAvoirMontantTotal(factureAvoirMontantTotal);
+		result.setFactureAvoirTotalRegle(factureAvoirMontantTotalRegle);
+		result.setFactureMontantAvoirTotalNonRegle(factureAvoirMontantTotal - factureAvoirMontantTotalRegle);
+		
 		result.setBlMontantTotal(blMontantTotal);
 		result.setBlMontantTotalRegle(blMontantTotalRegle);
 		result.setBlMontantTotalNonRegle(blMontantTotal - blMontantTotalRegle);
 		
 		result.setListFactureNonRegle(new TreeSet<>(listFactureNonRegleVentre));
 		result.setListLivraisonNonRegle(new TreeSet<>(listLivraisonNonRegle));
+		result.setListFactureAvoirNonRegle(new TreeSet<>(listFactureAvoirNonRegleVentre));
 		
 		return result;
 	}
@@ -1546,6 +1937,7 @@ public class ReglementDomaineImpl implements IReglementDomaine{
 		
 		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
 		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
+		
 		
 		List<String> refBLFromFacture = new ArrayList<String>();
 		List<String> refBLFromReglement = new ArrayList<String>();
@@ -2106,4 +2498,665 @@ List< RefLivraisonNonRegleValue> resultatlistRefBLNonRegle = new ArrayList< RefL
 		
 		return null;
 	}
+
+	@Override
+	public List<RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByClientId(Long clientId) {
+		// TODO Auto-generated method stub
+     List< RefFactureAvoirNonRegleValue> resultatlistRefFactureNonRegle = new ArrayList< RefFactureAvoirNonRegleValue>();
+		
+    
+		
+		List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
+		List<FactureAvoirNonRegleValue> listFactureAvoirNonRegleVentre = new ArrayList<FactureAvoirNonRegleValue>();
+		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
+		
+		Double factureMontantTotal = ZERO;
+		Double factureMontantTotalRegle = ZERO;
+		
+		Double blMontantTotal = ZERO;
+		Double blMontantTotalRegle = ZERO;
+		//facture avoir 
+		Double factureAvoirMontantTotal = ZERO;
+		Double factureAvoirMontantTotalRegle = ZERO;
+		
+		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByClientId(clientId);
+		
+		RechercheMulticritereReglementValue requestElementReglement = new RechercheMulticritereReglementValue();
+		requestElementReglement.setPartieIntId(clientId);
+		
+		List<ElementReglementValue> listElementReglement  = elementReglementPersistance.rechercherMultiCritereOptimiser(requestElementReglement);
+		
+		
+		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByClientIdOptimiser(clientId);
+		List<FactureVenteValue> listFactureAvoirByClientId = facturePersistance.getByClientAvoirIdOptimiser(clientId);
+
+		
+		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByClientIdOptimiser(clientId);
+		
+		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
+		Map<String, Double> mapFactureAvoirRefMontantRegle = new HashMap<String, Double>();
+		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
+		
+		List<String> refBLFromFacture = new ArrayList<String>();
+		List<String> refAvoirFromFacture = new ArrayList<String>();
+		List<String> refBLFromReglement = new ArrayList<String>();
+		
+		List<String> refBLFromBL = new ArrayList<String>();
+
+		
+		//if(listReglementByClientId.size() > 0 ){
+			
+			//for(ReglementValue reglement : listReglementByClientId){
+				
+				//for(ReglementValue reglement: reglement.getListElementReglement()){
+		
+		
+	  	for(ElementReglementValue element: listElementReglement){
+	  		
+					
+					if(element.getRefFacture() != null){
+						
+						
+						if(mapFactureRefMontantRegle.containsKey(element.getRefFacture())){
+							
+							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
+							
+						}else{
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
+						}
+					}
+					
+                 if(element.getRefAvoir() != null){
+                 
+						//("zied"+mapFactureAvoirRefMontantRegle);
+
+						if(mapFactureAvoirRefMontantRegle.containsKey(element.getRefAvoir())){
+							//("saber hassen "+mapFactureAvoirRefMontantRegle);
+							Double currentAmount = mapFactureAvoirRefMontantRegle.get(element.getRefAvoir());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapFactureAvoirRefMontantRegle.put(element.getRefAvoir(), currentAmount);
+							
+						}else{
+							mapFactureAvoirRefMontantRegle.put(element.getRefAvoir(), element.getMontantDemande());
+						}
+					}
+					if(element.getRefBL() != null){
+						
+						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
+							
+							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
+							
+						}else{
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
+						}
+						
+						refBLFromReglement.add(element.getRefBL());
+					}
+				}
+			//}
+		//}
+		
+		
+		if(listBLByClientId.size() > 0 ){
+			
+			for(LivraisonVenteValue livraisonVente : listBLByClientId){
+				
+				if(livraisonVente.getReference() != null){
+					
+					refBLFromBL.add(livraisonVente.getReference());
+				}
+			}
+		}
+		
+		if(listFactureByClientId.size() > 0 ){
+			
+			for(FactureVenteValue factureVente : listFactureByClientId){
+				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
+			
+					if(factureVente.getMontantTTC() != null){
+						
+						
+						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
+						
+						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
+						
+						if(montantFactureRegle != null){
+							
+							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
+							
+							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
+							
+							if(montantResteARegle > 0.1){
+								
+								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+								
+								factureNonRegle.setMontantRegle(montantResteARegle);
+								
+								listFactureNonRegleVentre.add(factureNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(factureVente.getMontantTTC() != null){
+
+						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+						
+						factureNonRegle.setMontantRegle(ZERO);
+						
+						listFactureNonRegleVentre.add(factureNonRegle);
+						
+					}
+					
+				}
+				
+				
+				String refBLSplitted[];
+				
+				if(factureVente.getInfoLivraison() != null){
+					
+					refBLSplitted = factureVente.getInfoLivraison().split(SEPARATOR);
+					
+					for(int index=0; index < refBLSplitted.length ;index++){
+
+						refBLFromFacture.add(refBLSplitted[index]);
+						
+					}	
+					
+				}
+				
+			}
+			
+			
+			
+		}
+		//liste facture de type=avoir
+		
+     if(listFactureAvoirByClientId.size() > 0 ){
+     	
+     	
+		for(FactureVenteValue factureVenteAvoir : listFactureAvoirByClientId){
+			
+			
+			if(mapFactureAvoirRefMontantRegle.containsKey(factureVenteAvoir.getReference())){
+				
+				if(factureVenteAvoir.getMontantTTC() != null){
+					
+				
+					factureAvoirMontantTotal = factureAvoirMontantTotal + factureVenteAvoir.getMontantTTC();
+			
+					Double montantFactureAvoirRegle = mapFactureAvoirRefMontantRegle.get(factureVenteAvoir.getReference());
+					
+					if(montantFactureAvoirRegle != null){
+						
+						factureAvoirMontantTotalRegle = factureAvoirMontantTotalRegle + montantFactureAvoirRegle;
+						
+						Double montantResteARegle = factureVenteAvoir.getMontantTTC() - Math.abs(montantFactureAvoirRegle);
+						
+						if(montantResteARegle > 0.1){
+							
+						
+							
+							FactureAvoirNonRegleValue factureAvoirNonRegleValue = factureToFactureAvoirNonRegle(factureVenteAvoir);
+							
+							factureAvoirNonRegleValue.setMontantRegleAvoir(montantResteARegle);
+							
+							listFactureAvoirNonRegleVentre.add(factureAvoirNonRegleValue);
+							
+						}
+					}	
+				}
+			}else{
+			
+			
+				if(factureVenteAvoir.getMontantTTC() != null){
+					
+
+					FactureAvoirNonRegleValue factureAvoirNonRegleValue  = factureToFactureAvoirNonRegle(factureVenteAvoir);
+					
+					factureAvoirNonRegleValue.setMontantRegleAvoir(ZERO);
+					
+					listFactureAvoirNonRegleVentre.add(factureAvoirNonRegleValue);
+					
+				}
+			}
+			String refAvoirSplitted[];
+			
+			if(factureVenteAvoir.getInfoLivraison() != null){
+				
+				refAvoirSplitted = factureVenteAvoir.getInfoLivraison().split(SEPARATOR);
+				
+				for(int index=0; index < refAvoirSplitted.length ;index++){
+
+					refAvoirFromFacture.add(refAvoirSplitted[index]);
+					
+				}	
+				
+			}
+			
+		}
+		
+		
+		
+	}
+			
+		
+		
+		//list des refBL nonRegle
+		refBLFromBL.removeAll(refBLFromFacture);
+		
+		for(String refBLNonRergle : refBLFromBL){
+			
+			//LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			LivraisonVenteValue livraisonVente = findBlByReference(listBLByClientId,refBLNonRergle);
+			
+			if(livraisonVente != null){
+				
+				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
+					
+					if(livraisonVente.getMontantTTC() != null){
+						
+						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
+						
+						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
+						
+						if(montantBLRegle != null){
+							
+							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
+							
+							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
+							
+							if(montantResteARegle > 0.1){
+								
+								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+								
+								livraisonNonRegle.setMontantRegle(montantResteARegle);
+								
+								listLivraisonNonRegle.add(livraisonNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(livraisonVente.getMontantTTC() != null){
+
+						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+						
+						livraisonNonRegle.setMontantRegle(ZERO);
+						
+						listLivraisonNonRegle.add(livraisonNonRegle);
+						
+					}
+				}
+			}
+		}
+		
+		//DISCUSS: recuperation des RefFacture Avoir  Non reglées
+		if(listFactureAvoirNonRegleVentre!= null){
+			for(FactureAvoirNonRegleValue elementFactureNonReg : listFactureAvoirNonRegleVentre){
+				RefFactureAvoirNonRegleValue factureNonRegle = new RefFactureAvoirNonRegleValue();
+				
+				factureNonRegle.setId(elementFactureNonReg.getId());
+				factureNonRegle.setNumFactureAvoir(elementFactureNonReg.getNumFactureAvoir());
+				
+				factureNonRegle.setMontantFactureAvoir(elementFactureNonReg.getMontantFactureAvoir());
+				factureNonRegle.setDateAvoir(elementFactureNonReg.getDateAvoir());
+				
+			
+				resultatlistRefFactureNonRegle.add(factureNonRegle);
+			}
+			
+			Collections.sort(resultatlistRefFactureNonRegle);
+		}
+		return resultatlistRefFactureNonRegle;
+		
+	}
+
+	@Override
+	public List<RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByGroupeId(Long groupeId) {
+		
+		// TODO Auto-generated method stub
+        List< RefFactureAvoirNonRegleValue> resultatlistRefFactureNonRegle = new ArrayList< RefFactureAvoirNonRegleValue>();
+		
+        List<FactureNonRegleValue> listFactureNonRegleVentre = new ArrayList<FactureNonRegleValue>();
+		List<FactureAvoirNonRegleValue> listFactureAvoirNonRegleVentre = new ArrayList<FactureAvoirNonRegleValue>();
+		List<LivraisonNonRegleValue> listLivraisonNonRegle = new ArrayList<LivraisonNonRegleValue>();
+		
+		Double factureMontantTotal = ZERO;
+		Double factureMontantTotalRegle = ZERO;
+		
+		Double blMontantTotal = ZERO;
+		Double blMontantTotalRegle = ZERO;
+		//facture vente Avoir
+		Double factureAvoirMontantTotal = ZERO;
+		Double factureAvoirMontantTotalRegle = ZERO;
+		
+		
+		//List<ReglementValue> listReglementByClientId = reglementPersistance.getByGroupeClientId(groupeClientId);
+		
+		
+		
+		RechercheMulticritereReglementValue requestElementReglement = new RechercheMulticritereReglementValue();
+		requestElementReglement.setGroupeClientId(groupeId);
+		
+		List<ElementReglementValue> listElementReglement  = elementReglementPersistance.rechercherMultiCritereOptimiser(requestElementReglement);
+		
+		
+		
+		List<FactureVenteValue> listFactureByClientId = facturePersistance.getByGroupeClientIdOptimiser(groupeId);
+		List<FactureVenteValue> listFactureAvoirByClientId = facturePersistance.getByGroupeClientAvoirIdOptimiser(groupeId);
+		List<LivraisonVenteValue> listBLByClientId = bonLivraisonPersistance.getByGroupeClientIdOptimiser(groupeId);
+		
+		Map<String, Double> mapFactureRefMontantRegle = new HashMap<String, Double>();
+		Map<String, Double> mapBLRefMontantRegle = new HashMap<String, Double>();
+		Map<String, Double> mapFactureAvoirRefMontantRegle = new HashMap<String, Double>();
+		
+		List<String> refBLFromFacture = new ArrayList<String>();
+		List<String> refBLFromReglement = new ArrayList<String>();
+		List<String> refAvoirFromFacture = new ArrayList<String>();
+		List<String> refBLFromBL = new ArrayList<String>();
+		
+		//if(listReglementByClientId.size() > 0 ){
+			
+			//for(ReglementValue reglement : listReglementByClientId){
+				
+				//for(ElementReglementValue element: reglement.getListElementReglement()){
+					
+			      for(ElementReglementValue element: listElementReglement){
+					
+					if(element.getRefFacture() != null){
+						
+						if(mapFactureRefMontantRegle.containsKey(element.getRefFacture())){
+							
+							Double currentAmount = mapFactureRefMontantRegle.get(element.getRefFacture());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), currentAmount);
+							
+						}else{
+							
+							mapFactureRefMontantRegle.put(element.getRefFacture(), element.getMontantDemande());
+						}
+					}
+					
+					
+
+					 if(element.getRefAvoir() != null){
+		                    
+
+							if(mapFactureAvoirRefMontantRegle.containsKey(element.getRefAvoir())){
+								Double currentAmount = mapFactureAvoirRefMontantRegle.get(element.getRefAvoir());
+								
+								if(currentAmount != null && element.getMontantDemande()!= null){
+									
+									currentAmount = currentAmount + element.getMontantDemande();
+								}
+								
+								mapFactureAvoirRefMontantRegle.put(element.getRefAvoir(), currentAmount);
+								
+							}else{
+								mapFactureAvoirRefMontantRegle.put(element.getRefAvoir(), element.getMontantDemande());
+							}
+						}
+					if(element.getRefBL() != null){
+						
+						if(mapBLRefMontantRegle.containsKey(element.getRefBL())){
+							
+							Double currentAmount = mapBLRefMontantRegle.get(element.getRefBL());
+							
+							if(currentAmount != null && element.getMontantDemande()!= null){
+								
+								currentAmount = currentAmount + element.getMontantDemande();
+							}
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), currentAmount);
+							
+						}else{
+							
+							mapBLRefMontantRegle.put(element.getRefBL(), element.getMontantDemande());
+						}
+						
+						refBLFromReglement.add(element.getRefBL());
+					}
+				}
+			//}
+		//}
+		
+		
+		if(listBLByClientId.size() > 0 ){
+			
+			for(LivraisonVenteValue livraisonVente : listBLByClientId){
+				
+				if(livraisonVente.getReference() != null){
+					
+					refBLFromBL.add(livraisonVente.getReference());
+				}
+			}
+		}
+		
+		if(listFactureByClientId.size() > 0 ){
+			
+			for(FactureVenteValue factureVente : listFactureByClientId){
+				
+				if(mapFactureRefMontantRegle.containsKey(factureVente.getReference())){
+					
+					if(factureVente.getMontantTTC() != null){
+						
+						factureMontantTotal = factureMontantTotal + factureVente.getMontantTTC();
+						
+						Double montantFactureRegle = mapFactureRefMontantRegle.get(factureVente.getReference());
+						
+						if(montantFactureRegle != null){
+							
+							factureMontantTotalRegle = factureMontantTotalRegle + montantFactureRegle;
+							
+							Double montantResteARegle = factureVente.getMontantTTC() - montantFactureRegle;
+							
+							if(montantResteARegle > 0.1){
+								
+								FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+								
+								factureNonRegle.setMontantRegle(montantResteARegle);
+								
+								listFactureNonRegleVentre.add(factureNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(factureVente.getMontantTTC() != null){
+
+						FactureNonRegleValue factureNonRegle = factureToFactureNonRegle(factureVente);
+						
+						factureNonRegle.setMontantRegle(ZERO);
+						
+						listFactureNonRegleVentre.add(factureNonRegle);
+						
+					}
+				}
+				
+				String refBLSplitted[];
+				
+				if(factureVente.getInfoLivraison() != null){
+					
+					refBLSplitted = factureVente.getInfoLivraison().split(SEPARATOR);
+					
+					for(int index=0; index < refBLSplitted.length ;index++){
+
+						refBLFromFacture.add(refBLSplitted[index]);
+						
+					}	
+					
+				}
+				
+			}
+			
+		}
+//liste facture de type=avoir
+		
+        if(listFactureAvoirByClientId.size() > 0 ){
+        	
+        	
+		for(FactureVenteValue factureVenteAvoir : listFactureAvoirByClientId){
+			
+			
+			if(mapFactureAvoirRefMontantRegle.containsKey(factureVenteAvoir.getReference())){
+				
+				if(factureVenteAvoir.getMontantTTC() != null){
+					
+				
+					factureAvoirMontantTotal = factureAvoirMontantTotal + factureVenteAvoir.getMontantTTC();
+			
+					Double montantFactureAvoirRegle = mapFactureAvoirRefMontantRegle.get(factureVenteAvoir.getReference());
+					
+					if(montantFactureAvoirRegle != null){
+						
+						factureAvoirMontantTotalRegle = factureAvoirMontantTotalRegle + montantFactureAvoirRegle;
+						
+						Double montantResteARegle = factureVenteAvoir.getMontantTTC() - Math.abs(montantFactureAvoirRegle);
+						
+						if(montantResteARegle > 0.1){
+							
+						
+							
+							FactureAvoirNonRegleValue factureAvoirNonRegleValue = factureToFactureAvoirNonRegle(factureVenteAvoir);
+							
+							factureAvoirNonRegleValue.setMontantRegleAvoir(montantResteARegle);
+							
+							listFactureAvoirNonRegleVentre.add(factureAvoirNonRegleValue);
+							
+						}
+					}	
+				}
+			}else{
+			
+			
+				if(factureVenteAvoir.getMontantTTC() != null){
+					
+
+					FactureAvoirNonRegleValue factureAvoirNonRegleValue  = factureToFactureAvoirNonRegle(factureVenteAvoir);
+					
+					factureAvoirNonRegleValue.setMontantRegleAvoir(ZERO);
+					
+					listFactureAvoirNonRegleVentre.add(factureAvoirNonRegleValue);
+					
+				}
+			}
+			String refAvoirSplitted[];
+			
+			if(factureVenteAvoir.getInfoLivraison() != null){
+				
+				refAvoirSplitted = factureVenteAvoir.getInfoLivraison().split(SEPARATOR);
+				
+				for(int index=0; index < refAvoirSplitted.length ;index++){
+
+					refAvoirFromFacture.add(refAvoirSplitted[index]);
+					
+				}	
+				
+			}
+			
+		}
+		
+		
+		
+	}
+			
+		//list des refBL nonRegle
+		refBLFromBL.removeAll(refBLFromFacture);
+		
+		for(String refBLNonRergle : refBLFromBL){
+			
+			//LivraisonVenteValue livraisonVente = bonLivraisonPersistance.getByReference(refBLNonRergle);
+			
+			LivraisonVenteValue livraisonVente = findBlByReference(listBLByClientId,refBLNonRergle);
+			
+			if(livraisonVente != null){
+				
+				if(mapBLRefMontantRegle.containsKey(livraisonVente.getReference())){
+					
+					if(livraisonVente.getMontantTTC() != null){
+						
+						blMontantTotal = blMontantTotal + livraisonVente.getMontantTTC();
+						
+						Double montantBLRegle = mapBLRefMontantRegle.get(livraisonVente.getReference());
+						
+						if(montantBLRegle != null){
+							
+							blMontantTotalRegle = blMontantTotalRegle + montantBLRegle;
+							
+							Double montantResteARegle = livraisonVente.getMontantTTC() - montantBLRegle;
+							
+							if(montantResteARegle > 0.1){
+								
+								LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+								
+								livraisonNonRegle.setMontantRegle(montantResteARegle);
+								
+								listLivraisonNonRegle.add(livraisonNonRegle);
+								
+							}
+						}	
+					}
+				}else{
+					
+					if(livraisonVente.getMontantTTC() != null){
+
+						LivraisonNonRegleValue livraisonNonRegle = blToBLNonRegle(livraisonVente);
+						
+						livraisonNonRegle.setMontantRegle(ZERO);
+						
+						listLivraisonNonRegle.add(livraisonNonRegle);
+						
+					}
+				}
+			}
+		}
+		//DISCUSS: recuperation des RefFacture Non reglées
+		if(listFactureAvoirNonRegleVentre != null){
+			for(FactureAvoirNonRegleValue elementFactureNonReg : listFactureAvoirNonRegleVentre){
+				RefFactureAvoirNonRegleValue factureNonRegle = new RefFactureAvoirNonRegleValue();
+				
+				factureNonRegle.setId(elementFactureNonReg.getId());
+				factureNonRegle.setNumFactureAvoir(elementFactureNonReg.getNumFactureAvoir());
+				factureNonRegle.setMontantFactureAvoir(elementFactureNonReg.getMontantFactureAvoir());
+				factureNonRegle.setDateAvoir(elementFactureNonReg.getDateAvoir());
+				
+			
+				resultatlistRefFactureNonRegle.add(factureNonRegle);
+			}
+			
+			Collections.sort(resultatlistRefFactureNonRegle);
+		}
+		return resultatlistRefFactureNonRegle;
 }
+}
+	

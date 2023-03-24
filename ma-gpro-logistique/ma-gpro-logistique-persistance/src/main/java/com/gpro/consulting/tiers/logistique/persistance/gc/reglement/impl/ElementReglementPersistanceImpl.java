@@ -48,6 +48,9 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.reglement.utility.Reg
 public class ElementReglementPersistanceImpl extends AbstractPersistance implements IElementReglementPersistance{
 
 	private static final Logger logger = LoggerFactory.getLogger(ElementReglementPersistanceImpl.class);
+
+
+	private static final int MAX_RESULTS = 52;
 	
 	
 	private String PREDICATE_REGLEMENT = "reglement";
@@ -61,6 +64,7 @@ public class ElementReglementPersistanceImpl extends AbstractPersistance impleme
 	private String PREDICATE_REFERENCE = "reference";
 	private String PREDICATE_MONTANT = "montantTotal";
 	private String PREDICATE_IDDEPOT = "idDepot";
+	private String PREDICATE_REFERENCE_AVOIR= "refAvoir";
 	
 	private String PERCENT = "%";
 	
@@ -233,7 +237,22 @@ public class ElementReglementPersistanceImpl extends AbstractPersistance impleme
 	    }
 		
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
-	    List <ElementReglementEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	    
+		
+		//TODO ajout condition if optimised
+		
+		List <ElementReglementEntity> resultatEntite = null;
+
+		if(request.isOptimized())
+		{
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).setMaxResults(MAX_RESULTS).getResultList();
+		}
+		
+		else
+			
+		{
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		}
 
 	    List<ResultatRechecheElementReglementElementValue> list = new ArrayList<ResultatRechecheElementReglementElementValue>();
 	    
@@ -737,7 +756,13 @@ public class ElementReglementPersistanceImpl extends AbstractPersistance impleme
     	
 	    	whereClause.add(criteriaBuilder.lessThanOrEqualTo(jointure_elementReglement_reglement.<Double>get(PREDICATE_MONTANT), request.getMontantMax()));
 	    }
-		
+		//avoir
+	    if (estNonVide(request.getRefAvoir())) {
+			Expression<String> path = root.get(PREDICATE_REFERENCE_AVOIR);
+			Expression<String> upper =criteriaBuilder.upper(path);
+			Predicate predicate = criteriaBuilder.like(upper, PERCENT + request.getRefAvoir().toUpperCase() + PERCENT);
+			whereClause.add(criteriaBuilder.and(predicate));
+		}
 		
 		
 		criteriaQuery.select(criteriaBuilder.array(
@@ -747,7 +772,8 @@ public class ElementReglementPersistanceImpl extends AbstractPersistance impleme
 	 			root.get("refFacture").as(String.class),	 	 		
 	 			root.get("refBL").as(String.class),
 	 		    root.get("montantDemande").as(Double.class),
-	 		    root.get("dateEcheance").as(Calendar.class)
+	 		    root.get("dateEcheance").as(Calendar.class),
+	 		    root.get("refAvoir").as(String.class)
 	 			
 	 			
 				)).where(whereClause.toArray(new Predicate[] {}));
@@ -771,6 +797,7 @@ public class ElementReglementPersistanceImpl extends AbstractPersistance impleme
 		    	entity.setRefBL((String) element[3]);
 		    	entity.setMontantDemande((Double)element[4]);
 		    	entity.setDateEcheance((Calendar) element[5]);
+		    	entity.setRefAvoir((String)element[6]);
 		    	
 		    	
 		    	

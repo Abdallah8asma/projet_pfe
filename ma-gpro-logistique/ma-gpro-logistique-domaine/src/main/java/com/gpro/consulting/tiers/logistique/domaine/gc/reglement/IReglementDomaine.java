@@ -3,6 +3,7 @@ package com.gpro.consulting.tiers.logistique.domaine.gc.reglement;
 import java.util.Calendar;
 import java.util.List;
 
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureAvoirNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefLivraisonNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.ValidateReglementResultValue;
@@ -49,6 +50,9 @@ public interface IReglementDomaine {
 	public String getCurrentReference(Calendar instance, boolean b);
 
 	public String getCurrentReferenceByDateAndDeclaree(Calendar date, boolean declarer, boolean increment);
+	public List<RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByClientId(Long clientId);
+	public List<RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByGroupeId(Long groupeId);
+
 
 
 }

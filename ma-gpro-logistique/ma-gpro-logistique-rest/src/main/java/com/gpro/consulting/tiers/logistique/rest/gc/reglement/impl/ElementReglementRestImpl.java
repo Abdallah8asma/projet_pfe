@@ -56,8 +56,9 @@ public class ElementReglementRestImpl {
 		
 		
 		ResultatRechecheElementReglementValue result;
-		
-		if(estNonVide(request.getNumPiece()) || estNonVide(request.getReferenceDetailReglement()) )  {
+		request.setOptimized(RechercheMulticritereReglementValue.checkForOptimization(request));
+
+		if(estNonVide(request.getNumPiece()) || estNonVide(request.getReferenceDetailReglement()))  {
 			
 		
 			
