@@ -62,5 +62,8 @@ public interface IFacturePersistance {
 	public List<FactureVenteValue> getByClientIdOptimiser(Long clientId);
 	
 	public List<FactureVenteValue> getByGroupeClientIdOptimiser(Long groupeClientId);
+	public List<FactureVenteValue> getByClientAvoirIdOptimiser(Long clientId);
+	
+	public List<FactureVenteValue> getByGroupeClientAvoirIdOptimiser(Long groupeClientId);
 
 }

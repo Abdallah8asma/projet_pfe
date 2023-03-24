@@ -2,6 +2,8 @@ package com.gpro.consulting.tiers.logistique.coordination.gc.reglement.value;
 
 import java.util.Calendar;
 
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.RechercheMulticritereDetFactureVenteValue;
+
 /**
  * @author Wahid Gazzah
  * @since 01/07/2016
@@ -48,9 +50,9 @@ public class RechercheMulticritereReglementValue {
 	private String hasElementReglement;
 	
 	private String hasDetailReglement;
+	private boolean isOptimized;
 	
-	
-	
+	private String refAvoir;
 	
 	
 
@@ -222,4 +224,57 @@ public class RechercheMulticritereReglementValue {
 		this.montantMax = montantMax;
 	}
 
+	public boolean isOptimized() {
+		return isOptimized;
+	}
+
+	public void setOptimized(boolean isOptimized) {
+		this.isOptimized = isOptimized;
+	}
+	
+	public String getRefAvoir() {
+		return refAvoir;
+	}
+
+	public void setRefAvoir(String refAvoir) {
+		this.refAvoir = refAvoir;
+	}
+
+	public static boolean checkForOptimization(RechercheMulticritereReglementValue request) {
+		
+		return isNullOrEmpty(request.getPartieIntId())
+	
+			
+				&& isNullOrEmpty(request.getBanque())
+				&& isNullOrEmpty(request.getBoutiqueId())
+				&& isNullOrEmpty(request.getGroupeClientId()) 
+				&& isNullOrEmpty(request.getHasDetailReglement())
+				&& isNullOrEmpty(request.getHasElementReglement())
+				&& isNullOrEmpty(request.getMontant())
+				&& isNullOrEmpty(request.getMontantMax()) 
+				&& isNullOrEmpty(request.getMontantMin())
+				&& isNullOrEmpty(request.getRefBL())
+				&& isNullOrEmpty(request.getReferenceDetailReglement())
+		        &&isNullOrEmpty(request.getRefFacture())
+		        &&isNullOrEmpty(request.getReglementId())
+		        &&isNullOrEmpty(request.getNumPiece())
+		        &&isNullOrEmpty(request.getReference())
+		        &&isNullOrEmpty(request.getRefAvoir())
+		        &&isNullOrEmpty(request.getDateReglementMax())
+		        &&isNullOrEmpty(request.getDateReglementMin())
+		        &&isNullOrEmpty(request.getDateEcheance())
+		        &&isNullOrEmpty(request.getDateEmission());
+		         
+		
+			
+				
+				
+	
+				
+	            
+	         	
+	}
+	public static boolean isNullOrEmpty(Object criteria) {
+		return criteria == null || criteria.toString().length() == 0;
+	}
 }

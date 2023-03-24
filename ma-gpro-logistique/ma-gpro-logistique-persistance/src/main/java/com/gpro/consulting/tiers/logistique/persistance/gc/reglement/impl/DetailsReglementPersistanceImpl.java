@@ -92,7 +92,7 @@ public class DetailsReglementPersistanceImpl extends AbstractPersistance impleme
 	
 	
 	private String PERCENT = "%";
-	
+	private int MAX_RESULTS =52;
 	  @Autowired
 	  private IPartieInteresseePersistance partieInteresseePersistance ;
 	
@@ -247,7 +247,19 @@ public class DetailsReglementPersistanceImpl extends AbstractPersistance impleme
 	    }
 		
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
-	    List <DetailsReglementEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	    List <DetailsReglementEntity> resultatEntite= null;
+		
+		if(request.isOptimized())
+		{
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).setMaxResults(MAX_RESULTS).getResultList();
+		}
+		
+		else
+			
+		{
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		}
+
 
 	    List<ResultatRechecheElementReglementElementValue> list = new ArrayList<ResultatRechecheElementReglementElementValue>();
 	    

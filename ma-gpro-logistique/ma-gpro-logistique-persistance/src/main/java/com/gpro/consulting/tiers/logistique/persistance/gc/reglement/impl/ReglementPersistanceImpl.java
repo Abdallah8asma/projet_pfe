@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -63,6 +64,8 @@ public class ReglementPersistanceImpl extends AbstractPersistance implements IRe
 
 	private String PREDICATE_DECLARE = "declarer";
 	private String PERCENT = "%";
+	private int MAX_RESULTS =52;
+
 	
 	@Override
 	public String create(ReglementValue reglement) {
@@ -211,7 +214,19 @@ public class ReglementPersistanceImpl extends AbstractPersistance implements IRe
 		}
 		
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
-	    List <ReglementEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	    List <ReglementEntity> resultatEntite = null;
+		
+		if(request.isOptimized())
+		{
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).setMaxResults(MAX_RESULTS).getResultList();
+		}
+		
+		else
+			
+		{
+			resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+		}
+
 
 	    List<ResultatRechecheReglementElementValue> list = new ArrayList<ResultatRechecheReglementElementValue>();
 	    
@@ -231,7 +246,7 @@ public class ReglementPersistanceImpl extends AbstractPersistance implements IRe
 
 	@Override
 	public List<ReglementValue> getByClientId(Long clientId) {
-
+		
 		
 		List<ReglementValue> resultat = new ArrayList<ReglementValue>();
 		

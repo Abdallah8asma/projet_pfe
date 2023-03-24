@@ -65,6 +65,8 @@ public class ElementReglementEntity implements Serializable{
 																							
 	@Column(name="VERSION")
 	private String version;
+	@Column(name="ref_avoir")
+	private  String refAvoir ;
 
 	public Long getId() {
 		return id;
@@ -161,5 +163,15 @@ public class ElementReglementEntity implements Serializable{
 	public void setVersion(String version) {
 		this.version = version;
 	}
+
+	public String getRefAvoir() {
+		return refAvoir;
+	}
+
+	public void setRefAvoir(String refAvoir) {
+		this.refAvoir = refAvoir;
+	}
+
+	
 	
 }

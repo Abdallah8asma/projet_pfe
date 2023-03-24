@@ -12,12 +12,17 @@ public class ValidateReglementResultValue {
 	private Double factureMontantTotalRegle;
 	private Double factureMontantTotalNonRegle;
 	
+	private Double factureAvoirMontantTotal;
+	private Double factureAvoirTotalRegle;
+	private Double factureMontantAvoirTotalNonRegle;
+	
 	private Double blMontantTotal;
 	private Double blMontantTotalRegle;
 	private Double blMontantTotalNonRegle;
 	
 	private Set<FactureNonRegleValue> listFactureNonRegle;
 	private Set<LivraisonNonRegleValue> listLivraisonNonRegle;
+	private Set<FactureAvoirNonRegleValue> listFactureAvoirNonRegle;
 	
 	public Double getFactureMontantTotal() {
 		return factureMontantTotal;
@@ -67,6 +72,30 @@ public class ValidateReglementResultValue {
 	public void setListLivraisonNonRegle(
 			Set<LivraisonNonRegleValue> listLivraisonNonRegle) {
 		this.listLivraisonNonRegle = listLivraisonNonRegle;
+	}
+	public Set<FactureAvoirNonRegleValue> getListFactureAvoirNonRegle() {
+		return listFactureAvoirNonRegle;
+	}
+	public void setListFactureAvoirNonRegle(Set<FactureAvoirNonRegleValue> listFactureAvoirNonRegle) {
+		this.listFactureAvoirNonRegle = listFactureAvoirNonRegle;
+	}
+	public Double getFactureAvoirMontantTotal() {
+		return factureAvoirMontantTotal;
+	}
+	public void setFactureAvoirMontantTotal(Double factureAvoirMontantTotal) {
+		this.factureAvoirMontantTotal = factureAvoirMontantTotal;
+	}
+	public Double getFactureAvoirTotalRegle() {
+		return factureAvoirTotalRegle;
+	}
+	public void setFactureAvoirTotalRegle(Double factureAvoirTotalRegle) {
+		this.factureAvoirTotalRegle = factureAvoirTotalRegle;
+	}
+	public Double getFactureMontantAvoirTotalNonRegle() {
+		return factureMontantAvoirTotalNonRegle;
+	}
+	public void setFactureMontantAvoirTotalNonRegle(Double factureMontantAvoirTotalNonRegle) {
+		this.factureMontantAvoirTotalNonRegle = factureMontantAvoirTotalNonRegle;
 	}
 	
 	

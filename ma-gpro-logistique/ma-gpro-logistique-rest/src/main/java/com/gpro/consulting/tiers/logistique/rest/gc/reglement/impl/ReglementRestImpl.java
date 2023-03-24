@@ -21,6 +21,7 @@ import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.Grou
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IGroupeClientService;
 import com.gpro.consulting.tiers.commun.service.partieInteressee.IPartieInteresseeService;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureAvoirNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefLivraisonNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.ValidateReglementResultValue;
@@ -63,7 +64,7 @@ public class ReglementRestImpl {
 	
 	@RequestMapping(value = "/rechercheMulticritere", method = RequestMethod.POST, produces = "application/json")
 	public ResultatRechecheReglementValue rechercherMultiCritere(@RequestBody RechercheMulticritereReglementValue request) {
-		 
+		request.setOptimized(RechercheMulticritereReglementValue.checkForOptimization(request));
 		//logger.info(" Delegating request to service layer.");
 		
 		ResultatRechecheReglementValue result = reglementService.rechercherMultiCritere(request);
@@ -106,34 +107,7 @@ public class ReglementRestImpl {
 	
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public String create(@RequestBody ReglementValue reglement) {
-		
-		 Set<ElementReglementValue> listElementReglement = new HashSet<ElementReglementValue>();
-		
-		//logger.info("Delegating request to Service layer.");
-		
-		if(reglement != null){
-			
-			if(reglement.getListElementReglement() != null){
-				
-				if(reglement.getListElementReglement().size() > 0){
-					
-					for(ElementReglementValue elementReglement : reglement.getListElementReglement()){
-						
-						if(elementReglement.getMontantDemande() != null && elementReglement.getMontantDemande() > 0)
-							listElementReglement.add(elementReglement);
-						
-						//logger.info("----refBL: "+elementReglement.getRefBL());
-						//logger.info("----refFacture: "+elementReglement.getRefFacture());
-						//logger.info("----montant: "+elementReglement.getMontant());
-					//logger.info("----montantDemande: "+elementReglement.getMontantDemande());
-						//logger.info("----dateEcheance: "+elementReglement.getDateEcheance());
-					}
-				}
-			}
-		}
-		
-		reglement.setListElementReglement(listElementReglement);
-		
+	
 		return reglementService.create(reglement);
 	}
 	
@@ -145,6 +119,7 @@ public class ReglementRestImpl {
 		ReglementValue reglement  =  reglementService.getById(id);
 		
 		reglement.setRefAvantChangement(reglement.getReference());
+	
 		
 		return reglement;
 	}
@@ -152,37 +127,6 @@ public class ReglementRestImpl {
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public String update(@RequestBody ReglementValue reglement) {
 	    
-		//logger.info("Delegating request to service layer.");
-		
-		
-		 Set<ElementReglementValue> listElementReglement = new HashSet<ElementReglementValue>();
-			
-		//logger.info("Delegating request to Service layer.");
-		
-		if(reglement != null){
-			
-			if(reglement.getListElementReglement() != null){
-				
-				if(reglement.getListElementReglement().size() > 0){
-					
-					for(ElementReglementValue elementReglement : reglement.getListElementReglement()){
-						
-						if(elementReglement.getMontantDemande() != null && elementReglement.getMontantDemande() >0)
-							listElementReglement.add(elementReglement);
-						
-						//logger.info("----refBL: "+elementReglement.getRefBL());
-						//logger.info("----refFacture: "+elementReglement.getRefFacture());
-						//logger.info("----montant: "+elementReglement.getMontant());
-					//logger.info("----montantDemande: "+elementReglement.getMontantDemande());
-						//logger.info("----dateEcheance: "+elementReglement.getDateEcheance());
-					}
-				}
-			}
-		}
-		
-		reglement.setListElementReglement(listElementReglement);
-		
-		
 		return reglementService.update(reglement);
 	}
 	  
@@ -289,5 +233,15 @@ public class ReglementRestImpl {
 		    return value != null && !"".equals(value);
 
 		  }
-	
+	  @RequestMapping(value = "/listeRefFactureAvoirNonRegleByClientId:{clientId}", method = RequestMethod.GET, produces =  "application/json")
+		public List< RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByClientId(@PathVariable Long clientId) {
+			//logger.info("Delegating request to service layer.");
+			return  reglementService.getRefFactureAvoirNonRegleByClientId(clientId);
+		}
+	  @RequestMapping(value = "/listeRefFactureAvoirNonRegleByGroupeId:{groupeId}", method = RequestMethod.GET, produces =  "application/json")
+		public List< RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByGroupeId(@PathVariable Long groupeId) {
+			//logger.info("Delegating request to service layer.");
+			return  reglementService.getRefFactureAvoirNonRegleByGroupeId(groupeId);
+		}
+		
 }

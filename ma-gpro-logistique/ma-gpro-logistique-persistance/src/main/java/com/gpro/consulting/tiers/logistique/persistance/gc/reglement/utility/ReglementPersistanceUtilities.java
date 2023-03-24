@@ -53,6 +53,19 @@ public class ReglementPersistanceUtilities {
 		entity.setAjoutSpecial(dto.getAjoutSpecial());
 		
 		entity.setDeclarer(dto.getDeclarer());
+		entity.setMontantFactureRegle(dto.getMontantFactureRegle());
+		entity.setMontantBlRegle(dto.getMontantBlRegle());
+		entity.setMontantFactureAvoirRegle(dto.getMontantFactureAvoirRegle());
+		entity.setNombreBlRegle(dto.getNombreBlRegle());
+		entity.setNombreFactureAvoirRegle(dto.getNombreFactureAvoirRegle());
+		entity.setNombreFactureRegle(dto.getNombreFactureRegle());
+		//
+		entity.setMontantFactureNonRegle(dto.getMontantFactureNonRegle());
+		entity.setMontantBlNonRegle(dto.getMontantBlNonRegle());
+		entity.setMontantFactureAvoirNonRegle(dto.getMontantFactureAvoirNonRegle());
+		entity.setNombreBlNonRegle(dto.getNombreBlNonRegle());
+		entity.setNombreFactureNonRegle(dto.getNombreFactureNonRegle());
+		entity.setNombreFactureAvoirNonRegle(dto.getNombreFactureAvoirNonRegle());
 		
 	    if(dto.getListDetailsReglement() != null){
 		     Set<DetailsReglementEntity> list = new HashSet <DetailsReglementEntity>();
@@ -109,6 +122,19 @@ public class ReglementPersistanceUtilities {
 		dto.setAjoutSpecial(entity.getAjoutSpecial());
 		
 		dto.setDeclarer(entity.getDeclarer());
+		dto.setMontantFactureRegle(entity.getMontantFactureRegle());
+		dto.setMontantBlRegle(entity.getMontantBlRegle());
+		dto.setMontantFactureAvoirRegle(entity.getMontantFactureAvoirRegle());
+		dto.setNombreBlRegle(entity.getNombreBlRegle());
+		dto.setNombreFactureAvoirRegle(entity.getNombreFactureAvoirRegle());
+		dto.setNombreFactureRegle(entity.getNombreFactureRegle());
+		//
+		dto.setMontantFactureNonRegle(entity.getMontantFactureNonRegle());
+		dto.setMontantBlNonRegle(entity.getMontantBlNonRegle());
+		dto.setMontantFactureAvoirNonRegle(entity.getMontantFactureAvoirNonRegle());
+		dto.setNombreBlNonRegle(entity.getNombreBlNonRegle());
+		dto.setNombreFactureNonRegle(entity.getNombreFactureNonRegle());
+		dto.setNombreFactureAvoirNonRegle(entity.getNombreFactureAvoirNonRegle());
 		
 	    if(entity.getListDetailsReglement() != null){
 	    	List<DetailsReglementValue> list = new ArrayList <DetailsReglementValue>();
@@ -237,6 +263,7 @@ public class ReglementPersistanceUtilities {
 		entity.setRefBL(dto.getRefBL());
 		entity.setMontantDemande(dto.getMontantDemande());
 		entity.setDateEcheance(dto.getDateEcheance());
+		entity.setRefAvoir(dto.getRefAvoir());
 		
 		if(dto.getReglementId() != null){
 			ReglementEntity reglement = new ReglementEntity();
@@ -344,6 +371,7 @@ public class ReglementPersistanceUtilities {
 		dto.setRefBL(entity.getRefBL());
 		dto.setMontantDemande(entity.getMontantDemande());
 		dto.setDateEcheance(entity.getDateEcheance());
+		dto.setRefAvoir(entity.getRefAvoir());
 		
 		if(entity.getReglement() != null){
 			dto.setReglementId(entity.getReglement().getId());
@@ -394,7 +422,19 @@ public class ReglementPersistanceUtilities {
 		dto.setDeclarer(entity.getDeclarer());
 		
 		dto.setRefAvantChangement(entity.getReference());
-		
+		dto.setMontantFactureRegle(entity.getMontantFactureRegle());
+		dto.setMontantBlRegle(entity.getMontantBlRegle());
+		dto.setMontantFactureAvoirRegle(entity.getMontantFactureAvoirRegle());
+		dto.setNombreBlRegle(entity.getNombreBlRegle());
+		dto.setNombreFactureAvoirRegle(entity.getNombreFactureAvoirRegle());
+		dto.setNombreFactureRegle(entity.getNombreFactureRegle());
+		// non regle 
+		dto.setMontantFactureNonRegle(entity.getMontantFactureNonRegle());
+		dto.setMontantBlNonRegle(entity.getMontantBlNonRegle());
+		dto.setMontantFactureAvoirNonRegle(entity.getMontantFactureAvoirNonRegle());
+		dto.setNombreBlNonRegle(entity.getNombreBlNonRegle());
+		dto.setNombreFactureAvoirNonRegle(entity.getNombreFactureAvoirNonRegle());
+		dto.setNombreFactureNonRegle(entity.getNombreFactureRegle());
 		String referenceDetailReglement = "";
 		
 		for(DetailsReglementEntity detail : entity.getListDetailsReglement()) {
@@ -420,6 +460,7 @@ public class ReglementPersistanceUtilities {
 		dto.setRefBL(entity.getRefBL());
 		dto.setMontantDemande(entity.getMontantDemande());
 		dto.setDateEcheance(entity.getDateEcheance());
+		
 		
 		if(entity.getReglement() != null){
 			
@@ -464,6 +505,7 @@ public class ReglementPersistanceUtilities {
 		dto.setChargeBanque(entity.getChargeBanque());
 		dto.setTvaBanque(entity.getTvaBanque());
 		dto.setBanqueSociete(entity.getBanqueSociete());
+		
 		
 		if(entity.getReglement() != null){
 			

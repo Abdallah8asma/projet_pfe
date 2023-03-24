@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.FactureNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.LivraisonNonRegleValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureAvoirNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefFactureNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.RefLivraisonNonRegleValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.reglement.validate.value.ValidateReglementResultValue;
@@ -144,6 +145,18 @@ public class ReglementServiceImpl implements IReglementService{
 	public String getCurrentReferenceByDateAndDeclaree(Calendar date, boolean declarer, boolean increment) {
 		// TODO Auto-generated method stub
 		return reglementDomaine.getCurrentReferenceByDateAndDeclaree(date,declarer,increment);
+	}
+
+	@Override
+	public List<RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByClientId(Long clientId) {
+		// TODO Auto-generated method stub
+		return reglementDomaine.getRefFactureAvoirNonRegleByClientId(clientId);
+	}
+
+	@Override
+	public List<RefFactureAvoirNonRegleValue> getRefFactureAvoirNonRegleByGroupeId(Long groupeId) {
+		// TODO Auto-generated method stub
+		return reglementDomaine.getRefFactureAvoirNonRegleByGroupeId(groupeId);
 	}
 
 	
