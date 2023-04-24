@@ -130,7 +130,7 @@ public class BonLivraisonReportValue {
 
 	private String villeClient;
 	
-	
+	private String identifiant;
 	
 	
 	
@@ -728,6 +728,14 @@ public class BonLivraisonReportValue {
 
 	public void setGroupeClientDesignation(String groupeClientDesignation) {
 		this.groupeClientDesignation = groupeClientDesignation;
+	}
+
+	public String getIdentifiant() {
+		return identifiant;
+	}
+
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
 	}
 
 }

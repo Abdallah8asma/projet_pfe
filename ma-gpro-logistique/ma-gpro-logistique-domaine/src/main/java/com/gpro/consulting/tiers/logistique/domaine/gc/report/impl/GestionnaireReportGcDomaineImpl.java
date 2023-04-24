@@ -564,6 +564,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		bonLivraisonReportValue.setDateBl(livraisonVente.getDate());
 		bonLivraisonReportValue.setReference(livraisonVente.getReference());
 		bonLivraisonReportValue.setObservations(livraisonVente.getObservations());
+		bonLivraisonReportValue.setIdentifiant(livraisonVente.getIdentifiantLivraison());
 
 		List<BonLivraisonReportProductValue> productList = new ArrayList<BonLivraisonReportProductValue>();
 		List<BonLivraisonReportTraitementFaconValue> traitementFaconList = new ArrayList<BonLivraisonReportTraitementFaconValue>();
@@ -776,6 +777,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		bonLivraisonReportValue.setClientId(livraisonVente.getPartieIntId());
 		bonLivraisonReportValue.setDateBl(livraisonVente.getDate());
 		bonLivraisonReportValue.setReference(livraisonVente.getReference());
+		bonLivraisonReportValue.setIdentifiant(livraisonVente.getIdentifiantLivraison());
 		bonLivraisonReportValue.setObservations(livraisonVente.getObservations());
 
 		// Ajouté le 25/04/2018

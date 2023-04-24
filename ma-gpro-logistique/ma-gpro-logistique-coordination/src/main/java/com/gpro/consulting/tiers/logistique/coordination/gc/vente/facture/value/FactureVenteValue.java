@@ -547,17 +547,27 @@ public class FactureVenteValue implements Comparable<FactureVenteValue> {
 
 	@Override
 	public String toString() {
-		return "FactureVenteValue [id=" + id + ", reference=" + reference + ", date=" + date + ", montantHTaxe="
-				+ montantHTaxe + ", montantTTC=" + montantTTC + ", montantTaxe=" + montantTaxe + ", montantRemise="
-				+ montantRemise + ", observations=" + observations + ", infoLivraison=" + infoLivraison
-				+ ", partieIntId=" + partieIntId + ", metrageTotal=" + metrageTotal + ", etat=" + etat
-				+ ", blSuppression=" + blSuppression + ", dateSuppression=" + dateSuppression + ", dateCreation="
-				+ dateCreation + ", dateModification=" + dateModification + ", version=" + version
+		return "FactureVenteValue [id=" + id + ", reference=" + reference + ", refAvantChangement=" + refAvantChangement
+				+ ", date=" + date + ", montantHTaxe=" + montantHTaxe + ", montantTTC=" + montantTTC + ", montantTaxe="
+				+ montantTaxe + ", montantRemise=" + montantRemise + ", observations=" + observations
+				+ ", infoLivraison=" + infoLivraison + ", partieIntId=" + partieIntId + ", metrageTotal=" + metrageTotal
+				+ ", etat=" + etat + ", blSuppression=" + blSuppression + ", dateSuppression=" + dateSuppression
+				+ ", dateCreation=" + dateCreation + ", dateModification=" + dateModification + ", version=" + version
 				+ ", listDetFactureVente=" + listDetFactureVente + ", listTaxeFacture=" + listTaxeFacture
-				+ ", modepaiementId=" + modepaiementId + ", partieIntAbreviation=" + partieIntAbreviation
-				+ ", modepaiement=" + modepaiement + ", marche=" + marche + ", refFactures=" + refFactures + ", type="
-				+ type + ", natureLivraison=" + natureLivraison + ", ficheId=" + ficheId + ", totalPourcentageRemise="
-				+ totalPourcentageRemise + "]";
+				+ ", listDocFactureVente=" + listDocFactureVente + ", modepaiementId=" + modepaiementId
+				+ ", partieIntAbreviation=" + partieIntAbreviation + ", modepaiement=" + modepaiement + ", marche="
+				+ marche + ", refFactures=" + refFactures + ", type=" + type + ", natureLivraison=" + natureLivraison
+				+ ", ficheId=" + ficheId + ", infoLivraisonExterne=" + infoLivraisonExterne + ", idMarche=" + idMarche
+				+ ", totalPourcentageRemise=" + totalPourcentageRemise + ", description=" + description
+				+ ", tauxTvaArt=" + tauxTvaArt + ", typePartieInteressee=" + typePartieInteressee + ", groupeClientId="
+				+ groupeClientId + ", raison=" + raison + ", nature=" + nature + ", reglementId=" + reglementId
+				+ ", dateIntroduction=" + dateIntroduction + ", boutiqueId=" + boutiqueId + ", avecRetourStock="
+				+ avecRetourStock + ", idDepot=" + idDepot + ", montantOuvert=" + montantOuvert + ", devise=" + devise
+				+ ", tauxConversion=" + tauxConversion + ", montantConverti=" + montantConverti + ", declarer="
+				+ declarer + ", forcerCalculMontant=" + forcerCalculMontant + ", modalitePaiement=" + modalitePaiement
+				+ ", dateEcheance=" + dateEcheance + ", refCommande=" + refCommande + ", identifiant=" + identifiant
+				+ "]";
 	}
 
+	
 }
