@@ -310,8 +310,11 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 		 			root.get("declare").as(Boolean.class),
 		 			root.get("infoSortie").as(String.class),
 		 			
-		 			root.get("referenceBlManuel").as(String.class)
+		 			root.get("referenceBlManuel").as(String.class),
 		 			
+                   root.get("identifiantLivraison").as(String.class),
+		 			
+		 			root.get("refCommande").as(String.class)
 		 			
 		 			
 		 			
@@ -371,6 +374,9 @@ public class BonLivraisonPersistanceImpl extends AbstractPersistance implements 
 	    	
 	    	
 	    	entity.setReferenceBlManuel((String) element[22]);
+	    	entity.setIdentifiantLivraison((String) element[23]);
+	    	entity.setRefCommande((String) element[24]);
+	    
 	    	
 	    	////////////////////////////
 	    	LivraisonVenteValue dto = bonLivraisonPersistanceUtilities.toValue(entity);

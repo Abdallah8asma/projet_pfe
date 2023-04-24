@@ -210,7 +210,8 @@ public class LivraisonVenteEntity implements Serializable {
 	@Column(name = "REFERENCE_BL_MANUEL")
 	private String referenceBlManuel;
 	
-	
+	@Column(name="identifiant_BL")
+	private String identifiantLivraison;
 	
 
 	public String getReferenceBlManuel() {
@@ -632,6 +633,16 @@ public class LivraisonVenteEntity implements Serializable {
 
 	public Boolean getModifier() {
 		return modifier;
+	}
+
+	
+
+	public String getIdentifiantLivraison() {
+		return identifiantLivraison;
+	}
+
+	public void setIdentifiantLivraison(String identifiantLivraison) {
+		this.identifiantLivraison = identifiantLivraison;
 	}
 
 	@Override
