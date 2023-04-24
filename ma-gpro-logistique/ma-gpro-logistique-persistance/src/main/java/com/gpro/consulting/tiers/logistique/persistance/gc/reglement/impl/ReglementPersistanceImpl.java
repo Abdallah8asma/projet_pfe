@@ -214,6 +214,7 @@ public class ReglementPersistanceImpl extends AbstractPersistance implements IRe
 		}
 		
 		criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+		criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
 	    List <ReglementEntity> resultatEntite = null;
 		
 		if(request.isOptimized())
