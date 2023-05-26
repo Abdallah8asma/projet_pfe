@@ -59,6 +59,23 @@
 				       	});
 					return defer.promise;
 				},
+				getRefFactureAvoirList: function(idClient){
+					/** Devise **/
+					var defer = $q.defer();
+				    $http
+				    	.get(UrlAtelier + "/reglement/listeRefFactureAvoirNonRegleByClientId:"+idClient)
+					    .success(function(data){
+					    	$log.debug("=========**listeRefFactureList : "+data.length+" idClient : "+idClient);
+					    	
+				            defer.resolve(data);
+					    })
+					    .error(function(msg, code) {
+				          	defer.reject(msg);
+				          	$log.error(msg, code);
+				       	});
+					return defer.promise;
+				},
+				
 				getRefBLList: function(idClient){
 					/** Devise **/
 					var defer = $q.defer();
@@ -81,6 +98,22 @@
 					var defer = $q.defer();
 				    $http
 				    	.get(UrlAtelier + "/reglement/listeRefFactureNonRegleByGroupeId:"+idClient)
+					    .success(function(data){
+					    	$log.debug("=========**listeRefFactureList : "+data.length+" groupe : "+idClient);
+					    	
+				            defer.resolve(data);
+					    })
+					    .error(function(msg, code) {
+				          	defer.reject(msg);
+				          	$log.error(msg, code);
+				       	});
+					return defer.promise;
+				},
+				getRefFactureAvoirListByGroupe: function(idClient){
+					/** Devise **/
+					var defer = $q.defer();
+				    $http
+				    	.get(UrlAtelier + "/reglement/listeRefFactureAvoirNonRegleByGroupeId:"+idClient)
 					    .success(function(data){
 					    	$log.debug("=========**listeRefFactureList : "+data.length+" groupe : "+idClient);
 					    	

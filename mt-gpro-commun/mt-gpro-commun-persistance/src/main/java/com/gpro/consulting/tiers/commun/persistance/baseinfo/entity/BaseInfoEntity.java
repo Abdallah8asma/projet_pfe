@@ -175,8 +175,76 @@ public class BaseInfoEntity implements Serializable{
 	
 	
 	
+	@Column(name = "fodec")
+	private Boolean fodec;
+	
+	@Column(name = "tva_19")
+	private Boolean tva19;
 	
 	
+	@Column(name="ref_commande_facture_obligatoire")
+	private Boolean refCommandeFactureObligatoire;
+	
+	
+	@Column(name="identifiant_facture_obligatoire")
+	private Boolean identifiantFactureObligatoire;
+	
+	
+	
+	@Column(name="contrainte_modification_bl")
+	private Boolean contrainteModificationBl;
+    @Column(name="details")
+    private String details ;
+    @Column(name="special")
+    private String special;
+    @Column(name="reglement_avoir")
+    private Boolean reglementAvoir ;
+    @Column(name="besoin ")
+    private Boolean besoin ;
+    @Column(name="reglement_bl")
+    private Boolean reglementBl ;
+	
+
+	public Boolean getContrainteModificationBl() {
+		return contrainteModificationBl;
+	}
+
+	public void setContrainteModificationBl(Boolean contrainteModificationBl) {
+		this.contrainteModificationBl = contrainteModificationBl;
+	}
+
+	public Boolean getRefCommandeFactureObligatoire() {
+		return refCommandeFactureObligatoire;
+	}
+
+	public void setRefCommandeFactureObligatoire(Boolean refCommandeFactureObligatoire) {
+		this.refCommandeFactureObligatoire = refCommandeFactureObligatoire;
+	}
+
+	public Boolean getIdentifiantFactureObligatoire() {
+		return identifiantFactureObligatoire;
+	}
+
+	public void setIdentifiantFactureObligatoire(Boolean identifiantFactureObligatoire) {
+		this.identifiantFactureObligatoire = identifiantFactureObligatoire;
+	}
+
+	public Boolean getFodec() {
+		return fodec;
+	}
+
+	public void setFodec(Boolean fodec) {
+		this.fodec = fodec;
+	}
+
+	public Boolean getTva19() {
+		return tva19;
+	}
+
+	public void setTva19(Boolean tva19) {
+		this.tva19 = tva19;
+	}
+
 	public Calendar getDateDemarrage() {
 		return dateDemarrage;
 	}
@@ -493,6 +561,48 @@ public class BaseInfoEntity implements Serializable{
 
 	public void setCoutMinute(Double coutMinute) {
 		this.coutMinute = coutMinute;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	
+
+	public String getSpecial() {
+		return special;
+	}
+
+	public void setSpecial(String special) {
+		this.special = special;
+	}
+
+	public Boolean getReglementAvoir() {
+		return reglementAvoir;
+	}
+
+	public void setReglementAvoir(Boolean reglementAvoir) {
+		this.reglementAvoir = reglementAvoir;
+	}
+
+	public Boolean getBesoin() {
+		return besoin;
+	}
+
+	public void setBesoin(Boolean besoin) {
+		this.besoin = besoin;
+	}
+
+	public Boolean getReglementBl() {
+		return reglementBl;
+	}
+
+	public void setReglementBl(Boolean reglementBl) {
+		this.reglementBl = reglementBl;
 	}
 	
 }

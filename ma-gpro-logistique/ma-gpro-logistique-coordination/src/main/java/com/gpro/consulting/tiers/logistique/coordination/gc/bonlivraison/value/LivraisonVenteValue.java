@@ -64,6 +64,7 @@ public class LivraisonVenteValue implements Comparable<LivraisonVenteValue> {
 	
 	private String referenceBlManuel;
 	
+	private String identifiantLivraison;
 	
 	
 
@@ -573,6 +574,16 @@ public class LivraisonVenteValue implements Comparable<LivraisonVenteValue> {
 
 	public void setIdChauffeur(Long idChauffeur) {
 		this.idChauffeur = idChauffeur;
+	}
+
+
+
+	public String getIdentifiantLivraison() {
+		return identifiantLivraison;
+	}
+
+	public void setIdentifiantLivraison(String identifiantLivraison) {
+		this.identifiantLivraison = identifiantLivraison;
 	}
 
 	@Override

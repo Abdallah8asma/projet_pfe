@@ -162,7 +162,8 @@ public class ReceptionAchatEntity {
 	  @Column(name = "boutique_id")
 		private Long boutiqueId;
 	  
-	  
+	  @Column(name="bon_mouvement_entree_id")
+	  private Long  bonMouvementEntreeId ;
 	  
 	
 	
@@ -478,6 +479,16 @@ public class ReceptionAchatEntity {
 	public void setListTaxeReceptionAchat(Set<TaxeReceptionAchatEntity> listTaxeReceptionAchat) {
 		this.listTaxeReceptionAchat = listTaxeReceptionAchat;
 	}
+
+	public Long getBonMouvementEntreeId() {
+		return bonMouvementEntreeId;
+	}
+
+	public void setBonMouvementEntreeId(Long bonMouvementEntreeId) {
+		this.bonMouvementEntreeId = bonMouvementEntreeId;
+	}
+
+	
 	
 	
 

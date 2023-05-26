@@ -964,52 +964,54 @@ angular
 				}
 
 			//generer rapport apres creation d'une facture. mode : Modification/Consultation 
-			 $scope.download = function(id,typerapport) {
-				 $log.debug("-- id" + id);
-				 var url = UrlAtelier+ "/reportgc/facture?id=" + id
-				 					+ "&typerapport="+typerapport
-									 + "&type=pdf";
+		$scope.download = function (id, typerapport,avecObservation) {
+					
+					if(avecObservation === undefined)
+					        avecObservation =false;
 
+					$scope.traitementEnCoursGenererAll = "true";
+					$log.debug("-- id" + id);
+					var url = UrlAtelier + "/reportgc/facture?id=" + id
+						+ "&typerapport=" + typerapport
+						+ "&avecObservation=" + avecObservation
 						
+						+ "&type=pdf";
 
-			
-									 var a = document.createElement('a');
-									 document.body.appendChild(a);
-									 downloadService.download(url).then(function (result) {
-										var heasersFileName = result.headers(['content-disposition']).substring(17);
-										var fileName = heasersFileName.split('.');
-									var typeFile = result.headers(['content-type']);
-									var file = new Blob([result.data], {type: typeFile});
-									var fileURL = window.URL.createObjectURL(file);
-									if(typeFile == 'application/vnd.ms-excel'){
-			
-									 // a.href = fileURL;
-										 a.download = fileName[0];
-										$window.open(fileURL)
-										 a.click();
+
+					var numeroFacture = '_';
+					if ($scope.factureVenteCourant.reference)
+						numeroFacture = $scope.factureVenteCourant.reference + '_';
+					var fileName = 'Facture_' + numeroFacture + formattedDate(new Date());
+					var a = document.createElement('a');
+					document.body.appendChild(a);
+					downloadService.download(url).then(function (result) {
+						var heasersFileName = result.headers(['content-disposition']).substring(17);
+						var fileName = heasersFileName.split('.');
+						var typeFile = result.headers(['content-type']);
+						var file = new Blob([result.data], { type: typeFile });
+						var fileURL = window.URL.createObjectURL(file);
+						if (typeFile == 'application/vnd.ms-excel') {
+
+							// a.href = fileURL;
+							a.download = fileName[0];
+							$window.open(fileURL)
+							a.click();
+
+						} else {
+							console.log('llll pdf');
+							a.href = fileURL;
+							a.download = fileName[0];
+							$window.open(fileURL)
+							a.click();
+
+						}
+
+						$scope.traitementEnCoursGenererAll = "false";
+
+					});
 					
-									}else{
-								
-										a.href = fileURL;
-										a.download = fileName[0];
-									 $window.open(fileURL)
-										a.click();
 					
-									}
-										
-									 
-									});
-
-
-
-				//  downloadService.download(url).then(
-				// 		 function(success) {
-				// 			 $log.debug('success : ' + success);
-				// 			 $scope.annulerAjout();
-				// 		 }, function(info) {
-				// 			 $log.debug('info : ' + info);
-				// 		 });
-			 };
+			}
 
 			//generer rapport de tous les bons de livraison. mode : List 
 			 $scope.downloadAllFactures = function(factureVenteCourant) {

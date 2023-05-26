@@ -187,6 +187,24 @@ public class PersistanceUtilities {
         
         dto.setDateDemarrage(entity.getDateDemarrage());
         
+        
+        dto.setTva19(entity.getTva19());
+        dto.setFodec(entity.getFodec());
+		
+        dto.setRefCommandeFactureObligatoire(entity.getRefCommandeFactureObligatoire());
+		
+        dto.setIdentifiantFactureObligatoire(entity.getIdentifiantFactureObligatoire());
+   
+        dto.setContrainteModificationBl(entity.getContrainteModificationBl());
+        dto.setDetails(entity.getDetails());
+        dto.setSpecial(entity.getSpecial());
+        dto.setReglementAvoir(entity.getReglementAvoir());
+        dto.setBesoin(entity.getBesoin());
+        dto.setReglementBl(entity.getReglementBl());
+
+        
+		
+        
 		return dto;
 	}
 
@@ -241,6 +259,21 @@ public class PersistanceUtilities {
 		
 		entity.setDateDemarrage(dto.getDateDemarrage());
 	
+		entity.setTva19(dto.getTva19());
+		entity.setFodec(dto.getFodec());
+		
+		
+		entity.setRefCommandeFactureObligatoire(dto.getRefCommandeFactureObligatoire());
+		
+		entity.setIdentifiantFactureObligatoire(dto.getIdentifiantFactureObligatoire());
+		
+		entity.setContrainteModificationBl(dto.getContrainteModificationBl());
+		entity.setDetails(dto.getDetails());
+		entity.setSpecial(dto.getSpecial());
+		entity.setReglementAvoir(dto.getReglementAvoir());
+		entity.setBesoin(dto.getBesoin());
+		entity.setReglementBl(dto.getReglementBl());
+		
 		return entity;
 	}
 	
@@ -1392,6 +1425,7 @@ public class PersistanceUtilities {
 	    vArticleEntity.setPiEntite(pArticleValue.getPiEntite());
 	    vArticleEntity.setNbrPose(pArticleValue.getNbrPose());
 	    vArticleEntity.setFichier(pArticleValue.getFichier());
+	    vArticleEntity.setStockMin(pArticleValue.getStockMin());
 	    
 	    // Liste Document
 	    if (pArticleValue.getDocumentEntites() != null) {
@@ -1526,6 +1560,7 @@ public class PersistanceUtilities {
 	    
 	    vArticleValue.setGrammage(pArticleEntity.getGrammage());
 	    vArticleValue.setDimension(pArticleEntity.getDimension());
+	    vArticleValue.setStockMin(pArticleEntity.getStockMin());
 	    
 	    // Liste Documents
 	    if (pArticleEntity.getDocumentEntites() != null) {
@@ -2511,6 +2546,8 @@ public class PersistanceUtilities {
 		categorieEntite.setDesignation(categorieValue.getDesignation());
 		
 		categorieEntite.setFamillePartieInteressee(categorieValue.getFamillePartieInteressee());
+		
+		categorieEntite.setCodeEntreprise(categorieValue.getCodeEntreprise());
 
 		return categorieEntite;
 	}
@@ -2525,6 +2562,8 @@ public class PersistanceUtilities {
 			categorieValue.setDesignation(categorieEntite.getDesignation());
 			
 			categorieValue.setFamillePartieInteressee(categorieEntite.getFamillePartieInteressee());
+			
+			categorieValue.setCodeEntreprise(categorieEntite.getCodeEntreprise());
 			
 			return categorieValue;
 
@@ -3086,6 +3125,24 @@ public class PersistanceUtilities {
 			ebMoldsValue.setEmplacement(moldsEntite.getEmplacement());
 			return ebMoldsValue;
 		}
-	
+		public static ArticleProduitValue toValueEnrichi(ArticleProduitEntity entity) 
+		{
+			ArticleProduitValue articleProduitValue=toValue(entity);
+			if(entity.getId() != null)
+			{
+				articleProduitValue.setReferenceArticle(entity.getProduit().getReference());
+				articleProduitValue.setDesignationArticle(entity.getProduit().getDesignation());
 
-}
+			
+				
+				
+			    
+			}
+			return articleProduitValue;
+			
+				
+			
+		}
+		
+
+          }

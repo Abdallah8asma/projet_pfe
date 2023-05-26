@@ -36,6 +36,7 @@ public class RechercheMulticritereEntiteStockValue {
 	private String numeroBonEntree;
 	
 	private String orderBy;
+	private Double stockMin;
 	
 	
 	

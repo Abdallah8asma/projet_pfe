@@ -43,7 +43,7 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	
 	private static final Logger logger = LoggerFactory.getLogger(FacturePersistanceImpl.class);
 	
-	
+	private String PREDICATE_refCommande = "refCommande";
 	private String PREDICATE_ID_DEPOT = "idDepot";
 	private String PREDICATE_NATURE = "nature";
 	private String PREDICATE_OBSERVATIONS = "observations";
@@ -81,6 +81,11 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	
 	private String PREDICATE_MODALITE_PAIEMENT = "modalitePaiement";
 	private String PREDICATE_DATE_ECHEANCE = "dateEcheance";
+	
+	private String PREDICATE_IDENTIFIANT = "identifiant";
+	
+	
+	
 	
 	
 	@PersistenceContext
@@ -295,6 +300,18 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 				whereClause.add(criteriaBuilder.and(predicate));
 			}
 			
+			
+
+			  // Set nature
+		    if (estNonVide(request.getRefCommande() )) {
+				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_refCommande), request.getRefCommande()));
+			}
+		    
+		    
+		    if (estNonVide(request.getIdentifiant() )) {
+				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_IDENTIFIANT), request.getIdentifiant()));
+			}
+			
 	 //	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
 	 	
 	 	
@@ -330,13 +347,18 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	 			
 	 			root.get("modalitePaiement").as(String.class),
 	 			root.get("dateEcheance").as(Calendar.class),
-	 			root.get("refFactures").as(String.class)
+	 			root.get("refFactures").as(String.class),
+	 			
+	 			root.get("refCommande").as(String.class),
+	 			
+	 			root.get("identifiant").as(String.class)
+	 			
 	 			
 	 			
 				
 				)).where(whereClause.toArray(new Predicate[] {}));
 	 	
-		criteriaQuery.orderBy(criteriaBuilder.desc(root.get("reference")));
+		criteriaQuery.orderBy(criteriaBuilder.desc(root.get("id")));
 		
 		
 		List<Object[]> resultatEntite = null;
@@ -390,6 +412,11 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 	    entity.setDateEcheance((Calendar)element[27]);
 	    
 	    entity.setRefFactures((String) element[28]);
+	    
+		entity.setRefCommande((String) element[29]);
+		
+		entity.setIdentifiant((String) element[30]);
+		
 	    	
 	    	FactureVenteValue dto = FacturePersistanceUtilities.toValue(entity);
 	    	list.add(dto);
@@ -598,6 +625,12 @@ public class FacturePersistanceImpl extends AbstractPersistance implements IFact
 		    if (estNonVide(request.getModalitePaiement() )) {
 				whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_MODALITE_PAIEMENT), request.getModalitePaiement()));
 			}
+		    
+		    
+		    if (estNonVide(request.getIdentifiant() )) {
+						whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_IDENTIFIANT), request.getIdentifiant()));
+				}
+					
 	 	
 	 	
 	 	criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
@@ -1160,6 +1193,288 @@ public List<FactureVenteValue> getByIdReglement(Long reglementId) {
 
     return list;
 }
+
+
+@Override
+public List<FactureVenteValue> getByClientIdOptimiser(Long clientId) {
+
 	
+	List<FactureVenteValue> resultat = new ArrayList<FactureVenteValue>();
+
+	// Set clientId on whereClause if not null
+	if (clientId != null) {
+		
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+		
+		
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+		//CriteriaQuery<FactureVenteEntity> criteriaQuery = criteriaBuilder.createQuery(FactureVenteEntity.class);
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		
+		Root<FactureVenteEntity> root = criteriaQuery.from(FactureVenteEntity.class);
+		
+		whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_CLIENT), clientId));
+	
+		whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_TYPE),IConstanteCommerciale.FACTURE_TYPE_NORMAL));
+
+		//criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+	    
+	     criteriaQuery.select(criteriaBuilder.array(
+	 			
+	 			root.get("id").as(Long.class),
+	 			root.get("reference").as(String.class),
+	 			root.get("montantTTC").as(Double.class),
+	 			root.get("infoLivraison").as(String.class),
+	 			 root.get("date").as(Calendar.class),
+	 			root.get("montantHTaxe").as(Double.class)
+	 		
+	 			
+	 			
+	 		
+	 				
+				
+				)).where(whereClause.toArray(new Predicate[] {}));
+		
+		
+		//List <FactureVenteEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	    
+		List<Object[]>resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	    
+
+		
+	    if(resultatEntite != null){
+	    	
+	    	for(Object[] element : resultatEntite){
+	    		
+	    		
+	    		FactureVenteEntity entity = new FactureVenteEntity();
+		    	
+		    	entity.setId((Long) element[0]);
+		    	entity.setReference((String) element[1]);
+		    	entity.setMontantTTC((Double) element[2]);
+		    	entity.setInfoLivraison((String) element[3]);
+		    	entity.setDate((Calendar) element[4]);
+		    	
+
+		    	entity.setMontantHTaxe((Double) element[5]);
+	    		
+	    		
+	    		resultat.add(FacturePersistanceUtilities.toValue(entity));
+	    	}
+	    }
+	}
+
+    return resultat;
+}
+
+@Override
+public List<FactureVenteValue> getByGroupeClientIdOptimiser(Long groupeClientId) {
+	List<FactureVenteValue> resultat = new ArrayList<FactureVenteValue>();
+
+	// Set clientId on whereClause if not null
+	if (groupeClientId != null) {
+		
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();     
+		
+		//CriteriaQuery<FactureVenteEntity> criteriaQuery = criteriaBuilder.createQuery(FactureVenteEntity.class);
+		
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+		
+		
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		
+		Root<FactureVenteEntity> root = criteriaQuery.from(FactureVenteEntity.class);
+		
+		whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_GROUPE_CLIENT), groupeClientId));
+		whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_TYPE),IConstanteCommerciale.FACTURE_TYPE_NORMAL));
+
+
+		
+	     criteriaQuery.select(criteriaBuilder.array(
+		 			
+	 			root.get("id").as(Long.class),
+	 			root.get("reference").as(String.class),
+	 			root.get("montantTTC").as(Double.class),
+	 			root.get("infoLivraison").as(String.class),
+	 			 root.get("date").as(Calendar.class),
+	 			root.get("montantHTaxe").as(Double.class)
+	 			
+	 			
+	 		
+	 				
+				
+				)).where(whereClause.toArray(new Predicate[] {}));
+		
+		
+		
+		
+	 	List<Object[]>resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	       if(resultatEntite != null){
+	    	
+	    	   for(Object[] element : resultatEntite){
+		    		
+		    		
+		    		FactureVenteEntity entity = new FactureVenteEntity();
+			    	
+			    	entity.setId((Long) element[0]);
+			    	entity.setReference((String) element[1]);
+			    	entity.setMontantTTC((Double) element[2]);
+			    	entity.setInfoLivraison((String) element[3]);
+			    	entity.setDate((Calendar) element[4]);
+			    	
+			    	entity.setMontantHTaxe((Double) element[5]);
+		    		
+		    		
+		    		resultat.add(FacturePersistanceUtilities.toValue(entity));
+		    	}
+	    }
+	}
+
+    return resultat;
+}
+
+
+
+@Override
+public List<FactureVenteValue> getByClientAvoirIdOptimiser(Long clientId) {
+	// TODO Auto-generated method stub
+
+	List<FactureVenteValue> resultat = new ArrayList<FactureVenteValue>();
+
+	// Set clientId on whereClause if not null
+	if (clientId != null) {
+		
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+		
+		
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+		//CriteriaQuery<FactureVenteEntity> criteriaQuery = criteriaBuilder.createQuery(FactureVenteEntity.class);
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		
+		Root<FactureVenteEntity> root = criteriaQuery.from(FactureVenteEntity.class);
+		
+		whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_CLIENT), clientId));
+	
+		whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_TYPE),IConstanteCommerciale.FACTURE_TYPE_AVOIR));
+
+		//criteriaQuery.select(root).where(whereClause.toArray(new Predicate[] {}));
+	    
+	     criteriaQuery.select(criteriaBuilder.array(
+	 			
+	 			root.get("id").as(Long.class),
+	 			root.get("reference").as(String.class),
+	 			root.get("montantTTC").as(Double.class),
+	 			root.get("infoLivraison").as(String.class),
+	 			 root.get("date").as(Calendar.class),
+	 			root.get("montantHTaxe").as(Double.class)
+	 		
+	 			
+	 			
+	 		
+	 				
+				
+				)).where(whereClause.toArray(new Predicate[] {}));
+		
+		
+		//List <FactureVenteEntity> resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	    
+		List<Object[]>resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	    
+
+		
+	    if(resultatEntite != null){
+	    	
+	    	for(Object[] element : resultatEntite){
+	    		
+	    		
+	    		FactureVenteEntity entity = new FactureVenteEntity();
+		    	
+		    	entity.setId((Long) element[0]);
+		    	entity.setReference((String) element[1]);
+		    	entity.setMontantTTC((Double) element[2]);
+		    	entity.setInfoLivraison((String) element[3]);
+		    	entity.setDate((Calendar) element[4]);
+		    	
+
+		    	entity.setMontantHTaxe((Double) element[5]);
+	    		
+	    		
+	    		resultat.add(FacturePersistanceUtilities.toValue(entity));
+	    	}
+	    }
+	}
+
+    return resultat;
+}
+
+
+
+@Override
+public List<FactureVenteValue> getByGroupeClientAvoirIdOptimiser(Long groupeClientId) {
+	List<FactureVenteValue> resultat = new ArrayList<FactureVenteValue>();
+
+	// Set clientId on whereClause if not null
+	if (groupeClientId != null) {
+		
+		CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();     
+		
+		//CriteriaQuery<FactureVenteEntity> criteriaQuery = criteriaBuilder.createQuery(FactureVenteEntity.class);
+		
+		CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+		
+		
+		List<Predicate> whereClause = new ArrayList<Predicate>();
+		
+		Root<FactureVenteEntity> root = criteriaQuery.from(FactureVenteEntity.class);
+		
+		whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_GROUPE_CLIENT), groupeClientId));
+		whereClause.add(criteriaBuilder.equal(root.get(PREDICATE_TYPE),IConstanteCommerciale.FACTURE_TYPE_AVOIR));
+
+
+		
+	     criteriaQuery.select(criteriaBuilder.array(
+		 			
+	 			root.get("id").as(Long.class),
+	 			root.get("reference").as(String.class),
+	 			root.get("montantTTC").as(Double.class),
+	 			root.get("infoLivraison").as(String.class),
+	 			 root.get("date").as(Calendar.class),
+	 			root.get("montantHTaxe").as(Double.class)
+	 			
+	 			
+	 		
+	 				
+				
+				)).where(whereClause.toArray(new Predicate[] {}));
+		
+		
+		
+		
+	 	List<Object[]>resultatEntite = this.entityManager.createQuery(criteriaQuery).getResultList();
+	       if(resultatEntite != null){
+	    	
+	    	   for(Object[] element : resultatEntite){
+		    		
+		    		
+		    		FactureVenteEntity entity = new FactureVenteEntity();
+			    	
+			    	entity.setId((Long) element[0]);
+			    	entity.setReference((String) element[1]);
+			    	entity.setMontantTTC((Double) element[2]);
+			    	entity.setInfoLivraison((String) element[3]);
+			    	entity.setDate((Calendar) element[4]);
+			    	
+			    	entity.setMontantHTaxe((Double) element[5]);
+		    		
+		    		
+		    		resultat.add(FacturePersistanceUtilities.toValue(entity));
+		    	}
+	    }
+	}
+
+    return resultat;
+	
+	
+}
 
 }

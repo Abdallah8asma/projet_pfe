@@ -67,4 +67,8 @@ public interface IBonLivraisonPersistance {
 	public List<LivraisonVenteValue> getByIdReglement(Long id);
 
 	public LivraisonVenteValue getByInfoSortie(String infoSortie);
+	
+	public List<LivraisonVenteValue> getByClientIdOptimiser(Long clientId);
+
+	public List<LivraisonVenteValue> getByGroupeClientIdOptimiser(Long groupeClientId);
 }

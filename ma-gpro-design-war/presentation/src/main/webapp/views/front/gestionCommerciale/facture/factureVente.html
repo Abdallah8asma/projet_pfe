@@ -449,6 +449,41 @@
 
 
             <div class="row">
+            
+            
+               <div class="col-sm-4">
+                 <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">R&eacute;f.Commande</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.refCommande =''"
+                      ng-model="factureVenteCourant.refCommande"
+                      />
+                  </div>
+                </div>
+              </div>
+            
+            
+            
+            
+                     <div class="col-sm-3">
+                 <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Identifiant</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.identifiant =''"
+                      ng-model="factureVenteCourant.identifiant"
+                      />
+                  </div>
+                </div>
+              </div>
+              
+            
+            
+            
+            
               <div class="col-sm-3">
                 <div class="form-group">
                   <div class="input-group">
@@ -651,7 +686,7 @@
        
            <div class="ms-CommandButton" permission="['V_Facture_Edit']">
             <button class="ms-CommandButton-button" ng-click="sauvegarderBonVente(factureVenteCourant,2)"
-              ng-disabled="factureVenteCourant.partieIntId == null || factureVenteCourant.date == nul">
+              ng-disabled="factureVenteCourant.partieIntId == null || factureVenteCourant.date == nul || (!factureVenteCourant.refCommande && clientActif.refCommandeFactureObligatoire) || (!factureVenteCourant.identifiant && clientActif.identifiantFactureObligatoire)">
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--CirclePlus"></i></span>
               <span class="ms-CommandButton-label">Enregistrer</span>
             </button>
@@ -882,7 +917,7 @@
                       <button class="btn" style="
                           color: rgb(54, 153, 255);
                           background-color: rgb(225, 240, 255);
-                        " ng-click="validerBLByOF()">
+                        " ng-click="validerNatureFini()">
                         Valider
                       </button>
                     </div> &nbsp;&nbsp;
@@ -985,8 +1020,24 @@
             
             <div class="row">
             
-                <div class="col-sm-6">
+            
+               <div class="col-sm-4">
+                 <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">R&eacute;f.Commande</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.refCommande =''"
+                      ng-model="factureVenteCourant.refCommande"
+                        ng-required ="clientActif.refCommandeFactureObligatoire==true"
+                      />
+                  </div>
+                </div>
+              </div>
+            
+            
 
+                <div class="col-sm-4">
 
                 <div class="form-group">
                   <div class="input-group">
@@ -1002,7 +1053,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-6">
+              <div class="col-sm-4">
 
 
                 <div class="form-group">
@@ -1026,6 +1077,24 @@
 
 
             <div class="row">
+            
+            
+              <div class="col-sm-3">
+                 <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Identifiant</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.identifiant =''"
+                      ng-model="factureVenteCourant.identifiant"
+                      ng-required ="clientActif.identifiantFactureObligatoire==true"
+                      />
+                  </div>
+                </div>
+              </div>
+              
+              
+              
 
               <div class="col-sm-3">
                 <div class="form-group">
@@ -1102,7 +1171,7 @@
 
 
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-sm-4">
 
 
                 <div class="form-group">
@@ -1112,6 +1181,23 @@
                     </div>
                     <textarea cols="9" rows="1" class="form-control"
                       ng-model="factureVenteCourant.observations"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label"> Date Introduction</span>
+                    </div>
+                    <input class="form-control" readonly="readonly"
+                    value="{{factureVenteCourant.dateIntroduction}}" datepicker-popup="{{format}}"
+                      ng-model="factureVenteCourant.dateIntroduction"  />
+                   
+
+                    
                   </div>
                 </div>
               </div>

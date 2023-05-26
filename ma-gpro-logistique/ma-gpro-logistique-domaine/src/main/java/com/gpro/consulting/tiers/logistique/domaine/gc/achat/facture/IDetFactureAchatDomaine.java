@@ -1,6 +1,8 @@
 package com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.DetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.RechercheMulticritereDetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.ResultatRechecheDetFactureAchatValue;
 
 /**
  * DetFacture Achat Domaine interface.
@@ -44,5 +46,7 @@ public interface IDetFactureAchatDomaine {
 	 *            the id
 	 */
 	public void delete(Long id);
+	public ResultatRechecheDetFactureAchatValue rechercherMultiCritere(RechercheMulticritereDetFactureAchatValue request);
+
 
 }

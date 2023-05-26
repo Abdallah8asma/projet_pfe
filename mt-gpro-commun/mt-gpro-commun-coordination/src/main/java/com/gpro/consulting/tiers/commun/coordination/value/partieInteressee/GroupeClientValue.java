@@ -17,9 +17,20 @@ public class GroupeClientValue {
 	private Long famillePartieInteressee;
 	
 	
+	private String codeEntreprise;
+	
+	
 	
 
-  public Long getFamillePartieInteressee() {
+  public String getCodeEntreprise() {
+		return codeEntreprise;
+	}
+
+	public void setCodeEntreprise(String codeEntreprise) {
+		this.codeEntreprise = codeEntreprise;
+	}
+
+public Long getFamillePartieInteressee() {
 		return famillePartieInteressee;
 	}
 

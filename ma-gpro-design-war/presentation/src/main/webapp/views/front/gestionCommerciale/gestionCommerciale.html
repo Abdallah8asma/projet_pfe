@@ -64,6 +64,9 @@
   <div ng-if="ITEM == 'bonCommande'">
     <div ng-include="'views/front/gestionCommerciale/bonCommande/bonCommande.html'"></div>
   </div>
+  <div ng-if="ITEM == 'detBonCommande'">
+    <div ng-include="'views/front/gestionCommerciale/detBonCommande/detBonCommande.html'"></div>
+  </div>
 
   <div ng-if="ITEM == 'devis'">
     <div ng-include="'views/front/gestionCommerciale/devis/devis.html'"></div>
@@ -84,6 +87,9 @@
 
   <div ng-if="ITEM == 'factureVente'">
     <div ng-include="'views/front/gestionCommerciale/facture/factureVente.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'detailsFactureVente'">
+    <div ng-include="'views/front/gestionCommerciale/Detfacturevente/detailsFactureVente.html'"></div>
   </div>
   <div ng-if="ITEM == 'factureAvoirVente'">
     <div ng-include="'views/front/gestionCommerciale/factureAvoir/factureAvoirVente.html'"></div>

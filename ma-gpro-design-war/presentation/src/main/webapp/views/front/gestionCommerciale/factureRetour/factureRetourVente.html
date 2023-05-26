@@ -1,3 +1,18 @@
+<script type="text/javascript">
+  var CommandBarElements = document.querySelectorAll(".ms-CommandBar");
+  for (var i = 0; i < CommandBarElements.length; i++) {
+    new fabric['CommandBar'](CommandBarElements[i]);
+  }
+
+  var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+  for (var i = 0; i < SearchBoxElements.length; i++) {
+    new fabric['SearchBox'](SearchBoxElements[i]);
+  }
+
+</script>
+
+
+
 <div class="container-fluid" ng-controller="factureRetourVenteController" style="background-color: #fff;">
 
   <div class="row" ng-show="traitementEnCoursGenerer =='true'">
@@ -407,6 +422,99 @@
               <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--CirclePlus"></i></span>
               <span class="ms-CommandButton-label">Enregistrer</span>
             </button>
+          </div>
+          
+          
+          
+          	  
+		     <div class="ms-CommandButton ms-CommandButton--dropdown" ng-show="modePdf == 'actif'">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+                  class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+              <span class="ms-CommandButton-dropdownIcon"><i class="ms-Icon ms-Icon--ChevronDown"></i></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+            
+            
+                 <li class="ms-ContextualMenu-item">
+
+
+                <div class="row">
+                  <div class="col-sm-8">
+                    <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                      ng-click="download(factureVenteCourant.id,2,factureVenteCourant.avecObservation)">Sans En-t&ecirc;te</a>
+
+                  </div>
+
+                  <div class="col-sm-2">
+                    <label>Observ</label>
+                    <input type="checkbox" ng-model="factureVenteCourant.avecObservation"
+                      ng-init="factureVenteCourant.avecObservation" />
+
+
+                  </div>
+                </div>
+
+
+
+              </li>
+            
+            
+               <li class="ms-ContextualMenu-item">
+
+
+                <div class="row">
+                  <div class="col-sm-8">
+                    <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                      ng-click="download(factureVenteCourant.id,3,factureVenteCourant.avecObservation)">Avec En-t&ecirc;te </a>
+
+                  </div>
+
+                  <div class="col-sm-2">
+                    <label>Observ</label>
+                    <input type="checkbox" ng-model="factureVenteCourant.avecObservation"
+                      ng-init="factureVenteCourant.avecObservation" />
+
+
+                  </div>
+                </div>
+
+
+
+              </li>
+              
+               
+               
+             
+            
+            
+              <!--      <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                  ng-click="download(factureVenteCourant.id,2)">Sans En-t&ecirc;te</a>
+
+              </li>
+              
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                  ng-click="download(factureVenteCourant.id,3)">Avec En-t&ecirc;te</a>
+
+              </li> -->
+              
+           <!--    <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                  ng-click="download(factureVenteCourant.id,5)">Sans En-t&ecirc;te $/€</a>
+
+              </li>
+              
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1" ng-show="modePdf == 'actif'"
+                  ng-click="download(factureVenteCourant.id,4)">Avec En-t&ecirc;te $/€ </a>
+
+              </li> -->
+              
+              
+            </ul>
           </div>
 
 

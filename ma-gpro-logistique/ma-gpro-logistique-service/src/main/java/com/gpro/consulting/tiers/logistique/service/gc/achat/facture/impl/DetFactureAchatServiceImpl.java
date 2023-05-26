@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.DetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.RechercheMulticritereDetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.ResultatRechecheDetFactureAchatValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture.IDetFactureAchatDomaine;
 import com.gpro.consulting.tiers.logistique.service.gc.achat.facture.IDetFactureAchatService;
 
@@ -71,6 +73,13 @@ public class DetFactureAchatServiceImpl implements IDetFactureAchatService {
 	public void delete(Long id) {
 
 		detFactureAchatDomaine.delete(id);
+	}
+
+	@Override
+	public ResultatRechecheDetFactureAchatValue rechercherMultiCritere(
+			RechercheMulticritereDetFactureAchatValue request) {
+		// TODO Auto-generated method stub
+		return detFactureAchatDomaine.rechercherMultiCritere(request);
 	}
 
 }

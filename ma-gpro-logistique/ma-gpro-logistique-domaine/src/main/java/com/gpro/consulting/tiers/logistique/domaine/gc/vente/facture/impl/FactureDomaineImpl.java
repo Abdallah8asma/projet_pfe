@@ -175,13 +175,18 @@ public class FactureDomaineImpl implements IFactureDomaine {
 			return codeError;
 		
 		factureValue.setDateIntroduction(Calendar.getInstance());
+		
+		
+		if(factureValue.getDeclarer() == null) {
+			factureValue.setDeclarer(true);
+		}
 
 		
 		if (((factureValue.getReference() != null && factureValue.getReference().equals(""))
 				|| factureValue.getReference() == null)) {
 			if (factureValue.getType() != null) {
          
-				factureValue.setReference(getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.isDeclarer(), factureValue.getDate(), true));
+				factureValue.setReference(getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.getDeclarer(), factureValue.getDate(), true));
        
                
                /*
@@ -197,7 +202,7 @@ public class FactureDomaineImpl implements IFactureDomaine {
 		{
 			if (factureValue.getRefAvantChangement() != null
 					&& factureValue.getReference().equals(factureValue.getRefAvantChangement())) {
-				this.getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.isDeclarer(), factureValue.getDate(), true);
+				this.getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.getDeclarer(), factureValue.getDate(), true);
 			}
 
 		}
@@ -589,7 +594,7 @@ public class FactureDomaineImpl implements IFactureDomaine {
 
 				&& !factureValue.getReference().equals(factureValue.getRefAvantChangement())) {
 
-			getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.isDeclarer(), factureValue.getDate(), true);
+			getCurrentReferenceByTypeFactureAndDeclarer(factureValue.getType(),factureValue.getDeclarer(), factureValue.getDate(), true);
 					
 		}
 

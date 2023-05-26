@@ -61,7 +61,23 @@ public class GroupeClientEntite implements Serializable {
 	private Long famillePartieInteressee;
 	
 	
+	@Column(name = "code_entreprise")
+	private String codeEntreprise;
 	
+	
+	
+
+	public String getCodeEntreprise() {
+		return codeEntreprise;
+	}
+
+	public void setCodeEntreprise(String codeEntreprise) {
+		this.codeEntreprise = codeEntreprise;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Long getFamillePartieInteressee() {
 		return famillePartieInteressee;

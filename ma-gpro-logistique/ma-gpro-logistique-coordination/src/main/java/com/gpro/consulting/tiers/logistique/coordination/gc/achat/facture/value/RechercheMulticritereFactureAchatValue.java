@@ -222,7 +222,7 @@ public class RechercheMulticritereFactureAchatValue {
 		this.dateFactureMin = dateFactureMin;
 	}
 
-	/**
+	/**Tf
 	 * Gets the date facture max.
 	 *
 	 * @return the date facture max

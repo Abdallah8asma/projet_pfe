@@ -92,7 +92,11 @@ public class BonLivraisonPersistanceUtilities {
 		dto.setEtat(entity.getEtat());
 		dto.setTransporteur(entity.getTransporteur());
 		dto.setMetrageTotal(entity.getMetrageTotal());
-		dto.setNatureLivraison(entity.getNatureLivraison().trim());
+		
+		if(entity.getNatureLivraison() != null) {
+			dto.setNatureLivraison(entity.getNatureLivraison().trim());
+		}
+	
 		dto.setTotalPourcentageRemise(entity.getTotalPourcentageRemise());
 		dto.setStock(entity.getStock());
 		dto.setIdDepot(entity.getIdDepot());
@@ -129,6 +133,7 @@ public class BonLivraisonPersistanceUtilities {
 	    dto.setTauxConversion(entity.getTauxConversion());
 	    
 	    dto.setReferenceBlManuel(entity.getReferenceBlManuel());
+	    dto.setIdentifiantLivraison(entity.getIdentifiantLivraison());
 		
 		if(entity.getListDetLivraisonVente() != null){
 	    	List<DetLivraisonVenteValue> list = new ArrayList <DetLivraisonVenteValue>();
@@ -229,6 +234,7 @@ public class BonLivraisonPersistanceUtilities {
 		entity.setMontantConverti(dto.getMontantConverti());
 		
 		entity.setReferenceBlManuel(dto.getReferenceBlManuel());
+		entity.setIdentifiantLivraison(dto.getIdentifiantLivraison());
 		
 	    if(dto.getListDetLivraisonVente() != null){
 		     Set<DetLivraisonVenteEntity> list = new HashSet <DetLivraisonVenteEntity>();

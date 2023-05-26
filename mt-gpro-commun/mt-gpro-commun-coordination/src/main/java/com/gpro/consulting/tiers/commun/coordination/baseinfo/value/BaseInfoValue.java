@@ -73,7 +73,68 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 	
 	private Calendar dateDemarrage;
 	
+
+	private Boolean fodec;
 	
+
+	private Boolean tva19;
+	
+	
+	private Boolean refCommandeFactureObligatoire;
+	
+
+	private Boolean identifiantFactureObligatoire;
+	
+	
+	private Boolean contrainteModificationBl;
+	  private String details ;
+	  private String special;
+	  private Boolean reglementAvoir ;
+	  private Boolean besoin ;
+	  private Boolean reglementBl ;
+	
+	
+	
+
+	public Boolean getContrainteModificationBl() {
+		return contrainteModificationBl;
+	}
+
+	public void setContrainteModificationBl(Boolean contrainteModificationBl) {
+		this.contrainteModificationBl = contrainteModificationBl;
+	}
+
+	public Boolean getRefCommandeFactureObligatoire() {
+		return refCommandeFactureObligatoire;
+	}
+
+	public void setRefCommandeFactureObligatoire(Boolean refCommandeFactureObligatoire) {
+		this.refCommandeFactureObligatoire = refCommandeFactureObligatoire;
+	}
+
+	public Boolean getIdentifiantFactureObligatoire() {
+		return identifiantFactureObligatoire;
+	}
+
+	public void setIdentifiantFactureObligatoire(Boolean identifiantFactureObligatoire) {
+		this.identifiantFactureObligatoire = identifiantFactureObligatoire;
+	}
+
+	public Boolean getFodec() {
+		return fodec;
+	}
+
+	public void setFodec(Boolean fodec) {
+		this.fodec = fodec;
+	}
+
+	public Boolean getTva19() {
+		return tva19;
+	}
+
+	public void setTva19(Boolean tva19) {
+		this.tva19 = tva19;
+	}
 
 	public Calendar getDateDemarrage() {
 		return dateDemarrage;
@@ -349,6 +410,47 @@ public class BaseInfoValue implements Comparable<BaseInfoValue> {
 
 	public void setCodeTVA(String codeTVA) {
 		this.codeTVA = codeTVA;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	
+	public String getSpecial() {
+		return special;
+	}
+
+	public void setSpecial(String special) {
+		this.special = special;
+	}
+
+	public Boolean getReglementAvoir() {
+		return reglementAvoir;
+	}
+
+	public void setReglementAvoir(Boolean reglementAvoir) {
+		this.reglementAvoir = reglementAvoir;
+	}
+
+	public Boolean getBesoin() {
+		return besoin;
+	}
+
+	public void setBesoin(Boolean besoin) {
+		this.besoin = besoin;
+	}
+
+	public Boolean getReglementBl() {
+		return reglementBl;
+	}
+
+	public void setReglementBl(Boolean reglementBl) {
+		this.reglementBl = reglementBl;
 	}
 
 }

@@ -439,7 +439,7 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 
 		BonMouvementStockValue bonMouvement = this.rechercheBonMouvementParId(pId);
 		
-		System.out.println("---Domaine supprimerBonMouvementStock--bonMouvement:"+bonMouvement);
+		//System.out.println("---Domaine supprimerBonMouvementStock--bonMouvement:"+bonMouvement);
 
 
 		if (bonMouvement.getType().equals(IConstante.TYPE_MVT_ENT)
@@ -535,7 +535,7 @@ public class BonMouvementDomaineImpl implements IBonMouvementDomaine {
 				}
 			}
 		}
-		System.out.println("---Domaine supprimerBonMouvementStock-rechercherById---bonMouvement:"+bonMouvement);
+		//System.out.println("---Domaine supprimerBonMouvementStock-rechercherById---bonMouvement:"+bonMouvement);
 
 		return bonMouvement;
 	}

@@ -43,6 +43,11 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       { id: 1, numFacture: 'Bl1' },
       { id: 2, refBL: 'Bl2' },
     ];
+    $scope.listRefAvoir=
+    [
+     
+  
+    ]
 
     // bouton pdf show
     $scope.modePdf = 'notActive';
@@ -51,7 +56,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
     $scope.msgChargement = '';
 
-    $scope.reglementCourante = {"declarerRech" : "oui" , "hasElementReglement":"" , "hasDetailReglement":"","idDepot":""};
+    $scope.reglementCourante = {"declarerRech" : "oui" , "hasElementReglement":"" , "hasDetailReglement":"","idDepot":"","montantBlRegle":""};
 
     $scope.currentFactureOrBl = { };
 	
@@ -385,17 +390,30 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
     $scope.listTypes();
 
     // methode appelé lors de check le checkbox Montant LB
-    $scope.changeMontantLBL = function (bool, index) {
+    $scope.changeMontantLBL = function (typeListe, index) {
       $scope.CheckWithShift();
-
-      if (bool == true) {
-        $scope.finalBLList[index].disable = false;
+      //typeListe={};
+     
+       if(typeListe=='bl')
+       {
+        $scope.finalBLList[index].typeListe = 'bl';
         $scope.finalBLList[index].montantRegle =
           $scope.finalBLList[index].montantBL;
-      } else {
-        $scope.finalBLList[index].disable = true;
-        $scope.finalBLList[index].montantRegle = 0;
-      }
+       }
+       if(typeListe=='normal')
+       {
+        $scope.finalFacturesList[index].typeListe = 'normal';
+        $scope.finalFacturesList[index].montantRegle =
+          $scope.finalFacturesList[index].montantFacture;
+       }
+       if(typeListe=='avoir')
+       {
+        $scope.finalAvoirList[index].typeListe = 'avoir';
+        $scope.finalFacturesList[index].montantRegleAvoir =
+         -1* $scope.finalFacturesList[index].montantFactureAvoir;
+       }
+     
+      
     };
 
     // methode appelé lors de check le checkbox Montant LB
@@ -426,7 +444,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         $scope.finalFacturesList[index].montantRegle = 0;
       }
     };
-
+    
     // methode appelé lors de check le checkbox Montant Facture
     $scope.changeMontantLFacturesById = function (bool, id) {
       var index = $scope.finalFacturesList.findIndex(
@@ -443,7 +461,22 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         $scope.finalFacturesList[index].montantRegle = 0;
       }
     };
+    // methode appelé lors de check le checkbox Montant Facture avoir
+    $scope.changeMontantLFacturesAvoirById = function (bool, id) {
+      var index = $scope.finalAvoirList.findIndex(
+        (record) => record.id === id
+      );
 
+      $scope.CheckWithShift();
+      if (bool == true) {
+        $scope.finalAvoirList[index].disable = false;
+        $scope.finalAvoirList[index].montantRegleAvoir =
+          -1*$scope.finalAvoirList[index].montantFactureAvoir;
+      } else {
+        $scope.finalAvoirList[index].disable = true;
+        $scope.finalAvoirList[index].montantRegleAvoir = 0;
+      }
+    };
     // Modification Reglement
     $scope.modifierOuCreerReglement = function () {
       var index = this.row.rowIndex;
@@ -483,6 +516,68 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
                   // $log.debug('*** RefFactureList *** : '+
                   // JSON.stringify(success,null, " "));
+                   // facture normal
+                   let montantFactureNonRegle = 0;
+                  let nombreFactureNonRegle=0
+
+                   angular.forEach($scope.listRefFacture, function(listFacture, key){
+                     
+                     if(listFacture.montantFacture){
+                       
+                      montantFactureNonRegle+= Number(listFacture.montantFacture) ;
+                      
+         
+                      }
+         
+                   });  
+                   nombreFactureNonRegle=$scope.listRefFacture.length;
+                   $scope.reglementCourante.montantFactureNonRegle=montantFactureNonRegle;
+                   $scope.reglementCourante.nombreFactureNonRegle=nombreFactureNonRegle;
+                   
+                   
+                 
+                  
+               
+        
+                },
+                function (error) {
+                  $log.error('****ErrorRefFactureList : ' + error);
+                }
+              );
+              initCommercialService
+              .getRefFactureAvoirListByGroupe($scope.idGroupeClient)
+              .then(
+                function (success) {
+                  $scope.avoir = success;
+                  // $log.debug(">>>>> Click B="+JSON.stringify($scope.b,
+                  // null, " "));
+
+                  $scope.listRefAvoir = $scope.avoir;
+
+                  // $log.debug(">>>>> Click
+                  // ....listRefFacture="+JSON.stringify($scope.listRefFacture,
+                  // null, " "));
+
+                  // $log.debug('*** RefFactureList *** : '+
+                  // JSON.stringify(success,null, " "));
+                  let montantFactureAvoirNonRegle = 0;
+                  let nombreFactureAvoirNonRegle=0;
+
+                  angular.forEach($scope.listRefAvoir, function(listFactureAvoir, key){
+                    
+                    if(listFactureAvoir.montantFactureAvoir){
+                      
+                      montantFactureAvoirNonRegle+= Number(listFactureAvoir.montantFactureAvoir) ;
+        
+                     }
+        
+                  });  
+                  nombreFactureAvoirNonRegle=$scope.listRefAvoir.length;
+         
+                  $scope.reglementCourante.montantFactureAvoirNonRegle=montantFactureAvoirNonRegle;
+                  $scope.reglementCourante.nombreFactureAvoirNonRegle=nombreFactureAvoirNonRegle;      
+        
+       
                 },
                 function (error) {
                   $log.error('****ErrorRefFactureList : ' + error);
@@ -504,6 +599,25 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
                   // $log.debug('*** listRefBL *** : '+
                   // JSON.stringify(success,null, " "));
+                  let montantBlNonRegle = 0;
+                  let nombreBlNonRegle=0;
+
+                  angular.forEach($scope.listRefBL, function(listFactueBl, key){
+                    
+                    if(listFactueBl.montantBL){
+                      
+                      montantBlNonRegle+= Number(listFactueBl.montantBL) ;
+        
+                     }
+        
+                  }); 
+                  nombreBlNonRegle=$scope.listRefBL.length;
+         
+                  $scope.reglementCourante.montantBlNonRegle=montantBlNonRegle;
+                  $scope.reglementCourante.nombreBlNonRegle=nombreBlNonRegle
+           
+               
+        
                 },
                 function (error) {
                   $log.error('****ErrorRefBLList : ' + error);
@@ -524,6 +638,62 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
                 // $log.debug('*** RefFactureList *** : '+
                 // JSON.stringify(success,null, " "));
+                let montantFactureNonRegle = 0;
+                let nombreFactureNonRegle=0
+
+                 angular.forEach($scope.listRefFacture, function(listFacture, key){
+                   
+                   if(listFacture.montantFacture){
+                     
+                    montantFactureNonRegle+= Number(listFacture.montantFacture) ;
+                    
+       
+                    }
+       
+                 });  
+                 nombreFactureNonRegle=$scope.listRefFacture.length;
+                 $scope.reglementCourante.montantFactureNonRegle=montantFactureNonRegle;
+                 $scope.reglementCourante.nombreFactureNonRegle=nombreFactureNonRegle;
+     
+              },
+              function (error) {
+                $log.error('****ErrorRefFactureList : ' + error);
+              }
+            );
+            initCommercialService.getRefFactureAvoirList($scope.idClient).then(
+              function (success) {
+                $scope.avoir = success;
+                // $log.debug(">>>>> Click B="+JSON.stringify($scope.b, null, "
+                // "));
+
+                $scope.listRefAvoir = $scope.avoir;
+
+                // $log.debug(">>>>> Click
+                // ....listRefFacture="+JSON.stringify($scope.listRefFacture,
+                // null, " "));
+
+                // $log.debug('*** RefFactureList *** : '+
+                // JSON.stringify(success,null, " "));
+                let montantFactureAvoirNonRegle = 0;
+                  let nombreFactureAvoirNonRegle=0;
+
+                  angular.forEach($scope.listRefAvoir, function(listFactureAvoir, key){
+                    
+                    if(listFactureAvoir.montantFactureAvoir){
+                      
+                      montantFactureAvoirNonRegle+= Number(listFactureAvoir.montantFactureAvoir) ;
+                     
+        
+                     }
+        
+                  });  
+                  nombreFactureAvoirNonRegle=$scope.listRefAvoir.length;
+         
+                  $scope.reglementCourante.montantFactureAvoirNonRegle=montantFactureAvoirNonRegle;
+                  $scope.reglementCourante.nombreFactureAvoirNonRegle=nombreFactureAvoirNonRegle; 
+                  console.log(montantFactureAvoirNonRegle); 
+        
+       
               },
               function (error) {
                 $log.error('****ErrorRefFactureList : ' + error);
@@ -542,6 +712,22 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
                 // $log.debug('*** listRefBL *** : '+
                 // JSON.stringify(success,null, " "));
+                let montantBlNonRegle = 0;
+                let nombreBlNonRegle=0;
+
+                angular.forEach($scope.listRefBL, function(listFactueBl, key){
+                  
+                  if(listFactueBl.montantBL){
+                    
+                    montantBlNonRegle+= Number(listFactueBl.montantBL) ;
+      
+                   }
+      
+                }); 
+                nombreBlNonRegle=$scope.listRefBL.length;
+       
+                $scope.reglementCourante.montantBlNonRegle=montantBlNonRegle;
+                $scope.reglementCourante.nombreBlNonRegle=nombreBlNonRegle
               },
               function (error) {
                 $log.error('****ErrorRefBLList : ' + error);
@@ -560,11 +746,18 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
           for (var i = 0; i < $scope.finalElementList.length; i++) {
             $scope.finalElementList[i].isNew = false;
 
-            if ($scope.finalElementList[i].refFacture != null) {
-              $scope.finalElementList[i].checked = true;
-            } else {
-              $scope.finalElementList[i].checked = false;
+            if ($scope.finalElementList[i].refBL != null) {
+              $scope.finalElementList[i].typeListe = 'bl';
             }
+            if ($scope.finalElementList[i].refFacture != null) {
+              $scope.finalElementList[i].typeListe = 'normal';
+            }
+           
+            if($scope.finalElementList[i].refAvoir != null)
+            {
+              $scope.finalElementList[i].typeListe = 'avoir';
+            }
+           
           }
           $scope.isEnCoursValider = false;
         });
@@ -594,22 +787,103 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       reglement.listElementReglement = $scope.finalElementList; 
       $scope.test = reglement.listElementReglement;
 
-      console.log('update:magazin: ' + reglement.idDepot);
+      //console.log('update:magazin: ' + reglement.idDepot);
+       // 
+       
 
-      $http
-        .put(UrlAtelier + '/reglement/update', reglement)
-        .success(function (reglementModifiee) {
-          // TODO Code à revoir
-          for (var i = 0; i < $scope.myData.length; i++) {
-            if ($scope.myData[i].id == reglementModifiee) {
-              $scope.myData[i] = reglementModifiee;
+          let montantRegleeTotal = 0;
 
-              break;
-            }
-          }
+             angular.forEach($scope.finalOperationsList, function(elementDetailReglement, key){
+	                     if(elementDetailReglement.montant != null){
+		
+		                      montantRegleeTotal+= Number(elementDetailReglement.montant) ;
+                         
+		
+	                      }
 
-          $scope.annulerAjout();
-        });
+                     });
+                    
+
+
+               montantRegleeTotal = Math.round(montantRegleeTotal * 100) / 100 ;
+
+           let montantFactureAndBLTotal = 0;
+
+             angular.forEach($scope.finalElementList, function(elementReglement, key){
+	                     if(elementReglement.montantDemande != null){
+		                      console.log("elementReglement.montantDemande = "+elementReglement.montantDemande);
+		                      montantFactureAndBLTotal+= elementReglement.montantDemande ;
+		
+	                      }
+
+              });
+
+       montantFactureAndBLTotal = Math.round(montantFactureAndBLTotal * 100) / 100 ;
+
+                  if(montantRegleeTotal != montantFactureAndBLTotal ){
+	
+	                     let msg = "Montant réglé (" +montantRegleeTotal+  ") est différent au montant des factures et BLs ("+montantFactureAndBLTotal + ")" ;
+	
+	                     let conf = confirm(msg+ "\n"+" Veuillez confirmer l'enregistrement ?");
+
+                       if(conf){
+	
+	
+	      $http
+                   .put(
+                       UrlAtelier +
+                       "/reglement/update",
+                       reglement)
+                   .success(
+                       function(reglementModifiee) {
+                         
+                       
+                           // TODO Code à revoir
+                           for (var i = 0; i < $scope.myData.length; i++) {
+
+                               if ($scope.myData[i].id == reglementModifiee) {
+                                   $scope.myData[i] = reglementModifiee;
+                                   
+                                   break;
+                               }
+                           }
+                         
+                           $scope.annulerAjout();
+                       });
+	
+}
+
+
+               }else{
+	
+	
+	
+	      $http
+                   .put(
+                       UrlAtelier +
+                       "/reglement/update",
+                       reglement)
+                   .success(
+                       function(reglementModifiee) {
+                         
+                       
+                           // TODO Code à revoir
+                           for (var i = 0; i < $scope.myData.length; i++) {
+
+                               if ($scope.myData[i].id == reglementModifiee) {
+                                   $scope.myData[i] = reglementModifiee;
+                                   
+                                   break;
+                               }
+                           }
+                         
+                           $scope.annulerAjout();
+                       });
+	
+}
+
+
+
     };
 
     // Création Reglement
@@ -617,7 +891,20 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       reglement.listDetailsReglement = $scope.finalOperationsList;
       reglement.listDocReglement= $scope.listeDocumentProduit;
 
+
+                     let montantRegleeTotal = 0;
+
+                     angular.forEach($scope.finalOperationsList, function(elementDetailReglement, key){
+	                     if(elementDetailReglement.montant){
+		
+		                      montantRegleeTotal+= Number(elementDetailReglement.montant) ;
+		
+	                      }
+
+                     });
+
       var tmplistElementReglement = [];
+  let montantFactureAndBLTotal = 0;
       // Facture
       angular.forEach($scope.finalFacturesList, function (elementFact, key) {
         var tmp = {};
@@ -628,6 +915,10 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         tmp.montantDemande = elementFact.montantRegle;
         tmp.dateEcheance = elementFact.date;
         tmp.reglementId = elementFact.reglementId;
+
+                 if(elementFact.montantRegle != null){
+	                            montantFactureAndBLTotal += elementFact.montantRegle;
+                       }
 
         tmplistElementReglement.push(tmp);
       });
@@ -642,18 +933,78 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         tmp.dateEcheance = elementBl.date;
         tmp.reglementId = elementBl.reglementId;
 
+
+                      if(elementBl.montantRegle != null){
+	                            montantFactureAndBLTotal += elementBl.montantRegle;
+                       }
+
         tmplistElementReglement.push(tmp);
       });
+     //facture Avoir 
+     angular.forEach($scope.finalAvoirList, function (elementFactureAvoir, key) {
+      var tmp = {};
+
+      tmp.id = null;
+      tmp.montant = elementFactureAvoir.montantFactureAvoir;
+      tmp.refAvoir = elementFactureAvoir.numFactureAvoir;
+      tmp.montantDemande = elementFactureAvoir.montantRegleAvoir;
+      tmp.dateEcheance = elementFactureAvoir.dateAvoir;
+      tmp.reglementId = elementFactureAvoir.reglementId;
+
+
+                    if( elementFactureAvoir.montantRegleAvoir != null){
+                            montantFactureAndBLTotal += elementFactureAvoir.montantRegleAvoir;
+                     }
+
+      tmplistElementReglement.push(tmp);
+    });
 
       reglement.listElementReglement = tmplistElementReglement;
 
-      $http
-        .post(UrlAtelier + '/reglement/create', reglement)
-        .success(function (newreglement) {
-          // TODO getId
 
-          $scope.annulerAjout();
-        });
+                      if(montantRegleeTotal != montantFactureAndBLTotal ){
+	
+	                     let msg = "Montant réglé (" + montantRegleeTotal+  ") est différent au montant des factures et BLs ("+montantFactureAndBLTotal + ")" ;
+	
+	                     let conf = confirm(msg+ "\n"+" Veuillez confirmer l'enregistrement ?");
+
+                     if(conf){
+	
+	                      $http
+                          .post(
+                              UrlAtelier +
+                              "/reglement/create",
+                              reglement)
+                          .success(
+                              function(newreglement) {
+
+                                  // TODO getId
+                            
+                                  
+                                  $scope.annulerAjout();
+                                  
+                                  
+                              });
+}
+                       }else {
+	
+	       $http
+                          .post(
+                              UrlAtelier +
+                              "/reglement/create",
+                              reglement)
+                          .success(
+                              function(newreglement) {
+
+                                  // TODO getId
+                            
+                                  
+                                  $scope.annulerAjout();
+                                  
+                                  
+                              });
+}
+     
     };
 
     $scope.InitializeArray = function () {
@@ -661,15 +1012,19 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       $scope.finalOperationsList = [];
       for (i = 1; i < 2; i++) {
         $scope.addElement(i);
+        
       }
       $scope.finalBLList = [];
+      $scope.finalAvoirList=[]
       $scope.finalFacturesList = [];
 
       $scope.selectedAllBL = [];
+      $scope.selectedAllFacturesAvoir=[];
       for (i = 1; i < 11; i++) {
         // $scope.addElement(i);
         $scope.addBLElement(i);
         $scope.addFacturesElement(i);
+        $scope.addAvoir(i);
       }
     };
 
@@ -1100,10 +1455,12 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
     var _init = function () {
       $scope.finalOperationsList = [];
       $scope.finalBLList = [];
+      
       $scope.finalFacturesList = [];
       for (i = 1; i < 11; i++) {
         $scope.addElement(i);
         $scope.addBLElement(i);
+        $scope.addAvoir(i);
         $scope.addFacturesElement(i);
       }
     };
@@ -1150,7 +1507,19 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         item.montantRegle = item.montantFacture;
       });
     };
-
+    // check La liste des Factures Avoir 
+    $scope.checkAllFacturesAvoir = function () {
+      if ($scope.selectedAllFacturesAvoir == true) {
+        $scope.selectedAllFacturesAvoir = true;
+      } else {
+        $scope.selectedAllFacturesAvoir = false;
+      }
+      angular.forEach($scope.finalAvoirList, function (item) {
+        item.checked = $scope.selectedAllFacturesAvoir;
+        item.disable = !$scope.selectedAllFacturesAvoir;
+        item.montantRegleAvoir = item.montantFactureAvoir;
+      });
+    };
     // boutton valider les reglements
     $scope.Valider = function (clientID) {
       $scope.isEnCoursValider = true;
@@ -1161,8 +1530,9 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         .success(function (reglement) {
           $scope.finalBLList = reglement.listLivraisonNonRegle;
           $scope.finalFacturesList = reglement.listFactureNonRegle;
-
+          $scope.finalAvoirList=reglement.listFactureAvoirNonRegle,
           $scope.test = $scope.finalFacturesList;
+          
           $scope.test.concat($scope.finalBLList);
           $scope.DisableMontantRegCol();
           $scope.isEnCoursValider = false;
@@ -1181,11 +1551,16 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         .success(function (reglement) {
           $scope.finalBLList = reglement.listLivraisonNonRegle;
           $scope.finalFacturesList = reglement.listFactureNonRegle;
+          $scope.finalAvoirList=reglement.listFactureAvoirNonRegle,
 
           $scope.test = $scope.finalFacturesList;
+          $scope.test = $scope.finalAvoirList;
           $scope.test.concat($scope.finalBLList);
           $scope.DisableMontantRegCol();
+          
+          
 
+        
           $scope.isEnCoursValider = false;
         });
     };
@@ -1201,6 +1576,10 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         $scope.finalFacturesList[i].checked = false;
         $scope.finalFacturesList[i].disable = true;
       }
+      // for (var i = 0; i < $scope.finalAvoirList.length; i++) {
+      //   $scope.finalAvoirList[i].checked = false;
+      //   $scope.finalAvoirList[i].disable = true;
+      // }
     };
 
     // used to add new element into list of table
@@ -1245,6 +1624,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
       var tmpElement = {
         refFacture: null,
         refBL: null,
+        refAvoir:null,
         montantDemande: 0,
         dateEcheance: 0,
         reglementId: null,
@@ -1326,12 +1706,31 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         var elementListRefFacture = $scope.listRefFacture.filter(
           (e) => e.numFacture === refFacture
         );
+      
 
         if (elementListRefFacture && elementListRefFacture[0]) {
           $scope.finalElementList[index].montantDemande =
             elementListRefFacture[0].montantFacture;
           $scope.finalElementList[index].dateEcheance =
             elementListRefFacture[0].date;
+        }
+      }
+    };
+    $scope.onChangeRefFactureAvoir = function (refAvoir, index) {
+      if (refAvoir != null) {
+        // $log.debug(">>>>> Click onChangeRefFacture ...");
+        // $log.debug(">>>>> RefFacture = ",refFacture);
+        // $log.debug(">>>>> index = ",index);
+
+        var elementListRefFacture = $scope.listRefAvoir.filter(
+          (e) => e.numFactureAvoir === refAvoir
+        );
+       
+        if (elementListRefFacture && elementListRefFacture[0]) {
+          $scope.finalElementList[index].montantDemande =
+           -1* elementListRefFacture[0].montantFactureAvoir;
+          $scope.finalElementList[index].dateEcheance =
+            elementListRefFacture[0].dateAvoir;
         }
       }
     };
@@ -1345,6 +1744,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
         var elementListRefBL = $scope.listRefBL.filter(
           (e) => e.numBL === refBL
         );
+       
 
         if (elementListRefBL && elementListRefBL[0]) {
           $scope.finalElementList[index].montantDemande =
@@ -1376,13 +1776,13 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
       // used to delete an element from the list
       $scope.showPanelDetailBlorFacture = function (item, indexLine) {
-
+   
         console.log("Appel showPanelDetailBlorFacture ");
 
 
-        if($scope.finalElementList[indexLine].checked){
+        if($scope.finalElementList[indexLine].typeListe=='normal'){
         
-          console.log("Facture ");
+          console.log("Facture  Normal");
            //Facture   //refFacture
 
 
@@ -1408,7 +1808,7 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
 
 
-        }else
+        }if($scope.finalElementList[indexLine].typeListe=='bl')
 
         {
           console.log("BL ");
@@ -1439,6 +1839,33 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
 
         }
+        if($scope.finalElementList[indexLine].typeListe=='avoir')
+        {
+          console.log("Facture  Avoir");
+          //Facture   //refFacture
+
+
+          $http
+          .get(
+            UrlAtelier
+            + "/facture/getFactureByReference:" + $scope.finalElementList[indexLine].refAvoir)
+          .success(
+            function (datagetFactureVente) {
+
+
+
+             $scope.currentFactureOrBl = datagetFactureVente ;
+
+
+             $scope.currentFactureOrBl.type  = 'Facture';
+
+          
+
+             $scope.currentFactureOrBl.detail = datagetFactureVente.listDetFactureVente;
+
+            });
+
+        }
 
        
 
@@ -1462,6 +1889,24 @@ angular.module('gpro.reglement', []).controller('ReglementController', [
 
     // liste des BL
     $scope.addBLElement = function (_ordre) {
+      /*
+		 * var tmpElement = { ordre: (_ordre === undefined) ?
+		 * (parseInt($scope.finalBLList[$scope.finalBLList.length - 1].ordre) +
+		 * 1) : _ordre, code : '', designation : '', temps: 0, pdh: 0, sectionId :
+		 * null, machineId : null, observations: '', operationId : null,
+		 * disable: true, comptage : false, checked : false };
+		 * 
+		 * if ($scope.finalBLList .indexOf(tmpElement) == -1) {
+		 * $scope.finalBLList.push(tmpElement);
+		 * 
+		 * var t = parseInt(_ordre)+1; _ordre =t;
+		 * 
+		 * 
+		 * 
+		 *  }
+		 */
+    };
+    $scope.addAvoir = function (_ordre) {
       /*
 		 * var tmpElement = { ordre: (_ordre === undefined) ?
 		 * (parseInt($scope.finalBLList[$scope.finalBLList.length - 1].ordre) +

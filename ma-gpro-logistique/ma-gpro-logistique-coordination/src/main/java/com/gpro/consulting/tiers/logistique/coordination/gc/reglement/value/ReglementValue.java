@@ -31,17 +31,33 @@ public class ReglementValue implements Comparable<ReglementValue> {
 	private String refBC;
 
 	private Long boutiqueId;
-	
-	private boolean declarer;
-	
-	
-	
 
-	public boolean isDeclarer() {
+	private Boolean declarer;
+
+	private Double montantBlRegle;
+	private Double montantFactureRegle;
+	private Double montantFactureAvoirRegle;
+	private Long nombreBlRegle;
+	private Long nombreFactureRegle;
+	private Long nombreFactureAvoirRegle;
+
+	private Double montantBlNonRegle;
+
+	private Double montantFactureNonRegle;
+
+	private Double montantFactureAvoirNonRegle;
+
+	private Long nombreBlNonRegle;
+
+	private Long nombreFactureNonRegle;
+
+	private Long nombreFactureAvoirNonRegle;
+
+	public Boolean getDeclarer() {
 		return declarer;
 	}
 
-	public void setDeclarer(boolean declarer) {
+	public void setDeclarer(Boolean declarer) {
 		this.declarer = declarer;
 	}
 
@@ -179,6 +195,102 @@ public class ReglementValue implements Comparable<ReglementValue> {
 
 	public void setListElementReglement(Set<ElementReglementValue> listElementReglement) {
 		this.listElementReglement = listElementReglement;
+	}
+
+	public Double getMontantBlRegle() {
+		return montantBlRegle;
+	}
+
+	public void setMontantBlRegle(Double montantBlRegle) {
+		this.montantBlRegle = montantBlRegle;
+	}
+
+	public Double getMontantFactureRegle() {
+		return montantFactureRegle;
+	}
+
+	public void setMontantFactureRegle(Double montantFactureRegle) {
+		this.montantFactureRegle = montantFactureRegle;
+	}
+
+	public Double getMontantFactureAvoirRegle() {
+		return montantFactureAvoirRegle;
+	}
+
+	public void setMontantFactureAvoirRegle(Double montantFactureAvoirRegle) {
+		this.montantFactureAvoirRegle = montantFactureAvoirRegle;
+	}
+
+	public Long getNombreBlRegle() {
+		return nombreBlRegle;
+	}
+
+	public void setNombreBlRegle(Long nombreBlRegle) {
+		this.nombreBlRegle = nombreBlRegle;
+	}
+
+	public Long getNombreFactureRegle() {
+		return nombreFactureRegle;
+	}
+
+	public void setNombreFactureRegle(Long nombreFactureRegle) {
+		this.nombreFactureRegle = nombreFactureRegle;
+	}
+
+	public Long getNombreFactureAvoirRegle() {
+		return nombreFactureAvoirRegle;
+	}
+
+	public void setNombreFactureAvoirRegle(Long nombreFactureAvoirRegle) {
+		this.nombreFactureAvoirRegle = nombreFactureAvoirRegle;
+	}
+
+	public Double getMontantBlNonRegle() {
+		return montantBlNonRegle;
+	}
+
+	public void setMontantBlNonRegle(Double montantBlNonRegle) {
+		this.montantBlNonRegle = montantBlNonRegle;
+	}
+
+	public Double getMontantFactureNonRegle() {
+		return montantFactureNonRegle;
+	}
+
+	public void setMontantFactureNonRegle(Double montantFactureNonRegle) {
+		this.montantFactureNonRegle = montantFactureNonRegle;
+	}
+
+	public Double getMontantFactureAvoirNonRegle() {
+		return montantFactureAvoirNonRegle;
+	}
+
+	public void setMontantFactureAvoirNonRegle(Double montantFactureAvoirNonRegle) {
+		this.montantFactureAvoirNonRegle = montantFactureAvoirNonRegle;
+	}
+
+	public Long getNombreBlNonRegle() {
+		return nombreBlNonRegle;
+	}
+
+	public void setNombreBlNonRegle(Long nombreBlNonRegle) {
+		this.nombreBlNonRegle = nombreBlNonRegle;
+	}
+
+	public Long getNombreFactureNonRegle() {
+		return nombreFactureNonRegle;
+	}
+
+	public void setNombreFactureNonRegle(Long nombreFactureNonRegle) {
+		this.nombreFactureNonRegle = nombreFactureNonRegle;
+	}
+
+	public Long getNombreFactureAvoirNonRegle() {
+		return nombreFactureAvoirNonRegle;
+	}
+
+	public void setNombreFactureAvoirNonRegle(Long nombreFactureAvoirNonRegle) {
+		this.nombreFactureAvoirNonRegle = nombreFactureAvoirNonRegle;
 	}
 
 }

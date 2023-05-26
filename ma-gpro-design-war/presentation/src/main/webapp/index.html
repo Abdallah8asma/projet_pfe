@@ -3,7 +3,7 @@
   <head>
     <base href="" />
     <meta charset="utf-8" />
-    <title>GPRO | HELIA PACK</title>
+    <title>GPRO | the lebanese factory</title>
     <meta name="description" content="Updates and statistics" />
     <meta
       name="viewport"
@@ -706,6 +706,7 @@
                         class="menu-item"
                         aria-haspopup="true"
                         permission="['Matiere_premiere_Consult']"
+                        ng-show="clientActif.special=='imprimerie'"
                       >
                         <a
                           href="#/elementsDeBase/film"
@@ -715,7 +716,7 @@
                           <i class="menu-bullet menu-bullet-dot">
                             <span></span>
                           </i>
-                          <span class="menu-text">Film</span>
+                          <span class="menu-text" >Film</span>
                         </a>
                       </li>
 
@@ -724,6 +725,8 @@
                       class="menu-item"
                       aria-haspopup="true"
                       permission="['Matiere_premiere_Consult']"
+                      ng-show="clientActif.special=='imprimerie'"
+
                     >
                       <a
                         href="#/elementsDeBase/forme"
@@ -900,6 +903,22 @@
                               <span></span>
                             </i>
                             <span class="menu-text">Produit Reporting</span>
+                          </a>
+                        </li>
+                        <li
+                          class="menu-item"
+                          aria-haspopup="true"
+                          permission="['Article_Consult']"
+                        >
+                          <a
+                            href="#/elementsDeBase/produitComposition"
+                            ng-click="upSelectedMenu('Produits ',' Produit Composition')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Composition Produit</span>
                           </a>
                         </li>
                         <!-- <li class="menu-item" aria-haspopup="true">
@@ -1427,6 +1446,18 @@
                             <span class="menu-text">Facture</span>
                           </a>
                         </li>
+                        <li class="menu-item" aria-haspopup="true" permission="['A_Facture_Consult']">
+                          <a
+                            href="#/gestionAchat/factureAchatDetail"
+                            ng-click="upSelectedMenu('Achat ','Det.Facture')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text">Det.Facture</span>
+                          </a>
+                        </li>
                         <li class="menu-item" aria-haspopup="true" permission="['A_Facture_Avoir_Consult']">
                           <a
                             href="#/gestionAchat/factureAvoirAchat"
@@ -1547,6 +1578,22 @@
                         <li
                           class="menu-item"
                           aria-haspopup="true"
+                          permission="['Bon_de_Commande_Consult']"
+                        >
+                          <a
+                            href="#/gestionCommerciale/detBonCommande"
+                            ng-click="upSelectedMenu('Vente ',' Det Bon Commande')"
+                            class="menu-link"
+                          >
+                            <i class="menu-bullet menu-bullet-dot">
+                              <span></span>
+                            </i>
+                            <span class="menu-text"> Det Bon Commande</span>
+                          </a>
+                        </li>
+                        <li
+                          class="menu-item"
+                          aria-haspopup="true"
                           permission="['Marche_Consult']"
                         >
                           <a
@@ -1631,6 +1678,22 @@
                             <span class="menu-text">Facture</span>
                           </a>
                         </li>
+                        <li
+                        class="menu-item"
+                        aria-haspopup="true"
+                        permission="['V_Facture_Consult']"
+                      >
+                        <a
+                          href="#/gestionCommerciale/detailsFactureVente"
+                          ng-click="upSelectedMenu('Vente ',' Det.Facture')"
+                          class="menu-link"
+                        >
+                          <i class="menu-bullet menu-bullet-dot">
+                            <span></span>
+                          </i>
+                          <span class="menu-text">Det.Facture </span>
+                        </a>
+                      </li>
 
                         <li
                           class="menu-item"
@@ -3707,7 +3770,7 @@
               >
                 <!--begin::Copyright-->
                 <div class="text-dark order-2 order-md-1">
-                  <span class="text-muted font-weight-bold mr-2">2020©</span>
+                  <span class="text-muted font-weight-bold mr-2">2023©</span>
                   <a
                     href="http://www.gpro-consulting.com/"
                     target="_blank"
@@ -5521,12 +5584,14 @@
     <script src="scripts/front/controllers/gestionCommerciale/gestionCommerciale.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/produits/produits.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/bonCommande/bonCommande.js"></script>
+    <script src="scripts/front/controllers/gestionCommerciale/detBonCommande/detBonCommande.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/devis/devis.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/reception/reception.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/marche/marche.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/livraison/bonLivraisonGC.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/detlivraison/detbonLivraisonGC.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/facture/factureVente.js"></script>
+     <script src="scripts/front/controllers/gestionCommerciale/detFacturevente/detailsFactureVente.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/factureAvoir/factureAvoirVente.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/factureRetour/factureRetourVente.js"></script>
     <script src="scripts/front/controllers/gestionCommerciale/reporting/reportingGC.js"></script>
@@ -5541,6 +5606,7 @@
     <script src="scripts/front/controllers/gestionAchat/reception/reception.js"></script>
     <script src="scripts/front/controllers/gestionAchat/reception/receptionDetail.js"></script>
     <script src="scripts/front/controllers/gestionAchat/facture/factureAchat.js"></script>
+    <script src="scripts/front/controllers/gestionAchat/facture/factureAchatDetail.js"></script>
     <script src="scripts/front/controllers/gestionAchat/facture/factureAvoirAchat.js"></script>
     <script src="scripts/front/controllers/gestionAchat/facture/factureRetourAchat.js"></script>
 
@@ -5664,6 +5730,8 @@
     <script src="scripts/front/services/gestionCommerciale/initialiserCommercial.js"></script>
     <script src="scripts/front/services/logistique/initialiserLogistique.js"></script>
     <script src="scripts/front/services/referentiel/initialiserReferentiel.js"></script>
+    <!-------------------------produitComposition--------------------->
+    <script src="scripts\front\controllers\elementsDeBase\produits\produitComposition.js"></script>
 
     <script src="scripts/app.js"></script>
     <!-- endbuild -->

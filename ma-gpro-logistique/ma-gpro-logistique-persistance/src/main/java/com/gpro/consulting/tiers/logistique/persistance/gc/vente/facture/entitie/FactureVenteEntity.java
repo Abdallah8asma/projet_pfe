@@ -170,7 +170,7 @@ public class FactureVenteEntity implements Serializable {
 	
 	
 	@Column(name = "declarer")
-	private boolean declarer;
+	private Boolean declarer;
 	
 	
 	@Column(name = "force_calcul_montant")
@@ -186,11 +186,34 @@ public class FactureVenteEntity implements Serializable {
 	private Calendar dateEcheance;
 	
 	
+	@Column(name="ref_commande")
+	private String refCommande;
+	
+	
+	@Column(name="identifiant")
+	private String identifiant;
 	
 	
 	
 	
 	
+	
+	public String getIdentifiant() {
+		return identifiant;
+	}
+
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
+	}
+
+	public String getRefCommande() {
+		return refCommande;
+	}
+
+	public void setRefCommande(String refCommande) {
+		this.refCommande = refCommande;
+	}
+
 	public String getModalitePaiement() {
 		return modalitePaiement;
 	}
@@ -219,11 +242,14 @@ public class FactureVenteEntity implements Serializable {
 		return serialVersionUID;
 	}
 
-	public boolean isDeclarer() {
+
+	
+
+	public Boolean getDeclarer() {
 		return declarer;
 	}
 
-	public void setDeclarer(boolean declarer) {
+	public void setDeclarer(Boolean declarer) {
 		this.declarer = declarer;
 	}
 

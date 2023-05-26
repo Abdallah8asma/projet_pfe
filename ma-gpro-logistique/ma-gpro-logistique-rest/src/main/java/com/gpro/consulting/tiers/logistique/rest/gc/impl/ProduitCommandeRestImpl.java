@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ProduitCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.RechercheMulticritereProduitBonCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ResultatRechecheProduitBonCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.RechercheMulticritereDetFactureVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.ResultatRechecheDetFactureVenteValue;
 import com.gpro.consulting.tiers.logistique.service.atelier.cache.IGestionnaireLogistiqueCacheService;
 import com.gpro.consulting.tiers.logistique.service.gc.bonCommande.IProduitCommandeService;
 
@@ -145,6 +149,16 @@ public class ProduitCommandeRestImpl {
 		//logger.info("getAll");
 
 		return produitCommandeService.getAll();
+	}
+	@RequestMapping(value = "/rechercheMulticritere", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody ResultatRechecheProduitBonCommandeValue rechercherMultiCritere(
+			@RequestBody RechercheMulticritereProduitBonCommandeValue request) {
+		request.setOptimized(RechercheMulticritereProduitBonCommandeValue.checkForOptimization(request));
+		ResultatRechecheProduitBonCommandeValue result = produitCommandeService
+				.rechercherMultiCritere(request);
+
+		
+		return  result;
 	}
 
 }

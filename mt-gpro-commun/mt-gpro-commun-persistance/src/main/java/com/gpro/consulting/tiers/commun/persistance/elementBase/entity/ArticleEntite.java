@@ -205,7 +205,8 @@ public class ArticleEntite implements Serializable {
 	
 	@Column(name = "nbr_pose")
 	private String nbrPose;	
-
+    @Column(name="stock_min")
+    private Double stockMin;
 
 	public String getFichier() {
 		return fichier;
@@ -699,6 +700,16 @@ public class ArticleEntite implements Serializable {
 
 		return super.equals(obj);
 	}
+
+	public Double getStockMin() {
+		return stockMin;
+	}
+
+	public void setStockMin(Double stockMin) {
+		this.stockMin = stockMin;
+	}
+
+	
 
 
 

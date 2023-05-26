@@ -564,6 +564,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		bonLivraisonReportValue.setDateBl(livraisonVente.getDate());
 		bonLivraisonReportValue.setReference(livraisonVente.getReference());
 		bonLivraisonReportValue.setObservations(livraisonVente.getObservations());
+		bonLivraisonReportValue.setIdentifiant(livraisonVente.getIdentifiantLivraison());
 
 		List<BonLivraisonReportProductValue> productList = new ArrayList<BonLivraisonReportProductValue>();
 		List<BonLivraisonReportTraitementFaconValue> traitementFaconList = new ArrayList<BonLivraisonReportTraitementFaconValue>();
@@ -776,6 +777,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		bonLivraisonReportValue.setClientId(livraisonVente.getPartieIntId());
 		bonLivraisonReportValue.setDateBl(livraisonVente.getDate());
 		bonLivraisonReportValue.setReference(livraisonVente.getReference());
+		bonLivraisonReportValue.setIdentifiant(livraisonVente.getIdentifiantLivraison());
 		bonLivraisonReportValue.setObservations(livraisonVente.getObservations());
 
 		// Ajouté le 25/04/2018
@@ -1810,6 +1812,9 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 		reportValue.setMontantRemiseTotal(factureVente.getMontantRemise());
 		reportValue.setMontantHTTotal(factureVente.getMontantHTaxe());
 		reportValue.setMontantTaxes(factureVente.getMontantTaxe());
+		
+		reportValue.setRefCommande(factureVente.getRefCommande());
+		reportValue.setIdentifiant(factureVente.getIdentifiant());
 
 		List<FactureReportProductValue> productList = new ArrayList<FactureReportProductValue>();
 		List<FactureReportTraitementFaconValue> traitementFaconList = new ArrayList<FactureReportTraitementFaconValue>();
@@ -1892,7 +1897,13 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 					
 					//modifier par samer le 24.09.20
 					//factureReportProduct.setTauxTvaArt(produitIdMap.get(produitId).getIdTaxe().intValue());
-					factureReportProduct.setTauxTvaArt(detFactureVente.getTaxeId().intValue());
+					
+					
+					if(detFactureVente.getTaxeId() != null) {
+						factureReportProduct.setTauxTvaArt(detFactureVente.getTaxeId().intValue());
+					}
+					
+				
 
 					// //// Ajout TVA /////////////
 					
@@ -2014,7 +2025,7 @@ public class GestionnaireReportGcDomaineImpl implements IGestionnaireReportGcDom
 			// taxeFactureIdTaxeMap.get(TAXE_ID_TVA).getMontant());
 
 			
-			if(reportValue.getMontantTaxeFodec() != null) {
+			if(reportValue.getMontantTaxeFodec() != null && produitTaxeMap.get(TAXE_ID_TVA) != null) {
 				reportValue.setAssietteTVA(produitTaxeMap.get(TAXE_ID_TVA)+reportValue.getMontantTaxeFodec());
 			}else
 			{

@@ -217,7 +217,7 @@ angular
 								$http
 										.get(
 												UrlAtelier
-														+ "/gestionnaireCache/listeMagasinCache")
+														+ "/magasin/depots")
 										.success(
 												function(dataMagasin) {
 													$scope.listeMagasinCache = dataMagasin;
@@ -932,6 +932,11 @@ angular
 															field : 'etat',
 															displayName : 'Etat'
 														},
+														{
+															field : 'referenceBonReception',
+															displayName : 'Réf.B Réception'
+														},
+														
 														{
 															field : '',
 															width: 80,

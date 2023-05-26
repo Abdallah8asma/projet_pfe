@@ -15,6 +15,7 @@ public class ElementReglementValue implements Comparable<ElementReglementValue> 
 	private Double montantDemande;
 	private Calendar dateEcheance;
 	private Long reglementId;
+	private String refAvoir ;
 
 	public int compareTo(ElementReglementValue element) {
 		return (element.getId().compareTo(id));
@@ -74,6 +75,16 @@ public class ElementReglementValue implements Comparable<ElementReglementValue> 
 
 	public void setReglementId(Long reglementId) {
 		this.reglementId = reglementId;
+	}
+
+	
+
+	public String getRefAvoir() {
+		return refAvoir;
+	}
+
+	public void setRefAvoir(String refAvoir) {
+		this.refAvoir = refAvoir;
 	}
 
 	@Override

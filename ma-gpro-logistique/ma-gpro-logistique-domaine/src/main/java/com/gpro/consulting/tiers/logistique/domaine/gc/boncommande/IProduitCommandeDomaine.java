@@ -3,6 +3,10 @@ package com.gpro.consulting.tiers.logistique.domaine.gc.boncommande;
 import java.util.List;
 
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ProduitCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.RechercheMulticritereProduitBonCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ResultatRechecheProduitBonCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.RechercheMulticritereDetFactureVenteValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.ResultatRechecheDetFactureVenteValue;
 
 /**
  * produitCommande Domaine interface
@@ -22,4 +26,6 @@ public interface IProduitCommandeDomaine {
 	public void delete(Long id);
 
 	public List<ProduitCommandeValue> getAll();
+	public ResultatRechecheProduitBonCommandeValue rechercherMultiCritere(RechercheMulticritereProduitBonCommandeValue request);
+
 }

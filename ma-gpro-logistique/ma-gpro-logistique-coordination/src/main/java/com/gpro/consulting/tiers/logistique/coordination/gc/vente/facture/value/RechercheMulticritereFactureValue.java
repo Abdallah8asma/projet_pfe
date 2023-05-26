@@ -65,8 +65,31 @@ public class RechercheMulticritereFactureValue {
 	private String infoLivraison ;
 	
 	
+	private String refCommande;
+	
+	private String identifiant;
+	
+	
+	
+	
 	
 
+
+	public String getIdentifiant() {
+		return identifiant;
+	}
+
+	public void setIdentifiant(String identifiant) {
+		this.identifiant = identifiant;
+	}
+
+	public String getRefCommande() {
+		return refCommande;
+	}
+
+	public void setRefCommande(String refCommande) {
+		this.refCommande = refCommande;
+	}
 
 	public String getInfoLivraison() {
 		return infoLivraison;

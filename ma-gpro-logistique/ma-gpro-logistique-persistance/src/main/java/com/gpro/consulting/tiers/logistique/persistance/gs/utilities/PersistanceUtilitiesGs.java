@@ -493,7 +493,7 @@ public class PersistanceUtilitiesGs {
 	public static BonMouvementStockValue toValue(BonMouvementEntite pBonMouvementEntite) {
 		BonMouvementStockValue bonMouvementStockValue = new BonMouvementStockValue();
 		
-		System.out.println("---Persistance supprimerBonMouvementStock--bonMouvement:"+bonMouvementStockValue);
+		//System.out.println("---Persistance supprimerBonMouvementStock--bonMouvement:"+bonMouvementStockValue);
 
 		bonMouvementStockValue.setId(pBonMouvementEntite.getId());
 		bonMouvementStockValue.setDate(pBonMouvementEntite.getDate());
@@ -522,6 +522,9 @@ public class PersistanceUtilitiesGs {
 		bonMouvementStockValue.setOfId(pBonMouvementEntite.getOfId());
 		bonMouvementStockValue.setNumBRSortie(pBonMouvementEntite.getNumBRSortie());
 		bonMouvementStockValue.setOrigineFSuiveuse(pBonMouvementEntite.isOrigineFSuiveuse());
+		bonMouvementStockValue.setReferenceBonReception(pBonMouvementEntite.getReferenceBonReception());
+
+		
 		return bonMouvementStockValue;
 	}
 

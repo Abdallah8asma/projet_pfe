@@ -10,9 +10,11 @@ import org.springframework.stereotype.Component;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.CommandeVenteValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.ProduitCommandeValue;
 import com.gpro.consulting.tiers.logistique.coordination.gc.boncommande.value.TaxeCommandeValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.vente.facture.value.DetFactureVenteValue;
 import com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.entitie.CommandeVenteEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.entitie.ProduitCommandeEntity;
 import com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.entitie.TaxeCommandeEntity;
+import com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.DetFactureVenteEntity;
 
 /**
  * Mapping Class from DTO to Entity, and from Entity to DTO
@@ -264,5 +266,27 @@ public class BonCommandePersistanceUtilities {
 
 		return dto;
 	}
-
+	public static   ProduitCommandeValue toValueEnrichi(ProduitCommandeEntity entity) 
+	{
+		ProduitCommandeValue produitCommandeValue=toValue(entity);
+		if(entity.getCommandeVente() != null)
+		{
+			produitCommandeValue.setPartieIntersseId(entity.getCommandeVente().getPartieIntersseId());
+			produitCommandeValue.setDateCommande(entity.getCommandeVente().getDateIntroduction());
+			produitCommandeValue.setReferenceCommande(entity.getCommandeVente().getReference());
+			produitCommandeValue.setMontantTaxe(entity.getCommandeVente().getMontantTaxe());
+			produitCommandeValue.setMontantRemise(entity.getCommandeVente().getMontantRemise());
+			produitCommandeValue.setMontantHTTotal(entity.getCommandeVente().getMontantTTC());
+			produitCommandeValue.setDeviseId(entity.getCommandeVente().getDevise());
+		
+		
+			
+			
+		    
+		}
+		return produitCommandeValue;
+		
+			
+		
+	}
 }

@@ -3,7 +3,15 @@ package com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ArticleValue;
+import com.gpro.consulting.tiers.commun.coordination.value.elementBase.ProduitValue;
+import com.gpro.consulting.tiers.commun.coordination.value.partieInteressee.PartieInteresseValue;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IArticlePersistance;
+import com.gpro.consulting.tiers.commun.persistance.elementBase.IProduitPersistance;
+import com.gpro.consulting.tiers.commun.persistance.partieInteressee.IPartieInteresseePersistance;
 import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.DetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.RechercheMulticritereDetFactureAchatValue;
+import com.gpro.consulting.tiers.logistique.coordination.gc.achat.facture.value.ResultatRechecheDetFactureAchatValue;
 import com.gpro.consulting.tiers.logistique.domaine.gc.achat.facture.IDetFactureAchatDomaine;
 import com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.IDetFactureAchatPersistance;
 
@@ -15,10 +23,14 @@ import com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.IDetFac
  */
 @Component
 public class DetFactureAchatDomaineImpl implements IDetFactureAchatDomaine {
-
-	/** The det facture achat persistance. */
+	
 	@Autowired
 	private IDetFactureAchatPersistance detFactureAchatPersistance;
+	@Autowired 
+	private IArticlePersistance articlePersistance;
+	
+	@Autowired
+	IPartieInteresseePersistance partieInteresseePersistance;
 
 	/*
 	 * (non-Javadoc)
@@ -68,6 +80,39 @@ public class DetFactureAchatDomaineImpl implements IDetFactureAchatDomaine {
 	public void delete(Long id) {
 
 		detFactureAchatPersistance.delete(id);
+	}
+
+	@Override
+	public ResultatRechecheDetFactureAchatValue rechercherMultiCritere(
+			RechercheMulticritereDetFactureAchatValue request) {
+		
+		
+		ResultatRechecheDetFactureAchatValue result = detFactureAchatPersistance.rechercherMultiCritere(request);
+	
+		for(DetFactureAchatValue detFactureAchatValue : result.getList()){
+			
+			
+			
+			if(detFactureAchatValue.getProduitId()!=null)
+			{
+			ArticleValue articleValue=	articlePersistance.getArticleParId(detFactureAchatValue.getProduitId());
+			detFactureAchatValue.setProduitDesignation(articleValue.getDesignation());
+			detFactureAchatValue.setProduitReference(articleValue.getRef());
+			
+		
+			}
+			if(detFactureAchatValue.getPartieIntId()!=null)
+			{
+				PartieInteresseValue partieInteresseValue=partieInteresseePersistance.getPartieInteresseById(detFactureAchatValue.getPartieIntId());
+				detFactureAchatValue.setClientAbreviation(partieInteresseValue.getAbreviation());
+			}
+		}
+			
+		
+		return result;
+	
+		
+		
 	}
 
 }

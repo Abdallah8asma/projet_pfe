@@ -97,13 +97,16 @@ public class FacturePersistanceUtilities {
 	    dto.setDevise(entity.getDevise());
 	    dto.setTauxConversion(entity.getTauxConversion());
 	    dto.setMontantConverti(entity.getMontantConverti());
-	    dto.setDeclarer(entity.isDeclarer());
+	    dto.setDeclarer(entity.getDeclarer());
 	    
 	    dto.setForcerCalculMontant(entity.isForcerCalculMontant());
 	    
 	    
 	    dto.setModalitePaiement(entity.getModalitePaiement());
 	    dto.setDateEcheance(entity.getDateEcheance());
+	    
+	    dto.setRefCommande(entity.getRefCommande());
+	    dto.setIdentifiant(entity.getIdentifiant());
 	    
 	    
 		if(entity.getListDetFactureVente() != null){
@@ -188,12 +191,15 @@ public class FacturePersistanceUtilities {
 	    entity.setDevise(dto.getDevise());
 	    entity.setTauxConversion(dto.getTauxConversion());
 	    entity.setMontantConverti(dto.getMontantConverti());
-	    entity.setDeclarer(dto.isDeclarer());
+	    entity.setDeclarer(dto.getDeclarer());
 	    
 	    entity.setForcerCalculMontant(dto.isForcerCalculMontant());
 	    
 	    entity.setModalitePaiement(dto.getModalitePaiement());
 	    entity.setDateEcheance(dto.getDateEcheance());
+	    
+	    entity.setRefCommande(dto.getRefCommande());
+	    entity.setIdentifiant(dto.getIdentifiant());
 	    
 	    
 		if(dto.getListDetFactureVente() != null){
@@ -530,6 +536,26 @@ public class FacturePersistanceUtilities {
 		}
 		raisonFactureEntite.setDesignation(pRaisonFactureValue.getDesignation());
 		return raisonFactureEntite;
+	}
+	public  DetFactureVenteValue toValueEnrichi(DetFactureVenteEntity entity) 
+	{
+		DetFactureVenteValue det=toValue(entity);
+		if(entity.getFactureVente() != null)
+		{
+			det.setDateFacture(entity.getFactureVente().getDateEcheance());
+			det.setDateFacture(entity.getFactureVente().getDate());
+			det.setReferenceFacture(entity.getFactureVente().getReference());
+			det.setReferenceBl(entity.getFactureVente().getInfoLivraison());
+			det.setCommandeReference(entity.getFactureVente().getRefCommande());
+			det.setPartieIntId(entity.getFactureVente().getPartieIntId());
+			det.setPrixTotalHT(entity.getFactureVente().getMontantTTC());
+			
+		    
+		}
+		return det;
+		
+			
+		
 	}
 
 }

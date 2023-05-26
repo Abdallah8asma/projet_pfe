@@ -70,7 +70,7 @@ angular.module('gpro.etatMP', [])
 			$http
 					.get(
 							UrlAtelier
-									+ "/gestionnaireCache/listeMagasinCache")
+									+ "/magasin/depots")
 					.success(
 							function(dataMagasin) {
 								$scope.listeMagasinCache = dataMagasin;
@@ -495,6 +495,12 @@ angular.module('gpro.etatMP', [])
 				{
 					field : 'qteActuelle',
 					displayName : 'Q.Actuelle.',
+					width :'8%'
+
+				},
+				{
+					field : 'stockMin',
+					displayName : 'Stock.Min',
 					width :'8%'
 
 				},

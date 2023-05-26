@@ -93,17 +93,40 @@ public class ReglementEntity implements Serializable{
     private String ajoutSpecial;
     
     @Column(name = "declarer")
-	private boolean declarer;
+	private Boolean declarer;
+    @Column(name = "montant_Bl_Regle")
+	private Double montantBlRegle ;
+    @Column(name = "montant_Facture_Regle")
+	private Double montantFactureRegle ;
+    @Column(name = "montant_Facture_Avoir_Regle")
+	private Double montantFactureAvoirRegle ;
+    @Column(name = "nombre_Bl_Regle")
+	private Long nombreBlRegle;
+    @Column(name = "nombre_Facture_Regle")
+	private Long nombreFactureRegle;
+    @Column(name = "nombre_Facture_Avoir_Regle")
+	private Long nombreFactureAvoirRegle;
     
-    
-    
+    @Column(name = "montant_Bl_Non_Regle")
+	private Double montantBlNonRegle ;
+    @Column(name = "montant_Facture_Non_Regle")
+	private Double montantFactureNonRegle ;
+    @Column(name = "montant_Facture_Avoir_Non_Regle")
+	private Double montantFactureAvoirNonRegle ;
+    @Column(name = "nombre_Bl_Non_Regle")
+	private Long nombreBlNonRegle;
+    @Column(name = "nombre_Facture_Non_Regle")
+	private Long nombreFactureNonRegle;
+    @Column(name = "nombre_Facture_Avoir_Non_Regle")
+	private Long nombreFactureAvoirNonRegle;
     
 
-	public boolean isDeclarer() {
+
+	public Boolean getDeclarer() {
 		return declarer;
 	}
 
-	public void setDeclarer(boolean declarer) {
+	public void setDeclarer(Boolean declarer) {
 		this.declarer = declarer;
 	}
 
@@ -273,6 +296,102 @@ public class ReglementEntity implements Serializable{
 		super();
 		this.id = id;
 		this.reference = reference;
+	}
+
+	public Double getMontantBlRegle() {
+		return montantBlRegle;
+	}
+
+	public void setMontantBlRegle(Double montantBlRegle) {
+		this.montantBlRegle = montantBlRegle;
+	}
+
+	public Double getMontantFactureRegle() {
+		return montantFactureRegle;
+	}
+
+	public void setMontantFactureRegle(Double montantFactureRegle) {
+		this.montantFactureRegle = montantFactureRegle;
+	}
+
+	public Double getMontantFactureAvoirRegle() {
+		return montantFactureAvoirRegle;
+	}
+
+	public void setMontantFactureAvoirRegle(Double montantFactureAvoirRegle) {
+		this.montantFactureAvoirRegle = montantFactureAvoirRegle;
+	}
+
+	public Long getNombreBlRegle() {
+		return nombreBlRegle;
+	}
+
+	public void setNombreBlRegle(Long nombreBlRegle) {
+		this.nombreBlRegle = nombreBlRegle;
+	}
+
+	public Long getNombreFactureRegle() {
+		return nombreFactureRegle;
+	}
+
+	public void setNombreFactureRegle(Long nombreFactureRegle) {
+		this.nombreFactureRegle = nombreFactureRegle;
+	}
+
+	public Long getNombreFactureAvoirRegle() {
+		return nombreFactureAvoirRegle;
+	}
+
+	public void setNombreFactureAvoirRegle(Long nombreFactureAvoirRegle) {
+		this.nombreFactureAvoirRegle = nombreFactureAvoirRegle;
+	}
+
+	public Double getMontantBlNonRegle() {
+		return montantBlNonRegle;
+	}
+
+	public void setMontantBlNonRegle(Double montantBlNonRegle) {
+		this.montantBlNonRegle = montantBlNonRegle;
+	}
+
+	public Double getMontantFactureNonRegle() {
+		return montantFactureNonRegle;
+	}
+
+	public void setMontantFactureNonRegle(Double montantFactureNonRegle) {
+		this.montantFactureNonRegle = montantFactureNonRegle;
+	}
+
+	public Double getMontantFactureAvoirNonRegle() {
+		return montantFactureAvoirNonRegle;
+	}
+
+	public void setMontantFactureAvoirNonRegle(Double montantFactureAvoirNonRegle) {
+		this.montantFactureAvoirNonRegle = montantFactureAvoirNonRegle;
+	}
+
+	public Long getNombreBlNonRegle() {
+		return nombreBlNonRegle;
+	}
+
+	public void setNombreBlNonRegle(Long nombreBlNonRegle) {
+		this.nombreBlNonRegle = nombreBlNonRegle;
+	}
+
+	public Long getNombreFactureNonRegle() {
+		return nombreFactureNonRegle;
+	}
+
+	public void setNombreFactureNonRegle(Long nombreFactureNonRegle) {
+		this.nombreFactureNonRegle = nombreFactureNonRegle;
+	}
+
+	public Long getNombreFactureAvoirNonRegle() {
+		return nombreFactureAvoirNonRegle;
+	}
+
+	public void setNombreFactureAvoirNonRegle(Long nombreFactureAvoirNonRegle) {
+		this.nombreFactureAvoirNonRegle = nombreFactureAvoirNonRegle;
 	}
 	
 	

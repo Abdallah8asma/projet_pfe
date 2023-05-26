@@ -85,6 +85,8 @@ public class ReceptionAchatValue implements Comparable<ReceptionAchatValue> {
 	private String refFacture;
 
 	private Long boutiqueId;
+	private Long  bonMouvementEntreeId ;
+
 	public Long getBoutiqueId() {
 		return boutiqueId;
 	}
@@ -371,6 +373,16 @@ public class ReceptionAchatValue implements Comparable<ReceptionAchatValue> {
 
 	public void setListSuppDetReceptionAchat(List<ProduitReceptionAchatValue> listSuppDetReceptionAchat) {
 		ListSuppDetReceptionAchat = listSuppDetReceptionAchat;
+	}
+
+     
+
+	public Long getBonMouvementEntreeId() {
+		return bonMouvementEntreeId;
+	}
+
+	public void setBonMouvementEntreeId(Long bonMouvementEntreeId) {
+		this.bonMouvementEntreeId = bonMouvementEntreeId;
 	}
 
 	@Override

@@ -51,5 +51,10 @@ public interface IElementReglementPersistance {
 
 
 	public Double getSumMontantPayerByReferenceBL(String reference);
+	
+	
+	
+	public List<ElementReglementValue> rechercherMultiCritereOptimiser(
+			RechercheMulticritereReglementValue request);
 
 }

@@ -94,6 +94,7 @@ angular
     'atelier.menuGC',
     'atelier.menuGA',
     'gpro.gcVenteBC',
+    'gpro.gcDetBonCommande',
     'gpro.gcVenteDevis',
     'gpro.gcReception',
     'gpro.gcReceptionAchat',
@@ -107,6 +108,7 @@ angular
     'gpro.detbondelivraisonGC',
     'gpro.marche',
     'gpro.factureVente',
+    'gpao.detailsFactureVente',
     'gpro.factureAvoirVente',
     'gpro.factureRetourVente',
     'gpro.back-logistique',
@@ -135,6 +137,7 @@ angular
     /** ************ modules Achat *********** */
 
     'gpro.factureAchat',
+    'gpro.detFactureAchat',
     'gpro.factureAvoirAchat',
     'gpro.factureRetourAchat',
 
@@ -232,8 +235,9 @@ angular
    'atelier.suivieOF',
    'gpro.film',
    'gpro.forme',
-   'gpro.service'
-   
+   'gpro.service',
+   /***************produitComposition */
+   'gpao.produitComposition'
 
 	
 	
@@ -350,7 +354,24 @@ angular
         $('#menuFront>ul>li').removeClass('active');
         $('#menuFront>ul>li').eq(6).addClass('active');
       };
-      
+      $scope.getClientActif = function() {
+
+				//TODO cache
+				$http
+				  .get(
+					UrlCommun
+					 + "/baseInfo/getClientActif")
+				  .success(
+					function(baseInfo) {
+					  // $log.debug("baseInfo : ",baseInfo);
+					  $scope.clientActif = baseInfo;
+				
+					});
+			  }
+
+        $scope.getClientActif ();
+          
+			 
       $scope.reloadAllCache = function () {
     
     	  $http.get(UrlCommun + '/gestionnaireCache/reloadReferentiel');
@@ -363,7 +384,14 @@ angular
       $scope.reloadGs = function () {
         $http.get(UrlAtelier + '/gestionnaireCache/reloadGs');
       };
-      $scope.reloadGs();
+
+      if($rootScope.isLoggedIn == true){
+        $scope.getClientActif();
+        $scope.reloadGs();
+      }
+
+
+     
 
       $scope.goFront = function () {
         $http.get(UrlCommun + '/gestionnaireCache/reloadReferentiel');
@@ -450,6 +478,39 @@ angular
         $rootScope.isLoggedIn = false;
       };
 
+
+      $scope.loginPostAction = function (userlogin) {
+        AuthenticationService.login(
+          userlogin.userName,
+          userlogin.password,
+          function (resultat) {
+            if (resultat == true) {
+              $scope.currentUser = AuthenticationService.getFromStorageCurrentUser();
+              $scope.emailUser = localStorage.getItem('email');
+              $scope.nameUser = localStorage.getItem('name'); 
+              $scope.jobUser = localStorage.getItem('job'); 
+     
+              $global.set('fullscreen', false);
+              $rootScope.isLoggedIn = true;
+              window.location.href = '#/';
+              var expToken = jwtHelper.decodeToken(
+                localStorage.getItem('currentUser')
+              );
+              $rootScope.permissions = expToken.operations;
+              // var tokenPayload = jwtHelper.decodeToken(expToken);
+
+              $scope.getClientActif();
+
+              
+            } else {
+              $scope.loginError = true;
+              $scope.userlogin.userName = '';
+              $scope.userlogin.password = '';
+            }
+          }
+        );
+      };
+
       $scope.logIn = function (userlogin) {
         /*  var expToken =
           'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYW1lciIsInVzZXJJZCI6IjUiLCJyb2xlIjoiQ09OVFJPTEVVUiJ9.D6g8IMHsK2EApcx_VRim-krMBrppiOunmNHHv6swg9tQxnXp0xPVkl3Q48LuhPYHJ_eyA93WgxmxJJTIgvfwgg';*/
@@ -458,33 +519,7 @@ angular
         // var permissionsBack = $scope.permissions;
         // localStorage.setItem('token', expToken);
 
-        $scope.loginPostAction = function (userlogin) {
-          AuthenticationService.login(
-            userlogin.userName,
-            userlogin.password,
-            function (resultat) {
-              if (resultat == true) {
-                $scope.currentUser = AuthenticationService.getFromStorageCurrentUser();
-                $scope.emailUser = localStorage.getItem('email');
-                $scope.nameUser = localStorage.getItem('name'); 
-                $scope.jobUser = localStorage.getItem('job'); 
-       
-                $global.set('fullscreen', false);
-                $rootScope.isLoggedIn = true;
-                window.location.href = '#/';
-                var expToken = jwtHelper.decodeToken(
-                  localStorage.getItem('currentUser')
-                );
-                $rootScope.permissions = expToken.operations;
-                // var tokenPayload = jwtHelper.decodeToken(expToken);
-              } else {
-                $scope.loginError = true;
-                $scope.userlogin.userName = '';
-                $scope.userlogin.password = '';
-              }
-            }
-          );
-        };
+      
         $scope.loginPostAction($scope.userlogin);
       };
 
