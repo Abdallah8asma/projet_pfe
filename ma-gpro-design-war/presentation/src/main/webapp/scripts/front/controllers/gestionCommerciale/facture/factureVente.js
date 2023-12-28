@@ -731,7 +731,7 @@ angular
 					// console.log("FROM FACTURE redirection");
 					// console.log("RECIEVED BL",$scope.sendedBL);
 
-					$scope.factureVenteCourant = { reference: $scope.referenceBL, date: $scope.dateBL };
+					 var  factureVenteCourant = { reference: $scope.referenceBL, date: $scope.dateBL };
 
 					$scope.tagReferenceBLivList.push($scope.sendedBL.reference);
 
@@ -748,7 +748,7 @@ angular
 
 					// console.log("AFFECTED
 					// groupeClientId",$scope.affectedgroupeClientId);
-					$scope.factureVenteCourant = {
+			         factureVenteCourant = {
 						"date": $scope.sendedBL.date,
 						"idDepot": $scope.sendedBL.idDepot,
 						"modepaiementId": $scope.sendedBL.modepaiementId.toString(),
@@ -756,9 +756,11 @@ angular
 						"typePartieInteressee": $scope.sendedBL.typePartieInteressee.toString(),
 						"groupeClientId": $scope.affectedgroupeClientId,
 						"declarer": $scope.sendedBL.declare,
+						"identifiant":$scope.sendedBL.identifiantLivraison,
+						"refCommande":$scope.sendedBL.refCommande,
 					};
-
-
+                   // console.log(factureVenteCourant);
+                    
 
 					// console.log("AFFECTED
 					// FACTURE",$scope.factureVenteCourant);
@@ -771,8 +773,10 @@ angular
 						.success(
 							function (res) {
 
-								$scope.factureVenteCourant.reference = res;
-								$scope.factureVenteCourant.refAvantChangement = res;
+								factureVenteCourant.reference = res;
+								factureVenteCourant.refAvantChangement = res;
+								$scope.factureVenteCourant=factureVenteCourant;
+								console.log($scope.factureVenteCourant);
 							});
 
 
