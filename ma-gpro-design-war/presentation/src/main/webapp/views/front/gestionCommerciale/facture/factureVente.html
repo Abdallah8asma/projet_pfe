@@ -789,7 +789,12 @@
             </ul>
           </div>
 
-
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="goLivraison()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span>
+              <span class="ms-CommandButton-label">Livraison</span>
+            </button>
+          </div>
 
           <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="annulerAjout()">
@@ -797,6 +802,7 @@
               <span class="ms-CommandButton-label">Retour</span>
             </button>
           </div>
+          
           
            <div class="ms-CommandButton">
             <button class="ms-CommandButton-button" ng-click="annulerAjoutRapide()">
@@ -1085,7 +1091,7 @@
                     <div class="input-group-prepend">
                       <label class="input-group-text ms-Label">Identifiant</label>
                     </div>
-                    <input class="form-control" ng-init="factureVenteCourant.identifiant =''"
+                    <input class="form-control" 
                       ng-model="factureVenteCourant.identifiant"
                       ng-required ="clientActif.identifiantFactureObligatoire==true"
                       />
