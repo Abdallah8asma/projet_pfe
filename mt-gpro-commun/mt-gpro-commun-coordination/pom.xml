@@ -47,4 +47,16 @@
 		</dependency>
   
   </dependencies>
+  <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <outputDirectory>/var/lib/jenkins/workspace/premier_job/mt-gpro-commun/mt-gpro-commun-coordination/target/classes</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
