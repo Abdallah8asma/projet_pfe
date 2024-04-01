@@ -11,11 +11,14 @@ pipeline
         }
         
         stage('Build') {
-
-            steps{
-                sh 'mvn clean install package'
-            
-        }}
+            steps {
+                // Changer le répertoire de travail
+                dir('/var/lib/jenkins/workspace/premier_job/mt-gpro-commun/mt-gpro-commun-coordination') {
+                    // Exécuter les commandes Maven
+                    sh 'mvn clean install package'
+                }
+            }
+        }
 
         stage('Deploy'){
             steps{
