@@ -1,16 +1,25 @@
 pipeline
 {
-    agent any
-    stages{
+ agent any
+    stages {
         stage('Clone') {
-          
-            steps{
-             // git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git'
-             
-             checkout([$class: 'GitSCM', branches: [[name: 'migration_devops'], [name: 'master']], credentialsId: 'Gitlab', userRemoteConfigs: [[url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git']]])
-
+            steps {
+                script {
+                    // Cloner la branche migration_devops
+                    
+                    checkout([$class: 'GitSCM', branches: [[name: 'migration_devops']], userRemoteConfigs: [[url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git']]])
+                }
+            }
         }
+        stage('Add other branches') {
+            steps {
+                script {
+                    // Ajouter d'autres branches
+                    checkout([$class: 'GitSCM', branches: [[name: 'master'], [name: 'dev']], userRemoteConfigs: [[url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git']]])
+                }
+            }
         }
+    }
         
         stage('Build') {
             steps {
