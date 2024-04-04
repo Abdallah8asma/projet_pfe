@@ -5,7 +5,9 @@ pipeline
         stage('Clone') {
           
             steps{
-              git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git'
+             // git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git'
+             
+             checkout([$class: 'GitSCM', branches: [[name: 'migration_devops'], [name: 'master']], credentialsId: 'Gitlab', userRemoteConfigs: [[url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git']]])
 
         }
         }
