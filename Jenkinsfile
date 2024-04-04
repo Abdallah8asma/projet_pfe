@@ -7,7 +7,7 @@ pipeline
                 script {
                     // Cloner la branche migration_devops
                     
-                    checkout([$class: 'GitSCM', branches: [[name: 'migration_devops']], userRemoteConfigs: [[url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git']]])
+                    checkout([$class: 'GitSCM', branches: [[name: 'migration_devops']], credentialsId: 'Gitlab' ,userRemoteConfigs: [[url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git']]])
                 }
             }
         }
@@ -15,7 +15,7 @@ pipeline
             steps {
                 script {
                     // Ajouter d'autres branches
-                    checkout([$class: 'GitSCM', branches: [[name: 'master'], [name: 'dev']], userRemoteConfigs: [[url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git']]])
+                    checkout([$class: 'GitSCM', branches: [[name: 'master'], [name: 'dev']], credentialsId: 'Gitlab', userRemoteConfigs: [[url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git']]])
                 }
             }
         }
