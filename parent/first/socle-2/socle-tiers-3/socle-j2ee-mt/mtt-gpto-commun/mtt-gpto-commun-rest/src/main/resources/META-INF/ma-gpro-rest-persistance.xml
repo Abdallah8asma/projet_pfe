@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+    version="2.0">
+    <persistence-unit name="persistance" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <non-jta-data-source>jdbc/module-ds</non-jta-data-source>
+		
+		<!-- Entité PartieInteressee  -->
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.GroupeClientEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CategorieEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DocumentEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.FamilleEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.PartieInteresseEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.RepresentantEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.SiteEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.TypeDocumentEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.TypeEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DeviseEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.RegionEntite</class> 
+
+		
+		
+		<!-- Entité Produit -->
+	    <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DocumentProduitEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleProduitEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SousFamilleProduitEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitSerialisableEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SuperFamilleProduitEntity</class>
+
+		
+		
+        
+        <!-- Entité Article --> 
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleEntite</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CouleurEntite</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.UniteArticleEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DocumentArticleEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SeuilArticleEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleArticleEntity</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SousFamilleArticleEntity</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.TypeArticleEntity</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PrixClientEntity</class>
+        
+        <class>com.gpro.consulting.tiers.commun.persistance.baseinfo.entity.BaseInfoEntity</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.login.entity.UserEntity</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.login.entity.RoleEntity</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.BoutiqueEntite</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.RemiseEntite</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PackageEntite</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DetailsPackageEntite</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SocieteEntite</class>
+         
+         
+        <!--  nouvelle entite commercial industriel -->
+         <class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.BanqueEntite</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CompteComptablePIEntity</class> 
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CompteComptableEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionProduitEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleProduitEntity</class>
+	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity</class>
+	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationProduitEntity</class>
+	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationArticleProduitEntity</class>
+	      <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.UtilsEntite</class>
+	      
+	      <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MoldsEntite</class>
+	      
+      
+         
+        <properties>
+        <!--           <property name="hibernate.hbm2ddl.auto" value="none" /> -->
+            <property name="hibernate.max_fetch_depth" value="0" />
+            <property name="hibernate.hbm2ddl.auto" value="none" />
+            <property name="hibernate.show_sql" value="false" />
+            <property name="hibernate.format_sql" value="false" />
+            <property name="use_sql_comments" value="false" />
+            <property name="hibernate.archive.autodetection" value="class" />
+            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+            <property name="hibernate.cache.use_second_level_cache" value="false" />
+            <property name="hibernate.cache.use_query_cache" value="false" />
+        </properties>
+    </persistence-unit>
+
+</persistence>
