@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-11-03T14:58:02 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EEEFF0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#CACED0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#D8D8D8"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tableDataset" uuid="f13e6d36-5148-4ecc-bbe3-3035def80980">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<subDataset name="GPRO-LOGISTIQUE" uuid="db2751e4-8932-4296-b89b-a43750a2e082">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GPRO-LOGISTIQUE"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<group name="Gruppo1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement x="11" y="0" width="126" height="20" uuid="a9300704-50ae-4714-90af-43a08c738e38"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nombre de rouleaux]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="139" y="0" width="103" height="20" uuid="0cc17ec8-a8fc-4be3-a2ea-b86bd26bc8f5"/>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band>
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="375" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="236" width="541" height="105" uuid="9ea82ca0-d616-4723-82a4-a2c5f924e505"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="401" y="3" width="159" height="81" uuid="17668aa9-0178-4a3d-8326-b82d6eb5ceb6"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="180" y="122" width="176" height="25" uuid="57aed2b1-4f4e-40a3-a6ad-54dae8dd4c5a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bon de Reception :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="415" y="10" width="36" height="20" uuid="0f86baff-6386-4f3f-b3fe-2388707babe8"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="457" y="10" width="84" height="20" uuid="bb10dbe1-0a4f-4722-9953-c163b63cf979"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center">
+				<reportElement x="0" y="0" width="65" height="60" uuid="94883631-a913-43e2-b182-ab8d77d0181e"/>
+				<imageExpression><![CDATA["invoice_logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="109" y="86" width="70" height="20" uuid="0b3f9342-da78-4cfa-9fc5-2301c4749678"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[B14932 1997]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="0" width="210" height="50" uuid="e622555d-198b-4ccd-a4a1-c59c53304058">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Société Tunisienne Pour l'Industries Textiles]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="70" width="256" height="15" uuid="b8cc42fd-b569-497d-834d-7e854040ad18"/>
+				<text><![CDATA[Téléphone: 73 455 913 - Télécopie: 73 473 209]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="40" width="205" height="15" uuid="c226e44d-3bb5-4145-b0b3-903bf1d79fde"/>
+				<text><![CDATA[Adresse: Av. Habib Bourguiba]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="55" width="256" height="15" uuid="b96f7183-44f8-43ad-ba60-43d8fbf50b6e"/>
+				<text><![CDATA[Code Postal: 5070 - Ville: Ksar Hellal Monastir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="86" width="99" height="20" uuid="f06a4f83-8ac6-436a-a46a-db5fd14960a4"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[09200W / A / M000]]></text>
+			</staticText>
+			<line>
+				<reportElement x="5" y="117" width="556" height="1" uuid="b6299fea-d00b-4540-94b7-acdcabd9ce25">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="84" y="85" width="36" height="20" uuid="8b349a08-ad36-42f4-8ad5-b9e647f2c1aa"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[R.C:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="86" width="51" height="20" uuid="47aa788f-7c4a-463e-8e98-110ca099b78b"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[M.Fiscal:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="176" width="144" height="20" uuid="3afb3242-f539-4f4c-99ac-c5c1056bd904"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Réf.Bon Commande:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="207" width="100" height="20" uuid="a8c4bbdf-9949-44b1-af58-4e3e08971c75"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Réception:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="246" width="100" height="20" uuid="be974068-02e5-4854-9a22-31706da0c6eb"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tissu:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="176" width="100" height="20" uuid="dc97a6f4-217e-4412-bb28-641d8647e7a1"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Client:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="207" width="100" height="20" uuid="f0f4bd84-9ac1-4696-be2d-16fdee7a8908"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Délai Livraison:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="246" width="100" height="20" uuid="28ffa407-32cd-4e37-b169-435007593d0d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type Tissu:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="152" y="176" width="85" height="20" uuid="4452d490-0a1e-4997-9da2-ca33663c50e5"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="105" y="207" width="129" height="20" uuid="28b853c7-4544-41d5-98e7-c49748ed6bef"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="105" y="246" width="129" height="20" uuid="44e4bf08-e2e3-48d1-8ee7-50d4abdf8977"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="366" y="176" width="141" height="20" uuid="edd56899-d49f-44c2-81f6-1f7cad4ab080"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="366" y="207" width="141" height="20" uuid="ceacd63b-3c40-41a3-8af5-1d7f7607932f"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="366" y="246" width="141" height="20" uuid="68aa9b1c-8498-4a56-b21b-9291a6f7be57"/>
+			</textField>
+			<textField>
+				<reportElement x="359" y="123" width="100" height="22" uuid="9f22cc5b-115a-49a2-81bb-417939be0e93"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="107" y="276" width="129" height="20" uuid="7a057dbd-3cc9-4a37-8e03-cab3b2162847"/>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="276" width="99" height="20" uuid="35f3d736-49b5-440c-beb7-a42dad06e956"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Composition:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="114" y="308" width="393" height="20" uuid="a8a8b3db-25de-4f9c-8805-e691cc9a9337"/>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="308" width="100" height="20" uuid="be4919b2-e39a-4ba9-a695-6b0e5b6bbf9d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observation:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="278" width="132" height="20" uuid="400faabd-ad44-43de-9595-758b4a622e0d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laise Fini Demandée:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="399" y="278" width="108" height="20" uuid="2c28e335-1c72-4383-b9eb-12cb6a9dffc4"/>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="21"/>
+	</detail>
+	<lastPageFooter>
+		<band height="177">
+			<staticText>
+				<reportElement positionType="Float" x="-1" y="30" width="261" height="101" uuid="1a0d7088-5af7-4865-8be1-41ec5f51fb36"/>
+				<box>
+					<topPen lineWidth="1.1" lineStyle="Dashed"/>
+					<leftPen lineWidth="1.1" lineStyle="Dashed"/>
+					<bottomPen lineWidth="1.1" lineStyle="Dashed"/>
+					<rightPen lineWidth="1.1" lineStyle="Dashed"/>
+				</box>
+				<text><![CDATA[Your notes here]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="147" width="556" height="30" backcolor="#E6E8E9" uuid="36aa233d-4305-48e6-974a-1bbf89bb3c8f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="9" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[THANKYOU FOR YOUR BUSINESS]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

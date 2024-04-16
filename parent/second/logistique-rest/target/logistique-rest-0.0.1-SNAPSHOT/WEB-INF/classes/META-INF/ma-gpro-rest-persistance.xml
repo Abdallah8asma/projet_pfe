@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+	<persistence-unit name="persistance" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<non-jta-data-source>jdbc/module-ds</non-jta-data-source>
+		
+		
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CategorieEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DeviseEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.FamilleEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.SiteEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.TypeDocumentEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.TypeEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.GroupeClientEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.PartieInteresseEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.RepresentantEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.DocumentEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.RegionEntite</class>
+		
+		
+			<!-- entity elementBase -->
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.BoutiqueEntite</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SocieteEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.PrixClientEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SousFamilleProduitEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleProduitEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DocumentProduitEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ProduitSerialisableEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SuperFamilleProduitEntity</class>
+		
+
+		<!-- entity Bonreception -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.entity.GuichetBonReceptionEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.entity.BonReceptionEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.entity.MachineEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.entity.ReceptionTraitementEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.entity.RouleauEcruEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.bonReception.entity.TraitementEntity</class>
+
+		<!-- entity RouleauFin -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.rouleaufini.entity.EntrepotEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.rouleaufini.entity.RouleauFiniEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.rouleaufini.entity.GuichetRouleauFiniEntity</class>
+		<!-- entity Mise -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.mise.entity.MiseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.mise.entity.TraitementMiseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.mise.entity.GuichetMiseEntity</class>
+
+		<!-- Entity Choix Rouleau -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.rouleaufini.entity.ChoixRouleauEntity</class>
+
+		<!-- Entity Bon Sortie Fini -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.bonsortiefini.entity.BonSortieFiniEntity</class>
+		
+		<!-- entity Bon de livraison -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.DocumentLivraisonVenteEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.DetLivraisonVenteEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.LivraisonVenteEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.TaxeEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.TaxeLivraisonEntity</class>
+		
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.MarcheEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.bonlivraison.entitie.ModePaiementEntity</class>
+		
+		<!-- Entity Facture Vente -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.DocumentFactureVenteEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.DetFactureVenteEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.FactureVenteEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.TaxeFactureEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.vente.facture.entitie.RaisonFactureEntite</class>
+		
+        <!-- Entité Article --> 
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleEntite</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CouleurEntite</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.UniteArticleEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MatiereArticleEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MetrageEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.GrosseurEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.DocumentArticleEntite</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SeuilArticleEntity</class>
+		<class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.FamilleArticleEntity</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.SousFamilleArticleEntity</class>
+        <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.TypeArticleEntity</class>
+        
+        <!-- FicheSuiveuse Entity --> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.fichesuiveuse.entity.FicheSuiveuseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.fichesuiveuse.entity.ControleEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.fichesuiveuse.entity.ElementControleEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.fichesuiveuse.entity.ElementRecetteMiseEntity</class>
+		
+		<!-- Reglement -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.DocumentReglementEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.DetailsReglementEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.ElementReglementEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.ReglementEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.entity.TypeReglementEntity</class>
+		
+				<!-- Reglement inverse -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.entity.DocumentReglementInverseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.entity.DetailsReglementInverseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.entity.ElementReglementInverseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reglement.inverse.entity.ReglementInverseEntity</class>
+	
+		
+		
+
+		<!-- SoldeClient -->
+		<class> com.gpro.consulting.tiers.logistique.persistance.gc.soldeClient.entite.SoldeClientEntity</class>
+		<!-- Guichet -->
+		<class> com.gpro.consulting.tiers.logistique.persistance.gc.guichet.entity.GuichetMensuelEntity</class>
+		<class> com.gpro.consulting.tiers.logistique.persistance.gc.guichet.entity.GuichetAnnuelEntity</class>
+		
+		<!-- Package façon --> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.facon.entity.FicheFaconEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.facon.entity.TraitementFicheEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.facon.entity.TraitementFaconEntity</class>
+		
+		<!-- Package gs -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.DetailsInventaireEntite</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.BLAchatEntite</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.EmplacementEntite</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.EntiteStockEntite</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.InventaireEntite</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.MagasinEntite</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.MouvementEntite</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.RaisonMouvementEntite</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.BonMouvementEntite</class>
+		
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.BonStockEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.DetBonStockEntity</class>
+		
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.BonInventaireEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.entite.DetBonInventaireEntity</class>
+		
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.transfert.entite.BonTransfertEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gs.transfert.entite.DetBonTransfertEntity</class>
+		
+		
+		<!-- Package bonCommande --> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.entitie.CommandeVenteEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.entitie.ProduitCommandeEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.boncommande.entitie.TaxeCommandeEntity</class>
+		
+		<!-- Package bonCommande achat --> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.boncommande.entitie.CommandeAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.boncommande.entitie.ProduitCommandeAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.boncommande.entitie.TaxeCommandeAchatEntity</class>
+		<!-- Package reception achat --> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.entitie.DocumentReceptionAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.entitie.ProduitReceptionAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.entitie.ReceptionAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reception.entitie.TaxeReceptionAchatEntity</class>
+		
+		<!-- Package reception --> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reception.entitie.ProduitReceptionEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.reception.entitie.ReceptionVenteEntity</class>
+		
+		<!-- Package methode teinture --> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.methodeteinture.entity.MethodeTeintureEntity</class>
+		
+		<!-- Package Bon Inventaire --> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.boninventairefini.entity.BonInventaireFiniEntity</class>
+		
+		<!-- package produit depot -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.produitdepot.entities.ProduitDepotEntity</class>
+		
+		<!-- package suivi -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.suivi.entity.EnginEntity</class> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.suivi.entity.PersonnelEntity</class> 
+		<class>com.gpro.consulting.tiers.logistique.persistance.gl.suivi.entity.RemorqueEntity</class>  
+		
+		
+		
+		<!-- Entity Facture Vente -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.entitie.DocumentFactureAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.entitie.DetFactureAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.entitie.FactureAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.facture.entitie.TaxeFactureAchatEntity</class>
+		
+		
+		<!--  Entite caisse  -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.caisse.entity.CaisseEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.caisse.entity.MouvementCaisseEntity</class>
+		
+		
+			
+		<!--      Entite  Base Info -->
+		<class>com.gpro.consulting.tiers.commun.persistance.baseinfo.entity.BaseInfoEntity</class>
+		
+		
+		<!-- entity Bon de comptoir -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.boncomptoir.entitie.DetComptoirVenteEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.boncomptoir.entitie.ComptoirVenteEntity</class>
+	
+	
+	
+		<!-- Reglement Achat-->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.DocumentReglementAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.DetailsReglementAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.ElementReglementAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.ReglementAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.entity.TypeReglementAchatEntity</class>
+		
+			
+		<!-- Reglement inverse Achat-->
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.entity.DocumentReglementInverseAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.entity.DetailsReglementInverseAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.entity.ElementReglementInverseAchatEntity</class>
+		<class>com.gpro.consulting.tiers.logistique.persistance.gc.achat.reglement.inverse.entity.ReglementInverseAchatEntity</class>
+	
+	
+	
+	  <class>com.gpro.consulting.tiers.commun.persistance.login.entity.UserEntity</class>
+	  <class>com.gpro.consulting.tiers.commun.persistance.login.entity.RoleEntity</class>
+	  
+	          <!--  nouvelle entite commercial industriel -->
+         <class>com.gpro.consulting.tiers.commun.persistance.partieInteressee.entity.CompteComptablePIEntity</class> 
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ImpressionProduitEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.CompteComptableEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.ArticleProduitEntity</class>
+	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OptionArticleProduitEntity</class>
+         <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationProduitEntity</class>
+	     <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.OperationArticleProduitEntity</class>
+	     
+	     	<!-- entity PrepMoule -->
+		<class>com.gpro.consulting.tiers.logistique.persistance.atelier.prepMoule.entity.PrepMouleEntity</class>
+		
+		
+	    <class>com.gpro.consulting.tiers.commun.persistance.elementBase.entity.MoldsEntite</class>
+	
+		
+		<properties>
+			<!-- <property name="hibernate.hbm2ddl.auto" value="none" /> -->
+			<property name="hibernate.max_fetch_depth" value="0" />
+			<property name="hibernate.hbm2ddl.auto" value="none" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="use_sql_comments" value="false" />
+			<property name="hibernate.archive.autodetection" value="class" />
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.cache.use_second_level_cache"
+				value="false" />
+			<property name="hibernate.cache.use_query_cache" value="false" />
+		</properties>
+	</persistence-unit>
+
+</persistence>

@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+        
     <wb-module deploy-name="mtt-gpto-commun-rest-0.0.1-SNAPSHOT">
+                
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+                
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
-        <dependent-module archiveName="mt-gpro-commun-service-3.5.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mt-gpro-commun-service/mt-gpro-commun-service">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <dependent-module archiveName="mtt-gpto-commun-service-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mtt-gpto-commun-service/mtt-gpto-commun-service">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="mt-gpro-commun-domaine-3.5.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mt-gpro-commun-domaine/mt-gpro-commun-domaine">
+        <dependent-module archiveName="mtt-gpto-commun-domaine-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mtt-gpto-commun-domaine/mtt-gpto-commun-domaine">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="mt-gpro-commun-persistance-3.5.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mt-gpro-commun-persistance/mt-gpro-commun-persistance">
+        <dependent-module archiveName="mtt-gpto-commun-persistance-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mtt-gpto-commun-persistance/mtt-gpto-commun-persistance">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="mt-socle-3.5.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mt-socle/mt-socle">
+        <dependent-module archiveName="mt-scole-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mt-scole/mt-scole">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="mt-commun-3.5.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mt-commun/mt-commun">
+        <dependent-module archiveName="mtt-commun-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mtt-commun/mtt-commun">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="mt-gpro-commun-coordination-3.5.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mt-gpro-commun-coordination/mt-gpro-commun-coordination">
+        <dependent-module archiveName="mtt-gpto-commun-coordination-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/mtt-gpto-commun-coordination/mtt-gpto-commun-coordination">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+                
         <property name="context-root" value="mtt-gpto-commun-rest"/>
+                
         <property name="java-output-path" value="/mtt-gpto-commun-rest/target/classes"/>
+            
     </wb-module>
+    
 </project-modules>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="classpath:/spring/ehcache.xsd"
+	updateCheck="false">
+	<!-- Default Cache Configuration, with name 'default' -->
+	<defaultCache maxElementsInMemory="300" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="listeChoixRouleauCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeEntrepotCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeTraitementCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeMachineCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeTypeReglementCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+		<cache name="listeTypeReglementAchatCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeModePaiementCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="listeTraitementFaconCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="rechercherDesignationId" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="mapClientById" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+	<cache name="mapPtoduitById" maxElementsInMemory="1000" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+					<!-- Gestion de Stock -->
+					
+	<cache name="ListeMagasinCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="ListeEmplacementCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="ListeRaisonCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="ListeFournisseurCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="ListeClientCache" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="rechercherBonMouvementParId" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="rechercherClientParId" maxElementsInMemory="1000"
+		eternal="false" overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+
+
+
+</ehcache>
