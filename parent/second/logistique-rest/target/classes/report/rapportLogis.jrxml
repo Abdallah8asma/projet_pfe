@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-11-10T20:09:07 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4eedbb89-b4f6-4469-9ab6-f642a1688cf7">
+	<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="288"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#EEEFF0"/>
+		</conditionalStyle>
+	</style>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#CACED0">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#D8D8D8"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="tableDataset" uuid="f13e6d36-5148-4ecc-bbe3-3035def80980">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<parameter name="p_ref" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="p_tissu" class="java.lang.String"/>
+	<parameter name="p_client" class="java.lang.String"/>
+	<parameter name="p_dateR" class="java.lang.String"/>
+	<parameter name="p_dateL" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="MetrageTrouve" class="java.lang.Long"/>
+	<field name="MetrageAnnonce" class="java.lang.Long"/>
+	<field name="PoidsTrouve" class="java.lang.String"/>
+	<field name="PoidsAnnonce" class="java.lang.Long"/>
+	<variable name="list1_1" class="java.lang.Integer" resetType="Column" calculation="Count">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<group name="Gruppo1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<staticText>
+					<reportElement x="138" y="0" width="138" height="20" uuid="8b405387-cf3f-4b70-987a-71329e5c7e90"/>
+					<text><![CDATA[MetrageAnnonce]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="276" y="0" width="80" height="20" uuid="ceabe8f4-24b7-498a-ba42-e71ec008d2c1"/>
+					<text><![CDATA[PoidsTrouve]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="411" y="0" width="138" height="20" uuid="35a0435d-d137-426a-b6d0-7aa3eb21c147"/>
+					<text><![CDATA[PoidsAnnonce]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="1" width="82" height="19" uuid="0e2e8b85-8587-4fa4-84e1-8a1047c16338"/>
+					<text><![CDATA[MetrageTrouve]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band>
+				<property name="local_mesure_unitheight" value="pixel"/>
+				<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="333" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="106" width="556" height="1" uuid="806ce5df-1219-4876-ae0c-ca7405b1f246">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="81" y="1" width="210" height="50" uuid="0d76c79e-34c4-480e-aeee-ba6f89174d5d">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Société Tunisienne Pour l'Industries Textiles]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="41" width="205" height="15" uuid="249b10d6-bc91-4f95-a049-490548d4a083"/>
+				<text><![CDATA[Adresse: Av. Habib Bourguiba]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="56" width="256" height="15" uuid="567a1030-3b0b-4b52-99d6-e852c30fb200"/>
+				<text><![CDATA[Code Postal: 5070 - Ville: Ksar Hellal Monastir]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="71" width="256" height="15" uuid="e6830686-69bd-4040-a23a-43e5f8484df3"/>
+				<text><![CDATA[Téléphone: 73 455 913 - Télécopie: 73 473 209]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="11" width="36" height="20" uuid="ed294097-9c4f-48a0-8e6b-e04309df7dda"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="86" width="70" height="20" uuid="f716fbd7-851e-4c89-883b-c85bca692c6a"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[B14932 1997]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="85" width="36" height="20" uuid="4cd91053-a45b-4478-89ae-8cff3d8006f1"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[R.C:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="86" width="55" height="20" uuid="476fdceb-1c13-4088-a3a6-05e1daa85795"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[M.Fiscal:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="86" width="91" height="20" uuid="38e17b6c-7ca5-47f6-89ae-359bc6aeac57"/>
+				<box rightPadding="4"/>
+				<textElement textAlignment="Left">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[09200W / A / M000]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="228" width="556" height="105" uuid="74b92ef0-2a97-48d1-ab74-496a9193037b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="5" y="168" width="144" height="20" uuid="439c6e8a-4289-47e9-901b-87855c867071"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Réf.Bon Commande:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="199" width="100" height="20" uuid="6b503e36-4691-4ad3-bc85-e2e2c92d6197"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Réception:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="238" width="100" height="20" uuid="789289c0-f735-4f99-adb6-9dad0b11d883"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tissu:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="168" width="100" height="20" uuid="b686c3eb-f5c0-48a8-8fca-7bf36f09dc61"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Client:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="199" width="100" height="20" uuid="57deaeb0-7094-43b5-8848-41f79674a767"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Délai Livraison:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="238" width="100" height="20" uuid="f857907b-0623-4a65-899a-b7ff2327147a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type Tissu:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="152" y="168" width="85" height="20" uuid="ef02e12d-5d05-4df6-acd5-b208bfb8da95"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="105" y="199" width="129" height="20" uuid="2ba3e330-da0f-4ef4-9c2b-2fbbf1fad52d"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="105" y="238" width="129" height="20" uuid="49e8ab1b-1a3f-459e-a90b-c772b746a896"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="366" y="168" width="141" height="20" uuid="bd0adfd0-eecf-420b-adfe-a7c6b0682533"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="366" y="199" width="141" height="20" uuid="e4240b43-0b8d-4d03-9302-d7989bd1c534"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="366" y="238" width="141" height="20" uuid="a3be2887-7247-4f0d-b8ad-7fe376de638d"/>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="368" y="268" width="141" height="20" uuid="21f79deb-f7d2-4242-9f72-11298fdc03c5"/>
+			</textField>
+			<staticText>
+				<reportElement x="268" y="268" width="100" height="20" uuid="62e351e8-312b-466b-877f-5aa3acc547b8"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nuance Tissu:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="107" y="268" width="129" height="20" uuid="ef760f3b-fa6e-4a85-9712-8a21ccd2a67e"/>
+			</textField>
+			<staticText>
+				<reportElement x="7" y="268" width="100" height="20" uuid="4bd1b0ad-b281-4b3c-a633-2246122a236e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Couleur Tissu:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="369" y="300" width="141" height="20" uuid="34bae686-ded3-47d6-ae97-334085542819"/>
+			</textField>
+			<staticText>
+				<reportElement x="269" y="300" width="100" height="20" uuid="20999269-4f68-4854-bd0f-a0e9b234382c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observation:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="140" y="300" width="96" height="20" uuid="7195214d-943e-41f9-9c32-cd219f4a576f"/>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="300" width="132" height="20" uuid="901e5ec3-b1ce-4ed5-9a19-e4036746968d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laise Fini Demandée:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="114" width="176" height="25" uuid="9c3b11da-69b2-44f9-a5f7-86c733b24b00">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bon de Reception :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="366" y="116" width="100" height="20" uuid="669a973f-d66b-419a-a9fe-9757e9d2f539"/>
+				<textFieldExpression><![CDATA[$P{p_ref}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="238" width="100" height="30" uuid="cb460f9c-b0a9-4474-b34b-9b794b964eb7"/>
+				<textFieldExpression><![CDATA[$P{p_tissu}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="369" y="168" width="100" height="30" uuid="7af10512-c05a-4d92-9d36-f4af7e5b7f67"/>
+				<textFieldExpression><![CDATA[$P{p_client}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="170" width="100" height="30" uuid="2dde1956-4331-4f65-b898-67caddf94cd4"/>
+				<textFieldExpression><![CDATA[$P{p_ref}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="197" width="100" height="22" uuid="0175b69b-3c82-495f-8e02-df4e2279717d"/>
+				<textFieldExpression><![CDATA[$P{p_dateR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="366" y="200" width="100" height="30" uuid="5fb6cb5f-1169-449c-8923-9736a28b3745"/>
+				<textFieldExpression><![CDATA[$P{p_dateL}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="10" y="0" width="121" height="100" uuid="25bfc7da-6d12-4415-8be4-267c3b29a639"/>
+				<imageExpression><![CDATA["D:/ERP/tissage/trunk/ma-gpro-atelier-war/presentation/src/main/webapp/images/logoSTIT.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="450" y="10" width="100" height="22" uuid="8dd055a1-b636-4464-a177-176d0a9e4d7a"/>
+				<textFieldExpression><![CDATA[$P{p_dateR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement x="-1" y="1" width="126" height="20" uuid="cb01015f-58ec-4c34-bda3-2d5f942c4f0a"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de rouleaux]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="126" y="1" width="103" height="20" uuid="2d70f9ab-ee1e-4f1d-971d-77b03f1efa25"/>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="19">
+			<textField>
+				<reportElement x="0" y="0" width="105" height="19" uuid="252fcee0-710f-4fb3-b90a-4ae60a46f435"/>
+				<textFieldExpression><![CDATA[$F{MetrageTrouve}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="0" width="107" height="19" uuid="53c0a58b-20a1-4f45-991d-59a44aa26100"/>
+				<textFieldExpression><![CDATA[$F{MetrageAnnonce}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="93" height="19" uuid="af4f052e-c1d9-4ae3-b6bc-79a5f9aaf148"/>
+				<textFieldExpression><![CDATA[$F{PoidsAnnonce}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="269" y="0" width="88" height="19" uuid="f329d421-4f7e-451b-82e6-944ac5447e5a"/>
+				<textFieldExpression><![CDATA[$F{PoidsTrouve}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="177">
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="0" y="147" width="556" height="30" backcolor="#E6E8E9" uuid="36aa233d-4305-48e6-974a-1bbf89bb3c8f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="9" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[THANKYOU FOR YOUR BUSINESS]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>
