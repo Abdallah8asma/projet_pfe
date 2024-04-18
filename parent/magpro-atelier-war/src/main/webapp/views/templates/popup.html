@@ -1,0 +1,66 @@
+
+<div class="row" id="deletePopupX">
+	<span class="pull-right clickable" ng-click="closePopupDelete(); codeSuppression =''">X</span>
+</div>
+
+<!--POPUP BonReception -->
+<div ng-show="message == 0" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].reference}}</div>
+</div>
+<div ng-show="message == 0" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerBonReception()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div>
+
+<!-- POPUP Mise -->
+<div ng-show="message == 1" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].abreviation}}</div>
+</div>
+<div ng-show="message == 1" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerMise()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div>
+
+<!-- POPUP Rouleau -->
+<div ng-show="message == 2" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].designation}}</div>
+</div>
+<div ng-show="message == 2" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerRouleau()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div>
+
+
+<!-- POPUP Rouleau Multiple -->
+<div ng-show="message == 3" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+	<input type="password" ng-model="codeSuppression" />
+		</div>
+</div>
+<div ng-show="message == 3" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-show="codeSuppression == '123900'"  ng-click="deleteMultipleColis(); codeSuppression =''">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete(); codeSuppression =''">Non</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

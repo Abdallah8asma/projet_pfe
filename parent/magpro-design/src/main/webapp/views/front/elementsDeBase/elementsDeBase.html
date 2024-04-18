@@ -1,0 +1,44 @@
+<div ng-controller="MenuElementBaseController">
+    <div ng-if="ITEM == 'produit'">
+        <div ng-include="'views/front/elementsDeBase/produits/produits.html'"></div>
+    </div>
+    <div ng-if="ITEM == 'produitSerialisable'">
+        <div ng-include="'views/front/elementsDeBase/produits/produitsSerialisable.html'"></div>
+    </div>
+
+    <div ng-if="ITEM == 'elementDeBaseReporting'">
+        <div ng-include="'views/front/elementsDeBase/reporting/elementDeBaseReporting.html'"></div>
+    </div>
+
+    <div ng-if="ITEM == 'engin'">
+        <div ng-include="'views/front/elementsDeBase/flotte/engin.html'"></div>
+    </div>
+
+    <div ng-if="ITEM == 'chauffeur'">
+        <div ng-include="'views/front/elementsDeBase/flotte/chauffeur.html'"></div>
+    </div>
+    <div ng-if="ITEM == 'remorque'">
+        <div ng-include="'views/front/elementsDeBase/flotte/remorque.html'"></div>
+    </div>
+
+    <div ng-if="ITEM == 'article'">
+        <div ng-include="'views/front/elementsDeBase/articles/articles.html'"></div>
+    </div>
+
+    <div ng-if="ITEM == 'produitFinancier'">
+        <div ng-include="'views/front/elementsDeBase/produits/produitsFinancier.html'"></div>
+    </div>
+    <div ng-if="ITEM == 'produitComposition'">
+        <div ng-include="'views/front/elementsDeBase/produits/produitComposition.html'"></div>
+    </div>
+
+    <div ng-if="ITEM == 'film'">
+        <div ng-include="'views/front/elementsDeBase/film/film.html'"></div>
+    </div>
+    <div ng-if="ITEM == 'forme'">
+        <div ng-include="'views/front/elementsDeBase/forme/forme.html'"></div>
+    </div>
+    <div ng-if="ITEM == 'service'">
+        <div ng-include="'views/front/elementsDeBase/service/service.html'"></div>
+    </div>
+</div>

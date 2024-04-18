@@ -1,0 +1,564 @@
+<!-- <div id="page-heading" style="background-color: #fff;"> -->
+<!-- 	<ol class="breadcrumb"> -->
+<!-- 		<li><a href="#/">Tableau de Bord</a></li> -->
+<!-- 		<li>Gestion des tiers</li> -->
+<!-- 		<li class="active">Parties Int&eacute;ress&eacute;es</li> -->
+<!-- 	</ol> -->
+<!-- </div> -->
+<!-- Menu Partie Interesse -->
+		<ul class="nav nav-gpro">
+			<li class="active"><a>Parties Int&eacute;ress&eacute;es</a></li>
+		</ul>
+	<div class="container-fluid" ng-controller="PartieInteresseeController"
+	style="background-color: #fff;">
+		<!-- Critere de recherche -->
+		<div class="row" ng-show="displayMode != 'edit'">
+			<div class="col-sm-12">
+				<button class="btn btn-action2 pull-right"
+					ng-click="AffectationPartieInteressee(partieInteresseeCourante)">Ajouter</button>
+			</div>
+			<div class="col-sm-12">
+				<div class="title-ajout">Crit&eacute;re de recherche</div>
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						<form class="form-horizontal"
+							name="recherchePartieIntereseeFormCritere"
+							id="recherchePartieIntereseeFormCritere">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">R&eacute;f&eacute;rence
+												PI</span> <input class="form-control"
+												ng-model="partieInteresseeCourante.vReference" />
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Raison
+												Sociale</span> <input class="form-control"
+												ng-model="partieInteresseeCourante.vRaisonSociale" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Famille
+												PI</span> <select name="selector1" id="selector1"
+												class="form-control"
+												ng-model="partieInteresseeCourante.vFamillePartieInteressee">
+												<option ng-repeat="famille in ListFamillePICache"
+													value="{{famille.id}}">{{famille.designation}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Categorie
+												PI</span> <select name="" categoriePI"" id="categoriePI"
+												class="form-control"
+												ng-model="partieInteresseeCourante.vCategoriePartieInteressee">
+												<option ng-repeat="categorie in ListCategoriePICache"
+													value="{{categorie.id}}">{{categorie.designation}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Type
+												PI</span> <select name="typePI" id="typePI" class="form-control"
+												ng-model="partieInteresseeCourante.vTypePartieInteressee">
+												<option ng-repeat="type in ListTypePICache"
+													value="{{type.id}}">{{type.designation}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Actif</span>
+											<select class="form-control"
+												ng-model="partieInteresseeCourante.actif">
+												<option value=""></option>
+												<option value="oui">oui</option>
+												<option value="non">non</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						<div class="pull-right">
+							<button class="btn btn-action">Generer</button>
+							<button class="btn btn-action"
+								ng-click="rechercherPartieInteressee(partieInteresseeCourante)">Recherecher</button>
+							<button class="btn btn-action" ng-click="annulerAjout()">Annuler</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- container d'ajout,  modification et de consultation d'une partie interessée-->
+		<div class="row" ng-show="displayMode == 'edit'">
+			<div class="col-sm-12">
+				<div class="pull-right">
+					<button class="btn btn-action"
+						ng-click="sauvegarderAjout(partieInteresseeCourante)"
+						ng-disabled="!creationPartieInteressee.$valid;">Enregistrer</button>
+					<button class="btn btn-action2" ng-click="annulerAjout()">Retour</button>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<div class="title-ajout">Parties Int&eacute;ress&eacute;es</div>
+				<div class="panel panel-primary">
+					<div class="panel-body">
+						<form id="creationPartieInteressee"
+							name="creationPartieInteressee">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">R&eacute;f&eacute;rence
+												PI<i style="color: red">*</i>
+											</span> <input class="form-control"
+												ng-model="partieInteresseeCourante.reference"
+												aria-describedby="basic-addon1" required />
+										</div>
+									</div>
+									<div class=" col-sm-6">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Raison
+												Sociale<i style="color: red">*</i>
+											</span> <input class="form-control"
+												ng-model="partieInteresseeCourante.raisonSociale" required />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Abr&eacute;viation<i
+												style="color: red">*</i></span> <input class="form-control"
+												ng-model="partieInteresseeCourante.abreviation" required />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-3" ng-controller="DatepickerDController">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Date
+												Intro</span> <input type="text" class="form-control datepicker"
+												datepicker-popup="{{format}}"
+												ng-model="partieInteresseeCourante.dateIntroduction"
+												is-open="opened" datepicker-options="dateOptions"
+												date-="enabled(date, mode)" close-text="Close"  max-date="{{maxToDay}}" />
+											<div class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="open($event)">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Famille
+												PI<i style="color: red">*</i>
+											</span> <select name="selector1" class="form-control"
+												ng-model="partieInteresseeCourante.famillePartieInteressee"
+												required>
+												<option ng-repeat="famille in ListFamillePICache"
+													value="{{famille.id}}">{{famille.designation}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Cat&eacute;gorie<i
+												style="color: red">*</i></span> <select name=""
+												categoriePI"" id="categoriePI" class="form-control"
+												ng-model="partieInteresseeCourante.categoriePartieInteressee"
+												required>
+												<option ng-repeat="categorie in ListCategoriePICache"
+													value="{{categorie.id}}">{{categorie.designation}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Type
+												PI<i style="color: red">*</i>
+											</span> <select name="typePI" id="typePI" class="form-control"
+												ng-model="partieInteresseeCourante.typePartieInteressee"
+												required>
+												<option ng-repeat="type in ListTypePICache"
+													value="{{type.id}}">{{type.designation}}</option>
+											</select>
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Activit&eacute;</span>
+											<input class="form-control"
+												ng-model="partieInteresseeCourante.activite" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Mat.Fiscale</span>
+											<input class="form-control"
+												ng-model="partieInteresseeCourante.matriculeFiscal" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Registre.Comm</span>
+											<input class="form-control"
+												ng-model="partieInteresseeCourante.regimeCommercial" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Code.Douane</span>
+											<input class="form-control"
+												ng-model="partieInteresseeCourante.codeDouane" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span
+												class="input-group-addon label1" id="basic-addon1">Devise</span>
+											<select class="form-control"
+												ng-model="partieInteresseeCourante.devise">
+												<option ng-repeat="devise in ListDeviseCache"
+													value="{{devise.id}}">{{devise.designation}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Actif</span>
+											<select class="form-control"
+												ng-model="partieInteresseeCourante.actif">
+												<option ng-repeat="actif in ListActifPI"
+													value="{{actif.actif}}">{{actif.designation}}</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Adresse</span>
+											<input class="form-control"
+												ng-model="partieInteresseeCourante.adresse" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Telephone</span>
+											<input class="form-control"
+												ng-model="partieInteresseeCourante.telephone"
+												data-ng-pattern="/^(\d{2})(-| )?(\d{3})(-| )?(\d{3})/" />
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Fax</span>
+											<input class="form-control"
+												ng-model="partieInteresseeCourante.fax"
+												data-ng-pattern="/^(\d{2})(-| )?(\d{3})(-| )?(\d{3})/" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Email</span>
+											<input class="form-control" type="email"
+												ng-model="partieInteresseeCourante.email" />
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Site</span>
+											<select class="form-control"
+												ng-model="partieInteresseeCourante.sitePartieInteressee">
+												<option ng-repeat="site in ListSitePICache"
+													value="{{site.id}}">{{site.nom}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="input-group input-group-sm">
+											<span class="input-group-addon label1" id="basic-addon1">Observation</span>
+											<input class="form-control"
+												ng-model="partieInteresseeCourante.observation" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						<div class="title-ajout">Vis &agrave; Vis</div>
+						<div class="panel-body" ng-show="displayMode == 'edit'">
+							<div class="form-group">
+								<div class="row">
+									<div class="panel panel-primary">
+										<table
+											class="table table-bordered table-condensed table-head-color">
+											<thead>
+												<tr>
+													<th style="width: 25%">Nom & Pr&eacute;nom</th>
+													<th style="width: 20%">Fonction</th>
+													<th style="width: 20%">T&eacute;l&eacute;phone</th>
+													<th style="width: 20%">E-mail</th>
+													<th style="width: 15%"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr ng-repeat="representant in listeRepresentant">
+													<td class="hidden">
+														<!-- editable representat (text with validation) --> <span
+														editable-text="representant.id" e-name="id"
+														e-form="rowform" e-required> {{ representant.id ||
+															'empty' }} </span>
+													</td>
+													<td>
+														<!-- editable representat (text with validation) --> <span
+														editable-text="representant.nom" e-name="nom"
+														e-form="rowform" e-required> {{ representant.nom ||
+															'empty' }} </span>
+													</td>
+													<td>
+														<!-- editable status (select-local) --> <span
+														editable-text="representant.fonction" e-name="fonction"
+														e-form="rowform" e-required> {{
+															representant.fonction || 'empty' }} </span>
+													</td>
+													<td>
+														<!-- editable status (select-local) --> <span
+														editable-text="representant.telephone" e-name="telephone"
+														e-form="rowform" e-required> {{
+															representant.telephone || 'empty' }} </span>
+													</td>
+													<td>
+														<!-- editable group (select-remote) --> <span
+														editable-email="representant.email" e-name="email"
+														id="representanttEmail" e-form="rowform" e-required>
+															{{ representant.email || 'empty' }} </span>
+													</td>
+													<td style="white-space: nowrap" class="pull-right">
+														<!-- form -->
+														<form editable-form name="rowform"
+															onbeforesave="saveRepresentant($data, representant.id)"
+															ng-show="rowform.$visible"
+															class="form-buttons form-inline"
+															shown="representantInserree == representant">
+															<button type="submit" ng-disabled="!rowform.$valid"
+																class="btn btn-sm glyphicon glyphicon-save"
+																aria-hidden="true"></button>
+															<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddPartieInteressee(rowform, $index, representant.id, representant.nom, listeRepresentant )"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+														</form>
+														<div class="buttons" ng-show="!rowform.$visible">
+															<button data-nodrag
+																class="btn btn-sm glyphicon glyphicon-pencil"
+																ng-click="rowform.$show()"></button>
+															<button data-nodrag
+																class="btn btn-sm glyphicon glyphicon-trash"
+																ng-click="removeRepresentant($index)"></button>
+														</div>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+										<button class="btn btn-action pull-right spacer2"
+											ng-click="ajoutRepresentant()">Ajouter</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Document Type and upload -->
+						<div class="title-ajout">Documents</div>
+						<div class="panel-body" ng-show="displayMode == 'edit'">
+							<div class="form-group">
+								<div class="row">
+									<div class="panel panel-primary">
+										<table
+											class="table table-bordered table-condensed table-head-color">
+											<thead>
+												<tr>
+													<th style="width: 40%">Type Document</th>
+													<th style="width: 40%">Document</th>
+													<th style="width: 20%"></th>
+												</tr>
+											</thead>
+											<tr ng-repeat="documentPi in listeDocument">
+												<td class="hidden"><span editable-text="documentPi.id"
+													e-name="id" e-form="rowform" e-required> {{
+														documentPi.id || 'empty' }} </span></td>
+												<td>
+													<!-- editable group (select-remote) --> <span
+													editable-select="documentPi.typeDocument"
+													e-ng-options="s.id as s.designation for s in listeTypeDocumentCache"
+													e-name="idTypeDocPI" e-form="rowform">
+														{{showStatus(documentPi.typeDocument) }} </span>
+												</td>
+												<td ng-controller="UploadCtrl">
+													<!-- Upload Document File -->
+													<div class="form-group">
+														<div class="col-sm-12">
+															<div class="fileinput fileinput-new"
+																data-provides="fileinput">
+																<input class="hidden" type="text" ng-model="name" /> <span
+																	class="btn btn-file btn-sm" style="background: #e6e9ee"
+																	ng-show="!isUploaded && rowform.$visible"> <span
+																	class="fileinput-new">S&eacute;lectionner document</span> <input
+																	type="file" class="custom-file-input"
+																	file-model="myFile"> <span href="#"
+																	class="close fileinput-exists pull-right"
+																	style="float: none; padding: 0"
+																	data-dismiss="fileinput"
+																	ng-show="!isUploaded && rowform.$visible">x</span>
+																</span> <span class="fileinput-filename"
+																	ng-model="documentPi.path" e-name="path"
+																	e-form="rowform" e-required>{{documentPi.path}}</span>
+															</div>
+<!-- 															<a class="btn btn-danger btn-sm pull-right" -->
+<!-- 																ng-click="downloadFile(documentPi.vUUIDDocument)" -->
+<!-- 																ng-href="{{urlFile}}" ng-show="!rowform.$visible"> <span -->
+<!-- 																class="glyphicon glyphicon-cloud-download"></span> -->
+<!-- 															</a> -->
+                                                               <a ng-click="uploadFile()" 
+																ng-show="!isUploaded && rowform.$visible"
+																class="btn btn-info btn-sm fileinput-upload glyphicon glyphicon-cloud-upload pull-right">
+															</a> <a class="btn btn-success btn-sm pull-right"
+																href="D:/eclipse/archive/{{documentPi.vUUIDDocument}}/{{documentPi.path}}"
+																ng-show="!rowform.$visible"> <span
+																class="glyphicon glyphicon-cloud-download"></span>
+															</a>
+														</div>
+													</div> <input class="hidden" ng-model="documentPi.vUUIDDocument"
+													e-name="vUUIDDocument" e-form="rowform" e-required
+													value="{{ documentPi.vUUIDDocument ||
+															'empty' }} " />
+												</td>
+												<td style="white-space: nowrap">
+													<!-- form -->
+													<form editable-form name="rowform"
+														ng-show="rowform.$visible"
+														onbeforesave="saveDocPI($data, documentPi.id)"
+														shown="DocPartieInteresseInserree == documentPi"
+														class="form-buttons form-inline">
+														<div class="pull-right">
+															<button type="submit" ng-disabled="!rowform.$valid"
+																class="btn btn-sm glyphicon glyphicon-save"
+																aria-hidden="true"></button>
+															<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddPartieInteressee(rowform, $index, documentPi.id, documentPi.typeDocument , listeDocument )"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+														</div>
+													</form>
+													<div class="buttons pull-right" ng-show="!rowform.$visible">
+														<button data-nodrag
+															class="btn btn-sm glyphicon glyphicon-pencil"
+															ng-click="rowform.$show()"></button>
+														<button data-nodrag
+															class="btn btn-sm glyphicon glyphicon-trash"
+															ng-click="removeDocPi($index)"></button>
+													</div>
+												</td>
+											</tr>
+										</table>
+										<button class="btn btn-action pull-right spacer2"
+											ng-click="ajoutDocPI()">Ajouter</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="title-ajout">Produits</div>
+						<div class="panel-body" ng-show="displayMode == 'edit'">
+							<div class="form-group">
+								<div class="row">
+									<div class="panel panel-primary">
+										<table
+											class="table table-bordered table-condensed table-head-color">
+											<thead>
+												<tr>
+													<th style="width: 15%">Code</th>
+													<th style="width: 15%">Produit</th>
+													<th style="width: 15%">Famille</th>
+													<th style="width: 15%">Sous Famille</th>
+													<th style="width: 15%">Etat</th>
+													<th style="width: 25%"></th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="title-ajout">Historique
+							Evaluations/R&eacute;clamations</div>
+						<div class="panel-body" ng-show="displayMode == 'edit'">
+							<div class="form-group">
+								<div class="row">
+									<div class="panel panel-primary">
+										<table
+											class="table table-bordered table-condensed table-head-color">
+											<thead>
+												<tr>
+													<th style="width: 40%">Evaluations</th>
+													<th style="width: 40%">R&eacute;clamations</th>
+													<th style="width: 20%"></th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Fin ajout et modif -->
+
+		<!-- container Grid-->
+		<div class="row" ng-show="displayMode != 'edit'">
+			<div class="col-md-12">
+				<div class="title-ajout line">Liste Parties
+					Int&eacute;ress&eacute;es</div>
+				<div panel-class="panel panel-primary">
+					<div style="height: 500px;" ng-grid="gridOptions"></div>
+				</div>
+			</div>
+		</div>
+	
+	
+	<!-- Popup de la suppression -->
+	<div id="light" class="white_content">
+		<pop-up type="delete-pi"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+	<!-- Fin Popup de la suppression -->
+</div>

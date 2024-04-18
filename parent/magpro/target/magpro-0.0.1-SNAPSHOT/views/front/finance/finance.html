@@ -1,0 +1,46 @@
+<div ng-controller="MenuFinanceController">
+  <div ng-if="ITEM == 'coutsVente'">
+    <div ng-include="'views/front/finance/couts/coutsFicheSuiveuse.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'reglementVente'">
+    <div ng-include="'views/front/finance/reglement/reglement.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'elementReglementVente'">
+    <div ng-include="'views/front/finance/reglement/elementReglement.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'soldeClient'">
+    <div ng-include="'views/front/finance/soldeClient/soldeClient.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'echeancier'">
+    <div ng-include="'views/front/finance/paiement/echeancier.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'reporting'">
+    <div ng-include="'views/front/finance/reporting/reportingFNclient.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'caisse'">
+    <div ng-include="'views/front/finance/caisse/caisse.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'mvtCaisse'">
+    <div ng-include="'views/front/finance/caisse/mouvementCaisse.html'"></div>
+  </div>
+    <div ng-if="ITEM == 'rapprochement'">
+    <div ng-include="'views/front/finance/rapprochement/rapprochement.html'"></div>
+  </div>
+  
+  
+<!--   reglement inverse -->
+
+
+  <div ng-if="ITEM == 'reglementInverseVente'">
+    <div ng-include="'views/front/finance/reglementInverse/reglementInverse.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'elementReglementInverseVente'">
+    <div ng-include="'views/front/finance/reglementInverse/elementReglementInverse.html'"></div>
+  </div>
+  
+   <div ng-if="ITEM == 'echeancierInverse'">
+    <div ng-include="'views/front/finance/paiementInverse/echeancierInverse.html'"></div>
+  </div>
+  
+  
+</div>

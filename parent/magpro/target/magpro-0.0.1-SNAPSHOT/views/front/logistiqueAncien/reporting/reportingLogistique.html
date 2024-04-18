@@ -1,0 +1,98 @@
+<div class="container-fluid">
+	<div class="row">
+		<!-- Client -->
+		<div class="col-sm-12" ng-controller="reportingLogistique">
+
+			<div class="title-ajout">Crit&egrave;res de rapports de production</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" id="rechercheClientForm"
+						name="rechercheClientForm">
+						<div class="form-group">
+							<div class="row" style="margin-bottom: 2%;">
+								<div class="col-sm-4" ng-controller="DatepickerDemoController">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+											<i style="color: red">*</i> :
+										</span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="reportingCourant.dateMin =''"
+											ng-model="reportingCourant.dateMin" ng-required="true"
+											is-open="opened" datepicker-options="dateOptions"
+											date-="enabled(date, mode)" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-4" ng-controller="DatepickerDemoController">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Au
+											<i style="color: red">*</i> :
+										</span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-init="reportingCourant.dateMax =''"
+											ng-model="reportingCourant.dateMax" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											close-text="Close" ng-required="true" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<button class="btn-action btn" ng-click="annulerAjout()">Annuler</button>
+								</div>
+							</div>
+						</div>
+					</form>
+
+					<div class="row" style="margin-bottom: 1%;">
+						<div class="col-sm-4">
+							<div class="col-sm-8">
+								<div class="title-ajout">R&eacute;partion par produit :</div>
+							</div>
+							<div class="col-sm-4">
+								<button class="btn-action btn" ng-disabled="!rechercheClientForm.$valid;" ng-click="downloadClientProduitReporting(reportingCourant,1,'Produit')">G&eacute;nerer</button>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="col-sm-6">
+								<div class="title-ajout"> R&eacute;partion par Client :</div>
+							</div>
+							<div class="col-sm-4">
+								<button class="btn-action btn" ng-disabled="!rechercheClientForm.$valid;" ng-click="downloadClientProduitReporting(reportingCourant,1,'Client')">G&eacute;nerer</button>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="margin-bottom: 1%;">
+						<div class="col-sm-4">
+							<div class="col-sm-8">
+								<div class="title-ajout"> R&eacute;partion par Maille/Chaine et tr&acirc;me :</div>
+							</div>
+							<div class="col-sm-4">
+								<button class="btn-action btn" ng-disabled="!rechercheClientForm.$valid;" ng-click="downloadChaineEtTrameReporting(reportingCourant,1)">G&eacute;nerer</button>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="col-sm-6">
+								<div class="title-ajout"> R&eacute;partion par Fini/Fa&ccedil;on :</div>
+							</div>
+							<div class="col-sm-4">
+								<button class="btn-action btn" ng-disabled="!rechercheClientForm.$valid;" ng-click="downloadFiniFaconReporting(reportingCourant,1)">G&eacute;nerer</button>
+							</div>
+						</div>
+					</div>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

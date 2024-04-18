@@ -1,0 +1,47 @@
+{
+	"BUTTON_LANG_EN" : "English",
+	"BUTTON_LANG_FR" : "French",
+	"BUTTON_LANG_AR" : "Arabic",
+	
+	"BUTTON_ADD" : "Add",
+	"BUTTON_CANCEL" : "cancel",
+	"BUTTON_GENERATE" : "Generate",
+	"BUTTON_SHEARCH" : "Search",
+	"BUTTON_RETURN" :"Return",
+	"BUTTON_SAVE" : "Save",
+	"BUTTON_DUPLICATE" : "Duplicate",
+	
+	"menu_gammeDeMontage": "Mounting range",
+	"menu_tableauDeBord" : "Dashboard",
+	"menu_partiesInteressee" :"Interested Parties",
+	"menu_elementsDeBase" : "Basic Elements",
+	"menu_gestionCommerciale" : "Business management",
+	"menu_gestionStock" : "Stock management",
+	"menu_GPAO" : "GPAO",
+	"menu_suiviCommande" : "Track order",
+	"menu_produit" : "Product",
+	"menu_reception" : "Reception",
+	"menu_rouleau" : "Rouleau",
+	"menu_mise" : "Mise",
+	"menu_misage" : "Misage",
+	"menu_logistique" : "Logistic",
+	"menu_enroulage" : "Enroulage",
+	
+	"critereDeRecherche" : "Search criteria",
+	
+	"prixEntre" : "Price between",
+	"et" : "And",
+	
+	"produit" : "Product",
+	
+	"article" : "Article",
+	"article_ref" : "Article Ref.",
+	"article_list" : "Articles List",
+	
+	"type" : "Type",
+	"famille": "Family",
+	"sous_famille" : "Sub Family",
+	"prix_unit" : "Unit Price",
+	"pmp" : "P.M.P",
+	"site" : "Site"
+}

@@ -1,0 +1,875 @@
+<script type="text/javascript">
+
+  var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+  for (var i = 0; i < SearchBoxElements.length; i++) {
+    new fabric['SearchBox'](SearchBoxElements[i]);
+  }
+
+</script> 
+
+
+<div class="container-fluid" ng-controller="PartieInteresseeFournisseurController" style="background-color: #fff;">
+
+
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-sm-12">
+			<br />
+			<span class="ms-ListItem-primaryText">Crit&eacute;re de Recherche</span>
+			<br />
+			<div class="ms-CommandBar ms-CommandBar--navBar">
+				<div class="ms-CommandBar-sideCommands">
+					<div class="ms-SearchBox ms-SearchBox--commandBar" id="searchFilterFournisseurInput">
+						<input class="ms-SearchBox-field" type="text" value="" id="searchFilterFournisseur"
+							ng-model="filterOptions.filterText" />
+						<label class="ms-SearchBox-label">
+							<i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+							<span class="ms-SearchBox-text">Rechercher</span>
+						</label>
+						<div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+								<span class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+						<div class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--ChromeBack"></i></span>
+								<span class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+						<div class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Filter"></i></span>
+								<span class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="ms-CommandButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+							<span class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+				</div>
+				<div class="ms-CommandBar-mainArea">
+
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="AffectationPartieInteressee(partieInteresseeCourante)">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--CirclePlus"></i></span>
+							<span class="ms-CommandButton-label">Ajouter</span>
+						</button>
+					</div>
+
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="downloadAllExcel(partieInteresseeCourante)">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+							<span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+						</button>
+					</div>
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="rechercherPartieInteressee(partieInteresseeCourante)">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+							<span class="ms-CommandButton-label">Rechercher</span>
+						</button>
+					</div>
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="annulerAjout()">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+							<span class="ms-CommandButton-label">Annuler</span>
+						</button>
+					</div>
+					<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+							<span class="ms-CommandButton-label"></span>
+						</button>
+						<ul class="ms-ContextualMenu is-opened">
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+								<i class="ms-Icon ms-Icon--Folder"></i>
+							</li>
+							<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+								<i class="ms-Icon ms-Icon--Document"></i>
+							</li>
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+								<i class="ms-Icon ms-Icon--Coffee"></i>
+							</li>
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+								<i class="ms-Icon ms-Icon--Picture"></i>
+							</li>
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+								<i class="ms-Icon ms-Icon--Money"></i>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="recherchePartieIntereseeFormCritere"
+						id="recherchePartieIntereseeFormCritere">
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">R&eacute;f&eacute;rence</span>
+										</div>
+										<input class="form-control" ng-model="partieInteresseeCourante.vReference" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Raison Sociale</span>
+										</div>
+										<input class="form-control" ng-model="partieInteresseeCourante.vRaisonSociale" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+
+											<label class=" input-group-text ms-Label">Groupe</label>
+										</div>
+
+										<select ui-select2 ng-model="partieInteresseeCourante.groupeClientId"
+											ng-init="partieInteresseeCourante.groupeClientId =''" data-placeholder="..." class="form-control "
+											style="border: 1px solid #e5eaee !important;">
+
+											<option value="">Tous</option>
+											<option ng-repeat="groupe in listGroupeClient" value="{{groupe.id}}">{{groupe.designation}}
+											</option>
+										</select>
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Categorie</span>
+										</div>
+										<select ui-select2  name="" categoriePI"" id="categoriePI" class="form-control"
+											ng-model="partieInteresseeCourante.vCategoriePartieInteressee" style="border: 1px solid #e5eaee !important;">
+											<option ng-repeat="categorie in ListCategoriePICache" value="{{categorie.id}}">
+												{{categorie.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Type</span>
+										</div>
+										<select ui-select2 name="typePI" id="typePI" class="form-control"
+											ng-model="partieInteresseeCourante.vTypePartieInteressee"
+											 style="border: 1px solid #e5eaee !important;">
+											<option ng-repeat="type in ListTypePICache" value="{{type.id}}">{{type.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Actif</span>
+										</div>
+										<select class="form-control" ng-model="partieInteresseeCourante.actif">
+											<option value=""></option>
+											<option value="oui">oui</option>
+											<option value="non">non</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row" ng-show="displayMode == 'edit'">
+
+		<div class="col-md-12">
+
+			<br />
+			<span class="ms-ListItem-primaryText">Fournisseur</span>
+			<br />
+			<div class="ms-CommandBar ms-CommandBar--navBar">
+				<div class="ms-CommandBar-sideCommands">
+
+
+					<div class="ms-CommandButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+							<span class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+				</div>
+				<div class="ms-CommandBar-mainArea">
+
+
+					<div class="ms-CommandButton" permission="['Fournisseur_Edit']">
+						<button class="ms-CommandButton-button" ng-disabled="!creationPartieInteressee.$valid;"
+							ng-click="sauvegarderAjout(partieInteresseeCourante)">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span>
+							<span class="ms-CommandButton-label">Enregistrer</span>
+						</button>
+					</div>
+
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="annulerAjout()">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span>
+							<span class="ms-CommandButton-label">Retour</span>
+						</button>
+					</div>
+					
+					
+					
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="annulerAjoutRapide()">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span>
+							<span class="ms-CommandButton-label">Retour Rapide</span>
+						</button>
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+							<span class="ms-CommandButton-label"></span>
+						</button>
+						<ul class="ms-ContextualMenu is-opened">
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+								<i class="ms-Icon ms-Icon--Folder"></i>
+							</li>
+							<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+								<i class="ms-Icon ms-Icon--Document"></i>
+							</li>
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+								<i class="ms-Icon ms-Icon--Coffee"></i>
+							</li>
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+								<i class="ms-Icon ms-Icon--Picture"></i>
+							</li>
+							<li class="ms-ContextualMenu-item">
+								<a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+								<i class="ms-Icon ms-Icon--Money"></i>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+
+
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form id="creationPartieInteressee" name="creationPartieInteressee">
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+
+											<span class="input-group-text ms-Label is-required">R&eacute;f&eacute;rence</span>
+										</div>
+										<input class="form-control" ng-model="partieInteresseeCourante.reference"
+											ng-disabled="clientActif.disableParametrage" aria-describedby="basic-addon1" />
+									</div>
+								</div>
+
+							</div>
+							<div class=" col-sm-6">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text  ms-Label is-required">Raison Sociale</span>
+										</div>
+										<input class="form-control" ng-model="partieInteresseeCourante.raisonSociale" required />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text  ms-Label is-required">Abr&eacute;viation</span>
+										</div>
+										<input class="form-control" ng-model="partieInteresseeCourante.abreviation" required />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6">
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text  ms-Label is-required">Cat&eacute;gorie</span>
+										</div>
+										<select ui-select2 ng-model="partieInteresseeCourante.categoriePartieInteressee"
+											ng-init="partieInteresseeCourante.categoriePartieInteressee =''" data-placeholder="..." required
+											class="form-control " style="border: 1px solid #e5eaee !important;" >
+											<option value="">Tous</option>
+											<option ng-repeat="categorie in ListCategoriePICache" value="{{categorie.id}}">
+												{{categorie.designation}}</option>
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<div class="col-sm-6">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Observation</span>
+										</div>
+										<input class="form-control" ng-model="partieInteresseeCourante.observation" />
+									</div>
+								</div>
+
+
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Activit&eacute;</span>
+											</div>
+											<input class="form-control" ng-model="partieInteresseeCourante.activite" />
+										</div>
+									</div>
+
+
+								</div>
+								<div class="col-sm-3">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text  ms-Label is-required">Mat.Fiscale</span>
+											</div>
+											<input class="form-control" ng-model="partieInteresseeCourante.matriculeFiscal" required />
+										</div>
+									</div>
+
+
+								</div>
+								<div class="col-sm-3">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Registre.Comm</span>
+											</div>
+											<input class="form-control" ng-model="partieInteresseeCourante.regimeCommercial" />
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="form-group">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<span class="input-group-text">Code.Postal</span>
+											</div>
+											<input class="form-control" ng-model="partieInteresseeCourante.codeDouane" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+						
+							<div class="col-sm-8">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text  ms-Label is-required">Adresse</span>
+										</div>
+										<input class="form-control" ng-model="partieInteresseeCourante.adresse" required />
+									</div>
+								</div>
+
+							</div>
+						
+						
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Email</span>
+										</div>
+										<input class="form-control" type="email" ng-model="partieInteresseeCourante.email" />
+									</div>
+								</div>
+							</div>
+
+						
+
+							
+						</div>
+						<div class="row">
+						<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Ville</span>
+										</div>
+										<select ui-select2 ng-model="partieInteresseeCourante.regionId"
+											ng-init="partieInteresseeCourante.regionId =''" data-placeholder="" class="form-control "
+											style="border: 1px solid #e5eaee !important;">
+											<option value="">Tous</option>
+											<option ng-repeat="region in listeRegionCache" value="{{region.id}}">{{region.designation}}
+											</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Telephone</span>
+										</div>
+										<input class="form-control" ng-model="partieInteresseeCourante.telephone"
+											data-ng-pattern="/^(\d{2})(-| )?(\d{3})(-| )?(\d{3})/" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Fax</span>
+										</div>
+										<input class="form-control" ng-model="partieInteresseeCourante.fax"
+											data-ng-pattern="/^(\d{2})(-| )?(\d{3})(-| )?(\d{3})/" />
+									</div>
+								</div>
+							</div>
+
+							<!-- <div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Site</span>
+										</div>
+										<select ui-select2 ng-model="partieInteresseeCourante.sitePartieInteressee" data-placeholder="..."
+											class="form-control ">
+											<option value="">Tous</option>
+											<option ng-repeat="site in ListSitePICache" value="{{site.id}}">{{site.nom}}</option>
+										</select>
+									</div>
+								</div>
+
+
+							</div>
+ -->
+						</div>
+						<div class="row">
+						<div class="col-sm-4">
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Groupe</label>
+										</div>
+
+										<select ui-select2 ng-model="partieInteresseeCourante.groupeClientId"
+											ng-init="partieInteresseeCourante.groupeClientId =''" data-placeholder="..." class="form-control "
+											style="border: 1px solid #e5eaee !important;">
+											<option value="">Tous</option>
+											<option ng-repeat="groupe in listGroupeClient" value="{{groupe.id}}">{{groupe.designation}}
+											</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Banque</label>
+										</div>
+										<select ui-select2 ng-model="partieInteresseeCourante.banqueId"
+											ng-init="partieInteresseeCourante.banqueId =''" data-placeholder="..."
+											class="form-control " style="border: 1px solid #e5eaee !important;">
+											<option value=""></option>
+											<option ng-repeat="categorie in listeBanque" value="{{categorie.id}}">
+												{{categorie.code}} - {{categorie.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							
+							
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class=" input-group-text ms-Label">Compte Bancaire</label>
+						
+										</div>
+										<input type="text" class="form-control" placeholder="Compte Bancaire" 
+											ng-model="partieInteresseeCourante.codeBancaire" 
+										 />
+									</div>
+								</div>
+							</div>
+							
+							
+							
+							
+							
+							
+						
+						</div>
+
+
+
+
+						<div class="row">
+
+		
+						
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Email 2</span>
+									</div>
+									<input class="form-control" type="email" ng-model="partieInteresseeCourante.email2" />
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-sm-4">
+
+
+							<div class="form-group float-right">
+								<div class="input-group">
+
+									<div class="input-group-prepend">
+										<label class="input-group-text ms-Label is-required">Actif</label>
+									</div>
+									<div class="input-group-prepend">
+										<div class="input-group-text">
+											<label class="checkbox checkbox-square checkbox-primary">
+												<input type="checkbox" ng-model="partieInteresseeCourante.actif" />
+												<span></span></label>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+
+					</form>
+
+					<span class="ms-ListItem-primaryText">Vis &agrave; Vis</span>
+
+
+
+					<div class="panel-body" ng-show="displayMode == 'edit'">
+						<div class="form-group">
+							<div class="row">
+
+								<table class="table table-bordered table-condensed table-head-color">
+									<thead>
+										<tr>
+											<th>Nom & Pr&eacute;nom</th>
+											<th>Fonction</th>
+											<th>T&eacute;l&eacute;phone</th>
+											<th>E-mail</th>
+											<th> <span class="ms-CommandButton-icon float-right" ng-click="ajoutRepresentant()">
+													<a href="javascript:void(0)">
+														<i class="ms-Icon ms-Icon--CirclePlus" style="color: #fff !important ;"> </i>
+													</a>
+												</span></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="representant in listeRepresentant">
+											<td class="hidden">
+												<span editable-text="representant.id" e-name="id" e-form="rowform" e-required> {{ representant.id ||
+															'empty' }} </span>
+											</td>
+											<td>
+												<span editable-text="representant.nom" e-name="nom" e-form="rowform" e-required> {{ representant.nom ||
+															'empty' }} </span>
+											</td>
+											<td>
+												<span editable-text="representant.fonction" e-name="fonction" e-form="rowform" e-required> {{
+															representant.fonction || 'empty' }} </span>
+											</td>
+											<td>
+												<span editable-text="representant.telephone" e-name="telephone" e-form="rowform" e-required> {{
+															representant.telephone || 'empty' }} </span>
+											</td>
+											<td>
+												<span editable-email="representant.email" e-name="email" id="representanttEmail"
+													e-form="rowform" e-required>
+													{{ representant.email || 'empty' }} </span>
+											</td>
+											<td style="white-space: nowrap" class="pull-right">
+
+												<form editable-form name="rowform" onbeforesave="saveRepresentant($data, representant.id)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="representantInserree == representant">
+													<button type="submit" ng-disabled="!rowform.$valid" class="btn btn-sm " aria-hidden="true">
+														<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+
+
+													</button>
+
+
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddPartieInteressee(rowform, $index, representant.id, representant.nom, listeRepresentant )"
+														class="btn btn-sm ">
+
+														<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+
+													</button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button data-nodrag class="btn btn-sm glyphicon glyphicon-pencil"
+														ng-click="rowform.$show()"></button>
+													<button data-nodrag class="btn btn-sm glyphicon glyphicon-trash"
+														ng-click="removeRepresentant($index)"></button>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+
+							</div>
+						</div>
+					</div>
+
+
+					<span class="ms-ListItem-primaryText">Documents</span>
+
+					<div class="panel-body" ng-show="displayMode == 'edit'">
+						<div class="form-group">
+							<div class="row">
+
+								<table class="table table-bordered table-condensed table-head-color">
+									<thead>
+										<tr>
+											<th>Type Document</th>
+											<th>Document</th>
+											<th><span class="ms-CommandButton-icon float-right" ng-click="ajoutDocPI()">
+													<a href="javascript:void(0)">
+														<i class="ms-Icon ms-Icon--CirclePlus" style="color: #fff !important ;"> </i>
+													</a>
+												</span></th>
+										</tr>
+									</thead>
+									<tr ng-repeat="documentPi in listeDocument">
+										<td class="hidden">
+											<span editable-text="documentPi.id" e-name="id" e-form="rowform" e-required> {{
+														documentPi.id || 'empty' }} </span></td>
+										<td>
+											<span editable-select="documentPi.typeDocument"
+												e-ng-options="s.id as s.designation for s in listeTypeDocumentCache" e-name="idTypeDocPI"
+												e-form="rowform">
+												{{showStatus(documentPi.typeDocument)}}</span>
+
+										</td>
+										<td ng-controller="UploadCtrl">
+
+											<div class="form-group">
+												<div class="col-sm-12">
+													<div class="fileinput fileinput-new" data-provides="fileinput">
+														<input class="hidden" type="text" ng-model="name" />
+
+
+														<span class="btn btn-file btn-sm" style="color: rgb(54, 153, 255);
+														background-color: rgb(225, 240, 255);
+														border-color: transparent" ng-show="!isUploaded && rowform.$visible">
+
+															<span class="fileinput-new">S&eacute;lectionner document</span> <input type="file"
+																class="custom-file-input" file-model="myFile"> <span href="#"
+																class="close fileinput-exists pull-right" style="float: none; padding: 0"
+																data-dismiss="fileinput" ng-show="!isUploaded && rowform.$visible">x</span>
+														</span> <span class="fileinput-filename" ng-model="documentPi.path" e-name="path"
+															e-form="rowform" e-required>{{documentPi.path}}</span>
+													</div>
+
+													<a class="btn  btn-sm pull-right" style="margin-right: 10px; cursor: pointer"
+														ng-click="downloadFile(documentPi.vUUIDDocument, 'PI_FOURNISSEUR')">
+
+														<span class="svg-icon svg-icon-primary svg-icon-2x">
+															<!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Download.svg--><svg
+																xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+																width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																	<rect x="0" y="0" width="24" height="24" />
+																	<path
+																		d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+																		fill="#000000" fill-rule="nonzero" opacity="0.3" />
+																	<rect fill="#000000" opacity="0.3"
+																		transform="translate(12.000000, 8.000000) rotate(-180.000000) translate(-12.000000, -8.000000) "
+																		x="11" y="1" width="2" height="14" rx="1" />
+																	<path
+																		d="M7.70710678,15.7071068 C7.31658249,16.0976311 6.68341751,16.0976311 6.29289322,15.7071068 C5.90236893,15.3165825 5.90236893,14.6834175 6.29289322,14.2928932 L11.2928932,9.29289322 C11.6689749,8.91681153 12.2736364,8.90091039 12.6689647,9.25670585 L17.6689647,13.7567059 C18.0794748,14.1261649 18.1127532,14.7584547 17.7432941,15.1689647 C17.3738351,15.5794748 16.7415453,15.6127532 16.3310353,15.2432941 L12.0362375,11.3779761 L7.70710678,15.7071068 Z"
+																		fill="#000000" fill-rule="nonzero"
+																		transform="translate(12.000004, 12.499999) rotate(-180.000000) translate(-12.000004, -12.499999) " />
+																</g>
+															</svg>
+															<!--end::Svg Icon--></span>
+
+
+
+
+													</a>
+													<a ng-click="uploadFile('PI_FOURNISSEUR')" ng-show="!isUploaded && rowform.$visible"
+														class="btn  btn-sm fileinput-upload  pull-right">
+
+
+
+														<span class="svg-icon svg-icon-primary svg-icon-2x">
+															<!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Upload.svg--><svg
+																xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+																width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																	<rect x="0" y="0" width="24" height="24" />
+																	<path
+																		d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+																		fill="#000000" fill-rule="nonzero" opacity="0.3" />
+																	<rect fill="#000000" opacity="0.3" x="11" y="2" width="2" height="14" rx="1" />
+																	<path
+																		d="M12.0362375,3.37797611 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6689749,0.916811528 12.2736364,0.900910387 12.6689647,1.25670585 L17.6689647,5.75670585 C18.0794748,6.12616487 18.1127532,6.75845471 17.7432941,7.16896473 C17.3738351,7.57947475 16.7415453,7.61275317 16.3310353,7.24329415 L12.0362375,3.37797611 Z"
+																		fill="#000000" fill-rule="nonzero" />
+																</g>
+															</svg>
+															<!--end::Svg Icon--></span>
+
+
+													</a>
+												</div>
+											</div> <input class="hidden" ng-model="documentPi.vUUIDDocument" e-name="vUUIDDocument"
+												e-form="rowform" e-required value="{{ documentPi.vUUIDDocument ||
+															'empty' }} " />
+										</td>
+										<td style="white-space: nowrap ;vertical-align: baseline;">
+
+											<form editable-form name="rowform" ng-show="rowform.$visible"
+												onbeforesave="saveDocPI($data, documentPi.id)" shown="DocPartieInteresseInserree == documentPi"
+												class="form-buttons form-inline float-right">
+												<div class="pull-right ">
+													<button type="submit" ng-disabled="!rowform.$valid" class="btn btn-sm " aria-hidden="true">
+														<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+													</button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAddPartieInteressee(rowform, $index, documentPi.id, documentPi.typeDocument , listeDocument )"
+														class="btn btn-sm ">
+														<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+
+													</button>
+												</div>
+											</form>
+											<div class="buttons pull-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm"
+													ng-click="rowform.$show()">
+													<i class="ms-Icon ms-Icon--Edit" aria-hidden="true"></i>
+												
+												</button>
+												<button data-nodrag class="btn btn-sm"
+													ng-click="removeDocPi($index)">
+												
+													<i class="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
+												</button>
+											</div>
+										</td>
+									</tr>
+								</table>
+
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" ng-show="displayMode != 'edit'">
+
+		<div class="col-md-12">
+
+
+			<br />
+			<span class="ms-ListItem-primaryText">Liste des Fournisseurs</span>
+			<br />
+			<div class="title-ajout line"></div>
+			<div panel-class="panel panel-primary">
+
+
+
+				<div style="height: 500px;" ng-grid="gridOptions"></div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div id="light" class="white_content">
+		<pop-up type="delete-pi"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+
+</div>

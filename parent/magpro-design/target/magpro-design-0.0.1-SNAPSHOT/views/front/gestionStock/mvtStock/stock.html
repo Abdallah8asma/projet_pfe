@@ -1,0 +1,23 @@
+
+<ul class="nav nav-gpro spacer">
+	<li class="active"><a href="#/stock">Mvt. Stock</a></li>
+	<!-- 		<li><a href="#/stockMvtOF">Mvt. OF</a></li> -->
+	<li><a href="#/historique">Historique</a></li>
+	<li><a href="#/etat">Etat</a></li>
+	<!-- <li><a href="#/historiqueS">Inventaire Magasin</a></li> -->
+	<li><a href="#/ChartGraphique">Tableau de Bord</a></li>
+</ul>
+<!-- Front M.V.T Stock -->
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-1">
+			<ul class="nav-gproS">
+				<li class="active"><a style="margin-top: 10px"
+					class="btn btn-action pull-right" href="#/stock">Entrée</a></li>
+				<li><a style="margin-top: 10px"
+					class="btn btn-action pull-right" href="#/stockSortie">Sortie</a></li>
+			</ul>
+		</div>
+		<div ng-include="'views/front/gestionStock/mvtStock/stockEntree.html'"></div>
+	</div>
+</div>

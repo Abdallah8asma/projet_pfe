@@ -1,0 +1,207 @@
+<div class="container-fluid" ng-controller="MarcheController"
+	style="background-color: #fff;">
+	<div class="row" ng-show="displayMode != 'edit'">
+
+
+		<div class="col-sm-12">
+
+
+			<br />
+			<div class="row" ng-show="traitementEnCours=='true'"
+				ng-click="traitementEnCours ='false'">
+				<div class="col-sm-5"></div>
+				<div class="col-sm-2">
+					<br>
+					<div>
+						<div>
+
+							<div class="lds-spinner">
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+								<div></div>
+							</div>
+						</div>
+						<div></div>
+						<div>{{msg}}</div>
+
+
+					</div>
+
+				</div>
+				<div class="col-sm-5"></div>
+
+			</div>
+
+			<span class="ms-ListItem-primaryText">March&eacute;</span> <br />
+
+			<div class="ms-CommandBar ms-CommandBar--navBar">
+				<div class="ms-CommandBar-sideCommands">
+					<div class="ms-CommandButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+								class="ms-Icon ms-Icon--Info"></i></span> <span
+								class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+				</div>
+				<div class="ms-CommandBar-mainArea">
+					<div class="ms-CommandButton" permission="['Marche_ADD']">
+						<button class="ms-CommandButton-button"
+							ng-click="affectationMarche(marcheCourant)">
+							<span class="ms-CommandButton-icon"><i
+								class="ms-Icon ms-Icon--CirclePlus"></i></span> <span
+								class="ms-CommandButton-label">Ajouter</span>
+						</button>
+					</div>
+
+					<div
+						class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon"><i
+								class="ms-Icon ms-Icon--More"></i></span> <span
+								class="ms-CommandButton-label"></span>
+						</button>
+						<ul class="ms-ContextualMenu is-opened">
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Folder</a> <i
+								class="ms-Icon ms-Icon--Folder"></i></li>
+							<li
+								class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Plain Text
+									Document</a> <i class="ms-Icon ms-Icon--Document"></i></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">A Coffee</a> <i
+								class="ms-Icon ms-Icon--Coffee"></i></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Picture</a> <i
+								class="ms-Icon ms-Icon--Picture"></i></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Money</a> <i
+								class="ms-Icon ms-Icon--Money"></i></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="creationMarcheForm"
+						id="creationMarcheForm">
+
+						<div class="row" ng-hide="hiddenNotif">
+
+							<div class="col-sm-8"></div>
+							<div class="col-sm-4">
+								<br> <span> <alert type="success"
+										class="alert-success-sauvegarde light"
+										style="text-align: center !important; background-color: #1BC5BD !important">
+									<span
+										ng-bind-html="'March&eacute; enregistr&eacute;e avec succ&egrave;s.' | safe_html"></span>
+									<a> <i class="fa fa-times close-notif"
+										ng-click="closeNotif()" style="color: #fff !important;"></i>
+									</a> </alert>
+								</span>
+							</div>
+						</div>
+
+
+
+
+						<div class="row">
+							<div class="col-sm-8"></div>
+
+							<div class="col-sm-4">
+
+
+
+
+
+
+								<span> <alert type="alert-error" ng-show="formIsInvalid"
+										class="alert-error light"
+										style="text-align: center !important; background-color: #f8d7da !important">
+									<span
+										ng-bind-html="'v&eacute;rifier D&eacute;signation et client !!' | safe_html"></span>
+									<a> <i class="fa fa-times close-notif"
+										ng-click="closeNotif()" style="color: #fff !important;"></i>
+									</a> </alert>
+								</span>
+
+
+							</div>
+
+
+						</div>
+
+
+
+						<div class="row">
+							<div class="col-sm-3">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Designation</label>
+										</div>
+										<input class="form-control"
+											ng-model="marcheCourant.designation" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-3">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Client</label>
+										</div>
+										<select ui-select2 ng-model="marcheCourant.partieInteresseId"
+											ng-init="marcheCourant.partieInteresseId =''"
+											data-placeholder="" class="form-control"
+											style="border: 1px solid #e5eaee !important;">
+											<option value="">Tous les Clients</option>
+											<option ng-repeat="client in listePartieInteresseeCache"
+												value="{{client.id}}">
+												{{client.reference}}-{{client.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-md-12">
+			<br /> <span class="ms-ListItem-primaryText line">Liste des
+				March&eacute;s</span> <br />
+
+
+			<div style="height: 500px;" ng-grid="gridOptions"></div>
+		</div>
+	</div>
+
+
+	<div id="light" class="white_content">
+		<pop-up type="delete-marche"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+</div>

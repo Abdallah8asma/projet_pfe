@@ -1,0 +1,567 @@
+<script type="text/javascript">
+
+  var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+  for (var i = 0; i < SearchBoxElements.length; i++) {
+    new fabric['SearchBox'](SearchBoxElements[i]);
+  }
+
+</script> 
+
+
+
+
+<div class="container-fluid" ng-controller="manageMagasinController"
+	style="background-color: #fff;">
+	<!-- Critere de recherche -->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<!-- <div class="col-sm-12">
+      <button class="btn btn-action2 pull-right"
+        ng-click="AffectationPartieInteressee(partieInteresseeCourante)">Ajouter</button>
+    </div> -->
+		<div class="col-sm-12">
+			<!-- <div class="title-ajout">Crit&eacute;re de recherche</div> -->
+
+			<br /> <span class="ms-ListItem-primaryText">Crit&eacute;re
+				de Recherche</span> <br />
+
+
+
+
+			<div class="ms-CommandBar ms-CommandBar--navBar">
+				<div class="ms-CommandBar-sideCommands">
+					<div class="ms-SearchBox ms-SearchBox--commandBar">
+						<input class="ms-SearchBox-field" type="text" value=""
+							ng-model="filterOptions.filterText" /> <label
+							class="ms-SearchBox-label"> <i
+							class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i> <span
+							class="ms-SearchBox-text">Rechercher</span>
+						</label>
+						<div
+							class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i
+									class="ms-Icon ms-Icon--Cancel"></i></span> <span
+									class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+						<div
+							class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i
+									class="ms-Icon ms-Icon--ChromeBack"></i></span> <span
+									class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+						<div
+							class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i
+									class="ms-Icon ms-Icon--Filter"></i></span> <span
+									class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="ms-CommandButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+								class="ms-Icon ms-Icon--Info"></i></span> <span
+								class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+				</div>
+				<div class="ms-CommandBar-mainArea">
+
+
+					<div class="ms-CommandButton btn-gpro">
+						<button class="ms-CommandButton-button"
+							ng-click="AffectationPartieInteressee(partieInteresseeCourante)">
+							<span class="ms-CommandButton-icon "><i
+								class="ms-Icon ms-Icon--CirclePlus"></i></span> <span
+								class="ms-CommandButton-label ">Ajouter</span>
+						</button>
+					</div>
+
+
+					<!-- <div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="downloadAllExcel(partieInteresseeCourante)">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+							<span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+						</button>
+					</div> -->
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button"
+							ng-click="rechercherPartieInteressee(partieInteresseeCourante)">
+							<span class="ms-CommandButton-icon"><i
+								class="ms-Icon ms-Icon--FolderSearch"></i></span> <span
+								class="ms-CommandButton-label">Rechercher</span>
+						</button>
+					</div>
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="annulerAjout()">
+							<span class="ms-CommandButton-icon"><i
+								class="ms-Icon ms-Icon--Cancel"></i></span> <span
+								class="ms-CommandButton-label">Annuler</span>
+						</button>
+					</div>
+					<div
+						class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon"><i
+								class="ms-Icon ms-Icon--More"></i></span> <span
+								class="ms-CommandButton-label"></span>
+						</button>
+						<ul class="ms-ContextualMenu is-opened">
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Folder</a> <i
+								class="ms-Icon ms-Icon--Folder"></i></li>
+							<li
+								class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Plain Text
+									Document</a> <i class="ms-Icon ms-Icon--Document"></i></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">A Coffee</a> <i
+								class="ms-Icon ms-Icon--Coffee"></i></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Picture</a> <i
+								class="ms-Icon ms-Icon--Picture"></i></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Money</a> <i
+								class="ms-Icon ms-Icon--Money"></i></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal"
+						name="recherchePartieIntereseeFormCritere"
+						id="recherchePartieIntereseeFormCritere">
+
+						<div class="row">
+							<div class="col-sm-3">
+
+
+
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+
+
+										<label class=" input-group-text ms-Label">Designation</label>
+									</div>
+									<input class="form-control"
+										ng-model="partieInteresseeCourante.designation" />
+								</div>
+
+							</div>
+
+
+
+							<div class="col-sm-3">
+
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+
+											<label class=" input-group-text ms-Label">Societe</label>
+										</div>
+										<select name="societeId" id="societeId" class="form-control"
+											ng-model="partieInteresseeCourante.societeId">
+
+											<option value="">Tous</option>
+											<option ng-repeat="societe in societes"
+												value="{{societe.id}}">{{societe.abreviation}}</option>
+
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<div class="col-sm-3">
+
+
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+
+											<label class=" input-group-text ms-Label">Boutique</label>
+										</div>
+										<select name="boutiqueId" id="boutiqueId" class="form-control"
+											ng-model="partieInteresseeCourante.boutiqueId">
+
+											<option value="">Tous</option>
+											<option ng-repeat="boutique in listeBoutique"
+												value="{{boutique.id}}">{{boutique.abreviation}}</option>
+
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+
+						</div>
+
+
+
+						<div class="row">
+
+
+							<div class="col-sm-3">
+
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+
+
+										<label class=" input-group-text ms-Label">Depot</label>
+									</div>
+									<select class="form-control"
+										ng-model="partieInteresseeCourante.depot"
+										ng-init="partieInteresseeCourante.depot = ''">
+										<option value="">Tous</option>
+										<option value="oui">oui</option>
+										<option value="non">non</option>
+									</select>
+								</div>
+
+							</div>
+
+
+
+							<div class="col-sm-3">
+
+
+
+
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+
+
+										<label class=" input-group-text ms-Label">Point Vente</label>
+									</div>
+									<select class="form-control"
+										ng-model="partieInteresseeCourante.pointVente"
+										ng-init="partieInteresseeCourante.pointVente = ''">
+										<option value="">Tous</option>
+										<option value="oui">oui</option>
+										<option value="non">non</option>
+									</select>
+								</div>
+
+							</div>
+
+
+
+
+
+
+
+
+						</div>
+
+
+
+
+
+
+
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- container d'ajout,  modification et de consultation d'une partie interessée-->
+	<div class="row" ng-show="displayMode == 'edit'">
+		<!-- <div class="col-sm-12">
+      <div class="pull-right">
+        <button class="btn btn-action"
+          ng-click="sauvegarderAjout(partieInteresseeCourante)"
+          ng-disabled="!creationPartieInteressee.$valid;">Enregistrer</button>
+        <button class="btn btn-action2" ng-click="annulerAjout()">Retour</button>
+      </div>
+    </div> -->
+		<div class="col-md-12">
+			<!-- <div class="title-ajout">Boutique</div> -->
+
+
+			<br /> <span class="ms-ListItem-primaryText">Magasin</span> <br />
+
+
+
+
+			<div class="ms-CommandBar ms-CommandBar--navBar">
+				<div class="ms-CommandBar-sideCommands">
+
+
+					<div class="ms-CommandButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+								class="ms-Icon ms-Icon--Info"></i></span> <span
+								class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+				</div>
+				<div class="ms-CommandBar-mainArea">
+
+
+					<div class="ms-CommandButton btn-gpro"
+						permission="['Magasin_Edit']">
+						<button class="ms-CommandButton-button"
+							ng-click="sauvegarderAjout(partieInteresseeCourante)"
+							ng-disabled="!creationPartieInteressee.$valid;">
+							<span class="ms-CommandButton-icon "><i
+								class="ms-Icon ms-Icon--Save"></i></span> <span
+								class="ms-CommandButton-label ">Enregistrer</span>
+						</button>
+					</div>
+
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="annulerAjout()">
+							<span class="ms-CommandButton-icon"><i
+								class="ms-Icon ms-Icon--Back"></i></span> <span
+								class="ms-CommandButton-label">Retour</span>
+						</button>
+					</div>
+
+
+					<div
+						class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon"><i
+								class="ms-Icon ms-Icon--More"></i></span> <span
+								class="ms-CommandButton-label"></span>
+						</button>
+						<ul class="ms-ContextualMenu is-opened">
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Folder</a> <i
+								class="ms-Icon ms-Icon--Folder"></i></li>
+							<li
+								class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Plain Text
+									Document</a> <i class="ms-Icon ms-Icon--Document"></i></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">A Coffee</a> <i
+								class="ms-Icon ms-Icon--Coffee"></i></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Picture</a> <i
+								class="ms-Icon ms-Icon--Picture"></i></li>
+							<li class="ms-ContextualMenu-item"><a
+								class="ms-ContextualMenu-link" tabindex="1">Money</a> <i
+								class="ms-Icon ms-Icon--Money"></i></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form id="creationPartieInteressee" name="creationPartieInteressee">
+
+
+
+						<div class="row">
+							<div class="col-sm-6">
+
+
+
+
+								<div class="input-group">
+									<div class="input-group-prepend">
+
+
+										<label class=" input-group-text ms-Label">Designation</label>
+									</div>
+									<input class="form-control"
+										ng-model="partieInteresseeCourante.designation" />
+								</div>
+
+							</div>
+
+
+
+							<div class="col-sm-3">
+
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+
+											<label class=" input-group-text ms-Label">Societe</label>
+										</div>
+										<select name="societeId" id="societeId" class="form-control"
+											ng-model="partieInteresseeCourante.societeId">
+
+											<option value="">Tous</option>
+											<option ng-repeat="societe in societes"
+												value="{{societe.id}}">{{societe.abreviation}}</option>
+
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<div class="col-sm-3">
+
+
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+
+											<label class=" input-group-text ms-Label">Boutique</label>
+										</div>
+										<select name="boutiqueId" id="boutiqueId" class="form-control"
+											required ng-model="partieInteresseeCourante.boutiqueId">
+
+											<option value="">Tous</option>
+											<option ng-repeat="boutique in listeBoutique"
+												value="{{boutique.id}}">{{boutique.abreviation}}</option>
+
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+
+
+
+
+
+
+
+
+						</div>
+
+
+
+
+
+
+
+						<div class="row">
+
+
+
+
+
+							<div class="col-sm-3">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Depot</label>
+										</div>
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<label class="checkbox checkbox-square checkbox-primary">
+													<input type="checkbox"
+													ng-model="partieInteresseeCourante.depot" /> <span></span>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Point
+												de vente</label>
+										</div>
+										<div class="input-group-prepend">
+											<div class="input-group-text">
+												<label class="checkbox checkbox-square checkbox-primary">
+													<input type="checkbox"
+													ng-model="partieInteresseeCourante.pointVente" /> <span></span>
+												</label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+
+
+
+
+
+
+						</div>
+
+
+
+
+
+
+
+					</form>
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Fin ajout et modif -->
+
+	<!-- container Grid-->
+	<div class="row" ng-show="displayMode != 'edit'">
+
+		<div class="col-md-12">
+			<!-- <div class="title-ajout line">Liste des Boutiques</div> -->
+
+			<br /> <span class="ms-ListItem-primaryText line">Liste des
+				Magasins</span> <br />
+			<div panel-class="panel panel-primary">
+
+				<!-- <div class="row">
+      <div class="input-icon right mb10 col-md-3 pull-right" id="searchFilterClientInput">
+      <input type="text" id="searchFilterClient" placeholder="Taper un terme de recherche" ng-model="filterOptions.filterText"
+        class="form-control">
+      </div>
+    </div> -->
+
+				<div style="height: 500px;" ng-grid="gridOptions"></div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Popup de la suppression -->
+	<div id="light" class="white_content">
+		<pop-up type="delete-pi"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+	<!-- Fin Popup de la suppression -->
+</div>

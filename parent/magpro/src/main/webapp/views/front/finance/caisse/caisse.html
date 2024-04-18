@@ -1,0 +1,444 @@
+
+<script type="text/javascript">
+
+  var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+  for (var i = 0; i < SearchBoxElements.length; i++) {
+    new fabric['SearchBox'](SearchBoxElements[i]);
+  }
+
+</script> 
+
+<div class="panel-body" ng-controller="caisseCtrl" style="background-color: #fff;">
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-sm-12">
+    
+
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Crit&egrave;res de recherche</span>
+    
+
+      <div class="ms-CommandBar ms-CommandBar--navBar">
+      <!--   <div class="ms-CommandBar-sideCommands">
+          <div class="ms-SearchBox ms-SearchBox--commandBar">
+            <input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
+            <label class="ms-SearchBox-label">
+              <i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+              <span class="ms-SearchBox-text">Rechercher</span>
+            </label>
+            <div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+            <div class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel">
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--ChromeBack"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+            <div class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel">
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Filter"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div> -->
+        <div class="ms-CommandBar-mainArea">
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="showAdd()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--CirclePlus"></i></span>
+              <span class="ms-CommandButton-label">Ajouter</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" disabled>
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+            </button>
+          </div>
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="recherchercaisse(caisseCourant)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+              <span class="ms-CommandButton-label">Rechercher</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+          <!--   <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon "></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button> -->
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div> 
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <form class="form-horizontal" id="rechercheSSForm" name="rechercheSSForm">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">R&eacute;f&eacute;rence</label>
+                    </div>
+                    <input type="text" class="form-control" ng-model="caisseCourant.reference" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> Date Cloture de</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="caisseCourant.dateClotureDe =''" ng-model="caisseCourant.dateClotureDe" is-open="opened"
+                      datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">A</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="caisseCourant.dateClotureAu =''" ng-model="caisseCourant.dateClotureAu" is-open="opened"
+                      datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Point de vente</label>
+                    </div>
+                    <select ui-select2 ng-model="caisseCourant.magasinId" ng-change="selectMagasin(magazin)"
+                      ng-init="caisseCourant.magasinId =''" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Magasins</option>
+                      <option ng-repeat="magazin in listeMagazinCache" value="{{magazin.id}}">{{magazin.designation}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    
+      <div class="col-md-12">
+        <span class="ms-ListItem-primaryText line" style="font-size:130%">Liste des Caisse:</span>
+        <div panel-class="panel panel-primary">
+        <div style="height: 500px;" ng-grid="gridOptions"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" ng-show="displayMode == 'edit'">
+
+      <div class="col-md-12">
+  
+        <span class="ms-ListItem-secondaryText float-right font-italic">
+          <b>Caisse</b>
+        </span>
+        <span class="ms-ListItem-primaryText" ng-show="mode != 'actif'" style="font-size:130%">
+          Cr&eacute;ation Caisse</span>
+        <span class="ms-ListItem-primaryText" ng-show="mode == 'actif'" style="font-size:130%">
+          Modification Caisse</span>
+        
+        <div class="ms-CommandBar ms-CommandBar--navBar">
+       <!--    <div class="ms-CommandBar-sideCommands">
+            <div class="ms-CommandButton ms-CommandButton--noLabel">
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+                    class="ms-Icon ms-Icon--Info"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+          </div> -->
+          <div class="ms-CommandBar-mainArea">
+            <div class="ms-CommandButton" permission="['Client_Caisse_Edit']">
+              <button class="ms-CommandButton-button" ng-click="sauvegarderAjout(caisseCourant)"
+                ng-disabled="creationSSForm.$invalid">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span>
+                <span class="ms-CommandButton-label">Enregistrer</span>
+              </button>
+            </div>
+
+            <div class="ms-CommandButton">
+              <button class="ms-CommandButton-button" ng-show="modePdf == 'actif'"
+                ng-click="download(caisseCourant.id,checkboxModel.rapportPrix)">
+                >
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+                <span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+              </button>
+            </div>
+            <div class="ms-CommandButton">
+              <button class="ms-CommandButton-button" ng-click="rechercherReceptionAchat(bonStockCourante)">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+                <span class="ms-CommandButton-label">Rechercher</span>
+              </button>
+            </div>
+
+            <div class="ms-CommandButton">
+              <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span>
+                <span class="ms-CommandButton-label">Retour</span>
+              </button>
+            </div>
+           <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+               <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button> 
+              <ul class="ms-ContextualMenu is-opened">
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                  <i class="ms-Icon ms-Icon--Folder"></i>
+                </li>
+                <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                  <i class="ms-Icon ms-Icon--Document"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                  <i class="ms-Icon ms-Icon--Coffee"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                  <i class="ms-Icon ms-Icon--Picture"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                  <i class="ms-Icon ms-Icon--Money"></i>
+                </li>
+              </ul>
+            </div> 
+          </div>
+        </div>
+
+        <div class="panel panel-primary">
+          <div class="panel-body">
+            <form class="form-horizontal" name="creationSSForm">
+              <div class="row">
+            
+                <div class="col-sm-4" ng-controller="DatepickerDemoController">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> Date</span>
+                      </div>
+                      <input type="text" class="form-control datepicker" name="creationSSForm.date" required
+                        datepicker-popup="{{format}}" ng-model="caisseCourant.date" is-open="opened"
+                        datepicker-options="dateOptions" date-disabled="enabled(date, mode)" close-text="Close" />
+
+                      <div class="input-group-append">
+                        <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                            color: rgb(54, 153, 255);
+                            background-color: rgb(225, 240, 255);
+                          ">
+                          <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4" ng-controller="DatepickerDemoController">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> Date de Cloture</span>
+                      </div>
+                      <input type="text" class="form-control datepicker" name="creationSSForm.dateCloture"
+                        datepicker-popup="{{format}}" ng-model="caisseCourant.dateCloture" is-open="opened"
+                        datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                        close-text="Close" />
+
+                      <div class="input-group-append">
+                        <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                            color: rgb(54, 153, 255);
+                            background-color: rgb(225, 240, 255);
+                          ">
+                          <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                    <div class="col-sm-4">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label">R&eacute;f&eacute;rence</label>
+                      </div>
+                      <input type="text" class="form-control" ng-model="caisseCourant.reference" disabled />
+                    </div>
+                  </div>
+                </div>
+           
+              </div>
+              <div class="row">
+                   <div class="col-sm-4">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label">Magasin</label>
+                      </div>
+                      <select ui-select2 ng-model="caisseCourant.magasinId"
+                        ng-change="setReference(caisseCourant.magasinId)" ng-init="caisseCourant.magasinId =''"
+                        data-placeholder="" required class="form-control" style="border: 1px solid #e5eaee !important;">
+                        <option value="">Tous les Magasins</option>
+                        <option ng-repeat="magazin in listeMagazinCache" value="{{magazin.id}}">{{magazin.designation}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label">Montant cheque</label>
+                      </div>
+                      <input type="text" class="form-control" ng-init="caisseCourant.montantEspeces =''"
+                        ng-model="caisseCourant.montantEspeces" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label">Montant Especes</label>
+                      </div>
+                      <input type="text" class="form-control" ng-init="caisseCourant.montantEspeces =''"
+                        ng-model="caisseCourant.montantEspeces" />
+                    </div>
+                  </div>
+                </div>
+
+                <div ng-if="mode == 'actif'" class="col-sm-3">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label">Point de vente</label>
+                      </div>
+                      <select ui-select2 ng-model="caisseCourant.magasinId" ng-change="selectMagasin(magazin)"
+                        ng-init="caisseCourant.magasinId =''" data-placeholder="" class="form-control"
+                        style="border: 1px solid #e5eaee !important;">
+                        <option value="">Tous les Magasins</option>
+                        <option ng-repeat="magazin in listeMagazinCache" value="{{magazin.id}}">
+                          {{magazin.designation}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3" ng-if="mode == 'actif'">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <label class="input-group-text ms-Label">
+                          Cloturer</label>
+                      </div>
+                      <select ui-select2 ng-model="caisseCourant.cloture" data-placeholder="" class="form-control"
+                        style="border: 1px solid #e5eaee !important;">
+                        <option value="true">OUI</option>
+                        <option value="false">NON</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+              <div class="row">&nbsp;</div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="light" class="white_content">
+        <pop-up type="delete-receptionVente"></pop-up>
+      </div>
+      <div id="fade" class="black_overlay"></div>
+    
+  </div>
+</div>

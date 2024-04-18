@@ -1,0 +1,696 @@
+<!--Script Fabric JS-->
+<script type="text/javascript">
+	var CommandBarElements = document.querySelectorAll(".ms-CommandBar-back-Article");
+	for (var i = 0; i < CommandBarElements.length; i++) {
+		new fabric['CommandBar'](CommandBarElements[i]);
+	}
+
+	var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+	for (var i = 0; i < SearchBoxElements.length; i++) {
+		new fabric['SearchBox'](SearchBoxElements[i]);
+	}
+
+	
+
+</script>
+<!--End FabricJS-->
+
+<style>
+	.ms-CommandBar-back-Article {
+		background-color: #F3F6F9 !important;
+		border-color: transparent !important;
+	}
+
+	.ms-CommandButton-button {
+		color: #3699FF !important;
+	}
+
+	.ms-CommandButton-button:hover {
+		background-color: #3699FF !important;
+	}
+
+	.ms-CommandButton-button:hover span {
+		color: #ffff !important;
+	}
+
+	.ms-CommandButton-button:hover i {
+		color: #ffff !important;
+	}
+
+
+	.ms-CommandButton-label,
+	.ms-SearchBox-text {
+		color: #3699FF !important;
+	}
+
+	.ms-CommandButton-label:hover {
+		color: #ffff !important;
+	}
+
+	.ms-Icon {
+		color: #3699FF !important;
+	}
+
+	.ms-Icon.ms-Icon-Gpro {
+		top: 30% !important;
+		color: #464E5F !important;
+		font-size: 14px !important;
+	}
+
+	.ms-CommandButton .ms-CommandButton-Gpro {
+		padding: 0px !important;
+	}
+
+	.ms-Icon:hover {
+		color: #fff !important;
+	}
+</style>
+
+
+<div ng-controller="BackElBase">
+	<!-- <ul class="nav back-nav-gpro">
+
+		<li ng-class="{active:ITEM == 'produit' }"><a ng-click="goProduit()">Articles</a></li>
+	</ul> -->
+
+
+	<div class="container-fluid back-office-background" ng-if="ITEM == 'article'"
+		ng-controller="BackPartieInteresseeCtrl2">
+
+		<span class="ms-ListItem-primaryText">Matière Première</span>
+		<br />
+
+
+
+
+		<div class="ms-CommandBar-back-Article  ms-CommandBar--navBar">
+			<div class="ms-CommandBar-sideCommands">
+				<div class="ms-SearchBox ms-SearchBox--commandBar">
+					<input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
+
+					<label class="ms-SearchBox-label">
+						<i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+						<span class="ms-SearchBox-text">Rechercher</span>
+					</label>
+					<div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+							<span class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+					<div class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--ChromeBack"></i></span>
+							<span class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+					<div class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Filter"></i></span>
+							<span class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+				</div>
+
+				<div class="ms-CommandButton ms-CommandButton--noLabel">
+					<button class="ms-CommandButton-button">
+						<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+						<span class="ms-CommandButton-label"></span>
+					</button>
+				</div>
+			</div>
+			<div class="ms-CommandBar-mainArea">
+
+
+				<div class="ms-CommandButton ms-CommandButton--dropdown">
+
+
+
+
+
+					<button class="ms-CommandButton-button" ng-change="selectAction()" name="selector1" id="selector1">
+						<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Settings"></i></span>
+						<span class="ms-CommandButton-label">Param&eacute;trage</span>
+						<span class="ms-CommandButton-dropdownIcon"><i class="ms-Icon ms-Icon--ChevronDown"></i></span>
+					</button>
+			
+						<select name="selector1" id="selector1" class="form-control" ng-model="parametre">
+							<option>Unite</option>
+						<!-- 	<option>M&eacute;trage Fils</option>
+							<option>Mati&egrave;re Tissu</option>
+							<option>Grosseur Fils</option> -->
+							<option>Famille Article</option>
+							<option>Sous Famille Article</option>
+						</select>
+
+
+
+
+				
+				</div>
+
+
+
+
+
+				<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+					<button class="ms-CommandButton-button">
+						<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+						<span class="ms-CommandButton-label"></span>
+					</button>
+					<ul class="ms-ContextualMenu is-opened">
+						<li class="ms-ContextualMenu-item">
+							<a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+							<i class="ms-Icon ms-Icon--Folder"></i>
+						</li>
+						<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+						<li class="ms-ContextualMenu-item">
+							<a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+							<i class="ms-Icon ms-Icon--Document"></i>
+						</li>
+						<li class="ms-ContextualMenu-item">
+							<a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+							<i class="ms-Icon ms-Icon--Coffee"></i>
+						</li>
+						<li class="ms-ContextualMenu-item">
+							<a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+							<i class="ms-Icon ms-Icon--Picture"></i>
+						</li>
+						<li class="ms-ContextualMenu-item">
+							<a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+							<i class="ms-Icon ms-Icon--Money"></i>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Menu Principale -->
+		<div ng-if="displayMenu == 'eb'">
+
+
+
+
+			<div class="panel panel-primary" ng-show="displayMode != 'test'">
+
+				<!-- Div Unite -->
+				<div class="panel-body" ng-if="parametre =='Unite'" ng-controller="BackArticleUniteController">
+
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th class="hidden">id</th>
+								<th>Unit&eacute;</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajoutUniteArticle()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="UniteArticle in listeUniteArticle">
+								<td class="hidden">
+									<!-- editable group (select-remote) --> <span editable-text="UniteArticle.id" e-name="id"
+										e-form="rowform" e-required> {{ UniteArticle.id || 'empty' }} </span>
+								</td>
+								<td>
+									<!-- editable group (select-remote) --> <span editable-text="UniteArticle.designation"
+										e-name="designation" e-form="rowform" e-required> {{
+											UniteArticle.designation || 'empty' }} </span>
+								</td>
+								<td style="white-space: nowrap">
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveUniteArticle($data, UniteArticle.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline"
+												shown="UniteArticleInserree == UniteArticle">
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+													<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+												</button>
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, UniteArticle.id, UniteArticle.designation, listeUniteArticle )"
+													class="btn btn-sm ">
+													<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm" ng-click="rowform.$show()">
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn  btn-sm " ng-click="removeUniteArticle($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+				<!-- Div Metrage -->
+				<div class="panel-body" ng-if="parametre =='M&eacute;trage Fils'"
+					ng-controller="BackArticleMetrageController">
+
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th class="hidden">id</th>
+								<th>M&eacute;trage Fils</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajoutMetrage()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="metrage in listeMetrage">
+								<td class="hidden">
+									<!-- editable group (select-remote) --> <span editable-text="metrage.id" e-name="id" e-form="rowform"
+										e-required> {{ metrage.id || 'empty' }} </span>
+								</td>
+								<td>
+									<!-- editable group (select-remote) --> <span editable-text="metrage.designation" e-name="designation"
+										e-form="rowform" e-required> {{ metrage.designation ||
+											'empty' }} </span>
+								</td>
+								<td style="white-space: nowrap">
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveMetrage($data, metrage.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline" shown="metrageInserree == metrage">
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+													<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+												</button>
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, metrage.id, metrage.designation, listeMetrage )"
+													class="btn btn-sm ">
+													<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn glyphicon btn-sm " ng-click="removeMetrage($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+				<!-- Div Matiere -->
+				<div class="panel-body" ng-if="parametre =='Mati&egrave;re Tissu'"
+					ng-controller="BackArticleMatiereController">
+					<div class="form-group">
+						<div class="row">
+
+							<table class="table table-bordered table-condensed back-table-head-color">
+								<thead>
+									<tr>
+										<th class="hidden">id</th>
+										<th>Mati&egrave;re Tissu</th>
+										<th> <span class="ms-CommandButton-icon float-right" ng-click="ajoutMatiere()">
+												<a href="javascript:void(0)">
+													<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+												</a>
+											</span></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="matiere in listeMatiere">
+										<td class="hidden">
+											<!-- editable group (select-remote) --> <span editable-text="matiere.id" e-name="id"
+												e-form="rowform" e-required> {{ matiere.id || 'empty' }} </span>
+										</td>
+										<td>
+											<!-- editable group (select-remote) --> <span editable-text="matiere.designation"
+												e-name="designation" e-form="rowform" e-required> {{ matiere.designation
+													|| 'empty' }} </span>
+										</td>
+										<td style="white-space: nowrap">
+											<div class="row">
+												<div class="col-sm-6">
+													<!-- form -->
+													<form editable-form name="rowform" onbeforesave="saveMatiere($data, matiere.id)"
+														ng-show="rowform.$visible" class="form-buttons form-inline"
+														shown="matiereInserree == matiere">
+														<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+															<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+														</button>
+														<button type="button" ng-disabled="rowform.$waiting"
+															ng-click="cancelAdd(rowform, $index, matiere.id, matiere.designation, listeMatiere )"
+															class="btn btn-sm ">
+
+															<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+														</button>
+													</form>
+
+												</div>
+												<div class="col-sm-6">
+													<div class="buttons float-right" ng-show="!rowform.$visible">
+														<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+															<i class="ms-Icon ms-Icon--Edit  ms-Icon-Gpro" aria-hidden="true"></i>
+														</button>
+														<button data-nodrag class="btn btn-sm " ng-click="removeMatiere($index)">
+															<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+														</button>
+													</div>
+
+												</div>
+											</div>
+
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Div Grosseur -->
+				<div class="panel-body" ng-if="parametre =='Grosseur Fils'" ng-controller="BackArticleGrosseurController">
+					<div class="form-group">
+						<div class="row">
+
+							<table class="table table-bordered table-condensed back-table-head-color">
+								<thead>
+									<tr>
+										<th class="hidden">id</th>
+										<th>Grosseur Fils</th>
+										<th> <span class="ms-CommandButton-icon float-right" ng-click="ajoutGrosseur()">
+												<a href="javascript:void(0)">
+													<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+												</a>
+											</span></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="grosseur in listeGrosseur">
+										<td class="hidden">
+											<!-- editable group (select-remote) --> <span editable-text="grosseur.id" e-name="id"
+												e-form="rowform" e-required> {{ grosseur.id || 'empty' }} </span>
+										</td>
+										<td>
+											<!-- editable group (select-remote) --> <span editable-text="grosseur.designation"
+												e-name="designation" e-form="rowform" e-required> {{ grosseur.designation
+													|| 'empty' }} </span>
+										</td>
+										<td style="white-space: nowrap">
+
+											<div class="row">
+												<div class="col-sm-6">
+
+													<!-- form -->
+													<form editable-form name="rowform" onbeforesave="saveGrosseur($data, grosseur.id)"
+														ng-show="rowform.$visible" class="form-buttons form-inline"
+														shown="grosseurInserree == grosseur">
+														<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+															<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+														</button>
+														<button type="button" ng-disabled="rowform.$waiting"
+															ng-click="cancelAdd(rowform, $index, grosseur.id, grosseur.designation, listeGrosseur )"
+															class="btn btn-sm ">
+
+															<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+														</button>
+													</form>
+
+												</div>
+												<div class="col-sm-6">
+													<div class="buttons float-right" ng-show="!rowform.$visible">
+														<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+															<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+														</button>
+														<button data-nodrag class="btn  btn-sm " ng-click="removeGrosseur($index)">
+
+															<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+														</button>
+													</div>
+
+												</div>
+											</div>
+
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+
+
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Div Famille -->
+				<div class="panel-body" ng-if="parametre =='Famille Article'" ng-controller="BackArticleFamilleController">
+					<div class="form-group">
+						<div class="row">
+
+							<table class="table table-bordered table-condensed back-table-head-color">
+								<thead>
+									<tr>
+										<th class="hidden">id</th>
+										<th>Famille Article</th>
+										<th>type</th>
+										<th> <span class="ms-CommandButton-icon float-right" ng-click="ajoutFamilleArticle()">
+												<a href="javascript:void(0)">
+													<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+												</a>
+											</span></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="FamilleArticle in listeFamilleArticle">
+										<td class="hidden">
+											<!-- editable group (select-remote) --> <span editable-text="FamilleArticle.id" e-name="id"
+												e-form="rowform" e-required> {{ FamilleArticle.id ||
+													'empty' }} </span>
+										</td>
+										<td>
+											<!-- editable group (select-remote) --> <span editable-text="FamilleArticle.designation"
+												e-name="designation" e-form="rowform" e-required> {{
+													FamilleArticle.designation || 'empty' }} </span>
+										</td>
+										<td>
+											<!-- editable group (select-remote) --> <span editable-select="FamilleArticle.idTypeArticle"
+												e-ng-options="s.id as s.designation for s in listeTypeArticle" e-name="idTypeArticle"
+												e-form="rowform"> {{
+													showStatus(FamilleArticle.idTypeArticle) }} </span>
+										</td>
+										<td style="white-space: nowrap">
+											<div class="row">
+												<div class="col-sm-6">
+
+													<!-- form -->
+													<form editable-form name="rowform" onbeforesave="saveFamilleArticle($data, FamilleArticle.id)"
+														ng-show="rowform.$visible" class="form-buttons form-inline"
+														shown="FamilleArticleInserree == FamilleArticle">
+														<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+															<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+
+														</button>
+														<button type="button" ng-disabled="rowform.$waiting"
+															ng-click="cancelAdd(rowform, $index, FamilleArticle.id, FamilleArticle.designation, listeFamilleArticle )"
+															class="btn btn-sm ">
+
+															<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+														</button>
+													</form>
+
+												</div>
+												<div class="col-sm-6">
+													<div class="buttons float-right" ng-show="!rowform.$visible">
+														<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+															<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+														</button>
+														<button data-nodrag class="btn  btn-sm " ng-click="removeFamilleArticle($index)">
+															<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+														</button>
+													</div>
+
+												</div>
+											</div>
+
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+
+				</div>
+
+				<!-- Div Sous Famille -->
+				<div class="panel-body" ng-if="parametre =='Sous Famille Article'"
+					ng-controller="BackArticleSousFamilleController">
+					<div class="form-group">
+						<div class="row">
+
+							<table class="table table-bordered table-condensed back-table-head-color">
+								<thead>
+									<tr>
+										<th class="hidden">id</th>
+										<th>Sous Famille Article</th>
+										<th>famille Article</th>
+										<th>type</th>
+										<th> <span class="ms-CommandButton-icon float-right" ng-click="ajoutSousFamilleArticle()">
+												<a href="javascript:void(0)">
+													<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+												</a>
+											</span></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="SousFamilleArticle in listeSousFamilleArticle">
+										<td class="hidden">
+											<!-- editable group (select-remote) --> <span editable-text="SousFamilleArticle.id" e-name="id"
+												e-form="rowform" e-required> {{ SousFamilleArticle.id
+													|| 'empty' }} </span>
+										</td>
+										<td>
+											<!-- editable group (select-remote) --> <span editable-text="SousFamilleArticle.designation"
+												e-name="designation" e-form="rowform" e-required> {{
+													SousFamilleArticle.designation || 'empty' }} </span>
+										</td>
+										<td>
+											<!-- editable group (select-remote) --> <span
+												editable-select="SousFamilleArticle.idFamilleArticle"
+												e-ng-options="s.id as s.designation for s in listeFamilleArticle" e-name="idFamilleArticle"
+												e-form="rowform"> {{
+													showStatusSousFamille(SousFamilleArticle.idFamilleArticle)
+													}} </span>
+										</td>
+										<td>
+											<!-- editable group (select-remote) --> <span>
+												{{showStatusSousFamilleType(SousFamilleArticle.idFamilleArticle)}}
+											</span>
+
+										</td>
+										<td style="white-space: nowrap">
+											<div class="row">
+												<div class="col-sm-6">
+
+													<!-- form -->
+													<form editable-form name="rowform"
+														onbeforesave="saveSousFamilleArticle($data, SousFamilleArticle.id)"
+														ng-show="rowform.$visible" class="form-buttons form-inline"
+														shown="SousFamilleArticleInserree == SousFamilleArticle">
+														<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+															<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+														</button>
+														<button type="button" ng-disabled="rowform.$waiting"
+															ng-click="cancelAdd(rowform, $index, SousFamilleArticle.id, SousFamilleArticle.designation, listeSousFamilleArticle )"
+															class="btn btn-sm ">
+
+															<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+														</button>
+													</form>
+
+												</div>
+												<div class="col-sm-6">
+													<div class="buttons float-right" ng-show="!rowform.$visible">
+														<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+															<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+														</button>
+														<button data-nodrag class="btn  btn-sm " ng-click="removeSousFamilleArticle($index)">
+															<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+														</button>
+													</div>
+
+												</div>
+											</div>
+
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+<!-- 
+		<div class="spacer3">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<div class="col-sm-3">
+							<div class="input-group">
+								<span class="input-group-addon label1" id="basic-addon1">Param&eacute;trage</span>
+								<select name="selector1" id="selector1" class="form-control" ng-model="parametre">
+									<option>Unite</option>
+									<option>M&eacute;trage Fils</option>
+									<option>Mati&egrave;re Tissu</option>
+									<option>Grosseur Fils</option>
+									<option>Famille Article</option>
+									<option>Sous Famille Article</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> -->
+
+	</div>
+
+
+
+
+	<div class="container-fluid back-office-background"
+		ng-include="'views/back/elementsDeBase/produits/backProduits.html'" ng-show="ITEM == 'produit'">
+
+
+	</div>
+</div>

@@ -1,0 +1,113 @@
+<!-- Menu gestion commertiale -->
+<div ng-controller="MenugestionController">
+  <!-- <ul class="breadcrumb">
+    <li ng-class="{active:ITEM == 'prixClient' }"><a href="#/gestionCommerciale/prixClient"
+        ng-click="goPrixClient()">Prix
+        Client</a>
+    </li>
+    <li ng-class="{active:ITEM == 'devis' }"><a href="#/gestionCommerciale/devis" ng-click="goDevis()">Devis</a></li>
+
+    <li ng-class="{active:ITEM == 'bonCommande' }"><a href="#/gestionCommerciale/bonCommande"
+        ng-click="goBonCommande()">Bon Commande</a></li>
+
+    <li ng-class="{active:ITEM == 'marche' }"><a href="#/gestionCommerciale/marche"
+        ng-click="goMarche()">March&eacute;</a></li>
+
+    <li ng-class="{active:ITEM == 'livraison' }"><a href="#/gestionCommerciale/livraison"
+        ng-click="goLivraison()">Livraison</a></li>
+
+    <li ng-class="{active:ITEM == 'detlivraison' }"><a href="#/gestionCommerciale/detlivraison"
+        ng-click="goDetLivraison()">Det.Livraison</a></li>
+
+    <li ng-class="{active:ITEM == 'factureVente' }"><a href="#/gestionCommerciale/factureVente"
+        ng-click="goFactureVente()">Facture</a></li>
+
+    <li ng-class="{active:ITEM == 'factureVente' }"><a href="#/gestionCommerciale/factureAvoirVente"
+        ng-click="goFactureAvoirVente()">Facture Avoir</a></li>
+
+    <li ng-class="{active:ITEM == 'factureRetourVente' }"><a href="#/gestionCommerciale/factureRetourVente"
+        ng-click="goFactureRetourVente()">Avoir Sp</a></li>
+
+    <li ng-class="{active:ITEM == 'reporting' }"><a href="#/gestionCommerciale/reporting"
+        ng-click="goReporting()">Reporting</a></li>
+
+  </ul> -->
+
+
+
+
+  <!-- <ul class="nav nav-gpro"> -->
+  <!--    <li ng-class="{active:ITEM == 'reception' }"><a ng-click="goReception()">R&eacute;ception</a></li> -->
+  <!-- <li ng-class="{active:ITEM == 'prixClient' }"><a ng-click="goPrixClient()">Prix Client</a></li>
+       	     <li ng-class="{active:ITEM == 'devis' }"><a ng-click="goDevis()">Devis</a></li>
+        <li ng-class="{active:ITEM == 'bonCommande' }"><a ng-click="goBonCommande()">Bon Commande</a></li>
+    
+  <li ng-class="{active:ITEM == 'marche' }"><a ng-click="goMarche()">March&eacute;</a></li> 
+  
+    <li ng-class="{active:ITEM == 'livraison' }"><a ng-click="goLivraison()">Livraison</a></li>
+    
+		<li ng-class="{active:ITEM == 'detlivraison' }"><a ng-click="goDetLivraison()">Det.Livraison</a></li>
+		<li ng-class="{active:ITEM == 'factureVente' }"><a ng-click="goFactureVente()">Facture</a></li>
+		<li ng-class="{active:ITEM == 'factureAvoirVente' }"><a ng-click="goFactureAvoirVente()">Facture Avoir</a></li>
+    			<li ng-class="{active:ITEM == 'factureRetourVente' }"><a ng-click="goFactureRetourVente()">Avoir Sp</a></li>
+    	
+    	<li ng-class="{active:ITEM == 'reporting' }"><a ng-click="goReporting()">Reporting</a></li>
+    	
+    	<li ng-class="{active:ITEM == 'remiseVente' }"><a ng-click="goRemiseVente()">Remise</a></li>
+    	<li ng-class="{active:ITEM == 'packageVente' }"><a ng-click="goPackageVente()">Package</a></li>
+    	
+	</ul> -->
+
+  <div ng-if="ITEM == 'prixClient'">
+    <div ng-include="'views/front/gestionCommerciale/produits/produits.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'bonCommande'">
+    <div ng-include="'views/front/gestionCommerciale/bonCommande/bonCommande.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'detBonCommande'">
+    <div ng-include="'views/front/gestionCommerciale/detBonCommande/detBonCommande.html'"></div>
+  </div>
+
+  <div ng-if="ITEM == 'devis'">
+    <div ng-include="'views/front/gestionCommerciale/devis/devis.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'marche'">
+    <div ng-include="'views/front/gestionCommerciale/marche/marche.html'"></div>
+  </div>
+
+  <div ng-if="ITEM == 'livraison'">
+    <div ng-include="'views/front/gestionCommerciale/livraison/bonLivraisonGC.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'livraisonBS'">
+    <div ng-include="'views/front/gestionCommerciale/livraisonBS/bonLivraisonBS.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'detlivraison'">
+    <div ng-include="'views/front/gestionCommerciale/detlivraison/detbonLivraisonGC.html'"></div>
+  </div>
+
+  <div ng-if="ITEM == 'factureVente'">
+    <div ng-include="'views/front/gestionCommerciale/facture/factureVente.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'detailsFactureVente'">
+    <div ng-include="'views/front/gestionCommerciale/Detfacturevente/detailsFactureVente.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'factureAvoirVente'">
+    <div ng-include="'views/front/gestionCommerciale/factureAvoir/factureAvoirVente.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'factureRetourVente'">
+    <div ng-include="'views/front/gestionCommerciale/factureRetour/factureRetourVente.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'reporting'">
+    <div ng-include="'views/front/gestionCommerciale/reporting/reportingGC.html'"></div>
+  </div>
+  
+       <div ng-if="ITEM == 'remiseVente'">
+     <div ng-include="'views/front/gestionCommerciale/remise/remiseVente.html'"></div>
+   </div>
+   
+     <div ng-if="ITEM == 'packageVente'">
+     <div ng-include="'views/front/gestionCommerciale/package/packageVente.html'"></div>
+   </div>
+   
+   
+</div>

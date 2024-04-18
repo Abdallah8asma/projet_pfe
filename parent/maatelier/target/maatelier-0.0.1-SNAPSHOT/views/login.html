@@ -1,0 +1,147 @@
+<style>
+	.error {
+	  color: #ff3c7e !important;
+	  text-align: start;
+	}
+  
+	.errorTest {
+	  border-color: #ff3c7e !important;
+	}
+  
+	.ng-valid {
+	  border-color: #f3f6f9 !important;
+	}
+  </style>
+  
+  <div id="kt_body" ng-controller="SignupPageController" ng-show="!isLoggedIn"
+	class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+  
+	<div class="d-flex flex-column flex-root" style="height: 100vh !important;">
+  
+	  <div class="login login-4 login-signin-on d-flex flex-row-fluid" id="kt_login">
+		<div class="d-flex flex-center flex-row-fluid bgi-size-cover bgi-position-top bgi-no-repeat"
+		  style="background-image: url('assets/media/bg/bg-officel.jpg');">
+		  <div class="login-form text-center p-7 position-relative overflow-hidden">
+  
+	<!-- 		<div class="d-flex flex-center mb-15">
+			  <a href="#">
+				<img src="assets/media/logos/officiel.png" class="max-h-100px" alt="" />
+			  </a>
+			</div> -->
+  
+			<div class="login-signin">
+			  <div class="mb-10">
+				<h3>Authentification</h3>
+				<div class="text-muted font-weight-bold">
+				  Merci d'entrer votre Nom d'utilisateur et votre Mot de passe
+				</div>
+				<br />
+				<div class="alert-danger" ng-show="loginError == true">
+				  Nom d'utilisateur ou Mot de passe Incorrect
+				</div>
+			  </div>
+  
+			  <form class="form" name="loginForm" novalidate>
+				<div class="form-group mb-5">
+				  <input class="form-control h-auto form-control-solid py-4 px-8" type="text"
+					placeholder="Nom d'utilisateur" ng-model="userlogin.userName" name="userName" autocomplete="off"
+					required ng-class="{errorTest:loginForm.userName.$dirty && loginForm.userName.$invalid}" />
+				  <div ng-show="
+					loginForm.userName.$dirty && loginForm.userName.$invalid" class="error">
+					<div ng-show="loginForm.userName.$error.required">
+					  Nom d'utilisateur est obligatoire !
+					</div>
+				  </div>
+				</div>
+				<div class="form-group mb-5">
+				  <input class="form-control h-auto form-control-solid py-4 px-8" type="password"
+					placeholder="Mot de passe" ng-model="userlogin.password" name="password" required
+					ng-class="{errorTest:  loginForm.password.$dirty && loginForm.password.$invalid}" />
+				  <div ng-show="
+					loginForm.password.$dirty && loginForm.password.$invalid
+				" class="error">
+					<div ng-show=" loginForm.password.$error.required">
+					  Mot de passe est obligatoire !
+					</div>
+				  </div>
+				</div>
+  
+				<button id="kt_login_signin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4"
+				  ng-click="logIn(userlogin)" ng-disabled="loginForm.$invalid">
+				  Sign In
+				</button>
+			  </form>
+			</div>
+  
+			<!-- <div class="login-signup">
+			  <div class="mb-20">
+				<h3>Sign Up</h3>
+				<div class="text-muted font-weight-bold">
+				  Enter your details to create your account
+				</div>
+			  </div>
+			  <form class="form" id="kt_login_signup_form">
+				<div class="form-group mb-5">
+				  <input class="form-control h-auto form-control-solid py-4 px-8" type="text" placeholder="Fullname"
+					name="fullname" />
+				</div>
+				<div class="form-group mb-5">
+				  <input class="form-control h-auto form-control-solid py-4 px-8" type="text" placeholder="Email"
+					name="email" autocomplete="off" />
+				</div>
+				<div class="form-group mb-5">
+				  <input class="form-control h-auto form-control-solid py-4 px-8" type="password" placeholder="Password"
+					name="password" />
+				</div>
+				<div class="form-group mb-5">
+				  <input class="form-control h-auto form-control-solid py-4 px-8" type="password"
+					placeholder="Confirm Password" name="cpassword" />
+				</div>
+				<div class="form-group mb-5 text-left">
+				  <label class="checkbox m-0">
+					<input type="checkbox" name="agree" />I Agree the
+					<a href="#" class="font-weight-bold">terms and conditions</a>.
+					<span></span></label>
+				  <div class="form-text text-muted text-center"></div>
+				</div>
+				<div class="form-group d-flex flex-wrap flex-center mt-10">
+				  <button id="kt_login_signup_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-2">
+					Sign Up
+				  </button>
+				  <button id="kt_login_signup_cancel" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-2">
+					Cancel
+				  </button>
+				</div>
+			  </form>
+			</div> -->
+ <!--  
+			<div class="login-forgot">
+			  <div class="mb-20">
+				<h3>Forgotten Password ?</h3>
+				<div class="text-muted font-weight-bold">
+				  Enter your email to reset your password
+				</div>
+			  </div>
+			  <form class="form" id="kt_login_forgot_form">
+				<div class="form-group mb-10">
+				  <input class="form-control form-control-solid h-auto py-4 px-8" type="text" placeholder="Email"
+					name="email" autocomplete="off" />
+				</div>
+				<div class="form-group d-flex flex-wrap flex-center mt-10">
+				  <button id="kt_login_forgot_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-2">
+					Request
+				  </button>
+				  <button id="kt_login_forgot_cancel" class="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-2">
+					Cancel
+				  </button>
+				</div>
+			  </form>
+			</div> -->
+  
+		  </div>
+		</div>
+	  </div>
+  
+	</div>
+  
+  </div>

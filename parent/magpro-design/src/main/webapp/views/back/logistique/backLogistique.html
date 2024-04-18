@@ -1,0 +1,213 @@
+<!-- Menu Partie Interesse -->
+		<ul class="nav back-nav-gpro">
+			<li class="active"><a>GPAO</a></li>
+		</ul>
+<div class="container-fluid back-office-background"
+	ng-controller="BackLogistiqueCtr">
+	<div ng-show="displayMenu == 'gpao'">
+		<!-- Critere  -->
+		<div class="spacer3">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<div class="col-sm-3">
+							<div class="input-group">
+								<span class="input-group-addon label1" id="basic-addon1">Param&eacute;trage</span>
+								<select ng-change="selectAction()" name="selector1"
+									id="selector1" class="form-control" ng-model="parametre">
+									<option>Machine</option>
+									<option>Traitement</option>
+									<option>Traitement Fa&ccedil;on</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- /***** machine *******/ -->
+		<div class="row" ng-show="parametre=='Machine'"
+			ng-controller="backMachineController">
+			<div class="panel panel-primary" data-heading="Editable Rows">
+				<table
+					class="table table-bordered table-condensed back-table-head-color">
+					<thead>
+						<tr>
+							<th style="width: 35%">Machine</th>
+							<th style="width: 25%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="machine in listeMachine">
+							<td class="hidden"> 
+								<!-- editable representat (text with validation) --> <span
+								editable-text="machine.id" e-name="id"
+								e-form="rowform" e-required> {{ machine.id ||
+									'empty' }} </span>
+							</td>
+							<td>
+								<!-- editable representat (text with validation) --> <span
+								editable-text="machine.designation" e-name="designation"
+								e-form="rowform" e-required> {{ machine.designation ||
+									'empty' }} </span>
+							</td>
+							<td style="white-space: nowrap">
+								<!-- form -->
+								<form editable-form name="rowform"
+									onbeforesave="saveMachine($data, machine.id)"
+									ng-show="rowform.$visible" class="form-buttons form-inline"
+									shown="MachineCourante == machine">
+									<button type="submit" ng-disabled="rowform.$waiting"
+										class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+									
+									<button type="button" ng-disabled="rowform.$waiting" 
+									    ng-click="cancelAdd(rowform, $index, statut.id, machine.designation,listeMachine )" 
+									    class="btn btn-sm glyphicon glyphicon-remove"></button>
+								</form>
+								<div class="buttons" ng-show="!rowform.$visible">
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-pencil"
+										ng-click="rowform.$show()"></button>
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-trash"
+										ng-click="removeMachine($index)"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-action3 pull-right spacer2"
+					ng-click="ajouterMachine()">Ajouter</button>
+			</div>
+		</div>
+
+		<!-- /***** Traitement *******/ -->
+		<div class="row" ng-show="parametre=='Traitement'"
+			ng-controller="backTraitementController">
+			<div class="panel panel-primary" data-heading="Editable Rows">
+				<table
+					class="table table-bordered table-condensed back-table-head-color">
+					<thead>
+						<tr>
+							<th style="width: 35%">Traitement</th>
+							<th style="width: 35%">Prix Unitaire</th>
+							<th style="width: 25%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="traitement in listeTraitement">
+							<td class="hidden"> 
+								<!-- editable representat (text with validation) --> <span
+								editable-text="traitement.id" e-name="id"
+								e-form="rowform" e-required> {{ traitement.id ||
+									'empty' }} </span>
+							</td>
+							<td>
+								<!-- editable representat (text with validation) --> <span
+								editable-text="traitement.designation" e-name="designation"
+								e-form="rowform" e-required> {{ traitement.designation ||
+									'empty' }} </span>
+							</td>
+							<td>
+								<!-- editable representat (text with validation) --> <span
+								editable-text="traitement.pu" e-name="pu"
+								e-form="rowform" e-required> {{ traitement.pu ||
+									'empty' }} </span>
+							</td>
+							<td style="white-space: nowrap">
+								<!-- form -->
+								<form editable-form name="rowform"
+									onbeforesave="saveTraitement($data, traitement.id)"
+									ng-show="rowform.$visible" class="form-buttons form-inline"
+									shown="TraitementCourant == traitement">
+									<button type="submit" ng-disabled="rowform.$waiting"
+										class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+									
+									<button type="button" ng-disabled="rowform.$waiting" 
+									    ng-click="cancelAdd(rowform, $index, statut.id, traitement.designation,listeTraitement )" 
+									    class="btn btn-sm glyphicon glyphicon-remove"></button>
+								</form>
+								<div class="buttons" ng-show="!rowform.$visible">
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-pencil"
+										ng-click="rowform.$show()"></button>
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-trash"
+										ng-click="removeTraitement($index)"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-action3 pull-right spacer2"
+					ng-click="ajouterTraitement()">Ajouter</button>
+			</div>
+		</div>
+
+			<!-- /***** Traitement Façon *******/ -->
+		<div class="row" ng-show="parametre=='Traitement Fa&ccedil;on'"
+			ng-controller="backTraitementFaconController">
+			<div class="panel panel-primary" data-heading="Editable Rows">
+				<table
+					class="table table-bordered table-condensed back-table-head-color">
+					<thead>
+						<tr>
+							<th style="width: 35%">Traitement Fa&ccedil;on</th>
+							<th style="width: 35%">Prix Unitaire</th>
+							<th style="width: 25%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="traitementFacon in listeTraitementFacon">
+							<td class="hidden"> 
+								<!-- editable representat (text with validation) --> <span
+								editable-text="traitementFacon.id" e-name="id"
+								e-form="rowform" e-required> {{ traitementFacon.id ||
+									'empty' }} </span>
+							</td>
+							<td>
+								<!-- editable representat (text with validation) --> <span
+								editable-text="traitementFacon.designation" e-name="designation"
+								e-form="rowform" e-required> {{ traitementFacon.designation ||
+									'empty' }} </span>
+							</td>
+							<td>
+								<!-- editable representat (text with validation) --> <span
+								editable-text="traitementFacon.pu" e-name="pu"
+								e-form="rowform" e-required> {{ traitementFacon.pu ||
+									'empty' }} </span>
+							</td>
+							<td style="white-space: nowrap">
+								<!-- form -->
+								<form editable-form name="rowform"
+									onbeforesave="saveTraitementFacon($data, traitementFacon.id)"
+									ng-show="rowform.$visible" class="form-buttons form-inline"
+									shown="TraitementFaconCourant == traitementFacon">
+									<button type="submit" ng-disabled="rowform.$waiting"
+										class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+									
+									<button type="button" ng-disabled="rowform.$waiting" 
+									    ng-click="cancelAdd(rowform, $index, statut.id, traitementFacon.designation,listeTraitementFacon )" 
+									    class="btn btn-sm glyphicon glyphicon-remove"></button>
+								</form>
+								<div class="buttons" ng-show="!rowform.$visible">
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-pencil"
+										ng-click="rowform.$show()"></button>
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-trash"
+										ng-click="removeTraitementFacon($index)"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-action3 pull-right spacer2"
+					ng-click="ajouterTraitementFacon()">Ajouter</button>
+			</div>
+		</div>		
+
+	</div>
+	
+</div>

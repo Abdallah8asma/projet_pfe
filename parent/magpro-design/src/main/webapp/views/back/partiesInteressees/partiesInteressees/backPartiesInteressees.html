@@ -1,0 +1,915 @@
+<!--Script Fabric JS-->
+<script type="text/javascript">
+
+var CommandBarElements = document.querySelectorAll(".ms-CommandBar");
+for (var i = 0; i < CommandBarElements.length; i++) {
+	new fabric['CommandBar'](CommandBarElements[i]);
+}
+
+	var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+	for (var i = 0; i < SearchBoxElements.length; i++) {
+		new fabric['SearchBox'](SearchBoxElements[i]);
+	}
+
+</script>
+<!--End FabricJS-->
+
+<style>
+	.ms-CommandBar {
+		background-color: #F3F6F9 !important;
+		border-color: transparent !important;
+	}
+
+	.ms-CommandButton-button {
+		color: #3699FF !important;
+	}
+
+	.ms-CommandButton-button:hover {
+		background-color: #3699FF !important;
+	}
+
+	.ms-CommandButton-button:hover span {
+		color: #ffff !important;
+	}
+
+	.ms-CommandButton-button:hover i {
+		color: #ffff !important;
+	}
+
+
+	.ms-CommandButton-label,
+	.ms-SearchBox-text {
+		color: #3699FF !important;
+	}
+
+	.ms-CommandButton-label:hover {
+		color: #ffff !important;
+	}
+
+	.ms-Icon {
+		color: #3699FF !important;
+	}
+
+	.ms-Icon.ms-Icon-Gpro {
+		top: 30% !important;
+		color: #464E5F !important;
+		font-size: 14px !important;
+	}
+
+	.ms-CommandButton .ms-CommandButton-Gpro {
+		padding: 0px !important;
+	}
+
+	.ms-Icon:hover {
+		color: #fff !important;
+	}
+</style>
+<div class="container-fluid back-office-background" ng-controller="BackPartieInteresseeCtrl">
+
+	<span class="ms-ListItem-primaryText">Client/Fournisseur</span>
+	<br />
+
+	<div class="ms-CommandBar ms-CommandBar--navBar">
+		<div class="ms-CommandBar-sideCommands">
+			<div class="ms-SearchBox ms-SearchBox--commandBar">
+				<input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
+
+				<label class="ms-SearchBox-label">
+					<i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+					<span class="ms-SearchBox-text">Rechercher</span>
+				</label>
+				<div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
+					<button class="ms-CommandButton-button">
+						<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+						<span class="ms-CommandButton-label"></span>
+					</button>
+				</div>
+				<div class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel">
+					<button class="ms-CommandButton-button">
+						<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--ChromeBack"></i></span>
+						<span class="ms-CommandButton-label"></span>
+					</button>
+				</div>
+				<div class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel">
+					<button class="ms-CommandButton-button">
+						<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Filter"></i></span>
+						<span class="ms-CommandButton-label"></span>
+					</button>
+				</div>
+			</div>
+
+			<div class="ms-CommandButton ms-CommandButton--noLabel">
+				<button class="ms-CommandButton-button">
+					<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+					<span class="ms-CommandButton-label"></span>
+				</button>
+			</div>
+		</div>
+		<div class="ms-CommandBar-mainArea">
+
+
+			<div class="ms-CommandButton ms-CommandButton--dropdown">
+				<button class="ms-CommandButton-button" ng-change="selectAction()" name="selector1" id="selector1">
+					<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Settings"></i></span>
+					<span class="ms-CommandButton-label">Param&eacute;trage</span>
+					<span class="ms-CommandButton-dropdownIcon"><i class="ms-Icon ms-Icon--ChevronDown"></i></span>
+				</button>
+				<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+					<select ng-change="selectAction()" name="selector1" id="selector1" class="form-control"
+											ng-model="parametre">
+											<option>Famille</option>
+											<option>Cat&eacute;gorie</option>
+											<option>Type PI</option>
+											<option>Devise</option>
+											<option>TypeDoc</option>
+											<option>Site</option>
+											<option>Groupe</option>
+											<option>Region</option>
+											<option>Banque</option>
+										</select>
+				</ul>
+			</div>
+
+
+
+
+
+			<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+				<button class="ms-CommandButton-button">
+					<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+					<span class="ms-CommandButton-label"></span>
+				</button>
+				<ul class="ms-ContextualMenu is-opened">
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+						<i class="ms-Icon ms-Icon--Folder"></i>
+					</li>
+					<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+						<i class="ms-Icon ms-Icon--Document"></i>
+					</li>
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+						<i class="ms-Icon ms-Icon--Coffee"></i>
+					</li>
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+						<i class="ms-Icon ms-Icon--Picture"></i>
+					</li>
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+						<i class="ms-Icon ms-Icon--Money"></i>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="panel panel-primary">
+		<div class="panel-body">
+
+			<div ng-show="displayMenu == 'pi'">
+				<!-- Critere  -->
+				<!-- <div class="spacer3">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Param&eacute;trage</span>
+										<select ng-change="selectAction()" name="selector1" id="selector1" class="form-control"
+											ng-model="parametre">
+											<option>Famille</option>
+											<option>Cat&eacute;gorie</option>
+											<option>Type PI</option>
+											<option>Devise</option>
+											<option>TypeDoc</option>
+											<option>Site</option>
+											<option>Groupe</option>
+											<option>Region</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div> -->
+
+				<!-- /*********devise **********/ -->
+				<div class="row" ng-if="parametre=='Devise'" ng-controller="backDeviseController">
+
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+
+								<th>Devise</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterDevise()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="devise in listeDevise">
+								<td class="hidden">
+									<!-- editable representat (text with validation) --> <span editable-text="devise.id" e-name="id"
+										e-form="rowform" e-required> {{ devise.id || 'empty' }} </span>
+								</td>
+								<td>
+									<!-- editable representat (text with validation) --> <span editable-text="devise.designation"
+										e-name="designation" e-form="rowform" e-required> {{ devise.designation || 'empty' }} </span>
+								</td>
+
+								<td style="white-space: nowrap">
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveDevise(devise,devise.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline float-right"
+												shown="DeviseCourante == devise">
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+
+													<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+												</button>
+
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, devise.id, devise.designation, listeDevise )"
+													class="btn btn-sm ">
+													<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+
+
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm" ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn btn-sm" ng-click="removeDevise($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+				<!-- /***** famille *******/ -->
+				<div class="row" ng-if="parametre=='Famille'" ng-controller="backFamillePIController">
+
+					<table class="table table-bordered table-condensed back-table-head-color" data-heading="Editable Rows">
+						<thead>
+							<tr>
+								<th>Famille</th>
+								<th>Achat</th>
+								<th>Vente
+									</td>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterFamille()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="famille in listeFamille">
+								<td>
+									<!-- editable representat (text with validation) --> <span editable-text="famille.designation"
+										e-name="designation" e-form="rowform" e-required> {{ famille.designation ||
+									'empty' }} </span>
+								</td>
+								<td><input type="checkbox" name="achat" ng-model="famille.achat"></td>
+								<td><input type="checkbox" name="vente" ng-model="famille.vente"></td>
+								<td style="white-space: nowrap">
+
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveFamille(famille, famille.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline" shown="familleCourante == famille">
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+													<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+
+												</button>
+
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, famille.id, famille.designation,listeFamille )"
+													class="btn btn-sm ">
+
+													<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+
+
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+
+												</button>
+												<button data-nodrag class="btn btn-sm " ng-click="removeFamilleProduit($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+
+												</button>
+											</div>
+										</div>
+									</div>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+				<!-- /***** type *******/ -->
+				<div class="row" ng-if="parametre=='Type PI'" ng-controller="backTypePIController">
+
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th class="hidden">Id</th>
+								<th style="width: 35%">Type Partie Interess&eacute;</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterTypePI()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="type in listeType">
+								<td class="hidden">
+									<!-- editable representat (text with validation) --> <span editable-text="type.designation"
+										e-name="id" e-form="rowform" e-required> {{ type.id || 'empty' }} </span>
+								</td>
+								<td>
+									<!-- editable representat (text with validation) --> <span editable-text="type.designation"
+										e-name="nom" e-form="rowform" e-required> {{ type.designation || 'empty' }} </span>
+								</td>
+
+								<td style="white-space: nowrap">
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveTypePI(type,type.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline" shown="TypePiCourante == type">
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+													<i class="ms-Icon ms-Icon--Download " aria-hidden="true"></i>
+
+												</button>
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, type.id, type.designation,listeType )"
+													class="btn btn-sm ">
+
+													<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn btn-sm " ng-click="removeTypePI($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+				<!-- /*********TypeDoc **********/ -->
+				<div class="row" ng-if="parametre=='TypeDoc'" ng-controller="backTypeDocController">
+
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th class="hidden">Id</th>
+								<th>Type Document</th>
+								<th>Module</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajoutTypeDoc()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="typeDoc in listeTypeDoc">
+								<td class="hidden">
+									<!-- editable representat (text with validation) --> <span editable-text="typeDoc.id" e-name="id"
+										e-form="rowform" e-required> {{ typeDoc.id || 'empty' }} </span>
+								</td>
+								<td>
+									<!-- editable representat (text with validation) --> <span editable-text="typeDoc.designation"
+										e-name="designation" e-form="rowform" e-required> {{ typeDoc.designation || 'empty' }} </span>
+								</td>
+								
+									<td>
+							<span editable-select="typeDoc.module"
+								e-ng-options="s.module as s.module for s in listeModuleDocuments" 
+								e-name="module" 
+								e-form="rowform"
+							    e-required> {{
+						typeDoc.module }} </span>
+						</td>
+
+								<td style="white-space: nowrap">
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveTypeDoc(typeDoc,typeDoc.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline" shown="TypeDocInserree == typeDoc">
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+													<i class="ms-Icon ms-Icon--Download " aria-hidden="true"></i>
+												</button>
+
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, typeDoc.id, typeDoc.designation, listeTypeDoc )"
+													class="btn btn-sm ">
+													<i class="ms-Icon ms-Icon--Cancel " aria-hidden="true"></i>
+
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn btn-sm " ng-click="removeTypeDoc($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+				<!-- /*****categorie *******/ -->
+				<div class="row" ng-if="parametre=='Cat&eacute;gorie'" ng-controller="backCathegoriePIController">
+
+					<!-- <panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
+								class="fa fa-wrench"></i></a> <a href="">
+							<panel-control-collapse class="fa fa-chevron-down"></panel-control-collapse>
+						</a> </panel-controls> -->
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th style="width: 35%">Cat&eacute;gorie</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterCathegorie()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="cathegorie in listeCathegorie">
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.designation"
+										e-name="nom" e-form="rowform" e-required> {{ cathegorie.designation ||
+									'empty' }} </span>
+								</td>
+								<td style="white-space: nowrap">
+
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveCathegorie(cathegorie,cathegorie.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline"
+												shown="CategorieCourante == cathegorie">
+
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+													<i class="ms-Icon ms-Icon--Download " aria-hidden="true"></i>
+												</button>
+
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, cathegorie.id, cathegorie.designation, listeCathegorie )"
+													class="btn btn-sm ">
+
+													<i class="ms-Icon ms-Icon--Cancel " aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn  btn-sm " ng-click="removecathegorie($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+				<!-- /*****Site *******/ -->
+				<div class="row" ng-if="parametre=='Site'" ng-controller="backSitePIController">
+					<!-- 
+					<panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
+								class="fa fa-wrench"></i></a> <a href="">
+							<panel-control-collapse class="fa fa-chevron-down"></panel-control-collapse>
+						</a> </panel-controls> -->
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th style="width: 35%">Cat&eacute;gorie</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterSite()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="site in listeSite">
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="site.nom" e-name="nom"
+										e-form="rowform" e-required> {{ site.nom ||
+									'empty' }} </span>
+								</td>
+								<td style="white-space: nowrap">
+
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveSite($data,site.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline" shown="siteCourante == site">
+
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+													<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+												</button>
+
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, site.id, site.nom, listeSite )" class="btn btn-sm ">
+
+													<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn  btn-sm " ng-click="removeSite($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+				<!-- /*****Groupe Client *******/ -->
+				<div class="row" ng-if="parametre=='Groupe'" ng-controller="backGroupeClientController">
+
+					<!-- <panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
+								class="fa fa-wrench"></i></a> <a href="">
+							<panel-control-collapse class="fa fa-chevron-down"></panel-control-collapse>
+						</a> </panel-controls> -->
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th style="width: 35%">Groupe</th>
+								<th style="width: 35%">Code Entreprise</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterCathegorie()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="cathegorie in listeCathegorie">
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.designation"
+										e-name="nom" e-form="rowform" e-required> {{ cathegorie.designation ||
+									'empty' }} </span>
+								</td>
+								
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.codeEntreprise"
+										e-name="nom" e-form="rowform" e-required> {{ cathegorie.codeEntreprise ||
+									'empty' }} </span>
+								</td>
+								
+								
+								
+								<td style="white-space: nowrap">
+
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveCathegorie(cathegorie,cathegorie.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline "
+												shown="CategorieCourante == cathegorie">
+
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+													<i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+												</button>
+
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, cathegorie.id, cathegorie.designation, listeCathegorie )"
+													class="btn btn-sm ">
+
+													<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn  btn-sm " ng-click="removecathegorie($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+
+				<!-- /*****Region Client,Fournisseur *******/ -->
+				<div class="row" ng-if="parametre=='Region'" ng-controller="backRegionPIController">
+					<!-- 
+					<panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
+								class="fa fa-wrench"></i></a> <a href="">
+							<panel-control-collapse class="fa fa-chevron-down"></panel-control-collapse>
+						</a> </panel-controls> -->
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th>Region</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterCathegorie()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+
+
+						</thead>
+						<tbody>
+							<tr ng-repeat="cathegorie in listeCathegorie">
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.designation"
+										e-name="nom" e-form="rowform" e-required> {{ cathegorie.designation ||
+									'empty' }} </span>
+								</td>
+								<td style="white-space: nowrap">
+
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveCathegorie(cathegorie,cathegorie.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline"
+												shown="CategorieCourante == cathegorie">
+
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+													<i class="ms-Icon ms-Icon--Download " aria-hidden="true"></i>
+												</button>
+
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, cathegorie.id, cathegorie.designation, listeCathegorie )"
+													class="btn btn-sm ">
+
+
+													<i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn  btn-sm " ng-click="removecathegorie($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+
+
+				
+				<!-- /*****banque *******/ -->
+				<div class="row" ng-if="parametre=='Banque'" ng-controller="backBanquePIController">
+
+					<!-- <panel-controls> <a href="javascript:;"><i class="fa fa-cog"></i></a> <a href="javascript:;"><i
+								class="fa fa-wrench"></i></a> <a href="">
+							<panel-control-collapse class="fa fa-chevron-down"></panel-control-collapse>
+						</a> </panel-controls> -->
+					<table class="table table-bordered table-condensed back-table-head-color">
+						<thead>
+							<tr>
+								<th style="width: 15%">Code</th>
+								<th style="width: 15%">Abreviation</th>
+								<th style="width: 60%">Nom</th>
+								<th style="width: 10%">Societe</th>
+								<th> <span class="ms-CommandButton-icon float-right" ng-click="ajouterCathegorie()">
+										<a href="javascript:void(0)">
+											<i class="ms-Icon ms-Icon--CirclePlus" style="color: #3699FF !important ;"> </i>
+										</a>
+									</span></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="cathegorie in listeCathegorie">
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.code"
+										e-name="code" e-form="rowform" e-required> {{ cathegorie.code ||
+									'empty' }} </span>
+								</td>
+
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.abreviation"
+										e-name="abreviation" e-form="rowform" e-required> {{ cathegorie.abreviation ||
+									'empty' }} </span>
+								</td>
+
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-text="cathegorie.designation"
+										e-name="designation" e-form="rowform" e-required> {{ cathegorie.designation ||
+									'empty' }} </span>
+								</td>
+								
+								<td>
+									<!-- editable taille (text with validation) --> <span editable-checkbox="cathegorie.societe"
+										e-name="societe" e-form="rowform" e-required>{{ cathegorie.societe && "OUI" || "NON" }} </span>
+								</td>
+								
+								
+							
+								
+								
+								<td style="white-space: nowrap">
+
+									<div class="row">
+										<div class="col-sm-6">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave="saveCathegorie(cathegorie,cathegorie.id)"
+												ng-show="rowform.$visible" class="form-buttons form-inline"
+												shown="CategorieCourante == cathegorie">
+
+												<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm " aria-hidden="true">
+
+													<i class="ms-Icon ms-Icon--Download " aria-hidden="true"></i>
+												</button>
+
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="cancelAdd(rowform, $index, cathegorie.id, cathegorie.designation, listeCathegorie )"
+													class="btn btn-sm ">
+
+													<i class="ms-Icon ms-Icon--Cancel " aria-hidden="true"></i>
+												</button>
+											</form>
+
+										</div>
+										<div class="col-sm-6">
+
+											<div class="buttons float-right" ng-show="!rowform.$visible">
+												<button data-nodrag class="btn btn-sm " ng-click="rowform.$show()">
+
+													<i class="ms-Icon ms-Icon--Edit ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+												<button data-nodrag class="btn  btn-sm " ng-click="removecathegorie($index)">
+
+													<i class="ms-Icon ms-Icon--Delete ms-Icon-Gpro" aria-hidden="true"></i>
+												</button>
+											</div>
+
+										</div>
+									</div>
+
+
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+
+				</div>
+
+
+			</div>
+			<div ng-show="displayMenu == 'eb'">
+				<h1>Hello Word Element de base</h1>
+			</div>
+			<div ng-show="displayMenu == 'gc'">
+				<h1>Hello Word Gestion commerciale</h1>
+			</div>
+		</div>
+	</div>
+</div>

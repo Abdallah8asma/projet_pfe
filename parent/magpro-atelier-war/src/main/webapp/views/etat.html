@@ -1,0 +1,372 @@
+<ul class="nav nav-gpro spacer">
+	<li><a href="#/stock">M.V.T Stock</a></li>
+	<li><a href="#/historiqueS">Historique</a></li>
+	<li class="active"><a href="#/etat">Etat</a></li>
+	<li><a href="#/historiqueS">Inventaire Magasin</a></li>
+</ul>
+<div class="container-fluid" ng-controller="EtatCtrl">
+	<div class="col-sm-12">
+		<div class="panel-body cadreERP">
+			<!-- Critere de recherche -->
+			<div class="title-ajout">Crit&eacute;res de recherche</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" id="creationStockForm"
+						name="creationStockForm">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Type
+											Article </span> <select class="form-control"
+											ng-model="etatCourant.typeArticle">
+											<option value="fourniture">Fourniture</option>
+											<option value="filaCoudre">Fil &agrave; coudre</option>
+											<option value="tissu">Tisuu</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="alert alert-warning" role="alert"
+										ng-show="displayEtat == 'alert'">Choisis type d'article</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Famille
+											Article </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">S.Famille
+											Article </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f.Article
+										</span> <input class="form-control" ng-model="etatCourant.refArticle" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">
+											Article </span><input class="form-control" ng-model="t" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Grosseur
+										</span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">M&eacute;trage
+											Article </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Mati&egrave;re
+										</span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+<!-- 						<div class="form-group"> -->
+<!-- 							<div class="row"> -->
+<!-- 								<div class="col-sm-3"> -->
+<!-- 									<div class="input-group input-group-sm"> -->
+<!-- 										<span class="input-group-addon label1" id="basic-addon1">Famille -->
+<!-- 											Produit </span> <select class="form-control" ng-model="t"> -->
+<!-- 											<option></option> -->
+<!-- 										</select> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-sm-3"> -->
+<!-- 									<div class="input-group input-group-sm"> -->
+<!-- 										<span class="input-group-addon label1" id="basic-addon1">S.Famille -->
+<!-- 											Produit </span> <select class="form-control" ng-model="t"> -->
+<!-- 											<option></option> -->
+<!-- 										</select> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-sm-3"> -->
+<!-- 									<div class="input-group input-group-sm"> -->
+<!-- 										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f.Produit -->
+<!-- 										</span> <select class="form-control" ng-model="t"> -->
+<!-- 											<option></option> -->
+<!-- 										</select> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-sm-3"> -->
+<!-- 									<div class="input-group input-group-sm"> -->
+<!-- 										<span class="input-group-addon label1" id="basic-addon1"> -->
+<!-- 											Produit </span> <select class="form-control" ng-model="t"> -->
+<!-- 											<option></option> -->
+<!-- 										</select> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3" ng-controller="DatepickerDemoController">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+										</span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}" ng-model="dt" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">
+											Quantit&eacute; </span> <select class="form-control" ng-model="t">
+											<option>&lt;</option>
+											<option>&gt;</option>
+											<option>&gt;=</option>
+											<option>&lt;=</option>
+											<option>&lt;&gt;</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<div class="input-group input-group-sm">
+										<span id="basic-addon1"></span> <input class="form-control"
+											ng-model="t" />
+									</div>
+								</div>
+										<div class="col-sm-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon label1" id="basic-addon1">Magasin</span>
+									<select class="form-control"
+										ng-model="etatCourant.magasin">
+										<option ng-repeat="magasin in listeMagasinCache"
+											value="{{magasin.id}}">{{magasin.designation}}</option>
+									</select>
+								</div>
+							</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Emplacement
+										</span> <select class="form-control"
+										ng-model="etatCourant.emplacement">
+										<option ng-repeat="empl in ListEmplacementCache"
+											value="{{empl.id}}">{{empl.designation}}</option>
+									</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Site
+											Produit </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm zone">
+										<span class="input-group-addon label1" id="basic-addon1">Zone
+											Dispo. </span> <select class="form-control" ng-model="t">
+											<option style="background: red;" value="1">Rouge</option>
+											<option style="background: #80ff00;" value="2">Vert</option>
+											<option style="background: yellow;" value="3">Jaune</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="pull-right">
+						<button class="btn-action2 btn" ng-click="voirEtat()">Etat</button>
+						<button class="btn-action2 btn" ng-click="">Art.N.MVT</button>
+					</div>
+				</div>
+			</div>
+			<!-- Etat des Fournitures -->
+			<div ng-show="displayEtat == 'fourniture'" class="">
+				<div class="titreEtat line">ETAT DES FOURNITURES</div>
+				<div class="CadreEtatCritere">
+					<div class="titreEtatCritere">Crit&egrave;res de recherche:</div>
+					<div class="marginLeft">
+						<div class="spacer spacer2 FontSize12">
+							<b>Date:</b>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Famille
+											Article </span> <span></span>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Sous
+											Famille Article </span> <span></span>
+									</div>
+								</div>
+								<div class="col-sm-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon label1" id="basic-addon1">Magasin</span>
+									<span></span>
+								</div>
+							</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Emplacement
+										</span> <span></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+					<div style="height: 500px;" class="spacer4" ng-grid="gridOptions"></div>
+			</div>
+			<div ng-show="displayEtat == 'filaCoudre'">
+				<div class="titreEtat line">ETAT DES FILS A COUDRE</div>
+				<div class="CadreEtatCritere">
+					<div class="titreEtatCritere">Crit&egrave;res de recherche:</div>
+					<div class="marginLeft">
+						<div class="spacer spacer2 FontSize12">
+							<b>Date:</b>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Famille
+											Article </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Sous
+											Famille Article </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Magasin
+										</span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">
+											Emplacement </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="height: 500px;" class="spacer4" ng-grid="gridOptionsFAC"></div>
+			</div>
+			<div ng-show="displayEtat == 'tissu'">
+				<div class="titreEtat line">ETAT DES TISSUS</div>
+				<div class="CadreEtatCritere">
+					<div class="titreEtatCritere">Crit&egrave;res de recherche:</div>
+					<div class="marginLeft">
+						<div class="spacer spacer2 FontSize12">
+							<b>Date:</b>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Famille
+											Article </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Sous
+											Famille Article </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Magasin
+										</span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">
+											Emplacement </span> <select class="form-control" ng-model="t">
+											<option></option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				<div style="height: 500px;" class="spacer4" ng-grid="gridOptions"></div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+</div>

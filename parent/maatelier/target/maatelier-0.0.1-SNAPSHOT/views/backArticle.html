@@ -1,0 +1,422 @@
+<div ng-controller="BackElBase">
+	<ul class="nav back-nav-gpro">
+		<li ng-class="{active:ITEM == 'article' }"><a
+			ng-click="goArticle()">Articles</a></li>
+		<li ng-class="{active:ITEM == 'produit' }"><a
+			ng-click="goProduit()">Produits</a></li>
+	</ul>
+	<div class="container-fluid back-office-background" ng-show="ITEM == 'article'" ng-controller="BackPartieInteresseeCtrl2">
+		<!-- Menu Principale -->
+		<div ng-show="displayMenu == 'eb'">
+			<!-- Back -->
+			<!-- Parametrage d'un article -->
+			<div class="row" ng-show="displayMode != 'test'">
+				<div class="spacer3">
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Param&eacute;trage</span>
+										<select name="selector1" id="selector1" class="form-control"
+											ng-model="parametre">
+											<option>Unite</option>
+											<option>M&eacute;trage Fils</option>
+											<option>Mati&egrave;re Tissu</option>
+											<option>Grosseur Fils</option>
+											<option>Famille Article</option>
+											<option>Sous Famille Article</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Div Unite -->
+				<div class="panel-body" ng-show="parametre =='Unite'"
+					ng-controller="BackArticleUniteController">
+					<div class="panel panel-primary">
+						<table
+							class="table table-bordered table-condensed back-table-head-color">
+							<thead>
+								<tr>
+									<th class="hidden" style="width: 15%">id</th>
+									<th style="width: 35%">Unit&eacute;</th>
+									<th style="width: 25%"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="UniteArticle in listeUniteArticle">
+									<td class="hidden">
+										<!-- editable group (select-remote) --> <span
+										editable-text="UniteArticle.id" e-name="id" e-form="rowform"
+										e-required> {{ UniteArticle.id || 'empty' }} </span>
+									</td>
+									<td>
+										<!-- editable group (select-remote) --> <span
+										editable-text="UniteArticle.designation" e-name="designation"
+										e-form="rowform" e-required> {{
+											UniteArticle.designation || 'empty' }} </span>
+									</td>
+									<td style="white-space: nowrap">
+										<!-- form -->
+										<form editable-form name="rowform"
+											onbeforesave="saveUniteArticle($data, UniteArticle.id)"
+											ng-show="rowform.$visible" class="form-buttons form-inline"
+											shown="UniteArticleInserree == UniteArticle">
+											<button type="submit" ng-disabled="rowform.$waiting"
+												class="btn btn-sm glyphicon glyphicon-save"
+												aria-hidden="true"></button>
+											<button type="button" ng-disabled="rowform.$waiting"
+												ng-click="cancelAdd(rowform, $index, UniteArticle.id, UniteArticle.designation, listeUniteArticle )"
+												class="btn btn-sm glyphicon glyphicon-remove"></button>
+										</form>
+										<div class="buttons" ng-show="!rowform.$visible">
+											<button data-nodrag
+												class="btn btn-sm glyphicon glyphicon-pencil"
+												ng-click="rowform.$show()"></button>
+											<button data-nodrag
+												class="btn glyphicon btn-sm glyphicon-trash"
+												ng-click="removeUniteArticle($index)"></button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<button class="btn btn-action3 pull-right spacer2"
+							ng-click="ajoutUniteArticle()">Ajouter</button>
+					</div>
+				</div>
+
+				<!-- Div Metrage -->
+				<div class="panel-body" ng-show="parametre =='M&eacute;trage Fils'"
+					ng-controller="BackArticleMetrageController">
+					<div class="panel panel-primary">
+						<table
+							class="table table-bordered table-condensed back-table-head-color">
+							<thead>
+								<tr>
+									<th class="hidden" style="width: 15%">id</th>
+									<th style="width: 35%">M&eacute;trage Fils</th>
+									<th style="width: 25%"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="metrage in listeMetrage">
+									<td class="hidden">
+										<!-- editable group (select-remote) --> <span
+										editable-text="metrage.id" e-name="id" e-form="rowform"
+										e-required> {{ metrage.id || 'empty' }} </span>
+									</td>
+									<td>
+										<!-- editable group (select-remote) --> <span
+										editable-text="metrage.designation" e-name="designation"
+										e-form="rowform" e-required> {{ metrage.designation ||
+											'empty' }} </span>
+									</td>
+									<td style="white-space: nowrap">
+										<!-- form -->
+										<form editable-form name="rowform"
+											onbeforesave="saveMetrage($data, metrage.id)"
+											ng-show="rowform.$visible" class="form-buttons form-inline"
+											shown="metrageInserree == metrage">
+											<button type="submit" ng-disabled="rowform.$waiting"
+												class="btn btn-sm glyphicon glyphicon-save"
+												aria-hidden="true"></button>
+											<button type="button" ng-disabled="rowform.$waiting"
+												ng-click="cancelAdd(rowform, $index, metrage.id, metrage.designation, listeMetrage )"
+												class="btn btn-sm glyphicon glyphicon-remove"></button>
+										</form>
+										<div class="buttons" ng-show="!rowform.$visible">
+											<button data-nodrag
+												class="btn btn-sm glyphicon glyphicon-pencil"
+												ng-click="rowform.$show()"></button>
+											<button data-nodrag
+												class="btn glyphicon btn-sm glyphicon-trash"
+												ng-click="removeMetrage($index)"></button>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<button class="btn btn-action3 pull-right spacer2"
+							ng-click="ajoutMetrage()">Ajouter</button>
+					</div>
+				</div>
+
+				<!-- Div Matiere -->
+				<div class="panel-body" ng-show="parametre =='Mati&egrave;re Tissu'"
+					ng-controller="BackArticleMatiereController">
+					<div class="form-group">
+						<div class="row">
+							<div class="panel panel-primary">
+								<table
+									class="table table-bordered table-condensed back-table-head-color">
+									<thead>
+										<tr>
+											<th class="hidden" style="width: 15%">id</th>
+											<th style="width: 35%">Mati&egrave;re Tissu</th>
+											<th style="width: 25%"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="matiere in listeMatiere">
+											<td class="hidden">
+												<!-- editable group (select-remote) --> <span
+												editable-text="matiere.id" e-name="id" e-form="rowform"
+												e-required> {{ matiere.id || 'empty' }} </span>
+											</td>
+											<td>
+												<!-- editable group (select-remote) --> <span
+												editable-text="matiere.designation" e-name="designation"
+												e-form="rowform" e-required> {{ matiere.designation
+													|| 'empty' }} </span>
+											</td>
+											<td style="white-space: nowrap">
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveMatiere($data, matiere.id)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="matiereInserree == matiere">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAdd(rowform, $index, matiere.id, matiere.designation, listeMatiere )"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"
+														ng-click="rowform.$show()"></button>
+													<button data-nodrag
+														class="btn glyphicon btn-sm glyphicon-trash"
+														ng-click="removeMatiere($index)"></button>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-action3 pull-right spacer2"
+									ng-click="ajoutMatiere()">Ajouter</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Div Grosseur -->
+				<div class="panel-body" ng-show="parametre =='Grosseur Fils'"
+					ng-controller="BackArticleGrosseurController">
+					<div class="form-group">
+						<div class="row">
+							<div class="panel panel-primary">
+								<table
+									class="table table-bordered table-condensed back-table-head-color">
+									<thead>
+										<tr>
+											<th class="hidden" style="width: 15%">id</th>
+											<th style="width: 35%">Grosseur Fils</th>
+											<th style="width: 25%"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="grosseur in listeGrosseur">
+											<td class="hidden">
+												<!-- editable group (select-remote) --> <span
+												editable-text="grosseur.id" e-name="id" e-form="rowform"
+												e-required> {{ grosseur.id || 'empty' }} </span>
+											</td>
+											<td>
+												<!-- editable group (select-remote) --> <span
+												editable-text="grosseur.designation" e-name="designation"
+												e-form="rowform" e-required> {{ grosseur.designation
+													|| 'empty' }} </span>
+											</td>
+											<td style="white-space: nowrap">
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveGrosseur($data, grosseur.id)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="grosseurInserree == grosseur">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAdd(rowform, $index, grosseur.id, grosseur.designation, listeGrosseur )"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"
+														ng-click="rowform.$show()"></button>
+													<button data-nodrag
+														class="btn glyphicon btn-sm glyphicon-trash"
+														ng-click="removeGrosseur($index)"></button>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-action3 pull-right spacer2"
+									ng-click="ajoutGrosseur()">Ajouter</button>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Div Famille -->
+				<div class="panel-body" ng-show="parametre =='Famille Article'"
+					ng-controller="BackArticleFamilleController">
+					<div class="form-group">
+						<div class="row">
+							<div class="panel panel-primary">
+								<table
+									class="table table-bordered table-condensed back-table-head-color">
+									<thead>
+										<tr>
+											<th class="hidden" style="width: 15%">id</th>
+											<th style="width: 35%">Famille Article</th>
+											<th style="width: 35%">type</th>
+											<th style="width: 15%"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="FamilleArticle in listeFamilleArticle">
+											<td class="hidden">
+												<!-- editable group (select-remote) --> <span
+												editable-text="FamilleArticle.id" e-name="id"
+												e-form="rowform" e-required> {{ FamilleArticle.id ||
+													'empty' }} </span>
+											</td>
+											<td>
+												<!-- editable group (select-remote) --> <span
+												editable-text="FamilleArticle.designation"
+												e-name="designation" e-form="rowform" e-required> {{
+													FamilleArticle.designation || 'empty' }} </span>
+											</td>
+											<td>
+												<!-- editable group (select-remote) --> <span
+												editable-select="FamilleArticle.idTypeArticle"
+												e-ng-options="s.id as s.designation for s in listeTypeArticle"
+												e-name="idTypeArticle" e-form="rowform"> {{
+													showStatus(FamilleArticle.idTypeArticle) }} </span>
+											</td>
+											<td style="white-space: nowrap">
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveFamilleArticle($data, FamilleArticle.id)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="FamilleArticleInserree == FamilleArticle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAdd(rowform, $index, FamilleArticle.id, FamilleArticle.designation, listeFamilleArticle )"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"
+														ng-click="rowform.$show()"></button>
+													<button data-nodrag
+														class="btn glyphicon btn-sm glyphicon-trash"
+														ng-click="removeFamilleArticle($index)"></button>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-action3 pull-right spacer2"
+									ng-click="ajoutFamilleArticle()">Ajouter</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Div Sous Famille -->
+				<div class="panel-body" ng-show="parametre =='Sous Famille Article'"
+					ng-controller="BackArticleSousFamilleController">
+					<div class="form-group">
+						<div class="row">
+							<div class="panel panel-primary">
+								<table
+									class="table table-bordered table-condensed back-table-head-color">
+									<thead>
+										<tr>
+											<th class="hidden" style="width: 20%">id</th>
+											<th style="width: 20%">Sous Famille Article</th>
+											<th style="width: 20%">famille Article</th>
+											<th style="width: 20%">type</th>
+											<th style="width: 20%"></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="SousFamilleArticle in listeSousFamilleArticle">
+											<td class="hidden">
+												<!-- editable group (select-remote) --> <span
+												editable-text="SousFamilleArticle.id" e-name="id"
+												e-form="rowform" e-required> {{ SousFamilleArticle.id
+													|| 'empty' }} </span>
+											</td>
+											<td>
+												<!-- editable group (select-remote) --> <span
+												editable-text="SousFamilleArticle.designation"
+												e-name="designation" e-form="rowform" e-required> {{
+													SousFamilleArticle.designation || 'empty' }} </span>
+											</td>
+											<td>
+												<!-- editable group (select-remote) --> <span
+												editable-select="SousFamilleArticle.idFamilleArticle"
+												e-ng-options="s.id as s.designation for s in listeFamilleArticle"
+												e-name="idFamilleArticle" e-form="rowform"> {{
+													showStatusSousFamille(SousFamilleArticle.idFamilleArticle)
+													}} </span>
+											</td>
+											<td>
+												<!-- editable group (select-remote) --> <span>
+													{{showStatusSousFamilleType(SousFamilleArticle.idFamilleArticle)}}
+											</span>
+
+											</td>
+											<td style="white-space: nowrap">
+												<!-- form -->
+												<form editable-form name="rowform"
+													onbeforesave="saveSousFamilleArticle($data, SousFamilleArticle.id)"
+													ng-show="rowform.$visible" class="form-buttons form-inline"
+													shown="SousFamilleArticleInserree == SousFamilleArticle">
+													<button type="submit" ng-disabled="rowform.$waiting"
+														class="btn btn-sm glyphicon glyphicon-save"
+														aria-hidden="true"></button>
+													<button type="button" ng-disabled="rowform.$waiting"
+														ng-click="cancelAdd(rowform, $index, SousFamilleArticle.id, SousFamilleArticle.designation, listeSousFamilleArticle )"
+														class="btn btn-sm glyphicon glyphicon-remove"></button>
+												</form>
+												<div class="buttons" ng-show="!rowform.$visible">
+													<button data-nodrag
+														class="btn btn-sm glyphicon glyphicon-pencil"
+														ng-click="rowform.$show()"></button>
+													<button data-nodrag
+														class="btn glyphicon btn-sm glyphicon-trash"
+														ng-click="removeSousFamilleArticle($index)"></button>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-action3 pull-right spacer2"
+									ng-click="ajoutSousFamilleArticle()">Ajouter</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid back-office-background" ng-include="'views/backProduit.html'" ng-show="ITEM == 'produit'"></div>	
+	</div>

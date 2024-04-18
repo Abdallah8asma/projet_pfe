@@ -1,0 +1,23 @@
+<!-- Menu Facon -->
+<div ng-controller="MenuFaconController">
+		<ul class="nav nav-gpro">
+		
+		    <li ng-class="{active:ITEM == 'lancement' }"><a ng-click="goLancement()">Lancement</a></li>
+			<li ng-class="{active:ITEM == 'expedition' }"><a ng-click="goExpedition()">Exp&eacute;dition </a></li>
+			<li ng-class="{active:ITEM == 'livraison' }"><a ng-click="goLivraison()">Livraison</a></li>
+			<li ng-class="{active:ITEM == 'facturation' }"><a ng-click="goFacturation()">Facturation</a></li>
+		</ul>
+
+   <div ng-if="ITEM == 'lancement'">
+     <div ng-include="'views/front/facon/lancement/facon.html'"></div>	
+   </div>
+   <div ng-if="ITEM == 'expedition'">
+     <div ng-include="'views/front/facon/expedition/bonSortie.html'"></div>
+   </div>
+   <div ng-if="ITEM == 'livraison'">
+     <div ng-include="'views/front/facon/livraison/bonLivraison.html'"></div>	
+   </div>
+   <div ng-if="ITEM == 'facturation'">
+     <div ng-include="'views/front/facon/facturation/factureVente.html'"></div>
+   </div>
+ </div>	

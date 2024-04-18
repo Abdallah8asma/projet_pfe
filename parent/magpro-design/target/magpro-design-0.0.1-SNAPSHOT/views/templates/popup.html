@@ -1,0 +1,1109 @@
+<style>
+  .header-modals {
+    color: #fff;
+    background-color: #3699ff !important;
+    height: 35px !important;
+  }
+
+  .ms-Dialog-buttonClose {
+    top: 0px !important;
+  }
+
+  .ms-Dialog-button.btn-close {
+    border: none !important;
+    background: #3699ff !important;
+    float: right !important;
+  }
+
+  .ms-Dialog-content {
+    text-align: center !important;
+    margin-top: 10% !important;
+  }
+
+  .ms-Dialog-actions {
+    text-align: center !important;
+  }
+
+  .ms-Button.gpro-btn {
+    background-color: #f3f6f9 !important;
+    /* border: 1px solid #3699FF !important; */
+  }
+
+  .ms-Button-label {
+    color: #3699ff !important;
+  }
+
+  /* .ms-Icon {
+		color: #fff !important;
+
+	} */
+
+  .ms-Icon.ms-Icon--Cancel.gpro-Icon--Cancel {
+    color: white !important;
+  }
+
+  .gpro-h6 {
+    margin-top: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-left: 10px;
+    color: #fff;
+  }
+</style> 
+
+<!-- <div class="row" id="deletePopupX">
+	<span class="pull-right clickable" ng-click="closePopupDelete()">X</span>
+</div> -->
+
+<!-- POPUP Partie Interessee -->
+<!-- <div ng-show="message == 1" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].abreviation}}</div>
+</div> -->
+<!-- <div ng-show="message == 1" class="row" style="text-align: center"> -->
+<!-- <button class="btn btn-action" ng-click="supprimerPartieInteressee()">Oui</button>
+  <button class="btn btn-action" ng-click="closePopupDelete()">Non</button> -->
+  
+
+
+
+
+
+  
+
+<div ng-show="message == 1" >
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].abreviation}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerPartieInteressee()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- </div> --> 
+
+<!-- POPUP Produit -->
+<!-- <div ng-show="message == 3" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].designation}}</div>
+</div>
+<div ng-show="message == 3" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerProduit()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 3">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].designation}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerProduit()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP BonSortie :Logistique /Expedition -->
+<!-- <div ng-show="message == 4" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].reference}}</div>
+</div>
+<div ng-show="message == 4" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerBonsortie()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerBonsortie()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP BonLivraisonVente -->
+<!-- <div ng-show="message == 5" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].reference}}</div>
+</div>
+<div ng-show="message == 5" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerBonVente()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 5">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerBonVente()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP March� -->
+<!-- <div ng-show="message == 6" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].designation}}</div>
+</div>
+<div ng-show="message == 6" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerMarche()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 6">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].designation}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerMarche()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP FactureVente -->
+<!-- <div ng-show="message == 7" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].reference}}</div>
+</div>
+
+<div ng-show="message == 7" class="row" style="text-align: center">
+	<div class="title-ajout line2"><input type="password" ng-model="codeSuppression" /></div>
+</div>
+
+
+<div ng-show="message == 7" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-show="codeSuppression == '123900'" ng-click="supprimerFactureVente()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete(); codeSuppression =''">Non</button>
+</div> -->
+
+<div ng-show="message == 7">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].reference}}</b>
+        </h4>
+        <div class="title-ajout">
+          <input type="password" ng-model="codeSuppression" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button
+      class="ms-Button gpro-btn"
+      ng-click="supprimerFactureVente()"
+      ng-show="codeSuppression == '123900'"
+    >
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button
+      class="ms-Button gpro-btn"
+      ng-click="closePopupDelete(); codeSuppression =''"
+    >
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP FicheSuiveuse :Logistique / Production -->
+<!-- <div ng-show="message == 8" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].designation}}</div>
+</div>
+<div ng-show="message == 8" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerFicheSuiveuse()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 8">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].designation}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerFicheSuiveuse()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP Article-->
+<!-- <div ng-show="message == 9" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[9]}}
+		{{myData[index].ref}}</div>
+</div>
+<div ng-show="message == 9" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerArticle()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 9">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].ref}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerArticle()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP metrage Invalid -->
+<div ng-show="message == 2" class="row" style="text-align: center;">
+  <div class="title-ajout line2">{{messages[message]}}</div>
+</div>
+<!-- POPUP Regelement-->
+<!-- <div ng-show="message == 10" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[10]}}
+		{{myData[index].reference}}</div>
+</div>
+
+
+<div ng-show="message == 10" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerReglement()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 10">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerReglement()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP FicheFa�on :Logistique / Facon -->
+<!-- <div ng-show="message == 11" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].designation}}</div>
+</div>
+<div ng-show="message == 11" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerFicheFacon()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 11">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].designation}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerFicheFacon()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP FicheFa�on : commercial / bon de commande -->
+<!-- <div ng-show="message == 12" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myDataCommandeVente[index].reference}}</div>
+</div>
+
+<div ng-show="message == 12" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerCommandeVente()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 12">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myDataCommandeVente[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerCommandeVente()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP FicheFa�on :Logistique / inventaire -->
+<!-- <div ng-show="message == 13" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].reference}}</div>
+</div>
+
+<div ng-show="message == 13" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerBonInventaire()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 13">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerBonInventaire()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP bon d'entr� :stock / bon d'entr� -->
+<!-- <div ng-show="message == 14" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].reference}}</div>
+</div>
+
+<div ng-show="message == 14" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerMouvementStock()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 14">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerMouvementStock()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP bon de sortie :stock / bon de sortie -->
+<!-- <div ng-show="message == 15" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].reference}}</div>
+</div>
+
+<div ng-show="message == 15" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerMouvementStock()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 15">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerMouvementStock()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP Caisse finance client -->
+<!-- <div ng-show="message == 16" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myDatacaisse[index].reference}}</div>
+</div>
+<div ng-show="message == 16" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimercaisse()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 16">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myDatacaisse[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimercaisse()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP Reception Achat -->
+<!-- <div ng-show="message == 17" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myDataReceptionAchat[index].reference}}</div>
+	<div class="title-ajout line3" ng-show="responseMsgDeleteReceptionAchat != ''">{{responseMsgDeleteReceptionAchat}}
+	</div>
+
+
+</div>
+<div ng-show="message == 17" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerReceptionAchat()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 17">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myDataReceptionAchat[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerReceptionAchat()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP Achat : commercial / bon de commande Achat -->
+<!-- <div ng-show="message == 18" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myDatacommandeAchat[index].reference}}</div>
+</div>
+
+<div ng-show="message == 18" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerCommandeAchat()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 18">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerCommandeAchat()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<!-- POPUP Achat : commercial / bon de commande Achat -->
+<!-- <div ng-show="message == 19" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myDataBonStock[index].reference}}</div>
+</div>
+
+<div ng-show="message == 19" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerBonStock()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 19">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myDataBonStock[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerBonStock()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+
+<!-- POPUP Vente : commercial / remise vente -->
+<!-- <div ng-show="message == 20" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myData[index].referenceProduit}}</div>
+</div>
+
+<div ng-show="message == 20" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerRemiseVente()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+
+<!-- POPUP Vente : commercial / package vente -->
+<!-- <div ng-show="message == 21" class="row" style="text-align: center">
+	<div class="title-ajout line2">{{messages[message]}}
+		{{myDataCommandeVente[index].reference}}</div>
+</div>
+
+<div ng-show="message == 21" class="row" style="text-align: center">
+	<button class="btn btn-action" ng-click="supprimerPackageVente()">Oui</button>
+	<button class="btn btn-action" ng-click="closePopupDelete()">Non</button>
+</div> -->
+
+<div ng-show="message == 20">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].referenceProduit}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerRemiseVente()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<div ng-show="message == 21">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myDataCommandeVente[index].reference}}</b>
+        </h4>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button class="ms-Button gpro-btn" ng-click="supprimerPackageVente()">
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button class="ms-Button gpro-btn" ng-click="closePopupDelete()">
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+
+<div ng-show="message == 22">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row header-modals">
+        <div class="col-md-9">
+          <h6 class="gpro-h6">Suppression</h6>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="ms-Dialog-button btn-close"
+            ng-click="closePopupDelete()"
+          >
+            <i class="ms-Icon ms-Icon--Cancel gpro-Icon--Cancel"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-content">
+    <div class="row bar-btn">
+      <div class="col-md-12">
+        <h4>
+          Êtes-vous sûr de vouloir supprimer
+          <b class="font-italic">{{myData[index].reference}}</b>
+        </h4>
+        <div class="title-ajout">
+          <input type="password" ng-model="codeSuppression" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ms-Dialog-actions">
+    <button
+      class="ms-Button gpro-btn"
+      ng-click="supprimerFactureAchat()"
+      ng-show="codeSuppression == '123900'"
+    >
+      <span class="ms-Button-label"> Oui</span>
+    </button>
+    <button
+      class="ms-Button gpro-btn"
+      ng-click="closePopupDelete(); codeSuppression =''"
+    >
+      <span class="ms-Button-label"> Non</span>
+    </button>
+  </div>
+</div>
+

@@ -1,0 +1,765 @@
+<!-- Menu Partie Interesse -->
+<!-- <ul class="nav back-nav-gpro">
+	<li class="active"><a>Generateur</a></li>
+
+</ul> -->
+
+
+<!--Script Fabric JS-->
+<script type="text/javascript">
+	var CommandBarElements = document.querySelectorAll(".ms-CommandBar-back-Generate ");
+	for (var i = 0; i < CommandBarElements.length; i++) {
+		new fabric['CommandBar'](CommandBarElements[i]);
+	}
+
+	var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+	for (var i = 0; i < SearchBoxElements.length; i++) {
+		new fabric['SearchBox'](SearchBoxElements[i]);
+	}
+
+</script>
+<!--End FabricJS-->
+
+<style>
+	.ms-CommandBar-back-Generate {
+		background-color: #F3F6F9 !important;
+		border-color: transparent !important;
+	}
+
+	.ms-CommandButton-button {
+		color: #3699FF !important;
+	}
+
+	.ms-CommandButton-button:hover {
+		background-color: #3699FF !important;
+	}
+
+	.ms-CommandButton-button:hover span {
+		color: #ffff !important;
+	}
+
+	.ms-CommandButton-button:hover i {
+		color: #ffff !important;
+	}
+
+
+	.ms-CommandButton-label,
+	.ms-SearchBox-text {
+		color: #3699FF !important;
+	}
+
+	.ms-CommandButton-label:hover {
+		color: #ffff !important;
+	}
+
+	.ms-Icon {
+		color: #3699FF !important;
+	}
+
+	.ms-Icon.ms-Icon-Gpro {
+		top: 30% !important;
+		color: #464E5F !important;
+		font-size: 14px !important;
+	}
+
+	.ms-CommandButton .ms-CommandButton-Gpro {
+		padding: 0px !important;
+	}
+
+	.ms-Icon:hover {
+		color: #fff !important;
+	}
+</style>
+
+
+<div class="container-fluid back-office-background" ng-controller="backSeqFactureController">
+
+
+
+	<span class="ms-ListItem-primaryText">Generateur</span>
+	<br />
+
+
+
+	<div class="ms-CommandBar-back-Generate ms-CommandBar--navBar">
+		<div class="ms-CommandBar-sideCommands">
+
+
+			<div class="ms-CommandButton ms-CommandButton--noLabel">
+				<button class="ms-CommandButton-button">
+					<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+					<span class="ms-CommandButton-label"></span>
+				</button>
+			</div>
+		</div>
+		<div class="ms-CommandBar-mainArea">
+
+			<div class="ms-CommandButton">
+				<button class="ms-CommandButton-button" ng-click="saveSequence(sequenceCourante)">
+					<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span>
+					<span class="ms-CommandButton-label">Enregistrer</span>
+				</button>
+			</div>
+
+
+
+
+
+
+
+			<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+				<button class="ms-CommandButton-button">
+					<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+					<span class="ms-CommandButton-label"></span>
+				</button>
+				<ul class="ms-ContextualMenu is-opened">
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+						<i class="ms-Icon ms-Icon--Folder"></i>
+					</li>
+					<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+						<i class="ms-Icon ms-Icon--Document"></i>
+					</li>
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+						<i class="ms-Icon ms-Icon--Coffee"></i>
+					</li>
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+						<i class="ms-Icon ms-Icon--Picture"></i>
+					</li>
+					<li class="ms-ContextualMenu-item">
+						<a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+						<i class="ms-Icon ms-Icon--Money"></i>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	<div>
+		<!-- 
+		<div class="form-group">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+
+						<div class="pull-right">
+							<div class="col-sm-3">
+								<button class="btn-action btn" ng-click="saveSequence(sequenceCourante)">Enregistrer</button>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+
+			</div>
+
+		</div> -->
+
+		<!-- <div class="title-ajout">Generateur Vente</div> -->
+
+
+		<div class="panel panel-primary">
+			<div class="panel-body">
+
+				<br />
+				<span class="ms-ListItem-primaryText line">Generateur Vente</span>
+				<br />
+
+
+
+
+				<div class="row">
+
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Devis</span>
+								</div>
+								<input class="form-control" ng-model="sequenceCourante.numReferenceDevisCourante"
+									ng-init="sequenceCourante.numReferenceDevisCourante=''" />
+							</div>
+						</div>
+
+					</div>
+					<div class="col-sm-4">
+
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Bon
+										Commande</span>
+								</div>
+								<input class="form-control" ng-model="sequenceCourante.numReferenceCommandeCourante"
+									ng-init="sequenceCourante.numReferenceCommandeCourante=''" />
+							</div>
+						</div>
+
+					</div>
+					<div class="col-sm-4">
+
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Bon
+									Livraison </span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numReferenceBonLivraisonCourante"
+								ng-init="sequenceCourante.numReferenceBonLivraisonCourante=''" />
+						</div>
+
+					</div>
+
+				</div>
+				<div class="row">
+
+					<div class="col-sm-4">
+
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									Devis </span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeDevis"
+								ng-init="sequenceCourante.prefixeDevis=''" />
+						</div>
+
+					</div>
+
+
+					<div class="col-sm-4">
+
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									BC </span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeBC"
+								ng-init="sequenceCourante.prefixeBC=''" />
+						</div>
+
+
+
+					</div>
+
+
+
+					<div class="col-sm-4">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									BL </span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeBL"
+								ng-init="sequenceCourante.prefixeBL''" />
+						</div>
+					</div>
+				</div>
+
+
+				<br />
+
+
+				<div class="row">
+
+					<div class="col-sm-4">
+
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Facture </span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numReferenceFactureCourant"
+								ng-init="sequenceCourante.numReferenceFactureCourant=''" />
+						</div>
+
+					</div>
+
+					<div class="col-sm-4">
+
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Facture
+									Avoir </span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numReferenceAvoirCourante"
+								ng-init="sequenceCourante.numReferenceAvoirCourante=''" />
+						</div>
+
+					</div>
+
+					<div class="col-sm-4">
+
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Reglement </span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numReferenceReglementCourante"
+								ng-init="sequenceCourante.numReferenceReglementCourante=''" />
+						</div>
+
+
+
+
+					</div>
+
+				</div>
+
+				<br />
+				<div class="row">
+					<div class="col-sm-4">
+
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Prefixe
+										Facture</span>
+								</div>
+								<input class="form-control" ng-model="sequenceCourante.prefixeFacture"
+									ng-init="sequenceCourante.prefixeFacture=''" />
+							</div>
+						</div>
+
+					</div>
+
+					<div class="col-sm-4">
+
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Prefixe
+										Avoir</span>
+								</div>
+								<input class="form-control" ng-model="sequenceCourante.prefixeAvoir"
+									ng-init="sequenceCourante.prefixeAvoir=''" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+
+
+
+
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group">
+
+
+							<!-- <div class="col-sm-2">
+							<div class="input-group">
+								<span class="input-group-addon label1" id="basic-addon1">Prefixe
+									Devis </span> <input class="form-control" ng-model="sequenceCourante.prefixeDevis"
+									ng-init="sequenceCourante.prefixeDevis=''" />
+							</div>
+						</div> -->
+							<!-- 
+					<div class="col-sm-2">
+						<div class="input-group">
+							<span class="input-group-addon label1" id="basic-addon1">Prefixe
+								BC </span> <input class="form-control" ng-model="sequenceCourante.prefixeBC"
+								ng-init="sequenceCourante.prefixeBC=''" />
+						</div>
+					</div> -->
+							<!-- 
+					<div class="col-sm-2">
+						<div class="input-group">
+							<span class="input-group-addon label1" id="basic-addon1">Prefixe
+								BL </span> <input class="form-control" ng-model="sequenceCourante.prefixeBL"
+								ng-init="sequenceCourante.prefixeBL''" />
+						</div>
+					</div> -->
+							<!-- 
+					<div class="col-sm-2">
+						<div class="input-group">
+							<span class="input-group-addon label1" id="basic-addon1">Prefixe
+								Facture </span> <input class="form-control" ng-model="sequenceCourante.prefixeFacture"
+								ng-init="sequenceCourante.prefixeFacture=''" />
+						</div>
+					</div> -->
+							<!-- 
+					<div class="col-sm-2">
+						<div class="input-group">
+							<span class="input-group-addon label1" id="basic-addon1">Prefixe
+								Avoir</span> <input class="form-control" ng-model="sequenceCourante.prefixeAvoir"
+								ng-init="sequenceCourante.prefixeAvoir=''" />
+						</div>
+					</div> -->
+
+
+
+
+
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+
+
+
+			<span class="ms-ListItem-primaryText line">Generateur Achat</span>
+			<br />
+
+
+
+			<div class="row">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Bon
+									Commande</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numReferenceCommandeAchatCourante"
+								ng-init="sequenceCourante.numReferenceCommandeAchatCourante=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Bon
+									Reception</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numReferenceBonReceptionCourante"
+								ng-init="sequenceCourante.numReferenceBonReceptionCourante=''" />
+						</div>
+					</div>
+				</div>
+
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Facture</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numReferenceFactureAchatCourante"
+								ng-init="sequenceCourante.numReferenceFactureAchatCourante=''" />
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div class="row">
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									BC</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeBcAchat"
+								ng-init="sequenceCourante.prefixeBcAchat=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									BR</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeBonReception"
+								ng-init="sequenceCourante.prefixeBonReception''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									Facture</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeFactureAchat"
+								ng-init="sequenceCourante.prefixeFactureAchat=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Facture
+									Avoir</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numFactureAvoirAchatCourante"
+								ng-init="sequenceCourante.numFactureAvoirAchatCourante=''" />
+						</div>
+					</div>
+
+
+
+
+
+
+
+				</div>
+
+
+				<div class="col-sm-4">
+
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Reglement
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numReferenceReglementAchatCourante"
+								ng-init="sequenceCourante.numReferenceReglementAchatCourante=''" />
+						</div>
+					</div>
+
+				</div>
+
+
+
+			</div>
+
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									Avoir</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeFactureAvoirAchat"
+								ng-init="sequenceCourante.prefixeFactureAvoirAchat=''" />
+						</div>
+					</div>
+
+
+
+
+
+
+
+				</div>
+			</div>
+
+
+
+
+
+
+
+
+
+			<span class="ms-ListItem-primaryText line">Generateur Stock</span>
+			<br />
+
+
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Bon
+									Stock Sortie</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numBonStockCourante"
+								ng-init="sequenceCourante.numBonStockCourante=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									BS</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeBonStock"
+								ng-init="sequenceCourante.prefixeBonStock=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+			</div>
+			
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Bon
+									Inventaire</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numBonInventaireCourante"
+								ng-init="sequenceCourante.numBonInventaireCourante=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									Inventaire</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeBonInventaire"
+								ng-init="sequenceCourante.prefixeBonInventaire=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+			</div>
+			
+			
+			<span class="ms-ListItem-primaryText line">Generateur Transfert</span>
+			<br />
+
+
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Bon
+									Transfert R&eacute;ception</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numBonTransfertReceptionCourante"
+								ng-init="sequenceCourante.numBonTransfertReceptionCourante=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									 Transfert R&eacute;ception</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeBonTransfertReception"
+								ng-init="sequenceCourante.prefixeBonTransfertReception=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+			</div>
+			
+			
+					<div class="row">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Bon
+									Transfert Sortie</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.numBonTransfertSortieCourante"
+								ng-init="sequenceCourante.numBonTransfertSortieCourante=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+				<div class="col-sm-4">
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Prefixe
+									 Transfert Sortie</span>
+							</div>
+							<input class="form-control" ng-model="sequenceCourante.prefixeBonTransfertSortie"
+								ng-init="sequenceCourante.prefixeBonTransfertSortie=''" />
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+</div>
+</div>

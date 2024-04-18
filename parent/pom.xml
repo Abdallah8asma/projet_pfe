@@ -8,5 +8,10 @@
   <modules>
   	<module>first</module>
   	<module>second</module>
+  	<module>magpro</module>
+  	<module>magpro-war</module>
+  	<module>magpro-design</module>
+  	<module>maatelier</module>
+  	<module>magpro-atelier-war</module>
   </modules>
 </project>

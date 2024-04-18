@@ -1,0 +1,293 @@
+<!--Script Fabric JS-->
+<script type="text/javascript">
+	var CommandBarElements = document
+		.querySelectorAll('.ms-CommandBar-Analyse-Achat');
+	for (var i = 0; i < CommandBarElements.length; i++) {
+		new fabric['CommandBar'](CommandBarElements[i]);
+	}
+
+	var SearchBoxElements = document.querySelectorAll('.ms-SearchBox');
+	for (var i = 0; i < SearchBoxElements.length; i++) {
+		new fabric['SearchBox'](SearchBoxElements[i]);
+	}
+</script>
+
+<!--End FabricJS-->
+<style>
+	.ms-CommandBar-Analyse-Vente {
+		background-color: #f3f6f9 !important;
+		border-color: transparent !important;
+	}
+
+	.ms-CommandButton-button {
+		color: #3699ff !important;
+	}
+
+	.ms-CommandButton-button:hover {
+		background-color: #3699ff !important;
+	}
+
+	.ms-CommandButton-button:hover span {
+		color: #ffff !important;
+	}
+
+	.ms-CommandButton-button:hover i {
+		color: #ffff !important;
+	}
+
+	.ms-CommandButton-label,
+	.ms-SearchBox-text {
+		color: #3699ff !important;
+	}
+
+	.ms-CommandButton-label:hover {
+		color: #ffff !important;
+	}
+
+	.ms-Icon {
+		color: #3699ff !important;
+	}
+
+	.ms-Icon.ms-Icon-Gpro {
+		top: 30% !important;
+		color: #464e5f !important;
+		font-size: 14px !important;
+	}
+
+	.ms-CommandButton .ms-CommandButton-Gpro {
+		padding: 0px !important;
+	}
+
+	.ms-Icon:hover {
+		color: #fff !important;
+	}
+
+	.ms-ListItem-primaryText.ms-Item-Gpro {
+		top: 15px !important;
+	}
+</style>
+
+<div class="container-fluid" ng-controller="AnalyseAchatController" style="background-color: #fff;">
+	<div class="row">
+		<div class="col-sm-12">
+			<br />
+		</div>
+		<div class="col-sm-12">
+			<br /> <span class="ms-ListItem-primaryText">Analyse Achat</span> <br />
+			<div class="ms-CommandBar-Analyse-Vente ms-CommandBar--navBar">
+				<div class="ms-CommandBar-sideCommands">
+					<div class="ms-CommandButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+							<span class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+				</div>
+				<div class="ms-CommandBar-mainArea">
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="createChartDepenseBr()"
+							ng-disabled="CritRecherche.dateMin =='' || CritRecherche.dateMax ==''">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--BarChart4"></i></span> <span
+								class="ms-CommandButton-label">D&eacute;pense BR</span>
+						</button>
+					</div>
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="createChartDepenseFacture()"
+							ng-disabled="CritRecherche.dateMin =='' || CritRecherche.dateMax ==''">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--BarChart4"></i></span> <span
+								class="ms-CommandButton-label">D&eacute;pense Facture</span>
+						</button>
+					</div>
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="createChartReglement()"
+							ng-disabled="CritRecherche.dateMin =='' || CritRecherche.dateMax ==''">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--BarChart4"></i></span> <span
+								class="ms-CommandButton-label">R&egrave;glement</span>
+						</button>
+					</div>
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="createChartTop10Article()"
+							ng-disabled="CritRecherche.dateMin =='' || CritRecherche.dateMax ==''">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--BarChartHorizontal"></i></span> <span
+								class="ms-CommandButton-label">TOP 10 - Article</span>
+						</button>
+					</div>
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="createChartTop3Frs()"
+							ng-disabled="CritRecherche.dateMin =='' || CritRecherche.dateMax ==''">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--BarChartHorizontal"></i></span> <span
+								class="ms-CommandButton-label">TOP 3 - Fournisseur</span>
+						</button>
+					</div>
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="createChartDepenseParFrs()"
+							ng-disabled="CritRecherche.dateMin =='' || CritRecherche.dateMax ==''">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--BarChart4"></i></span> <span
+								class="ms-CommandButton-label">D&eacute;penses % Fournisseur</span>
+						</button>
+					</div>
+
+
+
+
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="annuler()">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span> <span
+								class="ms-CommandButton-label">Annuler</span>
+						</button>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="rechercheecheancierForm" id="rechercheecheancierForm">
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">Boutique</label>
+										</div>
+										<select ui-select2 ng-model="CritRecherche.boutiqueId" ng-init="CritRecherche.boutiqueId =''"
+											data-placeholder="..." class="form-control" style="border: 1px solid #e5eaee !important;">
+											<option value="">Tous les Boutiques</option>
+											<option ng-repeat="pi in boutiques" value="{{pi.id}}">{{pi.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+
+							</div>
+
+
+							<div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> Date De :</span>
+										</div>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											ng-init="CritRecherche.dateMin =''" ng-model="CritRecherche.dateMin" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+											close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default" ng-click="open($event)"
+												style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+							<div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> Date A:</span>
+										</div>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											ng-init="CritRecherche.dateMax =''" ng-model="CritRecherche.dateMax" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+											close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default" ng-click="open($event)"
+												style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255);">
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<div style="margin-bottom: 500px;" ng-show="init"></div>
+	</div>
+
+
+
+	<div class="row">
+		<div class="col-md-12" ng-show="displayChartDepenseBr">
+			<br /> <span class="ms-ListItem-primaryText line">D&eacute;pense BR</span> <br />
+			<div class="row">
+
+				<div id="chartDepenseBR" style="height: 400px;" class="col-md-12"></div>
+
+
+			</div>
+
+		</div>
+
+		<div class="col-md-12" ng-show="displayChartDepenseFacture">
+			<br /> <span class="ms-ListItem-primaryText line">D&eacute;pense Facture</span>
+			<br />
+			<div class="row">
+
+				<div id="chartDepenseFacture" style="height: 400px;" class="col-md-12"></div>
+
+
+			</div>
+
+		</div>
+		<div class="col-md-12" ng-show="displayChartReglement">
+			<br /> <span class="ms-ListItem-primaryText line">R&egrave;glement</span>
+			<br />
+			<div class="row">
+				<div id="chartReglement" style="height: 400px;" class="col-md-12"></div>
+
+
+			</div>
+		</div>
+		<div class="col-md-12" ng-show="displayChartTop10Article">
+			<br /> <span class="ms-ListItem-primaryText line">TOP 10 -
+				Article</span> <br />
+			<div class="row">
+				<div id="chartTop10Article" style="height: 400px;" class="col-md-12"></div>
+
+			</div>
+		</div>
+		<div class="col-md-12" ng-show="displayChartTop3Frs">
+			<br /> <span class="ms-ListItem-primaryText line">TOP 3 -
+				Fournisseur</span> <br />
+			<div class="row">
+				<div id="chartTop3Frs" style="height: 400px;" class="col-md-12"></div>
+
+
+			</div>
+		</div>
+
+		<div class="col-md-12" ng-show="displayChartCAClient">
+			<br /> <span class="ms-ListItem-primaryText line">D&eacute;penses % Fournisseur</span>
+			<br />
+			<div class="row">
+				<div id="chartDepenceFrs" style="height: 400px;" class="col-md-12"></div>
+
+
+			</div>
+		</div>
+	</div>
+
+	<div id="light" class="white_content">
+		<pop-up type="delete-article"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+</div>

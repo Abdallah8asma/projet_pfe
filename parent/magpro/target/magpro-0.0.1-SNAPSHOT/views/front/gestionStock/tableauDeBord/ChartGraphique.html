@@ -1,0 +1,320 @@
+	<ul class="nav nav-gpro spacer">
+		<li><a
+			href="#/stock">Mvt. Stock</a></li>
+<!-- 		<li><a href="#/stockMvtOF">Mvt. OF</a></li> -->
+		<li><a href="#/historique">Historique</a></li>
+		<li><a href="#/etat">Etat</a></li>
+		<!-- <li><a href="#/historiqueS">Inventaire Magasin</a></li> -->
+	    <li class="active"><a href="#/ChartGraphique">Tableau de Bord</a></li>
+	</ul>
+	
+	
+	<div class="container-fluid" ng-controller="StockCE">
+		<div class="row">
+			<div class="col-sm-1">
+				<ul class="nav-gproS">
+				<li ng-class="{active: chartType == 'gse1' }" ><a style="margin-top: 10px; width: 73px;"
+						class="btn btn-action pull-right" ng-click="switchToChartgse1()">Tissu</a></li>
+					<li ng-class="{active: chartType == 'gse2' }" ><a style="margin-top: 10px"
+						class="btn btn-action pull-right" ng-click="switchToChartgse2()">Entr&eacute;e</a></li>
+						<li ng-class="{active: chartType == 'gss' }"><a style="margin-top: 10px"
+						class="btn btn-action pull-right" ng-click="switchToChartgss()">Sortie&nbsp;</a></li>
+				</ul>
+			</div>
+			<div class="col-sm-11 cadreERP" >
+
+	
+
+<div ng-show="chartType == 'gse1'" >
+			<div class="title-ajout" style="font-size: 18px;">Variation des Import - Tissu</div>
+
+                               
+                <div style="margin-left:20px;">
+                  <form name="requestGse1Form">
+                    
+                  <div class="col-sm-3"  ng-controller="DatepickerDemoController">
+                
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon label1" id="basic-addon1">
+										From</span> <input type="text" placeholder="YYYY-MM-DD"
+										class="form-control datepicker" datepicker-popup="{{format}}"
+										ng-model="currentRequestgse1.dateFrom" is-open="opened"
+										datepicker-options="dateOptions" date-="enabled(date, mode)"
+										ng-required="true" close-text="Close" required  />
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							 <div class="col-sm-3" ng-controller="DatepickerDemoController" >
+								<div class="input-group input-group-sm" >
+									<span class="input-group-addon label1" id="basic-addon1">
+										To</span> <input type="text"
+										class="form-control datepicker" datepicker-popup="{{format}}"
+										ng-model="currentRequestgse1.dateTo" is-open="opened" placeholder="YYYY-MM-DD"
+										datepicker-options="dateOptions" date-="enabled(date, mode)"
+										ng-required="true" close-text="Close" required />
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row" >
+								<div class="col-sm-3" style="margin-left: 250px;">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon label1" id="basic-addon1">Affichage par</span>
+									<select class="form-control" ng-model="d" data-placeholder="..." style="width: 100%">
+										<OPTION value="1">JOUR</OPTION>
+											<option value="2">MOI</option>
+											<option value="3">ANNEE</option>
+									</select>
+									
+								</div>
+								</div>
+								</div>
+								<div class="pull-right" style="margin-top: 10px;margin-right: 50px;">
+								<button class="btn-action btn" ng-click="gse1(currentRequestgse1,d)">Valider</button>
+								<button class="btn-action btn" ng-click="annulergse1()">Annuler</button>
+							</div>
+			
+					</form>
+					
+			
+				</div>
+				
+		
+		<div class="title-ajout" style="font-size: 12px; margin-left: 30px; margin-top:10px; absolute; color:#676767; " >
+			Le nombre de resultats trouv&eacute;s: {{nombreResultaRecherchergse1}} 
+		</div>
+		<div ng-hide="nombreResultaRecherchergse1 == 0">
+							<div id="chartdiv" style="width: 100%; height: 400px; margin-top: 50px;"></div>
+						</div>
+						
+						<div ng-hide="nombreResultaRecherchergse1 != 0">	
+	                         <div class="alert alert-dismissable alert-danger" style="margin-top: 70px;">
+	                            <strong> Pas de donn&eacute;es disponibles !</strong>
+	                          </div>
+                    	</div>
+                    	
+
+
+
+</div>
+<div ng-show="chartType == 'gse2'" >
+<div class="title-ajout" style="font-size: 18px;">Variation des ENTREE</div>
+
+                               
+                <div style="margin-left:20px;">
+                  <form name="requestGse2Form">
+                    <!--  ng-controller="DatepickerDemoController" -->
+                    <div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Sous Famille
+											</span> <select class="form-control"
+											ng-model="currentRequestgse2.sousFamilleId">
+											<option value=""></option>
+											<option ng-repeat="sousfamille in Listesousfamille"
+												value="{{sousfamille.id}}">{{sousfamille.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Article
+											</span> <select class="form-control"
+											ng-model="currentRequestgse2.articleId">
+											<option value=""></option>
+											<option ng-repeat="article in Listearticle"
+												value="{{article.id}}">{{article.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div style="float: left; margin-top: 10px;">
+                  <div class="col-sm-3" ng-controller="DatepickerDemoController" >
+                
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon label1" id="basic-addon1">
+										From</span> <input type="text" placeholder="YYYY-MM-DD"
+										class="form-control datepicker" datepicker-popup="{{format}}"
+										ng-model="currentRequestgse2.dateFrom" is-open="opened"
+										datepicker-options="dateOptions" date-="enabled(date, mode)"
+										ng-required="true" close-text="Close" required  />
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							 <div class="col-sm-3" ng-controller="DatepickerDemoController" >
+								<div class="input-group input-group-sm" >
+									<span class="input-group-addon label1" id="basic-addon1">
+										To</span> <input type="text"
+										class="form-control datepicker" datepicker-popup="{{format}}"
+										ng-model="currentRequestgse2.dateTo" is-open="opened" placeholder="YYYY-MM-DD"
+										datepicker-options="dateOptions" date-="enabled(date, mode)"
+										ng-required="true" close-text="Close" required />
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							<div class="row" >
+								<div class="col-sm-3" style="margin-left: 250px;">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon label1" id="basic-addon1">Affichage par</span>
+									<select class="form-control" ng-model="d2" data-placeholder="..." style="width: 100%">
+										<OPTION value="1">JOUR</OPTION>
+											<option value="2">MOI</option>
+											<option value="3">ANNEE</option>
+									</select>
+									
+								</div>
+								</div>
+								</div>
+					  <div class="pull-right" style="margin-top: 10px;margin-right: 50px;">
+								<button class="btn-action btn" ng-click="gse2(currentRequestgse2,d)">Valider</button>
+								<button class="btn-action btn"  ng-click="annulergse2()">Annuler</button>
+							</div>
+					    </div>
+					</form>
+			
+				</div>
+		
+<div class="title-ajout" style="font-size: 12px; margin-left: 30px; margin-top:80px; absolute; color:#676767; " >
+Le nombre de resultats trouv&eacute;s: {{nombreResultaRecherchergse2}} 
+</div>
+<div ng-hide="nombreResultaRecherchergse2 == 0">
+							<div id="chartdiv2" style="width: 100%; height: 400px; margin-top: 50px;"></div>
+						</div>
+						
+						<div ng-hide="nombreResultaRecherchergse2 != 0">	
+	                         <div class="alert alert-dismissable alert-danger" style="margin-top: 70px;">
+	                            <strong> Pas de donn&eacute;es disponibles !</strong>
+	                          </div>
+                    	</div>
+</div>
+<div ng-show="chartType == 'gss'" >
+	<div class="title-ajout" style="font-size: 18px;">Variation des SORTIE</div>
+
+                               
+                <div style="margin-left:20px;">
+                  <form name="requestGssForm">
+                  
+                   <div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Sous Famille
+											</span> <select class="form-control"
+											ng-model="currentRequestgss.sousFamilleId">
+											<option value=""></option>											
+											<option ng-repeat="sousfamille in Listesousfamille"
+												value="{{sousfamille.id}}">{{sousfamille.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Article
+											</span> <select class="form-control"
+											ng-model="currentRequestgss.articleId">
+								            <option value=""></option>
+											<option ng-repeat="article in Listearticle"
+												value="{{article.id}}">{{article.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div style="float: left; margin-top: 10px;">
+                  
+                    
+                  <div class="col-sm-3" ng-controller="DatepickerDemoController"  >
+                
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon label1" id="basic-addon1">
+										From</span> <input type="text" placeholder="YYYY-MM-DD"
+										class="form-control datepicker" datepicker-popup="{{format}}"
+										ng-model="currentRequestgss.dateFrom" is-open="opened"
+										datepicker-options="dateOptions" date-="enabled(date, mode)"
+										 close-text="Close"   />
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+					
+							 <div class="col-sm-3" ng-controller="DatepickerDemoController" >
+								<div class="input-group input-group-sm" >
+									<span class="input-group-addon label1" id="basic-addon1">
+										To</span> <input type="text"
+										class="form-control datepicker"  datepicker-popup="{{format}}"
+										ng-model="currentRequestgss.dateTo" is-open="opened" placeholder="YYYY-MM-DD"
+										datepicker-options="dateOptions" date-="enabled(date, mode)"
+										 close-text="Close" />
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open($event)">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row" >
+								<div class="col-sm-3" style="margin-left: 250px;">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon label1" id="basic-addon1">Affichage par</span>
+									<select class="form-control" ng-model="ds" data-placeholder="..." style="width: 100%">
+										<OPTION value="1">JOUR</OPTION>
+											<option value="2">MOI</option>
+											<option value="3">ANNEE</option>
+									</select>
+									
+								</div>
+								</div>
+								</div>
+								
+					    <div class="pull-right" style="margin-top: 10px; margin-right: 50px;">
+								<button class="btn-action btn" ng-click="gss(currentRequestgss,ds)">Valider</button>
+								<button class="btn-action btn"  ng-click="annulergss()">Annuler</button>
+							</div>
+					    </div>
+					</form>
+			
+				</div>
+				
+		
+		<div class="title-ajout" style="font-size: 12px; margin-left: 30px; margin-top:80px; absolute; color:#676767; " >
+			Le nombre de resultats trouv&eacute;s: {{nombreResultaRecherchergss}} 
+		</div>
+		<div ng-hide="nombreResultaRecherchergss == 0">
+							<div id="chartdiv3" style="width: 100%; height: 400px; margin-top: 50px;"></div>
+						</div>
+						
+						<div ng-hide="nombreResultaRecherchergss != 0">	
+	                         <div class="alert alert-dismissable alert-danger" style="margin-top: 70px;">
+	                            <strong> Pas de donn&eacute;es disponibles !</strong>
+	                          </div>
+                    	</div>
+</div>
+</div>
+
+
+
+
+
+		</div>
+	</div>
+	

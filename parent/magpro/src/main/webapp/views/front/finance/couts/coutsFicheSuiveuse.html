@@ -1,0 +1,162 @@
+<div class="container-fluid" ng-controller="coutsController" style="background-color: #fff;">
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="title-ajout">Critère de recherche</div>
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <form class="form-horizontal" name="rechercheFicheForm" id="rechercheFicheForm">
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">N&deg; Mise :
+                    </label>
+                  </div>
+                  <select ui-select2 ng-model="ficheCouranteRecherche.numMise"
+                    ng-init="ficheCouranteRecherche.numMise =''" data-placeholder="..." style="width: 100%;">
+                    <option value="">Toutes les Mises</option>
+                    <option ng-repeat="mise in listeMise" value="{{mise.reference}}">{{mise.reference}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">Ref.Tissu</label>
+                  </div>
+                  <select ui-select2 ng-model="ficheCouranteRecherche.produitId"
+                    ng-init="ficheCouranteRecherche.produitId =''" data-placeholder="..." style="width: 100%;">
+                    <option value="">Tous les Tissus</option>
+                    <option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">{{produit.reference}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">Tissu</label>
+                  </div>
+                  <select ui-select2 ng-model="ficheCouranteRecherche.produitId"
+                    ng-init="ficheCouranteRecherche.produitId =''" data-placeholder="..." style="width: 100%;">
+                    <option value="">Tous les Tissus</option>
+                    <option ng-repeat="produit in listeProduitCache" value="{{produit.id}}">{{produit.designation}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">Client</label>
+                  </div>
+                  <select ui-select2 ng-model="ficheCouranteRecherche.partieIntId"
+                    ng-init="ficheCouranteRecherche.partieIntId =''" data-placeholder="..." style="width: 100%;">
+                    <option value="">Tous les Clients</option>
+                    <option ng-repeat="client in listeClientCache" value="{{client.id}}">{{client.abreviation}}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3" ng-controller="DatepickerDController">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">Date</label>
+                  </div>
+                  <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                    ng-init="ficheCouranteRecherche.dateEntreMin =''" ng-model="ficheCouranteRecherche.dateEntreMin"
+                    is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                    close-text="Close" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3" ng-controller="DatepickerDController">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">Et</label>
+                  </div>
+                  <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                    ng-init="ficheCouranteRecherche.dateEntreMax =''" ng-model="ficheCouranteRecherche.dateEntreMax"
+                    is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                    close-text="Close" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">Type Liv.</label>
+                  </div>
+                  <input type="numeric" class="form-control" ng-model="ficheCouranteRecherche.typeLivraison"
+                    ng-init="ficheCouranteRecherche.typeLivraison =''" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">Poids S.Entre</label>
+                  </div>
+                  <input type="number" step="any" class="form-control" ng-init="ficheCouranteRecherche.poidsSortieMin"
+                    ng-model="ficheCouranteRecherche.poidsSortieMin" />
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text ms-Label">ET :</label>
+                  </div>
+                  <input type="number" step="any" class="form-control" ng-init="ficheCouranteRecherche.poidsSortieMax"
+                    ng-model="ficheCouranteRecherche.poidsSortieMax" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="pull-right">
+          <button class="btn-action btn" ng-click="rechercherFiche(ficheCouranteRecherche)">
+            Rechercher
+          </button>
+          <button class="btn-action btn" ng-click="annulerAjout()">
+            Annuler
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-md-12">
+      <div class="title-ajout line">
+        Liste des fiches avec calcul des co&ucirc;ts
+      </div>
+
+      <div class="row">
+        <div class="input-icon right mb10 col-md-3 pull-right">
+          <input placeholder="Taper un terme de recherche" type="text" ng-model="filterOptions.filterText"
+            class="form-control" />
+        </div>
+      </div>
+
+      <div style="height: 500px;" ng-grid="gridOptions"></div>
+    </div>
+  </div>
+</div>

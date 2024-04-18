@@ -1,0 +1,20 @@
+<div ng-controller="stockMPcontroller">
+    <div ng-if="ITEM == 'etat'">
+      <div ng-include="'views/front/stockMP/etat/etat.html'"></div>
+    </div>
+    <div ng-if="ITEM == 'historique'">
+      <div ng-include="'views/front/stockMP/historique/historique.html'"></div>
+    </div>
+
+    <div ng-if="ITEM == 'entree'">
+        <div ng-include="'views/front/stockMP/entree/entree.html'"></div>
+      </div>
+      <div ng-if="ITEM == 'sortie'">
+        <div ng-include="'views/front/stockMP/sortie/sortie.html'"></div>
+      </div>
+      <div ng-if="ITEM == 'tableaudebord'">
+        <div ng-include="'views/front/stockMP/tableaudebord/tableaudebord.html'"></div>
+      </div>
+    
+  </div>
+  

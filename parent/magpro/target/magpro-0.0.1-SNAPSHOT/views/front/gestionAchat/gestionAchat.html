@@ -1,0 +1,43 @@
+
+<div ng-controller="MenugestionAchatController">
+  <div ng-if="ITEM == 'bcAchat'">
+    <div
+      ng-include="'views/front/gestionAchat/bonCommande/bonCommande.html'"
+    ></div>
+  </div>
+  <div ng-if="ITEM == 'reception'">
+    <div ng-include="'views/front/gestionAchat/reception/reception.html'"></div>
+  </div>
+  <div ng-if="ITEM == 'receptionDetail'">
+    <div
+      ng-include="'views/front/gestionAchat/reception/receptionDetail.html'"
+    ></div>
+  </div>
+  <div ng-if="ITEM == 'factureAchat'">
+    <div
+      ng-include="'views/front/gestionAchat/facture/factureAchat.html'"
+    ></div>
+  </div>
+  <div ng-if="ITEM == 'factureAchatDetail'">
+    <div
+      ng-include="'views/front/gestionAchat/facture/factureAchatDetail.html'"
+    ></div>
+  </div>
+  <div ng-if="ITEM == 'factureAvoirAchat'">
+    <div
+      ng-include="'views/front/gestionAchat/facture/factureAvoirAchat.html'"
+    ></div>
+  </div>
+
+  <div ng-if="ITEM == 'factureRetourAchat'">
+    <div
+      ng-include="'views/front/gestionAchat/facture/factureRetourAchat.html'"
+    ></div>
+  </div>
+  
+    <div ng-if="ITEM == 'prixFournisseur'">
+    <div
+      ng-include="'views/front/gestionAchat/prixFournisseur/prixFournisseur.html'"
+    ></div>
+  </div>
+</div>
