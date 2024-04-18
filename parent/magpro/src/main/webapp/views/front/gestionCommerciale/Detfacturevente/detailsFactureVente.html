@@ -1,0 +1,530 @@
+<script type="text/javascript">
+  var CommandBarElements = document.querySelectorAll(".ms-CommandBar");
+  for (var i = 0; i < CommandBarElements.length; i++) {
+    new fabric['CommandBar'](CommandBarElements[i]);
+  }
+
+  var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+  for (var i = 0; i < SearchBoxElements.length; i++) {
+    new fabric['SearchBox'](SearchBoxElements[i]);
+  }
+
+</script>
+
+
+
+
+
+<div class="container-fluid" ng-controller="detailsFactureVenteController" style="background-color: #fff;">
+
+  <div class="row" ng-show="traitementEnCoursGenererAll =='true'">
+    <div class="col-sm-5"></div>
+    <div class="col-sm-2">
+      <br>
+      <div ng-click="traitementEnCoursGenererAll ='false'">
+
+
+        <div class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+
+
+
+
+      </div>
+
+    </div>
+    <div class="col-sm-5"></div>
+
+  </div>
+
+  <div class="row" ng-show="traitementEnCours=='true'" ng-click="traitementEnCours ='false'">
+    <div class="col-sm-5"></div>
+    <div class="col-sm-2">
+      <br>
+      <div>
+        <div>
+
+          <div class="lds-spinner">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div></div>
+        <div>{{msg}}</div>
+
+
+      </div>
+
+    </div>
+    <div class="col-sm-5"></div>
+
+  </div>
+
+
+  <div class="row" ng-hide="hiddenNotif">
+
+    <div class="col-sm-8"></div>
+    <div class="col-sm-4">
+      <br> <span>
+        <alert type="success" class="alert-success-sauvegarde light"
+          style="text-align: center !important; background-color: #1BC5BD !important">
+          <span ng-bind-html="'Facture Vente enregistr&eacute;e avec succ&egrave;s.' | safe_html"></span>
+          <a> <i class="fa fa-times close-notif" ng-click="closeNotif()" style="color: #fff !important;"></i>
+          </a>
+        </alert>
+      </span>
+    </div>
+  </div>
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-sm-12">
+      <br /> <span
+      class="ms-ListItem-secondaryText float-right font-italic"> <b>Facture Détaillé</b>
+    </span> 
+  <span class="ms-ListItem-primaryText">Critére de Recherche</span>
+  <br />
+      
+
+      <div class="ms-CommandBar ms-CommandBar--navBar">
+        <div class="ms-CommandBar-sideCommands">
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div>
+        <div class="ms-CommandBar-mainArea">
+          
+
+
+
+          <div class="ms-CommandButton ms-CommandButton--drop">
+            <button class="ms-CommandButton-button" ng-click="downloadAllFacturesExcel(factureVenteCourant)">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"  ><i
+                  class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+              <span class="ms-CommandButton-dropdownIcon"><i class="ms-Icon ms-Icon--ChevronDown"></i></span>
+            </button>
+           
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="rechercherFactureVente(factureVenteCourant)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+              <span class="ms-CommandButton-label">Rechercher</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <form class="form-horizontal" name="rechercheFactureVenteForm" id="rechercheFactureVenteForm">
+            <!--  <div class="row" ng-hide="hiddenNotif">
+              <div class="col-sm-8">
+              </div>
+              <div class="col-sm-4">
+
+
+                <span>
+                  <alert type="success" class="alert-success-sauvegarde light"
+                    style="text-align: center !important; background-color: #1BC5BD !important"> <span
+                      ng-bind-html="'Facture enregistrer avec succ&egrave;s.' | safe_html"></span>
+                    <a> <i class="fa fa-times close-notif" ng-click="closeNotif()" style="color: #fff !important;"></i>
+                    </a> </alert>
+                </span>
+
+              </div>
+            </div> -->
+
+            <div class="row">
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">R&eacute;f.Facture</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.referenceFacture =''"
+                      ng-model="factureVenteCourant.referenceFacture" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <select ui-select2 ng-model="factureVenteCourant.partieIntId" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Clients</option>
+                      <option ng-repeat="client in listePartieInteresseeCache | filter:{famillePartieInteressee:1}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">R&eacute;f.BL</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.referenceBl =''"
+                      ng-model="factureVenteCourant.referenceBl" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Produit</label>
+                    </div>
+                    <select ui-select2 ng-model="factureVenteCourant.produitId"
+                      ng-init="factureVenteCourant.produitId =''" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Produits</option>
+                      <option ng-repeat="prod in listeProduitCache" value="{{prod.id}}">{{prod.designation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label"> Date Fac.Entree</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="factureVenteCourant.dateFactureMin =''" ng-model="factureVenteCourant.dateFactureMin"
+                      is-open="opened" datepicker-options="dateOptions" date-disabled="enabled(date, mode)"
+                      ng-required="false" close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label"> ET</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="factureVenteCourant.dateFactureMax =''" ng-model="factureVenteCourant.dateFactureMax"
+                      is-open="opened" datepicker-options="dateOptions" date-disabled="enabled(date, mode)"
+                      ng-required="false" close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Prix Entre</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.prixMin =''"
+                      ng-model="factureVenteCourant.prixMin" type="number" min="0" pattern="^\d*(\.\d{0,2})?$"
+                      placeholder="0.00" value="0" name="prixMin" />
+                  </div>
+                  <div ng-show="
+                  rechercheFactureVenteForm.prixMin.$dirty && rechercheFactureVenteForm.prixMin.$invalid"
+                    class="error">
+                    <div ng-show="rechercheFactureVenteForm.prixMin.$error">
+                      La valeur doit être supérieure ou égale à 0 !
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">ET</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.prixMax =''"
+                      ng-model="factureVenteCourant.prixMax" type="number" min="0" pattern="^\d*(\.\d{0,2})?$"
+                      placeholder="0.00" value="0" name="prixMax" />
+                  </div>
+                  <div ng-show="
+                  rechercheFactureVenteForm.prixMax.$dirty && rechercheFactureVenteForm.prixMax.$invalid"
+                    class="error">
+                    <div ng-show="rechercheFactureVenteForm.prixMax.$error">
+                      La valeur doit être supérieure ou égale à 0 !
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+            
+
+              
+
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Quantit&eacute; Entre</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.quantiteDe =''"
+                      ng-model="factureVenteCourant.quantiteDe" type="number" min="0" pattern="^\d*(\.\d{0,2})?$"
+                      placeholder="0" value="0" name="metrageMin" />
+                  </div>
+
+                  <div ng-show="
+                  rechercheFactureVenteForm.metrageMin.$dirty && rechercheFactureVenteForm.metrageMin.$invalid"
+                    class="error">
+                    <div ng-show="rechercheFactureVenteForm.metrageMin.$error">
+                      La valeur doit être supérieure ou égale à 0 !
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">ET</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.quantiteA =''"
+                      ng-model="factureVenteCourant.quantiteA" type="number" min="0" pattern="^\d*(\.\d{0,2})?$"
+                      placeholder="0" value="0" name="metrageMax" />
+                  </div>
+                  <div ng-show="
+                  rechercheFactureVenteForm.metrageMax.$dirty && rechercheFactureVenteForm.metrageMax.$invalid"
+                    class="error">
+                    <div ng-show="rechercheFactureVenteForm.metrageMax.$error">
+                      La valeur doit être supérieure ou égale à 0 !
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label"> Date Echeance De</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-model="factureVenteCourant.dateEcheanceDe" is-open="opened" datepicker-options="dateOptions"
+                      date-disabled="enabled(date, mode)" close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label"> Date Echeance De</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-model="factureVenteCourant.dateEcheanceA" is-open="opened" datepicker-options="dateOptions"
+                      date-disabled="enabled(date, mode)" close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           
+             
+              
+
+            </div>
+
+
+            <div class="row">
+            
+            
+               <div class="col-sm-4">
+                 <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">R&eacute;f.Commande</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.refCommande =''"
+                      ng-model="factureVenteCourant.refCommande"
+                      />
+                  </div>
+                </div>
+              </div>
+            
+            
+            
+            
+                    
+              
+            
+            
+            
+            
+              
+
+              <div class="col-sm-3" ng-show="clientActif.blackMode==true">
+
+               
+              </div>
+              
+              
+                <div class="col-sm-3">
+
+                
+              </div>
+
+
+            </div>
+            
+            
+            
+            
+               <div class="row">
+               
+              
+              
+              
+              
+              
+                        
+            
+                 </div>
+            
+            
+
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-md-12">
+
+      <span class="ms-ListItem-primaryText line">Liste Detail Facture</span>
+      <div style="height: 500px;" ng-grid="gridOptions"></div>
+    </div>
+  </div>
+
+
+  <div id="light" class="white_content">
+    <pop-up type="delete-bonVente"></pop-up>
+  </div>
+  <div id="fade" class="black_overlay"></div>
+</div>

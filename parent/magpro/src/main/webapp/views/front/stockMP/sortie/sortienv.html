@@ -1,0 +1,926 @@
+<script type="text/javascript">
+	var CommandBarElements = document.querySelectorAll(".ms-CommandBar");
+	for (var i = 0; i < CommandBarElements.length; i++) {
+		new fabric['CommandBar'](CommandBarElements[i]);
+	}
+
+	var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+	for (var i = 0; i < SearchBoxElements.length; i++) {
+		new fabric['SearchBox'](SearchBoxElements[i]);
+	}
+</script>
+
+<div class="container-fluid" ng-controller="StockControllerSortie" style="background-color: #fff;">
+
+	<div class="row" ng-show="displayMode != 'edit'">
+
+		<div class="col-sm-12">
+			<br /> <span class="ms-ListItem-primaryText">Crit&eacute;re
+				de Recherche</span> <br />
+
+			<div class="ms-CommandBar ms-CommandBar--navBar">
+				<div class="ms-CommandBar-sideCommands">
+					<div class="ms-SearchBox ms-SearchBox--commandBar">
+						<input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
+						<label class="ms-SearchBox-label"> <i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+							<span class="ms-SearchBox-text">Rechercher</span>
+						</label>
+						<div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span> <span
+									class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+						<div class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--ChromeBack"></i></span>
+								<span class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+						<div class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Filter"></i></span> <span
+									class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+					</div>
+
+					<div class="ms-CommandButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+									class="ms-Icon ms-Icon--Info"></i></span> <span
+								class="ms-CommandButton-label"></span>
+						</button>
+					</div>
+				</div>
+				<div class="ms-CommandBar-mainArea">
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="AffectationMouvement()">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--CirclePlus"></i></span> <span
+								class="ms-CommandButton-label">Ajouter</span>
+						</button>
+					</div>
+
+
+					<div class="ms-CommandButton ms-CommandButton--dropdown">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+									class="ms-Icon ms-Icon--Generate"></i></span> <span
+								class="ms-CommandButton-label">G&eacute;n&eacute;rer</span> <span
+								class="ms-CommandButton-dropdownIcon"><i
+									class="ms-Icon ms-Icon--ChevronDown"></i></span>
+						</button>
+						<ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1"
+									ng-click="downloadAllProduits(bonMouvementStockCourante)">PDF</a></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1" (
+									ng-click="downloadAllProduitsExcel(bonMouvementStockCourante)">Excel</a></li>
+						</ul>
+					</div>
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="rechercherStockSortie(mouvementStockCourante)">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+							<span class="ms-CommandButton-label">Rechercher</span>
+						</button>
+					</div>
+
+					<div class="ms-CommandButton">
+						<button class="ms-CommandButton-button" ng-click="annulerAjoutS()">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span> <span
+								class="ms-CommandButton-label">Annuler</span>
+						</button>
+					</div>
+					<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+						<button class="ms-CommandButton-button">
+							<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span> <span
+								class="ms-CommandButton-label"></span>
+						</button>
+						<ul class="ms-ContextualMenu is-opened">
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+								<i class="ms-Icon ms-Icon--Folder"></i></li>
+							<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">Plain Text
+									Document</a> <i class="ms-Icon ms-Icon--Document"></i></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">A
+									Coffee</a> <i class="ms-Icon ms-Icon--Coffee"></i></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+									tabindex="1">Picture</a> <i class="ms-Icon ms-Icon--Picture"></i></li>
+							<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+								<i class="ms-Icon ms-Icon--Money"></i></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="rechercheSSForm" id="rechercheSSForm">
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+										<span class="input-group-text">N°.</span>
+										</div>
+										<input class="form-control" ng-model="bonMouvementStockCourante.n"
+											ng-init="bonMouvementStockCourante.n=''" />
+									</div>
+								</div>
+							</div>
+
+
+						
+							<div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												Date Entre </span>
+										</div>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											ng-init="receptionAchatCourante.dateIntroductionDu =''"
+											ng-model="receptionAchatCourante.dateIntroductionDu" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+											close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+														color: rgb(54, 153, 255);
+														background-color: rgb(225, 240, 255);
+													">
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+
+
+							<div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												Et</span>
+										</div>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											ng-init="receptionAchatCourante.dateIntroductionDu =''"
+											ng-model="receptionAchatCourante.dateIntroductionDu" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+											close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+														color: rgb(54, 153, 255);
+														background-color: rgb(225, 240, 255);
+													">
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col-sm-3">
+							<div class="form-group">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">Raison de Sortie </span>
+									</div>
+									<select class="form-control" ng-model="bonMouvementStockCourante.sortie"
+										ng-init="bonMouvementStockCourante.sortie=''">
+										<option value="">Tous</option>
+										<option ng-repeat="raison in ListeRaisonCache"
+										value="{{raison.id}}">{{raison.designation}}</option>
+										
+									</select>
+								</div>
+							</div>
+
+							</div>
+
+
+
+
+						</div>
+
+						<div class="row">
+
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Valeur Entre</span>
+										</div>
+										
+										<input class="form-control" ng-model="bonMouvementStockCourante.valeur"
+											ng-init="bonMouvementStockCourante.valeur=''" />
+									</div>
+								</div>
+							</div>
+
+							<div class="col-sm-3">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Et</span>
+										</div>
+										<input class="form-control" ng-model="bonMouvementStockCourante.et"
+											ng-init="bonMouvementStockCourante.et=''" />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Etat </span>
+										</div>
+										<select  class="form-control" ng-model="bonMouvementStockCourante.etat"
+										ng-init="bonMouvementStockCourante.etat = ''">
+
+											<option value=""></option>
+											<option value="">validation Conforme</option>
+											<option value="=">Aucune Validation Conforme</option>
+											<option value="">Attente de validation</option>
+										</select>
+									</div>
+								</div>
+							</div>
+
+
+
+
+
+						</div>
+
+
+						
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row" ng-show="displayMode == 'edit'">
+
+
+		<div class="col-md-12">
+			<div class="panel panel-primary">
+				<br /> <span class="ms-ListItem-primaryText">Donn&eacute;es
+					G&eacute;n&eacute;rales</span> <br />
+
+				<div class="ms-CommandBar ms-CommandBar--navBar">
+					<div class="ms-CommandBar-sideCommands">
+
+
+						<div class="ms-CommandButton ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+										class="ms-Icon ms-Icon--Info"></i></span> <span
+									class="ms-CommandButton-label"></span>
+							</button>
+						</div>
+					</div>
+					<div class="ms-CommandBar-mainArea">
+						<div class="ms-CommandButton" permission="['StockMP_Sortie_Edit']">
+							<button class="ms-CommandButton-button" ng-click="sauvegarderAjout(bonMouvementStockCourante)">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span> <span
+									class="ms-CommandButton-label">Enregistrer</span>
+							</button>
+						</div>
+
+						<div class="ms-CommandButton">
+							<button class="ms-CommandButton-button" ng-click="annulerAjoutS()">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Back"></i></span> <span
+									class="ms-CommandButton-label">Retour</span>
+							</button>
+						</div>
+						<div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+							<button class="ms-CommandButton-button">
+								<span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span> <span
+									class="ms-CommandButton-label"></span>
+							</button>
+							<ul class="ms-ContextualMenu is-opened">
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+										tabindex="1">Folder</a> <i class="ms-Icon ms-Icon--Folder"></i></li>
+								<li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">Plain
+										Text
+										Document</a> <i class="ms-Icon ms-Icon--Document"></i></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link" tabindex="1">A
+										Coffee</a> <i class="ms-Icon ms-Icon--Coffee"></i></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+										tabindex="1">Picture</a> <i class="ms-Icon ms-Icon--Picture"></i></li>
+								<li class="ms-ContextualMenu-item"><a class="ms-ContextualMenu-link"
+										tabindex="1">Money</a> <i class="ms-Icon ms-Icon--Money"></i></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="panel-body" ng-show="displayMode == 'edit'">
+					<br />
+					<div class="row" ng-show="displayMode == 'edit'">
+						<div class="col-sm-12" ng-show="hiddenNotifSucc">
+							<div class="ms-MessageBar ms-MessageBar--error mx-auto float-left"
+								style="width: 300px !important;">
+								<div class="ms-MessageBar-content">
+									<div class="ms-MessageBar-icon">
+										<i class="ms-Icon ms-Icon--ErrorBadge"></i>
+									</div>
+									<div class="ms-MessageBar-text">
+										<b>Article existe d&egrave;ja</b> <br />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br />
+
+					<form class="form-horizontal" id="creationSSForm" name="creationSSForm">
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Réf.</label>
+										</div>
+										<input type="text" class="form-control" ng-model="bonMouvementStockCourante.reference"
+											ng-change="bonMouvementStockCourante.reference = bonMouvementStockCourante.reference.toUpperCase()"
+											required />
+									</div>
+								</div>
+							</div>
+
+
+							
+							<div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												Date Sortie </span>
+										</div>
+										<input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+											ng-init="receptionAchatCourante.dateIntroductionDu =''"
+											ng-model="receptionAchatCourante.dateIntroductionDu" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+											close-text="Close" />
+
+										<div class="input-group-append">
+											<button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+														color: rgb(54, 153, 255);
+														background-color: rgb(225, 240, 255);
+													">
+												<i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Responsable</label>
+										</div>
+										<input type="text" class="form-control" ng-model="bonMouvementStockCourante.responsable"
+											ng-change="bonMouvementStockCourante.responsable = bonMouvementStockCourante.responsable.toUpperCase()"
+											required />
+									</div>
+								</div>
+							</div>
+
+
+
+
+						</div>
+
+
+
+						<div class="row">
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Raison de sortie</label>
+										</div>
+										<input type="text" class="form-control" ng-model="bonMouvementStockCourante.raison"
+											ng-change="bonMouvementStockCourante.raison = bonMouvementStockCourante.raison.toUpperCase()"
+											required />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Valeur</label>
+										</div>
+										<input type="text" class="form-control" ng-model="bonMouvementStockCourante.valeur"
+										ng-change="bonMouvementStockCourante.valeur = bonMouvementStockCourante.valeur.toUpperCase()"
+										required />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label">OF</label>
+										</div>
+										<input type="text" class="form-control"
+											ng-model="bonMouvementStockCourante.of"
+											ng-change="bonMouvementStockCourante.of = bonMouvementStockCourante.of.toUpperCase()" />
+									</div>
+								</div>
+							</div>
+
+
+
+
+
+						</div>
+
+
+						<div class="row">
+
+
+			         	<div class="col-sm-4">
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<label class="input-group-text ms-Label is-required">Description </label>
+										</div>
+										<input type="text" class="form-control" ng-model="bonMouvementStockCourante.description"
+										ng-change="bonMouvementStockCourante.description = bonMouvementStockCourante.description.toUpperCase()"
+										required />
+									</div>
+								</div>
+							</div>
+
+
+
+						</div>
+
+
+
+
+
+
+						<span class="ms-CommandButton-icon float-left"
+												ng-click="addArticleProduit(bonMouvementStockCourante.articleProduits)"> <a href="javascript:void(0)"> <i
+														class="ms-Icon ms-Icon--CirclePlus"
+														style="color: rgb(0, 0, 255) !important;"> </i>
+												</a>
+						</span>
+
+
+
+
+
+					</form>
+				</div>
+
+
+
+				<div class="ms-PanelExample">
+					<div class="ms-Grid-row">
+					<div class="ms-ListItem-primaryText">
+						Articles<span class="fadeIn hidePlus" id="articlesS">+</span>
+					</div>
+					</div>
+					<div class="ms-Grid-row"> </div>
+					<div class="ms-Grid" id="panel-articlesS" ng-controller="PopupStockSortieCtrl">
+						<div class="ms-Grid-row">
+
+							<div class="ms-Grid-col ms-sm6 ">
+								Material / Painting <span id="fournituresBtnS"
+										class="fadeOut pull-right hidePlusFourniture">-</span>
+								</div>
+							</div>
+					
+							<div class="ms-Grid-row">
+
+						 <div id="fournituresS">
+							<div class="ms-form-group">
+								<div class="ms-Grid-row">
+									<form class="form-horizontal" name="magasinFormFourniture"
+										id=magasinFormFourniture>
+										<div class="ms-Grid-col ms-sm3">
+											<div class="input-group input-group-sm">
+												<span class="input-group-addon label1" id="basic-addon1">Store</span>
+												<select class="form-control" required
+													ng-model="idMagasin">
+													<option ng-repeat="magasin in listeMagasinCache"
+														value="{{magasin.id}}">{{magasin.designation}}</option>
+												</select>
+											</div>
+										</div>
+									</form>
+									<button class="ms-Button">
+										<span class="ms-Button-label" >search</span> 
+									  </button>
+								</div>
+							</div>
+							<table
+								class="table table-bordered table-condensed table-head-color"
+								style="width: 100%">
+								<thead>
+									<tr>
+										<th style="width: 20%">Ref.</th>
+										<th style="width: 30%">Description</th>
+										<th style="width: 13%">Family</th>
+										<th style="width: 10%">Q.Act.</th>
+										<th style="width: 6%">Q.MVT</th>
+										<th style="width: 6%">Q.R</th>
+										<th style="width: 6%">P.U</th>
+										<th style="width: 6%">P.T</th>
+										<th style="width: 10%">Empl.</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr
+										ng-repeat="articleF in listArticlesFournitures track by $index">
+										<td><span ng-model="articleF.referenceArticle">{{articleF.referenceArticle
+												|| 'empty' }}</span></td>
+										<td><span ng-model="articleF.designationArticle">{{articleF.designationArticle
+												|| 'empty' }}</span></td>
+										<td><span ng-model="articleF.familleArticle">{{articleF.familleArticle
+												|| 'empty' }}</span></td>
+										<td><input type="text"
+											ng-disabled="true"
+											ng-model="listArticlesFournitures[$index].quantiteAct"
+											class="form-control" /></td>
+										<td><input type="text"
+											ng-change="controlEmptyField('fourniture')"
+											ng-disabled="!listArticlesFournitures[$index].nouveau"
+											ng-model="listArticlesFournitures[$index].quantiteReelle"
+											class="form-control" /></td>
+										<td><input type="text"
+											ng-disabled="true"
+											ng-model="listArticlesFournitures[$index].prixUnitaire"
+											class="form-control" /></td>
+										<td><span
+											ng-model="listArticlesFournitures[$index].prixTotal">{{listArticlesFournitures[$index].prixTotal}}</span></td>
+										<td><input type="text"
+											ng-disabled="true"
+											ng-model="listArticlesFournitures[$index].emplacement"
+											class="form-control" /></td>
+										<td style="white-space: nowrap" class="pull-right">
+											<!-- form -->
+											<form editable-form name="rowform"
+												ng-show="rowform.$visible"
+												class="form-buttons form-inline"></form>
+											<div class="buttons" ng-show="!rowform.$visible">
+												<button data-nodrag
+													class="btn btn-sm glyphicon glyphicon-trash"
+													ng-click="removeMvtFourniture($index)"></button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<!-- En chargement -->
+							<!-- <div class="ms-Spinner ms-Spinner--large" ng-show="isLoading">
+								<div class="ms-Spinner-label">
+								  Loading...
+								</div>
+							  </div> -->
+						</div>
+					</div>
+					</div>
+
+
+					
+					<div class="ms-Panel ms-Panel--xxl"  style="margin-top:150px;">
+					  <button class="ms-Panel-closeButton ms-PanelAction-close">
+						<i class="ms-Panel-closeIcon ms-Icon ms-Icon--Cancel"></i>
+					  </button>
+					
+
+						
+				
+						<div class="ms-Panel-content">
+							<div class="ms-Panel-contentInner">
+								<p class="ms-Panel-headerText" >Add Materials</p>
+							
+								 <div class="modal-body"  style="
+								 
+								 background-color: #fff;
+							   ">
+							
+									<div class="panel-body">
+										<div class="form-group">
+												
+												<!-- Recherche avec un champ universel -->
+												
+												<div class="row">
+													<div class="col-sm-5">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">1st Search Criteria :
+															</span> 
+															<input type="text" ng-model="articleCourantrecherchePopup.query1" class="form-control">	
+														</div>
+													</div>
+							
+													<div class="col-sm-5">
+														<div class="input-group input-group-sm">
+															<span class="input-group-addon label1" id="basic-addon1">2nd Search Criteria :
+															</span> 
+															<input type="text" ng-model="articleCourantrecherchePopup.query2" class="form-control">	
+														</div>
+													</div>
+							
+												<div class="pull-right">
+													<button class="btn-action3 btn" ng-click="annulerAjoutPopUp()">Cancel</button>
+												</div>
+											</div>
+										</div>
+							
+									<div style="max-height: 300px; overflow: scroll" >
+									
+										<table
+																		class="table table-bordered table-condensed table-head-color">
+																		<thead>
+																			<tr>
+																				<th style="width:5%">Lot</th>
+																				<th style="width:20%">Reference</th>
+																				<th style="width:30%">Description</th>
+																				<th style="width:15%">Family</th>
+																				<th style="width:15%">SubFamily</th>
+																				<th style="width:5%"></th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<!-- Un champ de recherche universel -->
+																			<tr
+																				ng-repeat="article in myCurrentList | filter:articleCourantrecherchePopup.query1 | filter:articleCourantrecherchePopup.query2">
+																			
+																					<td>
+																						<input type="checkbox" ng-model="article.isChecked" ng-change="addSelectedArticle(article)">
+																					</td>
+																					<td>
+																					<span
+																					ng-model="article.reference"
+																					>{{article.reference || 'empty' }}</span></td>
+							
+																					<td>
+																					<span
+																					ng-model="article.Lot"
+																					>{{article.Lot || 'empty' }}</span></td>
+																				<td>
+																					<span
+																					ng-model="article.designation"
+																					>{{article.designation || 'empty' }}</span></td>
+																				<td>
+																					<span
+																					ng-model="article.famille"
+																					>{{article.famille || 'empty' }}</span></td>
+																				<td>
+																					<span
+																					ng-model="article.sousFamille"
+																					>{{article.sousFamille || 'empty' }}</span>
+																				</td>
+																				<td>
+																					<span class="rawform-icon2"></span>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+											</div>
+										</div>
+									<div class="modal-footer">
+										<button class="btn-action btn" ng-click="ok()">OK</button>
+										<button class="btn-action btn" ng-click="cancel()">Cancel</button>
+									</div>
+						  
+						</div>
+					  </div>
+					</div>
+				  </div>
+
+
+
+
+
+
+
+
+
+
+	
+					
+		<span class="ms-ListItem-primaryText">Documents</span>
+		<div class="panel-body" ng-show="displayMode == 'edit'">
+		   <div class="form-group">
+			   <div class="row">
+				   <table class="table table-bordered table-condensed table-head-color">
+					   <thead>
+						   <tr>
+							   <th class="hidden">Id</th>
+							   <th>Type Document</th>
+							   <th>Document</th>
+							   <th><span class="ms-CommandButton-icon float-right"
+									   ng-click="ajoutDocumentProduit()"> <a href="javascript:void(0)"> <i
+											   class="ms-Icon ms-Icon--CirclePlus"
+											   style="color: #fff !important;"> </i>
+									   </a>
+								   </span></th>
+						   </tr>
+					   </thead>
+					   <tbody>
+						   <tr ng-repeat="documentProduit in listeDocumentProduit">
+							   <td class="hidden"><span editable-text="documentProduit.id" e-name="id"
+									   e-form="rowform" e-required> {{ documentProduit.id ||
+									   'empty' }} </span></td>
+							   <td><span editable-select="documentProduit.typeDocumentId"
+									   e-ng-options="s.id as s.designation for s in listeTypeDocumentsCache"
+									   e-name="idTypeDocPROD" e-form="rowform">
+									   {{showStatus(documentProduit.typeDocumentId)}} </span></td>
+							   <td ng-controller="UploadCtrl">
+
+								   <div class="form-group">
+									   <div class="col-sm-12">
+										   <div class="fileinput fileinput-new" data-provides="fileinput">
+											   <input class="hidden" type="text" ng-model="name" /> <span
+												   class="btn btn-file btn-sm"
+												   style="color: rgb(54, 153, 255); background-color: rgb(225, 240, 255); border-color: transparent;"
+												   ng-show="!isUploaded && rowform.$visible"> <span
+													   class="fileinput-new">Selectionner fichier</span> <input
+													   type="file" class="custom-file-input"
+													   file-model="myFile" />
+												   <span href="#" class="close fileinput-exists pull-right"
+													   style="float: none; padding: 0;"
+													   data-dismiss="fileinput"
+													   ng-show="!isUploaded && rowform.$visible">x</span>
+											   </span> <span class="fileinput-filename"
+												   ng-model="documentProduit.path" e-name="path"
+												   e-form="rowform" e-required>{{documentProduit.path}}</span>
+										   </div>
+										   <a class="btn btn-sm pull-right"
+											   style="margin-right: 10px; cursor: pointer;"
+											   ng-click="downloadFile(documentProduit.uidDocument, 'ELEMENT_DE_BASE_PRODUIT')">
+											   <span class="svg-icon svg-icon-primary svg-icon-2x">
+												   <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Download.svg-->
+												   <svg xmlns="http://www.w3.org/2000/svg"
+													   xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+													   height="24px" viewBox="0 0 24 24" version="1.1">
+													   <g stroke="none" stroke-width="1" fill="none"
+														   fill-rule="evenodd">
+														   <rect x="0" y="0" width="24" height="24" />
+														   <path
+															   d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+															   fill="#000000" fill-rule="nonzero"
+															   opacity="0.3" />
+														   <rect fill="#000000" opacity="0.3"
+															   transform="translate(12.000000, 8.000000) rotate(-180.000000) translate(-12.000000, -8.000000) "
+															   x="11" y="1" width="2" height="14" rx="1" />
+														   <path
+															   d="M7.70710678,15.7071068 C7.31658249,16.0976311 6.68341751,16.0976311 6.29289322,15.7071068 C5.90236893,15.3165825 5.90236893,14.6834175 6.29289322,14.2928932 L11.2928932,9.29289322 C11.6689749,8.91681153 12.2736364,8.90091039 12.6689647,9.25670585 L17.6689647,13.7567059 C18.0794748,14.1261649 18.1127532,14.7584547 17.7432941,15.1689647 C17.3738351,15.5794748 16.7415453,15.6127532 16.3310353,15.2432941 L12.0362375,11.3779761 L7.70710678,15.7071068 Z"
+															   fill="#000000" fill-rule="nonzero"
+															   transform="translate(12.000004, 12.499999) rotate(-180.000000) translate(-12.000004, -12.499999) " />
+													   </g>
+												   </svg>
+												   <!--end::Svg Icon-->
+											   </span>
+										   </a>
+										   <a ng-click="uploadFile('ELEMENT_DE_BASE_PRODUIT')"
+											   ng-show="!isUploaded && rowform.$visible"
+											   class="btn btn-sm fileinput-upload pull-right"> <span
+												   class="svg-icon svg-icon-primary svg-icon-2x">
+												   <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo1\dist/../src/media/svg/icons\Files\Upload.svg-->
+												   <svg xmlns="http://www.w3.org/2000/svg"
+													   xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+													   height="24px" viewBox="0 0 24 24" version="1.1">
+													   <g stroke="none" stroke-width="1" fill="none"
+														   fill-rule="evenodd">
+														   <rect x="0" y="0" width="24" height="24" />
+														   <path
+															   d="M2,13 C2,12.5 2.5,12 3,12 C3.5,12 4,12.5 4,13 C4,13.3333333 4,15 4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 C2,15 2,13.3333333 2,13 Z"
+															   fill="#000000" fill-rule="nonzero"
+															   opacity="0.3" />
+														   <rect fill="#000000" opacity="0.3" x="11" y="2"
+															   width="2" height="14" rx="1" />
+														   <path
+															   d="M12.0362375,3.37797611 L7.70710678,7.70710678 C7.31658249,8.09763107 6.68341751,8.09763107 6.29289322,7.70710678 C5.90236893,7.31658249 5.90236893,6.68341751 6.29289322,6.29289322 L11.2928932,1.29289322 C11.6689749,0.916811528 12.2736364,0.900910387 12.6689647,1.25670585 L17.6689647,5.75670585 C18.0794748,6.12616487 18.1127532,6.75845471 17.7432941,7.16896473 C17.3738351,7.57947475 16.7415453,7.61275317 16.3310353,7.24329415 L12.0362375,3.37797611 Z"
+															   fill="#000000" fill-rule="nonzero" />
+													   </g>
+												   </svg>
+												   <!--end::Svg Icon--></span>
+										   </a>
+									   </div>
+								   </div> <input class="hidden" ng-model="documentProduit.uidDocument"
+									   e-name="uidDocument" e-form="rowform" e-required value="{{ documentProduit.uidDocument ||
+												   'empty' }} " />
+							   </td>
+							   <td style="white-space: nowrap;">
+
+								   <form editable-form name="rowform"
+									   onbeforesave="saveDocumentProduit($data, documentProduit.id)"
+									   ng-show="rowform.$visible" class="form-buttons form-inline float-right"
+									   shown="DocumentProduitInserree == documentProduit">
+									   <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-sm">
+										   <i class="ms-Icon ms-Icon--Download" aria-hidden="true"></i>
+									   </button>
+									   <button type="button" ng-disabled="rowform.$waiting"
+										   ng-click="cancelAddProduit(rowform, $index, documentProduit.id, documentProduit.typeDocumentId, listeDocumentProduit )"
+										   class="btn btn-sm">
+										   <i class="ms-Icon ms-Icon--Cancel" aria-hidden="true"></i>
+									   </button>
+								   </form>
+								   <div class="buttons float-right " ng-show="!rowform.$visible">
+									   <button data-nodrag class="btn btn-sm" ng-click="rowform.$show()">
+										   <i class="ms-Icon ms-Icon--Edit" aria-hidden="true"></i>
+									   </button>
+									   <button data-nodrag class="btn btn-sm"
+										   ng-click="removeDocumentProduit($index)">
+										   <i class="ms-Icon ms-Icon--Delete" aria-hidden="true"></i>
+
+									   </button>
+								   </div>
+							   </td>
+						   </tr>
+					   </tbody>
+				   </table>
+			   </div>
+		   </div>
+	   </div>
+
+	
+
+
+
+
+    </div>
+
+
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-md-12">
+
+
+			<br /> <span class="ms-ListItem-primaryText">Liste</span> <br />
+			<div class="title-ajout line"></div>
+
+
+
+			<div style="height: 500px;" ng-grid="gridOptionsS"></div>
+		</div>
+	</div>
+
+	<div id="light" class="white_content">
+		<pop-up type="delete-article"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+
+</div>
+		
+
+<script type="text/javascript">
+			var PanelExamples = document.getElementsByClassName("ms-PanelExample");
+			for (var i = 0; i < PanelExamples.length; i++) {
+			  (function() {
+				var PanelExampleButton = PanelExamples[i].querySelector(".ms-Button");
+				var PanelExamplePanel = PanelExamples[i].querySelector(".ms-Panel");
+				PanelExampleButton.addEventListener("click", function(i) {
+				  new fabric['Panel'](PanelExamplePanel);
+				});
+			  }());
+			}
+</script>
+
+
+	<!-- 	  <script>
+			var SpinnerElements = document.querySelectorAll(".ms-Spinner");
+			for (var i = 0; i < SpinnerElements.length; i++) {
+			  new fabric['Spinner'](SpinnerElements[i]);
+			}
+		  </script> -->

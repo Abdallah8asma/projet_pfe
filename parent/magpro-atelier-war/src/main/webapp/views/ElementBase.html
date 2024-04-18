@@ -1,0 +1,9 @@
+<!-- Menu ElementBase -->
+<div ng-controller="MenuElementBaseController">
+		<ul class="nav nav-gpro">
+			<li ng-class="{active:ITEM == 'article' }"><a ng-click="goArticle()" translate="article"></a></li>
+			<li ng-class="{active:ITEM == 'produit' }"><a ng-click="goProduit()" translate="produit"></a></li>
+		</ul>
+ <div ng-include="'views/articles.html'" ng-show="ITEM == 'article'"></div>
+ <div ng-include="'views/produit.html'" ng-show="ITEM == 'produit'"></div>	
+ </div>	

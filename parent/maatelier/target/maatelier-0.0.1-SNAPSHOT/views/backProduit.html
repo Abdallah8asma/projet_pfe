@@ -1,0 +1,127 @@
+
+<div class="container-fluid back-office-background"
+	ng-controller="BackProduitCtrl2">
+	<!-- Critere  -->
+	<div class="spacer3">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="form-group">
+					<div class="col-sm-3">
+						<div class="input-group">
+							<span class="input-group-addon label1" id="basic-addon1">Param&eacute;trage</span>
+							<select name="selector1" id="selector1" class="form-control"
+								ng-model="parametre">
+								<option>Famille</option>
+								<option>Sous Famille</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- /***** famille *******/ -->
+	<div class="row" ng-show="parametre=='Famille'"
+		ng-controller="backFamilleProduitController">
+		<div class="form-group">
+		<div class="panel panel-primary">
+			<table
+				class="table table-bordered table-condensed back-table-head-color">
+				<thead>
+					<tr>
+						<th style="width: 35%">Famille</th>
+						<th style="width: 25%"></th>
+					</tr>
+				</thead>
+				<tr ng-repeat="famille in listeFamille">
+					<td>
+						<!-- editable representat (text with validation) --> <span
+						editable-text="famille.designation" e-name="nom" e-form="rowform"
+						e-required> {{ famille.designation || 'empty' }} </span>
+					</td>
+
+
+					<td style="white-space: nowrap">
+						<!-- form -->
+						<form editable-form name="rowform"
+							onbeforesave="saveFamille(famille, famille.id)"
+							ng-show="rowform.$visible" class="form-buttons form-inline"
+							shown="familleCourante == famille">
+							<button type="submit" ng-disabled="rowform.$waiting"
+								class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+							<button type="button" ng-disabled="rowform.$waiting"
+								ng-click="cancelAdd(rowform, $index, famille.id, famille.designation, listeFamille )"
+								class="btn btn-sm glyphicon glyphicon-remove"></button>
+						</form>
+						<div class="buttons" ng-show="!rowform.$visible">
+							<button data-nodrag class="btn btn-sm glyphicon glyphicon-pencil"
+								ng-click="rowform.$show()"></button>
+							<button data-nodrag class="btn btn-sm glyphicon glyphicon-trash"
+								ng-click="removeFamilleProduit($index)"></button>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<button class="btn btn-action3 pull-right spacer2"
+				ng-click="ajouterFamille()">Ajouter</button>
+		</div>
+		</div>
+	</div>
+
+	<!-- /*****sous famille *******/ -->
+	<div class="row" ng-show="parametre=='Sous Famille'"
+		ng-controller="backSousSousFamilleProduitController">
+		<div class="form-group">
+		<div class="panel panel-primary">
+			<table
+				class="table table-bordered table-condensed back-table-head-color">
+				<thead>
+					<tr>
+						<th style="width: 35%">Sous Famille</th>
+						<th style="width: 35%">Famille</th>
+						<th style="width: 25%"></th>
+					</tr>
+				</thead>
+				<tr ng-repeat="sousFamille in listeSousFamille">
+					<td>
+						<!-- editable sousFamille (text with validation) --> <span
+						editable-text="sousFamille.designation" e-name="designation" e-form="rowform"
+						e-required> {{ sousFamille.designation || 'empty' }} </span>
+					</td>
+					<td>
+					 <span editable-select="sousFamille.familleProduitId"
+						  e-ng-options="s.id as s.designation for s in listeFamille"
+						  e-name="familleProduitId" e-form="rowform"> {{
+						showStatusFamille(sousFamille.familleProduitId) }} </span> 
+					</td>
+
+
+					<td style="white-space: nowrap">
+						<!-- form -->
+						<form editable-form name="rowform"
+							onbeforesave="saveSousFamille(sousFamille, sousFamille.id)"
+							ng-show="rowform.$visible" class="form-buttons form-inline"
+							shown="SousFamilleCourante == sousFamille">
+							<button type="submit" ng-disabled="rowform.$waiting"
+								class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+							<button type="button" ng-disabled="rowform.$waiting"
+								ng-click="cancelAdd(rowform, $index, sousFamille.id, sousFamille.designation, listeSousFamille )"
+								class="btn btn-sm glyphicon glyphicon-remove"></button>
+						</form>
+						<div class="buttons" ng-show="!rowform.$visible">
+							<button data-nodrag class="btn btn-sm glyphicon glyphicon-pencil"
+								ng-click="rowform.$show()"></button>
+							<button data-nodrag class="btn btn-sm glyphicon glyphicon-trash"
+								ng-click="removeSousFamilleProduit($index)"></button>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<button class="btn btn-action3 pull-right spacer2"
+				ng-click="ajouterSousFamille()">Ajouter</button>
+		</div>
+		</div>
+	</div>
+
+<div>

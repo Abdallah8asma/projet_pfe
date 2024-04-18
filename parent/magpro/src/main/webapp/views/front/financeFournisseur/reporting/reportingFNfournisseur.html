@@ -1,0 +1,884 @@
+  <style>
+    .center {
+      margin: auto;
+      width: 35%;
+      padding-left: 30px;
+    }
+  </style>
+
+<div class="panel-body" style="background-color: #fff;">
+  <div class="row">
+    <div class="col-sm-12">
+     
+    </div>
+
+    <div class="col-sm-12" ng-controller="GcReportingFNfournisseurClientCtrl">
+    
+
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Founisseur</span>
+
+      <div class="ms-CommandBar ms-CommandBar--navBar">
+     <!--    <div class="ms-CommandBar-sideCommands">
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div> -->
+        <div class="ms-CommandBar-mainArea">
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheClientForm.$valid;"
+              ng-click="downloadClientReporting(ordreFabricationCourant,1)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">Fiche</span>
+            </button>
+          </div>
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheClientForm.$valid;"
+              ng-click="downloadClientReporting(ordreFabricationCourant,2)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+              <span class="ms-CommandButton-label">Releve</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerOFAjout()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+           <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div> 
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <form class="form-horizontal" id="rechercheClientForm" name="rechercheClientForm">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label is-required input-group-text">
+                        Fournisseur</label>
+                    </div>
+                    <select ui-select2 ng-model="ordreFabricationCourant.clientId"
+                      ng-init="ordreFabricationCourant.clientId =''" data-placeholder="..." required
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="client in ListClientCache | filter:{famillePartieInteressee:2}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Date</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="ordreFabricationCourant.dateMin =initDate" ng-model="ordreFabricationCourant.dateMin"
+                      ng-required="true" is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Au</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="ordreFabricationCourant.dateMax =dt" ng-model="ordreFabricationCourant.dateMax"
+                      is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)" close-text="Close"
+                      ng-required="true" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+        
+        
+              <div class="row" ng-show="isEnCoursChargement">
+          
+          <div class="center"  ng-click="isEnCoursChargement =false">
+            <div class="center">
+              <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+  
+        <!--     <div class="center">{{msgChargement}}</div> -->
+          </div>
+         </div>
+        
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12" ng-controller="GcReportingFNfournisseurSituationCtrl">
+
+
+
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Situation</span>
+
+      <div class="ms-CommandBar ms-CommandBar--navBar">
+       <!--  <div class="ms-CommandBar-sideCommands">
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div> -->
+        <div class="ms-CommandBar-mainArea">
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheSituationForm.$valid;"
+              ng-click="downloadAllOrdreFabrication(ordreFabricationCourant, 1)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">Tous</span>
+            </button>
+          </div>
+              <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheSituationForm.$valid;"
+              ng-click="downloadAllOrdreFabricationExcel(ordreFabricationCourant, 1)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">Tous/Excel</span>
+            </button>
+          </div>
+          
+          
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheSituationForm.$valid;"
+              ng-click="downloadAllOrdreFabrication(ordreFabricationCourant, 2)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">Génerer</span>
+            </button>
+          </div>
+          
+          
+            <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheSituationForm.$valid;"
+              ng-click="downloadAllOrdreFabricationExcel(ordreFabricationCourant, 2)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">Génerer/Excel</span>
+            </button>
+          </div>
+
+          <div ng-hide="true" class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerChaineAjout()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+           <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div> 
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <form class="form-horizontal" id="rechercheSituationForm" name="rechercheSituationForm">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text"> Region</label>
+                    </div>
+                    <select ui-select2 ng-model="ordreFabricationCourant.regionId"
+                      ng-init="ordreFabricationCourant.regionId =''" data-placeholder="..." class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Toutes les Regions</option>
+                      <option ng-repeat="region in ListRegion" value="{{region.id}}">{{region.designation}}</option>
+                    </select>
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Fournisseur</label>
+                    </div>
+                    <select ui-select2 ng-model="ordreFabricationCourant.partieIntId"
+                      ng-init="ordreFabricationCourant.partieIntId =''" data-placeholder="..." class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="client in ListClientCache | filter:{famillePartieInteressee:2}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Date</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="ordreFabricationCourant.dateMin =initDate" ng-model="ordreFabricationCourant.dateMin"
+                      ng-required="true" is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Au</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" ng-required="true" datepicker-popup="{{format}}"
+                      ng-init="ordreFabricationCourant.dateMax =dt" ng-model="ordreFabricationCourant.dateMax"
+                      ng-required="true" is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+         
+         
+               <div class="row" ng-show="isEnCoursChargement">
+          
+          <div class="center"  ng-click="isEnCoursChargement =false">
+            <div class="center">
+              <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+  
+        <!--     <div class="center">{{msgChargement}}</div> -->
+          </div>
+         </div>
+         
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12" ng-controller="GcReportingFNfournisseurBRnonPayeCtrl">
+
+
+    
+
+      <span class="ms-ListItem-primaryText" style="font-size:130%">BR Non pay&eacutees</span>
+
+      <div class="ms-CommandBar  ms-CommandBar--navBar">
+      <!--   <div class="ms-CommandBar-sideCommands">
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div> -->
+        <div class="ms-CommandBar-mainArea">
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheClientForm.$valid;"
+              ng-click="downloadBLNonPaye(bonLivraisonVenteCourant)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">Génerer</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+          <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div> 
+        </div>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <form class="form-horizontal" id="rechercheClientForm" name="rechercheClientForm">
+            <div class="row">
+            
+
+              <div class="col-sm-4">
+
+
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Date Liv.Entre</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="bonLivraisonVenteCourant.dateLivraisonMin =''"
+                      ng-model="bonLivraisonVenteCourant.dateLivraisonMin" is-open="opened"
+                      datepicker-options="dateOptions" date-disabled="enabled(date, mode)" ng-required="false"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+
+              </div>
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+
+
+
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">ET</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="bonLivraisonVenteCourant.dateLivraisonMax =''"
+                      ng-model="bonLivraisonVenteCourant.dateLivraisonMax" is-open="opened"
+                      datepicker-options="dateOptions" date-disabled="enabled(date, mode)" ng-required="false"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+                <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Fournisseur</label>
+                    </div>
+                    <select ui-select2 ng-init="bonLivraisonVenteCourant.partieIntId =''"
+                      ng-model="bonLivraisonVenteCourant.partieIntId" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="client in listePartieInteresseeCache | filter:{famillePartieInteressee:2}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Prix Entre</label>
+                    </div>
+                    <input class="form-control" ng-init="bonLivraisonVenteCourant.prixMin =''"
+                      ng-model="bonLivraisonVenteCourant.prixMin" />
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text"> ET</label>
+                    </div>
+                    <input class="form-control" ng-init="bonLivraisonVenteCourant.prixMax =''"
+                      ng-model="bonLivraisonVenteCourant.prixMax" />
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Quantit&eacute;</label>
+                    </div>
+                    <input class="form-control" ng-init="bonLivraisonVenteCourant.metrageMin =''"
+                      ng-model="bonLivraisonVenteCourant.metrageMin" />
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text"> ET</label>
+                    </div>
+                    <input class="form-control" ng-init="bonLivraisonVenteCourant.metrageMax =''"
+                      ng-model="bonLivraisonVenteCourant.metrageMax" />
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+         
+               <div class="row" ng-show="isEnCoursChargement">
+          
+          <div class="center"  ng-click="isEnCoursChargement =false">
+            <div class="center">
+              <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+  
+        <!--     <div class="center">{{msgChargement}}</div> -->
+          </div>
+         </div>
+         
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-sm-12" ng-controller="GcReportingFNfournisseurFactureNonPayeCtrl">
+
+
+  
+
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Facture Non pay&eacutees</span>
+
+      <div class="ms-CommandBar  ms-CommandBar--navBar">
+     <!--    <div class="ms-CommandBar-sideCommands">
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div> -->
+        <div class="ms-CommandBar-mainArea">
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-disabled="!rechercheClientForm.$valid;"
+              ng-click="downloadFactureNonPaye(factureVenteCourant)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">Génerer</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+        <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <form class="form-horizontal" id="rechercheClientForm" name="rechercheClientForm">
+            <div class="row">
+           
+
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Date Fac.Entree</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="factureVenteCourant.dateFactureMin =''" ng-model="factureVenteCourant.dateFactureMin"
+                      is-open="opened" datepicker-options="dateOptions" date-disabled="enabled(date, mode)"
+                      ng-required="false" close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+
+
+
+
+
+
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Date Fac.Entree</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="factureVenteCourant.dateFactureMax =''" ng-model="factureVenteCourant.dateFactureMax"
+                      is-open="opened" datepicker-options="dateOptions" date-disabled="enabled(date, mode)"
+                      ng-required="false" close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+                 <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Fournisseur</label>
+                    </div>
+                    <select ui-select2 ng-model="factureVenteCourant.partieIntId" data-placeholder=""
+                      class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="client in listePartieInteresseeCache | filter:{famillePartieInteressee:2}"
+                        value="{{client.id}}">{{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Prix Entre</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.prixMin =''"
+                      ng-model="factureVenteCourant.prixMin" />
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text"> ET</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.prixMax =''"
+                      ng-model="factureVenteCourant.prixMax" />
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Quantit&eacute; Entre</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.metrageMin =''"
+                      ng-model="factureVenteCourant.metrageMin" />
+                  </div>
+                </div>
+
+
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text"> ET</label>
+                    </div>
+                    <input class="form-control" ng-init="factureVenteCourant.metrageMax =''"
+                      ng-model="factureVenteCourant.metrageMax" />
+                  </div>
+                </div>
+
+              </div>
+            </div>
+         
+         
+               <div class="row" ng-show="isEnCoursChargement">
+          
+          <div class="center"  ng-click="isEnCoursChargement =false">
+            <div class="center">
+              <div class="lds-spinner">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+  
+        <!--     <div class="center">{{msgChargement}}</div> -->
+          </div>
+         </div>
+         
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

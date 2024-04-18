@@ -1,0 +1,375 @@
+<!-- Menu Partie Interesse -->
+		<ul class="nav back-nav-gpro">
+			<li class="active"><a>Parties Int&eacute;ress&eacute;es</a></li>
+			<li><a>Evaluations</a></li>
+		</ul>
+<div class="container-fluid back-office-background"
+	ng-controller="BackPartieInteresseeCtrl">
+	<div ng-show="displayMenu == 'pi'">
+		<!-- Critere  -->
+		<div class="spacer3">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<div class="col-sm-3">
+							<div class="input-group">
+								<span class="input-group-addon label1" id="basic-addon1">Param&eacute;trage</span>
+								<select ng-change="selectAction()" name="selector1"
+									id="selector1" class="form-control" ng-model="parametre">
+									<option>Famille</option>
+									<option>Cat&eacute;gorie</option>
+									<option>Type PI</option>
+									<option>Devise</option>
+									<option>TypeDoc</option>
+									<option>Site</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- /*********devise **********/ -->
+		<div class="row" ng-show="parametre=='Devise'" ng-controller="backDeviseController">
+			<div class="panel panel-primary">
+				<table
+					class="table table-bordered table-condensed back-table-head-color">
+					<thead>
+						<tr>
+							<th class="hidden">Id</th>
+							<th style="width: 35%">Devise</th>
+							<th style="width: 25%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="devise in listeDevise">
+						<td class="hidden">
+								<!-- editable representat (text with validation) --> <span
+								editable-text="devise.id" e-name="id" e-form="rowform"
+								e-required> {{ devise.id || 'empty' }} </span>
+							</td>
+							<td>
+								<!-- editable representat (text with validation) --> <span
+								editable-text="devise.designation" e-name="designation" e-form="rowform"
+								e-required> {{ devise.designation || 'empty' }} </span>
+							</td>
+
+							<td style="white-space: nowrap">
+								<!-- form -->
+								<form editable-form name="rowform"
+									onbeforesave="saveDevise(devise,devise.id)"
+									ng-show="rowform.$visible" class="form-buttons form-inline"
+									shown="DeviseCourante == devise">
+									<button type="submit" ng-disabled="rowform.$waiting"
+										class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+									
+									<button type="button" ng-disabled="rowform.$waiting" 
+									    ng-click="cancelAdd(rowform, $index, devise.id, devise.designation, listeDevise )" 
+									    class="btn btn-sm glyphicon glyphicon-remove"></button>
+								</form>
+								<div class="buttons" ng-show="!rowform.$visible">
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-pencil"
+										ng-click="rowform.$show()"></button>
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-trash"
+										ng-click="removeDevise($index)"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-action3 pull-right spacer2"
+					ng-click="ajouterDevise()">Ajouter</button>
+			</div>
+		</div>
+
+		<!-- /***** famille *******/ -->
+		<div class="row" ng-show="parametre=='Famille'"
+			ng-controller="backFamillePIController">
+			<div class="panel panel-primary" data-heading="Editable Rows">
+				<table
+					class="table table-bordered table-condensed back-table-head-color">
+					<thead>
+						<tr>
+							<th style="width: 35%">Famille</th>
+							<th style="width: 30%">Achat</th>
+							<th style="width: 30%">Vente
+							</td>
+							<th style="width: 25%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="famille in listeFamille">
+							<td>
+								<!-- editable representat (text with validation) --> <span
+								editable-text="famille.designation" e-name="designation"
+								e-form="rowform" e-required> {{ famille.designation ||
+									'empty' }} </span>
+							</td>
+							<td><input type="checkbox" name="achat"
+								ng-model="famille.achat"></td>
+							<td><input type="checkbox" name="vente"
+								ng-model="famille.vente"></td>
+							<td style="white-space: nowrap">
+								<!-- form -->
+								<form editable-form name="rowform"
+									onbeforesave="saveFamille(famille, famille.id)"
+									ng-show="rowform.$visible" class="form-buttons form-inline"
+									shown="familleCourante == famille">
+									<button type="submit" ng-disabled="rowform.$waiting"
+										class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+									
+									<button type="button" ng-disabled="rowform.$waiting" 
+									    ng-click="cancelAdd(rowform, $index, famille.id, famille.designation,listeFamille )" 
+									    class="btn btn-sm glyphicon glyphicon-remove"></button>
+								</form>
+								<div class="buttons" ng-show="!rowform.$visible">
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-pencil"
+										ng-click="rowform.$show()"></button>
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-trash"
+										ng-click="removeFamilleProduit($index)"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-action3 pull-right spacer2"
+					ng-click="ajouterFamille()">Ajouter</button>
+			</div>
+		</div>
+
+		<!-- /***** type *******/ -->
+		<div class="row" ng-show="parametre=='Type PI'"
+			ng-controller="backTypePIController">
+			<div class="panel panel-primary">
+				<table
+					class="table table-bordered table-condensed back-table-head-color">
+					<thead>
+						<tr>
+							<th class="hidden">Id</th>
+							<th style="width: 35%">Type Partie Interess&eacute;</th>
+							<th style="width: 25%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="type in listeType">
+						<td class="hidden">
+								<!-- editable representat (text with validation) --> <span
+								editable-text="type.designation" e-name="id" e-form="rowform"
+								e-required> {{ type.id || 'empty' }} </span>
+							</td>
+							<td>
+								<!-- editable representat (text with validation) --> <span
+								editable-text="type.designation" e-name="nom" e-form="rowform"
+								e-required> {{ type.designation || 'empty' }} </span>
+							</td>
+
+							<td style="white-space: nowrap">
+								<!-- form -->
+								<form editable-form name="rowform"
+									onbeforesave="saveTypePI(type,type.id)"
+									ng-show="rowform.$visible" class="form-buttons form-inline"
+									shown="TypePiCourante == type">
+									<button type="submit" ng-disabled="rowform.$waiting"
+										class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+									<button type="button" ng-disabled="rowform.$waiting" 
+									    ng-click="cancelAdd(rowform, $index, type.id, type.designation,listeType )" 
+									    class="btn btn-sm glyphicon glyphicon-remove"></button>
+								</form>
+								<div class="buttons" ng-show="!rowform.$visible">
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-pencil"
+										ng-click="rowform.$show()"></button>
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-trash"
+										ng-click="removeTypePI($index)"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-action3 pull-right spacer2"
+					ng-click="ajouterTypePI()">Ajouter</button>
+			</div>
+		</div>
+		
+		<!-- /*********TypeDoc **********/ -->
+		<div class="row" ng-show="parametre=='TypeDoc'" ng-controller="backTypeDocController">
+			<div class="panel panel-primary">
+				<table
+					class="table table-bordered table-condensed back-table-head-color">
+					<thead>
+						<tr>
+							<th class="hidden">Id</th>
+							<th style="width: 35%">Type Document</th>
+							<th style="width: 25%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="typeDoc in listeTypeDoc">
+						<td class="hidden">
+								<!-- editable representat (text with validation) --> <span
+								editable-text="typeDoc.id" e-name="id" e-form="rowform"
+								e-required> {{ typeDoc.id || 'empty' }} </span>
+							</td>
+							<td>
+								<!-- editable representat (text with validation) --> <span
+								editable-text="typeDoc.designation" e-name="designation" e-form="rowform"
+								e-required> {{ typeDoc.designation || 'empty' }} </span>
+							</td>
+
+							<td style="white-space: nowrap">
+								<!-- form -->
+								<form editable-form name="rowform"
+									onbeforesave="saveTypeDoc(typeDoc,typeDoc.id)"
+									ng-show="rowform.$visible" class="form-buttons form-inline"
+									shown="TypeDocInserree == typeDoc">
+									<button type="submit" ng-disabled="rowform.$waiting"
+										class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+									
+									<button type="button" ng-disabled="rowform.$waiting" 
+									    ng-click="cancelAdd(rowform, $index, typeDoc.id, typeDoc.designation, listeTypeDoc )" 
+									    class="btn btn-sm glyphicon glyphicon-remove"></button>
+								</form>
+								<div class="buttons" ng-show="!rowform.$visible">
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-pencil"
+										ng-click="rowform.$show()"></button>
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-trash"
+										ng-click="removeTypeDoc($index)"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-action3 pull-right spacer2"
+					ng-click="ajoutTypeDoc()">Ajouter</button>
+			</div>
+		</div>
+
+		<!-- /*****categorie *******/ -->
+		<div class="row" ng-show="parametre=='Cat&eacute;gorie'"
+			ng-controller="backCathegoriePIController">
+			<div panel-class="panel panel-primary">
+				<panel-controls> <a href="javascript:;"><i
+					class="fa fa-cog"></i></a> <a href="javascript:;"><i
+					class="fa fa-wrench"></i></a> <a href=""><panel-control-collapse
+						class="fa fa-chevron-down"></panel-control-collapse></a> </panel-controls>
+				<table
+					class="table table-bordered table-condensed back-table-head-color">
+					<thead>
+						<tr>
+							<th style="width: 35%">Cat&eacute;gorie</th>
+							<th style="width: 25%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="cathegorie in listeCathegorie">
+							<td>
+								<!-- editable taille (text with validation) --> <span
+								editable-text="cathegorie.designation" e-name="nom"
+								e-form="rowform" e-required> {{ cathegorie.designation ||
+									'empty' }} </span>
+							</td>
+							<td style="white-space: nowrap">
+								<!-- form -->
+								<form editable-form name="rowform"
+									onbeforesave="saveCathegorie(cathegorie,cathegorie.id)"
+									ng-show="rowform.$visible" class="form-buttons form-inline"
+									shown="CategorieCourante == cathegorie">
+									
+									<button type="submit" ng-disabled="rowform.$waiting"
+										class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+										
+									<button type="button" ng-disabled="rowform.$waiting" 
+									    ng-click="cancelAdd(rowform, $index, cathegorie.id, cathegorie.designation, listeCathegorie )" 
+									    class="btn btn-sm glyphicon glyphicon-remove"></button>
+								</form>
+
+								<div class="buttons" ng-show="!rowform.$visible">
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-pencil"
+										ng-click="rowform.$show()"></button>
+									<button data-nodrag
+										class="btn glyphicon btn-sm glyphicon-trash"
+										ng-click="removecathegorie($index)"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-action3 pull-right spacer2"
+					ng-click="ajouterCathegorie()">Ajouter</button>
+			</div>
+		</div>
+
+		<!-- /*****Site *******/ -->
+		<div class="row" ng-show="parametre=='Site'"
+			ng-controller="backSitePIController">
+			<div panel-class="panel panel-primary">
+				<panel-controls> <a href="javascript:;"><i
+					class="fa fa-cog"></i></a> <a href="javascript:;"><i
+					class="fa fa-wrench"></i></a> <a href=""><panel-control-collapse
+						class="fa fa-chevron-down"></panel-control-collapse></a> </panel-controls>
+				<table
+					class="table table-bordered table-condensed back-table-head-color">
+					<thead>
+						<tr>
+							<th style="width: 35%">Cat&eacute;gorie</th>
+							<th style="width: 25%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="site in listeSite">
+							<td>
+								<!-- editable taille (text with validation) --> <span
+								editable-text="site.nom" e-name="nom"
+								e-form="rowform" e-required> {{ site.nom ||
+									'empty' }} </span>
+							</td>
+							<td style="white-space: nowrap">
+								<!-- form -->
+								<form editable-form name="rowform"
+									onbeforesave="saveSite($data,site.id)"
+									ng-show="rowform.$visible" class="form-buttons form-inline"
+									shown="siteCourante == site">
+									
+									<button type="submit" ng-disabled="rowform.$waiting"
+										class="btn btn-sm glyphicon glyphicon-save" aria-hidden="true"></button>
+										
+									<button type="button" ng-disabled="rowform.$waiting" 
+									    ng-click="cancelAdd(rowform, $index, site.id, site.nom, listeSite )" 
+									    class="btn btn-sm glyphicon glyphicon-remove"></button>
+								</form>
+
+								<div class="buttons" ng-show="!rowform.$visible">
+									<button data-nodrag
+										class="btn btn-sm glyphicon glyphicon-pencil"
+										ng-click="rowform.$show()"></button>
+									<button data-nodrag
+										class="btn glyphicon btn-sm glyphicon-trash"
+										ng-click="removeSite($index)"></button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<button class="btn btn-action3 pull-right spacer2"
+					ng-click="ajouterSite()">Ajouter</button>
+			</div>
+		</div>
+
+
+	</div>
+	<div ng-show="displayMenu == 'eb'">
+		<h1>Hello Word Element de base</h1>
+	</div>
+	<div ng-show="displayMenu == 'gc'">
+		<h1>Hello Word Gestion commerciale</h1>
+	</div>
+</div>

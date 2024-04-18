@@ -1,0 +1,72 @@
+<!-- Front -->
+<div class="container-fluid" ng-controller="EnginController"
+	style="background-color: #fff;">
+	<!-- Recherche marche -->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-sm-12">
+			<button class="btn btn-action2 pull-right"
+				ng-click="affectationMarche(marcheCourant)">Ajouter</button>
+		</div>
+		<div class="col-sm-12">
+			<div class="title-ajout">Camion</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="creationMarcheForm"
+						id="creationMarcheForm">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Marque</span>
+										<input class="form-control"
+											ng-model="marcheCourant.marque" />
+									</div>
+								</div>
+							</div>
+			              	<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Type</span>
+										<input class="form-control"
+											ng-model="marcheCourant.type" />
+									</div>
+								</div>
+							</div>
+								<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Immatriculation</span>
+										<input class="form-control"
+											ng-model="marcheCourant.immatriculation" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">TU</span>
+										<input class="form-control"
+											ng-model="marcheCourant.serie" />
+									</div>
+								</div>
+							</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Grid containner -->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-md-12">
+			<div class="title-ajout line">Liste des Camions</div>
+			<div style="height: 500px;" ng-grid="gridOptions"></div>
+		</div>
+	</div>
+
+	<!-- Popup de suppression -->
+	<div id="light" class="white_content">
+		<pop-up type="delete-marche"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+</div>

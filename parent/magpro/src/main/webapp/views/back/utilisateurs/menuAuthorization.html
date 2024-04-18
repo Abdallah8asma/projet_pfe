@@ -1,0 +1,37 @@
+<!-- Menu gestion Users / operations -->
+<div ng-controller="MenuAuthorizationController">
+	<!-- <ul class="nav nav-gpro">
+	
+	
+	<li ng-class="{active:ITEM == 'managerUser' }"><a
+			ng-click="goManagerUser()">Utilisateurs</a></li>
+			
+				<li ng-class="{active:ITEM == 'managerOperation' }"><a
+			ng-click="goManagerOperation()">Operations</a></li>
+			
+		<li ng-class="{active:ITEM == 'managerBoutique' }"><a
+			ng-click="goManagerBoutique()">Boutiques</a></li>
+	
+	</ul> -->
+	
+	
+	
+	 <div ng-if="ITEM == 'managerUser'">
+     <div ng-include="'views/back/utilisateurs/manageUsers.html'"></div>
+   </div> 
+   <div ng-if="ITEM == 'managerOperation'">
+     <div ng-include="'views/back/utilisateurs/manageOperations.html'"></div>
+   </div>
+      <div ng-if="ITEM == 'managerBoutique'">
+     <div ng-include="'views/back/utilisateurs/manageBoutique.html'"></div>
+   </div>
+   
+    <div ng-if="ITEM == 'managerSociete'">
+     <div ng-include="'views/back/utilisateurs/manageSociete.html'"></div>
+   </div>
+   
+    <div ng-if="ITEM == 'managerMagasin'">
+     <div ng-include="'views/back/utilisateurs/manageMagasin.html'"></div>
+   </div>
+   
+</div>	

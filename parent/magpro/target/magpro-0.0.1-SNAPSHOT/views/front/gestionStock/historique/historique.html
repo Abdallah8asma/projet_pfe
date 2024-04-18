@@ -1,0 +1,274 @@
+	<ul class="nav nav-gpro spacer">
+		<li><a
+			href="#/stock">Mvt. Stock</a></li>
+<!-- 		<li><a href="#/stockMvtOF">Mvt. OF</a></li> -->
+		<li class="active"><a href="#/historique" >Historique</a></li>
+		<li><a href="#/etat">Etat</a></li>
+		<!-- <li><a href="#/historiqueS">Inventaire Magasin</a></li> -->
+	    <li ><a href="#/ChartGraphique">Tableau de Bord</a></li>
+	</ul>
+	
+<div class="container-fluid" ng-controller="HistoriqueCtrl">
+	<div class="col-sm-12">
+		<div class="panel-body ">
+			<!-- Critere de recherche -->
+			<div class="title-ajout">Crit&eacute;res de recherche</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" id="creationStockForm"
+						name="creationStockForm">
+						<div class="form-group">
+							<div class="row" ng-show="displayEtat == 'alert'">
+								<div class="col-sm-6">
+									<div class="alert alert-warning" role="alert">Veuillez choisir le type d'article</div>
+							</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Historique
+										</span> <select ui-select2 data-placeholder="..."
+											style="width: 100%; max-width: 188px;" ng-model="historiqueCourant.historique">
+											<option value="">Tous</option>
+											<option value="ENTREE">Entr&eacute;e</option>
+											<option value="SORTIE">Sortie</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Fournisseur
+										</span> <select ui-select2 data-placeholder="..."
+											style="width: 100%; max-width: 188px;"
+											ng-model="historiqueCourant.fournisseur">
+											<option value=''>Tous</option>
+											<option ng-repeat="fournisseur in listeFournisseurCache"
+												value="{{fournisseur.id}}">{{fournisseur.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Emplacement
+										</span> <input type="text" class="form-control"
+										ng-model="historiqueCourant.emplacement"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Type
+											Article </span> <select ui-select2 
+											style="width: 100%; max-width: 188px;"
+											ng-model="historiqueCourant.type"
+											ng-init="historiqueCourant.type='1'">
+											<option value="1">Produit chimique</option>
+											<option value="2">Fil</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Famille
+										</span> 
+										<select ui-select2 data-placeholder="..."
+											style="width: 100%; max-width: 188px;"
+										ng-model="historiqueCourant.famille">
+											<option value=''>Tous</option>
+											<option ng-repeat="famille in listeFamilleCache"
+											value="{{famille.id}}">{{famille.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Sous
+											Famille </span>
+											<select ui-select2 data-placeholder="..."
+											style="width: 100%; max-width: 188px;"
+										ng-model="historiqueCourant.Sousfamille">
+										<option value=''>Tous</option>
+										<option ng-repeat="Sousfamille in listeSousFamilleArticleCache"
+											value="{{Sousfamille.id}}">{{Sousfamille.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f&eacute;rence
+										</span>
+										<select ui-select2  
+										ng-model="historiqueCourant.refArticle"
+										data-placeholder="..."
+										style="width: 100% ; max-width: 188px; ">
+										<option value=''>Tous</option>
+										<option ng-repeat="article in listeArticle"
+											value="{{article.id}}">{{article.ref}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Article
+											 </span>
+											 
+										<select ui-select2  
+										ng-model="historiqueCourant.article"
+										data-placeholder="..."
+										style="width: 100% ; max-width: 188px; ">
+										<option value=''>Tous</option>
+										<option ng-repeat="article in listeArticle"
+											value="{{article.id}}">{{article.ref}}</option>
+										</select>
+								
+									</div>
+								</div>
+								<div class="col-sm-3">
+								<div class="input-group input-group-sm">
+									<span class="input-group-addon label1" id="basic-addon1">Magasin</span>
+									<select ui-select2 data-placeholder="..."
+											style="width: 100%; max-width: 188px;"
+										ng-model="historiqueCourant.magasin">
+										<option value=''>Tous</option>
+										<option ng-repeat="magasin in listeMagasinCache"
+											value="{{magasin.id}}">{{magasin.designation}}</option>
+									</select>
+								</div>
+							</div>
+								
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3" ng-controller="DatepickerDemoController">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+											Entre </span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}" ng-model="historiqueCourant.dateDu" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3" ng-controller="DatepickerDemoController">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Et
+										</span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}" ng-model="historiqueCourant.dateA" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">
+											Raison E/S </span> <select ui-select2 data-placeholder="..."
+											style="width: 100%; max-width: 188px;" ng-model="historiqueCourant.raison">
+											<option value=''>Tous</option>
+										<option ng-repeat="raison in ListeRaisonCache"
+											value="{{raison.id}}">{{raison.designation}}</option>
+									</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+<!-- 								<div class="col-sm-3"> -->
+<!-- 									<div class="input-group input-group-sm"> -->
+<!-- 										<span class="input-group-addon label1" id="basic-addon1">N&#176; -->
+<!-- 											OF </span> <select ui-select2 ng-model="historiqueCourant.ofId" -->
+<!-- 											data-placeholder="..." style="width: 100%; max-width: 188px;"> -->
+<!-- 											<OPTION value="">Tous les Ordres</OPTION> -->
+<!-- 											<option ng-repeat="of in listeOF" value="{{of.id}}">{{of.numero}}</option> -->
+<!-- 										</select> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Fournisseur
+										</span> <select ui-select2 data-placeholder="..."
+											style="width: 100%; max-width: 188px;"
+											ng-model="historiqueCourant.fournisseur">
+											<option value=''>Tous</option>
+											<option ng-repeat="fournisseur in listeFournisseurCache"
+												value="{{fournisseur.id}}">{{fournisseur.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+
+											<div class="col-sm-3">
+												<div class="input-group input-group-sm">
+													<span class="input-group-addon label1" id="basic-addon1">R&eacute;f.Mise</span>
+													<select ui-select2 data-placeholder="..."
+														ng-model="historiqueCourant.refMise"
+														style="width: 100%">
+														<option value=''>Tous</option>
+														<option ng-repeat="mise in ListeMises"
+															value="{{mise.reference}}">{{mise.reference}}</option>
+													</select>
+												</div>
+											</div>
+							</div>
+						</div>
+					</form>
+					<div class="pull-right">
+						<button class="btn-action btn" ng-click="voirHistorique()">Rechercher</button>
+						<button class="btn-action2 btn" ng-click="downloadEtatMvt()">Etat Mouvement</button>
+					    <button class="btn-action btn" ng-click="download(historiqueCourant.historique,historiqueCourant.type)">Rapport basique</button>
+<!-- 					    <button class="btn-action btn" ng-click="downloadDetaille(historiqueCourant.historique,historiqueCourant.type)">Rapport d&eacute;taill&eacute;</button> -->
+						<button class="btn-action btn" ng-click="resetFields()">Annuler</button>
+					</div>
+				</div>
+				
+			</div>
+			<!-- Etat des Fournitures -->
+				<div class="row" ng-show="displayEtat == 'fourniture'">
+			<div class="col-md-12">
+				<div class="title-ajout line">
+					Listes des fournitures</div>
+				<div panel-class="panel panel-primary">
+					<div style="height: 500px;" class="spacer4" ng-grid="gridOptions"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row" ng-show="displayEtat == 'filaCoudre'">
+			<div class="col-md-12">
+				<div class="title-ajout line">
+					Listes des Fils &agrave; Coudre</div>
+				<div panel-class="panel panel-primary">
+					<div style="height: 500px;" class="spacer4" ng-grid="gridOptionsFAC"></div>
+				</div>
+			</div>
+		</div>
+			<div class="row" ng-show="displayEtat == 'tissu'">
+			<div class="col-md-12">
+				<div class="title-ajout line">
+					Listes des Tissus</div>
+				<div panel-class="panel panel-primary">
+					<div style="height: 500px;" class="spacer4" ng-grid="gridOptionsTisuu"></div>
+				</div>
+			</div>
+		</div>
+		
+		</div>
+	</div>
+</div>

@@ -1,0 +1,47 @@
+{
+	"BUTTON_LANG_EN" : "الإنجليزية",
+  	"BUTTON_LANG_FR" : "الفرنسية",
+  	"BUTTON_LANG_AR" : "العربية",
+  	
+	"BUTTON_ADD" : "أضف",
+	"BUTTON_CANCEL" : "إلغاء",
+	"BUTTON_GENERATE" : "إنشاء",
+	"BUTTON_SHEARCH" : "ابحث",
+	"BUTTON_RETURN" :"عودة",
+	"BUTTON_SAVE" : "سجل",
+	"BUTTON_DUPLICATE" : "كرر",
+  	
+	"menu_gammeDeMontage": "مجموعة التركيبات",
+	"menu_tableauDeBord" : "لوحة القيادة",
+	"menu_partiesInteressee" :"الأطراف المعنية",
+	"menu_elementsDeBase" : "العناصر الأساسية",
+	"menu_gestionCommerciale" : "الإدارة التجارية",
+	"menu_gestionStock" : "إدارة المخزون",
+	"menu_GPAO" : "GPAO",
+	"menu_suiviCommande" : "تتبع الطلبية",
+	"menu_produit" : "المنتوج",
+	"menu_reception" : "استقبال",
+	"menu_rouleau" : "Rouleau",
+	"menu_mise" : "Mise",
+	"menu_misage" : "Misage",
+	"menu_logistique" : "الخدمات اللوجستية",
+	"menu_enroulage" : "Enroulage",
+	
+	"critereDeRecherche" : "معايير البحث",
+	
+	"prixEntre" : "السعر بين",
+	"et" : "و",
+	
+	"produit" : "المنتوج",
+		
+	"article" : "الصنف",
+	"article_ref" : "مرجع الصنف",
+	"article_list" : "قائمة الأصناف",
+	
+	"type" : "النوع",
+	"famille": "العائلة",
+	"sous_famille" : "الفصيلية",
+	"prix_unit" : "سعر الوحدة",
+	"pmp" : "P.M.P",
+	"site" : "الموقع"
+}

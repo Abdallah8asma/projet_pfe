@@ -1,0 +1,158 @@
+<div id="page-heading" style="height: 40px;">
+	<p style="font-family: sans-serif; color:#1F8597; font-size: 25px; padding-left: 50px; padding-top: 3px;">Chart Graphique</p>
+</div>
+
+<ul class="nav nav-gpro spacer">
+	<li><a href="#/stock">M.V.T Stock</a></li>
+	<li><a href="#/historiqueS">Historique</a></li>
+	<li><a href="#/etat">Etat</a></li>
+	<!-- <li><a href="#/historiqueS">Inventaire Magasin</a></li> -->
+	<li  class="active"><a href="#/stockChartsEntre">Chartes</a></li>
+</ul>
+
+<div class="container-fluid">
+	<div class="row">
+		
+		<div class="col-sm-1">
+			<ul class="nav-gproS">
+				<li class="active">
+					<a style="margin-top: 10px"
+					class="btn btn-action pull-right" href="#/stockChartsEntre">Entr&eacute;e</a>
+				</li>
+				<li>
+					<a style="margin-top: 10px"
+					class="btn btn-action pull-right" href="#/stockChartsSortie">Sortie&nbsp;</a>
+				</li>
+			</ul>
+		</div>
+
+
+
+<div class="col-sm-11 cadreERP" ng-controller="StockCE">
+
+	<div class="title-ajout" style="font-size: 18px;">Variation des Import - Tissu</div>
+
+	<div style="margin-left: 20px;">
+		<form ng-submit="ch()">
+			<!--  ng-controller="DatepickerDemoController" -->
+			<div class="col-sm-3">
+
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon label1" id="basic-addon1">
+						From</span> <input type="text" placeholder="YYYY-MM-DD"
+						class="form-control datepicker" datepicker-popup="{{format}}"
+						ng-model="datefrom" is-open="opened"
+						datepicker-options="dateOptions" date-="enabled(date, mode)"
+						ng-required="true" close-text="Close" required />
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default"
+							ng-click="open($event)">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon label1" id="basic-addon1"> To</span>
+					<input type="text" class="form-control datepicker"
+						datepicker-popup="{{format}}" ng-model="dateto" is-open="opened"
+						placeholder="YYYY-MM-DD" datepicker-options="dateOptions"
+						date-="enabled(date, mode)" ng-required="true" close-text="Close"
+						required />
+					<div class="input-group-btn">
+						<button type="button" class="btn btn-default"
+							ng-click="open($event)">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<input style="height: 27px; padding-top: 4px;" class="btn-action btn"
+				type="submit">
+		</form>
+
+	</div>
+
+	<div
+		style="font-size: 14px; margin-left: 30px; margin-top: 10px; padding-left: 230px; absolute; width: 577px; background-color: #FFDAD7; border-radius: 25px; color: #FD0000;">
+		{{err}}</div>
+	<div class="title-ajout"
+		style="font-size: 12px; margin-left: 30px; margin-top: 10px; absolute; color: #676767;">
+		Le nombre de resultats trouv&eacute;s: {{nombreResult1}}</div>
+	<div id="chartdiv" style="width: 100%; height: 400px;" ng-init="ch()"></div>
+
+
+	<div class="title-ajout" style="font-size: 18px;">Variation des ENTREE</div>
+
+	<div style="margin-left: 20px;">
+		<form ng-submit="chart2()">
+			<!--  ng-controller="DatepickerDemoController" -->
+			<div class="col-sm-3">
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon label1" id="basic-addon1">Sous
+						Famille </span> <select class="form-control" ng-model="sousFamilleId">
+						<option value=""></option>
+						<option ng-repeat="sousfamille in Listesousfamille"
+							value="{{sousfamille.id}}">{{sousfamille.designation}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-sm-3">
+				<div class="input-group input-group-sm">
+					<span class="input-group-addon label1" id="basic-addon1">Article
+					</span> <select class="form-control" ng-model="articleId">
+						<option value=""></option>
+						<option ng-repeat="article in Listearticle" value="{{article.id}}">{{article.designation}}</option>
+					</select>
+				</div>
+			</div>
+			<div style="float: left; margin-top: 10px;">
+				<div class="col-sm-3">
+
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon label1" id="basic-addon1">
+							From</span> <input type="text" placeholder="YYYY-MM-DD"
+							class="form-control datepicker" datepicker-popup="{{format}}"
+							ng-model="datefrom" is-open="opened"
+							datepicker-options="dateOptions" date-="enabled(date, mode)"
+							ng-required="true" close-text="Close" required />
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					<div class="input-group input-group-sm">
+						<span class="input-group-addon label1" id="basic-addon1">
+							To</span> <input type="text" class="form-control datepicker"
+							datepicker-popup="{{format}}" ng-model="dateto" is-open="opened"
+							placeholder="YYYY-MM-DD" datepicker-options="dateOptions"
+							date-="enabled(date, mode)" ng-required="true" close-text="Close"
+							required />
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default"
+								ng-click="open($event)">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<input style="height: 27px; padding-top: 4px;"
+					class="btn-action btn" type="submit">
+			</div>
+		</form>
+
+	</div>
+
+	<div
+		style="font-size: 14px; margin-left: 30px; margin-top: 10px; padding-left: 230px; absolute; width: 577px; background-color: #FFDAD7; border-radius: 25px; color: #FD0000;">
+		{{err}}</div>
+	<div class="title-ajout"
+		style="font-size: 12px; margin-left: 30px; margin-top: 80px; absolute; color: #676767;">
+		Le nombre de resultats trouv&eacute;s: {{nombreResult2}}</div>
+	<div id="chartdiv2" style="width: 100%; height: 400px;"
+		ng-init="chart2()"></div>

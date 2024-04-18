@@ -1,0 +1,259 @@
+<script type="text/javascript">
+
+  var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+  for (var i = 0; i < SearchBoxElements.length; i++) {
+    new fabric['SearchBox'](SearchBoxElements[i]);
+  }
+
+</script> 
+
+<div
+  class="container-fluid"
+  ng-controller="StockNvController"
+  style="background-color: #fff;"
+>
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-sm-12">
+      <br />
+    </div>
+    <div class="col-sm-12">
+      <br />
+
+      <span class="ms-ListItem-primaryText">Crit&eacute;re de Recherche</span>
+      <br />
+
+      <div class="ms-CommandBar ms-CommandBar--navBar">
+        <div class="ms-CommandBar-sideCommands">
+          <div class="ms-SearchBox ms-SearchBox--commandBar">
+            <input
+              class="ms-SearchBox-field"
+              type="text"
+              value=""
+              ng-model="filterOptions.filterText"
+            />
+            <label class="ms-SearchBox-label">
+              <i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+              <span class="ms-SearchBox-text">Rechercher</span>
+            </label>
+            <div
+              class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel"
+            >
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"
+                  ><i class="ms-Icon ms-Icon--Cancel"></i
+                ></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+            <div
+              class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel"
+            >
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"
+                  ><i class="ms-Icon ms-Icon--ChromeBack"></i
+                ></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+            <div
+              class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel"
+            >
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"
+                  ><i class="ms-Icon ms-Icon--Filter"></i
+                ></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"
+                ><i class="ms-Icon ms-Icon--Info"></i
+              ></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div>
+        <div class="ms-CommandBar-mainArea">
+          <div class="ms-CommandButton">
+            <button
+              class="ms-CommandButton-button"
+              ng-click="downloadProduitDepotList(produitDepotCourant)"
+            >
+              <span class="ms-CommandButton-icon"
+                ><i class="ms-Icon ms-Icon--Generate"></i
+              ></span>
+              <span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+            </button>
+          </div>
+          <div class="ms-CommandButton">
+            <button
+              class="ms-CommandButton-button"
+              ng-click="rechercherProduitDepot(produitDepotCourant)"
+            >
+              <span class="ms-CommandButton-icon"
+                ><i class="ms-Icon ms-Icon--FolderSearch"></i
+              ></span>
+              <span class="ms-CommandButton-label">Rechercher</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+              <span class="ms-CommandButton-icon"
+                ><i class="ms-Icon ms-Icon--Cancel"></i
+              ></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+          <div
+            class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel"
+          >
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"
+                ><i class="ms-Icon ms-Icon--More"></i
+              ></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li
+                class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"
+              ></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1"
+                  >Plain Text Document</a
+                >
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <form
+            class="form-horizontal"
+            name="recherchePartieIntereseeFormCritere"
+            id="recherchePartieIntereseeFormCritere"
+          >
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-tex ms-Label is-requiredt">Magasin</span>
+                    </div>
+                    <select
+                      ui-select2
+                      ng-model="produitDepotCourant.idDepot"
+                      ng-init="produitDepotCourant.idDepot =''"
+                      data-placeholder=""
+                      class="form-control"
+                      style="border: 1px solid #e5eaee !important;"
+                    >
+                      <option value="">Tous les Magasins</option>
+                      <option
+                        ng-repeat="magazin in listeMagazinCache"
+                        value="{{magazin.id}}"
+                        >{{magazin.designation}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label is-required">Reference</span>
+                    </div>
+                    <select
+                      ui-select2
+                      ng-model="produitDepotCourant.idProduit"
+                      ng-init="produitDepotCourant.idProduit =''"
+                      data-placeholder=""
+                      class="form-control"
+                      style="border: 1px solid #e5eaee !important;"
+                    >
+                      <option value="">Tous</option>
+                      <option
+                        ng-repeat="prod in listeProduitCache"
+                        value="{{prod.id}}"
+                        >{{prod.reference}}</option
+                      >
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label is-required">Designation</span>
+                    </div>
+                    <select
+                      ui-select2
+                      ng-model="produitDepotCourant.idProduit"
+                      ng-init="produitDepotCourant.idProduit =''"
+                      data-placeholder=""
+                      class="form-control"
+                      style="border: 1px solid #e5eaee !important;"
+                    >
+                      <option value="">Tous</option>
+                      <option
+                        ng-repeat="prod in listeProduitCache"
+                        value="{{prod.id}}"
+                        >{{prod.designation}}</option
+                      >
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-md-12">
+      <br />
+      <span class="ms-ListItem-primaryText">Etat du stock</span>
+      <div class="title-ajout line"></div>
+
+      <div panel-class="panel panel-primary">
+        <div class="row"></div>
+
+        <div style="height: 500px;" ng-grid="gridOptions"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="light" class="white_content">
+    <pop-up type="delete-pi"></pop-up>
+  </div>
+  <div id="fade" class="black_overlay"></div>
+
+</div>

@@ -1,0 +1,673 @@
+<div      permission="['Production_Production_Consult']" class="container-fluid " ng-controller="RouleauController"
+	style="background-color: #fff;">
+
+	<div class="row">
+
+		<!-- mainContent -->
+		<div class="col-md-9">
+			<!-- MenuReception -->
+			<div class="row">
+				<div class="col-md-12" style="background-color: #999; color: #fff">
+					<div class="col-md-8">
+						<span style="font-size: 30pt;"> <a href="#/"
+							data-toggle="modal" style="color: #fff; text-decoration: none;">
+								<i class="glyphicon glyphicon-check"></i>
+						</a> Colis <em style="font-size: 50%"><b>{{rouleauCourant.reference}}</b></em></span>
+					</div>
+					<div class="col-md-4">
+						<span class="pull-right" style="zoom: 3"> 
+							
+							<i
+							ng-show="rouleauCourant.ids != null"
+							class="glyphicon glyphicon-align-justify clickable"
+							style="margin-right: 5px;" ng-click="downloadListRouleauParIds(rouleauCourant.ids)"></i>
+							
+							
+							<i
+							ng-show="modePdf == 'actif'"
+							class="glyphicon glyphicon-barcode clickable"
+							style="margin-right: 5px;" ng-click="download(rouleauCourant.id)"></i>
+
+						
+
+								<button  permission="['Production_Production_Edit']" ng-disabled="!creationRouleau.$valid;"
+								ng-click="sauvegarderAjout(rouleauCourant)" class="fa fa-floppy-o clickable" style="margin-right: 5px;">
+								
+						
+								
+								
+								</button>
+						 <i
+							class="fa fa-ban clickable" style="margin-right: 5px;"
+							ng-click="annulerAjout()"></i>
+							
+							
+							
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- MainContent -->
+			<div class="row LineHeight">
+				<!-- RechercheRouleau -->
+				<div class="col-md-5" style="background-color: white;">
+					<!-- Critere de recherche -->
+					<div class="row" ng-show="displayMode != 'edit'">
+						<div class="col-sm-12">
+							<div class="title-ajout">Crit&eacute;re de recherche</div>
+							<div class="panel panel-primary">
+								<div class="panel-body">
+									<form class="form-horizontal"
+										name="recherchePartieIntereseeFormCritere"
+										id="recherchePartieIntereseeFormCritere">
+										<div class="form-group">
+											<div class="row">
+												
+												
+												
+												<div class="col-sm-12">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">O.F
+														</span> 
+														
+														
+														
+													<!-- 	<select ui-select2
+															ng-model="rouleauCourantRecherche.refMise"
+															data-placeholder="choisir .." style="width: 100%">
+
+															<option value="">Tous</option>
+															<option ng-repeat="mise in listeMise"
+																value="{{mise.reference}}">{{mise.reference}}</option>
+														</select>
+														 -->
+														 
+														  <input type="text" class="form-control"
+															ng-model="rouleauCourantRecherche.refMise" />
+														
+													</div>
+												</div>
+												
+												
+												
+												
+												
+												
+											</div>
+										</div>
+
+
+										<div class="form-group">
+											<div class="row">
+											
+
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Nbr Colis
+															:</span> <input class="form-control"
+															ng-model="rouleauCourantRecherche.numberOfBox" />
+													</div>
+												</div>	
+
+
+
+
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Quantite
+															 :</span> <input class="form-control"
+															ng-model="rouleauCourantRecherche.metrage" />
+													</div>
+												</div>
+
+											</div>
+										</div>
+								<!-- 		<div class="form-group">
+											<div class="row">
+												<div class="col-sm-12">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Ancien
+															: </span> <input class="form-control"
+															ng-model="rouleauCourantRecherche.infoModif" />
+													</div>
+												</div>
+											</div>
+											<div class="pull-right">
+												<button class="btn btn-action"
+														ng-click="rechercherRouleauByInfoModif(rouleauCourantRecherche)">Recherecher</button>
+													</div>
+										</div> -->
+									</form>
+									<div class="pull-right">
+										<button class="btn btn-action"
+											ng-click="downloadListRouleau(rouleauCourantRecherche)">Generer</button>
+
+
+										<button class="btn btn-action"
+											ng-click="rechercherRouleau(rouleauCourantRecherche)">Recherecher</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+
+				<!-- Ajout/Modification/Consultation d'un BonRecepetion -->
+				<div class="col-md-7" style="background-color: white;">
+					<div class="row" ng-show="displayMode != 'edit'">
+						<div class="col-md-12">
+							<div class="title-ajout" ng-show="modePdf != 'actif'">Creation
+								Colis</div>
+							<div class="title-ajout" ng-show="modePdf=='actif'">Modification
+								Colis</div>
+							<div class="panel panel-primary">
+								<div class="panel-body">
+									<form id="creationRouleau" name="creationRouleau">
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">N&deg;
+															O.F :</span>
+
+														<!-- modeCreationMise -->
+														<!-- <select ng-show="creation" ui-select2
+															data-placeholder="---" style="width: 100%" ng-model="id"
+															ng-change="remplirRouleauMise(id)" required>
+															<option ng-repeat="mise in listeMise"
+																value="{{mise.idMise}}">{{mise.reference}}</option>
+														</select> -->
+														
+														
+														 <div style="display : flex">
+														 		  <input ng-show="creation" type="text" class="form-control"
+															ng-model="referenceMise" style="width : 100px" ng-change="cleanChamps()" />
+															
+														
+														
+														
+														<!-- modeModificationMise -->
+														<input ng-hide="creation" class="form-control"
+															readonly="readonly"
+															value="{{resultatRechercheMise.referenceMise}}" style="width : 100px"/>
+															
+															<button style="margin-left : 20px" ng-show="creation" class="btn btn-action"
+											               ng-click="remplirRouleauMiseByReference(referenceMise)">valider</button>
+														 
+														 </div>
+												
+													</div>
+												</div>
+											<!-- 	<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">N&deg;
+															BR</span>
+														modeCreationMise
+														<div ng-show="creation">
+															<input ng-show="remplir" class="form-control"
+																readonly="readonly"
+																value="{{resultatRechercheMise.refBonreception}}" />
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+
+														modeModificationMise
+														<input ng-hide="creation" class="form-control"
+															readonly="readonly"
+															value="{{resultatRechercheMise.refBonreception}}" />
+													</div>
+												</div> -->
+											
+								
+												</div>
+										</div>
+										
+										
+										
+										
+											<div class="form-group">
+											<div class="row">
+											
+											
+															<div class="col-sm-12">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Client
+														</span>
+														<!-- modeCreationMise -->
+														<div ng-show="creation">
+															<!-- <input ng-show="remplir" class="form-control"
+															readonly="readonly" value="{{resultatRechercheMise.clientAbreviation}}"/> -->
+															<!-- **{{clientId.status}} ** {{resultatRechercheMise.partieintId}} -->
+															
+															
+															
+															<select ui-select2 ng-show="remplir" style="width: 100%"
+																ng-model="clientId.status">
+																<option ng-repeat="client in listeClient"
+																	value="{{client.id}}">{{client.abreviation}}</option>
+															</select>
+															
+														
+															
+															
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+
+														<!-- modeModificationMise -->
+														<input ng-hide="creation" class="form-control"
+															readonly="readonly"
+															value="{{resultatRechercheMise.clientAbreviation}}" />
+			
+													</div>
+												</div>
+											
+													</div>
+												</div>
+											
+											
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Produit
+															:</span>
+														<!-- modeCreationMise -->
+														<div ng-show="creation">
+															<input ng-show="remplir" class="form-control"
+																readonly="readonly"
+																value="{{resultatRechercheMise.reference}}" />
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+
+														<!-- modeModificationMise -->
+														<input ng-hide="creation" class="form-control"
+															readonly="readonly"
+															value="{{resultatRechercheMise.reference}}" />
+													</div>
+												</div>
+											
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Sous Categ.
+															:</span>
+														<!-- modeCreationMise -->
+														<div ng-show="creation">
+															<input ng-show="remplir" class="form-control"
+																readonly="readonly"
+																value="{{resultatRechercheMise.sousFamille}}" />
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+
+														<!-- modeModificationMise -->
+														<input ng-hide="creation" class="form-control"
+															readonly="readonly"
+															value="{{resultatRechercheMise.sousFamille}}" />
+													</div>
+												</div>
+												</div>
+										</div>
+										
+										<div class="form-group">
+											<div class="row">
+											
+													<div class="col-sm-12">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Designation
+															:</span>
+														<!-- modeCreationMise -->
+														<div ng-show="creation">
+															<input ng-show="remplir" class="form-control"
+																readonly="readonly"
+																value="{{resultatRechercheMise.designationProduit}}" />
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+
+														<!-- modeModificationMise -->
+														<input ng-hide="creation" class="form-control"
+															readonly="readonly"
+															value="{{resultatRechercheMise.designationProduit}}" />
+													</div>
+												</div>
+											
+											
+													</div>
+										</div>
+										
+										
+										
+								<!-- 		<div class="form-group">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Composition
+															:</span>
+														modeCreationMise
+														<div ng-show="creation">
+															<input ng-show="remplir" class="form-control"
+																readonly="readonly"
+																value="{{resultatRechercheMise.composition}}" />
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+
+														modeModificationMise
+														<input ng-hide="creation" class="form-control"
+															readonly="readonly"
+															value="{{resultatRechercheMise.composition}}" />
+													</div>
+												</div>
+											
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Laize
+															F:</span>
+														modeCreationMise
+														<div ng-show="creation">
+															<input ng-show="remplir" class="form-control"
+																ng-init="rouleauCourant.laize ='150'"
+																ng-model="rouleauCourant.laize" />
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+
+														modeModificationMise
+														<input ng-hide="creation" class="form-control"
+															ng-model="rouleauCourant.laize"
+															value="{{rouleauCourant.laize}}" />
+
+													</div>
+												</div>
+												<!-- <div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Poids
+															F:</span> <input class="form-control"
+															ng-model="rouleauCourant.poids" />
+													</div>
+												</div> 
+											</div>
+										</div> -->
+										<div class="form-group">
+											<div class="row">
+
+
+
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Nbr Colis
+															:</span> <input class="form-control"
+															ng-model="rouleauCourant.numberOfBox" />
+													</div>
+												</div>	
+
+
+
+
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Quantite
+															 :</span> <input class="form-control"
+															 required
+															ng-model="rouleauCourant.metrage" />
+													</div>
+												</div>
+
+
+
+												
+
+	
+
+												<!-- <div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Cr.Qualit&eacute;
+															: <i style="color: red">*</i>
+														</span>
+														modeCreationChoix
+														<div ng-show="creation">
+															<select ng-show="remplir" class="form-control"
+																ng-init="rouleauCourant.choix ='1'"
+																ng-model="rouleauCourant.choix">
+																<option ng-repeat="choix in listeQualite"
+																	value="{{choix.id}}">{{choix.designation}}</option>
+															</select>
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+														modeModificationChoix
+														<select ng-hide="creation"  class="form-control"
+															ng-model="rouleauCourant.choix">
+															<option ng-repeat="choix in listeQualite"
+																value="{{choix.id}}">{{choix.designation}}</option>
+														</select>
+													</div>
+												</div> -->
+										
+										
+
+
+
+
+												</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Emplacement
+															:</span> <input class="form-control"
+															ng-model="rouleauCourant.emplacement" />
+													</div>
+												</div>
+												
+												
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" ng-show="creation" id="basic-addon1">Prod.OF
+															:</span>
+														<!-- modeCreationMise -->
+														<div ng-show="creation">
+															<input ng-show="remplir" class="form-control"
+																readonly="readonly"
+																value="{{resultatRechercheMise.poidFini}}" />
+														</div>
+														<div ng-show="creation">
+															<input ng-hide="remplir" class="form-control"
+																placeholder="" disabled />
+														</div>
+
+														<!-- modeModificationMise -->
+														<!-- <input ng-hide="" class="form-control"
+															readonly="readonly"
+															value="{{resultatRechercheMise.poidFini}}" />-->
+													</div>
+												</div>
+												
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="row">
+										
+												<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Info
+															:</span> <input class="form-control"
+															ng-model="rouleauCourant.info" />
+													</div>
+												</div>
+
+
+
+											<div class="col-sm-6">
+													<div class="input-group input-group-sm">
+														<span class="input-group-addon label1" id="basic-addon1">Poids.OF
+															:</span> 
+															
+													<div ng-show="creation">
+													<input ng-show="remplir" class="form-control"
+														readonly="readonly"
+														value="{{resultatRechercheMise.poids}}" />
+												</div>
+												<div ng-show="creation">
+													<input ng-hide="remplir" class="form-control"
+														placeholder="" disabled />
+												</div>
+													</div>
+													
+													
+														
+														
+												</div>
+											</div>
+										</div>
+									</form>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Grid -->
+			<div class="row">
+				<div class="row" ng-show="displayMode != 'edit'">
+					<div class="col-md-12">
+						<div class="title-ajout line">Liste des Colis <input type="checkbox" ng-model="checkList" ng-change="checkAllItemList(checkList)"  style="margin: 8px;"/>   <button  class="btn btn-default btn-xs"	ng-click="showPopupDelete(3)" permission="['Production_Production_Delete']">	<i class="fa fa-fw fa-trash-o"></i></button> <div ng-if="enCoursDelete" class="alert alert-info">
+Suppression   <strong>Colis!</strong> en cours
+</div></div>
+						<div panel-class="panel panel-primary">
+							<div style="height: 500px;" ng-grid="gridOptions"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- endMainContent -->
+
+		<!-- leftContent -->
+		<div class="col-md-3 col-sm-6">
+			<div class="row">
+				<div class="col-md-12 ">
+					<a class="info-tiles tiles-danger" href="#">
+						<div class="tiles-heading">
+							<div class="pull-left">
+								<i class="fa fa-group"></i>        <!--          ajout username            -->
+							</div>
+							<div class="pull-right"></div>
+						</div>
+						<div class="tiles-body" ng-controller='TimeCtrl'>
+							<div class="pull-left">
+								<i class="glyphicon glyphicon-time"></i>{{ clock |
+								date:'HH:mm'}}<br> <span
+									style="color: #fff; font-size: 16px"> {{ clock |
+									date:'EEEE' }} <br>{{ clock | date:'dd MMM' }}
+								</span>
+							</div>
+							<div class="pull-right">
+								<img src="images/admin.png" style="width: 80px; height: 80px" />
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<a class="info-tiles tiles-grape" href="#">
+						<div class="tiles-heading">
+							<div class="pull-left">
+								<i class="glyphicon glyphicon-comment"></i> Rappel / Annonces
+							</div>
+							<div class="pull-right"></div>
+						</div>
+						<div class="tiles-body">
+							<p>
+								Bienvenue &agrave; <b>HELIAPACK</b>
+							<p />
+						</div>
+					</a>
+				</div>
+			</div>
+	<!-- 		<div class="row">
+				<div class="col-md-12">
+					<a class="info-tiles tiles-success" href="#">
+						<div class="tiles-heading">
+							<div class="pull-left">
+								<i class="glyphicon glyphicon-stats"></i> Statistiques
+								Journali&egrave;res
+							</div>
+							<div class="pull-right"></div>
+						</div>
+						<div class="tiles-body">
+							<div class="menu-item color">
+								<div class="row" style="margin-bottom: 5px; text-align: left;">
+									<div class="col-md-12">
+										<div class="col-md-3 green">
+											<span style="font-size: 20pt">--</span>
+										</div>
+										<div class="col-md-9">
+											<span style="font-size: 14pt; line-height: 2;">Rouleaux
+												Exp&eacute;di&eacute;s</span>
+										</div>
+									</div>
+								</div>
+								<div class="row" style="margin-bottom: 5px; text-align: left;">
+									<div class="col-md-12">
+										<div class="col-md-3 green">
+											<span style="font-size: 20pt">--%</span>
+										</div>
+										<div class="col-md-9">
+											<span style="font-size: 14pt; line-height: 2;">Rendement
+											</span>
+										</div>
+									</div>
+								</div>
+								<div class="row" style="margin-bottom: 5px; text-align: left;">
+									<div class="col-md-12">
+										<div class="col-md-3 green">
+											<span style="font-size: 20pt">--</span>
+										</div>
+										<div class="col-md-9">
+											<span style="font-size: 14pt; line-height: 2;">Retard
+												Prod./Liv.</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div> -->
+		</div>
+
+	</div>
+	<!-- endRow -->
+
+	<!-- Popup de la suppression -->
+	<div id="light" class="white_content">
+		<pop-up type="delete-Rouleau"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+	<!-- Fin Popup de la suppression -->
+</div>
+

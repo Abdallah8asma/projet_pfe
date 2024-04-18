@@ -1,0 +1,152 @@
+
+<!-- Front -->
+<div class="container-fluid" ng-controller="inventaireController"
+	style="background-color: #fff;">
+	<!-- criter de recherche -->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<!-- <div class="col-sm-12">
+			<button class="btn btn-action2 pull-right"
+				ng-click="AffectationProduit(produitCourante)">Ajouter</button>
+		</div> -->
+		<div class="col-sm-12">
+			<div class="title-ajout">Crit&eacute;re de recherche</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="rechercheInventaireForm"
+						id="rechercheInventaireForm">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Client
+										</span> 
+										<!-- <select ui-select2 ng-model="inventaireCourant.client"
+											ng-init="inventaireCourant.client =''" style="width: 100%">
+											<option ng-repeat="pi in listeClientCache"
+												value="{{pi.id}}">{{pi.abreviation}}</option>
+										</select> -->
+										<select class="form-control" ng-init="inventaireCourant.client =''" 
+											ng-model="inventaireCourant.client">
+											<option ng-repeat="pi in listeClientCache"
+												value="{{pi.id}}">{{pi.abreviation}}</option>
+										</select>
+										
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Nbre.Colis Entr&eacute;
+										</span>
+										<input class="form-control" type="number" step="any" 
+											ng-model="inventaireCourant.nombreColieDu" ng-init="inventaireCourant.nombreColieDu=''"/>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">ET 
+										</span>
+										<input class="form-control" type="number" step="any" 
+											ng-model="inventaireCourant.nombreColieA" ng-init="inventaireCourant.nombreColieA=''" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Entrepot
+										</span> <select class="form-control" ng-init="inventaireCourant.entrepot =''" 
+											ng-model="inventaireCourant.entrepot">
+											<option ng-repeat="entrepot in listeEntrepotCache"
+												value="{{entrepot.id}}">{{entrepot.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Emplacement
+										</span> <input type="text" class="form-control"
+											ng-model="inventaireCourant.emplacement" ng-init="inventaireCourant.emplacement =''" >
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Metrage Entre</span>
+										<input type="number" step="any" class="form-control" 
+											ng-model="inventaireCourant.metrageDu" ng-init="inventaireCourant.metrageDu =''">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">ET </span>
+										<input type="number" step="any" class="form-control"
+											ng-model="inventaireCourant.metrageA" ng-init="inventaireCourant.metrageA =''">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">designation
+										</span> <input type="text" class="form-control"
+											ng-model="inventaireCourant.designationQuiContient" ng-init="inventaireCourant.designationQuiContient =''" >
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Fini
+										</span> <select class="form-control" ng-init="inventaireCourant.fini =''" 
+											ng-model="inventaireCourant.fini">
+											<option ng-repeat="origine in listeOrigine"
+												value="{{origine.designation}}">{{origine.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Tri
+										</span> <select class="form-control" ng-init="inventaireCourant.orderBy =''" 
+											ng-model="inventaireCourant.orderBy">
+											<option ng-repeat="tri in listeTri"
+												value="{{tri.designation}}">{{tri.designation}}</option>
+										</select>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3" ng-controller="DatepickerDController">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Date:
+										<i style="color: red">*</i> </span> 
+										<input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}"
+											ng-model="inventaireCourant.dateEtat" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+					<div class="pull-right">
+						<button class="btn-action btn" ng-click="download(inventaireCourant)" ng-disabled="!rechercheInventaireForm.$valid;">G&eacute;n&eacute;rer</button>
+						<button class="btn-action btn" ng-click="annulerAjout()">Annuler</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+

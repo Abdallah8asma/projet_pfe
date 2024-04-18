@@ -1,0 +1,455 @@
+<script type="text/javascript">
+
+  var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+  for (var i = 0; i < SearchBoxElements.length; i++) {
+    new fabric['SearchBox'](SearchBoxElements[i]);
+  }
+
+
+
+  
+  var PanelExamples = document.getElementsByClassName("ms-PanelExample");
+  for (var i = 0; i < PanelExamples.length; i++) {
+    (function() {
+      var PanelExampleButton = PanelExamples[i].querySelector(".ms-Button");
+      var PanelExamplePanel = PanelExamples[i].querySelector(".ms-Panel");
+      PanelExampleButton.addEventListener("click", function(i) {
+        new fabric['Panel'](PanelExamplePanel);
+      });
+    }());
+  }
+
+</script>
+
+<div class="panel-body" ng-controller="soldeClientController" style="background-color: #fff;">
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-sm-12">
+
+     
+
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Crit&eacute;re de recherche</span>
+      
+      <div class="ms-CommandBar ms-CommandBar--navBar">
+       <!--  <div class="ms-CommandBar-sideCommands">
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div> -->
+        <div class="ms-CommandBar-mainArea">
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="recherchesoldeCl(soldeClCourante)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+              <span class="ms-CommandButton-label">Rechercher</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+        <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+          <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-primary" style="margin-bottom:0%">
+        <div class="panel-body">
+          <form class="form-horizontal" name="recherchesoldeClForm" id="recherchesoldeClForm">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <select ui-select2 ng-model="soldeClCourante.partieIntId" ng-init="soldeClCourante.partieIntId =''"
+                      data-placeholder="..." class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Clients</option>
+                      <option ng-repeat="pi in listClients | filter:{famillePartieInteressee:1}" value="{{pi.id}}">
+                        {{pi.reference}}-{{pi.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label is-required">Bloqu&eacute;e</label>
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="checkbox-sm checkbox-square checkbox-primary"
+                          ng-model="partieInteresseeCourante.actif">
+                          <input type="checkbox" ng-model="soldeClCourante.bloque" ng-init="soldeClCourante.bloque =''"
+                            ng-change="" />
+                          <span></span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row" ng-show="displayMode == 'edit'">
+    <div class="col-md-12">
+      <div class="panel panel-primary">
+        <br />
+        <span class="ms-ListItem-primaryText">Modification Solde Client</span>
+        <br />
+
+
+        <div class="ms-CommandBar ms-CommandBar--navBar">
+          <div class="ms-CommandBar-sideCommands">
+            <div class="ms-CommandButton ms-CommandButton--noLabel">
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i
+                    class="ms-Icon ms-Icon--Info"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+          </div>
+          <div class="ms-CommandBar-mainArea">
+            <div class="ms-CommandButton">
+              <button class="ms-CommandButton-button" id="todoSubmit" ng-click="sauvegarderAjout(soldeClCourante)">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Save"></i></span>
+                <span class="ms-CommandButton-label">Enregistrer</span>
+              </button>
+            </div>
+
+            <div class="ms-CommandButton">
+              <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+                <span class="ms-CommandButton-label">Annuler</span>
+              </button>
+            </div>
+            <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+              <ul class="ms-ContextualMenu is-opened">
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                  <i class="ms-Icon ms-Icon--Folder"></i>
+                </li>
+                <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                  <i class="ms-Icon ms-Icon--Document"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                  <i class="ms-Icon ms-Icon--Coffee"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                  <i class="ms-Icon ms-Icon--Picture"></i>
+                </li>
+                <li class="ms-ContextualMenu-item">
+                  <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                  <i class="ms-Icon ms-Icon--Money"></i>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <form id="creationsoldeClForm" name="creationsoldeClForm">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.partieIntAbreviation" readonly="readonly"
+                      value="soldeClCourante.partieIntAbreviation" />
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Solde Initial</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.soldeInitial" />
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Seuil</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.seuil" />
+                  </div>
+                </div>
+
+
+              </div>
+
+
+              <div class="col-sm-2">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Bloqu&eacute;e</label>
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="checkbox checkbox-square checkbox-primary"
+                          ng-model="partieInteresseeCourante.actif">
+                          <input type="checkbox" ng-model="soldeClCourante.bloque" ng-model="soldeClCourante.bloque" />
+                          <span></span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                      <div class="row">
+                      
+                      
+                           <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Total Reglement</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.totalReglement" />
+                  </div>
+                </div>
+
+
+              </div> 
+           
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Total Facture</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.totalFacture" />
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Regelement Payes</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.regelementPayes" />
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+            <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Regelement en circul.</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.regelementEnCirculation" />
+                  </div>
+                </div>
+
+
+              </div>
+
+          
+            </div>
+            
+            
+            
+            
+            
+                      <div class="row">
+                      
+                      
+                           <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Tot. Fact. N.Paye</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.totalFactureNonPaye" />
+                  </div>
+                </div>
+
+
+              </div> 
+           
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Solde Anterieur</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.soldeAnterieur" />
+                  </div>
+                </div>
+
+
+              </div>
+
+             
+     <div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+                <div class="form-group">
+                  <div class="input-group">
+
+                    <div class="input-group-prepend">
+                    <span class="input-group-text">Date Solde Ant.</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="soldeClCourante.dateSoldeAnterieur =''" ng-model="soldeClCourante.dateSoldeAnterieur"
+                      is-open="opened"
+                      datepicker-options="dateOptions" date-="enabled(date, mode)" close-text="Close"  required/>
+
+
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                        color: rgb(54, 153, 255);
+                        background-color: rgb(225, 240, 255);
+                      ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+              
+              
+              
+              
+                      <div class="col-sm-3" ng-show="clientActif.blackMode==true">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Solde Initial N</label>
+                    </div>
+                    <input class="form-control" ng-model="soldeClCourante.soldeInitialNonDeclaree" />
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+          
+            </div>
+            
+            
+
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Observations</label>
+                    </div>
+                    <textarea name="txtarea1" id="txtarea1" cols="50" rows="20" class="form-control"
+                      ng-model="soldeClCourante.observation"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-md-12">
+      <span class="ms-ListItem-primaryText line">Liste des soldes Client</span>
+
+      <div style="height: 500px;" ng-grid="gridOptions"></div>
+    </div>
+  </div>
+
+
+  <div id="light" class="white_content">
+    <pop-up type="delete-article"></pop-up>
+  </div>
+  <div id="fade" class="black_overlay"></div>
+
+</div>

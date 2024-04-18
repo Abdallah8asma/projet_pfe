@@ -1,0 +1,624 @@
+<!--Script Fabric JS-->
+<script type="text/javascript">
+  var CommandBarElements = document.querySelectorAll(
+    '.ms-CommandBar-back-Stock '
+  );
+  for (var i = 0; i < CommandBarElements.length; i++) {
+    new fabric['CommandBar'](CommandBarElements[i]);
+  }
+
+  var SearchBoxElements = document.querySelectorAll('.ms-SearchBox');
+  for (var i = 0; i < SearchBoxElements.length; i++) {
+    new fabric['SearchBox'](SearchBoxElements[i]);
+  }
+</script>
+<!--End FabricJS-->
+
+<style>
+  .ms-CommandBar-back-Stock {
+    background-color: #f3f6f9 !important;
+    border-color: transparent !important;
+  }
+
+  .ms-CommandButton-button {
+    color: #3699ff !important;
+  }
+
+  .ms-CommandButton-button:hover {
+    background-color: #3699ff !important;
+  }
+
+  .ms-CommandButton-button:hover span {
+    color: #ffff !important;
+  }
+
+  .ms-CommandButton-button:hover i {
+    color: #ffff !important;
+  }
+
+  .ms-CommandButton-label,
+  .ms-SearchBox-text {
+    color: #3699ff !important;
+  }
+
+  .ms-CommandButton-label:hover {
+    color: #ffff !important;
+  }
+
+  .ms-Icon {
+    color: #3699ff !important;
+  }
+
+  .ms-Icon.ms-Icon-Gpro {
+    top: 30% !important;
+    color: #464e5f !important;
+    font-size: 14px !important;
+  }
+
+  .ms-CommandButton .ms-CommandButton-Gpro {
+    padding: 0px !important;
+  }
+
+  .ms-Icon:hover {
+    color: #fff !important;
+  }
+</style>
+
+<div
+  class="container-fluid back-office-background"
+  ng-controller="backStockCtrl"
+>
+  <span class="ms-ListItem-primaryText">Stock</span>
+  <br />
+
+  <div class="ms-CommandBar-back-Stock ms-CommandBar--navBar">
+    <div class="ms-CommandBar-sideCommands">
+      <div class="ms-SearchBox ms-SearchBox--commandBar">
+        <input
+          class="ms-SearchBox-field"
+          type="text"
+          value=""
+          ng-model="filterOptions.filterText"
+        />
+
+        <label class="ms-SearchBox-label">
+          <i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+          <span class="ms-SearchBox-text">Rechercher</span>
+        </label>
+        <div
+          class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel"
+        >
+          <button class="ms-CommandButton-button">
+            <span class="ms-CommandButton-icon"
+              ><i class="ms-Icon ms-Icon--Cancel"></i
+            ></span>
+            <span class="ms-CommandButton-label"></span>
+          </button>
+        </div>
+        <div
+          class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel"
+        >
+          <button class="ms-CommandButton-button">
+            <span class="ms-CommandButton-icon"
+              ><i class="ms-Icon ms-Icon--ChromeBack"></i
+            ></span>
+            <span class="ms-CommandButton-label"></span>
+          </button>
+        </div>
+        <div
+          class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel"
+        >
+          <button class="ms-CommandButton-button">
+            <span class="ms-CommandButton-icon"
+              ><i class="ms-Icon ms-Icon--Filter"></i
+            ></span>
+            <span class="ms-CommandButton-label"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="ms-CommandButton ms-CommandButton--noLabel">
+        <button class="ms-CommandButton-button">
+          <span class="ms-CommandButton-icon ms-fontColor-themePrimary"
+            ><i class="ms-Icon ms-Icon--Info"></i
+          ></span>
+          <span class="ms-CommandButton-label"></span>
+        </button>
+      </div>
+    </div>
+    <div class="ms-CommandBar-mainArea">
+      <div class="ms-CommandButton ms-CommandButton--dropdown">
+        <button class="ms-CommandButton-button">
+          <span class="ms-CommandButton-icon ms-fontColor-themePrimary"
+            ><i class="ms-Icon ms-Icon--Settings"></i
+          ></span>
+          <span class="ms-CommandButton-label">Param&eacute;trage</span>
+          <span class="ms-CommandButton-dropdownIcon"
+            ><i class="ms-Icon ms-Icon--ChevronDown"></i
+          ></span>
+        </button>
+        <ul class="ms-ContextualMenu is-opened ms-ContextualMenu--hasIcons">
+          <select
+            name="selector1"
+            id="selector1"
+            class="form-control"
+            ng-model="parametre"
+          >
+            <li class="ms-ContextualMenu-item">
+              <a class="ms-ContextualMenu-link" tabindex="1">
+                <option>Magasin</option></a
+              >
+              <!-- <i class="ms-Icon ms-Icon--Document"></i> -->
+            </li>
+            <li class="ms-ContextualMenu-item">
+              <a class="ms-ContextualMenu-link" tabindex="1">
+                <option>Emplacement</option></a
+              >
+              <!-- <i class="ms-Icon ms-Icon--Coffee"></i> -->
+            </li>
+            <li class="ms-ContextualMenu-item">
+              <a class="ms-ContextualMenu-link" tabindex="1">
+                <option>Raison Mouvement</option></a
+              >
+              <!-- <i class="ms-Icon ms-Icon--Coffee"></i> -->
+            </li>
+          </select>
+        </ul>
+      </div>
+
+      <div
+        class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel"
+      >
+        <button class="ms-CommandButton-button">
+          <span class="ms-CommandButton-icon"
+            ><i class="ms-Icon ms-Icon--More"></i
+          ></span>
+          <span class="ms-CommandButton-label"></span>
+        </button>
+        <ul class="ms-ContextualMenu is-opened">
+          <li class="ms-ContextualMenu-item">
+            <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+            <i class="ms-Icon ms-Icon--Folder"></i>
+          </li>
+          <li
+            class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"
+          ></li>
+          <li class="ms-ContextualMenu-item">
+            <a class="ms-ContextualMenu-link" tabindex="1"
+              >Plain Text Document</a
+            >
+            <i class="ms-Icon ms-Icon--Document"></i>
+          </li>
+          <li class="ms-ContextualMenu-item">
+            <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+            <i class="ms-Icon ms-Icon--Coffee"></i>
+          </li>
+          <li class="ms-ContextualMenu-item">
+            <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+            <i class="ms-Icon ms-Icon--Picture"></i>
+          </li>
+          <li class="ms-ContextualMenu-item">
+            <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+            <i class="ms-Icon ms-Icon--Money"></i>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-primary">
+    <!-- /*********magasin **********/ -->
+    <div
+      class="panel-body"
+      ng-show="parametre=='Magasin'"
+      ng-controller="backMagasinController"
+    >
+      <div class="panel panel-primary">
+        <table
+          class="table table-bordered table-condensed back-table-head-color"
+        >
+          <thead>
+            <tr>
+              <th>Designation</th>
+              <th>Point de Vente</th>
+              <th>Depot</th>
+              <th>
+                <span
+                  class="ms-CommandButton-icon float-right"
+                  ng-click="ajouterMagasin()"
+                >
+                  <a href="javascript:void(0)">
+                    <i
+                      class="ms-Icon ms-Icon--CirclePlus"
+                      style="color: #3699ff !important ;"
+                    >
+                    </i>
+                  </a>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="magasin in listeMagasin">
+              <td>
+                <!-- editable magasin (text with validation) -->
+                <span
+                  editable-text="magasin.designation"
+                  e-name="designation"
+                  e-form="rowform"
+                  e-required
+                >
+                  {{ magasin.designation || 'empty' }}
+                </span>
+              </td>
+              <td>
+                <!-- editable magasin (text with validation) -->
+                <span
+                  editable-text="magasin.pointVente"
+                  e-name="pdv"
+                  e-form="rowform"
+                  e-required
+                >
+                  {{ magasin.pointVente || 'empty' }}
+                </span>
+              </td>
+              <td>
+                <!-- editable magasin (text with validation) -->
+                <span
+                  editable-text="depot"
+                  e-name="depot"
+                  e-form="rowform"
+                  e-required
+                >
+                  {{ magasin.depot || 'empty' }}
+                </span>
+              </td>
+              <!-- 						<td> -->
+              <!-- 							editable group (select-remote) <span -->
+              <!-- 							editable-select="magasin.piComSiteId" -->
+              <!-- 							e-ng-options="s.id as s.nom for s in listeSites" -->
+              <!-- 							e-name="piComSiteId" e-form="rowform"> {{ -->
+              <!-- 								showStatus(magasin.piComSiteId) }} </span> -->
+              <!-- 						</td> -->
+              <td style="white-space: nowrap;">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <form
+                      editable-form
+                      name="rowform"
+                      onbeforesave="saveMagasin($data, magasin.id)"
+                      ng-show="rowform.$visible"
+                      class="form-buttons form-inline float-righ"
+                      shown="magasinCourante == magasin"
+                    >
+                      <button
+                        type="submit"
+                        ng-disabled="rowform.$waiting"
+                        class="btn btn-sm t"
+                        aria-hidden="true"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Download"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                      <button
+                        type="button"
+                        ng-disabled="rowform.$waiting"
+                        ng-click="cancelAdd(rowform, $index, UniteArticle.id, UniteArticle.designation, listeUniteArticle )"
+                        class="btn btn-sm"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Cancel"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </form>
+                  </div>
+                  <div class="col-sm-6">
+                    <div
+                      class="buttons float-right"
+                      ng-show="!rowform.$visible"
+                    >
+                      <button
+                        data-nodrag
+                        class="btn btn-sm"
+                        ng-click="rowform.$show()"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Edit ms-Icon-Gpro"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                      <button
+                        data-nodrag
+                        class="btn"
+                        ng-click="removeMagasinProduit(magasin.id)"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Delete ms-Icon-Gpro"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- form -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- /*****fin magasin *******/ -->
+
+    <!-- /*********emplacement **********/ -->
+    <div
+      class="panel-body"
+      ng-show="parametre=='Emplacement'"
+      ng-controller="backEmplacementController"
+    >
+      <div class="panel panel-primary">
+        <table
+          class="table table-bordered table-condensed back-table-head-color"
+        >
+          <thead>
+            <tr>
+              <th>Designation</th>
+              <th>Magasin</th>
+              <th>
+                <span
+                  class="ms-CommandButton-icon float-right"
+                  ng-click="ajouterEmplacement()"
+                >
+                  <a href="javascript:void(0)">
+                    <i
+                      class="ms-Icon ms-Icon--CirclePlus"
+                      style="color: #3699ff !important ;"
+                    >
+                    </i>
+                  </a>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="emplacement in listeEmplacement">
+              <td>
+                <!-- editable representat (text with validation) -->
+                <span
+                  editable-text="emplacement.designation"
+                  e-name="designation"
+                  e-form="rowform"
+                  e-required
+                >
+                  {{ emplacement.designation || 'empty' }}
+                </span>
+              </td>
+              <td>
+                <span
+                  editable-select="emplacement.magasin"
+                  e-ng-options="em.id as em.designation for em in listeEmplacementMagasin"
+                  e-name="magasin"
+                  e-form="rowform"
+                >
+                  {{ showStatus(emplacement.magasin) }}
+                </span>
+              </td>
+              <td style="white-space: nowrap;">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <!-- form -->
+                    <form
+                      editable-form
+                      name="rowform"
+                      onbeforesave="saveEmplacement(emplacement, emplacement.id)"
+                      ng-show="rowform.$visible"
+                      class="form-buttons form-inline float-right"
+                      shown="emplacementCourante == emplacement"
+                    >
+                      <button
+                        type="submit"
+                        ng-disabled="rowform.$waiting"
+                        class="btn btn-sm"
+                        aria-hidden="true"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Download"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                      <button
+                        type="button"
+                        ng-disabled="rowform.$waiting"
+                        ng-click="cancelAdd(rowform, $index, UniteArticle.id, UniteArticle.designation, listeUniteArticle )"
+                        class="btn btn-sm"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Cancel"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </form>
+                  </div>
+                  <div class="col-sm-6">
+                    <div
+                      class="buttons float-right"
+                      ng-show="!rowform.$visible"
+                    >
+                      <button
+                        data-nodrag
+                        class="btn btn-sm"
+                        ng-click="rowform.$show()"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Edit ms-Icon-Gpro"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                      <button
+                        data-nodrag
+                        class="btn"
+                        ng-click="removeEmplacement($index)"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Delete ms-Icon-Gpro"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- /*****fin emplacement *******/ -->
+
+    <!-- /***** raison *******/ -->
+    <div
+      class="panel-body"
+      ng-show="parametre=='Raison Mouvement'"
+      ng-controller="backRaisonMouvementController"
+    >
+      <div class="panel panel-primary">
+        <table
+          class="table table-bordered table-condensed back-table-head-color"
+        >
+          <thead>
+            <tr>
+              <th>Raison</th>
+              <th>
+                <span
+                  class="ms-CommandButton-icon float-right"
+                  ng-click="ajouterRaison()"
+                >
+                  <a href="javascript:void(0)">
+                    <i
+                      class="ms-Icon ms-Icon--CirclePlus"
+                      style="color: #3699ff !important ;"
+                    >
+                    </i>
+                  </a>
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="raison in listeRaison">
+              <td>
+                <!-- editable  (text with validation) -->
+                <span
+                  editable-text="raison.designation"
+                  e-name="designation"
+                  e-form="rowform"
+                  e-required
+                >
+                  {{ raison.designation || 'empty' }}
+                </span>
+              </td>
+              <td style="white-space: nowrap;">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <!-- form -->
+                    <form
+                      editable-form
+                      name="rowform"
+                      onbeforesave="saveRaison($data, raison.id)"
+                      ng-show="rowform.$visible"
+                      class="form-buttons form-inline float-right"
+                      shown="raisonCourante == raison"
+                    >
+                      <button
+                        type="submit"
+                        ng-disabled="rowform.$waiting"
+                        class="btn btn-sm"
+                        aria-hidden="true"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Download"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                      <button
+                        type="button"
+                        ng-disabled="rowform.$waiting"
+                        ng-click="cancelAdd(rowform, $index, UniteArticle.id, UniteArticle.designation, listeUniteArticle )"
+                        class="btn btn-sm"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Cancel"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </form>
+                  </div>
+                  <div class="col-sm-6">
+                    <div
+                      class="buttons float-right"
+                      ng-show="!rowform.$visible"
+                    >
+                      <button
+                        data-nodrag
+                        class="btn btn-sm"
+                        ng-click="rowform.$show()"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Edit ms-Icon-Gpro"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                      <button
+                        data-nodrag
+                        class="btn glyphicon btn-sm"
+                        ng-click="removeRaison(raison.id)"
+                      >
+                        <i
+                          class="ms-Icon ms-Icon--Delete ms-Icon-Gpro"
+                          aria-hidden="true"
+                        ></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- /*****fin raison *******/ -->
+  </div>
+
+  <!-- <div class="row">
+    <div class="spacer3">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="col-sm-3">
+              <div class="input-group">
+                <span class="input-group-addon label1" id="basic-addon1"
+                  >Param&eacute;trage</span
+                >
+                <select
+                  name="selector1"
+                  id="selector1"
+                  class="form-control"
+                  ng-model="parametre"
+                >
+                  <option>Magasin</option>
+                  <option>Emplacement</option>
+                  <option>Raison Mouvement</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

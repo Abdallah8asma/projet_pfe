@@ -1,0 +1,214 @@
+<!-- Front -->
+<div class="container-fluid" ng-controller="rouleauController"
+	style="background-color: #fff;">
+	<!-- critere de recherche -->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-sm-12">
+			<div class="title-ajout">Crit&eacute;re de recherche</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<form class="form-horizontal" name="rechercheRouleauForm"
+						id="rechercheRouleauForm">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">N&deg; Mise :</span> 
+										<select ui-select2 ng-model="rouleauCourant.numMise"
+											ng-init="rouleauCourant.numMise =''" data-placeholder="..." style="width: 100%">
+											<option value="">Toutes les Mises</option>
+											<option ng-repeat="mise in listeMise" value="{{mise.reference}}">{{mise.reference}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f. Tissu</span>
+										<select ui-select2 ng-model="rouleauCourant.idProduitReference"
+											ng-init="rouleauCourant.idProduitReference =''" 
+											data-placeholder="..." style="width: 100%">
+											<option value="">Toutes les R&eacute;f. de Tissus</option>
+											<option ng-repeat="produit in listeProduitCache"
+												value="{{produit.id}}">{{produit.reference}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Tissu</span>
+										<select ui-select2 ng-model="rouleauCourant.produitId"
+											ng-init="rouleauCourant.produitId =''" 
+											data-placeholder="..." style="width: 100%">
+											<option value="">Tous les Tissus</option>
+											<option ng-repeat="produit in listeProduitCache"
+												value="{{produit.id}}">{{produit.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">R&eacute;f. rouleau : </span>
+										<input type="number" step="any"  class="form-control"
+											ng-model="rouleauCourant.reference"
+											ng-init="rouleauCourant.reference =''">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Laize F.Entre:
+											</span> <input type="number" step="any" class="form-control"
+											 ng-init="rouleauCourant.laizeMin"
+											ng-model="rouleauCourant.laizeMin">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">ET :
+										</span> <input type="number" step="any" class="form-control"
+											  ng-init="rouleauCourant.laizeMax"
+											ng-model="rouleauCourant.laizeMax">
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Client</span>
+										<select ui-select2 ng-model="rouleauCourant.partieInteresseeId"
+											ng-init="rouleauCourant.partieInteresseeId =''" 
+											data-placeholder="..." style="width: 100%">
+											<option value="">Tous les Clients</option>
+											<option ng-repeat="client in listeClientCache"
+												value="{{client.id}}">{{client.abreviation}}</option>
+										</select>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">M&eacute;trage F Entre: </span>
+										<input type="number" step="any" class="form-control"
+											ng-model="rouleauCourant.metrageMin"
+											 ng-init="rouleauCourant.metrageMin =''">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">ET : </span>
+										<input type="number" step="any"  class="form-control"
+											ng-model="rouleauCourant.metrageMax"
+											 ng-init="rouleauCourant.metrageMax =''">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Poids F Entre: </span>
+										<input type="number" step="any" class="form-control"
+											ng-model="rouleauCourant.poidMin"
+											 ng-init="rouleauCourant.poidMin =''">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">ET :</span>
+										<input type="number" step="any" class="form-control"
+											ng-model="rouleauCourant.poidMax"
+											 ng-init="rouleauCourant.poidMax =''">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Entrepot : </span>
+										<select class="form-control"
+											ng-model="rouleauCourant.entrepot"
+											 ng-init="rouleauCourant.entrepot =''">
+											 <option value="">Tous les Entrepots</option>
+											<option ng-repeat="entrepot in listeEntrepotCache"
+												value="{{entrepot.id}}">{{entrepot.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Emplacement : </span>
+										<input type="text" class="form-control"
+											ng-model="rouleauCourant.emplacement"
+											ng-init="rouleauCourant.emplacement =''">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Sortie : </span>
+										<select class="form-control"
+											ng-model="rouleauCourant.inBonDeSortie"
+											 ng-init="rouleauCourant.inBonDeSortie ='Non'">
+											<option ng-repeat="sortie in listeSortie"
+												value="{{sortie.designation}}">{{sortie.designation}}</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group">
+										<span class="input-group-addon label1" id="basic-addon1">Cr. Qualit&eacute; : </span>
+										<select class="form-control"
+											ng-model="rouleauCourant.crQalite"
+											 ng-init="rouleauCourant.crQalite =''">
+											 <option value="">Tous les Choix</option>
+											<option ng-repeat="choix in listeChoixRouleauCache"
+												value="{{choix.id}}">{{choix.designation}}</option>
+										</select>
+									</div>
+								</div>								
+							</div>
+						</div>
+							<div class="form-group">
+							 	<div class="row">
+									<div class="col-sm-3">
+										<div class="input-group">
+											<span class="input-group-addon label1" id="basic-addon1">Fini
+											</span> <select class="form-control" ng-init="rouleauCourant.fini =''" 
+												ng-model="rouleauCourant.fini">
+												<option ng-repeat="origine in listeOrigine"
+													value="{{origine.designation}}">{{origine.designation}}</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+					</form>
+					<div class="pull-right">
+						<button class="btn-action btn">G&eacute;n&eacute;rer</button>
+						<button class="btn-action btn"
+							ng-click="rechercherRouleau(rouleauCourant)">Recherecher</button>
+						<button class="btn-action btn" ng-click="annulerAjout()">Annuler</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- container Grid-->
+	<div class="row" ng-show="displayMode != 'edit'">
+		<div class="col-md-12">
+			<div class="title-ajout line">Liste des rouleaux</div>
+			<div style="height: 500px;" ng-grid="gridOptions"></div>
+		</div>
+	</div>
+<!-- Popup de la suppression -->
+	<div id="light" class="white_content">
+		<pop-up type="delete-rouleau"></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+	<!-- Fin Popup de la suppression -->
+</div>
+

@@ -1,0 +1,29 @@
+<!-- Menu Magasin -->
+<div ng-controller="MenuMagasinController">
+<div ng-if="ITEM == 'production'">
+ <div ng-include="'views/front/logistique/production/production.html'"></div>	
+</div>
+<div ng-if="ITEM == 'expedition'">
+ <div ng-include="'views/front/logistique/expedition/bonSortie.html'"></div>
+</div>
+<div ng-if="ITEM == 'livraison'">
+  <div ng-include="'views/front/logistique/livraison/bonLivraison.html'"></div>
+</div>
+
+<div ng-if="ITEM == 'of'">
+ <div ng-include="'views/front/logistique/of/of.html'"></div>	
+</div>
+
+<div ng-if="ITEM == 'reporting'">
+  <div ng-include="'views/front/logistique/reporting/reportingLogistique.html'"></div>
+</div>
+ 
+<div ng-if="ITEM == 'stockage'">
+    <div ng-include="'views/front/logistique/stockage/stockage.html'"></div>
+  </div>
+
+  <div ng-if="ITEM == 'suivieof'">
+    <div ng-include="'views/front/logistique/suivieof/suivieof.html'"></div>
+  </div>
+
+</div>	

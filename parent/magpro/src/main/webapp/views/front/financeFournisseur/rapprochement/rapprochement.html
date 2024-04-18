@@ -1,0 +1,492 @@
+
+
+<script type="text/javascript">
+
+  var SearchBoxElements = document.querySelectorAll(".ms-SearchBox");
+  for (var i = 0; i < SearchBoxElements.length; i++) {
+    new fabric['SearchBox'](SearchBoxElements[i]);
+  }
+
+
+  
+  var PanelExamples = document.getElementsByClassName("ms-PanelExample");
+  for (var i = 0; i < PanelExamples.length; i++) {
+    (function() {
+      var PanelExampleButton = PanelExamples[i].querySelector(".ms-Button");
+      var PanelExamplePanel = PanelExamples[i].querySelector(".ms-Panel");
+      PanelExampleButton.addEventListener("click", function(i) {
+        new fabric['Panel'](PanelExamplePanel);
+      });
+    }());
+  }
+
+  
+</script> 
+
+<div class="panel-body" ng-controller="rapprochementFournisseurController" style="background-color: #fff;">
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-sm-12">
+  
+      <span class="ms-ListItem-primaryText" style="font-size:130%">Rapprochement Fournisseur</span>
+ 
+      <div class="ms-CommandBar ms-CommandBar--navBar">
+<!--         <div class="ms-CommandBar-sideCommands">
+          <div class="ms-SearchBox ms-SearchBox--commandBar">
+            <input class="ms-SearchBox-field" type="text" value="" ng-model="filterOptions.filterText" />
+            <label class="ms-SearchBox-label">
+              <i class="ms-SearchBox-icon ms-Icon ms-Icon--Search"></i>
+              <span class="ms-SearchBox-text">Rechercher</span>
+            </label>
+            <div class="ms-CommandButton ms-SearchBox-clear ms-CommandButton--noLabel">
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+            <div class="ms-CommandButton ms-SearchBox-exit ms-CommandButton--noLabel">
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--ChromeBack"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+            <div class="ms-CommandButton ms-SearchBox-filter ms-CommandButton--noLabel">
+              <button class="ms-CommandButton-button">
+                <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Filter"></i></span>
+                <span class="ms-CommandButton-label"></span>
+              </button>
+            </div>
+          </div>
+
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div> -->
+        <div class="ms-CommandBar-mainArea">
+          
+          
+     
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="downloadAllecheanciers(echeancierCourant, 0)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--PaymentCard"></i></span>
+              <span class="ms-CommandButton-label">Paiement</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="downloadAllecheanciers(echeancierCourant, 1)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Timeline"></i></span>
+              <span class="ms-CommandButton-label"> Ech&eacute;ancier</span>
+            </button>
+          </div>
+          
+          
+          
+          
+            <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="downloadAllecheanciersExcel(echeancierCourant, 0)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--PaymentCard"></i></span>
+              <span class="ms-CommandButton-label">Paiement Excel</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="downloadAllecheanciersExcel(echeancierCourant, 1)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Timeline"></i></span>
+              <span class="ms-CommandButton-label"> Ech&eacute;ancier Excel</span>
+            </button>
+          </div>
+          
+          
+          
+          
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="rechercheecheancier(echeancierCourant)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+              <span class="ms-CommandButton-label">Rechercher</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+         <div ng-hide="true" class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div> 
+        </div>
+      </div>
+
+      <div class="panel panel-primary" style="margin-bottom:0%">
+        <div class="panel-body">
+          <form class="form-horizontal" name="rechercheecheancierForm" id="rechercheecheancierForm">
+            <div class="row">
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        R&eacute;f.Facture</label>
+                    </div>
+                    <input class="form-control" ng-model="echeancierCourant.refFacture"
+                      ng-init="echeancierCourant.refFacture=''" />
+                  </div>
+                </div>
+              </div>
+              
+              
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Transact.</label>
+                    </div>
+                    <input class="form-control" ng-model="echeancierCourant.referenceDetReglement"
+                      ng-init="echeancierCourant.referenceDetReglement=''" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        R&eacute;f.BR</label>
+                    </div>
+                    <input class="form-control" ng-model="echeancierCourant.refBL"
+                      ng-init="echeancierCourant.refBL=''" />
+                  </div>
+                </div>
+              </div>
+                 <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        R&eacute;f. R&eacute;gl</label>
+                    </div>
+                    <select ui-select2 ng-model="echeancierCourant.reference" ng-init="echeancierCourant.reference =''"
+                      data-placeholder="..." class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Reglements</option>
+                      <option ng-repeat="refReg in listrefReglement" value="{{refReg.reference}}">{{refReg.reference}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+           
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Fournisseur</label>
+                    </div>
+                    <select ui-select2 ng-model="echeancierCourant.partieIntId"
+                      ng-init="echeancierCourant.partieIntId =''" data-placeholder="..." class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="pi in listClients | filter:{famillePartieInteressee:2}" value="{{pi.id}}">
+                        {{pi.reference}}-{{pi.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> Date Reglement du</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="echeancierCourant.dateReglementDu =''" ng-model="echeancierCourant.dateReglementDu"
+                      is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> Au</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="echeancierCourant.dateReglementAu =''" ng-model="echeancierCourant.dateReglementAu"
+                      is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> Date Echeance Du :</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="echeancierCourant.dateEcheanceDu =''" ng-model="echeancierCourant.dateEcheanceDu"
+                      is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> Au</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="echeancierCourant.dateEcheanceAu =''" ng-model="echeancierCourant.dateEcheanceAu"
+                      is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text"> Type</label>
+                    </div>
+                    <select ui-select2 ng-model="echeancierCourant.typeReglementId"
+                      ng-init="echeancierCourant.typeReglementId =''" data-placeholder="..." class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Types</option>
+                      <option ng-repeat="pi in listTypes" value="{{pi.id}}">{{pi.designation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+          
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">
+                        Num Piece</label>
+                    </div>
+                    <input class="form-control" ng-model="echeancierCourant.numPiece"
+                      ng-init="echeancierCourant.numPiece=''" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text"> Region</label>
+                    </div>
+                    <select ui-select2 ng-model="echeancierCourant.regionId" ng-init="echeancierCourant.regionId =''"
+                      data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Toutes les Regions</option>
+                      <option ng-repeat="region in listeRegionCache" value="{{region.id}}">{{region.designation}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="ms-Label input-group-text">Ech&eacute;ance</label>
+                    </div>
+                    <select ui-select2 ng-model="echeancierCourant.avecTerme" ng-init="echeancierCourant.avecTerme =''"
+                      data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Touts les Modes</option>
+                      <option ng-repeat="item in listATerme" value="{{item.valeur}}">{{item.designation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+           <!--    <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Regl&eacute;e</label>
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="checkbox-sm checkbox-square checkbox-primary"
+                          ng-model="partieInteresseeCourante.actif">
+                          <input type="checkbox" ng-model="echeancierCourant.regle"
+                            ng-init="echeancierCourant.regle=''" />
+                          <span></span></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              
+               <div class="col-sm-3">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Regl&eacute;e</label>
+                    </div>
+                  
+                                   <select ui-select2 ng-model="echeancierCourant.regle" ng-init="echeancierCourant.regle =''"
+                      data-placeholder="" class="form-control" style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option value="true">OUI</option>
+                         <option value="false">NON</option>
+                  <!--     <option ng-repeat="item in listATerme" value="{{item.valeur}}">{{item.designation}}</option> -->
+                    </select>
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+               
+                             <div class="row">
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> D.Depot Banque Du :</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="echeancierCourant.dateDepotBanqueDe =''" ng-model="echeancierCourant.dateDepotBanqueDe"
+                      is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4" ng-controller="DatepickerDemoController">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"> Au</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="echeancierCourant.dateDepotBanqueA =''" ng-model="echeancierCourant.dateDepotBanqueA"
+                      is-open="opened" datepicker-options="dateOptions" date-="enabled(date, mode)" ng-required="true"
+                      close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+             
+           
+            </div>
+          
+          
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-md-12" style="margin-left:0.5%">
+      <span class="ms-ListItem-primaryText line" style="font-size:130%">Liste des Echeanciers</span>
+      <div style="height: 500px;" ng-grid="gridOptions"></div>
+    </div>
+  </div>
+
+
+  <div id="light" class="white_content">
+    <pop-up type="delete-article"></pop-up>
+  </div>
+  <div id="fade" class="black_overlay"></div>
+
+</div>

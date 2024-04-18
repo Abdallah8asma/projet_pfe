@@ -1,0 +1,496 @@
+
+<div class="col-sm-12" ng-controller="FicheBesoinController">
+
+	<!-- container d'ajout,  modification et de consultation Gestion Stock Entree-->
+	<div class="panel-body">
+		<div class="col-sm-12">
+			<div class="pull-right">
+				<button class="btn btn-action"
+					ng-click="creerOuModifierFicheBesoin(ficheBesoinCourante)"
+					ng-disabled="">Enregistrer</button>
+				<button class="btn-action btn">G&eacute;n&eacute;rer</button>
+				<button class="btn btn-action" ng-click="annulerAjout()">x</button>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="title-ajout">Doon&eacute;es G&eacute;n&eacute;rales</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+
+
+					<form class="form-horizontal" id="creationProduitForm"
+						name="creationProduitForm">
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Ref&eacute;r&eacute;nce
+										</span> <input type="text" class="form-control"
+											ng-model="ficheBesoinCourante.produitValue.reference">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">D&eacute;signation
+										</span> <input type="text" class="form-control"
+											ng-model="ficheBesoinCourante.produitValue.designation">
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Famille
+										</span> <input class="form-control"
+											ng-model="ficheBesoinCourante.produitValue.familleDesignation" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Sous
+											Famille </span> <input class="form-control"
+											ng-model="ficheBesoinCourante.produitValue.sousFamilleDesignation" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Partie
+											Int&eacute;r&eacute;sse</span> <input class="form-control"
+											ng-model="ficheBesoinCourante.produitValue.partieIntersseDesignation" />
+									</div>
+								</div>
+								<div class="col-sm-3" ng-controller="DateIntroCtrl">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+											Intro</span> <input type="text" class="form-control datepicker"
+											datepicker-popup="{{format}}" max-date="{{maxToDay}}"
+											ng-model="ficheBesoinCourante.produitValue.dateIntroduction"
+											is-open="opened" datepicker-options="dateOptions"
+											date-="enabled(date, mode)" ng-required="true"
+											close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Site</span>
+										<input class="form-control"
+											ng-model="ficheBesoinCourante.produitValue.siteEntiteDesignation" />
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Etat</span>
+										<input type="text" class="form-control"
+											ng-model="ficheBesoinCourante.produitValue.etat">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-sm-3" ng-controller="DateIntroCtrl">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Date
+											Cr&eacute;ation</span> <input type="text"
+											class="form-control datepicker" datepicker-popup="{{format}}"
+											max-date="{{maxToDay}}"
+											ng-model="ficheBesoinCourante.dateCreation" is-open="opened"
+											datepicker-options="dateOptions" date-="enabled(date, mode)"
+											ng-required="true" close-text="Close" />
+										<div class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open($event)">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-3">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Responsable
+										</span> <input class="form-control"
+											ng-model="ficheBesoinCourante.responsable" />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="input-group input-group-sm">
+										<span class="input-group-addon label1" id="basic-addon1">Observation</span>
+										<textarea class="form-control"
+											ng-model="ficheBesoinCourante.observation"
+											placeholder="Observation ..."></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<!-- End Données génrales -->
+
+			<div class="title-ajout line">Fiche Besoin</div>
+			<div class="title-ajout">
+				Articles<span class="fadeIn hidePlus" id="articles">+</span>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<div style="display: none" id="panel-articles">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="title-ajout2">
+									Fournitures<span id="fournituresBtn"
+										class="fadeOut pull-right hidePlusFourniture">-</span>
+								</div>
+							</div>
+						</div>
+						<div class="line4"></div>
+						<div id="fournitures">
+							<div class="form-group">
+								<div class="row">
+									<button class="btn btn-action pull-right spacer2"
+										ng-click="showPopupDelete(11,1)">Rechercher</button>
+								</div>
+							</div>
+<!-- 														listArticlesFournituresE: {{listArticlesFournituresE}}<br> -->
+							<!-- 							listArticlesTissusE: {{listArticlesTissusE}} -->
+							<!-- 							<br> listArticlesFACE: {{listArticlesFACE}} -->
+							<table
+								class="table table-bordered table-condensed table-head-color"
+								id="tableElementBesoin">
+								<thead>
+									<tr>
+										<th class="hidden"></th>
+										<th>R&eacute;f.</th>
+										<th>D&eacute;signation</th>
+										<th>Famille</th>
+										<th>S.Famille</th>
+										<th>Quantit&eacute;</th>
+										<th>Prix Unitaire</th>
+										<th>Prix Total</th>
+										<th>Bloquant</th>
+										<th>Phase</th>
+										<th>Taille</th>
+										<th>Couleur</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="articleF in listArticlesFournituresE">
+										<td class="hidden"><span
+											editable-text="articleF.article.id" e-name="article.id"
+											e-form="rowform" e-required> {{articleF.article.id ||
+												'empty' }} </span></td>
+										<td><span editable-text="articleF.article.ref"
+											e-name="article.ref" e-form="rowform" e-required>
+												{{articleF.article.ref|| 'empty' }} </span></td>
+										<td><span editable-text="articleF.article.designation"
+											e-name="article.designation" e-form="rowform" e-required>
+												{{articleF.article.designation || 'empty' }} </span></td>
+										<td><span
+											editable-text="articleF.article.familleArticleDesignation"
+											e-name="article.familleArticleDesignation" e-form="rowform"
+											e-required>
+												{{articleF.article.familleArticleDesignation || 'empty' }} </span></td>
+										<td><span
+											editable-text="articleF.article.sousFamilleArtEntiteDesignation"
+											e-name="article.sousFamilleArtEntiteDesignation"
+											e-form="rowform" e-required>
+												{{articleF.article.sousFamilleArtEntiteDesignation ||
+												'empty' }}</span></td>
+										<td>
+											<!-- editable representat (text with validation) --> <input
+											ng-model="listArticlesFournituresE[$index].quantite"
+											e-name="quantite" e-form="rowform" value=""
+											class="form-control" e-required />
+										</td>
+										<td><input
+											ng-model="listArticlesFournituresE[$index].article.pu"
+											e-name="article.pu" e-form="rowform" e-required value=""
+											class="form-control" /></td>
+										<td><input
+											ng-model="listArticlesFournituresE[$index].prixTotal"
+											value="" e-form="rowform" e-name="prixTotal"
+											class="form-control" /></td>
+										<td><input type="checkbox" ng-model="articleF.bloQuatite"
+											e-name="bloQuatite" style="width: 20px; margin-left: 30%"
+											e-form="rowform" class="form-control" e-required /></td>
+										<td>
+										<select ng-model="articleF.phase" class="form-control">
+										<option ng-repeat="phase in listePhaseCache" value="{{phase.designation}}" 
+										 ng-selected="{{phase.designation == articleF.phase}}">{{phase.designation}}</option>
+										</select>
+										</td>
+										<td><input
+											ng-model="listArticlesFournituresE[$index].designationTaille"
+											e-name="taille.designation"
+											e-form="rowform" value="" class="form-control" e-required
+											disabled></td>
+										<td><input
+											ng-model="listArticlesFournituresE[$index].designationCouleur"
+											e-name="couleur.designation"
+											e-form="rowform" value="" class="form-control" e-required
+											disabled></td>
+										<td style="white-space: nowrap" class="pull-right">
+											<!-- form -->
+											<form editable-form name="rowform" ng-show="rowform.$visible"
+												class="form-buttons form-inline"></form>
+											<div class="buttons" ng-show="!rowform.$visible">
+												<button class="btn-info btn-xs fa fa-info-circle"
+													ng-show="!articleF.global"
+													ng-click="showPopupTailleColor(14,articleF.article.id,articleF.article.ref,articleF.article.designation,articleF.article.familleArticleDesignation,articleF.article.sousFamilleArtEntiteDesignation,$index)"></button>
+												<span class="rawform-icon"></span>
+												<button data-nodrag
+													class="btn btn-sm glyphicon glyphicon-trash"
+													ng-click="removeMvt($index)"></button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div style="display: none" id="panel-articles">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="title-ajout2">
+									Tissu<span id="tissuBtn"
+										class="fadeOut pull-right hidePlusTissu">+</span>
+								</div>
+							</div>
+						</div>
+						<div class="line4"></div>
+						<div id="tissu" style="display: none">
+							<div class="form-group">
+								<div class="row">
+									<button class="btn btn-action pull-right spacer2"
+										ng-click="showPopupDelete(12,0)">Rechercher</button>
+								</div>
+							</div>
+							<table
+								class="table table-bordered table-condensed table-head-color">
+								<thead>
+									<tr>
+										<th class="hidden"></th>
+										<th>R&eacute;f.</th>
+										<th style="width: 10%">D&eacute;signation</th>
+										<th>Famille</th>
+										<th>S.Famille</th>
+										<th>Q.Act.</th>
+										<th>M&eacute;trage</th>
+										<th>Nbr Rouleaux</th>
+										<th>P.U</th>
+										<th>PMP</th>
+										<th>P.T</th>
+										<th>Empl</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="mvtT in listArticlesTissusE">
+										<td class="hidden"><span editable-text="mvtT.entiteStock"
+											e-name="entiteStock" e-form="rowform" e-required>
+												{{mvtT.entiteStock || 'empty' }} </span></td>
+										<td><span editable-text="mvtT.referenceArticle"
+											e-name="referenceArticle" e-form="rowform" e-required>
+												{{mvtT.referenceArticle || 'empty' }} </span></td>
+										<td><span editable-text="mvtT.designationArticle"
+											e-name="designationArticle" e-form="rowform" e-required>
+												{{mvtT.designationArticle || 'empty' }} </span></td>
+										<td><span editable-text="mvtT.familleArticle"
+											e-name="familleArticle" e-form="rowform" e-required>{{mvtT.familleArticle
+												|| 'empty' }} </span></td>
+										<td><span editable-text="mvtT.sousFamilleArticle"
+											e-name="sousFamilleArticle" e-form="rowform" e-required>
+												{{mvtT.sousFamilleArticle || 'empty' }}</span></td>
+										<td><span editable-text="mvtT.quantite" e-name="quantite"
+											e-form="rowform" e-required> {{mvtT.quantite ||
+												'empty' }} </span></td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><input ng-model="MvtTissu[$index].prixUnitaire"
+											value="" class="form-control"
+											ng-change="changeMvtTissu($index,MvtTissu[$index].prixUnitaire,'prixUnitaire')" />
+										</td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><input ng-model="MvtTissu[$index].prixTotal" value=""
+											class="form-control"
+											ng-change="changeMvtTissu($index,MvtTissu[$index].prixTotal,'prixTotal')" />
+										</td>
+										<td><input ng-model="MvtTissu[$index].emplacement"
+											value="" class="form-control"
+											ng-change="changeMvtTissu($index,MvtTissu[$index].emplacement,'emplacement')" />
+										</td>
+										<td style="white-space: nowrap" class="pull-right">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave=""
+												ng-show="rowform.$visible" class="form-buttons form-inline"
+												shown="">
+												<button type="submit" ng-disabled="!rowform.$valid"
+													class="btn btn-sm glyphicon glyphicon-save"
+													aria-hidden="true"></button>
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="rowform.$cancel()"
+													class="btn btn-sm glyphicon glyphicon-remove"></button>
+											</form>
+											<div class="buttons" ng-show="!rowform.$visible">
+												<span class="rawform-icon"></span>
+												<button data-nodrag
+													class="btn btn-sm glyphicon glyphicon-pencil"
+													ng-click="rowform.$show()"></button>
+												<button data-nodrag
+													class="btn btn-sm glyphicon glyphicon-trash" ng-click=""></button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div style="display: none" id="panel-articles">
+						<div class="row">
+							<div class="col-sm-2">
+								<div class="title-ajout2">
+									Fil &agrave; coudre<span id="filBtn"
+										class="fadeOut pull-right hidePlusFil">+</span>
+								</div>
+							</div>
+						</div>
+						<div class="line4"></div>
+						<div id="fil" style="display: none">
+							<div class="form-group">
+								<div class="row">
+									<button class="btn btn-action pull-right spacer2"
+										ng-click="showPopupDelete(13,0)">Rechercher</button>
+								</div>
+							</div>
+							<table
+								class="table table-bordered table-condensed table-head-color">
+								<thead>
+									<tr>
+										<th>R&eacute;f.</th>
+										<th style="width: 10%">D&eacute;signation</th>
+										<th>Famille</th>
+										<th>S.Famille</th>
+										<th>M&eacute;trage</th>
+										<th>F.C&ocirc;ne</th>
+										<th>Poids</th>
+										<th>Q.Act.</th>
+										<th>Q.BL</th>
+										<th>Q.R</th>
+										<th>P.U</th>
+										<th>PMP</th>
+										<th>P.T</th>
+										<th>Empl</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="MvtFAC in listArticlesFACE">
+										<td class="hidden"><span
+											editable-text="MvtFAC.entiteStock" e-name="entiteStock"
+											e-form="rowform" e-required> {{MvtFAC.entiteStock ||
+												'empty' }} </span></td>
+										<td><span editable-text="MvtFAC.referenceArticle"
+											e-name="referenceArticle" e-form="rowform" e-required>
+												{{MvtFAC.referenceArticle || 'empty' }} </span></td>
+										<td><span editable-text="MvtFAC.designationArticle"
+											e-name="designationArticle" e-form="rowform" e-required>
+												{{MvtFAC.designationArticle || 'empty' }} </span></td>
+										<td><span editable-text="MvtFAC.familleArticle"
+											e-name="familleArticle" e-form="rowform" e-required>{{MvtFAC.familleArticle
+												|| 'empty' }} </span></td>
+										<td><span editable-text="MvtFAC.sousFamilleArticle"
+											e-name="sousFamilleArticle" e-form="rowform" e-required>
+												{{MvtFAC.sousFamilleArticle || 'empty' }}</span></td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><span editable-text="MvtFAC.quantite"
+											e-name="quantite" e-form="rowform" e-required>
+												{{MvtFAC.quantite || 'empty' }} </span></td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><input ng-model="MvtFAC[$index].quantiteReelle"
+											value="" class="form-control"
+											ng-change="changeMvtFAC($index,MvtFAC[$index].quantiteReelle,'quantiteReelle')" />
+
+										</td>
+										<td>
+											<!-- editable representat (text with validation) --> <span
+											editable-text="t" e-name="t" e-form="rowform" e-required>
+										</span>
+										</td>
+										<td>
+											<!-- editable representat (text with validation) --> <span
+											editable-text="t" e-name="t" e-form="rowform" e-required>
+										</span>
+										</td>
+										<td><input ng-model="MvtFAC[$index].prixUnitaire"
+											value="" class="form-control"
+											ng-change="changeMvtFAC($index,MvtFAC[$index].prixUnitaire,'prixUnitaire')" />
+										</td>
+										<td><span editable-text="t" e-name="t" e-form="rowform"
+											e-required> </span></td>
+										<td><input ng-model="MvtFAC[$index].prixTotal" value=""
+											class="form-control"
+											ng-change="changeMvtFAC($index,MvtFAC[$index].prixTotal,'prixTotal')" />
+										</td>
+										<td><input ng-model="MvtFAC[$index].emplacement" value=""
+											class="form-control"
+											ng-change="changeMvtFAC($index,MvtFAC[$index].emplacement,'emplacement')" />
+										</td>
+										<td style="white-space: nowrap" class="pull-right">
+											<!-- form -->
+											<form editable-form name="rowform" onbeforesave=""
+												ng-show="rowform.$visible" class="form-buttons form-inline"
+												shown="">
+												<button type="submit" ng-disabled="!rowform.$valid"
+													class="btn btn-sm glyphicon glyphicon-save"
+													aria-hidden="true"></button>
+												<button type="button" ng-disabled="rowform.$waiting"
+													ng-click="rowform.$cancel()"
+													class="btn btn-sm glyphicon glyphicon-remove"></button>
+											</form>
+											<div class="buttons" ng-show="!rowform.$visible">
+												<span class="rawform-icon"></span>
+												<button data-nodrag
+													class="btn btn-sm glyphicon glyphicon-pencil"
+													ng-click="rowform.$show()"></button>
+												<button data-nodrag
+													class="btn btn-sm glyphicon glyphicon-trash" ng-click=""></button>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Popup Recherche Stock -->
+	<div id="light" class="white_content2">
+		<pop-up></pop-up>
+	</div>
+	<div id="fade" class="black_overlay"></div>
+	<!-- Fin Popup de la suppression -->
+</div>

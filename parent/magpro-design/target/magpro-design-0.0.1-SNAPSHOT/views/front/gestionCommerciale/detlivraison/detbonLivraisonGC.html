@@ -1,0 +1,420 @@
+<div class="container-fluid" ng-controller="detbonlivraisonControllerGC" style="background-color: #fff;">
+
+<div class="row" ng-show="traitementEnCoursGenererDet =='true'">
+		<div class="col-sm-5"></div>
+		<div class="col-sm-2">
+		<br>
+			<div  
+				ng-click="traitementEnCoursGenererDet ='false'">
+				 
+
+					<div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+				 
+				 
+
+
+			</div>
+
+		</div>
+		<div class="col-sm-5"></div>
+
+	</div>
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-sm-12">
+      <br />
+      <div class="pull-right">
+
+      </div>
+    </div>
+    <div class="col-sm-12">
+      <br />
+
+      <span class="ms-ListItem-primaryText">Detail Bon de livraison</span>
+      <br />
+
+
+
+      <div class="ms-CommandBar ms-CommandBar--navBar">
+        <div class="ms-CommandBar-sideCommands">
+          <div class="ms-CommandButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Info"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+          </div>
+        </div>
+        <div class="ms-CommandBar-mainArea">
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="downloadAllBonLiv(detbonLivraisonVenteCourant)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Generate"></i></span>
+              <span class="ms-CommandButton-label">G&eacute;n&eacute;rer</span>
+            </button>
+          </div>
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="rechercherBonLivraisonVente(detbonLivraisonVenteCourant)">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--FolderSearch"></i></span>
+              <span class="ms-CommandButton-label">Rechercher</span>
+            </button>
+          </div>
+
+          <div class="ms-CommandButton">
+            <button class="ms-CommandButton-button" ng-click="annulerAjout()">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--Cancel"></i></span>
+              <span class="ms-CommandButton-label">Annuler</span>
+            </button>
+          </div>
+          <div class="ms-CommandButton ms-CommandBar-overflowButton ms-CommandButton--noLabel">
+            <button class="ms-CommandButton-button">
+              <span class="ms-CommandButton-icon"><i class="ms-Icon ms-Icon--More"></i></span>
+              <span class="ms-CommandButton-label"></span>
+            </button>
+            <ul class="ms-ContextualMenu is-opened">
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Folder</a>
+                <i class="ms-Icon ms-Icon--Folder"></i>
+              </li>
+              <li class="ms-ContextualMenu-item ms-ContextualMenu-item--divider"></li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Plain Text Document</a>
+                <i class="ms-Icon ms-Icon--Document"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">A Coffee</a>
+                <i class="ms-Icon ms-Icon--Coffee"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Picture</a>
+                <i class="ms-Icon ms-Icon--Picture"></i>
+              </li>
+              <li class="ms-ContextualMenu-item">
+                <a class="ms-ContextualMenu-link" tabindex="1">Money</a>
+                <i class="ms-Icon ms-Icon--Money"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-primary">
+        <div class="panel-body">
+          <form class="form-horizontal" name="rechercheBLVenteForm" id="rechercheBLVenteForm">
+            <div class="row">
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Client</label>
+                    </div>
+                    <select ui-select2 ng-model="detbonLivraisonVenteCourant.partieIntId"
+                      ng-init="detbonLivraisonVenteCourant.partieIntId =''" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Clients</option>
+                      <option ng-repeat="client in listePartieInteresseeCache" value="{{client.id}}">
+                        {{client.reference}}-{{client.abreviation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Magasin</label>
+                    </div>
+                    <select ui-select2 ng-model="detbonLivraisonVenteCourant.idDepot"
+                      ng-init="detbonLivraisonVenteCourant.idDepot =''" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Magasins</option>
+                      <option ng-repeat="magazin in listeMagazinCache" value="{{magazin.id}}">{{magazin.designation}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Produit</label>
+                    </div>
+                    <select ui-select2 ng-model="detbonLivraisonVenteCourant.idProduit"
+                      ng-init="detbonLivraisonVenteCourant.idProduit =''" data-placeholder="" class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous les Produits</option>
+                      <option ng-repeat="prod in listeProduitCache" value="{{prod.id}}">{{prod.designation}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3">
+
+
+                <div class="form-group" ng-controller="DatepickerDemoController">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label"> Date de</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="detbonLivraisonVenteCourant.dateDe =''" ng-model="detbonLivraisonVenteCourant.dateDe"
+                      is-open="opened" datepicker-options="dateOptions" date-disabled="enabled(date, mode)"
+                      ng-required="false" close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3" ng-controller="DatepickerDemoController">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text ms-Label"> Date a</span>
+                    </div>
+                    <input type="text" class="form-control datepicker" datepicker-popup="{{format}}"
+                      ng-init="detbonLivraisonVenteCourant.dateA =''" ng-model="detbonLivraisonVenteCourant.dateA"
+                      is-open="opened" datepicker-options="dateOptions" date-disabled="enabled(date, mode)"
+                      ng-required="false" close-text="Close" />
+
+                    <div class="input-group-append">
+                      <button type="button" class="btn1 btn-default" ng-click="open($event)" style="
+                          color: rgb(54, 153, 255);
+                          background-color: rgb(225, 240, 255);
+                        ">
+                        <i class="glyphicon glyphicon-calendar" style="color: #3699ff;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Prix Entre</label>
+                    </div>
+                    <input class="form-control" min="0" pattern="^\d*(\.\d{0,2})?$" placeholder="0.00" value="0"
+                      type="number" name="prixDe" ng-init="detbonLivraisonVenteCourant.prixDe =''"
+                      ng-model="detbonLivraisonVenteCourant.prixDe" />
+                  </div>
+
+                  <div ng-show="
+                  rechercheBLVenteForm.prixDe.$dirty && rechercheBLVenteForm.prixDe.$invalid" class="error">
+                    <div ng-show="rechercheBLVenteForm.prixDe.$error">
+                      La valeur doit être supérieure ou égale à 0 !
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Et </label>
+                    </div>
+                    <input class="form-control" min="0" pattern="^\d*(\.\d{0,2})?$" placeholder="0.00" value="0"
+                      name="prixA" type="number" ng-init="detbonLivraisonVenteCourant.prixA =''"
+                      ng-model="detbonLivraisonVenteCourant.prixA" />
+                  </div>
+                  <div ng-show="
+                  rechercheBLVenteForm.prixA.$dirty && rechercheBLVenteForm.prixA.$invalid" class="error">
+                    <div ng-show="rechercheBLVenteForm.prixA.$error">
+                      La valeur doit être supérieure ou égale à 0 !
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+             <div class="row">
+             
+                   <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">N° Article</label>
+                    </div>
+                    <input class="form-control" ng-init="detbonLivraisonVenteCourant.numeroProduit =''"
+                      ng-model="detbonLivraisonVenteCourant.numeroProduit" />
+                  </div>
+                </div>
+              </div>
+              
+              
+                     <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">R&eacute;f Four.</label>
+                    </div>
+                    <input class="form-control" ng-init="detbonLivraisonVenteCourant.referenceFournisseurProduit =''"
+                      ng-model="detbonLivraisonVenteCourant.referenceFournisseurProduit" />
+                  </div>
+                </div>
+              </div>
+             
+              </div>
+            
+
+            <div class="row">
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Quantit&eacute; De
+                      </label>
+                    </div>
+                    <input class="form-control" min="0" pattern="^\d*(\.\d{0,2})?$" placeholder="0" value="0"
+                      name="qteDe" type="number" ng-init="detbonLivraisonVenteCourant.qteDe =''"
+                      ng-model="detbonLivraisonVenteCourant.qteDe" />
+                  </div>
+
+                  <div ng-show="
+                  rechercheBLVenteForm.qteDe.$dirty && rechercheBLVenteForm.qteDe.$invalid" class="error">
+                    <div ng-show="rechercheBLVenteForm.qteDe.$error">
+                      La valeur doit être supérieure ou égale à 0 !
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">A </label>
+                    </div>
+                    <input class="form-control" ng-init="detbonLivraisonVenteCourant.qteA =''"
+                      ng-model="detbonLivraisonVenteCourant.qteA" min="0" pattern="^\d*(\.\d{0,2})?$" placeholder="0"
+                      value="0" name="qteA" type="number" />
+                  </div>
+
+                  <div ng-show="
+                  rechercheBLVenteForm.qteA.$dirty && rechercheBLVenteForm.qteA.$invalid" class="error">
+                    <div ng-show="rechercheBLVenteForm.qteA.$error">
+                      La valeur doit être supérieure ou égale à 0 !
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-3" hidden="true">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label is-required">Stock</label>
+                    </div>
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <label class="checkbox checkbox-square checkbox-primary">
+                          <input type="checkbox" ng-init="checkboxModelRech.stock='oui'"
+                            ng-model="checkboxModelRech.stock" ng-true-value="oui" ng-false-value="non" />
+                          <span></span> {{checkboxModelRech.stock}}</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+               <div class="col-sm-3">
+
+
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text ms-Label">Groupe</label>
+                    </div>
+                    <select ui-select2 ng-model="detbonLivraisonVenteCourant.groupeClientId"
+                      ng-init="detbonLivraisonVenteCourant.groupeClientId =''" data-placeholder="..." class="form-control"
+                      style="border: 1px solid #e5eaee !important;">
+                      <option value="">Tous</option>
+                      <option ng-repeat="groupe in listGroupeClient" value="{{groupe.id}}">{{groupe.designation}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+<div class="row">
+
+
+  <div class="col-sm-4">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <label class="input-group-text ms-Label">OF</label>
+        </div>
+        <select  ui-select2="true" class="form-control" ng-model="detbonLivraisonVenteCourant.numOF"
+         style="border: 1px solid #e5eaee !important;" required>
+          <option ng-repeat="mise in ListeMises" value="{{mise.reference}}">
+            {{mise.reference}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row" ng-show="displayMode != 'edit'">
+    <div class="col-md-12">
+
+
+      <span class="ms-ListItem-primaryText line">Liste Detail livraison</span>
+      <div style="height: 500px;" ng-grid="gridOptions"></div>
+    </div>
+  </div>
+
+
+  <div id="light" class="white_content">
+    <pop-up type="delete-bonVente"></pop-up>
+  </div>
+  <div id="fade" class="black_overlay"></div>
+</div>
