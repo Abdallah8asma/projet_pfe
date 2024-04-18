@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Built-By: Asus
+Build-Jdk: 19.0.1
+ArtifactId: mtt-gpto-commun-domaine
+BuildTime: 2024-04-18 18:33:47
+Created-By: Maven Integration for Eclipse
+GroupId: com.gpro.consulting.parent
+Packaging: jar
+Profile: 
+Projet: GENERIC
+Version: 0.0.1-SNAPSHOT
+environnement: 
+
