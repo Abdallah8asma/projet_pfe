@@ -128,6 +128,12 @@
     <artifactId>java-jwt</artifactId>
     <version>3.4.1</version>
 </dependency>
+<dependency>
+    <groupId>com.thoughtworks.xstream</groupId>
+    <artifactId>xstream</artifactId>
+    <version>1.4.20</version> <!-- Use the latest version available -->
+</dependency>
+
 
   </dependencies>
   
@@ -159,6 +165,14 @@
 			      
 			    </dependencies>		
 			    </plugin>	
+			    <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <configuration>
+        <argLine>--illegal-access=permit</argLine>
+    </configuration>
+</plugin>
+
 			</plugins>
 			 </pluginManagement>
 		</build>
