@@ -13,7 +13,7 @@
 	<packaging>war</packaging>
 
 	<properties>
-		<jasper.version>5.1.0</jasper.version>
+		<jasper.version>6.21.2</jasper.version>
 		<commons.digester.version>2.1</commons.digester.version>
 		<commons.collections.version>3.2.1</commons.collections.version>
 		<barbecue.version>1.5-beta1</barbecue.version>
