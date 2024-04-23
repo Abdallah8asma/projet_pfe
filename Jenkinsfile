@@ -13,10 +13,10 @@ pipeline
         stage('Build') {
             steps {
                 // Changer le répertoire de travail
-                dir('/var/lib/jenkiins/workspace/premier_job/mt-gpro-commun') {
+                dir('/var/lib/jenkins/workspace/premier_job/mt-gpro-commun') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkiins/workspace/premier_job/ma-gpro-logistique') {
+                dir('/var/lib/jenkins/workspace/premier_job/ma-gpro-logistique') {
                     sh 'mvn clean install'
         
             }
