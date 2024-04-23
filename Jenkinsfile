@@ -12,7 +12,27 @@ pipeline
         
         stage('Build') {
             steps {
-                // Changer le répertoire de travail
+                dir('/var/lib/jenkins/workspace/premier_job/socle') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/premier_job/socle-j2ee') {
+                    sh 'mvn clean install'
+        
+            }
+                dir('/var/lib/jenkins/workspace/premier_job/socle-j2ee-tiers') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/premier_job/scole-j2ee-mt') {
+                    sh 'mvn clean install'
+        
+            }
+                dir('/var/lib/jenkins/workspace/premier_job/mt-socle') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/premier_job/mt-commun') {
+                    sh 'mvn clean install'
+        
+            }
                 dir('/var/lib/jenkins/workspace/premier_job/mt-gpro-commun') {
                     sh 'mvn clean install'
                 }
