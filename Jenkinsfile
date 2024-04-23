@@ -51,9 +51,11 @@ pipeline
         }
 
         stage('Deploy'){
-            steps{
-                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.224.35.51:8080/')], contextPath: null, war: '**/*.war'
+            steps {
+                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.224.35.51:8080/')], contextPath: '/ma-gpro-design', war: '**/*.war'
     }
+}
+
 
   }
 
