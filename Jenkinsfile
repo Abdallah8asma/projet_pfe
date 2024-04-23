@@ -40,6 +40,13 @@ pipeline
                     sh 'mvn clean install'
         
             }
+               dir('/var/lib/jenkins/workspace/premier_job/ma-gpro-design-war') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/premier_job/ma-gpro-atelier-war') {
+                    sh 'mvn clean install'
+        
+            }
         }
         }
 
