@@ -1,26 +1,34 @@
-# Stage 1
-FROM node:12.18.1 as build-step
+# Stage 1: Build the Angular application
+FROM node:12.18.1 as build
+
 MAINTAINER asmaabdallah518@gmail.com
 
-# Set working directory
+# Définition du répertoire de travail
 WORKDIR /app
 
-# Copy package.json and package-lock.json separately
-COPY package*.json /app/
+# Copie des fichiers de configuration du package.json
+COPY package.json package-lock.json /app/
 
-# Install dependencies
+# Installation des dépendances
 RUN npm install
 
-# Copy the rest of the application
+# Copie du code source de l'application
 COPY . /app/
 
-# Build the application
-RUN npm run build --production
+# Construction de l'application Angular
+RUN npm run build --prod
 
-# Stage 2
+# Stage 2: Serve the Angular application using Nginx
 FROM nginx:1.23.1-alpine
 
-# Copy built files from Stage 1
-COPY --from=build-step /app/dist/commercial-industriel/ /usr/share/nginx/html
+# Copie du fichier de configuration Nginx
+COPY nginx.conf /etc/nginx/nginx.conf
 
+# Copie des fichiers construits de l'étape précédente vers le répertoire d'hébergement de Nginx
+COPY --from=build /app/dist/ /usr/share/nginx/html
 
+# Exposition du port 80
+EXPOSE 80
+
+# Commande pour démarrer Nginx une fois le conteneur démarré
+CMD ["nginx", "-g", "daemon off;"]
