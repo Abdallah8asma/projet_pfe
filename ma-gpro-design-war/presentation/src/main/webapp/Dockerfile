@@ -6,17 +6,12 @@ MAINTAINER asmaabdallah518@gmail.com
 # Définition du répertoire de travail
 WORKDIR /app
 
-# Copie des fichiers de configuration du package.json
-COPY package.json package-lock.json /app/
-
-# Installation des dépendances
-RUN npm install
-
-# Copie du code source de l'application
+# Copie de tout le code source de l'application
 COPY . /app/
 
 # Construction de l'application Angular
-RUN npm run build --prod
+RUN npm install -g @angular/cli && \
+    ng build --prod
 
 # Stage 2: Serve the Angular application using Nginx
 FROM nginx:1.23.1-alpine
@@ -32,3 +27,4 @@ EXPOSE 80
 
 # Commande pour démarrer Nginx une fois le conteneur démarré
 CMD ["nginx", "-g", "daemon off;"]
+
