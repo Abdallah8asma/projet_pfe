@@ -6,6 +6,6 @@ COPY .  /app
 RUN mvn -Dmaven.test.skip=true clean package
 
 FROM openjdk:11
-COPY --from=build-step /app/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war  app.war
+COPY --from=build-step /app/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war app.war
 EXPOSE 8080
 ENTRYPOINT ["java","-war","app.war"]
