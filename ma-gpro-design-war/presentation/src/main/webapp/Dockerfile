@@ -1,5 +1,5 @@
 # Stage 1: Build the Angular application
-FROM node:12.18.1 as build
+FROM node:18.20.2 as build
 
 MAINTAINER asmaabdallah518@gmail.com
 
