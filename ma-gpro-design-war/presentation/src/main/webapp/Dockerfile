@@ -12,5 +12,5 @@ RUN npm run build --production
 # Stage 2
 
 FROM nginx:1.23.1-alpine
-COPY --from=build-step /app/dist/Angular11SocialLogin/ /usr/share/nginx/html
+COPY --from=build-step /app/dist/commercial-industriel/ /usr/share/nginx/html
 
