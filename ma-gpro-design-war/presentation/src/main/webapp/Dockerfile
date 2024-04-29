@@ -10,7 +10,7 @@ WORKDIR /app
 COPY . /app/
 
 # Construction de l'application Angular
-RUN npm install -g @angular/cli && \
+RUN npm install -g npm@10.6.0 @angular/cli && \
     ng build --prod
 
 # Stage 2: Serve the Angular application using Nginx
