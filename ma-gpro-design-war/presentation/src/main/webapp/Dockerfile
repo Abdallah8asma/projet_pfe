@@ -1,4 +1,4 @@
-# Stage 1: Build the Angular application
+# Stage 1: Build the AngularJS application
 FROM node:18.20.2 as build
 
 MAINTAINER asmaabdallah518@gmail.com
@@ -9,11 +9,13 @@ WORKDIR /app
 # Copie de tout le code source de l'application
 COPY . /app/
 
-# Construction de l'application Angular
-RUN npm install -g npm@10.6.0 @angular/cli && \
-    ng build --prod
+# Installation des dépendances
+RUN npm install
 
-# Stage 2: Serve the Angular application using Nginx
+# Construction de l'application AngularJS (remplacez cette étape par vos propres commandes de construction AngularJS)
+RUN npm run build
+
+# Stage 2: Serve the AngularJS application using Nginx
 FROM nginx:1.23.1-alpine
 
 # Copie du fichier de configuration Nginx
@@ -27,4 +29,3 @@ EXPOSE 80
 
 # Commande pour démarrer Nginx une fois le conteneur démarré
 CMD ["nginx", "-g", "daemon off;"]
-
