@@ -1,68 +1,29 @@
-#FROM openjdk:11 
+FROM maven:3.6.3-openjdk-11-slim AS BUILDER
+ARG VERSION=3.5.0.0-SNAPSHOT
+WORKDIR /build/
+COPY . /build/
+COPY socle/pom.xml /build/
+RUN mvn clean install package
+COPY socle-j2ee/pom.xml /build/socle-j2ee/
+RUN mvn clean install package
+COPY socle-j2ee-tiers/pom.xml /build/socle-j2ee-tiers/
+RUN mvn clean install package
+COPY scole-j2ee-mt/pom.xml /build/scole-j2ee-mt/
+RUN mvn clean install package
+COPY mt-socle/pom.xml /build/mt-socle/
+RUN mvn clean install package
+COPY mt-commun/pom.xml   /build/mt-commun/
+RUN mvn clean install package
+COPY mt-gpro-commun/pom.xml /build/mt-gpro-commun/
+RUN mvn clean install package
+COPY ma-gpro-logistique/pom.xml /build/ma-gpro-logistique/
+RUN mvn clean install package
+COPY mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-${VERSION}.war target/mt-gpro-commun.war
+COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-${VERSION}.war target/ma-gpro-logistique.war
 
-#MAINTAINER asmaabdallah518@gmail.com
-
-#RUN mkdir -p /app
-
-#WORKDIR /app
-
-#COPY . /app
-
-#COPY /app/ma-gpro-logistique/ma-gpro-logistique-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war  /app/app.war
-
-#EXPOSE 8080
-
-#ENTRYPOINT ["java","-jar","/app/app.war"]
-
-
-# Utilisez une image de base contenant Java et Maven
-FROM maven:3.8.1-jdk-11 AS build
-
-# Définissez le répertoire de travail dans le conteneur
-WORKDIR /app
-
-# Copiez le fichier pom.xml pour installer les dépendances
-COPY /socle/pom.xml .
-RUN mvn dependency:go-offline
-RUN mvn package -DskipTests
-
-COPY /socle-j2ee/pom.xml .
-RUN mvn dependency:go-offline
-RUN mvn package -DskipTests
-
-COPY /socle-j2ee-tiers/pom.xml .
-RUN mvn dependency:go-offline
-RUN mvn package -DskipTests
-
-COPY /scole-j2ee-mt/pom.xml .
-RUN mvn dependency:go-offline
-RUN mvn package -DskipTests
-
-COPY /mt-socle/pom.xml .
-RUN mvn dependency:go-offline
-RUN mvn package -DskipTests
-
-COPY /mt-commun/pom.xml . 
-RUN mvn dependency:go-offline
-RUN mvn package -DskipTests
-
-COPY /mt-gpro-commun/pom.xml .
-
-# Installez les dépendances
-RUN mvn dependency:go-offline
-
-
-# Compilez l'application
-RUN mvn package -DskipTests
-
-# Utilisez une image de base légère pour exécuter l'application
-FROM openjdk:11-jre-slim
-
-# Copiez le fichier JAR compilé dans le conteneur
-COPY --from=build /app/target/*.war /app/application.war
-
-# Exposez le port sur lequel l'application Spring Boot écoute
-EXPOSE 8080
-
-# Commande pour démarrer l'application Spring Boot
-CMD ["java", "-jar", "/app/application.war"]
+FROM openjdk:11.0.11-jre-slim
+WORKDIR /app/
+COPY --from=BUILDER /build/target/mt-gpro-commun.war /app/
+COPY --from=BUILDER /build/target/ma-gpro-logistique.war /app/
+CMD java -jar /app/mt-gpro-commun.war
+CMD java -jar /app/ma-gpro-logistique.war

@@ -1,16 +1,14 @@
-# Stage 1
+# Utilisation de l'image Nginx officielle comme base
+FROM nginx:latest
 
-FROM node:18.20.2 as build-step
-MAINTAINER asmaabdallah518@gmail.com
-RUN mkdir -p /app
-WORKDIR /app
-COPY . /app
-RUN npm install -g @angular/cli
-RUN npm install
-COPY . /app
-RUN npm run build --production
+# Supprimer les fichiers de configuration par défaut de Nginx
+RUN rm -rf /etc/nginx/conf.d/*
 
-# Stage 2
+# Copier les fichiers de votre application Angular dans le répertoire de travail de Nginx
+COPY . /usr/share/nginx/html
 
-FROM nginx:1.23.1-alpine
-COPY --from=build-step /app/dist/ma-gpro-design-war/ /usr/share/nginx/html
+# Exposer le port 80 sur lequel Nginx écoute par défaut
+EXPOSE 80
+
+# Commande par défaut pour démarrer Nginx lorsque le conteneur est lancé
+CMD ["nginx", "-g", "daemon off;"]
