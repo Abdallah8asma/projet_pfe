@@ -1,0 +1,49 @@
+2024-03-22 10:14:55 CET LOG:  le système de bases de données a été arrêté à 2024-03-22 10:14:43 CET
+2024-03-22 10:14:55 CET LOG:  le système de bases de données est prêt pour accepter les connexions
+2024-03-22 10:14:55 CET LOG:  lancement du processus autovacuum
+2024-03-22 10:17:54 CET LOG:  les points de vérification (checkpoints) arrivent trop fréquemment
+	(toutes les 22 secondes)
+2024-03-22 10:17:54 CET ASTUCE :  Considèrez l'augmentation du paramètre « checkpoint_segments ».
+2024-03-22 10:18:01 CET LOG:  les points de vérification (checkpoints) arrivent trop fréquemment
+	(toutes les 7 secondes)
+2024-03-22 10:18:01 CET ASTUCE :  Considèrez l'augmentation du paramètre « checkpoint_segments ».
+2024-03-22 10:18:08 CET LOG:  envoi de l'annulation pour bloquer le PID 18240 de l'autovacuum
+2024-03-22 10:18:08 CET DÃ‰TAIL:  Le processus 12568 attend AccessExclusiveLock sur relation 16873 de la base de donnÃ©es 16393.
+2024-03-22 10:18:08 CET INSTRUCTION :  ALTER TABLE ONLY gc_detfacturevente
+	    ADD CONSTRAINT pk_gc_detfacturevente PRIMARY KEY (id);
+	
+	
+	
+2024-03-22 10:18:08 CET ERREUR:  annulation de la tÃ¢che d'autovacuum
+2024-03-22 10:18:08 CET CONTEXTE :  ANALYZE automatique de la table Â« commercial-industriel.public.gc_detfacturevente Â»
+2024-03-22 10:19:11 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 10:19:11 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 10:20:19 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 10:20:19 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 10:25:15 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 10:25:15 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 11:30:12 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 11:30:12 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 11:40:39 CET ATTENTION:  aucune transaction en cours
+2024-03-22 11:40:39 CET ATTENTION:  aucune transaction en cours
+2024-03-22 11:40:39 CET ATTENTION:  aucune transaction en cours
+2024-03-22 11:40:39 CET ATTENTION:  aucune transaction en cours
+2024-03-22 11:40:39 CET ATTENTION:  aucune transaction en cours
+2024-03-22 12:02:52 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 12:02:52 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 12:41:15 CET ATTENTION:  aucune transaction en cours
+2024-03-22 13:19:56 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 17:34:53 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 17:34:53 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 17:36:47 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 17:36:47 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 18:15:49 CET ATTENTION:  aucune transaction en cours
+2024-03-22 18:15:49 CET ATTENTION:  aucune transaction en cours
+2024-03-22 18:15:52 CET ATTENTION:  aucune transaction en cours
+2024-03-22 18:15:52 CET ATTENTION:  aucune transaction en cours
+2024-03-22 18:47:40 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-22 18:47:40 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-23 02:03:32 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-23 02:03:32 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-23 15:46:51 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061
+2024-03-23 15:46:51 CET LOG:  n'a pas pu recevoir les donnÃ©es du client : unrecognized winsock error 10061

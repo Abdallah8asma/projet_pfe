@@ -1,0 +1,4 @@
+2024-03-23 15:47:42 CET LOG:  a reçu une demande d'arrêt rapide
+2024-03-23 15:47:42 CET LOG:  annulation des transactions actives
+2024-03-23 15:47:42 CET LOG:  arrêt du processus autovacuum
+2024-03-23 15:47:42 CET ERREUR:  annulation de la requête à la demande de l'utilisateur

@@ -1,11 +1,14 @@
-FROM maven:3.9.6-openjdk-11 as build-step
-MAINTAINER asmaabdallah518@gmail.com
-RUN mkdir -p /app
-WORKDIR /app
-COPY .  /app
-RUN mvn -Dmaven.test.skip=true clean package
+FROM maven:3.6.3-openjdk-11-slim as BUILDER
+ARG VERSION=3.5.0.0-SNAPSHOT
+WORKDIR /build/
+COPY pom.xml /build/
+COPY src /build/src/
 
-FROM openjdk:11
-COPY --from=build-step /app/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war app.war
-EXPOSE 8080
-ENTRYPOINT ["java","-war","app.war"]
+RUN mvn clean package
+COPY target/mt-gpro-commun-service-${VERSION}.jar target/application.jar
+
+FROM openjdk:11.0.11-jre-slim
+WORKDIR /app/
+
+COPY --from=BUILDER /build/target/application.jar /app/
+CMD java -jar /app/application.jar

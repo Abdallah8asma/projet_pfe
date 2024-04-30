@@ -1,0 +1,4 @@
+2024-04-27 14:19:15 CEST LOG:  le système de bases de données a été arrêté à 2024-04-27 14:18:46 CEST
+2024-04-27 14:19:15 CEST LOG:  le système de bases de données est prêt pour accepter les connexions
+2024-04-27 14:19:15 CEST FATAL:  le système de bases de données se lance
+2024-04-27 14:19:15 CEST LOG:  lancement du processus autovacuum
