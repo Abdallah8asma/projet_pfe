@@ -1,0 +1,12 @@
+
+# Utilisation de l'image PostgreSQL officielle comme base
+FROM postgres:latest
+
+# Définition d'une variable d'environnement pour spécifier le mot de passe du superutilisateur
+ENV POSTGRES_PASSWORD=admin
+
+# Exposer le port par défaut de PostgreSQL
+EXPOSE 5432
+
+# Commande par défaut pour démarrer PostgreSQL lorsque le conteneur est lancé
+CMD ["postgres"]
