@@ -1,0 +1,13 @@
+2024-03-23 15:48:19 CET LOG:  le système de bases de données a été interrompu ; dernier lancement connu à 2024-03-22 10:33:01 CET
+2024-03-23 15:48:19 CET LOG:  le système de bases de données n'a pas été arrêté proprement ; restauration
+	automatique en cours
+2024-03-23 15:48:19 CET LOG:  record with zero length at 0/9B6CA68
+2024-03-23 15:48:19 CET LOG:  la ré-exécution n'est pas nécessaire
+2024-03-23 15:48:19 CET LOG:  le système de bases de données est prêt pour accepter les connexions
+2024-03-23 15:48:19 CET LOG:  lancement du processus autovacuum
+2024-03-23 15:48:54 CET LOG:  a reçu une demande d'arrêt rapide
+2024-03-23 15:48:54 CET LOG:  annulation des transactions actives
+2024-03-23 15:48:54 CET ERREUR:  annulation de la requête à la demande de l'utilisateur
+2024-03-23 15:48:55 CET LOG:  arrêt du processus autovacuum
+2024-03-23 15:48:55 CET LOG:  arrêt en cours
+2024-03-23 15:48:55 CET LOG:  le système de base de données est arrêté

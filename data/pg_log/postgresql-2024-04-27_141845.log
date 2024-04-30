@@ -1,0 +1,9 @@
+2024-04-27 14:18:45 CEST LOG:  a reçu une demande d'arrêt rapide
+2024-04-27 14:18:46 CEST LOG:  le système de bases de données a été interrompu ; dernier lancement connu à 2024-04-04 14:00:35 CEST
+2024-04-27 14:18:46 CEST LOG:  le système de bases de données n'a pas été arrêté proprement ; restauration
+	automatique en cours
+2024-04-27 14:18:46 CEST LOG:  record with zero length at 0/9B6CB38
+2024-04-27 14:18:46 CEST LOG:  la ré-exécution n'est pas nécessaire
+2024-04-27 14:18:46 CEST FATAL:  le système de base de données s'arrête
+2024-04-27 14:18:46 CEST LOG:  arrêt en cours
+2024-04-27 14:18:46 CEST LOG:  le système de base de données est arrêté
