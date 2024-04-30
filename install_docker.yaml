@@ -1,0 +1,78 @@
+---
+- name: Installation Docker
+  hosts: 172.31.36.234
+  become: yes
+
+  tasks:
+    - name: Mise à jour des paquets
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Installation des dépendances requises pour Docker
+      package:
+        name: "{{ packages }}"
+        state: present
+      vars:
+        packages:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+
+
+    - name: Ajout de la clé GPG officielle de Docker
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Mise à jour de la liste des paquets (nouvelle source ajoutée)
+      apt:
+        update_cache: yes
+
+
+    - name: installa docker
+      apt:
+        name: "{{item}}"
+        state: latest
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+    
+    
+    - name: Démarrage et activation du service Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+
+    - name: Vérifier la version de Docker
+      command: docker --version
+      register: docker_version
+      ignore_errors: true
+
+    - debug:
+        msg: "La version de Docker installée est {{ docker_version.stdout }}"
+      when: docker_version.rc == 0
+
+    - name: Vérifier l'état du service Docker
+      systemd:
+        name: docker
+        state: started
+      register: docker_service_status
+
+    - debug:
+        msg: "Le service Docker est {{ docker_service_status.state }}"
+      when: docker_service_status.changed
+
+
+
+
