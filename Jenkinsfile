@@ -51,7 +51,7 @@ pipeline
         }
         stage('install docker'){
             steps{
-                ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', playbook: 'install_docker.yaml', vaultTmpPath: ''
+                ansiblePlaybook credentialsId: 'Ansible', installation: 'ansible', playbook: 'install_docker.yaml', vaultTmpPath: ''
 
        }
   }
