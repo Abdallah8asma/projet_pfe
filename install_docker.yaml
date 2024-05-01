@@ -9,6 +9,8 @@
       apt:
         update_cache: yes
         upgrade: yes
+        force_apt_get: yes
+
 
     - name: Installation des dépendances requises pour Docker
       package:
