@@ -13,7 +13,7 @@ pipeline
 
    stage('install docker'){
             steps{
-                ansiblePlaybook credentialsId: 'Ansible', installation: 'ansible', inventory: 'hosts.yaml', 
+                ansiblePlaybook credentialsId: 'Ansible', installation: 'ansible', inventory: '', 
             playbook: 'install_docker.yaml', vaultTmpPath: ''
 
 
