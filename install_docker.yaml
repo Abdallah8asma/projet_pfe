@@ -1,6 +1,6 @@
 ---
 - name: Installation Docker
-  hosts: 172.31.36.234
+  hosts: localhost
   become: yes
 
   tasks:
@@ -63,15 +63,7 @@
         msg: "La version de Docker installée est {{ docker_version.stdout }}"
       when: docker_version.rc == 0
 
-    - name: Vérifier l'état du service Docker
-      systemd:
-        name: docker
-        state: started
-      register: docker_service_status
-
-    - debug:
-        msg: "Le service Docker est {{ docker_service_status.state }}"
-      when: docker_service_status.changed
+    
 
 
 
