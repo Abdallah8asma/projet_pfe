@@ -1,7 +1,7 @@
 ---
 - name: Installation Docker
   hosts: localhost
- # become: yes
+  become: yes
 
   tasks:
     - name: Mise à jour des paquets
