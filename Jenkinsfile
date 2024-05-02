@@ -5,7 +5,8 @@ pipeline
 
         stage('Clone') {
             steps{
-                git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git'
+                git branch: 'migration_devops', credentialsId: 'Gitlab', 
+                url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git'
                         }
                  }
         stage('install docker'){
