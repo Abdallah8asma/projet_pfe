@@ -7,7 +7,7 @@ pipeline
             steps{
                 git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:samer.gproconsulting/commercial-industriel.git'        
  
-   }}}
+   }}
 
         stage('install docker'){
             steps{
@@ -43,16 +43,13 @@ pipeline
                     sh 'mvn clean install'
                 }
                 dir('/var/lib/jenkins/workspace/premier_job/ma-gpro-logistique') {
-                    sh 'mvn clean install'
-        
-            }
+                    sh 'mvn clean install'      }
+
                dir('/var/lib/jenkins/workspace/premier_job/ma-gpro-design-war') {
-                    sh 'mvn clean install'
-                }
+                    sh 'mvn clean install'                }
+
                 dir('/var/lib/jenkins/workspace/premier_job/ma-gpro-atelier-war') {
-                    sh 'mvn clean install'
-        
-            }
+                    sh 'mvn clean install' }
         }
         }
 
@@ -62,11 +59,8 @@ pipeline
     }
 }  
 
-  }
 
-          
-
-}
+} }
 
 
 
