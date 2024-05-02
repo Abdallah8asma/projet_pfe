@@ -15,8 +15,7 @@ pipeline
             playbook: 'install_docker.yaml', vaultTmpPath: ''
             }
         }
-         }
-          }
+        
   stage('Build') {
             steps {
                 dir('/var/lib/jenkins/workspace/premier_job/socle') {
