@@ -12,7 +12,7 @@
         force_apt_get: yes
 
 
-    - name: Installation des dépendances requises pour Docker
+    - name: Installer les dépendances requises pour Docker
       package:
         name: "{{ packages }}"
         state: present
@@ -25,12 +25,12 @@
           - lsb-release
 
 
-    - name: Ajout de la clé GPG officielle de Docker
+    - name: Ajouter la clé GPG officielle de Docker
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Add Docker Repository
+    - name:  Ajouter le référentiel Docker
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu focal stable
         state: present
@@ -40,7 +40,7 @@
         update_cache: yes
 
 
-    - name: installa docker
+    - name: Installer docker
       apt:
         name: "{{item}}"
         state: latest
@@ -50,7 +50,7 @@
         - containerd.io
     
     
-    - name: Démarrage et activation du service Docker
+    - name: Démarrer & Activer le service Docker
       service:
         name: docker
         state: started
@@ -66,6 +66,8 @@
         msg: "La version de Docker installée est {{ docker_version.stdout }}"
       when: docker_version.rc == 0
 
+    - name: Ajouter l'utilisateur actuel au groupe Docker
+      command: sudo usermod -aG docker $USER
     
 
 
