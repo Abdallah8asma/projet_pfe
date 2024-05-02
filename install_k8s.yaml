@@ -1,0 +1,76 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Mettre à jour le cache des paquets apt
+      apt:
+        update_cache: yes
+
+    - name: Ajouter la clé du référentiel apt Google Cloud
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+    - name: Ajouter le référentiel apt Kubernetes
+      apt_repository:
+        repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+
+    - name: Installer une version spécifique de kubeadm, kubelet et kubectl
+      apt:
+        name: "{{ item }}"
+        state: present
+        version: 1.23.6-00
+      loop:
+        - kubeadm
+        - kubelet
+        - kubectl
+
+    - name: Bloquer les versions de kubeadm, kubelet et kubectl à la version actuelle
+      apt:
+        name: "{{ item }}"
+        state: held
+      loop:
+        - kubeadm
+        - kubelet
+        - kubectl
+
+    - name: Configurer le démon Docker
+      copy:
+        content: |
+          {
+            "exec-opts": ["native.cgroupdriver=systemd"],
+            "log-driver": "json-file",
+            "log-opts": {
+              "max-size": "100m"
+            },
+            "storage-driver": "overlay2"
+          }
+        dest: /etc/docker/daemon.json
+
+    - name: Redémarrer le service Docker
+      systemd:
+        name: docker
+        state: restarted
+
+    - name: Initialiser le maître Kubernetes
+      command: kubeadm init
+
+    - name: Copier admin.conf de Kubernetes dans le répertoire personnel de l'utilisateur
+      command: cp -i /etc/kubernetes/admin.conf "{{ ansible_env.HOME }}/.kube/config"
+
+    - name: Changer la propriété du fichier de configuration de Kubernetes
+      file:
+        path: "{{ ansible_env.HOME }}/.kube/config"
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_id }}"
+
+    - name: Appliquer le plugin CNI Calico
+      command: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+
+    - name: Appliquer les attributs de noeuds
+      command: kubectl taint nodes --all node-role.kubernetes.io/master-
+
+    - name: Télécharger le binaire kubectl
+      get_url:
+        url: https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+        dest: /usr/local/bin/kubectl
+        mode: 'u+x'
