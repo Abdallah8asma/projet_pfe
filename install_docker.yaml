@@ -2,7 +2,7 @@
 - name: Installation Docker
   hosts: localhost
   gather_facts: true
-  become: false  # Disable sudo
+  become: true
 
   tasks:
     - name: Mise à jour des paquets
