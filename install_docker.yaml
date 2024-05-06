@@ -1,7 +1,6 @@
 ---
 - name: Installation Docker
   hosts: localhost
-  gather_facts: true
   become: true
 
   tasks:
