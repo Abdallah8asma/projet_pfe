@@ -19,37 +19,37 @@ pipeline
 
      stage('Build') {
             steps {
-                dir('/var/lib/jenkins/workspace/premier_job/socle') {
+                dir('/var/lib/jenkins/workspace/Pfe1/socle') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/premier_job/socle-j2ee') {
+                dir('/var/lib/jenkins/workspace/Pfe1/socle-j2ee') {
                     sh 'mvn clean install'
         
             }
-                dir('/var/lib/jenkins/workspace/premier_job/socle-j2ee-tiers') {
+                dir('/var/lib/jenkins/workspace/Pfe1/socle-j2ee-tiers') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/premier_job/scole-j2ee-mt') {
+                dir('/var/lib/jenkins/workspace/Pfe1/scole-j2ee-mt') {
                     sh 'mvn clean install'
         
             }
-                dir('/var/lib/jenkins/workspace/premier_job/mt-socle') {
+                dir('/var/lib/jenkins/workspace/Pfe1/mt-socle') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/premier_job/mt-commun') {
+                dir('/var/lib/jenkins/workspace/Pfe1/mt-commun') {
                     sh 'mvn clean install'
         
             }
-                dir('/var/lib/jenkins/workspace/premier_job/mt-gpro-commun') {
+                dir('/var/lib/jenkins/workspace/Pfe1/mt-gpro-commun') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/premier_job/ma-gpro-logistique') {
+                dir('/var/lib/jenkins/workspace/Pfe1/ma-gpro-logistique') {
                     sh 'mvn clean install'      }
 
-               dir('/var/lib/jenkins/workspace/premier_job/ma-gpro-design-war') {
+               dir('/var/lib/jenkins/workspace/Pfe1/ma-gpro-design-war') {
                     sh 'mvn clean install'                }
 
-                dir('/var/lib/jenkins/workspace/premier_job/ma-gpro-atelier-war') {
+                dir('/var/lib/jenkins/workspace/Pfe1/ma-gpro-atelier-war') {
                     sh 'mvn clean install' }
         }
         }
