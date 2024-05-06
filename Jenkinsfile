@@ -9,6 +9,14 @@ pipeline
  
    }}
 
+           stage('Installer_Docker'){
+            steps{
+                ansiblePlaybook credentialsId: 'Ansible', installation: 'ansible', inventory: '', 
+            playbook: 'install_docker.yaml', vaultTmpPath: ''
+            }
+        }
+
+
      stage('Build') {
             steps {
                 dir('/var/lib/jenkins/workspace/premier_job/socle') {
@@ -46,19 +54,7 @@ pipeline
         }
         }
 
-              stage('Deploy'){
-            steps {
-                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.224.35.51:8080/')], contextPath: '/ma-gpro-design', war: '**/*.war'
-    }
-}  
-
-
-        stage('Installer_k8s'){
-            steps{
-                ansiblePlaybook credentialsId: 'Ansible', installation: 'ansible', inventory: '', 
-            playbook: 'install_k8s.yaml', vaultTmpPath: ''
-            }
-        }
+          
         
   
 
