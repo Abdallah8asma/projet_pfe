@@ -62,6 +62,18 @@ pipeline {
         sh 'docker rm -f backc || true'
     }
 }
+        stage('Setup') {
+            steps {
+                // Libérer le port 8090
+                sh 'sudo kill $(sudo lsof -t -i:8090)'
+                
+                // Libérer le port 5432
+                sh 'sudo kill $(sudo lsof -t -i:5432)'
+                
+                // Libérer le port 80
+                sh 'sudo kill $(sudo lsof -t -i:80)'
+            }
+        }
 
         stage('Build Docker Images') {
             steps {
