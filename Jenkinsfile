@@ -66,8 +66,8 @@ pipeline {
        stage('Libération des Ports') {
             steps {
                 script {
-                    // Libérer le port 8090
-                    sh 'sudo netstat -tuln | grep ":8090" | awk \'{print $7}\' | cut -d \'/\' -f 1 | xargs -r sudo kill || true'
+                    // Libérer le port 8888
+                    sh 'sudo netstat -tuln | grep ":8888" | awk \'{print $7}\' | cut -d \'/\' -f 1 | xargs -r sudo kill || true'
                     
                     // Libérer le port 80
                     sh 'sudo netstat -tuln | grep ":80" | awk \'{print $7}\' | cut -d \'/\' -f 1 | xargs -r sudo kill || true'
@@ -105,7 +105,7 @@ pipeline {
                     sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATA'
                 }
                 //run container back 
-                sh 'docker run -d --name backc -p 8090:8090 back'
+                sh 'docker run -d --name backc -p 8888:8888 back'
                 
                 // creation de volume pour data 
                 sh 'docker volume create --name pgdata'
