@@ -53,6 +53,9 @@ pipeline {
         }
         stage('Supprimer le conteneur existant') {
     steps {
+        sh 'docker stop -f frontc || true'
+        sh 'docker stop -f datac || true'
+        sh 'docker stop -f backc || true'
         sh 'docker rm -f frontc || true'
         sh 'docker rm -f datac || true'
         sh 'docker rm -f backc || true'
