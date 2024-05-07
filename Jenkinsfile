@@ -62,19 +62,46 @@ pipeline {
         sh 'docker rm -f backc || true'
     }
 }
+
+    stage('Setup') {
+        steps {
+           pipeline {
+    agent any
+    
+    stages {
         stage('Setup') {
             steps {
-                // Libérer le port 8090
-                sh 'sudo kill $(sudo lsof -t -i:8090)'
-                
-                // Libérer le port 5432
-                sh 'sudo kill $(sudo lsof -t -i:5432)'
-                
-                // Libérer le port 80
-                sh 'sudo kill $(sudo lsof -t -i:80)'
+                script {
+                    // Vérifier si des processus utilisent le port 8090
+                    def processes8090 = sh(script: 'sudo lsof -t -i:8090', returnStdout: true).trim()
+                    
+                    // Vérifier si des processus utilisent le port 5432
+                    def processes5432 = sh(script: 'sudo lsof -t -i:5432', returnStdout: true).trim()
+                    
+                    // Vérifier si des processus utilisent le port 80
+                    def processes80 = sh(script: 'sudo lsof -t -i:80', returnStdout: true).trim()
+                    
+                    // Si des processus utilisent le port 8090, les tuer
+                    if (processes8090) {
+                        sh 'sudo kill $(sudo lsof -t -i:8090)'
+                    } else {
+                        echo "Le port 8090 est déjà libre."}
+                    
+                    // Si des processus utilisent le port 5432, les tuer
+                    if (processes5432) {
+                        sh 'sudo kill $(sudo lsof -t -i:5432)'
+                    } else {
+                        echo "Le port 5432 est déjà libre."}
+                    
+                    // Si des processus utilisent le port 80, les tuer
+                    if (processes80) {
+                        sh 'sudo kill $(sudo lsof -t -i:80)'
+                    } else {
+                        echo "Le port 80 est déjà libre."}
+                    
+                }
             }
         }
-
         stage('Build Docker Images') {
             steps {
                 dir('/var/lib/jenkins/workspace/Pfe1/ma-gpro-design-war') {
