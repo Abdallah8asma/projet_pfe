@@ -105,7 +105,7 @@ pipeline {
                     sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATA'
                 }
                 //run container back 
-                sh 'docker run -d --name backc DOCKER_IMAGE_NAME_BACK'
+                sh 'docker run -d --name backc back'
                 
                 // creation de volume pour data 
                 sh 'docker volume create --name pgdata'
