@@ -81,7 +81,7 @@ pipeline {
                     sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATA'
                 }
                 //run container back 
-                sh 'docker run -d --name backc -p 8087:8087 back'
+                sh 'docker run -d --name backc -p 8090:8090 back'
                 // creation de volume pour data 
                 sh 'docker volume create --name pgdata'
                 sh 'docker run -d -v pgdata:/pgdata data'
