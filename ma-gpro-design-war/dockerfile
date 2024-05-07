@@ -1,14 +1,10 @@
-# Utilisation de l'image Nginx officielle comme base
-FROM nginx:latest
+FROM tomcat:latest
 
-# Supprimer les fichiers de configuration par défaut de Nginx
-RUN rm -rf /etc/nginx/conf.d/*
+# Copie du fichier war de l'application front-end dans le répertoire webapps de Tomcat
+COPY presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps
 
-# Copier les fichiers de votre application Angular dans le répertoire de travail de Nginx
-COPY . /usr/share/nginx/html
+# Exposition du port utilisé par Tomcat (par défaut : 8080)
+EXPOSE 8080
 
-# Exposer le port 80 sur lequel Nginx écoute par défaut
-EXPOSE 80
-
-# Commande par défaut pour démarrer Nginx lorsque le conteneur est lancé
-CMD ["nginx", "-g", "daemon off;"]
+# Commande pour démarrer Tomcat lorsque le conteneur démarre
+CMD ["catalina.sh", "run"]
