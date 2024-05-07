@@ -34,7 +34,7 @@ COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3
 FROM tomcat:9.0.56-jdk11-openjdk-slim
 
 # Copiez le war dans le répertoire webapps de Tomcat
-WORKDIR /app/
+WORKDIR /opt/
 COPY --from=BUILDER /build/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps/
 COPY --from=BUILDER /build/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps/
 
