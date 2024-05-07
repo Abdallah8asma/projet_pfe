@@ -3,6 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE_NAME_FRONT = 'front'
         DOCKER_IMAGE_NAME_DATA = 'data'
+        DOCKER_IMAGE_NAME_BACK = 'back'
     }
     stages {
         stage('Clone') {
@@ -69,6 +70,10 @@ pipeline {
                 }
                 dir('/var/lib/jenkins/workspace/Pfe1/data') {
                     sh 'docker build -t $DOCKER_IMAGE_NAME_DATA .'
+
+                    sh 'docker build -t $DOCKER_IMAGE_NAME_BACK .'
+
+
                 }
             }
         }
@@ -86,6 +91,7 @@ pipeline {
                 }
                 //run container back 
                 sh 'docker run -d --name backc -p 8090:8090 back'
+                
                 // creation de volume pour data 
                 sh 'docker volume create --name pgdata'
                 sh 'docker run -d -v pgdata:/pgdata data'
