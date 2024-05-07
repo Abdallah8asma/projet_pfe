@@ -87,6 +87,14 @@ pipeline {
                 sh 'docker run -d -v pgdata:/pgdata data'
             }
         }
+        stage('Remove Docker Compose Containers') {
+    steps {
+        dir('/var/lib/jenkins/workspace/Pfe1') {
+            sh 'docker-compose down'
+        }
+    }
+}
+
 
         stage('Docker Compose Up') {
             steps {
