@@ -131,9 +131,9 @@ pipeline {
             steps {
                sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war frontc:/opt/tomcat/latest/webapps'
 
-              sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war backc:/opt/tomcat/latest/webapps'
+              //sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war backc:/opt/tomcat/latest/webapps'
 
-              sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war backc:/opt/tomcat/latest/webapps'
+              //sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war backc:/opt/tomcat/latest/webapps'
 
                 
 
