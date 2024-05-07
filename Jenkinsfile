@@ -98,14 +98,14 @@ pipeline {
             steps {
                 //run container front 
                 dir('/var/lib/jenkins/workspace/Pfe1/ma-gpro-design-war') {
-                    sh 'docker run -d --name frontc -p 80:80 $DOCKER_IMAGE_NAME_FRONT'
+                    sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
                 }
                 //run container data
                 dir('/var/lib/jenkins/workspace/Pfe1/data') {
                     sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATA'
                 }
                 //run container back 
-                sh 'docker run -d --name backc -p 8888:8888 back'
+                sh 'docker run -d --name backc DOCKER_IMAGE_NAME_BACK'
                 
                 // creation de volume pour data 
                 sh 'docker volume create --name pgdata'
