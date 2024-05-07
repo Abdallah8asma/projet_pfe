@@ -80,10 +80,10 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-                dir('/var/lib/jenkins/workspace/Pfe1/ma-gpro-design-war') {
+                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
                     sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'
                 }
-                dir('/var/lib/jenkins/workspace/Pfe1/data') {
+                dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
                     sh 'docker build -t $DOCKER_IMAGE_NAME_DATA .'
 
                     sh 'docker build -t $DOCKER_IMAGE_NAME_BACK .'
@@ -97,11 +97,11 @@ pipeline {
         stage('Run Containers') {
             steps {
                 //run container front 
-                dir('/var/lib/jenkins/workspace/Pfe1/ma-gpro-design-war') {
+                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
                     sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
                 }
                 //run container data
-                dir('/var/lib/jenkins/workspace/Pfe1/data') {
+                dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
                     sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATA'
                 }
                 //run container back 
@@ -114,7 +114,7 @@ pipeline {
         }
         stage('Remove Docker Compose Containers') {
     steps {
-        dir('/var/lib/jenkins/workspace/Pfe1') {
+        dir('/var/lib/jenkins/workspace/commercial_industriel') {
             sh 'docker-compose down'
         }
     }
@@ -129,9 +129,18 @@ pipeline {
 
         stage('Déploiement sur Tomcat') {
             steps {
-                sh 'docker cp /var/lib/jenkins/workspace/Pfe1/ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war frontc:/opt/tomcat/latest/webapps'
-                // déploiement sur Tomcat à l'adresse 52.205.136.205
-                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://52.205.136.205:8080/')], contextPath: '/ma-gpro-design', war: '**/*.war'
+              //  sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war frontc:/opt/tomcat/latest/webapps'
+
+               // sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war backc:/opt/tomcat/latest/webapps'
+
+               // sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war backc:/opt/tomcat/latest/webapps'
+
+                
+
+
+
+                // déploiement sur Tomcat 
+                deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://107.20.69.49:8080/')], contextPath: '/ma-gpro-design', war: '**/*.war'
 
             }
         }
