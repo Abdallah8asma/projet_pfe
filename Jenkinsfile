@@ -123,6 +123,10 @@ pipeline {
 
         sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war frontc:/opt/tomcat/latest/webapps'
 
+        sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/ma-gpro-atelier-war/presentation/target
+ma-atelier-3.5.0.0-SNAPSHOT.war frontc:/opt/tomcat/latest/webapps'
+
+
     
 
 
