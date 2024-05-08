@@ -63,23 +63,13 @@ pipeline {
     }
 }
 
-       stage('Libération des Ports') {
-            steps {
-                script {
-                    // Libérer le port 8888
-                    sh 'sudo netstat -tuln | grep ":8888" | awk \'{print $7}\' | cut -d \'/\' -f 1 | xargs -r sudo kill || true'
-                    
-                    // Libérer le port 80
-                    sh 'sudo netstat -tuln | grep ":80" | awk \'{print $7}\' | cut -d \'/\' -f 1 | xargs -r sudo kill || true'
-                    
-                    // Libérer le port 5432
-                    sh 'sudo netstat -tuln | grep ":5432" | awk \'{print $7}\' | cut -d \'/\' -f 1 | xargs -r sudo kill || true'
-                }
-            }
-        }
 
         stage('Build Docker Images') {
             steps {
+
+                // Change permissions of docker socket
+                sh 'sudo chmod 666 /var/run/docker.sock'
+                
                 dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
                     sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'
                 }
