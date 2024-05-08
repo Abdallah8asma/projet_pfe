@@ -118,23 +118,23 @@ pipeline {
 
         stage('Déploiement sur Tomcat') {
             steps {
+
         // Copier le fichier WAR dans le conteneur frontend
+
         sh 'docker cp /var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war frontc:/opt/tomcat/latest/webapps'
 
-     withCredentials([usernamePassword(credentialsId: 'Tomcat', usernameVariable: 'admin', passwordVariable: 'admin')]) {
-            sh "docker exec frontc curl -v --upload-file /opt/tomcat/latest/webapps/ma-gpro-design-3.5.0.0-SNAPSHOT.war 'http://3.81.24.225:8080/manager/text/deploy?path=/ma-gpro-design-3.5.0.0-SNAPSHOT&update=true' -u $TOMCAT_USERNAME:$TOMCAT_PASSWORD"
-        }
     
-}
 
-        }
 
 
                 // déploiement sur Tomcat 
-                //deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://107.20.69.49:8080/')], contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', war: '**/*.war'
+               deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://3.81.24.225:8080/')], contextPath: '', war: '**/*.war'
 
           
     }
 }
+    }
+}
+
 
 
