@@ -54,6 +54,8 @@ pipeline {
         }
         stage('Supprimer le conteneur existant') {
     steps {
+        // Change permissions of docker socket
+        sh 'sudo chmod 666 /var/run/docker.sock'
         sh 'docker stop -f frontc || true'
         sh 'docker stop -f datac || true'
         sh 'docker stop -f backc || true'
@@ -66,9 +68,6 @@ pipeline {
 
         stage('Build Docker Images') {
             steps {
-
-                // Change permissions of docker socket
-                sh 'sudo chmod 666 /var/run/docker.sock'
                 
                 dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
                     sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'
