@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE_NAME_FRONT = 'front'
+        DOCKER_IMAGE_NAME_FRONT2 = 'front2'
         DOCKER_IMAGE_NAME_DATA = 'data'
         DOCKER_IMAGE_NAME_BACK = 'back'
     }
@@ -57,9 +58,11 @@ pipeline {
         // Change permissions of docker socket
         sh 'sudo chmod 666 /var/run/docker.sock'
         sh 'docker stop -f frontc || true'
+         sh 'docker stop -f frontc2 || true'
         sh 'docker stop -f datac || true'
         sh 'docker stop -f backc || true'
         sh 'docker rm -f frontc || true'
+         sh 'docker rm -f frontc2 || true'
         sh 'docker rm -f datac || true'
         sh 'docker rm -f backc || true'
     }
@@ -71,6 +74,9 @@ pipeline {
                 
                 dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
                     sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-atelier-war') {
+                    sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT2 .'
                 }
                 dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
                     sh 'docker build -t $DOCKER_IMAGE_NAME_DATA .'
@@ -85,10 +91,15 @@ pipeline {
 
         stage('Run Containers') {
             steps {
-                //run container front 
+                //run container front design 
                 dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
                     sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
                 }
+                //run container front atelier
+                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
+                    sh 'docker run -d --name frontc2 $DOCKER_IMAGE_NAME_FRONT2'
+                }
+
                 //run container data
                 dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
                     sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATA'
