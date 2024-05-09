@@ -1,0 +1,10 @@
+FROM tomcat:latest
+
+# Copie du fichier war de l'application front-end dans le répertoire webapps de Tomcat
+COPY /presentation/target/ma-atelier-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps
+
+# Exposition du port utilisé par Tomcat (par défaut : 8080)
+EXPOSE 8080
+
+# Commande pour démarrer Tomcat lorsque le conteneur démarre
+CMD ["catalina.sh", "run"]
