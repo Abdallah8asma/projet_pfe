@@ -142,7 +142,7 @@ pipeline {
 
 
                 // déploiement sur Tomcat 
-               deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://3.81.24.225:8080/')], contextPath: '/ma-gpro-design', war: '**/*.war'
+               deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://3.91.235.53:8080/')], contextPath: '/ma-gpro-design', war: '**/*.war'
 
           
     }
