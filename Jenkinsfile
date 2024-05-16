@@ -53,26 +53,21 @@ pipeline {
                 }
             }
         }
+        
         stage('Supprimer le conteneur existant') {
     steps {
         // Change permissions of docker socket
         sh 'sudo chmod 666 /var/run/docker.sock'
-        
-        def containers = ['frontc', 'frontc2', 'datac', 'backc']
-                containers.each { container ->
-                        sh "docker stop ${container} || true"
-                        sh "docker rm -f ${container} || true"
-                    }
-                
-      //  sh 'docker stop frontc || true'
-        //sh 'docker stop frontc2 || true'
-       // sh 'docker stop datac || true'
-    //    sh 'docker stop backc || true'
+                      
+        sh 'docker stop frontc || true'
+        sh 'docker stop frontc2 || true'
+        sh 'docker stop datac || true'
+        sh 'docker stop backc || true'
 
-     //   sh 'docker rm -f frontc || true'
-      //  sh 'docker rm -f frontc2 || true'
-       // sh 'docker rm -f datac || true'
-       // sh 'docker rm -f backc || true'
+       sh 'docker rm -f frontc || true'
+       sh 'docker rm -f frontc2 || true'
+       sh 'docker rm -f datac || true'
+       sh 'docker rm -f backc || true'
     }
 }
 
