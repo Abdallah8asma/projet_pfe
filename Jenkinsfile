@@ -167,10 +167,10 @@ stage('Slack notification') {
             steps {
 
                     // Déploiement de ma-atelier
-deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.165.5.216:8080/')], contextPath: '/ma-atelier-3.5.0.0-SNAPSHOT', war: 'ma-gpro-atelier-war/presentation/target/ma-atelier-3.5.0.0-SNAPSHOT.war'
+deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.80.121.19:8080/')], contextPath: '/ma-atelier-3.5.0.0-SNAPSHOT', war: 'ma-gpro-atelier-war/presentation/target/ma-atelier-3.5.0.0-SNAPSHOT.war'
 
                     // Déploiement de ma-gpro-design
-                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.165.5.216:8080/')], 
+                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.80.121.19:8080/')], 
                            contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', 
                            war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
 
