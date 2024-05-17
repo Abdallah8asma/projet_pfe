@@ -54,11 +54,14 @@ pipeline {
             }
         }
 
-        stage('Slack notification'){
+stage('Slack notification') {
             steps {
-                slackSend(channel: '#devops', message: 'Find Status of Pipeline:- ${currentBuild.currentResult} ${env.JOB_NAME} ${env.BUILD_NUMBER} ${BUILD_URL}')
-    }
-    }
+                script {
+                    def message = "Find Status of Pipeline: ${currentBuild.currentResult} ${env.JOB_NAME} ${env.BUILD_NUMBER} ${env.BUILD_URL}"
+                    slackSend(channel: '#devops', message: message)
+                }
+            }
+        }
         
         stage('Supprimer le conteneur existant') {
     steps {
