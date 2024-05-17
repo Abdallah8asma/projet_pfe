@@ -174,13 +174,7 @@ deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://18.215
                            contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', 
                            war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
 
-               // Déploiement de mt-gpro-commun-rest
-deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://18.215.247.91:8080/')], contextPath: '/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT', war: 'mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war'
-
-
-               // Déploiement de ma-gpro-logistique-rest
-deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://18.215.247.91:8080/')], contextPath: '/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT', war: 'ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war'
-              
+               
           
     }
 }
