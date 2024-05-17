@@ -55,13 +55,20 @@ pipeline {
         }
 
 stage('Slack notification') {
-            steps {
-                script {
-                    def message = "Find Status of Pipeline: ${currentBuild.currentResult} ${env.JOB_NAME} ${env.BUILD_NUMBER} ${env.BUILD_URL}"
-                    slackSend(channel: '#devops', message: message)
-                }
+    steps {
+        script {
+            def buildStatus = currentBuild.currentResult
+            def message = "Pipeline Status: ${buildStatus}\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
+
+            if (buildStatus == 'SUCCESS') {
+                slackSend(channel: '#devops', message: "Pipeline Succeeded\n${message}")
+            } else {
+                slackSend(channel: '#devops', message: "Pipeline Failed\n${message}")
             }
         }
+    }
+}
+
         
         stage('Supprimer le conteneur existant') {
     steps {
