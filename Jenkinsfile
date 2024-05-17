@@ -53,6 +53,12 @@ pipeline {
                 }
             }
         }
+
+        stage('Slack notification'){
+            steps {
+                slackSend(channel: '#devops', message: 'Find Status of Pipeline:- ${currentBuild.currentResult} ${env.JOB_NAME} ${env.BUILD_NUMBER} ${BUILD_URL}')
+    }
+    }
         
         stage('Supprimer le conteneur existant') {
     steps {
