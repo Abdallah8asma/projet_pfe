@@ -91,7 +91,26 @@ pipeline {
             }
         }
 
+    
+ stage('Push vers DockerHub & Tag') {
+            steps {
+                 //sh 'echo "$DOCKERHUB_PASSWORD" | docker login -u "asmaabdallah518329" --password-stdin'
 
+                 withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
+                     sh 'docker tag $DOCKER_IMAGE_NAME_FRONT asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT:latest'
+                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT:latest'
+                     
+                     sh 'docker tag $DOCKER_IMAGE_NAME_FRONT2 asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT2:latest'
+                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT2:latest'
+                     
+                     sh 'docker tag $DOCKER_IMAGE_NAME_DATA asmaabdallah518329/$DOCKER_IMAGE_NAME_DATA:latest'
+                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_DATA:latest'
+                     
+                     sh 'docker tag $DOCKER_IMAGE_NAME_BACK asmaabdallah518329/$DOCKER_IMAGE_NAME_BACK:latest'
+                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_BACK:latest'
+            }
+        }
+    }
         stage('Run Containers') {
             steps {
                 //run container front design 
