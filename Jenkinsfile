@@ -136,11 +136,9 @@ pipeline {
         }
         stage('Remove Docker Compose Containers') {
     steps {
-        dir('/var/lib/jenkins/workspace/commercial_industriel') {
-            sh 'docker-compose down'
+        sh 'docker-compose down'
         }
     }
-}
 
 
         stage('Docker Compose Up') {
