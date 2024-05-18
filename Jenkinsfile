@@ -1,11 +1,5 @@
 pipeline {
     agent any
-    environment {
-        DOCKER_IMAGE_NAME_FRONT = 'front'
-        DOCKER_IMAGE_NAME_FRONT2 = 'front2'
-        DOCKER_IMAGE_NAME_DATA = 'data'
-        DOCKER_IMAGE_NAME_BACK = 'back'
-    }
     stages {
         stage('Clone') {
             steps {
@@ -69,87 +63,6 @@ stage('Slack notification') {
     }
 }
 
-        
-        stage('Supprimer le conteneur existant') {
-    steps {
-        // Change permissions of docker socket
-        sh 'sudo chmod 666 /var/run/docker.sock'
-                      
-        sh 'docker stop frontc || true'
-        sh 'docker stop frontc2 || true'
-        sh 'docker stop datac || true'
-        sh 'docker stop backc || true'
-
-       sh 'docker rm -f frontc || true'
-       sh 'docker rm -f frontc2 || true'
-       sh 'docker rm -f datac || true'
-       sh 'docker rm -f backc || true'
-    }
-}
-
-
-        stage('Build Docker Images') {
-            steps {
-                
-                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'
-                }
-                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-atelier-war') {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT2 .'
-                }
-                dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_DATA .'
-
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_BACK .'
-
-
-                }
-            }
-        }
-
-    
- stage('Push vers DockerHub & Tag') {
-            steps {
-                 //sh 'echo "$DOCKERHUB_PASSWORD" | docker login -u "asmaabdallah518329" --password-stdin'
-
-                 withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
-                     sh 'docker tag $DOCKER_IMAGE_NAME_FRONT asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT:latest'
-                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT:latest'
-                     
-                     sh 'docker tag $DOCKER_IMAGE_NAME_FRONT2 asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT2:latest'
-                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT2:latest'
-                     
-                     sh 'docker tag $DOCKER_IMAGE_NAME_DATA asmaabdallah518329/$DOCKER_IMAGE_NAME_DATA:latest'
-                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_DATA:latest'
-                     
-                     sh 'docker tag $DOCKER_IMAGE_NAME_BACK asmaabdallah518329/$DOCKER_IMAGE_NAME_BACK:latest'
-                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_BACK:latest'
-            }
-        }
-    }
-        stage('Run Containers') {
-            steps {
-                //run container front design 
-                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
-                    sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
-                }
-                //run container front atelier
-                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
-                    sh 'docker run -d --name frontc2 $DOCKER_IMAGE_NAME_FRONT2'
-                }
-
-                //run container data
-                dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
-                    sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATA'
-                }
-                //run container back 
-                sh 'docker run -d --name backc back'
-                
-                // creation de volume pour data 
-                sh 'docker volume create --name pgdata'
-                sh 'docker run -d -v pgdata:/pgdata data'
-            }
-        }
         stage('Remove Docker Compose Containers') {
     steps {
         sh 'docker-compose down'
