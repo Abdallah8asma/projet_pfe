@@ -60,8 +60,6 @@ services:
       - "5432:5432"
     volumes:
       - pg:/var/lib/postgresql/data
-    secrets:
-      - db_password
     deploy:
       replicas: 1
       restart_policy:
@@ -81,7 +79,4 @@ networks:
 volumes:
   pg:
 
-secrets:
-  db_password:
-    external: true
 
