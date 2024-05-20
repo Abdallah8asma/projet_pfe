@@ -75,6 +75,7 @@ services:
 networks:
   my_network:
     driver: overlay
+    attachable: true
 
 volumes:
   pg:
