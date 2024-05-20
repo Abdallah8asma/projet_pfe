@@ -166,6 +166,16 @@ stage('Slack notification') {
 
         stage('Déploiement sur Tomcat') {
             steps {
+                 // Déploiement de mt-gpro-commun
+                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.162.116.206:8080/')], 
+                           contextPath: '/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT', 
+                           war: 'mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war'
+
+ // Déploiement de ma-gpro-logistique
+                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.162.116.206:8080/')], 
+                           contextPath: '/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT', 
+                           war: 'ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war'
+
 
                     // Déploiement de ma-atelier
 deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.162.116.206:8080/')], contextPath: '/ma-atelier-3.5.0.0-SNAPSHOT', war: 'ma-gpro-atelier-war/presentation/target/ma-atelier-3.5.0.0-SNAPSHOT.war'
@@ -175,7 +185,7 @@ deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.162
                            contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', 
                            war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
 
-               
+              
           
     }
 }
