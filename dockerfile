@@ -31,7 +31,7 @@ COPY mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPS
 COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /build/target/
 
 # Utilisez l'image Tomcat officielle comme base
-FROM tomcat:9.0.56-jdk11-openjdk-slim
+FROM tomcat:9.0.88-jdk11-openjdk-slim
 
 # Copiez le war dans le répertoire webapps de Tomcat
 WORKDIR /opt/
