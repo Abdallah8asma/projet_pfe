@@ -19,12 +19,6 @@ pipeline {
             }
         }
 
-        stage('Créer et ajouter des secrets') {
-            steps {
-                sh 'echo "admin" | docker secret create db_password -'
-            }
-        }
-
 
         //stage('Installer Docker') {
           //  steps {
