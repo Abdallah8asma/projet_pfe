@@ -13,6 +13,19 @@ pipeline {
             }
         }
 
+        stage('Initialisation Docker Swarm') {
+            steps {
+                sh 'docker swarm init'
+            }
+        }
+
+        stage('Créer et ajouter des secrets') {
+            steps {
+                sh 'echo "admin" | docker secret create db_password -'
+            }
+        }
+
+
         //stage('Installer Docker') {
           //  steps {
             //    ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', inventory: '', playbook: 'install_docker.yaml', vaultTmpPath: ''
@@ -160,6 +173,12 @@ stage('Slack notification') {
         stage('Docker Compose Up') {
             steps {
                 sh 'docker-compose up -d'
+            }
+        }
+
+                stage('Déploiement de la stack avec Docker Swarm') {
+            steps {
+                sh 'docker stack deploy -c docker-compose.yml commercial_industriel'
             }
         }
 
