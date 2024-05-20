@@ -166,7 +166,7 @@ stage('Slack notification') {
 
                 stage('Déploiement de la stack avec Docker Swarm') {
             steps {
-                sh 'docker stack deploy -c docker-compose.yml commercial_industriel'
+                sh 'docker stack deploy -c docker-compose.yaml commercial_industriel'
             }
         }
 
