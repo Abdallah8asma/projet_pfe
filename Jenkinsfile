@@ -168,7 +168,7 @@ stage('Slack notification') {
             steps {
                  // Déploiement de mt-gpro-commun
                     deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.162.116.206:8080/')], 
-                           contextPath: '/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT', 
+                           contextPath: '/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT'
 
  // Déploiement de ma-gpro-logistique
                     deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.162.116.206:8080/')], 
