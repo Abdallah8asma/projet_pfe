@@ -13,12 +13,6 @@ pipeline {
             }
         }
 
-        stage('Initialisation Docker Swarm') {
-            steps {
-                sh 'docker swarm init'
-            }
-        }
-
 
         //stage('Installer Docker') {
           //  steps {
