@@ -5,9 +5,13 @@ services:
     build:
       context: ./ma-gpro-design-war/
     ports:
-      - "80:80"
+      - "80:8080"
     depends_on:
       - backend
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 30s
@@ -21,6 +25,10 @@ services:
       - "8888:8080"
     depends_on:
       - postgres
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
@@ -37,6 +45,10 @@ services:
       - "5432:5432"
     volumes:
       - pg:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 30s
