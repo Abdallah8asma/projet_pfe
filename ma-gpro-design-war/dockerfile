@@ -1,4 +1,4 @@
-FROM tomcat:latest
+FROM tomcat:9.0.56
 
 # Copie du fichier war de l'application front-end dans le répertoire webapps de Tomcat
 COPY presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps
