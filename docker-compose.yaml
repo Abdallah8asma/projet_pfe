@@ -8,6 +8,16 @@ services:
       - "80:80"
     depends_on:
       - backend
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+      restart_policy:
+        condition: on-failure
+    networks:
+      - my_network
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 30s
@@ -21,8 +31,21 @@ services:
       - "8888:8080"
     depends_on:
       - postgres
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == manager
+    networks:
+      - my_network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -37,12 +60,28 @@ services:
       - "5432:5432"
     volumes:
       - pg:/var/lib/postgresql/data
+    secrets:
+      - db_password
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - my_network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 30s
       timeout: 10s
-      retries: 3
+      retries: 5
+
+networks:
+  my_network:
+    driver: overlay
 
 volumes:
   pg:
+
+secrets:
+  db_password:
+    external: true
 
