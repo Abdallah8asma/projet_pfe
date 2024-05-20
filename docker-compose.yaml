@@ -42,7 +42,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: commercial-industriel
     ports:
-      - "5432:5432"
+      - "5432:8080"
     volumes:
       - pg:/var/lib/postgresql/data
     deploy:
