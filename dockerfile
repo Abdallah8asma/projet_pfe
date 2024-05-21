@@ -26,21 +26,21 @@ RUN mvn clean install package
 #ma-gpro-logistique
 COPY ma-gpro-logistique/pom.xml /build/ma-gpro-logistique/
 RUN mvn clean install package
+#copie
+COPY mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war /build/target/
+COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /build/target/
 
-# Copy the final WAR files to the target directory
-COPY mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-${VERSION}.war /build/target/
-COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-${VERSION}.war /build/target/
-
-# Tomcat
+# Utilisez l'image Tomcat officielle comme base
 FROM tomcat:9.0.88
-WORKDIR /usr/local/tomcat/webapps/
 
-# Copy the WAR files from the builder stage
-COPY --from=builder /build/target/mt-gpro-commun-rest-${VERSION}.war ./mt-gpro-commun-rest.war
-COPY --from=builder /build/target/ma-gpro-logistique-rest-${VERSION}.war ./ma-gpro-logistique-rest.war
+# Copiez le war dans le répertoire webapps de Tomcat
+WORKDIR /opt/
+COPY --from=BUILDER /build/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps/
+COPY --from=BUILDER /build/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps/
 
-# Expose the default Tomcat port
+
+# Exposez le port sur lequel Tomcat écoute (par défaut : 8080)
 EXPOSE 8080
 
-# Start Tomcat
+# Commande par défaut pour démarrer Tomcat lors de l'exécution du conteneur
 CMD ["catalina.sh", "run"]
