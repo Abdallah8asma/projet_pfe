@@ -151,11 +151,11 @@ stage('Slack notification') {
         //        sh 'docker run -d -v pgdata:/pgdata data'
           //  }
       //  }
-        stage('Remove Docker Compose Containers') {
-    steps {
-        sh 'docker-compose down'
-        }
-    }
+      //  stage('Remove Docker Compose Containers') {
+    //steps {
+    //    sh 'docker-compose down'
+     //   }
+   // }
 
 
         stage('Docker Compose Up') {
