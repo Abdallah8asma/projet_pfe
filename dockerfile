@@ -1,3 +1,4 @@
+FROM tomcat:9.0.88
 FROM maven:3.6.3-openjdk-11-slim AS BUILDER
 ARG VERSION=3.5.0.0-SNAPSHOT
 WORKDIR /build/
@@ -31,7 +32,7 @@ COPY mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPS
 COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /build/target/
 
 # Utilisez l'image Tomcat officielle comme base
-FROM tomcat:9.0.88
+
 
 # Copiez le war dans le répertoire webapps de Tomcat
 WORKDIR /opt/
