@@ -15,10 +15,10 @@ pipeline {
 
 
         //stage('Installer Docker') {
-          //  steps {
-            //    ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', inventory: '', playbook: 'install_docker.yaml', vaultTmpPath: ''
-            //}
-        //}
+         // steps {
+         //   ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', inventory: '', playbook: 'install_docker.yaml', vaultTmpPath: ''
+         //   }
+       // }
 
         stage('Build') {
             steps {
