@@ -20,7 +20,6 @@ pipeline {
        stage('Setup Docker Permissions') {
             steps {
                 script {
-                    // Run the commands to setup Docker permissions
                     sh '''
                         sudo usermod -aG docker $USER
                         sudo chown root:docker /var/run/docker.sock
@@ -30,6 +29,7 @@ pipeline {
                 }
             }
         }
+        
         //stage('Installer Docker') {
          // steps {
          //   ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', inventory: '', playbook: 'install_docker.yaml', vaultTmpPath: ''
