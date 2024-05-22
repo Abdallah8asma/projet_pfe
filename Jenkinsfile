@@ -168,7 +168,7 @@ stage('Slack notification') {
             steps {
      
                     // Déploiement de ma-gpro-design
-                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://18.207.200.63:8080/')], 
+                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://3.81.150.86:8080/')], 
                            contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', 
                            war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
 
