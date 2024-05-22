@@ -74,7 +74,6 @@ stage('Slack notification') {
  stage('Remove Docker Compose Containers') {
       steps {
         sh 'docker-compose down'
-        sh 'docker rmi $(docker image ls -q)'
         }
     }
   stage('Docker Compose Up') {
