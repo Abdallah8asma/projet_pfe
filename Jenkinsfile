@@ -116,7 +116,7 @@ stage('update war file'){
                     ],
                     credentialsId: 'nexus',
                     groupId: proj.groupId,
-                    nexusUrl: '52.90.255.77:8081',
+                    nexusUrl: '54.90.87.233:8081',
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'Nexus', 
@@ -227,7 +227,7 @@ stage('update war file'){
             steps {
      
                     // Déploiement de ma-gpro-design
-                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://3.81.150.86:8080/')], 
+                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://3.85.220.158:8080/')], 
                            contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', 
                            war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
 
