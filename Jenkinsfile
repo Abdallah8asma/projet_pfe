@@ -4,11 +4,9 @@ pipeline {
         DOCKER_IMAGE_NAME_FRONT = 'front'
         DOCKER_IMAGE_NAME_DATA = 'data'
         DOCKER_IMAGE_NAME_BACK = 'back'
+        BUILD_NUMBER = "${BUILD_NUMBER}"
     }
 
-   environment { 
-       BUILD_NUMBER = "${BUILD_NUMBER}"
-   }
     stages {
         stage('Clone') {
             steps {
