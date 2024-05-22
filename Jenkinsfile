@@ -1,12 +1,5 @@
 pipeline {
     agent any
-    environment {
-        DOCKER_IMAGE_NAME_FRONT = 'front'
-        DOCKER_IMAGE_NAME_DATA = 'data'
-        DOCKER_IMAGE_NAME_BACK = 'back'
-        BUILD_NUMBER = "${BUILD_NUMBER}"
-    }
-
     stages {
         stage('Clone') {
             steps {
@@ -26,57 +19,70 @@ pipeline {
                 }
             }
         }
+
+             stage('Build') {
+            steps {
+                dir('/var/lib/jenkins/workspace/commercial_industriel/socle') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/socle-j2ee') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/socle-j2ee-tiers') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/scole-j2ee-mt') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/mt-socle') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/mt-commun') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/mt-gpro-commun') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-logistique') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
+                    sh 'mvn clean install'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-atelier-war') {
+                    sh 'mvn clean install'
+                }
+            }
+        }
         
-stage('Suppression de conteneur existant') {
+stage('Slack notification') {
     steps {
-      //  sh 'docker stop $(docker ps -aq) && docker rm $(docker ps -aq)'
-        sh 'docker rmi -f $(docker image ls -q)'
+        script {
+            def buildStatus = currentBuild.currentResult
+            def message = "Pipeline Status: ${buildStatus}\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
+
+            if (buildStatus == 'SUCCESS') {
+                slackSend(channel: '#devops', message: "Pipeline Succeeded\n${message}")
+            } else {
+                slackSend(channel: '#devops', message: "Pipeline Failed\n${message}")
+            }
+        }
     }
 }
 
 
-        stage('Build Docker Images') {
+ stage('Remove Docker Compose Containers') {
+      steps {
+        sh 'docker-compose down'
+        }
+    }
+  stage('Docker Compose Up') {
             steps {
-                
-                dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'
-                }
-                dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_DATA .'
-                }
-                dir('/var/lib/jenkins/workspace/commercial_industriel') {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_BACK .'
-                }
+               sh 'docker-compose down'
+               sh 'docker-compose build'
+                sh 'docker-compose up -d'
             }
         }
-
-        stage('Run Containers') {
-            steps {
-                //run container front design 
-                 dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
-                   sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
-                }
-
-                //run container data
-                 dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
-                    sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATA'
-               }
-                //run container back 
-                   sh 'docker run -d --name backc back'
-                
-                // creation de volume pour data 
-                  sh 'docker volume create --name pgdata'
-                  sh 'docker run -d -v pgdata:/pgdata data'
-            }
-       }
-
-
-      //  stage('Remove Docker Compose Containers') {
-    //steps {
-    //    sh 'docker-compose down'
-     //   }
-   // }
-
 
         stage('Déploiement sur Tomcat') {
             steps {
