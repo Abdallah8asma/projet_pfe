@@ -17,6 +17,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - mynetwork
 
   backend:
     build:
@@ -34,6 +36,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - mynetwork
 
   postgres:
     image: postgres:latest
@@ -42,7 +46,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: commercial-industriel
     ports:
-      - "5432:8080"
+      - "5432:5432"
     volumes:
       - pg:/var/lib/postgresql/data
     deploy:
@@ -54,7 +58,12 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - mynetwork
 
 volumes:
   pg:
-
+    
+networks:
+  mynetwork:
+    driver: bridge
