@@ -13,7 +13,19 @@ pipeline {
             }
         }
 
-
+       stage('Setup Docker Permissions') {
+            steps {
+                script {
+                    // Run the commands to setup Docker permissions
+                    sh '''
+                        sudo usermod -aG docker $USER
+                        sudo chown root:docker /var/run/docker.sock
+                        sudo chmod 666 /var/run/docker.sock
+                        sudo systemctl restart docker
+                    '''
+                }
+            }
+        }
         //stage('Installer Docker') {
          // steps {
          //   ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', inventory: '', playbook: 'install_docker.yaml', vaultTmpPath: ''
