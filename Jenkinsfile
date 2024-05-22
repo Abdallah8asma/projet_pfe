@@ -6,6 +6,10 @@ pipeline {
     //    DOCKER_IMAGE_NAME_DATA = 'data'
     //    DOCKER_IMAGE_NAME_BACK = 'back'
    // }
+
+   environment { 
+       BUILD_NUMBER = "${BUILD_NUMBER}"
+   }
     stages {
         stage('Clone') {
             steps {
@@ -86,7 +90,7 @@ stage('Slack notification') {
 stage('update war file'){
     steps {
         script {
-            def version = '3.5.0'
+            def version =  "${BUILD_NUMBER}"
             def projects = [
                 [artifactId: 'mt-socle', groupId: 'com.gpro.consulting.socle.j2ee.mt', path: '/var/lib/jenkins/workspace/commercial_industriel/mt-socle/target/mt-socle-3.5.0.0-SNAPSHOT.jar', type: 'jar'],
 
