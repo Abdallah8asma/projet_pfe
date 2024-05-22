@@ -4,28 +4,28 @@ WORKDIR /build/
 COPY . /build/
 #socle
 COPY socle/pom.xml /build/
-RUN mvn clean install package
+RUN mvn clean install 
 #socle-j2ee
 COPY socle-j2ee/pom.xml /build/socle-j2ee/
-RUN mvn clean install package
+RUN mvn clean install 
 #socle-j2ee-tiers
 COPY socle-j2ee-tiers/pom.xml /build/socle-j2ee-tiers/
-RUN mvn clean install package
+RUN mvn clean install 
 #scole-j2ee-mt
 COPY scole-j2ee-mt/pom.xml /build/scole-j2ee-mt/
-RUN mvn clean install package
+RUN mvn clean install 
 #mt-socle
 COPY mt-socle/pom.xml /build/mt-socle/
-RUN mvn clean install package
+RUN mvn clean install 
 #mt-commun
 COPY mt-commun/pom.xml   /build/mt-commun/
-RUN mvn clean install package
+RUN mvn clean install 
 #mt-gpro-commun
 COPY mt-gpro-commun/pom.xml /build/mt-gpro-commun/
-RUN mvn clean install package
+RUN mvn clean install 
 #ma-gpro-logistique
 COPY ma-gpro-logistique/pom.xml /build/ma-gpro-logistique/
-RUN mvn clean install package
+RUN mvn clean install 
 #copie
 COPY mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war /build/target/
 COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /build/target/
