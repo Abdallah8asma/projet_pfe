@@ -17,6 +17,12 @@ pipeline {
             }
         }
 
+        stage('Installer Docker') {
+          steps {
+           ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', inventory: '', playbook: 'install_docker.yaml', vaultTmpPath: ''
+           }
+        }
+
        stage('Setup Docker Permissions') {
             steps {
                 script {
@@ -29,12 +35,6 @@ pipeline {
                 }
             }
         }
-        
-        //stage('Installer Docker') {
-         // steps {
-         //   ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', inventory: '', playbook: 'install_docker.yaml', vaultTmpPath: ''
-         //   }
-       // }
 
         stage('Build') {
             steps {
