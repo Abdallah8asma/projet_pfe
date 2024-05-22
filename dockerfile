@@ -44,7 +44,3 @@ EXPOSE 8080
 
 # Commande par défaut pour démarrer Tomcat lors de l'exécution du conteneur
 CMD ["catalina.sh", "run"]
-
-networks:
-  mynetwork:
-    driver: bridge
