@@ -112,10 +112,10 @@ stage('update war file'){
                     ],
                     credentialsId: 'nexus',
                     groupId: proj.groupId,
-                    nexusUrl: '18.206.208.221:8081',
+                    nexusUrl: '52.90.255.77:8081',
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    repository: 'commercial-industriel', 
+                    repository: 'Nexus', 
                     version: version
                 )
             }
