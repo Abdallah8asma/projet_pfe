@@ -213,6 +213,8 @@ stage('update war file'){
 
         stage('Docker Compose Up') {
             steps {
+               sh 'docker-compose down'
+               sh 'docker-compose build'
                 sh 'docker-compose up -d'
             }
         }
