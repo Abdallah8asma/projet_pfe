@@ -4,28 +4,28 @@ WORKDIR /build/
 COPY . /build/
 #socle
 COPY socle/pom.xml /build/
-RUN mvn clean install package
+RUN mvn clean install -DskipTests
 #socle-j2ee
 COPY socle-j2ee/pom.xml /build/socle-j2ee/
-RUN mvn clean install package
+RUN mvn clean install -DskipTests
 #socle-j2ee-tiers
 COPY socle-j2ee-tiers/pom.xml /build/socle-j2ee-tiers/
-RUN mvn clean install package
+RUN mvn clean install -DskipTests
 #scole-j2ee-mt
 COPY scole-j2ee-mt/pom.xml /build/scole-j2ee-mt/
-RUN mvn clean install package
+RUN mvn clean install -DskipTests
 #mt-socle
 COPY mt-socle/pom.xml /build/mt-socle/
-RUN mvn clean install package
+RUN mvn clean install -DskipTests
 #mt-commun
 COPY mt-commun/pom.xml   /build/mt-commun/
-RUN mvn clean install package
+RUN mvn clean install -DskipTests
 #mt-gpro-commun
 COPY mt-gpro-commun/pom.xml /build/mt-gpro-commun/
-RUN mvn clean install package
+RUN mvn clean install -DskipTests
 #ma-gpro-logistique
 COPY ma-gpro-logistique/pom.xml /build/ma-gpro-logistique/
-RUN mvn clean install package
+RUN mvn clean install -DskipTests
 #copie
 COPY mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war /build/target/
 COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /build/target/
@@ -44,3 +44,7 @@ EXPOSE 8080
 
 # Commande par défaut pour démarrer Tomcat lors de l'exécution du conteneur
 CMD ["catalina.sh", "run"]
+
+networks:
+  mynetwork:
+    driver: bridge
