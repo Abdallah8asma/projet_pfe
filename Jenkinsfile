@@ -27,11 +27,11 @@ pipeline {
             }
         }
         
-       stage('Suppression de conteneur existant') {
+stage('Suppression de conteneur existant') {
     steps {
-      sh 'docker stop $(docker ps -aq) && docker rm $(docker ps -aq)'   
-      sh 'docker rmi -f $(docker image ls -q)'
-  }
+        sh "docker stop \$(docker ps -aq) && docker rm \$(docker ps -aq)"
+        sh "docker rmi -f \$(docker image ls -q)"
+    }
 }
 
 
