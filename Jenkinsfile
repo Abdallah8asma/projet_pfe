@@ -71,14 +71,24 @@ stage('Slack notification') {
                     }
         }
 
-stage('Suppression des conteneurs existants') {
-    steps {
-        sh 'docker stop $(docker ps -aq)'
-        sh 'docker rm $(docker ps -aq)'
-        sh 'docker rmi -f $(docker image ls -q)'
-    }
-}
+ stage('Supprimer le conteneur existant') { 
 
+    steps { 
+
+        sh 'docker stop frontc || true' 
+
+        sh 'docker stop backc1 || true' 
+
+        sh 'docker stop backc2 || true' 
+
+
+       sh 'docker rm -f frontc || true' 
+
+       sh 'docker rm -f backc1 || true' 
+       sh 'docker rm -f backc2 || true'  
+
+
+    }} 
      stage('Build Docker Images') {
          steps {
 
