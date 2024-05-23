@@ -11,10 +11,8 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        sudo usermod -aG docker $USER
                         sudo chown root:docker /var/run/docker.sock
                         sudo chmod 666 /var/run/docker.sock
-                        sudo systemctl restart docker
                     '''
                 }
             }
