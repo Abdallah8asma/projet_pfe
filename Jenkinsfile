@@ -71,91 +71,6 @@ stage('Slack notification') {
                     }
         }
 
- stage('Supprimer le conteneur existant') { 
-
-    steps { 
-
-        sh 'docker stop frontc || true' 
-
-        sh 'docker stop backc1 || true' 
-
-        sh 'docker stop backc2 || true' 
-
-
-       sh 'docker rm -f frontc || true' 
-
-       sh 'docker rm -f backc1 || true' 
-       sh 'docker rm -f backc2 || true'  
-
-
-    }} 
-     stage('Build Docker Images') {
-         steps {
-
-             dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
-            // Construction de l'image Docker pour le frontend
-                sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'        }
-
-            // Construction de l'image Docker pour le data
-                dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_DATA .'}
-
-
-            // Construction de l'image Docker pour mt-gpro-commun
-                sh 'docker build -f Dockerfile.mt-gpro-commun -t mt-gpro-commun-rest:latest .'
-     
-
-            // Construction de l'image Docker pour ma-gpro-logistique
-                sh 'docker build -f Dockerfile.ma-gpro-logistique -t ma-gpro-logistique-rest:latest .'
-            }}
-
-
-       stage('Run Containers') {
-    steps {
-        // Run container front design 
-        dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
-            sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
-        }
-
-        // Run container data
-        dir('/var/lib/jenkins/workspace/commercial_industriel/data') {
-            sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATA'
-        }
-
-        // Run container backend
-        sh 'docker run -d --name backc1 mt-gpro-commun-rest:latest'
-        sh 'docker run -d --name backc2 ma-gpro-logistique-rest:latest'
-
-        // Création de volume pour data 
-        sh 'docker volume create --name pgdata'
-        sh 'docker run -d -v pgdata:/pgdata data'
-    }
-}
-
-
-      
-stage('Push vers DockerHub & Tag') {
-    steps {
-        withDockerRegistry([credentialsId: "dockerHub", url: ""]) {
-
-            // Tagging et push de l'image pour le frontend
-            sh "docker tag $DOCKER_IMAGE_NAME_FRONT asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT:latest"
-            sh "docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT:latest"
-
-            // Tagging et push de l'image pour mt-gpro-commun
-            sh "docker tag mt-gpro-commun-rest:latest asmaabdallah518329/mt-gpro-commun-rest:latest"
-            sh "docker push asmaabdallah518329/mt-gpro-commun-rest:latest"
-
-            // Tagging et push de l'image pour ma-gpro-logistique
-            sh "docker tag ma-gpro-logistique-rest:latest asmaabdallah518329/ma-gpro-logistique-rest:latest"
-            sh "docker push asmaabdallah518329/ma-gpro-logistique-rest:latest"
-
-            // Tagging et push de l'image pour la data
-            sh "docker tag $DOCKER_IMAGE_NAME_DATA asmaabdallah518329/$DOCKER_IMAGE_NAME_DATA:latest"
-            sh "docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_DATA:latest"
-        }
-    }
-}
 
   stage('Remove Docker Compose Containers') {
       steps {
@@ -168,11 +83,45 @@ stage('Push vers DockerHub & Tag') {
             }
         }
 
+ stage('Importation de la base de données') {
+            steps {
+                // Copier le fichier de sauvegarde vers le conteneur Docker
+                script {
+                    sh "docker cp Backup/commercial-industriel_Libanese_2024_03_21__12_00_15.backup commercial_industriel1-postgres-1:/data.backup"
+                }
+            }
+        }
+        stage('Connexion au conteneur PostgreSQL') {
+            steps {
+                // Connexion au conteneur PostgreSQL
+                script {
+                    sh "docker exec -it commercial_industriel1-postgres-1 bash -c 'psql -U postgres'"
+                }
+            }
+        }
+        stage('Création de la base de données') {
+            steps {
+                // Création de la base de données
+                script {
+                    sh "docker exec -it commercial_industriel1-postgres-1 bash -c 'psql -U postgres -c \"CREATE DATABASE \\\"commercial-industriel\\\";\"'"
+                }
+            }
+        }
+        stage('Restauration de la base de données') {
+            steps {
+                // Restauration de la base de données avec pg_restore
+                script {
+                    sh "docker exec -it commercial_industriel-postgres-1 bash -c 'pg_restore -U postgres -d \\\"commercial-industriel\\\" /data.backup'"
+                }
+            }
+        }
+
+
         stage('Déploiement sur Tomcat') {
             steps {
      
                     // Déploiement de ma-gpro-design
-                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.198.154.81:8080/')], 
+                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.242.23.170:8080/')], 
                            contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', 
                            war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
 
