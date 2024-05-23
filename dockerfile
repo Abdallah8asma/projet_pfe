@@ -37,7 +37,9 @@ FROM tomcat:9.0.88
 
 # Copiez le WAR dans le répertoire webapps de Tomcat
 WORKDIR /opt/
-COPY --from=BUILDER /build/ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-${VERSION}.war /opt/tomcat/latest/webapps/
+COPY --from=BUILDER /build/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps/
+
+
 
 # Exposez le port sur lequel Tomcat écoute (par défaut : 8080)
 EXPOSE 8080
