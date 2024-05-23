@@ -73,11 +73,12 @@ stage('Slack notification') {
 
 stage('Suppression des conteneurs existants') {
     steps {
-        sh 'docker stop $(docker ps -aq) && docker rm $(docker ps -aq)'
+        sh 'docker stop $(docker ps -aq)'
+        sh 'docker rm $(docker ps -aq)'
         sh 'docker rmi -f $(docker image ls -q)'
-    
+    }
 }
-}
+
      stage('Build Docker Images') {
          steps {
 
