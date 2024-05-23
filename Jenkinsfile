@@ -1,5 +1,11 @@
 pipeline {
     agent any
+        environment {
+       DOCKER_IMAGE_NAME_FRONT = 'front'
+       DOCKER_IMAGE_NAME_DATA = 'data'
+       BUILD_NUMBER = "${BUILD_NUMBER}"
+
+    }
     stages {
         stage('Clone') {
             steps {
