@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mt-gpro-commun
+  name: ma-gpro-logistique
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: mt-gpro-commun
+      app: ma-gpro-logistique
   template:
     metadata:
       labels:
-        app: mt-gpro-commun
+        app: ma-gpro-logistique
     spec:
       containers:
-      - name: mt-gpro-commun
-        image: asmaabdallah518329/mt-gpro-commun-rest:latest
+      - name: ma-gpro-logistique
+        image: asmaabdallah518329/ma-gpro-logistique-rest:latest
         ports:
         - containerPort: 8080
         livenessProbe:
@@ -33,10 +33,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mt-gpro-commun
+  name: ma-gpro-logistique
 spec:
   selector:
-    app: mt-gpro-commun
+    app: ma-gpro-logistique
   ports:
   - protocol: TCP
     port: 8080
