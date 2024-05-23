@@ -70,30 +70,48 @@ stage('Slack notification') {
     }
 }
 
+ stage('Supprimer le conteneur existant') {
+    steps {
+        // Change permissions of docker socket
+       sh 'sudo chmod 666 /var/run/docker.sock'
+        sh 'docker stop frontc || true'
+        sh 'docker stop backc || true'
+       sh 'docker rm -f frontc || true'
+       sh 'docker rm -f backc || true'
+    }}
+  stage('Build Docker Images') {
+       steps {
+              dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
+                  sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'
+              }
+                  sh 'docker build -t $DOCKER_IMAGE_NAME_BACK .'
+        }}
+  stage('Push vers DockerHub & Tag') {
+           steps {
+                 withDockerRegistry([ credentialsId: "dockerHub", url: "" ]) {
+                     sh 'docker tag $DOCKER_IMAGE_NAME_FRONT asmaabdallah518329 $DOCKER_IMAGE_NAME_FRONT:latest'
+                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_FRONT:latest' 
+                     
+                     sh 'docker tag $DOCKER_IMAGE_NAME_BACK asmaabdallah518329/$DOCKER_IMAGE_NAME_BACK:latest'
+                     sh 'docker push asmaabdallah518329/$DOCKER_IMAGE_NAME_BACK:latest'
+          }}}
 
- stage('Remove Docker Compose Containers') {
+    stage('Run Containers') {
       steps {
-        sh 'docker-compose down'
-        }
-    }
-  stage('Docker Compose Up') {
-            steps {
-                sh 'docker-compose up -d'
-            }
-        }
+           //run container front design 
+              dir('/var/lib/jenkins/workspace/commercial_industriel/ma-gpro-design-war') {
+                sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
+             }
+         //run container back 
+               sh 'docker run -d --name backc back'
+                
+         creation de volume pour data 
+              sh 'docker volume create --name pgdata'
+               sh 'docker run -d -v pgdata:/pgdata data'
+          }}
 
-        stage('Déploiement sur Tomcat') {
-            steps {
-     
-                    // Déploiement de ma-gpro-design
-                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.166.210.227:8080/')], 
-                           contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', 
-                           war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
 
-              
-          
-    }
-}
+
     }
 }
 
