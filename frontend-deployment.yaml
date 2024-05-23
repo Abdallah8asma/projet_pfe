@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: asmaabdallah518329/ma-gpro-design-frontend:latest
+          image: asmaabdallah518329/front:latest
           ports:
             - containerPort: 8080
 ---
