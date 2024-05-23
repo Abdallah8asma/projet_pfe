@@ -1,12 +1,13 @@
 pipeline {
     agent any
-        environment {
-       DOCKER_IMAGE_NAME_FRONT = 'front'
-       DOCKER_IMAGE_NAME_DATA = 'data'
-       BUILD_NUMBER = "${BUILD_NUMBER}"
-
+    environment {
+        DOCKER_IMAGE_NAME_FRONT = 'asmaabdallah518329/front'
+        DOCKER_IMAGE_NAME_DATA = 'asmaabdallah518329/data'
+        DOCKER_IMAGE_NAME_BACK_COMMUN = 'asmaabdallah518329/mt-gpro-commun-rest'
+        DOCKER_IMAGE_NAME_BACK_LOGISTIQUE = 'asmaabdallah518329/ma-gpro-logistique-rest'
+        BUILD_NUMBER = "${BUILD_NUMBER}"
     }
-    stages {
+       stages {
         stage('Clone') {
             steps {
                 git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:Abdallah8asma/projet_pfe.git'
@@ -62,40 +63,63 @@ stage('Slack notification') {
                 }
             }
         }
-   stage('Setup Docker Permissions') {
-            steps {
-                    sh '''
-                        sudo chown root:docker /var/run/docker.sock
-                        sudo chmod 666 /var/run/docker.sock
-                    '''
-                    }
-        }
 
-
-  stage('Remove Docker Compose Containers') {
-      steps {
-        sh 'docker-compose down'
-        }
-    }
-  stage('Docker Compose Up') {
+        stage('Setup Docker Permissions') {
             steps {
-                sh 'docker-compose up -d'
+                sh '''
+                    sudo chown root:docker /var/run/docker.sock
+                    sudo chmod 666 /var/run/docker.sock
+                '''
             }
         }
 
-        stage('Déploiement sur Tomcat') {
+        stage('Build Docker Images') {
             steps {
-     
-                    // Déploiement de ma-gpro-design
-                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.242.23.170:8080/')], 
-                           contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', 
-                           war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
+                dir('/var/lib/jenkins/workspace/commercial_industriel1/ma-gpro-design-war') {
+                    sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'
+                }
+                dir('/var/lib/jenkins/workspace/commercial_industriel1/data') {
+                    sh 'docker build -t $DOCKER_IMAGE_NAME_DATA .'
+                }
+                sh 'docker build -f Dockerfile.mt-gpro-commun -t $DOCKER_IMAGE_NAME_BACK_COMMUN .'
+                sh 'docker build -f Dockerfile.ma-gpro-logistique -t $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE .'
+            }
+        }
 
-              
-          
-    }
-}
+        stage('Push Docker Images') {
+            steps {
+                withDockerRegistry([credentialsId: 'dockerHub', url: '']) {
+                    sh 'docker push $DOCKER_IMAGE_NAME_FRONT'
+                    sh 'docker push $DOCKER_IMAGE_NAME_DATA'
+                    sh 'docker push $DOCKER_IMAGE_NAME_BACK_COMMUN'
+                    sh 'docker push $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE'
+                }
+            }
+        }
 
+        stage('Deploy to Kubernetes') {
+            steps {
+                withKubeConfig(credentialsId: 'k8ss', serverUrl: 'https://172.31.54.180:6443') {
 
+                     sh 'kubectl delete -f postgres-deployment || true'
+                     sh 'kubectl delete -f mt-gpro-commun-deployment || true'
+                     sh 'kubectl delete -f ma-gpro-logistique-deployment || true'
+
+                     sh 'kubectl delete -f frontend-deployment || true'
+
+  
+
+                    sh 'kubectl apply -f postgres-pv-pvc.yaml'
+                    sh 'kubectl apply -f deployservice-postgres.yaml'
+
+                    sh 'kubectl apply -f frontend-deployment.yaml' 
+
+                    sh 'kubectl apply -f commun-deployment.yaml' 
+                    sh 'kubectl apply -f logistique-deployment.yaml'
+
+                    
+                }
+            }
+        }
     }
 }
