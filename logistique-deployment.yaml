@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ma-gpro-logistique
+  name: ma-gpro-logistique-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: ma-gpro-logistique
@@ -13,32 +13,20 @@ spec:
         app: ma-gpro-logistique
     spec:
       containers:
-      - name: ma-gpro-logistique
-        image: asmaabdallah518329/ma-gpro-logistique-rest:latest
-        ports:
-        - containerPort: 8080
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
+        - name: ma-gpro-logistique
+          image: asmaabdallah518329/ma-gpro-logistique-rest:latest
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ma-gpro-logistique
+  name: ma-gpro-logistique-service
 spec:
   selector:
     app: ma-gpro-logistique
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
-  type: LoadBalancer
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
