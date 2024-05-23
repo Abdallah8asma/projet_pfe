@@ -3,6 +3,7 @@ FROM maven:3.6.3-openjdk-11-slim AS BUILDER
 ARG VERSION=3.5.0.0-SNAPSHOT
 WORKDIR /build/
 COPY . /build/
+
 # socle
 COPY socle/pom.xml /build/
 RUN mvn clean install
@@ -27,11 +28,13 @@ RUN mvn clean install
 # ma-gpro-logistique
 COPY ma-gpro-logistique/pom.xml /build/ma-gpro-logistique/
 RUN mvn clean install
-# Build the ma-gpro-logistique-rest WAR
-RUN mvn clean package -pl ma-gpro-logistique/ma-gpro-logistique-rest
+
+#Copie 
+COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /build/target/
 
 # Utilisez l'image Tomcat officielle comme base
 FROM tomcat:9.0.88
+
 # Copiez le WAR dans le répertoire webapps de Tomcat
 WORKDIR /opt/
 COPY --from=BUILDER /build/ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-${VERSION}.war /opt/tomcat/latest/webapps/
