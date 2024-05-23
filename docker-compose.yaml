@@ -8,6 +8,11 @@ services:
       - "80:8080"
     depends_on:
       - mt-gpro-commun
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   mt-gpro-commun:
     build:
@@ -16,7 +21,12 @@ services:
     ports:
       - "8889:8080"
     depends_on:
-      - ma-gpro-logistique
+      - postgres
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   ma-gpro-logistique:
     build:
@@ -25,8 +35,12 @@ services:
     ports:
       - "8890:8080"
     depends_on:
-      - postgres
-
+      - mt-gpro-commun
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
  
   postgres:
     image: postgres:latest
@@ -38,6 +52,10 @@ services:
       - "5432:5432"
     volumes:
       - pg:/var/lib/postgresql/data
-
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 volumes:
   pg:
