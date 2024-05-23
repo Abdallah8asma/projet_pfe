@@ -23,10 +23,10 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: postgres-storage
-  volumes:
-    - name: postgres-storage
-      persistentVolumeClaim:
-        claimName: postgres-pvc
+      volumes:  # Moved this section under template.spec
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
 ---
 apiVersion: v1
 kind: Service
