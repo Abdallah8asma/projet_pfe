@@ -43,18 +43,19 @@ pipeline {
         }
         
 stage('Slack notification') {
-    steps {
-            def buildStatus = currentBuild.currentResult
-            def message = "Pipeline Status: ${buildStatus}\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
+            steps {
+                script {
+                    def buildStatus = currentBuild.currentResult
+                    def message = "Pipeline Status: ${buildStatus}\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
 
-            if (buildStatus == 'SUCCESS') {
-                slackSend(channel: '#devops', message: "Pipeline Succeeded\n${message}")
-            } else {
-                slackSend(channel: '#devops', message: "Pipeline Failed\n${message}")
+                    if (buildStatus == 'SUCCESS') {
+                        slackSend(channel: '#devops', message: "Pipeline Succeeded\n${message}")
+                    } else {
+                        slackSend(channel: '#devops', message: "Pipeline Failed\n${message}")
+                    }
+                }
             }
-        
-    }
-}
+        }
    stage('Setup Docker Permissions') {
             steps {
                     sh '''
