@@ -7,15 +7,24 @@ services:
     ports:
       - "80:8080"
     depends_on:
-      - backend
+      - mt-gpro-commun
 
-  backend:
+  mt-gpro-commun:
     build:
-      context: .
+      context: ./mt-gpro-commun/
     ports:
-      - "8888:8080"
+      - "8889:8080"
+    depends_on:
+      - ma-gpro-logistique
+
+  ma-gpro-logistique:
+    build:
+      context: ./ma-gpro-logistique/
+    ports:
+      - "8890:8080"
     depends_on:
       - postgres
+
  
   postgres:
     image: postgres:latest
@@ -27,22 +36,6 @@ services:
       - "5432:5432"
     volumes:
       - pg:/var/lib/postgresql/data
-
-  mt-gpro-commun:
-    build:
-      context: ./mt-gpro-commun/
-    ports:
-      - "8889:8080"
-    depends_on:
-      - postgres
-
-  ma-gpro-logistique:
-    build:
-      context: ./ma-gpro-logistique/
-    ports:
-      - "8890:8080"
-    depends_on:
-      - postgres
 
 volumes:
   pg:
