@@ -91,30 +91,17 @@ stage('Slack notification') {
                 }
             }
         }
-        stage('Connexion au conteneur PostgreSQL') {
-            steps {
-                // Connexion au conteneur PostgreSQL
-                script {
-                    sh "docker exec -it commercial_industriel1-postgres-1 bash -c 'psql -U postgres'"
-                }
-            }
-        }
-        stage('Création de la base de données') {
-            steps {
-                // Création de la base de données
-                script {
-                    sh "docker exec -it commercial_industriel1-postgres-1 bash -c 'psql -U postgres -c \"CREATE DATABASE \\\"commercial-industriel\\\";\"'"
-                }
-            }
-        }
         stage('Restauration de la base de données') {
             steps {
-                // Restauration de la base de données avec pg_restore
                 script {
-                    sh "docker exec -it commercial_industriel-postgres-1 bash -c 'pg_restore -U postgres -d \\\"commercial-industriel\\\" /data.backup'"
+                    sh "docker exec -it commercial_industriel1-postgres-1 bash "
+                    sh "psql -U postgres"
+                    sh "CREATE DATABASE \\\"commercial-industriel\\\";\"'"
+                    sh "pg_restore -U postgres -d \\\"commercial-industriel\\\" /data.backup'"
                 }
             }
         }
+      
 
 
         stage('Déploiement sur Tomcat') {
