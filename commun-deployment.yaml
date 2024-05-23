@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mt-gpro-commun
+  name: mt-gpro-commun-deployment
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: mt-gpro-commun
@@ -13,32 +13,20 @@ spec:
         app: mt-gpro-commun
     spec:
       containers:
-      - name: mt-gpro-commun
-        image: asmaabdallah518329/mt-gpro-commun-rest:latest
-        ports:
-        - containerPort: 8080
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 30
-          periodSeconds: 10
+        - name: mt-gpro-commun
+          image: asmaabdallah518329/mt-gpro-commun-rest:latest
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mt-gpro-commun
+  name: mt-gpro-commun-service
 spec:
   selector:
     app: mt-gpro-commun
   ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
-  type: LoadBalancer
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
