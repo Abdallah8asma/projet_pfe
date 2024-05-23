@@ -101,11 +101,8 @@ stage('Slack notification') {
             steps {
                 withKubeConfig(credentialsId: 'k8ss', serverUrl: 'https://172.31.54.180:6443') {
 
-                     sh 'kubectl delete -f postgres-deployment || true'
-                     sh 'kubectl delete -f mt-gpro-commun-deployment || true'
-                     sh 'kubectl delete -f ma-gpro-logistique-deployment || true'
-
-                     sh 'kubectl delete -f frontend-deployment || true'
+            sh 'kubectl delete deployments --all || true' // Supprimer tous les déploiements existants
+            sh 'kubectl delete services --all || true' // Supprimer tous les services existants
 
   
 
