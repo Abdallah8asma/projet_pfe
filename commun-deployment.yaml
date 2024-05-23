@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mt-gpro-commun
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mt-gpro-commun
+  template:
+    metadata:
+      labels:
+        app: mt-gpro-commun
+    spec:
+      containers:
+      - name: mt-gpro-commun
+        image: asmaabdallah518329/mt-gpro-commun-rest:latest
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mt-gpro-commun
+spec:
+  selector:
+    app: mt-gpro-commun
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: LoadBalancer
