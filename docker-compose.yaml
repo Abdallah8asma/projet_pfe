@@ -16,7 +16,6 @@ services:
 
   mt-gpro-commun:
     build:
-      context: .
       dockerfile: Dockerfile.mt-gpro-commun
     ports:
       - "8889:8080"
@@ -30,7 +29,6 @@ services:
 
   ma-gpro-logistique:
     build:
-      context: .
       dockerfile: Dockerfile.ma-gpro-logistique
     ports:
       - "8890:8080"
