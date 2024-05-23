@@ -7,7 +7,7 @@ services:
     ports:
       - "80:8080"
     depends_on:
-      - mt-gpro-commun
+      - ma-gpro-logistique
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
       interval: 30s
@@ -35,7 +35,7 @@ services:
     ports:
       - "8890:8080"
     depends_on:
-      - postgres
+      - mt-gpro-commun
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/health || exit 1"]
       interval: 30s
