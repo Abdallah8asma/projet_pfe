@@ -95,7 +95,6 @@ stage('Slack notification') {
             steps {
                 script {
                     // Restauration de la base de données avec pg_restore
-                    sh "docker exec commercial_industriel1-postgres-1 psql -U postgres -c \"CREATE DATABASE \\\"commercial-industriel\\\";\""
                     sh "docker exec commercial_industriel1-postgres-1 pg_restore -U postgres -d \\\"commercial-industriel\\\" /data.backup"
                 }
             }
