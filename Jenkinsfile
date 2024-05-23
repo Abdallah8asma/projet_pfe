@@ -91,13 +91,12 @@ stage('Slack notification') {
                 }
             }
         }
-        stage('Restauration de la base de données') {
+     stage('Restauration de la base de données') {
             steps {
                 script {
-                    sh "docker exec -it commercial_industriel1-postgres-1 bash "
-                    sh "psql -U postgres"
-                    sh "CREATE DATABASE \\\"commercial-industriel\\\";\"'"
-                    sh "pg_restore -U postgres -d \\\"commercial-industriel\\\" /data.backup'"
+                    // Restauration de la base de données avec pg_restore
+                    sh "docker exec commercial_industriel1-postgres-1 psql -U postgres -c \"CREATE DATABASE \\\"commercial-industriel\\\";\""
+                    sh "docker exec commercial_industriel1-postgres-1 pg_restore -U postgres -d \\\"commercial-industriel\\\" /data.backup"
                 }
             }
         }
