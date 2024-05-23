@@ -83,25 +83,6 @@ stage('Slack notification') {
             }
         }
 
- stage('Importation de la base de données') {
-            steps {
-                // Copier le fichier de sauvegarde vers le conteneur Docker
-                script {
-                    sh "docker cp Backup/commercial-industriel_Libanese_2024_03_21__12_00_15.backup commercial_industriel1-postgres-1:/data.backup"
-                }
-            }
-        }
-     stage('Restauration de la base de données') {
-            steps {
-                script {
-                    // Restauration de la base de données avec pg_restore
-                    sh "docker exec commercial_industriel1-postgres-1 pg_restore -U postgres -d \\\"commercial-industriel\\\" /data.backup"
-                }
-            }
-        }
-      
-
-
         stage('Déploiement sur Tomcat') {
             steps {
      
