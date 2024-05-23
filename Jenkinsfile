@@ -44,7 +44,6 @@ pipeline {
         
 stage('Slack notification') {
     steps {
-        script {
             def buildStatus = currentBuild.currentResult
             def message = "Pipeline Status: ${buildStatus}\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
 
@@ -53,25 +52,23 @@ stage('Slack notification') {
             } else {
                 slackSend(channel: '#devops', message: "Pipeline Failed\n${message}")
             }
-        }
+        
     }
 }
    stage('Setup Docker Permissions') {
             steps {
-                script {
                     sh '''
                         sudo chown root:docker /var/run/docker.sock
                         sudo chmod 666 /var/run/docker.sock
                     '''
-                }
-            }
+                    }
         }
 
 stage('Suppression des conteneurs existants') {
     steps {
-      //  sh 'docker stop $(docker ps -aq) && docker rm $(docker ps -aq)'
+        sh 'docker stop $(docker ps -aq) && docker rm $(docker ps -aq)'
         sh 'docker rmi -f $(docker image ls -q)'
-    }
+    
 }
 }
      stage('Build Docker Images') {
@@ -169,6 +166,3 @@ stage('Push vers DockerHub & Tag') {
 
     }
 }
-
-
-
