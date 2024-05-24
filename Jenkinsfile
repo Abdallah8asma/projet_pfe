@@ -81,8 +81,8 @@ stage('Slack notification') {
                 dir('/var/lib/jenkins/workspace/commercial_industriel1/data') {
                     sh 'docker build -t $DOCKER_IMAGE_NAME_DATA .'
                 }
-                sh 'docker build -f Dockerfile.mt-gpro-commun -t $DOCKER_IMAGE_NAME_BACK_COMMUN .'
-                sh 'docker build -f Dockerfile.ma-gpro-logistique -t $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE .'
+                sh 'docker build -f dockerfile-commun -t $DOCKER_IMAGE_NAME_BACK_COMMUN .'
+                sh 'docker build -f dockerfile-logistique -t $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE .'
             }
         }
 
@@ -99,7 +99,7 @@ stage('Slack notification') {
 
         stage('Deploy to Kubernetes') {
             steps {
-                withKubeConfig(credentialsId: 'k8ss', serverUrl: 'https://172.31.54.180:6443') {
+                withKubeConfig(credentialsId: 'k8s', serverUrl: 'https://172.31.54.180:6443') {
 
             sh 'kubectl delete deployments --all || true' // Supprimer tous les déploiements existants
             sh 'kubectl delete services --all || true' // Supprimer tous les services existants
