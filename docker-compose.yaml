@@ -17,10 +17,8 @@ postgres:
       interval: 30s
       timeout: 10s
       retries: 5
-volumes:
-  pg:
 
-  mt-gpro-commun:
+mt-gpro-commun:
     build:
       context: .
       dockerfile: dockerfile-commun
@@ -34,7 +32,7 @@ volumes:
       timeout: 10s
       retries: 5
 
-  ma-gpro-logistique:
+ma-gpro-logistique:
     build:
       context: .
       dockerfile: dockerfile-logistique
@@ -47,7 +45,8 @@ volumes:
       interval: 30s
       timeout: 10s
       retries: 5
-  frontend:
+
+frontend:
     build:
       context: ./ma-gpro-design-war/
     ports:
@@ -60,4 +59,6 @@ volumes:
       timeout: 10s
       retries: 5
       
+volumes:
+  pg:
   
