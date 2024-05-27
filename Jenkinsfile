@@ -73,11 +73,11 @@ stage('Slack notification') {
             }
         }
 
- // stage('Remove Docker Compose Containers') {
-  //    steps {
-   //     sh 'docker-compose down'
-   //     }
-  //  }
+  stage('Remove Docker Compose Containers') {
+     steps {
+        sh 'docker-compose down'
+        }
+    }
   stage('Docker Compose Up') {
             steps {
                 sh 'docker-compose up -d'
