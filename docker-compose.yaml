@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
 
-postgres:
+  postgres:
     image: postgres:latest
     environment:
       POSTGRES_USER: postgres
@@ -18,7 +18,7 @@ postgres:
       timeout: 10s
       retries: 5
 
-mt-gpro-commun:
+  mt-gpro-commun:
     build:
       context: .
       dockerfile: dockerfile-commun
@@ -32,7 +32,7 @@ mt-gpro-commun:
       timeout: 10s
       retries: 5
 
-ma-gpro-logistique:
+  ma-gpro-logistique:
     build:
       context: .
       dockerfile: dockerfile-logistique
@@ -46,7 +46,7 @@ ma-gpro-logistique:
       timeout: 10s
       retries: 5
 
-frontend:
+  frontend:
     build:
       context: ./ma-gpro-design-war/
     ports:
@@ -61,4 +61,3 @@ frontend:
       
 volumes:
   pg:
-  
