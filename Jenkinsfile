@@ -73,18 +73,17 @@ stage('Slack notification') {
             }
         }
 
-        stage('Build Docker Images') {
+  stage('Remove Docker Compose Containers') {
+      steps {
+        sh 'docker-compose down'
+        }
+    }
+  stage('Docker Compose Up') {
             steps {
-                dir('/var/lib/jenkins/workspace/commercial_industriel1/ma-gpro-design-war') {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_FRONT .'
-                }
-                dir('/var/lib/jenkins/workspace/commercial_industriel1/data') {
-                    sh 'docker build -t $DOCKER_IMAGE_NAME_DATA .'
-                }
-                sh 'docker build -f dockerfile-commun -t $DOCKER_IMAGE_NAME_BACK_COMMUN .'
-                sh 'docker build -f dockerfile-logistique -t $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE .'
+                sh 'docker-compose up -d'
             }
         }
+
 
         stage('Push Docker Images') {
             steps {
