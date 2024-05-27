@@ -85,16 +85,7 @@ stage('Slack notification') {
         }
 
 
-        stage('Push Docker Images') {
-            steps {
-                withDockerRegistry([credentialsId: 'dockerHub', url: '']) {
-                    sh 'docker push $DOCKER_IMAGE_NAME_FRONT'
-                    sh 'docker push $DOCKER_IMAGE_NAME_DATA'
-                    sh 'docker push $DOCKER_IMAGE_NAME_BACK_COMMUN'
-                    sh 'docker push $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE'
-                }
-            }
-        }
+       
 
         
         stage('Déploiement sur Tomcat') {
