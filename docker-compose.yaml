@@ -1,18 +1,24 @@
 version: '3.8'
 
 services:
-  frontend:
-    build:
-      context: ./ma-gpro-design-war/
+
+postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: commercial-industriel
     ports:
-      - "80:8080"
-    depends_on:
-      - ma-gpro-logistique
+      - "5433:5432"
+    volumes:
+      - pg:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 30s
       timeout: 10s
       retries: 5
+volumes:
+  pg:
 
   mt-gpro-commun:
     build:
@@ -41,21 +47,17 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
- 
-  postgres:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: commercial-industriel
+  frontend:
+    build:
+      context: ./ma-gpro-design-war/
     ports:
-      - "5433:5432"
-    volumes:
-      - pg:/var/lib/postgresql/data
+      - "80:8080"
+    depends_on:
+      - ma-gpro-logistique
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
-volumes:
-  pg:
+      
+  
