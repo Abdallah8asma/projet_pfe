@@ -97,26 +97,21 @@ stage('Slack notification') {
             }
         }
 
-        stage('Deploy to Kubernetes') {
+        
+        stage('Déploiement sur Tomcat') {
             steps {
-                withKubeConfig(credentialsId: 'k8s', serverUrl: 'https://172.31.54.180:6443') {
+     
+                    // Déploiement de ma-gpro-design
+                    deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.196.178.43:8080/')], 
+                           contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', 
+                           war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
 
-            sh 'kubectl delete deployments --all || true' // Supprimer tous les déploiements existants
-            sh 'kubectl delete services --all || true' // Supprimer tous les services existants
+              
+          
+    }
+}
 
-  
 
-                    sh 'kubectl apply -f postgres-pv-pvc.yaml'
-                    sh 'kubectl apply -f deployservice-postgres.yaml'
-
-                    sh 'kubectl apply -f frontend-deployment.yaml' 
-
-                    sh 'kubectl apply -f commun-deployment.yaml' 
-                    sh 'kubectl apply -f logistique-deployment.yaml'
-
-                    
-                }
-            }
         }
     }
 }
