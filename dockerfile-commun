@@ -38,8 +38,11 @@ COPY --from=BUILDER /build/mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-com
 COPY --from=BUILDER /build/mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war /usr/local/tomcat/webapps/
 COPY --from=BUILDER /build/mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT /usr/local/tomcat/webapps/
 
-# Exposez le port sur lequel Tomcat écoute (par défaut : 8080)
-EXPOSE 8080
+COPY --from=BUILDER /build/mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war /usr/local/tomcat/webapps.dist/
+COPY --from=BUILDER /build/mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT /usr/local/tomcat/webapps.dist/
+
+# Exposez le port sur lequel Tomcat écoute 
+EXPOSE 8081
 
 # Commande par défaut pour démarrer Tomcat lors de l'exécution du conteneur
 CMD ["catalina.sh", "run"]
