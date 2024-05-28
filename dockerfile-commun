@@ -26,14 +26,14 @@ COPY mt-gpro-commun/pom.xml /build/mt-gpro-commun/
 RUN mvn clean install
 
 #copie
-COPY mt-gpro-commun/mt-gpro-commun-rest/target/ /build/target/
+#COPY mt-gpro-commun/mt-gpro-commun-rest/target/ /build/target/
 
 # Utilisez l'image Tomcat officielle comme base
 FROM tomcat:9.0.88
 # Copiez le WAR dans le répertoire webapps de Tomcat
 WORKDIR /opt/
-COPY --from=BUILDER /build/target/ /opt/tomcat/latest/webapps/
-COPY --from=BUILDER /build/target/ /usr/local/tomcat/webapps/
+COPY --from=BUILDER mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps/
+COPY --from=BUILDER mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT /usr/local/tomcat/webapps/
 
 # Exposez le port sur lequel Tomcat écoute (par défaut : 8080)
 EXPOSE 8080
