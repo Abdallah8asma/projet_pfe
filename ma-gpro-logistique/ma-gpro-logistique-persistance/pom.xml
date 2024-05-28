@@ -16,6 +16,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
+			<version>5.5.7.Final</version> 
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.common</groupId>
@@ -26,11 +27,11 @@
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>8.4-702.jdbc4</version>
-		</dependency>
+	<dependency>
+		<groupId>org.postgresql</groupId>
+		<artifactId>postgresql</artifactId>
+		<version>42.2.19 </version>
+	</dependency>
 
 
 		<dependency>
