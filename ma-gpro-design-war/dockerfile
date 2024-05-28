@@ -1,7 +1,7 @@
 FROM tomcat:9.0.88
 
 # Copie du fichier war de l'application front-end dans le répertoire webapps de Tomcat
-COPY presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war /usr/local/tomcat/webapps
+COPY presentation/target/ /usr/local/tomcat/webapps
 
 # Exposition du port utilisé par Tomcat (par défaut : 8080)
 EXPOSE 8080
