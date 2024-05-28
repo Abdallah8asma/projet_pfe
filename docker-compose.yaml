@@ -5,11 +5,11 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_USER: postgres
+      POSTGRES_USER: postgre
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: commercial-industriel
     ports:
-      - "5433:5433"
+      - "5432:5432"
     volumes:
       - pg:/var/lib/postgresql/data
     healthcheck:
