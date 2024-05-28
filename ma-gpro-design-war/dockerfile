@@ -1,6 +1,6 @@
 FROM tomcat:9.0.88
 
-WORKDIR /opt
+WORKDIR /opt/
 # Copie du fichier war de l'application front-end dans le répertoire webapps de Tomcat
 COPY presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war /opt/tomcat/latest/webapps
 COPY presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT /opt/tomcat/latest/webapps
