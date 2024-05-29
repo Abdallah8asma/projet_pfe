@@ -23,7 +23,7 @@ services:
       context: .
       dockerfile: dockerfile-commun
     ports:
-      - "8889:8081"
+      - "8889:8080"
     depends_on:
       - postgres
     healthcheck:
@@ -37,7 +37,7 @@ services:
       context: .
       dockerfile: dockerfile-logistique
     ports:
-      - "8890:8081"
+      - "8890:8080"
     depends_on:
       - postgres
     healthcheck:
