@@ -12,11 +12,17 @@ services:
       - "5432:5432"
     volumes:
       - pg:/var/lib/postgresql/data
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - mynetwork
 
   mt-gpro-commun:
     build:
@@ -26,11 +32,17 @@ services:
       - "8889:8080"
     depends_on:
       - postgres
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - mynetwork
 
   ma-gpro-logistique:
     build:
@@ -40,12 +52,17 @@ services:
       - "8890:8080"
     depends_on:
       - postgres
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
-
+    networks:
+      - mynetwork
   frontend:
     build:
       context: .
@@ -54,11 +71,21 @@ services:
       - "80:8080"
     depends_on:
       - postgres
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/ma-gpro-design-3.5.0.0-SNAPSHOT || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - mynetwork
       
 volumes:
   pg:
+    
+networks:
+  mynetwork:
+    driver: bridge
