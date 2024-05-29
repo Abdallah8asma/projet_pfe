@@ -24,7 +24,7 @@
 	<bean id="dataSource"
         class="org.springframework.jdbc.datasource.SingleConnectionDataSource">
         <property name="driverClassName" value="org.postgresql.Driver" />
-        <property name="url" value="jdbc:postgresql://commercial_industriel1-postgres-1:5432/commercial-industriel"/>
+        <property name="url" value="jdbc:postgresql://postgres:5432/commercial-industriel"/>
         <property name="username" value="postgres" />
         <property name="password" value="admin" />
         <property name="suppressClose" value="true" />
