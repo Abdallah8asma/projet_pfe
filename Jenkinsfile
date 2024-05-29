@@ -14,6 +14,13 @@ pipeline {
             }
         }
 
+        stage('Docker Swarm ') {
+    steps {
+        script {
+            sh 'docker swarm leave || true'
+            sh 'docker swarm init'
+        }}}
+
             stage('Build') {
             steps {
                 dir('/var/lib/jenkins/workspace/commercial_industriel1/socle') {
@@ -72,11 +79,7 @@ stage('Slack notification') {
                 '''
             }
         }
-        stage('Docker Swarm ') {
-    steps {
-        script {
-            sh 'docker swarm init'
-        }}}
+
 
   stage('Remove Docker Compose Containers') {
      steps {
