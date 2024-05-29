@@ -72,6 +72,11 @@ stage('Slack notification') {
                 '''
             }
         }
+        stage('Docker Swarm ') {
+    steps {
+        script {
+            sh 'docker swarm init'
+        }}}
 
   stage('Remove Docker Compose Containers') {
      steps {
