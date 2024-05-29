@@ -18,7 +18,7 @@ pipeline {
     steps {
         script {
             sh 'docker swarm leave || true'
-            sh 'docker swarm init'
+            sh 'docker swarm init || true'
         }}}
 
             stage('Build') {
