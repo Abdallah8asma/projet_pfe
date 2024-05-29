@@ -27,7 +27,7 @@ services:
     depends_on:
       - postgres
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://mt-gpro-commun:8080/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -41,7 +41,7 @@ services:
     depends_on:
       - postgres
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://ma-gpro-logistique:8080/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
