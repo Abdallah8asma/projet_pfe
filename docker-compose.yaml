@@ -51,7 +51,7 @@ services:
       context: .
       dockerfile: dockerfile-front
     ports:
-      - "80:80"
+      - "80:8080"
     depends_on:
       - postgres
     healthcheck:
