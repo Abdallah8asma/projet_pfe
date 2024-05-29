@@ -43,7 +43,7 @@ COPY --from=BUILDER /build/ma-gpro-design-war/presentation/target/ma-gpro-design
 COPY --from=BUILDER /build/ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT /usr/local/tomcat/webapps.dist/
 
 # Exposez le port sur lequel Tomcat écoute 
-EXPOSE 8081
+EXPOSE 80
 
 # Commande par défaut pour démarrer Tomcat lors de l'exécution du conteneur
 CMD ["catalina.sh", "run"]
