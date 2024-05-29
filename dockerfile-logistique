@@ -35,6 +35,8 @@ RUN mvn clean install
 # Utilisez l'image Tomcat officielle comme base
 FROM tomcat:9.0.88
 
+COPY logistique-server.xml /usr/local/tomcat/conf/server.xml
+
 # Copiez le WAR dans le répertoire webapps de Tomcat
 WORKDIR /usr/local/tomcat/webapps/
 
@@ -42,7 +44,7 @@ COPY --from=BUILDER /build/ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-
 
 
 # Exposez le port sur lequel Tomcat écoute 
-EXPOSE 8080
+EXPOSE 8890
 
 # Commande par défaut pour démarrer Tomcat lors de l'exécution du conteneur
 CMD ["catalina.sh", "run"]
