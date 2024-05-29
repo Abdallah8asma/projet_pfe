@@ -51,11 +51,11 @@ services:
       context: .
       dockerfile: dockerfile-front
     ports:
-      - "8081:8081"
+      - "80:80"
     depends_on:
       - postgres
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8081/ma-gpro-design-3.5.0.0-SNAPSHOT || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:80/ma-gpro-design-3.5.0.0-SNAPSHOT || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
