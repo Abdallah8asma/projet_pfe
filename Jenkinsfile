@@ -14,13 +14,6 @@ pipeline {
             }
         }
 
-        stage('Docker Swarm ') {
-    steps {
-        script {
-            sh 'docker swarm leave || true'
-            sh 'docker swarm init || true'
-        }}}
-
             stage('Build') {
             steps {
                 dir('/var/lib/jenkins/workspace/commercial_industriel1/socle') {
