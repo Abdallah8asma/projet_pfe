@@ -29,7 +29,7 @@ services:
     depends_on:
       - postgres
     healthcheck:
-      test: ["CMD-SHELL", "curl -u commercial:2023 -f http://localhost:8889/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
+      test:  ["CMD", "curl", "-u", "commercial:2023", "-f", "http://localhost:8889/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -45,7 +45,7 @@ services:
     depends_on:
       - postgres
     healthcheck:
-      test: ["CMD", "curl", "-u", "commercial:2023", "-f", "http://localhost:8890/health"]
+      test: ["CMD", "curl", "-u", "commercial:2023", "-f", "http://localhost:8890/ma-gpro-logistique-3.5.0.0-SNAPSHOT"]
       interval: 30s
       timeout: 10s
       retries: 5
