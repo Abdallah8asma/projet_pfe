@@ -29,7 +29,7 @@ services:
       context: .
       dockerfile: dockerfile-commun
     ports:
-      - "8889:8080"
+      - "8889:8889"
     depends_on:
       - postgres
     deploy:
@@ -37,7 +37,7 @@ services:
       restart_policy:
         condition: on-failure
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8889/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -49,7 +49,7 @@ services:
       context: .
       dockerfile: dockerfile-logistique
     ports:
-      - "8890:8080"
+      - "8890:8890"
     depends_on:
       - postgres
     deploy:
@@ -57,7 +57,7 @@ services:
       restart_policy:
         condition: on-failure
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8080/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8890/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
