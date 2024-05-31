@@ -1,37 +1,34 @@
 package com.gpro.consulting.tiers.commun.rest.security;
 
+import javax.servlet.*;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+public class CORSFilter implements Filter {
 
-import org.springframework.web.filter.OncePerRequestFilter;
+    private String allowedOrigin;
 
-public class CORSFilter extends OncePerRequestFilter {
-
-@Override
-protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-	response.addHeader("Access-Control-Allow-Origin", "*");
-	response.addHeader("Access-Control-Allow-Headers","Content-Type");
-	response.addHeader("Access-Control-Allow-Headers","Authorization");
-
-    if (request.getHeader("Access-Control-Request-Method") != null && "OPTIONS".equals(request.getMethod())) {
-        // CORS "pre-flight" request
-
-    	
-   
-     	response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE,OPTIONS");
-
-    	//response.addHeader("Access-Control-Allow-Headers","Content-Type");
-
-        response.addHeader("Access-Control-Max-Age", "86400");
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        allowedOrigin = System.getenv("http://localhost:8080/ma-gpro-design-3.5.0.0-SNAPSHOT"); // URL de votre frontend
+        if (allowedOrigin == null) {
+            allowedOrigin = "http://localhost:8080"; // Valeur par défaut
+        }
     }
 
-    filterChain.doFilter(request, response);
-  }
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+        httpServletResponse.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+        httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        httpServletResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
 
+        chain.doFilter(request, response);
+    }
+
+    @Override
+    public void destroy() {
+        // Cleanup if needed
+    }
 }
-
-	
