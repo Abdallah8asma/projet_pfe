@@ -24,13 +24,13 @@ angular.module('gpromoteApp.authServices', ['LocalStorageModule'])
 
 	that = this;
 
-	var urlBase = "http://localhost:8080/ma-gpro-logistique-rest";
+	var urlBase = "http://localhost:8080/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT";
 
 })	
 	
 
 	.factory('LoginFactory', function ($http, $resource,Cookies) {
-		var urlBase = "http://localhost:8080/ma-gpro-logistique-rest";
+		var urlBase = "http://localhost:8080/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT";
 
 		var loginResources = $resource(urlBase + '/login', {}, {
 			options: {method: 'OPTIONS', cache: false}
