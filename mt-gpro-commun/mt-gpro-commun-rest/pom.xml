@@ -1,205 +1,185 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.gpro.consulting.socle.j2ee.tiers</groupId>
-		<artifactId>socle-j2ee-tiers-rest</artifactId>
-		<version>3.5.0.0-SNAPSHOT</version>
-	</parent>
-	<groupId>com.gpro.consulting.tiers.commun.rest</groupId>
-	<version>3.5.0.0-SNAPSHOT</version>
-	<artifactId>mt-gpro-commun-rest</artifactId>
-	<packaging>war</packaging>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.gpro.consulting.socle.j2ee.tiers</groupId>
+        <artifactId>socle-j2ee-tiers-rest</artifactId>
+        <version>3.5.0.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.gpro.consulting.tiers.commun.rest</groupId>
+    <artifactId>mt-gpro-commun-rest</artifactId>
+    <version>3.5.0.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.gpro.consulting.tiers.commun.service</groupId>
-	        <artifactId>mt-gpro-commun-service</artifactId>
-			<version>3.5.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.gpro.consulting.tiers.commun.coordination</groupId>
-			<artifactId>mt-gpro-commun-coordination</artifactId>
-			<version>3.5.0.0-SNAPSHOT</version>
-		</dependency>
-	<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>4.1.5.RELEASE</version>
+    <properties>
+        <spring.version>4.1.5.RELEASE</spring.version>
+        <jackson.version>2.5.4</jackson.version>
+        <spring.security.version>3.2.3.RELEASE</spring.security.version>
+        <jasperreports.version>6.21.2</jasperreports.version>
+    </properties>
 
-		</dependency>
+    <dependencies>
+        <!-- GPro Consulting Dependencies -->
+        <dependency>
+            <groupId>com.gpro.consulting.tiers.commun.service</groupId>
+            <artifactId>mt-gpro-commun-service</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gpro.consulting.tiers.commun.coordination</groupId>
+            <artifactId>mt-gpro-commun-coordination</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-actuator</artifactId>
-	 <version>1.5.22.RELEASE</version> 
-</dependency>
+        <!-- Spring Dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>1.5.22.RELEASE</version>
+        </dependency>
 
+        <!-- Jackson Dependencies -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
 
-		<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-core</artifactId>
-    <version>2.5.4</version> <!-- This version is compatible with Spring 4.1.5 -->
-</dependency>
+        <!-- Servlet and JSP Dependencies -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
 
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.5.4</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-annotations</artifactId>
-    <version>2.5.4</version>
-</dependency>
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-xml</artifactId>
-    <version>2.5.4</version>
-</dependency>
+        <!-- Commons FileUpload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
+        <!-- JExcelAPI -->
+        <dependency>
+            <groupId>net.sourceforge.jexcelapi</groupId>
+            <artifactId>jxl</artifactId>
+            <version>2.6</version>
+        </dependency>
 
-		
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
-			<version>1.9.13</version>
-		</dependency>
+        <!-- Barbecue for JasperReports -->
+        <dependency>
+            <groupId>net.sourceforge.barbecue</groupId>
+            <artifactId>barbecue</artifactId>
+            <version>1.5-beta1</version>
+        </dependency>
 
+        <!-- Spring Security -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>2.0.10.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+            <version>1.0.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+    </dependencies>
 
-		
-		
-
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-		</dependency>
-		
-		<dependency>
-	<groupId>commons-fileupload</groupId>
-	<artifactId>commons-fileupload</artifactId>
-	<version>1.3.1</version>
-</dependency>
-
-
-	<!-- Dependency required by jexcelapi for excel reporting -->
-		<dependency>
-			<groupId>net.sourceforge.jexcelapi</groupId>
-			<artifactId>jxl</artifactId>
-			<version>2.6</version>
-		</dependency>
-
-<!--Jasper reports -->
-		<dependency>
-		    <groupId>net.sf.jasperreports</groupId>
-		    <artifactId>jasperreports</artifactId>
-		    <version>6.21.2</version>
-		</dependency>
-		
-		
-				<!-- Dependency required by Jasper to generate the bare code -->
-		<dependency>
-			<groupId>net.sourceforge.barbecue</groupId>
-			<artifactId>barbecue</artifactId>
-			<version>1.5-beta1</version>
-		</dependency>
-
-<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina 
-		<dependency>
-		    <groupId>org.apache.tomcat</groupId>
-		    <artifactId>tomcat-catalina</artifactId>
-		    <version>7.0.50</version>
-		</dependency-->
-		
-		
-				  <dependency>
-		<groupId>org.springframework.security</groupId>
-    <artifactId>spring-security-web</artifactId>
-    <version>3.2.3.RELEASE</version>
-  </dependency>
-  <dependency>
-    <groupId>org.springframework.security</groupId>
-    <artifactId>spring-security-config</artifactId>
-    <version>3.2.3.RELEASE</version>
-  </dependency>
-  <dependency>
-		    <groupId>org.springframework.security.oauth</groupId>
-		    <artifactId>spring-security-oauth2</artifactId>
-    <version>2.0.10.RELEASE</version>
-		</dependency>
-  <dependency>
-		    <groupId>org.springframework.security</groupId>
-		    <artifactId>spring-security-jwt</artifactId>
-		    <version>1.0.5.RELEASE</version>
-		</dependency>
-  <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
-<dependency>
-    <groupId>io.jsonwebtoken</groupId>
-    <artifactId>jjwt</artifactId>
-    <version>0.6.0</version>
-</dependency>
-  <dependency>
-    <groupId>com.auth0</groupId>
-    <artifactId>java-jwt</artifactId>
-    <version>3.4.1</version>
-</dependency>
-
-  </dependencies>
-  
-		<build>
-		 <pluginManagement>
-			<plugins>
-		  <plugin>
-			    <groupId>org.codehaus.mojo</groupId>
-			    <artifactId>jasperreports-maven-plugin</artifactId>
-			    <version>1.0-beta-2</version>
-			    <executions>
-			    <execution>
-			        <goals>
-			          <goal>compile-reports</goal>
-			        </goals>
-			      </execution>
-			    </executions>
-			    <dependencies>
-			      <dependency>
-			        <groupId>net.sf.jasperreports</groupId>
-			        <artifactId>jasperreports</artifactId>
-			        <version>5.0.1</version>
-			      </dependency>
-			      <dependency>
-			        <groupId>javax.servlet</groupId>
-			        <artifactId>javax.servlet-api</artifactId>
-			        <version>3.0.1</version>
-			      </dependency>
-			      
-			    </dependencies>		
-			    </plugin>	
-			 <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <version>3.1</version>
-    <configuration>
-        <compilerArgs>
-            <arg>-Xlint:unchecked</arg>
-            <arg>-Xlint:deprecation</arg>
-        </compilerArgs>
-    </configuration>
-</plugin>
-  
-			    
-			</plugins>
-			 </pluginManagement>
-		</build>
-  
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>jasperreports-maven-plugin</artifactId>
+                    <version>1.0-beta-2</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile-reports</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sf.jasperreports</groupId>
+                            <artifactId>jasperreports</artifactId>
+                            <version>${jasperreports.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>javax.servlet</groupId>
+                            <artifactId>javax.servlet-api</artifactId>
+                            <version>3.0.1</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.1</version>
+                    <configuration>
+                        <compilerArgs>
+                            <arg>-Xlint:unchecked</arg>
+                            <arg>-Xlint:deprecation</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
 </project>
