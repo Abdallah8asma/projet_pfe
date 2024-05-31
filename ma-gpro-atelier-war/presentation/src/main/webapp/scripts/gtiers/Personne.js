@@ -2,7 +2,7 @@
 
 angular
   .module('theme.personne', ["ngResource"])
- .constant("baseUrl", "http://localhost:8080/mt-gpro-commun-rest")
+ .constant("baseUrl", "http://localhost:8080/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT")
   .controller('PersonneController', ['$scope', '$http','baseUrl', function ($scope,$http, baseUrl) {
 	  
 	  
