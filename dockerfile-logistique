@@ -29,7 +29,7 @@ RUN mvn clean install
 COPY ma-gpro-logistique/pom.xml /build/ma-gpro-logistique/
 RUN mvn clean install
 
-#Copie 
+#Copie
 COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /build/
 
 # Utilisez l'image Tomcat officielle comme base
@@ -43,7 +43,7 @@ WORKDIR /usr/local/tomcat/webapps/
 COPY --from=BUILDER /build/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war .
 
 
-# Exposez le port sur lequel Tomcat écoute 
+# Exposez le port sur lequel Tomcat écoute
 EXPOSE 8890
 #EXPOSE 8080
 # Commande par défaut pour démarrer Tomcat lors de l'exécution du conteneur
