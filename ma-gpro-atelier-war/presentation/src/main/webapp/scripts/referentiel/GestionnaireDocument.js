@@ -26,7 +26,7 @@ gestionnaireDocument.service('fileUpload', [ '$http', function($http) {
 ]);
 gestionnaireDocument.controller('UploadCtrl',
 		[ '$scope', '$http', function($scope,$http){
-			$scope.uploadUrl = "http://localhost:8080/mt-gpro-commun-rest/gestionnaireDocument";
+			$scope.uploadUrl = "http://localhost:8080/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/gestionnaireDocument";
 			
 			//declaration variable
 			$scope.isUploaded = false;
@@ -59,7 +59,7 @@ gestionnaireDocument.controller('UploadCtrl',
 			}
 		$scope.downloadFile = function(uuid){
 			console.log("*uuid "+uuid);
-			$http.get("http://localhost:8080/mt-gpro-commun-rest/gestionnaireDocument/document/"+uuid)
+			$http.get("http://localhost:8080/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/gestionnaireDocument/document/"+uuid)
 			.success(function(data){
 				$scope.dataByte = data;
 			}).error(function() {
@@ -74,7 +74,7 @@ gestionnaireDocument.controller('UploadCtrl',
 		gestionnaireDocument.controller('UploadCtrlCommandeVente',
 		[ '$scope', '$http', function($scope,$http){
 			
-			$scope.uploadUrl = "http://localhost:8080/mt-gpro-commun-rest/gestionnaireDocument";
+			$scope.uploadUrl = "http://localhost:8080/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/gestionnaireDocument";
 			//declaration des variables
 			$scope.isUploadedCommandeVente = false;
 			$scope.uploadFileCommandeVente = function() {
@@ -103,7 +103,7 @@ gestionnaireDocument.controller('UploadCtrl',
 			}
 		$scope.downloadFileCommandeVente = function(uuid){
 			console.log("*uuid "+uuid);
-			$http.get("http://localhost:8080/mt-gpro-commun-rest/gestionnaireDocument/document/"+uuid)
+			$http.get("http://localhost:8080/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT/gestionnaireDocument/document/"+uuid)
 			.success(function(data){
 				$scope.dataByte = data;
 			}).error(function() {
