@@ -57,6 +57,9 @@ services:
       dockerfile: dockerfile-front
     ports:
       - "8080:8080"
+    depends_on:
+      - mt-gpro-commun
+      - ma-gpro-logistique
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/ma-gpro-design-3.5.0.0-SNAPSHOT || exit 1"]
       interval: 30s
