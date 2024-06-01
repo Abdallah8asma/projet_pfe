@@ -81,7 +81,7 @@ stage('Slack notification') {
     }
   stage('Docker Compose Up') {
             steps {
-                sh 'docker-compose up -d'
+                sh 'docker-compose up --build -d'
             }
         }
 
