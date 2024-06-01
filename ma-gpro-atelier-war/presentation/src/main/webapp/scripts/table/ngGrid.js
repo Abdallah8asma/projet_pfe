@@ -26,14 +26,14 @@ angular
             var data;
             if (searchText) {
                 var ft = searchText.toLowerCase();
-                $http.get('http://localhost:8889/mt-gpro-commun/partieInteressee/all').success(function (largeLoad) {        
+                $http.get('http://localhost:8080/mt-gpro-commun/partieInteressee/all').success(function (largeLoad) {        
                     data = largeLoad.filter(function(item) {
                         return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                     });
                     $scope.setPagingData(data,page,pageSize);
                 });            
             } else {
-                $http.get('http://localhost:8889/mt-gpro-commun/partieInteressee/all').success(function (largeLoad) {
+                $http.get('http://localhost:8080/mt-gpro-commun/partieInteressee/all').success(function (largeLoad) {
                     $scope.setPagingData(largeLoad,page,pageSize);
                 });
             }
