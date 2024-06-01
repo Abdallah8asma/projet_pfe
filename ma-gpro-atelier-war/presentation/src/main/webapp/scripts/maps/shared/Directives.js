@@ -466,7 +466,7 @@ angular
 						controller : function($scope, $element, $http,$resource, baseUrl) {
 							// declaration variables
 							var baseUrlGs = "http://localhost:8080/ma-gpro-gs-rest";
-							var baseUrl = "http://localhost:8889/mt-gpro-commun";
+							var baseUrl = "http://localhost:8080/mt-gpro-commun";
 							$scope.matrix = [ [], [], [], [], [] ];
 							$scope.elementValueRow = [];
 							$scope.elementNGgridShow = true;
