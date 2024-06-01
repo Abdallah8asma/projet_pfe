@@ -466,7 +466,7 @@ angular
 						controller : function($scope, $element, $http,$resource, UrlCommun) {
 							// declaration variables
 							var UrlCommunGs = "http://localhost:8080/ma-gpro-gs-rest";
-							var UrlCommun = "http://localhost:8889/mt-gpro-commun";
+							var UrlCommun = "http://localhost:8080/mt-gpro-commun";
 							$scope.matrix = [ [], [], [], [], [] ];
 							$scope.elementValueRow = [];
 							$scope.elementNGgridShow = true;
