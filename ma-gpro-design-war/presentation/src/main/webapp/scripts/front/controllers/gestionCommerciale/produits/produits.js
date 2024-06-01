@@ -86,7 +86,7 @@ angular
 
 							// Liste des Taxes - Marwa 0202108
 							$scope.ListeTaxe = function() {
-								$http.get("http://localhost:8080/ma-gpro-logistique-rest/taxe/getTVA").success(
+								$http.get("http://localhost:8080/ma-gpro-logistique/taxe/getTVA").success(
 										function(dataTaxe) {
 
 											$scope.ListeTaxe = dataTaxe;
