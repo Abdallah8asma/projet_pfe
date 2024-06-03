@@ -3,7 +3,6 @@ FROM maven:3.6.3-openjdk-11-slim AS BUILDER
 ARG VERSION=3.5.0.0-SNAPSHOT
 WORKDIR /build/
 COPY . /build/
-
 # socle
 COPY socle/pom.xml /build/
 RUN mvn clean install
@@ -28,7 +27,6 @@ RUN mvn clean install
 # ma-gpro-logistique
 COPY ma-gpro-logistique/pom.xml /build/ma-gpro-logistique/
 RUN mvn clean install
-
 #Copie
 COPY ma-gpro-logistique/ma-gpro-logistique-rest/target/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war /build/
 
@@ -39,9 +37,7 @@ COPY logistique-server.xml /usr/local/tomcat/conf/server.xml
 
 # Copiez le WAR dans le répertoire webapps de Tomcat
 WORKDIR /usr/local/tomcat/webapps/
-
 COPY --from=BUILDER /build/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT.war .
-
 
 # Exposez le port sur lequel Tomcat écoute
 EXPOSE 8890
