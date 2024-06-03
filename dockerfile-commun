@@ -29,7 +29,7 @@ RUN mvn clean install
 COPY mt-gpro-commun/mt-gpro-commun-rest/target/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT.war /build/
 
 # Utilisez l'image Tomcat officielle comme base
-FROM tomcat:9.0.88
+FROM tomcat:10.1-jdk11
 
 COPY commun-server.xml /usr/local/tomcat/conf/server.xml
 
