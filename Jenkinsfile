@@ -121,30 +121,7 @@ stage("Deploy to Kubernetes") {
           
 
 
-    }
+    
 }
 }
-
-
-
-
-
-
-  
-
-
-       
-
-        
-      //  stage('Déploiement sur Tomcat') {
-      //      steps {
-     
-                    // Déploiement de ma-gpro-design
-           //         deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.196.178.43:8080/')], contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT',  war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
- //   }
-//}
-
-
-        }
-  
 }
