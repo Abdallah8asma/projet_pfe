@@ -51,7 +51,6 @@ pipeline {
         
 stage('Slack notification') {
             steps {
-                script {
                     def buildStatus = currentBuild.currentResult
                     def message = "Pipeline Status: ${buildStatus}\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
 
@@ -60,7 +59,7 @@ stage('Slack notification') {
                     } else {
                         slackSend(channel: '#devops', message: "Pipeline Failed\n${message}")
                     }
-                }
+                
             }
         }
 
@@ -72,7 +71,7 @@ stage('Slack notification') {
                 sh 'docker build -t asmaabdallah518329/ma-gpro-logistique-rest -f dockerfile-logistique .'
                 sh 'docker build -t asmaabdallah518329/mt-gpro-commun-rest -f dockerfile-commun .'
             }
-
+        }
     
  stage('Push to DockerHub & Tag') {
             steps {
@@ -114,12 +113,6 @@ stage("Deploy to Kubernetes") {
         }
     }
 }
-
-
-
-     
-          
-
 
     
 }
