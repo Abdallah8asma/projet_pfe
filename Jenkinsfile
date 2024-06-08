@@ -10,7 +10,7 @@ pipeline {
        stages {
         stage('Clone') {
             steps {
-                git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:Abdallah8asma/projet_pfe.git'
+                git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:Abdallah8asma/pfe_k8s.git'
             }
         }
 
@@ -64,26 +64,73 @@ stage('Slack notification') {
             }
         }
 
-        stage('Setup Docker Permissions') {
+  
+        stage('Build Docker Images') {
             steps {
-                sh '''
-                    sudo chown root:docker /var/run/docker.sock
-                    sudo chmod 666 /var/run/docker.sock
-                '''
+                sh 'docker build -t asmaabdallah518329/front -f dockerfile-front .'
+                sh 'docker build -t asmaabdallah518329/data -f dockerfile-data .'
+                sh 'docker build -t asmaabdallah518329/ma-gpro-logistique-rest -f dockerfile-logistique .'
+                sh 'docker build -t asmaabdallah518329/mt-gpro-commun-rest -f dockerfile-commun .'
+            }
+
+    
+ stage('Push to DockerHub & Tag') {
+            steps {
+                withDockerRegistry([credentialsId: "dockerHub", url: ""]) {
+                    sh 'docker tag asmaabdallah518329/front asmaabdallah518329/front:latest'
+                    sh 'docker push asmaabdallah518329/front:latest' 
+                    
+                    sh 'docker tag asmaabdallah518329/ma-gpro-logistique-rest asmaabdallah518329/ma-gpro-logistique-rest:latest'
+                    sh 'docker push asmaabdallah518329/ma-gpro-logistique-rest:latest'
+                    
+                    sh 'docker tag asmaabdallah518329/mt-gpro-commun-rest asmaabdallah518329/mt-gpro-commun-rest:latest'
+                    sh 'docker push asmaabdallah518329/mt-gpro-commun-rest:latest'
+                    
+                    sh 'docker tag asmaabdallah518329/data asmaabdallah518329/data:latest'
+                    sh 'docker push asmaabdallah518329/data:latest'
+                }
             }
         }
 
 
-  stage('Remove Docker Compose Containers') {
-     steps {
-        sh 'docker-compose down'
+stage("Deploy to Kubernetes") {
+    steps {
+        withKubeConfig(credentialsId: 'k8s', serverUrl: 'https://172.31.54.180:6443') {
+
+            // Appliquer la définition du volume persistant et du volume persistant revendiqué
+            sh 'kubectl apply -f postgres-pv-pvc.yaml'
+
+            // Déployer le service frontend
+            sh 'kubectl apply -f frontend-deployment.yaml' 
+
+            // Déployer le service logistique
+            sh 'kubectl apply -f logistique-deployment.yaml' 
+
+            // Déployer le service commun
+            sh 'kubectl apply -f mt-gpro-commun-deployment.yaml' 
+
+            // Déployer le service de base de données PostgreSQL
+            sh 'kubectl apply -f postgres-deployment.yaml' 
         }
     }
-  stage('Docker Compose Up') {
-            steps {
-                sh 'docker-compose up --build -d'
-            }
-        }
+}
+
+
+
+     
+          
+
+
+    }
+}
+}
+
+
+
+
+
+
+  
 
 
        
