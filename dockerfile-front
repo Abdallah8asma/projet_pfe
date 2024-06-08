@@ -31,7 +31,7 @@ COPY ma-gpro-design-war/pom.xml /build/ma-gpro-design-war
 COPY ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war /build/
 
 # Utilisez l'image Tomcat officielle comme base
-FROM tomcat:9.0.88
+FROM tomcat:10.1
 # Copiez le WAR dans le répertoire webapps de Tomcat
 WORKDIR /usr/local/tomcat/webapps/
 
