@@ -104,41 +104,36 @@ stage('stock war file'){
     }
 }
 
- stage('Installer Docker') {
-         steps {
-            ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', inventory: '', playbook: 'install_docker.yaml', vaultTmpPath: ''
+
+
+stage('Remove Docker Compose Containers') {
+     steps {
+        sh 'docker-compose down'
+        }
+    }
+  stage('Docker Compose Up') {
+            steps {
+                sh 'docker-compose up --build -d'
             }
         }
-
-    
         
-      stage('Supprimer le conteneur existant') {
-    steps {
-                      
-        sh 'docker stop frontc || true'
-        sh 'docker stop backl || true'
-        sh 'docker stop backc || true'
+        stage('Healthcheck') {
+            steps {
+                script {
+                    def frontendStatus = sh(script: "docker inspect --format='\\{{json .State.Health}}\\' $(docker ps -q -f name=frontend) | jq .Status", returnStdout: true).trim()
+                    def backendStatus = sh(script: "docker inspect --format='\\{{json .State.Health}}\\' $(docker ps -q -f name=backend) | jq .Status", returnStdout: true).trim()
+                    def postgresStatus = sh(script: "docker inspect --format='\\{{json .State.Health}}\\' $(docker ps -q -f name=postgres) | jq .Status", returnStdout: true).trim()
 
-       sh 'docker rm -f frontc || true'
-       sh 'docker rm -f backl || true'
-       sh 'docker rm -f backc || true'
-
+                    if (frontendStatus != 'healthy' || backendStatus != 'healthy' || postgresStatus != 'healthy') {
+                        error "One or more services are not healthy: frontend=${frontendStatus}, backend=${backendStatus}, postgres=${postgresStatus}"
+            }
+        }
     }
 }
 
- 
-
-stage('Build Docker Images') {
-            steps {
-                sh 'docker build -t asmaabdallah518329/front -f dockerfile-front .'
-                sh 'docker build -t asmaabdallah518329/ma-gpro-logistique-rest -f dockerfile-logistique .'
-                sh 'docker build -t asmaabdallah518329/mt-gpro-commun-rest -f dockerfile-commun .'
-            }
-        }
-    
- stage('Push to DockerHub & Tag') {
-            steps {
-                withDockerRegistry([credentialsId: "dockerHub", url: ""]) {
+         stage('Push to DockerHub & Tag') {
+             steps {
+                 withDockerRegistry([credentialsId: "dockerHub", url: ""]) {
                     sh 'docker tag asmaabdallah518329/front asmaabdallah518329/front:latest'
                     sh 'docker push asmaabdallah518329/front:latest' 
                     
@@ -152,26 +147,6 @@ stage('Build Docker Images') {
             }
         }       
 
-         stage('Run Containers') {
-      steps {
-           //run container front design 
-                sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
-            
-         //run container back logistique
-               sh 'docker run -d --name backl DOCKER_IMAGE_NAME_BACK_LOGISTIQUE '
 
-         //run container back commun
-               sh 'docker run -d --name backc DOCKER_IMAGE_NAME_BACK_COMMUN'
-                
-         //creation de volume pour data 
-              sh 'docker volume create --name pgdata'
-               sh 'docker run -d -v pgdata:/pgdata data'
-          }
-       }
-
-     
-
-
-        }
-  
+        } 
 }
