@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+
+  postgres:
+    image : postgres:12
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: commercial-industriel
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - mynetwork
+
+  mt-gpro-commun:
+    build:
+      context: .
+      dockerfile: dockerfile-commun
+    ports:
+      - "8889:8080"
+    depends_on:
+      - postgres
+    healthcheck:
+      test:  ["CMD", "curl", "-u", "commercial:2023", "-f", "http://localhost:8889/mt-gpro-commun-rest-3.5.0.0-SNAPSHOT"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - mynetwork
+
+  ma-gpro-logistique:
+    build:
+      context: .
+      dockerfile: dockerfile-logistique
+    ports:
+      - "8890:8080"
+    depends_on:
+      - postgres
+    healthcheck:
+      test: ["CMD", "curl", "-u", "commercial:2023", "-f", "http://localhost:8890/ma-gpro-logistique-rest-3.5.0.0-SNAPSHOT"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - mynetwork
+  frontend:
+    build:
+      context: .
+      dockerfile: dockerfile-front
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ma-gpro-design-3.5.0.0-SNAPSHOT || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - mynetwork
+
+volumes:
+  pg:
+
+networks:
+  mynetwork:
+    driver: bridge
+
