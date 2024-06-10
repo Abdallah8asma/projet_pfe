@@ -10,7 +10,7 @@ pipeline {
        stages {
         stage('Clone') {
             steps {
-                git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:Abdallah8asma/projet_pfe.git'
+                git branch: 'migration_devops', credentialsId: 'Gitlab', url: 'git@gitlab.com:Abdallah8asma/pfe_docker.git'
             }
         }
 
