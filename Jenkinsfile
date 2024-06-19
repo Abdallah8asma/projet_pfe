@@ -160,10 +160,10 @@ stage('Build Docker Images') {
                 sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
             
          //run container back logistique
-               sh 'docker run -d --name backl DOCKER_IMAGE_NAME_BACK_LOGISTIQUE '
+               sh 'docker run -d --name backl $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE '
 
          //run container back commun
-               sh 'docker run -d --name backc DOCKER_IMAGE_NAME_BACK_COMMUN'
+               sh 'docker run -d --name backc $DOCKER_IMAGE_NAME_BACK_COMMUN'
                 
          //creation de volume pour data 
               sh 'docker volume create --name pgdata'
