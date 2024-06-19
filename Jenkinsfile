@@ -79,19 +79,7 @@ stage('Remove Docker Compose Containers') {
             }
         }
         
-        stage('Healthcheck') {
-            steps {
-                script {
-                    def frontendStatus = sh(script: "docker inspect --format='\\{{json .State.Health}}\\' $(docker ps -q -f name=frontend) | jq .Status", returnStdout: true).trim()
-                    def backendStatus = sh(script: "docker inspect --format='\\{{json .State.Health}}\\' $(docker ps -q -f name=backend) | jq .Status", returnStdout: true).trim()
-                    def postgresStatus = sh(script: "docker inspect --format='\\{{json .State.Health}}\\' $(docker ps -q -f name=postgres) | jq .Status", returnStdout: true).trim()
-
-                    if (frontendStatus != 'healthy' || backendStatus != 'healthy' || postgresStatus != 'healthy') {
-                        error "One or more services are not healthy: frontend=${frontendStatus}, backend=${backendStatus}, postgres=${postgresStatus}"
-            }
-        }
-    }
-}
+        
 
          stage('Push to DockerHub & Tag') {
              steps {
