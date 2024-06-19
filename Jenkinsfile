@@ -67,6 +67,19 @@ stage('Slack notification') {
 }
 
 
+stage('Clean Docker') {
+            steps {
+                script {
+                    sh '''
+                        docker stop $(docker ps -aq) || true
+                        docker rm $(docker ps -aq) || true
+                        docker rmi -f $(docker image ls -q) || true
+                    '''
+                }
+            }
+        }
+
+
   
         stage('Build Docker Images') {
             steps {
