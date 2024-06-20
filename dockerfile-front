@@ -27,6 +27,7 @@ RUN mvn clean install
 COPY ma-gpro-logistique/pom.xml /build/ma-gpro-logistique
 RUN mvn clean install
 COPY ma-gpro-design-war/pom.xml /build/ma-gpro-design-war
+RUN mvn clean install
 
 COPY ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war /build/
 
