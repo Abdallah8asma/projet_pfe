@@ -104,7 +104,7 @@ stage('stock war file'){
        stage('Déploiement sur Tomcat') {
             steps {
      
-               deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.167.248.145:8080/')], contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT',  war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
+               deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://18.209.33.206:8080/')], contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT',  war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
  }
 }
 
