@@ -92,21 +92,6 @@ stage('Remove Docker Compose Containers') {
         
         
 
-         stage('Push to DockerHub & Tag') {
-             steps {
-                 withDockerRegistry([credentialsId: "dockerHub", url: ""]) {
-                    sh 'docker tag asmaabdallah518329/front asmaabdallah518329/front:latest'
-                    sh 'docker push asmaabdallah518329/front:latest' 
-                    
-                    sh 'docker tag asmaabdallah518329/ma-gpro-logistique-rest asmaabdallah518329/ma-gpro-logistique-rest:latest'
-                    sh 'docker push asmaabdallah518329/ma-gpro-logistique-rest:latest'
-                    
-                    sh 'docker tag asmaabdallah518329/mt-gpro-commun-rest asmaabdallah518329/mt-gpro-commun-rest:latest'
-                    sh 'docker push asmaabdallah518329/mt-gpro-commun-rest:latest'
-                    
-                }
-            }
-        }       
 
 
         } 
