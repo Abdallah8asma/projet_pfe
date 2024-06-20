@@ -87,7 +87,7 @@ stage('stock war file'){
                     ],
                     credentialsId: 'nexus',
                     groupId: proj.groupId,
-                    nexusUrl: '54.90.87.233:8081',
+                    nexusUrl: '3.87.178.107:8081',
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'Nexus', 
