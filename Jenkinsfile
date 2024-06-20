@@ -16,34 +16,34 @@ pipeline {
 
             stage('Build') {
             steps {
-                dir('/var/lib/jenkins/workspace/PFE_k8s/socle') {
+                dir('/var/lib/jenkins/workspace/kubernetes/socle') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_k8s/socle-j2ee') {
+                dir('/var/lib/jenkins/workspace/kubernetes/socle-j2ee') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_k8s/socle-j2ee-tiers') {
+                dir('/var/lib/jenkins/workspace/kubernetes/socle-j2ee-tiers') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_k8s/scole-j2ee-mt') {
+                dir('/var/lib/jenkins/workspace/kubernetes/scole-j2ee-mt') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_k8s/mt-socle') {
+                dir('/var/lib/jenkins/workspace/kubernetes/mt-socle') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_k8s/mt-commun') {
+                dir('/var/lib/jenkins/workspace/kubernetes/mt-commun') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_k8s/mt-gpro-commun') {
+                dir('/var/lib/jenkins/workspace/kubernetes/mt-gpro-commun') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_k8s/ma-gpro-logistique') {
+                dir('/var/lib/jenkins/workspace/kubernetes/ma-gpro-logistique') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_k8s/ma-gpro-design-war') {
+                dir('/var/lib/jenkins/workspace/kubernetes/ma-gpro-design-war') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_k8s/ma-gpro-atelier-war') {
+                dir('/var/lib/jenkins/workspace/kubernetes/ma-gpro-atelier-war') {
                     sh 'mvn clean install'
                 }
             }
