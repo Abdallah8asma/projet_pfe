@@ -1,6 +1,11 @@
+# Utilisation de l'image PostgreSQL officielle comme base
 FROM postgres:12
 
-# Installation des locales
-RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/*
-RUN locale-gen fr_FR.UTF-8
-ENV LANG fr_FR.UTF-8
+# Définition d'une variable d'environnement pour spécifier le mot de passe du superutilisateur
+ENV POSTGRES_USER=postgres
+
+# Exposer le port par défaut de PostgreSQL
+EXPOSE 5432
+
+# Commande par défaut pour démarrer PostgreSQL lorsque le conteneur est lancé
+CMD ["postgres"]
