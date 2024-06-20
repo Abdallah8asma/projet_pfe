@@ -123,7 +123,7 @@ stage("Deploy to Kubernetes") {
             sh 'kubectl apply -f logistique-deployment.yaml' 
 
             // Déployer le service commun
-            sh 'kubectl apply -f mt-gpro-commun-deployment.yaml' 
+            sh 'kubectl apply -f commun-deployment.yaml' 
 
             // Déployer le service de base de données PostgreSQL
             sh 'kubectl apply -f postgres-deployment.yaml' 
