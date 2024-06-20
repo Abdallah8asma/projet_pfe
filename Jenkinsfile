@@ -130,10 +130,10 @@ stage('Build Docker Images') {
                 
          //creation de volume pour data 
               sh 'docker volume create --name pgdata'
-              sh 'docker run -d -v pgdata:/pgdata $DOCKER_IMAGE_NAME_DATA'
+              sh 'docker run -d -v pgdata:/pgdata --name datac $DOCKER_IMAGE_NAME_DATA'
 
-              // Run container datac
-            sh 'docker run -d --name datac $DOCKER_IMAGE_NAME_DATAC' // Ajout de l'exécution du conteneur datac
+             // sh 'docker run -d -v pgdata:/pgdata $DOCKER_IMAGE_NAME_DATA'
+
 
           }
        }
