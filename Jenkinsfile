@@ -65,14 +65,6 @@ stage('Slack notification') {
         }
 
 
-
- stage('Installer Docker') {
-       steps {
-        ansiblePlaybook credentialsId: 'ansible', installation: 'ansible', inventory: '', playbook: 'install_docker.yaml', vaultTmpPath: ''
-      }
- }
-
-    
         
       stage('Clean Docker') {
             steps {
@@ -118,29 +110,18 @@ stage('Build Docker Images') {
         }       
 
          stage('Run Containers') {
-      steps {
-           //run container front design 
+             steps {
                 sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
-            
-         //run container back logistique
-               sh 'docker run -d --name backl $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE '
 
-         //run container back commun
-               sh 'docker run -d --name backc $DOCKER_IMAGE_NAME_BACK_COMMUN'
+                sh 'docker run -d --name backl $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE '
+
+                sh 'docker run -d --name backc $DOCKER_IMAGE_NAME_BACK_COMMUN'
                 
-         //creation de volume pour data 
-              sh 'docker volume create --name pgdata'
-              sh 'docker run -d -v pgdata:/pgdata --name datac $DOCKER_IMAGE_NAME_DATA'
-
-             // sh 'docker run -d -v pgdata:/pgdata $DOCKER_IMAGE_NAME_DATA'
-
+                sh 'docker volume create --name pgdata'
+                sh 'docker run -d -v pgdata:/pgdata --name datac $DOCKER_IMAGE_NAME_DATA'
 
           }
        }
 
-     
-
-
         }
-  
 }
