@@ -114,19 +114,20 @@ stage("Deploy to Kubernetes") {
         withKubeConfig(credentialsId: 'k8s', serverUrl: 'https://172.31.87.67:6443') {
 
             // Appliquer la définition du volume persistant et du volume persistant revendiqué
-            sh 'kubectl apply -f postgres-pv-pvc.yaml'
+          //  sh 'kubectl apply -f postgres-pv-pvc.yaml'
+          sh 'kubectl apply --validate=false -f postgres-pv-pvc.yaml'
 
             // Déployer le service frontend
-            sh 'kubectl apply -f frontend-deployment.yaml' 
+            sh 'kubectl apply --validate=false -f frontend-deployment.yaml' 
 
             // Déployer le service logistique
-            sh 'kubectl apply -f logistique-deployment.yaml' 
+            sh 'kubectl apply --validate=false -f logistique-deployment.yaml' 
 
             // Déployer le service commun
-            sh 'kubectl apply -f commun-deployment.yaml' 
+            sh 'kubectl apply --validate=false -f commun-deployment.yaml' 
 
             // Déployer le service de base de données PostgreSQL
-            sh 'kubectl apply -f deployservice-postgres.yaml' 
+            sh 'kubectl apply --validate=false -f deployservice-postgres.yaml' 
         }
     }
 }
