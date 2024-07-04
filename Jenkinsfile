@@ -108,7 +108,6 @@ stage('stock war file'){
  stage('SonarQube Analysis') {
     steps {
         script {
-            def mvn = tool 'Default Maven' 
             def projects = [
                 [path: '/var/lib/jenkins/workspace/projet-commercial/socle', projectKey: 'socle'],
                 [path: '/var/lib/jenkins/workspace/projet-commercial/socle-j2ee', projectKey: 'socle-j2ee'],
@@ -125,7 +124,7 @@ stage('stock war file'){
                 for (proj in projects) {
                     dir(proj.path) {
                         // Execute 'mvn clean package sonar:sonar'
-                        sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=${proj.projectKey} -Dsonar.host.url=http://54.175.17.55:9000  -Dsonar.login=admin -Dsonar.password=sonar"
+                        sh "mvn clean verify sonar:sonar -Dsonar.projectKey=${proj.projectKey} -Dsonar.host.url=http://54.175.17.55:9000  -Dsonar.login=admin -Dsonar.password=sonar"
                     }
                 }
             }
