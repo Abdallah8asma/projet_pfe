@@ -43,21 +43,27 @@ pipeline {
             }
         }
         
-stage('Slack notification') {
-            steps {
-                script {
-                    def buildStatus = currentBuild.currentResult
-                    def message = "Pipeline Status: ${buildStatus}\nJob 
-                    Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
 
-                    if (buildStatus == 'SUCCESS') {
-                        slackSend(channel: '#devopss', message: "Pipeline Succeeded\n${message}")
-                    } else {
-                        slackSend(channel: '#devopss', message: "Pipeline Failed\n${message}")
-                    }
-                }
+The error you're encountering in your Jenkinsfile is likely due to a syntax issue where Groovy expects a continuation of the string but encounters a newline unexpectedly. In Groovy, multi-line strings should either be concatenated using the + operator or enclosed in triple quotes ("""). Here's how you can fix your Slack notification stage:
+
+
+stage('Slack notification') {
+    steps {
+        script {
+            def buildStatus = currentBuild.currentResult
+            def message = "Pipeline Status: ${buildStatus}\n" +
+                          "Job Name: ${env.JOB_NAME}\n" +
+                          "Build Number: ${env.BUILD_NUMBER}\n" +
+                          "Build URL: ${env.BUILD_URL}"
+
+            if (buildStatus == 'SUCCESS') {
+                slackSend(channel: '#devopss', message: "Pipeline Succeeded\n${message}")
+            } else {
+                slackSend(channel: '#devopss', message: "Pipeline Failed\n${message}")
             }
         }
+    }
+}
 
 stage('stock war file'){
     steps {
