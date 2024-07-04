@@ -111,7 +111,7 @@ stage('Clean Docker') {
 
 stage("Deploy to Kubernetes") {
     steps {
-        withKubeConfig(credentialsId: 'k8s', serverUrl: 'https://172.31.54.180:6443') {
+        withKubeConfig(credentialsId: 'k8s', serverUrl: 'https://172.31.87.67:6443') {
 
             // Appliquer la définition du volume persistant et du volume persistant revendiqué
             sh 'kubectl apply -f postgres-pv-pvc.yaml'
