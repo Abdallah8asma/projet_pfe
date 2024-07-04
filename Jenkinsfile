@@ -16,34 +16,34 @@ pipeline {
 
             stage('Build') {
             steps {
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/socle') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/socle') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/socle-j2ee') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/socle-j2ee') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/socle-j2ee-tiers') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/socle-j2ee-tiers') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/scole-j2ee-mt') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/scole-j2ee-mt') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/mt-socle') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/mt-socle') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/mt-commun') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/mt-commun') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/mt-gpro-commun') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/mt-gpro-commun') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/ma-gpro-logistique') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/ma-gpro-logistique') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/ma-gpro-design-war') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/ma-gpro-design-war') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/PFE_Docker_Compose/ma-gpro-atelier-war') {
+                dir('/var/lib/jenkins/workspace/pfe_docker_compose/ma-gpro-atelier-war') {
                     sh 'mvn clean install'
                 }
             }
