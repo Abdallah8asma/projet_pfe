@@ -88,7 +88,7 @@ stage('stock war file'){
                     ],
                     credentialsId: 'nexus',
                     groupId: proj.groupId,
-                    nexusUrl: '54.86.3.55:8081',
+                    nexusUrl: '3.84.35.159:8081',
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'Nexus', 
@@ -105,7 +105,7 @@ stage('stock war file'){
        stage('Déploiement sur Tomcat') {
             steps {
      
-               deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.166.166.30:8080')], contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
+               deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://18.207.244.123:8080')], contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
  }
 }
 
