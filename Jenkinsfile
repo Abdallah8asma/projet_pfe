@@ -104,6 +104,36 @@ stage('stock war file'){
     }
 }
 
+     
+ stage('SonarQube Analysis') {
+    steps {
+        script {
+            def projects = [
+                [path: '/var/lib/jenkins/workspace/projet-commercial/socle', projectKey: 'socle'],
+                [path: '/var/lib/jenkins/workspace/projet-commercial/socle-j2ee', projectKey: 'socle-j2ee'],
+                [path: '/var/lib/jenkins/workspace/projet-commercial/socle-j2ee-tiers', projectKey: 'socle-j2ee-tiers'],
+                [path: '/var/lib/jenkins/workspace/projet-commercial/scole-j2ee-mt', projectKey: 'scole-j2ee-mt'],
+                [path: '/var/lib/jenkins/workspace/projet-commercial/mt-socle', projectKey: 'mt-socle'],
+                [path: '/var/lib/jenkins/workspace/projet-commercial/mt-commun', projectKey: 'mt-commun'],
+                [path: '/var/lib/jenkins/workspace/projet-commercial/mt-gpro-commun', projectKey: 'mt-gpro-commun'],
+                [path: '/var/lib/jenkins/workspace/projet-commercial/ma-gpro-logistique', projectKey: 'ma-gpro-logistique'],
+                [path: '/var/lib/jenkins/workspace/projet-commercial/ma-gpro-design-war', projectKey: 'ma-gpro-design-war'],
+                [path: '/var/lib/jenkins/workspace/projet-commercial/ma-gpro-atelier-war', projectKey: 'ma-gpro-atelier-war']
+            ]
+            withSonarQubeEnv('SonarQube') {
+                for (proj in projects) {
+                    dir(proj.path) {
+                        // Execute 'mvn clean install'
+                        sh 'mvn clean install'
+
+                        // Execute 'mvn clean package sonar:sonar'
+                        sh "mvn clean package sonar:sonar -Dsonar.projectKey=${proj.projectKey} -Dsonar.host.url=http://52.23.226.186:9000  -Dsonar.login=admin -Dsonar.password=sonar"
+                    }
+                }
+            }
+        }
+    }
+}
 
 
         
