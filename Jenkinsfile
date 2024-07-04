@@ -91,7 +91,7 @@ stage('stock war file'){
                     nexusUrl: '3.84.35.159:8081',
                     nexusVersion: 'nexus3',
                     protocol: 'http',
-                    repository: 'Nexus', 
+                    repository: 'devops', 
                     version: version
                 )
             }
