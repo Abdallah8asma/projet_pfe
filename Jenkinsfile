@@ -123,9 +123,6 @@ stage('stock war file'){
             withSonarQubeEnv('SonarQube') {
                 for (proj in projects) {
                     dir(proj.path) {
-                        // Execute 'mvn clean install'
-                        sh 'mvn clean install'
-
                         // Execute 'mvn clean package sonar:sonar'
                         sh "mvn clean package sonar:sonar -Dsonar.projectKey=${proj.projectKey} -Dsonar.host.url=http://52.23.226.186:9000  -Dsonar.login=admin -Dsonar.password=sonar"
                     }
