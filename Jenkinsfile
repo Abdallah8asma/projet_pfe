@@ -51,9 +51,9 @@ stage('Slack notification') {
                     Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}"
 
                     if (buildStatus == 'SUCCESS') {
-                        slackSend(channel: '#devops', message: "Pipeline Succeeded\n${message}")
+                        slackSend(channel: '#devopss', message: "Pipeline Succeeded\n${message}")
                     } else {
-                        slackSend(channel: '#devops', message: "Pipeline Failed\n${message}")
+                        slackSend(channel: '#devopss', message: "Pipeline Failed\n${message}")
                     }
                 }
             }
