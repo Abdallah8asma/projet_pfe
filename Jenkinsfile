@@ -44,7 +44,6 @@ pipeline {
         }
         
 
-The error you're encountering in your Jenkinsfile is likely due to a syntax issue where Groovy expects a continuation of the string but encounters a newline unexpectedly. In Groovy, multi-line strings should either be concatenated using the + operator or enclosed in triple quotes ("""). Here's how you can fix your Slack notification stage:
 
 
 stage('Slack notification') {
