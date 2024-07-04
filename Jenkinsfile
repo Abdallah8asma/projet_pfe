@@ -31,7 +31,7 @@ pipeline {
                 dir('/var/lib/jenkins/workspace/projet_pfe/mt-gpro-commun') {
                     sh 'mvn clean install'
                 }
-                dir('/var/lib/jenkins/workspace/projet_PFE/ma-gpro-logistique') {
+                dir('/var/lib/jenkins/workspace/projet_pfe/ma-gpro-logistique') {
                     sh 'mvn clean install'
                 }
                 dir('/var/lib/jenkins/workspace/projet_pfe/ma-gpro-design-war') {
