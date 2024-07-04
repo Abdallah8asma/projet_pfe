@@ -93,7 +93,7 @@ stage('stock war file'){
                     ],
                     credentialsId: 'nexus',
                     groupId: proj.groupId,
-                    nexusUrl: '3.84.35.159:8081',
+                    nexusUrl: '54.167.145.36:8081',
                     nexusVersion: 'nexus3',
                     protocol: 'http',
                     repository: 'devops', 
@@ -124,7 +124,7 @@ stage('stock war file'){
                 for (proj in projects) {
                     dir(proj.path) {
                         // Execute 'mvn clean package sonar:sonar'
-                        sh "mvn clean package sonar:sonar -Dsonar.projectKey=${proj.projectKey} -Dsonar.host.url=http://52.23.226.186:9000  -Dsonar.login=admin -Dsonar.password=sonar"
+                        sh "mvn clean package sonar:sonar -Dsonar.projectKey=${proj.projectKey} -Dsonar.host.url=http://54.175.17.55:9000  -Dsonar.login=admin -Dsonar.password=sonar"
                     }
                 }
             }
@@ -137,7 +137,7 @@ stage('stock war file'){
        stage('Déploiement sur Tomcat') {
             steps {
      
-               deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://18.207.244.123:8080')], contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
+               deploy adapters: [tomcat9(credentialsId: 'Tomcat', path: '', url: 'http://54.163.153.253:8080')], contextPath: '/ma-gpro-design-3.5.0.0-SNAPSHOT', war: 'ma-gpro-design-war/presentation/target/ma-gpro-design-3.5.0.0-SNAPSHOT.war'
  }
 }
 
