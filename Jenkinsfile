@@ -90,6 +90,19 @@ stage('Build Docker Images') {
                 sh 'docker build -t asmaabdallah518329/data -f dockerfile-data .'
             }
         }
+               stage('Run Containers') {
+             steps {
+                sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
+
+                sh 'docker run -d --name backl $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE '
+
+                sh 'docker run -d --name backc $DOCKER_IMAGE_NAME_BACK_COMMUN'
+                
+                sh 'docker volume create --name pgdata'
+                sh 'docker run -d -v pgdata:/pgdata --name datac $DOCKER_IMAGE_NAME_DATA'
+
+          }
+       }
     
  stage('Push to DockerHub & Tag') {
             steps {
@@ -109,19 +122,7 @@ stage('Build Docker Images') {
             }
         }       
 
-         stage('Run Containers') {
-             steps {
-                sh 'docker run -d --name frontc $DOCKER_IMAGE_NAME_FRONT'
-
-                sh 'docker run -d --name backl $DOCKER_IMAGE_NAME_BACK_LOGISTIQUE '
-
-                sh 'docker run -d --name backc $DOCKER_IMAGE_NAME_BACK_COMMUN'
-                
-                sh 'docker volume create --name pgdata'
-                sh 'docker run -d -v pgdata:/pgdata --name datac $DOCKER_IMAGE_NAME_DATA'
-
-          }
-       }
+  
 
         }
 }
